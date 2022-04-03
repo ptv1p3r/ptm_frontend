@@ -24,14 +24,26 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="<?php echo auto_version('../../css/movie.css'); ?>">
+
+    <link rel="icon" href="Images/home/favicon.png">
+
+    <link href="css/home/custom.css" rel="stylesheet">
+    <link href="css/home/color.css" rel="stylesheet">
+    <link href="css/home/responsive.css" rel="stylesheet">
+    <link href="css/home/owl.carousel.min.css" rel="stylesheet">
+    <link href="css/home/bootstrap.min.css" rel="stylesheet">
+    <link href="css/home/prettyPhoto.css" rel="stylesheet">
+    <link href="css/home/all.min.css" rel="stylesheet">
+
+
     <title><?php echo $this->title?></title>
 
 </head>
 <body>
-
+<!-- left side of navbar
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 
-    <!-- left side of navbar -->
+    <!-- left side of navbar
     <div class="navbar-collapse ">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
@@ -45,7 +57,7 @@
             </li>
         </ul>
 
-        <!-- right side of navbar -->
+        <!-- right side of navbar
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <form class="form-inline" action="">
@@ -55,3 +67,130 @@
         </ul>
     </div>
 </nav>
+-->
+
+<!--Header Start-->
+
+<header class="header-style-2">
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="index.html"><img src="Images/home/h2logo.png" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <i class="fas fa-bars"></i> </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="index.html"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Home </a>
+                    <ul class="dropdown-menu" >
+                        <li><a href="index.html">Home One</a></li>
+                        <li><a href="Images/home/home-two.html">Home Two</a></li>
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/home-three.html">Home Three</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"> <a class="nav-link" href="../../../../../Users/User/Desktop/Main Files/Main Files/about.html">About</a> </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="../../../../../Users/User/Desktop/Main Files/Main Files/events-grid.html" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Events </a>
+                    <ul class="dropdown-menu" >
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/events-grid.html">Events Grid</a></li>
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/events-grid-2.html">Events Grid Two</a></li>
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/events-grid-3.html">Events Grid Three</a></li>
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/events-list.html">Events List</a></li>
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/events-list-two.html">Events List Two</a></li>
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/event-details.html">Event Details</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="../../../../../Users/User/Desktop/Main Files/Main Files/causes.html" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Causes </a>
+                    <ul class="dropdown-menu" >
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/causes.html">Causes Grid</a></li>
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/causes-list.html">Causes List</a></li>
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/causes-details.html">Causes Details</a> </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="../../../../../Users/User/Desktop/Main Files/Main Files/blog.html" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Blogs </a>
+                    <ul class="dropdown-menu" >
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/blog.html">Blog Default</a></li>
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/blog-list.html">Blog List</a> </li>
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/blog-grid.html">Blog Grid</a></li>
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/blog-two-col.html">Blog Two Columns</a> </li>
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/blog-three-col.html">Blog Three Columns</a></li>
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/blog-details.html">Blog Details</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Pages </a>
+                    <ul class="dropdown-menu" >
+                        <li>
+                            <a href="#">Projects</a>
+                            <ul class="dropdown-menu" >
+                                <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/projects.html">Projects</a> </li>
+                                <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/projects-grid.html">Projects Grid</a> </li>
+                                <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/projects-grid-two.html">Projects Grid Two</a> </li>
+                                <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/projects-list.html">Projects List</a> </li>
+                                <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/projects-details.html">Project Details</a> </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Shop</a>
+                            <ul class="dropdown-menu" >
+                                <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/shop.html">Shop</a> </li>
+                                <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/shop-two.html">Shop Two</a> </li>
+                                <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/shop-details.html">Shop Details</a> </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="../../../../../Users/User/Desktop/Main Files/Main Files/team.html">Team</a>
+                            <ul class="dropdown-menu" >
+                                <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/team.html">Team One</a> </li>
+                                <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/team-two.html">Team Two</a> </li>
+                                <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/team-details.html">Team Details</a> </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Gallery</a>
+                            <ul class="dropdown-menu" >
+                                <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/gallery-grid.html">Gallery Grid</a> </li>
+                                <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/gallery-full.html">Gallery Full</a> </li>
+                                <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/gallery-masonry.html">Gallery Masonry</a> </li>
+                            </ul>
+                        </li>
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/testimonials.html">Testimonials</a> </li>
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/donation.html">Donation</a> </li>
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/my-account.html">My Account</a> </li>
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/coming-soon.html">Coming Soon</a> </li>
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/page-404.html">404 Error</a> </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="contact.html"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Contact </a>
+                    <ul class="dropdown-menu" >
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/contact-one.html">Contact One</a> </li>
+                        <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/contact-two.html">Contact Two</a> </li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="topnav-right">
+                <li> <a class="mdonate" href="../../../../../Users/User/Desktop/Main Files/Main Files/donation.html"><span>Make a Donation</span></a> </li>
+                <li> <a class="search-icon" href="#search"> <i class="fas fa-search"></i> </a> </li>
+                <li class="dropdown">
+                    <a class="cart-icon" href="#" role="button" id="cartdropdown" data-toggle="dropdown"> <i class="fas fa-shopping-cart"></i></a>
+                    <div class="dropdown-menu cart-box" aria-labelledby="cartdropdown">
+                        Recently added item(s)
+                        <ul class="list">
+                            <li class="item">
+                                <a href="#" class="preview-image"><img class="preview" src="Images/home/pro.jpg" alt=""></a>
+                                <div class="description"> <a href="#">Sample Course</a> <strong class="price">1 x $44.95</strong> </div>
+                            </li>
+                            <li class="item">
+                                <a href="#" class="preview-image"><img class="preview" src="Images/home/pro.jpg" alt=""></a>
+                                <div class="description"> <a href="#">Sample Course</a> <strong class="price">1 x $44.95</strong> </div>
+                            </li>
+                        </ul>
+                        <div class="total">Total: <strong>$44.95</strong></div>
+                        <div class="view-link"><a href="#">Proceed to Checkout</a> <a href="#">View cart </a></div>
+                    </div>
+                </li>
+                <li class="login-reg"> <a href="../../../../../Users/User/Desktop/Main Files/Main Files/my-account.html">Login</a> | <a href="../../../../../Users/User/Desktop/Main Files/Main Files/my-account.html">Signup</a> </li>
+            </ul>
+        </div>
+    </nav>
+</header>

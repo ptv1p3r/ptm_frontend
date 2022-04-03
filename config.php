@@ -10,7 +10,7 @@
 define( 'ABSPATH', dirname( __FILE__ ) );
 
 // Caminho para a pasta de uploads
-//define( 'UP_ABSPATH', ABSPATH . '/views/_uploads' );
+define( 'UP_ABSPATH', ABSPATH . '/views/_uploads' );
 
 // URL da home
 define( 'HOME_URI', 'http://127.0.0.1' );
@@ -38,3 +38,4 @@ define( 'DEBUG', true );
 
 // Carrega o loader
 require_once ABSPATH . '/init.php';
+

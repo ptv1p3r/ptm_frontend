@@ -6,7 +6,10 @@
  * Time: 23:07
  */
 /**
- * MainController - Todos os controllers deverão estender essa classe
+ * classMainController.php
+ * MainController -
+ * Todos os controllers deverão
+ * estender essa classe
  *
  */
 class MainController
