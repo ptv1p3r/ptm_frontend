@@ -244,32 +244,31 @@
             <img src="Images/home/h2-slide1.jpg" alt="">
         </div>
 
-        <!--
-<div class="item">
-<div class="slider-caption h2slider">
-<div class="container">
-    <strong><span>Please</span> Stop Hunting & </strong>
-    <h1>Save WildLife</h1>
-    <p>of <strong>endangered animals</strong> in the world</p>
-    <a href="#" class="active">Find Out More</a> <a href="#">Join us Now</a>
-</div>
-</div>
-<img src="Images/home/h2-slide2.jpg" alt="">
-</div>
-<div class="item">
-<div class="slider-caption h2slider">
-<div class="container">
-    <strong>Save <span> & don’t waste our life</span> partner</strong>
-    <h1>Water Resource</h1>
-    <p>Before <strong>it’s too late</strong> for us...</p>
-    <a href="#" class="active">Find Out More</a> <a href="#">Join us Now</a>
-</div>
-</div>
-<img src="Images/home/h2-slide3.jpg" alt="">
-</div>
-
--->
-</section>
+    
+        <div class="item">
+            <div class="slider-caption h2slider">
+                <div class="container">
+                    <strong><span>Please</span> Stop Hunting & </strong>
+                    <h1>Save WildLife</h1>
+                    <p>of <strong>endangered animals</strong> in the world</p>
+                    <a href="#" class="active">Find Out More</a> <a href="#">Join us Now</a>
+                </div>
+            </div>
+            <img src="Images/home/h2-slide2.jpg" alt="">
+        </div>
+        
+        <div class="item">
+            <div class="slider-caption h2slider">
+                <div class="container">
+                    <strong>Save <span> & don’t waste our life</span> partner</strong>
+                    <h1>Water Resource</h1>
+                    <p>Before <strong>it’s too late</strong> for us...</p>
+                    <a href="#" class="active">Find Out More</a> <a href="#">Join us Now</a>
+                </div>
+            </div>
+            <img src="Images/home/h2-slide3.jpg" alt="">
+        </div>
+    </section>
 <!--Slider End-->
     <!--Service Area Start-->
     <section class="services-area wf100">
