@@ -29,7 +29,7 @@ class HomeModel extends MainModel{
      * Obtém a lista de filmes top rated
      *
      */
-    public function getTopRatedList($intLimit = 0) {
+    /*public function getTopRatedList($intLimit = 0) {
 
         if ($intLimit > 0){
             $query = $this->db->query('SELECT * FROM `movies` ORDER BY rating_1 DESC LIMIT ' . $intLimit);
@@ -43,13 +43,13 @@ class HomeModel extends MainModel{
         }
         // Preenche a tabela com os dados
         return $query->fetchAll();
-    }
+    }*/
 
     /**
      * Obtém a lista de filmes top downloaded
      *
      */
-    public function getTopDownloaded($intLimit = 0) {
+    /*public function getTopDownloaded($intLimit = 0) {
 
         if ($intLimit > 0){
             $query = $this->db->query('SELECT * FROM `movies` ORDER BY download_count DESC LIMIT ' . $intLimit);
@@ -63,13 +63,13 @@ class HomeModel extends MainModel{
         }
         // Preenche a tabela com os dados
         return $query->fetchAll();
-    }
+    }*/
 
     /**
      * Obtém a lista de filmes adicionados recentemente
      *
      */
-    public function getLastAdded($intLimit = 0) {
+    /*public function getLastAdded($intLimit = 0) {
 
         if ($intLimit > 0){
             $query = $this->db->query('SELECT * FROM `movies` ORDER BY creation_timestamp DESC LIMIT ' . $intLimit);
@@ -84,5 +84,5 @@ class HomeModel extends MainModel{
         }
         // Preenche a tabela com os dados
         return $query->fetchAll();
-    }
+    }*/
 }

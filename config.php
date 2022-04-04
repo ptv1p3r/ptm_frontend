@@ -16,7 +16,7 @@ define( 'UP_ABSPATH', ABSPATH . '/views/_uploads' );
 define( 'HOME_URI', 'http://127.0.0.1' );
 
 // Nome do host da base de dados
-define( 'HOSTNAME', 'localhost' );
+/*define( 'HOSTNAME', 'localhost' );
 
 // Porta do host da base de dados
 define( 'HOSTPORT', '3306' );
@@ -31,7 +31,7 @@ define( 'DB_USER', 'root' );
 define( 'DB_PASSWORD', '' );
 
 // Charset da conexão PDO
-define( 'DB_CHARSET', 'utf8' );
+define( 'DB_CHARSET', 'utf8' );*/
 
 // DEBUG MODE
 define( 'DEBUG', true );
