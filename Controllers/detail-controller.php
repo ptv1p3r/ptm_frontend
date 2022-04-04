@@ -109,3 +109,4 @@ class DetailController extends MainController
 
 
 }
+

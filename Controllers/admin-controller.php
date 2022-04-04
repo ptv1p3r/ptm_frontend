@@ -10,7 +10,8 @@ class AdminController extends MainController
 {
 
     /**
-     * Carrega a página "/views/admin/admin-view.php"
+     * Carrega a página
+     * "/views/admin/admin-view.php"
      */
     public function index() {
 

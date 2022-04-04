@@ -83,6 +83,7 @@ class DetailModel extends MainModel{
         return $query->fetchAll();
     }
 
+
     /**
      * Metodo que retorna todas as categorias do filme
      * @param null $intMovieId

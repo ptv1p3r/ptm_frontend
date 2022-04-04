@@ -34,3 +34,4 @@ require_once ABSPATH . '/Classes/classTheMovieDB.php';
 require_once ABSPATH . '/Classes/classTheMovieMVC.php';
 
 $_AppMovie = new TheMovieMVC();
+
