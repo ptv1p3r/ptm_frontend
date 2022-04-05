@@ -30,7 +30,7 @@ if ( ! defined('DEBUG') || DEBUG === false ) {
 require_once ABSPATH . '/Includes/global-functions.php';
 require_once ABSPATH . '/Classes/classMainController.php';
 require_once ABSPATH . '/Classes/classMainModel.php';
-require_once ABSPATH . '/Classes/classTheMovieDB.php';
+require_once ABSPATH . '/Classes/classPtmDB.php';
 require_once ABSPATH . '/Classes/classPtmMVC.php';
 
 $_AppMovie = new PtmMVC();
