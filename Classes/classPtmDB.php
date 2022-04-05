@@ -6,7 +6,7 @@
  * Time: 15:32
  */
 
-class TheMovieDB
+class PtmDB
 {
 
     /** DB Properties */
