@@ -1766,7 +1766,7 @@ section.services-area ul li.active:after {
 /***************  Urgent Causes  *****************/
 
 .urgent-causes {
-	background: url(../images/urgentcause.png) no-repeat center center #000;
+	background: url(/Images/home/urgentcause.png) no-repeat center center #000;
 	background-size: cover;
 }
 .section-title-2 h5 {
@@ -1920,7 +1920,7 @@ li.form-submit button:hover {
 /***************  Current Projects  *****************/
 
 .current-projects {
-	background: url(../images/mappatt.jpg) no-repeat;
+	background: url(/Images/home/mappatt.jpg) no-repeat;
 }
 .current-projects div#myTabContent {
 	width: 100%;
@@ -2044,7 +2044,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', e
 /*****************  News And Articles  ****************/
 
 .h2-news {
-	background: url(../images/news-artilcesbg.jpg) no-repeat;
+	background: url(/Images/home/news-artilcesbg.jpg) no-repeat;
 	background-size: cover;
 }
 .blog-post-large {
@@ -2172,7 +2172,7 @@ header .navbar-toggler {
 /*****************  WHY Ecova  ****************/
 
 .why-ecova {
-	background: url(../images/whybg.jpg) no-repeat;
+	background: url(/Images/home/whybg.jpg) no-repeat;
 	padding: 65px 0 65px;
 	background-size: cover;
 	text-align: center;
@@ -2367,7 +2367,7 @@ Footer Style 2 Start
 .footer-style-2 {
 	width: 100%;
 	float: left;
-	background: url(../images/fpat.jpg);
+	background: url(/Images/home/fpat.jpg);
 	margin-top: 70px;
 }
 .footer-widget.about-ecova {
@@ -2903,7 +2903,7 @@ button.sbtn:hover {
 	left: 0;
 	top: -10px;
 	content: "";
-	background: url(../images/line3.png);
+	background: url(/Images/home/line3.png);
 	width: 59px;
 	height: 2px;
 }
@@ -2923,7 +2923,7 @@ button.sbtn:hover {
 /**************  Core Projects  ******************/
 
 .our-core-projects {
-	background: url(../images/coreprojectbg.jpg) no-repeat;
+	background: url(/Images/home/coreprojectbg.jpg) no-repeat;
 	background-size: cover;
 }
 .our-core-projects .owl-theme .owl-nav {
@@ -3236,7 +3236,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', e
 /************************************/
 
 .h3teams-section {
-	background: url(../images/h3teambg.jpg) no-repeat #fff;
+	background: url(/Images/home/h3teambg.jpg) no-repeat #fff;
 }
 .h3-stitle h1 {
 	margin: 0 0 12px;
@@ -3323,7 +3323,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', e
 	margin: 0 auto 30px;
 }
 .testimonials-section, .h3testimonials {
-	background: url(../images/patt2.jpg);
+	background: url(/Images/home/patt2.jpg);
 }
 .h3testimonials h1.text-center {
 	margin: 0 0 30px;
@@ -3396,7 +3396,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', e
 /***************  Home 3 Footer Start  *****************/
 
 .h3footer {
-	background: url(../images/h3footerbg.jpg) no-repeat;
+	background: url(/Images/home/h3footerbg.jpg) no-repeat;
 	background-size: cover;
 	padding: 60px 0 0;
 }
@@ -4627,7 +4627,7 @@ Coming Soon Start
 *********************************/
 
 .coming-soon {
-	background: url(../images/coming-soon.jpg) top center fixed;
+	background: url(/Images/home/coming-soon.jpg) top center fixed;
 	background-size: cover;
 }
 .cs-txt {
@@ -5847,7 +5847,7 @@ About Us Page
 	padding: 40px 0 80px;
 }
 .story-title-bg {
-	background: url(../images/storybg.jpg) no-repeat;
+	background: url(/Images/home/storybg.jpg) no-repeat;
 	background-size: cover;
 	width: 100%;
 	float: left;
@@ -6066,7 +6066,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', end
 	margin: 0 0 8px;
 }
 .choose-ecova {
-	background: url(../images/patt.png);
+	background: url(/Images/home/patt.png);
 }
 .choose-ecova .volunteer-form {
 	border-radius: 5px;
