@@ -1001,7 +1001,9 @@
     </div>
 </section>
 <!--Current Projects End-->
-<!--News & Articles Start-->
+
+
+<!--News & Articles Star
 <section class="h2-news wf100 p80">
     <div class="container">
         <div class="row">
@@ -1028,7 +1030,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <!--Blog Small Post Start-->
+
                 <div class="blog-small-post">
                     <div class="post-thumb"><a href="#"><i class="fas fa-link"></i></a> <img
                                 src="Images/home//h2news2.jpg" alt=""></div>
@@ -1039,8 +1041,8 @@
                         <a href="#" class="rm">Read More</a>
                     </div>
                 </div>
-                <!--Blog Small Post End-->
-                <!--Blog Small Post Start-->
+
+
                 <div class="blog-small-post">
                     <div class="post-thumb"><a href="#"><i class="fas fa-link"></i></a> <img
                                 src="Images/home/h2news3.jpg" alt=""></div>
@@ -1051,12 +1053,13 @@
                         <a href="#" class="rm">Read More</a>
                     </div>
                 </div>
-                <!--Blog Small Post End-->
+
             </div>
         </div>
     </div>
 </section>
-<!--News & Articles End-->
+News & Articles End-->
+
 <!--Why Ecova + Facts Start-->
 <section class="why-ecova wf100">
     <div class="container">
@@ -1071,8 +1074,11 @@
         </div>
     </div>
 </section>
+
+
+
 <!--Why Ecova + Facts End-->
-<!--Online Products Start-->
+<!--Online Products Start
 <section class="online-shop wf100 p80">
     <div class="container">
         <div class="row">
@@ -1084,7 +1090,7 @@
             </div>
         </div>
         <div class="row">
-            <!--Pro Box Start-->
+
             <div class="col-md-3 col-sm-6">
                 <div class="product-box">
                     <div class="pro-thumb"><a href="#">Add To Cart</a> <img src="Images/home//pro1.jpg" alt=""></div>
@@ -1097,8 +1103,7 @@
                     </div>
                 </div>
             </div>
-            <!--Pro Box End-->
-            <!--Pro Box Start-->
+
             <div class="col-md-3 col-sm-6">
                 <div class="product-box">
                     <div class="pro-thumb"><a href="#">Add To Cart</a> <img src="Images/home//pro2.jpg" alt=""></div>
@@ -1111,8 +1116,7 @@
                     </div>
                 </div>
             </div>
-            <!--Pro Box End-->
-            <!--Pro Box Start-->
+
             <div class="col-md-3 col-sm-6">
                 <div class="product-box">
                     <div class="pro-thumb"><a href="#">Add To Cart</a> <img src="Images/home//pro3.jpg" alt=""></div>
@@ -1125,8 +1129,8 @@
                     </div>
                 </div>
             </div>
-            <!--Pro Box End-->
-            <!--Pro Box Start-->
+
+
             <div class="col-md-3 col-sm-6">
                 <div class="product-box">
                     <div class="pro-thumb"><a href="#">Add To Cart</a> <img src="Images/home//pro4.jpg" alt=""></div>
@@ -1139,12 +1143,15 @@
                     </div>
                 </div>
             </div>
-            <!--Pro Box End-->
+            <!-
         </div>
     </div>
 </section>
-<!--Online Products End-->
+Online Products End-->
 <!--InstaGram Start-->
+
+
+
 <div class="instagram">
     <ul>
         <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="Images/home/insta1.jpg" alt=""></li>
