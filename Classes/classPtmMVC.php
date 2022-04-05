@@ -9,7 +9,7 @@
  * TheMovieMVC - Gere Models, Controllers e Views
  *
  */
-class TheMovieMVC
+class PtmMVC
 
 {
 
