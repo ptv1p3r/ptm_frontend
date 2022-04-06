@@ -26,7 +26,7 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="<?php echo auto_version('../../css/sb-admin.css'); ?>">
-    <link rel="stylesheet" href="<?php echo auto_version('../../css/movie.css'); ?>">
+    <link rel="stylesheet" href="<?php echo auto_version('../../css/ptm.css'); ?>">
 
 
     <script src=<?php echo auto_version('../../js/global-functions.js'); ?>></script>
