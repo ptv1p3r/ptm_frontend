@@ -1,4 +1,5 @@
-$(document).ready(function () {
+//$(document).ready(function () {
+   /*
     var movieId = $('input[type=hidden]#movieId').val();
 
     $('#btnDownload').click(function (){
@@ -112,4 +113,4 @@ $(document).on("click", "a", function () {
     $("#movid").val($(this).data('movid'));
     $("#title").val($(this).data('title'));
     $("#year").val($(this).data('year'));
-});
+});*/
