@@ -45,7 +45,7 @@
                     </tr>
                     </thead>
 
-                    <?php foreach ($moviesTable as $movie) { ?>
+                    <?php /*foreach ($moviesTable as $movie) { ?>
                         <tbody>
                         <tr>
                             <td><?php echo $movie["movid"]?></td>
@@ -61,14 +61,15 @@
                             </td>
                         </tr>
                         </tbody>
-                    <?php }?>
+                    <?php }*/?>
 
                 </table>
 
                 <!-- Pagination -->
                 <div class="clearfix">
                     <div class="hint-text">Showing <b>
-                            <?php if (10*$parametros[0] >= count($movies)) {
+                            <?php
+                            /*if (10*$parametros[0] >= count($movies)) {
                                 echo count($movies);
                             } else {
                                 if ($parametros[0] == null || $parametros[0] == "1") {
@@ -80,10 +81,11 @@
                                 } else {
                                     echo 10*$parametros[0];
                                 }
-                            }?>
-                        </b> out of <b><?php echo count($movies)?></b> entries</div>
+                            }*/
+                            ?>
+                        </b> out of <b><?php //echo count($movies)?></b> entries</div>
                         <ul class="pagination">
-                            <?php if ($parametros[0] == null) { ?>
+                            <?php /*if ($parametros[0] == null) { ?>
                                 <li class="page-item active"><a href="<?php echo HOME_URI . '/admin/movie/' . 1;?>" class="page-link">1</a></li>
                             <?php } else {
                                 for ($i = 1 ; $i <= ceil(count($movies)/10) ; $i++) { ?>
@@ -91,7 +93,8 @@
                                     echo "active";
                                 }?>"><a href="<?php echo HOME_URI . '/admin/movie/' . $i;?>" class="page-link"><?php echo $i?></a></li>
                                 <?php }
-                            }?>
+                            }*/
+                            ?>
                         </ul>
                     </div>
                 </div>
@@ -119,7 +122,7 @@
 
                             <label>Categories</label>
                             <div class="form-group" style="padding-left: 40px" >
-                                    <?php foreach ( $categories as $category) {?>
+                                    <?php /*foreach ( $categories as $category) {?>
 
                                         <div class="form-check form-check-inline col-md-3">
                                             <input class="form-check-input" type="checkbox" id="<?php echo $category["catid"]?>">
@@ -130,7 +133,7 @@
                                             </div>
                                             <div class="form-group" style="padding-left: 40px">
                                         <?php } ?>
-                                    <?php }?>
+                                    <?php }*/?>
 
                             </div>
 
@@ -155,7 +158,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <input id="movid" type="hidden" class="form-control" value="<?php $movieById[0]["movid"]?>">
+                                <input id="movid" type="hidden" class="form-control" value="<?php //$movieById[0]["movid"]?>">
                             </div>
                             <div class="form-group">
                                 <label>Title</label>
@@ -168,7 +171,7 @@
                             <label>Categories</label>   <!-- fill categories -->
                             <div class="form-group" style="padding-left: 40px" >
                                 <?php
-                                $i=1;
+                                /*$i=1;
                                 foreach ( $categories as $category) {?>
 
                                     <div class="form-check form-check-inline col-md-3">
@@ -181,7 +184,7 @@
                                         <div class="form-group" style="padding-left: 40px">
                                     <?php } ?>
                                 <?php $i++;
-                                }?>
+                                }*/?>
 
                             </div>
 
