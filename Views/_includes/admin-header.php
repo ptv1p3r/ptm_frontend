@@ -26,7 +26,7 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="<?php echo auto_version('../../css/sb-admin.css'); ?>">
-    <link rel="stylesheet" href="<?php echo auto_version('../../css/movie.css'); ?>">
+    <link rel="stylesheet" href="<?php echo auto_version('../../css/ptm.css'); ?>">
 
 
     <script src=<?php echo auto_version('../../js/global-functions.js'); ?>></script>
@@ -37,7 +37,7 @@
 
 <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand mr-1" href="<?php echo HOME_URI . '/admin/movie';?>"> <img src="<?php echo HOME_URI . '/Images/logo_black.png';?>" alt="" width="48">The Real Movie Database</a>
+    <a class="navbar-brand mr-1" href="<?php echo HOME_URI . '/admin/movie';?>"> <img src="<?php echo HOME_URI . '/Images/logo_black.png';?>" alt="" width="48">Project Tree Management</a>
 
     <!-- Spacing -->
     <a class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
