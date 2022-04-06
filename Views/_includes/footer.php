@@ -27,32 +27,31 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <!--Footer Widget Start-->
                     <div class="footer-widget">
-                        <h4>Our Promises</h4>
+                        <h4>Os nossos compromissoss</h4>
                         <ul class="quick-links">
-                            <li><a href="#">Solar Energy</a></li>
-                            <li><a href="#">Waste Management</a></li>
-                            <li><a href="#">Eco Ideas</a></li>
-                            <li><a href="#">Recycling Materials</a></li>
-                            <li><a href="#">Plant Ecology</a></li>
-                            <li><a href="#">Saving Wildlife </a></li>
+                            <li><a href="#">Visão</a></li>
+                            <li><a href="#">Etc....</a></li>
+                            <li><a href="#">Etc....</a></li>
+                            <li><a href="#">Etc....</a></li>
+                            <li><a href="#">Etc....</a></li>
+                            <li><a href="#">Batatas</a></li>
                         </ul>
                     </div>
                     <!--Footer Widget End-->
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6">
+
+
                     <!--Footer Widget Start-->
                     <div class="footer-widget">
-                        <h4>Latest Posts</h4>
-                        <ul class="lastest-products">
-                            <li><img src="/images/home/flp1.jpg" alt=""> <strong><a href="#">How you can keep alive wild
-                                        animals for...</a></strong> <span class="pdate"><i>Posted:</i> 29 September, 2018</span>
-                            </li>
-                            <li><img src="/images/home/flp2.jpg" alt=""> <strong><a href="#">Eliminate your plastic
-                                        bottle pollution & keep...</a></strong> <span class="pdate"><i>Posted:</i> 29 September, 2018</span>
-                            </li>
-                            <li><img src="/images/home/flp3.jpg" alt=""> <strong><a href="#">How you can keep alive wild
-                                        animals for...</a></strong> <span class="pdate"><i>Posted:</i> 29 September, 2018</span>
-                            </li>
+                        <h4>Ocupar com algo interessante</h4>
+                        <ul class="quick-links">
+                            <li><a href="#">Visão</a></li>
+                            <li><a href="#">Etc....</a></li>
+                            <li><a href="#">Etc....</a></li>
+                            <li><a href="#">Etc....</a></li>
+                            <li><a href="#">Etc....</a></li>
+                            <li><a href="#">Batatas</a></li>
                         </ul>
                     </div>
                     <!--Footer Widget End-->
@@ -64,10 +63,10 @@
                             <!--Footer Product Start-->
                             <div class="item">
                                 <div class="f-product">
-                                    <img src="/images/home/fpro1.jpg" alt="">
+                                    <img src="/Images/home/fpro1.jpg" alt="">
                                     <div class="fp-text">
-                                        <h6><a href="#">Buy T-Shirts</a></h6>
-                                        <strong>$19.00</strong>
+                                        <h6><a href="#">Amendoeira</a></h6>
+
                                     </div>
                                 </div>
                             </div>
@@ -75,10 +74,10 @@
                             <!--Footer Product Start-->
                             <div class="item">
                                 <div class="f-product">
-                                    <img src="/images/home/fpro1.jpg" alt="">
+                                    <img src="/Images/home/fpro1.jpg" alt="">
                                     <div class="fp-text">
-                                        <h6><a href="#">Buy T-Shirts</a></h6>
-                                        <strong>$19.00</strong>
+                                        <h6><a href="#">Medronheiro</a></h6>
+
                                     </div>
                                 </div>
                             </div>
@@ -86,10 +85,10 @@
                             <!--Footer Product Start-->
                             <div class="item">
                                 <div class="f-product">
-                                    <img src="/images/home/fpro1.jpg" alt="">
+                                    <img src="/Images/home/fpro1.jpg" alt="">
                                     <div class="fp-text">
-                                        <h6><a href="#">Buy T-Shirts</a></h6>
-                                        <strong>$19.00</strong>
+                                        <h6><a href="#">Sobreiro</a></h6>
+
                                     </div>
                                 </div>
                             </div>
@@ -119,10 +118,11 @@
 
 <!--   JS Files Start-->
 <!-- <script src="js/home/jquery-3.3.1.min.js"></script>-->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.js"></script>
+<!--   Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 <!--<script src="js/home/jquery-migrate-1.4.1.min.js"></script>-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.4.1/jquery-migrate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.4.0/jquery-migrate.min.map"></script>
 <!--<script src="js/home/popper.min.js"></script>-->
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <!--<script src="js/home/bootstrap.min.js"></script>-->
@@ -137,7 +137,7 @@
 <!--<script src="js/home/isotope.min.js"></script>-->
 <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
 <!--Temos de incluir este custom é o que faz o alinhamento das imagens no template-->
-<script src="js/home/custom.js"></script>
+<script src="/js/home/custom.js"></script>
 <!--   JS Files End-->
 
 
