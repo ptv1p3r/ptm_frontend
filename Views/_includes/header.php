@@ -20,14 +20,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
             integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
             crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
-          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    </script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
 
-    <!--  CSS custom que não pode ser apagado-->
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+
+     <!--  CSS custom que não pode ser apagado-->
     <link href="css/home/custom.css" rel="stylesheet">
 
     <!-- Template original CSS links -->
@@ -41,7 +41,7 @@
 
     <!--  END CSS links -->
     <!--  Icon do template-->
-    <link rel="icon" href="Images/home/favicon.png">
+    <link rel="icon" href="/Images/home/favicon.png">
 
     <!--  Script auto-version-->
     <script src="<?php echo auto_version('../../js/global-functions.js'); ?>"></script>
@@ -81,7 +81,7 @@
 <!--Header Start-->
 <header class="header-style-2">
     <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="index.html"><img src="Images/home/h2logo.png" alt=""></a>
+<!--        <a class="navbar-brand" href="index.html"><img src="Images/home/h2logo.png" alt=""></a>-->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
                     class="fas fa-bars"></i></button>
@@ -94,61 +94,61 @@
                         <li><a href="index.html">Home One</a></li>
                         <li><a href="<?php echo HOME_URI . 'ptm_frontend/donation/donation-view.php'; ?>">TESTE CHANGE
                                 PAGE</a></li>
-                        <li><a href="Images/home/home-three.html">Home
+                        <li><a href="/Images/home/home-three.html">Home
                                 Three</a></li>
                     </ul>
                 </li>
                 <li class="nav-item"><a class="nav-link"
-                                        href="Images/home/about.html">About</a>
+                                        href="/Images/home/about.html">About</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle"
                        href="Images/home/events-grid.html" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Events </a>
                     <ul class="dropdown-menu">
-                        <li><a href="Images/home/events-grid.html">Events
+                        <li><a href="/Images/home/events-grid.html">Events
                                 Grid</a></li>
-                        <li><a href="Images/home/events-grid-2.html">Events
+                        <li><a href="/Images/home/events-grid-2.html">Events
                                 Grid Two</a></li>
-                        <li><a href="Images/home/events-grid-3.html">Events
+                        <li><a href="/Images/home/events-grid-3.html">Events
                                 Grid Three</a></li>
-                        <li><a href="Images/home/events-list.html">Events
+                        <li><a href="/Images/home/events-list.html">Events
                                 List</a></li>
-                        <li><a href="Images/home/events-list-two.html">Events
+                        <li><a href="/Images/home/events-list-two.html">Events
                                 List Two</a></li>
-                        <li><a href="Images/home/event-details.html">Event
+                        <li><a href="/Images/home/event-details.html">Event
                                 Details</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle"
-                       href="Images/home/causes.html" role="button"
+                       href="/Images/home/causes.html" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Causes </a>
                     <ul class="dropdown-menu">
-                        <li><a href="Images/home/causes.html">Causes
+                        <li><a href="/Images/home/causes.html">Causes
                                 Grid</a></li>
-                        <li><a href="Images/home/causes-list.html">Causes
+                        <li><a href="/Images/home/causes-list.html">Causes
                                 List</a></li>
-                        <li><a href="Images/home/causes-details.html">Causes
+                        <li><a href="/Images/home/causes-details.html">Causes
                                 Details</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle"
-                       href="Images/home/blog.html" role="button"
+                       href="/Images/home/blog.html" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Blogs </a>
                     <ul class="dropdown-menu">
-                        <li><a href="Images/home/blog.html">Blog Default</a>
+                        <li><a href="/Images/home/blog.html">Blog Default</a>
                         </li>
-                        <li><a href="Images/home/blog-list.html">Blog
+                        <li><a href="/Images/home/blog-list.html">Blog
                                 List</a></li>
-                        <li><a href="Images/home/blog-grid.html">Blog
+                        <li><a href="/Images/home/blog-grid.html">Blog
                                 Grid</a></li>
-                        <li><a href="Images/home/blog-two-col.html">Blog Two
+                        <li><a href="/Images/home/blog-two-col.html">Blog Two
                                 Columns</a></li>
-                        <li><a href="Images/home/blog-three-col.html">Blog
+                        <li><a href="/Images/home/blog-three-col.html">Blog
                                 Three Columns</a></li>
-                        <li><a href="Images/home/blog-details.html">Blog
+                        <li><a href="/Images/home/blog-details.html">Blog
                                 Details</a></li>
                     </ul>
                 </li>
@@ -159,65 +159,65 @@
                         <li>
                             <a href="#">Projects</a>
                             <ul class="dropdown-menu">
-                                <li><a href="Images/home/projects.html">Projects</a>
+                                <li><a href="/Images/home/projects.html">Projects</a>
                                 </li>
                                 <li>
-                                    <a href="Images/home/projects-grid.html">Projects
+                                    <a href="/Images/home/projects-grid.html">Projects
                                         Grid</a></li>
                                 <li>
-                                    <a href="Images/home/projects-grid-two.html">Projects
+                                    <a href="/Images/home/projects-grid-two.html">Projects
                                         Grid Two</a></li>
                                 <li>
-                                    <a href="Images/home/projects-list.html">Projects
+                                    <a href="/Images/home/projects-list.html">Projects
                                         List</a></li>
                                 <li>
-                                    <a href="Images/home/projects-details.html">Project
+                                    <a href="/Images/home/projects-details.html">Project
                                         Details</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#">Shop</a>
                             <ul class="dropdown-menu">
-                                <li><a href="Images/home/shop.html">Shop</a>
+                                <li><a href="/Images/home/shop.html">Shop</a>
                                 </li>
-                                <li><a href="Images/home/shop-two.html">Shop
+                                <li><a href="/Images/home/shop-two.html">Shop
                                         Two</a></li>
-                                <li><a href="Images/home/shop-details.html">Shop
+                                <li><a href="/Images/home/shop-details.html">Shop
                                         Details</a></li>
                             </ul>
                         </li>
                         <li>
-                            <a href="Images/home/team.html">Team</a>
+                            <a href="/Images/home/team.html">Team</a>
                             <ul class="dropdown-menu">
-                                <li><a href="Images/home/team.html">Team
+                                <li><a href="/Images/home/team.html">Team
                                         One</a></li>
-                                <li><a href="Images/home/team-two.html">Team
+                                <li><a href="/Images/home/team-two.html">Team
                                         Two</a></li>
-                                <li><a href="Images/home/team-details.html">Team
+                                <li><a href="/Images/home/team-details.html">Team
                                         Details</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#">Gallery</a>
                             <ul class="dropdown-menu">
-                                <li><a href="Images/home/gallery-grid.html">Gallery
+                                <li><a href="/Images/home/gallery-grid.html">Gallery
                                         Grid</a></li>
-                                <li><a href="Images/home/gallery-full.html">Gallery
+                                <li><a href="/Images/home/gallery-full.html">Gallery
                                         Full</a></li>
                                 <li>
-                                    <a href="Images/home/gallery-masonry.html">Gallery
+                                    <a href="/Images/home/gallery-masonry.html">Gallery
                                         Masonry</a></li>
                             </ul>
                         </li>
-                        <li><a href="Images/home/testimonials.html">Testimonials</a>
+                        <li><a href="/Images/home/testimonials.html">Testimonials</a>
                         </li>
-                        <li><a href="Images/home/donation.html">Donation</a>
+                        <li><a href="/Images/home/donation.html">Donation</a>
                         </li>
-                        <li><a href="Images/home/my-account.html">My
+                        <li><a href="/Images/home/my-account.html">My
                                 Account</a></li>
-                        <li><a href="Images/home/coming-soon.html">Coming
+                        <li><a href="/Images/home/coming-soon.html">Coming
                                 Soon</a></li>
-                        <li><a href="Images/home/page-404.html">404
+                        <li><a href="/Images/home/page-404.html">404
                                 Error</a></li>
                     </ul>
                 </li>
@@ -225,16 +225,16 @@
                     <a class="nav-link dropdown-toggle" href="contact.html" role="button" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false"> Contact </a>
                     <ul class="dropdown-menu">
-                        <li><a href="Images/home/contact-one.html">Contact
+                        <li><a href="/Images/home/contact-one.html">Contact
                                 One</a></li>
-                        <li><a href="Images/home/contact-two.html">Contact
+                        <li><a href="/Images/home/contact-two.html">Contact
                                 Two</a></li>
                     </ul>
                 </li>
             </ul>
             <ul class="topnav-right">
                 <li><a class="mdonate"
-                       href="Images/home/donation.html"><span>Make a Donation</span></a>
+                       href="/Images/home/donation.html"><span>Make a Donation</span></a>
                 </li>
                 <li><a class="search-icon" href="#search"> <i class="fas fa-search"></i> </a></li>
                 <li class="dropdown">
@@ -244,22 +244,22 @@
                         Recently added item(s)
                         <ul class="list">
                             <li class="item">
-                                <a href="#" class="preview-image"><img class="preview" src="Images/home/pro.jpg" alt=""></a>
+                                <a href="#" class="preview-image"><img class="preview" src="/Images/home/pro.jpg" alt=""></a>
                                 <div class="description"><a href="#">Sample Course</a> <strong class="price">1 x
-                                        $44.95</strong></div>
+                                        $0</strong></div>
                             </li>
                             <li class="item">
-                                <a href="#" class="preview-image"><img class="preview" src="Images/home/pro.jpg" alt=""></a>
+                                <a href="#" class="preview-image"><img class="preview" src="/Images/home/pro.jpg" alt=""></a>
                                 <div class="description"><a href="#">Sample Course</a> <strong class="price">1 x
-                                        $44.95</strong></div>
+                                        $0</strong></div>
                             </li>
                         </ul>
                         <div class="total">Total: <strong>$44.95</strong></div>
                         <div class="view-link"><a href="#">Proceed to Checkout</a> <a href="#">View cart </a></div>
                     </div>
                 </li>
-                <li class="login-reg"><a href="Images/home/my-account.html">Login</a>
-                    | <a href="Images/home/my-account.html">Signup</a></li>
+                <li class="login-reg"><a href="/Images/home/my-account.html">Login</a>
+                    | <a href="/Images/home/my-account.html">Signup</a></li>
             </ul>
         </div>
     </nav>
