@@ -241,7 +241,7 @@
                 <a href="#" class="active">Descubra mais</a> <a href="#">Junte-se a nós</a>
             </div>
         </div>
-        <img src="Images/home/h2-slide1.jpg" alt="">
+        <img src="/Images/home/h2-slide1.jpg" alt="">
     </div>
 
 
@@ -254,7 +254,7 @@
                 <a href="#" class="active">Find Out More</a> <a href="#">Join us Now</a>
             </div>
         </div>
-        <img src="Images/home/h2-slide2.jpg" alt="">
+        <img src="/Images/home/h2-slide2.jpg" alt="">
     </div>
 
     <div class="item">
@@ -266,7 +266,7 @@
                 <a href="#" class="active">Find Out More</a> <a href="#">Join us Now</a>
             </div>
         </div>
-        <img src="Images/home/h2-slide3.jpg" alt="">
+        <img src="/Images/home/h2-slide3.jpg" alt="">
     </div>
 </section>
 <!--Slider End-->
@@ -277,7 +277,7 @@
             <!--box  start-->
             <li>
                 <div class="sinfo">
-                    <img src="Images/home/sericon1.png" alt="">
+                    <img src="/Images/home/sericon1.png" alt="">
                     <h6>Recycling</h6>
                     <p>Waste Management</p>
                 </div>
@@ -286,7 +286,7 @@
             <!--box  start-->
             <li>
                 <div class="sinfo">
-                    <img src="Images/home/sericon2.png" alt="">
+                    <img src="/Images/home/sericon2.png" alt="">
                     <h6>Wind Energy</h6>
                     <p>Polar, Prevailing, Tropical</p>
                 </div>
@@ -295,7 +295,7 @@
             <!--box  start-->
             <li>
                 <div class="sinfo">
-                    <img src="Images/home/sericon3.png" alt="">
+                    <img src="/Images/home/sericon3.png" alt="">
                     <h6>Pure Water</h6>
                     <p>Save Water Resources</p>
                 </div>
@@ -304,7 +304,7 @@
             <!--box  start-->
             <li class="active">
                 <div class="sinfo">
-                    <img src="Images/home/sericon4.png" alt="">
+                    <img src="/Images/home/sericon4.png" alt="">
                     <h6>Solar Panels</h6>
                     <p>Save Natural Engery</p>
                 </div>
@@ -313,7 +313,7 @@
             <!--box  start-->
             <li>
                 <div class="sinfo">
-                    <img src="Images/home/sericon5.png" alt="">
+                    <img src="/Images/home/sericon5.png" alt="">
                     <h6>Forest Planting</h6>
                     <p>Make Plants Alive for Life</p>
                 </div>
@@ -330,7 +330,7 @@
             <div class="col-md-5">
                 <div class="video-img"><a href="https://vimeo.com/103994901&width=700" data-rel="prettyPhoto"
                                           title="Vimeo video"><i class="fas fa-play"></i></a> <img
-                            src="Images/home/h2about.jpg" alt=""></div>
+                            src="/Images/home/h2about.jpg" alt=""></div>
             </div>
             <div class="col-md-7">
                 <div class="h2-about-txt">
@@ -493,7 +493,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro1.jpg" alt="">
+                                    <img src="/Images/home/current-pro1.jpg" alt="">
                                     <h5>Forest & Tree Planting</h5>
                                     <div class="pro-hover">
                                         <h6>Forest & Tree Planting</h6>
@@ -507,7 +507,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro2.jpg" alt="">
+                                    <img src="/Images/home/current-pro2.jpg" alt="">
                                     <h5>Recycling & Waste Management</h5>
                                     <div class="pro-hover">
                                         <h6>Recycling & Waste Management</h6>
@@ -521,7 +521,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro3.jpg" alt="">
+                                    <img src="/Images/home/current-pro3.jpg" alt="">
                                     <h5>Solar & Wind
                                         Energy
                                     </h5>
@@ -539,7 +539,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro4.jpg" alt="">
+                                    <img src="/Images/home/current-pro4.jpg" alt="">
                                     <h5>Saving Wildlife
                                         & their Cubs
                                     </h5>
@@ -557,7 +557,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro5.jpg" alt="">
+                                    <img src="/Images/home/current-pro5.jpg" alt="">
                                     <h5>Forest & Tree Planting</h5>
                                     <div class="pro-hover">
                                         <h6>Forest & Tree Planting</h6>
@@ -571,7 +571,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro6.jpg" alt="">
+                                    <img src="/Images/home/current-pro6.jpg" alt="">
                                     <h5>Recycling & Waste Management</h5>
                                     <div class="pro-hover">
                                         <h6>Recycling & Waste Management</h6>
@@ -585,7 +585,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro7.jpg" alt="">
+                                    <img src="/Images/home/current-pro7.jpg" alt="">
                                     <h5>Solar & Wind
                                         Energy
                                     </h5>
@@ -603,7 +603,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro8.jpg" alt="">
+                                    <img src="/Images/home/current-pro8.jpg" alt="">
                                     <h5>Saving Wildlife
                                         & their Cubs
                                     </h5>
@@ -627,7 +627,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro5.jpg" alt="">
+                                    <img src="/Images/home/current-pro5.jpg" alt="">
                                     <h5>Forest & Tree Planting</h5>
                                     <div class="pro-hover">
                                         <h6>Forest & Tree Planting</h6>
@@ -641,7 +641,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro6.jpg" alt="">
+                                    <img src="/Images/home/current-pro6.jpg" alt="">
                                     <h5>Recycling & Waste Management</h5>
                                     <div class="pro-hover">
                                         <h6>Recycling & Waste Management</h6>
@@ -655,7 +655,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro7.jpg" alt="">
+                                    <img src="/Images/home/current-pro7.jpg" alt="">
                                     <h5>Solar & Wind
                                         Energy
                                     </h5>
@@ -673,7 +673,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro8.jpg" alt="">
+                                    <img src="/Images/home/current-pro8.jpg" alt="">
                                     <h5>Saving Wildlife
                                         & their Cubs
                                     </h5>
@@ -691,7 +691,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro1.jpg" alt="">
+                                    <img src="/Images/home/current-pro1.jpg" alt="">
                                     <h5>Forest & Tree Planting</h5>
                                     <div class="pro-hover">
                                         <h6>Forest & Tree Planting</h6>
@@ -705,7 +705,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro2.jpg" alt="">
+                                    <img src="/Images/home/current-pro2.jpg" alt="">
                                     <h5>Recycling & Waste Management</h5>
                                     <div class="pro-hover">
                                         <h6>Recycling & Waste Management</h6>
@@ -719,7 +719,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro3.jpg" alt="">
+                                    <img src="/Images/home/current-pro3.jpg" alt="">
                                     <h5>Solar & Wind
                                         Energy
                                     </h5>
@@ -737,7 +737,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro4.jpg" alt="">
+                                    <img src="/Images/home/current-pro4.jpg" alt="">
                                     <h5>Saving Wildlife
                                         & their Cubs
                                     </h5>
@@ -761,7 +761,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro7.jpg" alt="">
+                                    <img src="/Images/home/current-pro7.jpg" alt="">
                                     <h5>Solar & Wind
                                         Energy
                                     </h5>
@@ -779,7 +779,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro8.jpg" alt="">
+                                    <img src="/Images/home/current-pro8.jpg" alt="">
                                     <h5>Saving Wildlife
                                         & their Cubs
                                     </h5>
@@ -797,7 +797,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro5.jpg" alt="">
+                                    <img src="/Images/home/current-pro5.jpg" alt="">
                                     <h5>Forest & Tree Planting</h5>
                                     <div class="pro-hover">
                                         <h6>Forest & Tree Planting</h6>
@@ -811,7 +811,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro6.jpg" alt="">
+                                    <img src="/Images/home/current-pro6.jpg" alt="">
                                     <h5>Recycling & Waste Management</h5>
                                     <div class="pro-hover">
                                         <h6>Recycling & Waste Management</h6>
@@ -825,7 +825,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro3.jpg" alt="">
+                                    <img src="/Images/home/current-pro3.jpg" alt="">
                                     <h5>Solar & Wind
                                         Energy
                                     </h5>
@@ -843,7 +843,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro4.jpg" alt="">
+                                    <img src="/Images/home/current-pro4.jpg" alt="">
                                     <h5>Saving Wildlife
                                         & their Cubs
                                     </h5>
@@ -861,7 +861,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro1.jpg" alt="">
+                                    <img src="/Images/home/current-pro1.jpg" alt="">
                                     <h5>Forest & Tree Planting</h5>
                                     <div class="pro-hover">
                                         <h6>Forest & Tree Planting</h6>
@@ -875,7 +875,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro2.jpg" alt="">
+                                    <img src="/Images/home/current-pro2.jpg" alt="">
                                     <h5>Recycling & Waste Management</h5>
                                     <div class="pro-hover">
                                         <h6>Recycling & Waste Management</h6>
@@ -895,7 +895,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro7.jpg" alt="">
+                                    <img src="/Images/home/current-pro7.jpg" alt="">
                                     <h5>Solar & Wind
                                         Energy
                                     </h5>
@@ -913,7 +913,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro8.jpg" alt="">
+                                    <img src="/Images/home/current-pro8.jpg" alt="">
                                     <h5>Saving Wildlife
                                         & their Cubs
                                     </h5>
@@ -931,7 +931,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro3.jpg" alt="">
+                                    <img src="/Images/home/current-pro3.jpg" alt="">
                                     <h5>Solar & Wind
                                         Energy
                                     </h5>
@@ -949,7 +949,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro4.jpg" alt="">
+                                    <img src="/Images/home/current-pro4.jpg" alt="">
                                     <h5>Saving Wildlife
                                         & their Cubs
                                     </h5>
@@ -967,7 +967,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro1.jpg" alt="">
+                                    <img src="/Images/home/current-pro1.jpg" alt="">
                                     <h5>Forest & Tree Planting</h5>
                                     <div class="pro-hover">
                                         <h6>Forest & Tree Planting</h6>
@@ -981,7 +981,7 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="Images/home/current-pro2.jpg" alt="">
+                                    <img src="/Images/home/current-pro2.jpg" alt="">
                                     <h5>Recycling & Waste Management</h5>
                                     <div class="pro-hover">
                                         <h6>Recycling & Waste Management</h6>
@@ -1019,7 +1019,7 @@
             <div class="col-md-6">
                 <div class="blog-post-large">
                     <div class="post-thumb"><a href="#"><i class="fas fa-link"></i></a> <img
-                                src="Images/home/h2news1.jpg" alt=""></div>
+                                src="/Images/home/h2news1.jpg" alt=""></div>
                     <div class="post-txt">
                         <ul class="post-meta">
                             <li><i class="fas fa-calendar-alt"></i> 29 September, 2018</li>
@@ -1033,7 +1033,7 @@
 
                 <div class="blog-small-post">
                     <div class="post-thumb"><a href="#"><i class="fas fa-link"></i></a> <img
-                                src="Images/home//h2news2.jpg" alt=""></div>
+                                src="/Images/home//h2news2.jpg" alt=""></div>
                     <div class="post-txt">
                         <span class="pdate"> <i class="fas fa-calendar-alt"></i> 29 September, 2018</span>
                         <h5><a href="#">How you can keep alive wildlife long.</a></h5>
@@ -1045,7 +1045,7 @@
 
                 <div class="blog-small-post">
                     <div class="post-thumb"><a href="#"><i class="fas fa-link"></i></a> <img
-                                src="Images/home/h2news3.jpg" alt=""></div>
+                                src="/Images/home/h2news3.jpg" alt=""></div>
                     <div class="post-txt">
                         <span class="pdate"> <i class="fas fa-calendar-alt"></i> 29 September, 2018</span>
                         <h5><a href="#">The effort GoGreen has been felt across</a></h5>
@@ -1093,7 +1093,7 @@ News & Articles End-->
 
             <div class="col-md-3 col-sm-6">
                 <div class="product-box">
-                    <div class="pro-thumb"><a href="#">Add To Cart</a> <img src="Images/home//pro1.jpg" alt=""></div>
+                    <div class="pro-thumb"><a href="#">Add To Cart</a> <img src="/Images/home//pro1.jpg" alt=""></div>
                     <div class="pro-txt">
                         <h6><a href="#">Happy Ninja Shirt</a></h6>
                         <p class="pro-price">
@@ -1106,7 +1106,7 @@ News & Articles End-->
 
             <div class="col-md-3 col-sm-6">
                 <div class="product-box">
-                    <div class="pro-thumb"><a href="#">Add To Cart</a> <img src="Images/home//pro2.jpg" alt=""></div>
+                    <div class="pro-thumb"><a href="#">Add To Cart</a> <img src="/Images/home//pro2.jpg" alt=""></div>
                     <div class="pro-txt">
                         <h6><a href="#">Woo corlor shirt</a></h6>
                         <p class="pro-price">
@@ -1119,7 +1119,7 @@ News & Articles End-->
 
             <div class="col-md-3 col-sm-6">
                 <div class="product-box">
-                    <div class="pro-thumb"><a href="#">Add To Cart</a> <img src="Images/home//pro3.jpg" alt=""></div>
+                    <div class="pro-thumb"><a href="#">Add To Cart</a> <img src="/Images/home//pro3.jpg" alt=""></div>
                     <div class="pro-txt">
                         <h6><a href="#">Premium Quality</a></h6>
                         <p class="pro-price">
@@ -1133,7 +1133,7 @@ News & Articles End-->
 
             <div class="col-md-3 col-sm-6">
                 <div class="product-box">
-                    <div class="pro-thumb"><a href="#">Add To Cart</a> <img src="Images/home//pro4.jpg" alt=""></div>
+                    <div class="pro-thumb"><a href="#">Add To Cart</a> <img src="/Images/home//pro4.jpg" alt=""></div>
                     <div class="pro-txt">
                         <h6><a href="#">Ninja Silhouette</a></h6>
                         <p class="pro-price">
@@ -1154,13 +1154,13 @@ Online Products End-->
 
 <div class="instagram">
     <ul>
-        <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="Images/home/insta1.jpg" alt=""></li>
-        <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="Images/home/insta2.jpg" alt=""></li>
-        <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="Images/home/insta3.jpg" alt=""></li>
-        <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="Images/home/insta4.jpg" alt=""></li>
-        <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="Images/home/insta5.jpg" alt=""></li>
-        <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="Images/home/insta6.jpg" alt=""></li>
-        <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="Images/home/insta7.jpg" alt=""></li>
+        <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta1.jpg" alt=""></li>
+        <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta2.jpg" alt=""></li>
+        <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta3.jpg" alt=""></li>
+        <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta4.jpg" alt=""></li>
+        <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta5.jpg" alt=""></li>
+        <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta6.jpg" alt=""></li>
+        <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta7.jpg" alt=""></li>
     </ul>
 </div>
 <!--InstaGram End-->
