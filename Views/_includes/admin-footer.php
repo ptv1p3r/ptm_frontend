@@ -12,7 +12,7 @@
 
 <div>
     <p class="text-muted text-center">Copyright ISMAT &copy;<?php echo date('Y');?> -
-        SIM - André João, Hélder Oliveira, Pedro Roldan</p>
+        Design & Developed By: EI Ismat</p>
 </div>
 
 </body>
