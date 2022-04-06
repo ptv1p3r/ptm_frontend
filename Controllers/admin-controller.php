@@ -108,22 +108,22 @@ class AdminController extends MainController
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
 
-        $modelo = $this->load_model('admin-model');
+        /*$modelo = $this->load_model('admin-model');
 
-        /*$movies = $modelo->getMovies();
+        $movies = $modelo->getMovies();
 
         if ($parametros[0] == "" || $parametros[0] == "1") {
             $moviesTable = $modelo->getMoviesTable(0);
         } else {
             $moviesTable = $modelo->getMoviesTable(($parametros[0]*10)-10);
-        }*/
+        }
 
 
         $categories = $modelo->getCategories();
         $movieCategories = $modelo->getMovieCategories();
 
         $movieById = $modelo->getMovieById($modelo->parametros[0]);
-
+        */
 
         //Carrega os arquivos do view
 
@@ -142,9 +142,9 @@ class AdminController extends MainController
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
 
-        $modelo = $this->load_model('admin-model');
+        /*$modelo = $this->load_model('admin-model');
 
-        /*$comments = $modelo->getComments();
+        $comments = $modelo->getComments();
 
         if ($parametros[0] == "" || $parametros[0] == "1") {
             $commentsTable = $modelo->getCommentsTable(0);
@@ -171,10 +171,10 @@ class AdminController extends MainController
 
         //$modelo = $this->load_model('admin-login-model');
 
-        $modelo = $this->load_model('admin-model');
+        /*$modelo = $this->load_model('admin-model');
 
 
-        /*if (isset($_POST['nameToAdd'])) {
+        if (isset($_POST['nameToAdd'])) {
             $modelo->setCategory($_POST['nameToAdd']);
         }
 
