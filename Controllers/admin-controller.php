@@ -21,7 +21,7 @@ class AdminController extends MainController
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
 
-        //$modelo = $this->load_model('admin-model');
+        $modelo = $this->load_model('admin-model');
 
         /** Carrega os arquivos do view **/
 
@@ -34,7 +34,7 @@ class AdminController extends MainController
 
     }
 
-    public function login() {
+    /*public function login() {
         // Título da página
         $this->title = 'Admin';
 
@@ -61,7 +61,7 @@ class AdminController extends MainController
 
                         $_POST['validation'] = "success";
 
-                        $this->movie(1);
+                        //$this->movie(1);
                     }
                 } else {
                     $_POST['validation'] = "failed";
@@ -78,9 +78,9 @@ class AdminController extends MainController
         } else {
             $this->index();
         }
-    }
+    }*/
 
-    public function logout() {
+    /*public function logout() {
         // Título da página
         $this->title = 'Admin';
 
@@ -95,11 +95,11 @@ class AdminController extends MainController
             unset($_SESSION[$key]);
         }
 
-//        unset($_SESSION['sess_user']);
+        //unset($_SESSION['sess_user']);
         session_destroy();
 
         $this->index();
-    }
+    }*/
 
     public function movie(){
         // Título da página
@@ -110,13 +110,13 @@ class AdminController extends MainController
 
         $modelo = $this->load_model('admin-model');
 
-        $movies = $modelo->getMovies();
+        /*$movies = $modelo->getMovies();
 
         if ($parametros[0] == "" || $parametros[0] == "1") {
             $moviesTable = $modelo->getMoviesTable(0);
         } else {
             $moviesTable = $modelo->getMoviesTable(($parametros[0]*10)-10);
-        }
+        }*/
 
 
         $categories = $modelo->getCategories();
@@ -125,7 +125,7 @@ class AdminController extends MainController
         $movieById = $modelo->getMovieById($modelo->parametros[0]);
 
 
-        /** Carrega os arquivos do view **/
+        //Carrega os arquivos do view
 
         require ABSPATH . '/views/_includes/admin-header.php';
 
@@ -144,15 +144,15 @@ class AdminController extends MainController
 
         $modelo = $this->load_model('admin-model');
 
-        $comments = $modelo->getComments();
+        /*$comments = $modelo->getComments();
 
         if ($parametros[0] == "" || $parametros[0] == "1") {
             $commentsTable = $modelo->getCommentsTable(0);
         } else {
             $commentsTable = $modelo->getCommentsTable(($parametros[0]*10)-10);
-        }
+        }*/
 
-        /** Carrega os arquivos do view **/
+        // Carrega os arquivos do view
 
         require ABSPATH . '/views/_includes/admin-header.php';
 
@@ -174,7 +174,7 @@ class AdminController extends MainController
         $modelo = $this->load_model('admin-model');
 
 
-        if (isset($_POST['nameToAdd'])) {
+        /*if (isset($_POST['nameToAdd'])) {
             $modelo->setCategory($_POST['nameToAdd']);
         }
 
@@ -192,11 +192,11 @@ class AdminController extends MainController
             $categoriesTable = $modelo->getTableCategories(0);
         } else {
             $categoriesTable = $modelo->getTableCategories(($parametros[0]*10)-10);
-        }
+        }*/
 
 
 
-        /** Carrega os arquivos do view **/
+        // Carrega os arquivos do view
 
         require ABSPATH . '/views/_includes/admin-header.php';
 
@@ -225,7 +225,7 @@ class AdminController extends MainController
 
     }
 
-    public function movieById(){
+    /*public function movieById(){
         // Título da página
 
         // Parametros da função
@@ -241,7 +241,7 @@ class AdminController extends MainController
             $ReturnData[0]["year"];
 
         echo $ReturnData;
-    }
+    }*/
 
     //login logout
 
