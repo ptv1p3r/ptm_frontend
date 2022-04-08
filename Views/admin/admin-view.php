@@ -10,7 +10,7 @@
 <div class="container">
 
     <div class="row  justify-content-center align-items-center" style="margin-top: 100px">
-        <img src="../../Images/logo_black.png" alt="">
+        <img src="../../Images/logo.png" alt="">
         <h1 class="text-light">Project Tree Management</h1>
     </div>
 
