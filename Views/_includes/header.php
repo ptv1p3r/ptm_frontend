@@ -81,7 +81,7 @@
 <!--Header Start-->
 <header class="header-style-2">
     <nav class="navbar navbar-expand-lg">
-<!--        <a class="navbar-brand" href="index.html"><img src="Images/home/h2logo.png" alt=""></a>-->
+<!--       --> <a class="navbar-brand" href="index.html"><img src="Images/home/logo.png" alt=""></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
                     class="fas fa-bars"></i></button>
