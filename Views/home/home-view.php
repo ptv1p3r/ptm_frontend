@@ -233,17 +233,16 @@
     <div class="item">
         <div class="slider-caption h2slider">
             <div class="container">
-                <strong>Ajude a natureza<span> & Adote uma árvore</span></strong>
-                <!--
-                <h1>Eco Friendly</h1>
-                <p>Nonprofit WordPress Theme</p>
+                <strong>Ajude a natureza<span> & </span></strong>
+
+                <h1>Adote uma árvore</h1>
+                <!--<p>Nonprofit WordPress Theme</p>
                -->
                 <a href="#" class="active">Descubra mais</a> <a href="#">Junte-se a nós</a>
             </div>
         </div>
         <img src="/Images/home/h2-slide1.jpg" alt="">
     </div>
-
 
     <div class="item">
         <div class="slider-caption h2slider">
@@ -267,6 +266,18 @@
             </div>
         </div>
         <img src="/Images/home/h2-slide3.jpg" alt="">
+    </div>
+
+    <div class="item">
+        <div class="slider-caption h2slider">
+            <div class="container">
+                <strong>Save <span> & don’t waste our life</span> partner</strong>
+                <h1>Water Resource</h1>
+                <p>Before <strong>it’s too late</strong> for us...</p>
+                <a href="#" class="active">Find Out More</a> <a href="#">Join us Now</a>
+            </div>
+        </div>
+        <img src="/Images/home/h2-slide4.jpg" alt="">
     </div>
 </section>
 <!--Slider End-->
