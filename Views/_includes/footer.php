@@ -122,7 +122,8 @@
 <!--   Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 <!--<script src="js/home/jquery-migrate-1.4.1.min.js"></script>-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.4.0/jquery-migrate.min.map"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.4.1/jquery-migrate.min.map"></script>-->
+<script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
 <!--<script src="js/home/popper.min.js"></script>-->
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <!--<script src="js/home/bootstrap.min.js"></script>-->
