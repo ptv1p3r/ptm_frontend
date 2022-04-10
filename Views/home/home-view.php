@@ -70,163 +70,6 @@
     </div>
 </div>
 -->
-<!--
-<!doctype html>
-<html lang="en">
-<head>
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   <meta name="description" content="">
-   <meta name="author" content="">
-   <link rel="icon" href="../../../../../Users/User/Desktop/Main%20Files/Main%20Files/images/favicon.png">
-   <title>ECO HTML</title>
-   CSS FILES START
-   <link href="css/home/custom.css" rel="stylesheet">
-   <link href="css/home/color.css" rel="stylesheet">
-   <link href="css/home/responsive.css" rel="stylesheet">
-   <link href="css/home/owl.carousel.min.css" rel="stylesheet">
-   <link href="css/home/bootstrap.min.css" rel="stylesheet">
-   <link href="css/home/prettyPhoto.css" rel="stylesheet">
-   <link href="css/home/all.min.css" rel="stylesheet">
-   CSS FILES End
-</head>
-<body>
-<div class="wrapper home2">
-   Header Start
-
-
-    <header class="header-style-2">
-        <nav class="navbar navbar-expand-lg">
-            <a class="navbar-brand" href="index.html"><img src="Images/home/h2logo.png" alt=""></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <i class="fas fa-bars"></i> </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="index.html"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Home </a>
-                        <ul class="dropdown-menu" >
-                            <li><a href="index.html">Home One</a></li>
-                            <li><a href="Images/home/home-two.html">Home Two</a></li>
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/home-three.html">Home Three</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"> <a class="nav-link" href="../../../../../Users/User/Desktop/Main Files/Main Files/about.html">About</a> </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="../../../../../Users/User/Desktop/Main Files/Main Files/events-grid.html" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Events </a>
-                        <ul class="dropdown-menu" >
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/events-grid.html">Events Grid</a></li>
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/events-grid-2.html">Events Grid Two</a></li>
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/events-grid-3.html">Events Grid Three</a></li>
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/events-list.html">Events List</a></li>
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/events-list-two.html">Events List Two</a></li>
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/event-details.html">Event Details</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="../../../../../Users/User/Desktop/Main Files/Main Files/causes.html" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Causes </a>
-                        <ul class="dropdown-menu" >
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/causes.html">Causes Grid</a></li>
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/causes-list.html">Causes List</a></li>
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/causes-details.html">Causes Details</a> </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="../../../../../Users/User/Desktop/Main Files/Main Files/blog.html" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Blogs </a>
-                        <ul class="dropdown-menu" >
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/blog.html">Blog Default</a></li>
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/blog-list.html">Blog List</a> </li>
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/blog-grid.html">Blog Grid</a></li>
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/blog-two-col.html">Blog Two Columns</a> </li>
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/blog-three-col.html">Blog Three Columns</a></li>
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/blog-details.html">Blog Details</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Pages </a>
-                        <ul class="dropdown-menu" >
-                            <li>
-                                <a href="#">Projects</a>
-                                <ul class="dropdown-menu" >
-                                    <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/projects.html">Projects</a> </li>
-                                    <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/projects-grid.html">Projects Grid</a> </li>
-                                    <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/projects-grid-two.html">Projects Grid Two</a> </li>
-                                    <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/projects-list.html">Projects List</a> </li>
-                                    <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/projects-details.html">Project Details</a> </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">Shop</a>
-                                <ul class="dropdown-menu" >
-                                    <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/shop.html">Shop</a> </li>
-                                    <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/shop-two.html">Shop Two</a> </li>
-                                    <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/shop-details.html">Shop Details</a> </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="../../../../../Users/User/Desktop/Main Files/Main Files/team.html">Team</a>
-                                <ul class="dropdown-menu" >
-                                    <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/team.html">Team One</a> </li>
-                                    <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/team-two.html">Team Two</a> </li>
-                                    <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/team-details.html">Team Details</a> </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">Gallery</a>
-                                <ul class="dropdown-menu" >
-                                    <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/gallery-grid.html">Gallery Grid</a> </li>
-                                    <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/gallery-full.html">Gallery Full</a> </li>
-                                    <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/gallery-masonry.html">Gallery Masonry</a> </li>
-                                </ul>
-                            </li>
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/testimonials.html">Testimonials</a> </li>
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/donation.html">Donation</a> </li>
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/my-account.html">My Account</a> </li>
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/coming-soon.html">Coming Soon</a> </li>
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/page-404.html">404 Error</a> </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="contact.html"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Contact </a>
-                        <ul class="dropdown-menu" >
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/contact-one.html">Contact One</a> </li>
-                            <li><a href="../../../../../Users/User/Desktop/Main Files/Main Files/contact-two.html">Contact Two</a> </li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="topnav-right">
-                    <li> <a class="mdonate" href="../../../../../Users/User/Desktop/Main Files/Main Files/donation.html"><span>Make a Donation</span></a> </li>
-                    <li> <a class="search-icon" href="#search"> <i class="fas fa-search"></i> </a> </li>
-                    <li class="dropdown">
-                        <a class="cart-icon" href="#" role="button" id="cartdropdown" data-toggle="dropdown"> <i class="fas fa-shopping-cart"></i></a>
-                        <div class="dropdown-menu cart-box" aria-labelledby="cartdropdown">
-                            Recently added item(s)
-                            <ul class="list">
-                                <li class="item">
-                                    <a href="#" class="preview-image"><img class="preview" src="../../../../../Users/User/Desktop/Main%20Files/Main%20Files/images/pro.jpg" alt=""></a>
-                                    <div class="description"> <a href="#">Sample Course</a> <strong class="price">1 x $44.95</strong> </div>
-                                </li>
-                                <li class="item">
-                                    <a href="#" class="preview-image"><img class="preview" src="../../../../../Users/User/Desktop/Main%20Files/Main%20Files/images/pro.jpg" alt=""></a>
-                                    <div class="description"> <a href="#">Sample Course</a> <strong class="price">1 x $44.95</strong> </div>
-                                </li>
-                            </ul>
-                            <div class="total">Total: <strong>$44.95</strong></div>
-                            <div class="view-link"><a href="#">Proceed to Checkout</a> <a href="#">View cart </a></div>
-                        </div>
-                    </li>
-                    <li class="login-reg"> <a href="../../../../../Users/User/Desktop/Main Files/Main Files/my-account.html">Login</a> | <a href="../../../../../Users/User/Desktop/Main Files/Main Files/my-account.html">Signup</a> </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-    <div id="search">
-        <button type="button" class="close">×</button>
-        <form class="search-overlay-form">
-            <input type="search" value="" placeholder="type keyword(s) here" />
-            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
-        </form>
-    </div>
-   Header End-->
-
 
 <!--Slider Start-->
 <section id="home-slider" class="owl-carousel owl-theme wf100">
@@ -234,11 +77,10 @@
         <div class="slider-caption h2slider">
             <div class="container">
                 <strong>Ajude a natureza<span> & </span></strong>
-
+                <p></p>
                 <h1>Adote uma árvore</h1>
-                <!--<p>Nonprofit WordPress Theme</p>
-               -->
-                <a href="#" class="active">Descubra mais</a> <a href="#">Junte-se a nós</a>
+                <p>A ajuda de todos é <strong>importante</strong></p>
+                <a href="#" class="active">Descubra mais</a> <a href="#">Junte-se já</a>
             </div>
         </div>
         <img src="/Images/home/h2-slide1.jpg" alt="">
@@ -247,10 +89,11 @@
     <div class="item">
         <div class="slider-caption h2slider">
             <div class="container">
-                <strong><span>Please</span> Stop Hunting & </strong>
-                <h1>Save WildLife</h1>
-                <p>of <strong>endangered animals</strong> in the world</p>
-                <a href="#" class="active">Find Out More</a> <a href="#">Join us Now</a>
+                <strong>Junte-se a nós <span> </span> </strong>
+                <h1>Seja patrocionador</h1>
+                <p></p>
+<!--                <p>A ajuda de todos é <strong>importante</strong> for us...</p>-->
+                <a href="#" class="active">Descubra mais</a> <a href="#">Junte-se já</a>
             </div>
         </div>
         <img src="/Images/home/h2-slide2.jpg" alt="">
@@ -259,10 +102,11 @@
     <div class="item">
         <div class="slider-caption h2slider">
             <div class="container">
-                <strong>Save <span> & don’t waste our life</span> partner</strong>
-                <h1>Water Resource</h1>
-                <p>Before <strong>it’s too late</strong> for us...</p>
-                <a href="#" class="active">Find Out More</a> <a href="#">Join us Now</a>
+                <strong>Ajude a floresta <span> </span> </strong>
+                <h1>Seja patrocionador</h1>
+                <p></p>
+                <p>A ajuda de todos é <strong>importante</strong> </p>
+                <a href="#" class="active">Descubra mais</a> <a href="#">Junte-se já</a>
             </div>
         </div>
         <img src="/Images/home/h2-slide3.jpg" alt="">
@@ -271,10 +115,10 @@
     <div class="item">
         <div class="slider-caption h2slider">
             <div class="container">
-                <strong>Save <span> & don’t waste our life</span> partner</strong>
-                <h1>Water Resource</h1>
-                <p>Before <strong>it’s too late</strong> for us...</p>
-                <a href="#" class="active">Find Out More</a> <a href="#">Join us Now</a>
+                <strong>Salve a nossa serra <span> & seja nosso</span> patrocinador</strong>
+                <h1>Plante uma árvore</h1>
+                <p>Ajudar é importante <strong></strong> </p>
+                <a href="#" class="active">Descubra mais</a> <a href="#">Junte-se já</a>
             </div>
         </div>
         <img src="/Images/home/h2-slide4.jpg" alt="">
@@ -289,7 +133,7 @@
             <li>
                 <div class="sinfo">
                     <img src="/Images/home/sericon1.png" alt="">
-                    <h6>Recycling</h6>
+                    <h6>Sustentabilidade</h6>
                     <p>Waste Management</p>
                 </div>
             </li>
@@ -298,7 +142,7 @@
             <li>
                 <div class="sinfo">
                     <img src="/Images/home/sericon2.png" alt="">
-                    <h6>Wind Energy</h6>
+                    <h6>Valorização dos aglomerados rurais</h6>
                     <p>Polar, Prevailing, Tropical</p>
                 </div>
             </li>
@@ -307,7 +151,7 @@
             <li>
                 <div class="sinfo">
                     <img src="/Images/home/sericon3.png" alt="">
-                    <h6>Pure Water</h6>
+                    <h6>Proteção dos eco-sistemas</h6>
                     <p>Save Water Resources</p>
                 </div>
             </li>
@@ -316,7 +160,7 @@
             <li class="active">
                 <div class="sinfo">
                     <img src="/Images/home/sericon4.png" alt="">
-                    <h6>Solar Panels</h6>
+                    <h6>Reflosteração</h6>
                     <p>Save Natural Engery</p>
                 </div>
             </li>
@@ -325,7 +169,7 @@
             <li>
                 <div class="sinfo">
                     <img src="/Images/home/sericon5.png" alt="">
-                    <h6>Forest Planting</h6>
+                    <h6>Alterações climáticas</h6>
                     <p>Make Plants Alive for Life</p>
                 </div>
             </li>
@@ -345,11 +189,11 @@
             </div>
             <div class="col-md-7">
                 <div class="h2-about-txt">
-                    <h3>About ecova</h3>
-                    <h2>Eco-friendly products can be made from scratch.</h2>
-                    <p> If anything’s hot in today’s economy, it’s saving money, including a broad range of green
-                        businesses helping people save energy, water, and other resources. </p>
-                    <a class="aboutus" href="#">More About us</a>
+                    <h3>Sobre o iniciativa</h3>
+                    <p></p>
+                    <!--                    <h2>Eco-friendly products can be made from scratch.</h2>-->
+                    <p> Para a melhoria da qualidade de vida dos habitantes da nossa serra, ao mesmo tempo que se contribui para o aumento da floresta e com isso, aumentar a resiliência dos ecossistemas, espécies e habitats aos efeitos das alterações climáticas. </p>
+                    <!--                    <a class="aboutus" href="#">More About us</a>-->
                 </div>
             </div>
         </div>
