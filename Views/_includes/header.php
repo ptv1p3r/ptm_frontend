@@ -16,7 +16,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!--  CSS links -->
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
             integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
             crossorigin="anonymous"></script>
@@ -32,12 +31,12 @@
 
     <!-- Template original CSS links -->
 
-    <!--  <link href="css/home/color.css" rel="stylesheet">-->
-    <!-- <link href="css/home/responsive.css" rel="stylesheet">-->
-    <!-- <link href="css/home/owl.carousel.min.css" rel="stylesheet">-->
-    <!-- <link href="css/home/bootstrap.min.css" rel="stylesheet">-->
-    <!-- <link href="css/home/prettyPhoto.css" rel="stylesheet">-->
-    <!-- <link href="css/home/all.min.css" rel="stylesheet">-->
+<!--     <link href="css/home/color.css" rel="stylesheet">-->
+<!--     <link href="css/home/responsive.css" rel="stylesheet">-->
+<!--     <link href="css/home/owl.carousel.min.css" rel="stylesheet">-->
+<!--     <link href="css/home/bootstrap.min.css" rel="stylesheet">-->
+   <link href="css/home/prettyPhoto.css" rel="stylesheet">
+<!--     <link href="css/home/all.min.css" rel="stylesheet">-->
 
     <!--  END CSS links -->
     <!--  Icon do template-->
@@ -92,7 +91,7 @@
                        aria-haspopup="true" aria-expanded="false"> Home </a>
                     <ul class="dropdown-menu">
                         <li><a href="index.html">Home One</a></li>
-                        <li><a href="<?php echo HOME_URI . 'ptm_frontend/donation/donation-view.php'; ?>">TESTE CHANGE
+                        <li><a href="<?php //echo HOME_URI . 'ptm_frontend/donation/donation-view.php'; ?>">TESTE CHANGE
                                 PAGE</a></li>
                         <li><a href="/Images/home/home-three.html">Home
                                 Three</a></li>
