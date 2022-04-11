@@ -38,5 +38,36 @@ class HomeController extends MainController
 
     }
 
+    public function newuser() {
+
+        /**
+         * Carrega a página
+         * "/views/home/new-user-view.php"
+         */
+
+        // Título da página
+        $this->title = 'New User';
+
+        // Parametros da função
+        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
+
+        /*$modelo = $this->load_model('home-model');
+
+        $moviesTopRated = $modelo->getTopRatedList(4);
+        $moviesTopDownloaded = $modelo->getTopDownloaded(4);
+        $moviesLastAdded = $modelo->getLastAdded(4);*/
+
+        /** Carrega os arquivos do view **/
+
+        require ABSPATH . '/views/_includes/header.php';
+
+        require ABSPATH . '/views/home/newuser-view.php';
+
+        require ABSPATH . '/views/_includes/footer.php';
+
+    }
+
+
+
 }
 
