@@ -115,7 +115,6 @@
 </div>
 <!--Footer End-->
 
-
 <!--   JS Files Start-->
 <!-- <script src="js/home/jquery-3.3.1.min.js"></script>-->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.js"></script>
@@ -140,7 +139,6 @@
 <!--Temos de incluir este custom é o que faz o alinhamento das imagens no template-->
 <script src="/js/home/custom.js"></script>
 <!--   JS Files End-->
-
 
 </body>
 </html>
