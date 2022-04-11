@@ -27,7 +27,7 @@
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
 
      <!--  CSS custom que não pode ser apagado-->
-    <link href="css/home/custom.css" rel="stylesheet">
+    <link href="../../css/home/custom.css" rel="stylesheet">
 
     <!-- Template original CSS links -->
 
@@ -35,7 +35,7 @@
 <!--     <link href="css/home/responsive.css" rel="stylesheet">-->
 <!--     <link href="css/home/owl.carousel.min.css" rel="stylesheet">-->
 <!--     <link href="css/home/bootstrap.min.css" rel="stylesheet">-->
-   <link href="css/home/prettyPhoto.css" rel="stylesheet">
+   <link href="../../css/home/prettyPhoto.css" rel="stylesheet">
 <!--     <link href="css/home/all.min.css" rel="stylesheet">-->
 
     <!--  END CSS links -->
@@ -79,7 +79,7 @@
 <!--Header Start-->
 <header class="header-style-2">
     <nav class="navbar navbar-expand-lg">
-<!--       --> <a class="navbar-brand" href="index.html"><img src="Images/home/logo.png" alt=""></a>
+<!--       --> <a class="navbar-brand" href="index.html"><img src="../../Images/home/logo.png" alt=""></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
                     class="fas fa-bars"></i></button>
@@ -90,7 +90,7 @@
                        aria-haspopup="true" aria-expanded="false"> Home </a>
                     <ul class="dropdown-menu">
                         <li><a href="index.html">Home One</a></li>
-                        <li><a href="<?php //echo HOME_URI . 'ptm_frontend/donation/donation-view.php'; ?>">TESTE CHANGE
+                        <li><a href="<?php //echo HOME_URI . 'ptm_frontend/donation/donation-view.php'; ?>">
                                 PAGE</a></li>
                         <li><a href="/Images/home/home-three.html">Home
                                 Three</a></li>
