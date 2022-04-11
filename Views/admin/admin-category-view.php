@@ -42,7 +42,7 @@
                     </tr>
                     </thead>
 
-                    <?php foreach ($categoriesTable as $category) { ?>
+                    <?php /*foreach ($categoriesTable as $category) { ?>
                         <tbody>
                         <tr>
                             <td><?php echo $category["catid"]?></td>
@@ -56,14 +56,15 @@
                             </td>
                         </tr>
                         </tbody>
-                    <?php }?>
+                    <?php }*/?>
 
 
                 </table>
 
                 <div class="clearfix">
                     <div class="hint-text">Showing <b>
-                            <?php if (10*$parametros[0] >= count($categories)) {
+                            <?php /*
+                            if (10*$parametros[0] >= count($categories)) {
                                 echo count($categories);
                             } else {
                                 if ($parametros[0] == null || $parametros[0] == "1") {
@@ -75,10 +76,12 @@
                                 } else {
                                     echo 10*$parametros[0];
                                 }
-                            }?>
-                        </b> out of <b><?php echo count($categories)?></b> entries</div>
+                            }*/
+                            ?>
+                        </b> out of <b><?php //echo count($categories)?></b> entries</div>
                     <ul class="pagination">
-                        <?php if ($parametros[0] == null) { ?>
+                        <?php /*
+                        if ($parametros[0] == null) { ?>
                             <li class="page-item active"><a href="<?php echo HOME_URI . '/admin/category/' . 1;?>"
                                                             class="page-link admin">1</a></li>
                         <?php } else {
@@ -88,7 +91,8 @@
                                 } ?>"><a href="<?php echo HOME_URI . '/admin/category/' . $i; ?>"
                                          class="page-link admin"><?php echo $i ?></a></li>
                             <?php }
-                        }?>
+                        }*/
+                        ?>
 
                     </ul>
                 </div>

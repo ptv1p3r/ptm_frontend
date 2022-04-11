@@ -12,7 +12,7 @@
 
 <div>
     <p class="text-muted text-center">Copyright ISMAT &copy;<?php echo date('Y');?> -
-        SIM - Pedro Roldan, Leandro Moreira</p>
+        Design & Developed By: EI Ismat</p>
 </div>
 
 </body>

@@ -20,7 +20,7 @@ class AdminModel extends MainModel {
         $this->parametros = $this->controller->parametros; // Configura os parâmetros
     }
 
-    public function validateUser($username, $password){
+    /*public function validateUser($username, $password){
         $query = null;
 
         $query = $this->db->query('SELECT * FROM login WHERE username=\'' . $username . '\' 
@@ -32,13 +32,13 @@ class AdminModel extends MainModel {
         }
         // Preenche a tabela com os dados
         return $query->fetchAll();
-    }
+    }*/
 
     /**
      * Metodo que retorna todas as categorias Existentes na BD
      * @return array
      */
-    public function getCategories(){
+    /*public function getCategories(){
         $query = null;
 
         $query = $this->db->query('SELECT * FROM `categories`');
@@ -49,9 +49,9 @@ class AdminModel extends MainModel {
         }
         // Preenche a tabela com os dados
         return $query->fetchAll();
-    }
+    }*/
 
-    public function setCategory($name){
+    /*public function setCategory($name){
         $query = null;
 
         $query = $this->db->query('SELECT Auto_increment as id FROM information_schema.tables 
@@ -62,18 +62,18 @@ class AdminModel extends MainModel {
         $insert = 'INSERT INTO categories (catid, name) VALUES (' . $result["id"] . ', \'' . $name . '\')';
 
         $this->db->query($insert);
-    }
+    }*/
 
-    public function updateCategory($id, $name){
+    /* function updateCategory($id, $name){
         $update = null;
 
         $update = 'UPDATE categories SET name=\'' . $name . '\' WHERE catid = ' . $id ;
 
         $this->db->query($update);
-    }
+    }*/
 
 
-    public function removeCategory($id){
+    /*public function removeCategory($id){
         $remove = null;
 
         $remove = 'DELETE FROM categories WHERE catid = ' . $id;
@@ -81,13 +81,13 @@ class AdminModel extends MainModel {
 
         $remove = 'DELETE FROM movies_categories WHERE catid = ' . $id;
         $this->db->query($remove);
-    }
+    }*/
 
     /**
      * Metodo que retorna 10 categorias da BD
      * @return array
      */
-    public function getTableCategories($startNumber = null){
+    /*public function getTableCategories($startNumber = null){
         $query = null;
 
         $query = $this->db->query('SELECT * FROM `categories` limit ' . $startNumber .',10');
@@ -99,13 +99,13 @@ class AdminModel extends MainModel {
         }
         // Preenche a tabela com os dados
         return $query->fetchAll();
-    }
+    }*/
 
     /**
      * Metodo que retorna o filme pelo id
      * @return array
      */
-    public function getMovieById($intMovieId = null){
+    /*public function getMovieById($intMovieId = null){
         $query = null;
 
         if ($intMovieId != null){
@@ -118,13 +118,13 @@ class AdminModel extends MainModel {
         }
         // Preenche a tabela com os dados
         return $query->fetchAll();
-    }
+    }*/
 
     /**
      * Metodo que retorna todos os filmes existentes na BD
      * @return array
      */
-    public function getMovies(){
+    /*public function getMovies(){
         $query = null;
 
         $query = $this->db->query('SELECT * FROM `movies`');
@@ -136,13 +136,13 @@ class AdminModel extends MainModel {
         }
         // Preenche a tabela com os dados
         return $query->fetchAll();
-    }
+    }*/
 
     /**
      * Metodo que retorna 10 filmes existentes na BD
      * @return array
      */
-    public function getMoviesTable($startNumber = null){
+    /*public function getMoviesTable($startNumber = null){
         $query = null;
 
         $query = $this->db->query('SELECT * FROM `movies` limit ' . $startNumber.',10');
@@ -153,13 +153,13 @@ class AdminModel extends MainModel {
         }
         // Preenche a tabela com os dados
         return $query->fetchAll();
-    }
+    }*/
 
     /**
      * Metodo que retorna todos os comentarios existentes na BD
      * @return array
      */
-    public function getComments(){
+    /*public function getComments(){
         $query = null;
 
         $query = $this->db->query('SELECT * FROM `comments`');
@@ -171,13 +171,13 @@ class AdminModel extends MainModel {
         }
         // Preenche a tabela com os dados
         return $query->fetchAll();
-    }
+    }*/
 
     /**
      * Metodo que retorna 10 comentarios existentes na BD
      * @return array
      */
-    public function getCommentsTable($startNumber = null){
+    /*public function getCommentsTable($startNumber = null){
         $query = null;
 
         $query = $this->db->query('SELECT * FROM `comments` limit ' . $startNumber.',10');
@@ -189,13 +189,13 @@ class AdminModel extends MainModel {
         }
         // Preenche a tabela com os dados
         return $query->fetchAll();
-    }
+    }*/
 
     /**
      * Metodo que retorna todos os categorias com filmes
      * @return array
      */
-    public function getMovieCategories(){
+    /*public function getMovieCategories(){
         $query = null;
 
         $query = $this->db->query('SELECT * FROM `movies_categories`');
@@ -206,6 +206,6 @@ class AdminModel extends MainModel {
         }
         // Preenche a tabela com os dados
         return $query->fetchAll();
-    }
+    }*/
 
 }

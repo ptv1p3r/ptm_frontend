@@ -39,7 +39,7 @@
                         <th>Description</th>
                         <th></th>
                     </tr>
-                    <?php foreach ($commentsTable as $comment) { ?>
+                    <?php /*foreach ($commentsTable as $comment) { ?>
                     <tbody>
                     <tr>
                         <td><?php echo $comment["comid"]?></td>
@@ -53,12 +53,13 @@
                         </td>
                     </tr>
                     </tbody>
-                    <?php }?>
+                    <?php }*/?>
                 </table>
 
                 <div class="clearfix">
                     <div class="hint-text">Showing <b>
-                            <?php if (10*$parametros[0] >= count($comments)) {
+                            <?php /*
+                            if (10*$parametros[0] >= count($comments)) {
                                 echo count($comments);
                             } else {
                                 if ($parametros[0] == null || $parametros[0] == "1") {
@@ -70,9 +71,11 @@
                                 } else {
                                     echo 10*$parametros[0];
                                 }
-                            }?></b> out of <b><?php echo count($comments)?></b> entries</div>
+                            }*/
+                            ?></b> out of <b><?php //echo count($comments)?></b> entries</div>
                     <ul class="pagination">
-                        <?php if ($parametros[0] == null) { ?>
+                        <?php /*
+                        if ($parametros[0] == null) { ?>
                             <li class="page-item active"><a href="<?php echo HOME_URI . '/admin/comment/' . 1;?>" class="page-link">1</a></li>
                         <?php } else {
                             for ($i = 1 ; $i <= ceil(count($comments)/10) ; $i++) { ?>
@@ -80,7 +83,8 @@
                                     echo "active";
                                 }?>"><a href="<?php echo HOME_URI . '/admin/comment/' . $i;?>" class="page-link"><?php echo $i?></a></li>
                             <?php }
-                        }?>
+                        }*/
+                        ?>
                     </ul>
                 </div>
             </div>
