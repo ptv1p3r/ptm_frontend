@@ -930,92 +930,16 @@ News & Articles End-->
     </div>
 </section>
 
-
-
-<!--Why Ecova + Facts End-->
-<!--Online Products Start
-<section class="online-shop wf100 p80">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="section-title-2 text-center">
-                    <h5>Read Our Latest</h5>
-                    <h2>News &amp; Articles</h2>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-
-            <div class="col-md-3 col-sm-6">
-                <div class="product-box">
-                    <div class="pro-thumb"><a href="#">Add To Cart</a> <img src="/Images/home//pro1.jpg" alt=""></div>
-                    <div class="pro-txt">
-                        <h6><a href="#">Happy Ninja Shirt</a></h6>
-                        <p class="pro-price">
-                            <del>$25.00</del>
-                            $19.00
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6">
-                <div class="product-box">
-                    <div class="pro-thumb"><a href="#">Add To Cart</a> <img src="/Images/home//pro2.jpg" alt=""></div>
-                    <div class="pro-txt">
-                        <h6><a href="#">Woo corlor shirt</a></h6>
-                        <p class="pro-price">
-                            <del>$25.00</del>
-                            $19.00
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6">
-                <div class="product-box">
-                    <div class="pro-thumb"><a href="#">Add To Cart</a> <img src="/Images/home//pro3.jpg" alt=""></div>
-                    <div class="pro-txt">
-                        <h6><a href="#">Premium Quality</a></h6>
-                        <p class="pro-price">
-                            <del>$25.00</del>
-                            $19.00
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-md-3 col-sm-6">
-                <div class="product-box">
-                    <div class="pro-thumb"><a href="#">Add To Cart</a> <img src="/Images/home//pro4.jpg" alt=""></div>
-                    <div class="pro-txt">
-                        <h6><a href="#">Ninja Silhouette</a></h6>
-                        <p class="pro-price">
-                            <del>$25.00</del>
-                            $19.00
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <!-
-        </div>
-    </div>
-</section>
-Online Products End-->
-<!--InstaGram Start-->
-
-
-
+<!--Maybe the local for the carrossel sponsor logo !!! -->
 <div class="instagram">
-    <ul>
-        <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta1.jpg" alt=""></li>
-        <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta2.jpg" alt=""></li>
-        <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta3.jpg" alt=""></li>
-        <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta4.jpg" alt=""></li>
-        <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta5.jpg" alt=""></li>
-        <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta6.jpg" alt=""></li>
-        <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta7.jpg" alt=""></li>
-    </ul>
-</div>
-<!--InstaGram End-->
+    <ul class="sponsor">
+        <li> <img src="/Images/home/insta_test_00.png" alt=""></li>
+        <li> <img src="/Images/home/insta_test_01.png" alt=""></li>
+        <li> <img src="/Images/home/insta_test_01.jpg" alt=""></li>
+        <!--   <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta4.jpg" alt=""></li>
+           <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta5.jpg" alt=""></li>
+           <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta6.jpg" alt=""></li>
+           <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta7.jpg" alt=""></li>-->
+       </ul>
+   </div>
+   <!--InstaGram End-->
