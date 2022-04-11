@@ -204,7 +204,7 @@
                 <div class="col-lg-3 col-sm-6 col-md-3">
                     <div class="counter-box">
                         <p class="counter-count">89000</p>
-                        <p class="ctxt">Trees Planted</p>
+                        <p class="ctxt">Árvores plantadas</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6 col-md-3">
@@ -230,17 +230,19 @@
     </div>
 </section>
 <!--About Section End-->
+
+
 <!--Urgent Causes Start-->
 <section class="urgent-causes wf100 p80">
     <div class="container">
         <div class="row">
             <div class="col-md-6">
                 <div class="section-title-2 white">
-                    <h5>Urgent Cause</h5>
-                    <h2>Stop Global Warming</h2>
+                    <h5>Uma causa nobre</h5>
+                    <h2>Ajude a reflorestar a nossa serra</h2>
                 </div>
-                <p> We need your support and help to Stop Globar Warning. Few generations ago it to seemed like the
-                    world’s resources were infinite, and the people needed only. </p>
+<!--                <p> We need your support and help to Stop Globar Warning. Few generations ago it to seemed like the-->
+<!--                    world’s resources were infinite, and the people needed only. </p>-->
                 <div class="progress">
                     <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0"
                          aria-valuemax="100"></div>
@@ -253,56 +255,56 @@
             </div>
             <div class="col-md-6">
                 <div class="donation-amount">
-                    <h5>Donation Amount</h5>
+                    <h5>Doação</h5>
                     <form>
                         <ul class="radio-boxes">
                             <li>
                                 <div class="radio custom">
                                     <input name="donation" id="d1" type="radio" class="css-radio">
-                                    <label for="d1" class="css-label">$5</label>
+                                    <label for="d1" class="css-label">€ 2.5</label>
                                 </div>
                             </li>
-                            <li>
-                                <div class="radio custom">
-                                    <input name="donation" id="d2" type="radio" class="css-radio">
-                                    <label for="d2" class="css-label">$20</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="radio custom">
-                                    <input name="donation" id="d3" type="radio" class="css-radio">
-                                    <label for="d3" class="css-label">$50</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="radio custom">
-                                    <input name="donation" id="d4" type="radio" class="css-radio">
-                                    <label for="d4" class="css-label">$100</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="radio custom">
-                                    <input name="donation" id="d5" type="radio" class="css-radio">
-                                    <label for="d5" class="css-label">$250</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="radio custom">
-                                    <input name="donation" id="d6" type="radio" class="css-radio">
-                                    <label for="d6" class="css-label">$500</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="radio custom">
-                                    <input name="donation" id="d7" type="radio" class="css-radio">
-                                    <label for="d7" class="css-label">$1000</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="inputs">
-                                    <input class="enter" type="text" placeholder="$ Other">
-                                </div>
-                            </li>
+<!--                            <li>-->
+<!--                                <div class="radio custom">-->
+<!--                                    <input name="donation" id="d2" type="radio" class="css-radio">-->
+<!--                                    <label for="d2" class="css-label">€20</label>-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <div class="radio custom">-->
+<!--                                    <input name="donation" id="d3" type="radio" class="css-radio">-->
+<!--                                    <label for="d3" class="css-label">$50</label>-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <div class="radio custom">-->
+<!--                                    <input name="donation" id="d4" type="radio" class="css-radio">-->
+<!--                                    <label for="d4" class="css-label">$100</label>-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <div class="radio custom">-->
+<!--                                    <input name="donation" id="d5" type="radio" class="css-radio">-->
+<!--                                    <label for="d5" class="css-label">$250</label>-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <div class="radio custom">-->
+<!--                                    <input name="donation" id="d6" type="radio" class="css-radio">-->
+<!--                                    <label for="d6" class="css-label">$500</label>-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <div class="radio custom">-->
+<!--                                    <input name="donation" id="d7" type="radio" class="css-radio">-->
+<!--                                    <label for="d7" class="css-label">$1000</label>-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <div class="inputs">-->
+<!--                                    <input class="enter" type="text" placeholder="$ Other">-->
+<!--                                </div>-->
+<!--                            </li>-->
                             <li class="form-submit">
                                 <button type="submit">Continue to Donate</button>
                             </li>
@@ -320,24 +322,24 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="section-title-2">
-                    <h5>We are working these</h5>
-                    <h2>Current Projects</h2>
+                    <h5>Faça uma escolha sensata</h5>
+                    <h2>Adote uma árvore</h2>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <ul class="nav" id="myTab" role="tablist">
-                    <li class="nav-item"><a class="nav-link active" id="wildlife-tab" data-toggle="tab" href="#wildlife"
-                                            role="tab" aria-controls="wildlife-tab" aria-selected="true">Wildlife</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" id="water-tab" data-toggle="tab" href="#water" role="tab"
-                                            aria-controls="water-tab" aria-selected="false">Water Resources</a></li>
-                    <li class="nav-item"><a class="nav-link" id="solar-tab" data-toggle="tab" href="#solar" role="tab"
-                                            aria-controls="solar-tab" aria-selected="false">Solar Energy</a></li>
-                    <li class="nav-item"><a class="nav-link" id="recycling-tab" data-toggle="tab" href="#recycling"
-                                            role="tab" aria-controls="recycling-tab" aria-selected="false">Recycling</a>
-                    </li>
-                </ul>
-            </div>
+<!--            <div class="col-lg-6">-->
+<!--                <ul class="nav" id="myTab" role="tablist">-->
+<!--                    <li class="nav-item"><a class="nav-link active" id="wildlife-tab" data-toggle="tab" href="#wildlife"-->
+<!--                                            role="tab" aria-controls="wildlife-tab" aria-selected="true">Wildlife</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item"><a class="nav-link" id="water-tab" data-toggle="tab" href="#water" role="tab"-->
+<!--                                            aria-controls="water-tab" aria-selected="false">Water Resources</a></li>-->
+<!--                    <li class="nav-item"><a class="nav-link" id="solar-tab" data-toggle="tab" href="#solar" role="tab"-->
+<!--                                            aria-controls="solar-tab" aria-selected="false">Solar Energy</a></li>-->
+<!--                    <li class="nav-item"><a class="nav-link" id="recycling-tab" data-toggle="tab" href="#recycling"-->
+<!--                                            role="tab" aria-controls="recycling-tab" aria-selected="false">Recycling</a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -349,12 +351,11 @@
                             <div class="item">
                                 <div class="pro-box">
                                     <img src="/Images/home/current-pro1.jpg" alt="">
-                                    <h5>Forest & Tree Planting</h5>
+                                    <h5>Sobreiro</h5>
                                     <div class="pro-hover">
-                                        <h6>Forest & Tree Planting</h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
+                                        <h6>Sobreiro</h6>
+                                        <p>Descubra mais sobre esta árvore!</p>
+                                        <a href="#">Clique aqui</a>
                                     </div>
                                 </div>
                             </div>
@@ -390,8 +391,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
+<!--                            Pro Box End-->
+<!--                            Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
                                     <img src="/Images/home/current-pro4.jpg" alt="">
@@ -857,74 +858,16 @@
 </section>
 <!--Current Projects End-->
 
-
-<!--News & Articles Star
-<section class="h2-news wf100 p80">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="section-title-2">
-                    <h5>Read Our Latest</h5>
-                    <h2>News & Articles</h2>
-                </div>
-            </div>
-            <div class="col-md-6"><a href="#" class="view-more">View More News</a></div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="blog-post-large">
-                    <div class="post-thumb"><a href="#"><i class="fas fa-link"></i></a> <img
-                                src="/Images/home/h2news1.jpg" alt=""></div>
-                    <div class="post-txt">
-                        <ul class="post-meta">
-                            <li><i class="fas fa-calendar-alt"></i> 29 September, 2018</li>
-                            <li><i class="fas fa-comments"></i> 134 Comments</li>
-                        </ul>
-                        <h5><a href="#">Planting Trees for Better Future</a></h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-
-                <div class="blog-small-post">
-                    <div class="post-thumb"><a href="#"><i class="fas fa-link"></i></a> <img
-                                src="/Images/home//h2news2.jpg" alt=""></div>
-                    <div class="post-txt">
-                        <span class="pdate"> <i class="fas fa-calendar-alt"></i> 29 September, 2018</span>
-                        <h5><a href="#">How you can keep alive wildlife long.</a></h5>
-                        <p>According to a survey the perceived higher cost of environmentally.</p>
-                        <a href="#" class="rm">Read More</a>
-                    </div>
-                </div>
-
-
-                <div class="blog-small-post">
-                    <div class="post-thumb"><a href="#"><i class="fas fa-link"></i></a> <img
-                                src="/Images/home/h2news3.jpg" alt=""></div>
-                    <div class="post-txt">
-                        <span class="pdate"> <i class="fas fa-calendar-alt"></i> 29 September, 2018</span>
-                        <h5><a href="#">The effort GoGreen has been felt across</a></h5>
-                        <p>Majority have suffered alteration in some form by injected humour.</p>
-                        <a href="#" class="rm">Read More</a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</section>
-News & Articles End-->
-
 <!--Why Ecova + Facts Start-->
 <section class="why-ecova wf100">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1> Why Ecova!</h1>
-                <p>Let’s Join us to do something awesome to Save Water, Energey, Control Pollution &
-                    Environment, Wildlife, Forest Planting Implant for Solar System.
+                <h1> Porquê juntar-se</h1>
+                <p>Apoiar uma causa nobre que visa dar o exemplo na defesa e promoção da floresta autóctone e do seu valor na
+                    mitigação das alterações climáticas, resiliência contra incêndios, regulação e melhoria do clima e conservação da biodiversidade.
                 </p>
-                <a href="#" class="cus">Signup to Join us</a>
+                <a href="#" class="cus">Junte-se já</a>
             </div>
         </div>
     </div>
@@ -932,10 +875,11 @@ News & Articles End-->
 
 <!--Maybe the local for the carrossel sponsor logo !!! -->
 <div class="instagram">
-    <ul class="sponsor">
-        <li> <img src="/Images/home/insta_test_00.png" alt=""></li>
-        <li> <img src="/Images/home/insta_test_01.png" alt=""></li>
-        <li> <img src="/Images/home/insta_test_01.jpg" alt=""></li>
+        <h2 class="section-title-2">Os nossos patrocionadores!!</h2>
+    <ul>
+        <li> <img src="/Images/home/insta1.jpg" alt=""></li>
+        <li> <img src="/Images/home/insta2.jpg" alt=""></li>
+        <li> <img src="/Images/home/insta3.jpg" alt=""></li>
         <!--   <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta4.jpg" alt=""></li>
            <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta5.jpg" alt=""></li>
            <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta6.jpg" alt=""></li>
