@@ -2316,8 +2316,10 @@ header .navbar-toggler {
 	margin: 0 auto 80px;
 }
 .instagram ul {
-	margin: 0px;
-	padding: 0px;
+	display: flex;
+	justify-content: center;
+	margin: 20px;
+	padding: 20px;
 	list-style: none;
 }
 .instagram ul li {
