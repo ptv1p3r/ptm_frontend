@@ -98,7 +98,6 @@
         </div>
         <img src="/Images/home/h2-slide2.jpg" alt="">
     </div>
-
     <div class="item">
         <div class="slider-caption h2slider">
             <div class="container">
@@ -230,8 +229,6 @@
     </div>
 </section>
 <!--About Section End-->
-
-
 <!--Urgent Causes Start-->
 <section class="urgent-causes wf100 p80">
     <div class="container">
