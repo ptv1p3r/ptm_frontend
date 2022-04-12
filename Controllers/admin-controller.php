@@ -5,7 +5,7 @@
  * Date: 22/01/2019
  * Time: 22:19
  */
-// TESTE COMMIT
+
 class AdminController extends MainController
 {
 
@@ -101,9 +101,9 @@ class AdminController extends MainController
         $this->index();
     }*/
 
-    public function movie(){
+    public function groups(){
         // Título da página
-        $this->title = 'Admin - Movies';
+        $this->title = 'Admin - Grupos';
 
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
@@ -129,7 +129,7 @@ class AdminController extends MainController
 
         require ABSPATH . '/views/_includes/admin-header.php';
 
-        require ABSPATH . '/views/admin/admin-movie-view.php';
+        require ABSPATH . '/views/admin/admin-groups-view.php';
 
         require ABSPATH . '/views/_includes/admin-footer.php';
 
