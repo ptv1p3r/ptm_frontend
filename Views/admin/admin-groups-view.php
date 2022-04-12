@@ -12,7 +12,7 @@
 
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
-        <li class="nav-item active"><a class="nav-link" href="<?php echo HOME_URI . '/admin/movie/1';?>"><span>Gestão de Filmes</span></a></li>
+        <li class="nav-item active"><a class="nav-link" href="<?php echo HOME_URI . '/admin/groups/1';?>"><span>Gestão de grupos</span></a></li>
         <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URI . '/admin/comment/1';?>"><span>Comentários</span></a></li>
         <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URI . '/admin/category/1';?>"><span>Categorias</span></a></li>
     </ul>
@@ -25,10 +25,10 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h2>Manage <b>Movies</b></h2>
+                            <h2>Manage <b>Groups</b></h2>
                         </div>
                         <div class="col-sm-6">
-                            <a href="#addMovieModal" class="btn btn-success" data-toggle="modal"><i class="fas fa-plus-circle"></i><span>Add New Movie</span></a>
+                            <a href="#addGroupsModal" class="btn btn-success" data-toggle="modal"><i class="fas fa-plus-circle"></i><span>Add New Group</span></a>
                         </div>
                     </div>
                 </div>
@@ -36,11 +36,12 @@
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Name</th>
-                        <th>Year</th>
-                        <th>Creation Date</th>
-                        <th>Last Updated</th>
+                        <th>Description</th>
+                        <th>SecurityId</th>
+                        <th>active</th>
+                        <th>dateCreated</th>
+                        <th>dateModified</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -102,12 +103,12 @@
         </div>
 
         <!-- Add Modal HTML -->
-        <div id="addMovieModal" class="modal fade">
+        <div id="addGroupsModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form>
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Movie</h4>
+                            <h4 class="modal-title">Add Group</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
