@@ -23,6 +23,7 @@ class AdminController extends MainController
 
         $modelo = $this->load_model('admin-model');
 
+
         /** Carrega os arquivos do view **/
 
         require ABSPATH . '/views/_includes/admin-login-header.php';
@@ -30,7 +31,6 @@ class AdminController extends MainController
         require ABSPATH . '/views/admin/admin-view.php';
 
         require ABSPATH . '/views/_includes/admin-footer.php';
-
 
     }
 
@@ -108,31 +108,72 @@ class AdminController extends MainController
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
 
-        /*$modelo = $this->load_model('admin-model');
+        $modelo = $this->load_model('admin-model');
 
-        $movies = $modelo->getMovies();
+        // processa chamadas ajax
+        if(isset($_POST['action']) && !empty($_POST['action'])) {
+            $action = $_POST['action'];
+            switch($action) {
+                case 'GetGroup' :
+                    echo json_encode($modelo->getGroupById($_POST['data']));
+                    break;
 
-        if ($parametros[0] == "" || $parametros[0] == "1") {
-            $moviesTable = $modelo->getMoviesTable(0);
+                case 'AddGroup' :
+                    $data = $_POST['data'];
+
+                    $apiResponse = json_decode($modelo->addGroup($data),true); //decode to check message from api
+
+                    if ($apiResponse['message'] == "Group added successfully"){
+                        $apiResponse['code'] = 200;
+                    } else {
+                        $apiResponse['code'] = 400;
+                    }
+
+                    $apiResponse = json_encode($apiResponse); // encode package to send
+                    echo $apiResponse;
+                    break;
+
+                case 'UpdateGroup' :
+                    $data = $_POST['data'];
+                    $apiResponse = json_decode($modelo->updateGroup($data),true); //decode to check message from api
+
+                    if ($apiResponse['message'] == "Group updated successfully"){
+                        $apiResponse['code'] = 200;
+                    } else {
+                        $apiResponse['code'] = 400;
+                    }
+
+                    $apiResponse = json_encode($apiResponse); // encode package to send
+                    echo $apiResponse;
+
+                    break;
+
+                case 'DeleteGroup' :
+                    $data = $_POST['data'];
+                    $apiResponse = json_decode($modelo->deleteGroup($data),true); //decode to check message from api
+
+                    if ($apiResponse['message'] == "Group deleted successfully"){
+                        $apiResponse['code'] = 200;
+                    } else {
+                        $apiResponse['code'] = 400;
+                    }
+
+                    $apiResponse = json_encode($apiResponse); // encode package to send
+                    echo $apiResponse;
+
+                    break;
+            }
+
         } else {
-            $moviesTable = $modelo->getMoviesTable(($parametros[0]*10)-10);
+
+            /**Carrega os arquivos do view**/
+
+            require ABSPATH . '/views/_includes/admin-header.php';
+
+            require ABSPATH . '/views/admin/admin-groups-view.php';
+
+            require ABSPATH . '/views/_includes/admin-footer.php';
         }
-
-
-        $categories = $modelo->getCategories();
-        $movieCategories = $modelo->getMovieCategories();
-
-        $movieById = $modelo->getMovieById($modelo->parametros[0]);
-        */
-
-        //Carrega os arquivos do view
-
-        require ABSPATH . '/views/_includes/admin-header.php';
-
-        require ABSPATH . '/views/admin/admin-groups-view.php';
-
-        require ABSPATH . '/views/_includes/admin-footer.php';
-
     }
 
     public function comment(){
@@ -152,7 +193,7 @@ class AdminController extends MainController
             $commentsTable = $modelo->getCommentsTable(($parametros[0]*10)-10);
         }*/
 
-        // Carrega os arquivos do view
+        /** Carrega os arquivos do view **/
 
         require ABSPATH . '/views/_includes/admin-header.php';
 
@@ -196,7 +237,7 @@ class AdminController extends MainController
 
 
 
-        // Carrega os arquivos do view
+        /** Carrega os arquivos do view **/
 
         require ABSPATH . '/views/_includes/admin-header.php';
 
