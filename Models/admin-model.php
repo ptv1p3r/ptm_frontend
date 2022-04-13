@@ -35,21 +35,21 @@ class AdminModel extends MainModel {
     }*/
 
     /**
-     * Metodo que retorna todas as categorias Existentes na BD
+     * Metodo que retorna Grupo pelo id
      * @return array
      */
-    /*public function getCategories(){
-        $query = null;
+    public function getGroupById($id) {
+        $result = null;
 
-        $query = $this->db->query('SELECT * FROM `categories`');
+        $url = API_URL . '/' . $id;
 
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
+        if (!empty($this->userdata['token'])){
+            $userToken = $this->userdata['token'];
+            $result = callAPI("GET", $url, '', $userToken );
         }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
+
+        return json_decode($result, true);
+    }
 
     /*public function setCategory($name){
         $query = null;
