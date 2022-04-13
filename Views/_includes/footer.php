@@ -117,7 +117,7 @@
 
 <!--   JS Files Start-->
 <!-- <script src="js/home/jquery-3.3.1.min.js"></script>-->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <!--   Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 <!--<script src="js/home/jquery-migrate-1.4.1.min.js"></script>-->
@@ -139,6 +139,8 @@
 <!--Temos de incluir este custom é o que faz o alinhamento das imagens no template-->
 <script src="/js/home/custom.js"></script>
 <!--   JS Files End-->
+
+
 
 </body>
 </html>
