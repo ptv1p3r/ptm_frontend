@@ -18,7 +18,6 @@
     </ul>
 
     <div id="content-wrapper">
-
         <!-- DataTables -->
         <div class="container">
             <div class="table-wrapper">
@@ -46,23 +45,21 @@
                     </tr>
                     </thead>
 
-                    <?php /*foreach ($moviesTable as $movie) { ?>
+                    <?php /*foreach ($groupsTable as $group) { */?>
                         <tbody>
                         <tr>
-                            <td><?php echo $movie["movid"]?></td>
-                            <td><?php echo $movie["title"]?></td>
-                            <td><?php echo $movie["year"]?></td>
-                            <td><?php echo $movie["creation_timestamp"]?></td>
-                            <td><?php echo $movie["update_timestamp"]?></td>
+                            <td><?php //echo $group["id"]?></td>
+                            <td><?php //echo $group["Description"]?></td>
+                            <td><?php //echo $group["SecurityId"]?></td>
+                            <td><?php //echo $group["active"]?></td>
+                            <td><?php //echo $group["dateModified"]?></td>
                             <td>
-                                <a href="#editMovieModal" data-movid="<?php echo $movie["movid"]?>" data-title="<?php echo $movie["title"]?>"
-                                   data-year="<?php echo $movie["year"]?>"
-                                   class="edit" data-toggle="modal"><i class="far fa-edit"></i></a>
-                                <a href="#deleteMovieModal" class="delete" data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
+                                <a href="#editGroupsModal" data-groupid="<?php //echo $group["id"]?>" data-title="<?php //echo $movie["title"]?>" data-year="<?php //echo $movie["year"]?>" class="edit" data-toggle="modal"><i class="far fa-edit"></i></a>
+                                <a href="#deleteGroupsModal" class="delete" data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
                             </td>
                         </tr>
                         </tbody>
-                    <?php }*/?>
+                    <?php /* }*/?>
 
                 </table>
 
@@ -100,7 +97,6 @@
                     </div>
                 </div>
             </div>
-        </div>
 
         <!-- Add Modal HTML -->
         <div id="addGroupsModal" class="modal fade">
@@ -113,15 +109,23 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>Title</label>
+                                <label>Name</label>
                                 <input type="text" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label>Year</label>
+                                <label>Description</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>SecurityId</label>
+                                <input type="number" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>active</label>
                                 <input type="number" class="form-control" required>
                             </div>
 
-                            <label>Categories</label>
+                            <!-- <label>Categories</label>
                             <div class="form-group" style="padding-left: 40px" >
                                     <?php /*foreach ( $categories as $category) {?>
 
@@ -136,7 +140,7 @@
                                         <?php } ?>
                                     <?php }*/?>
 
-                            </div>
+                            </div>-->
 
                         </div>
                         <div class="modal-footer">
@@ -149,27 +153,37 @@
         </div>
 
         <!-- Edit Modal HTML -->
-        <div id="editMovieModal" class="modal fade">
+        <div id="editGroupsModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="/admin/movie/1" method="post">
+                    <form action="/admin/group/1" method="post">
                         <div class="modal-header">
-                            <h4 class="modal-title">Edit Movie</h4>
+                            <h4 class="modal-title">Edit Group</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <input id="movid" type="hidden" class="form-control" value="<?php //$movieById[0]["movid"]?>">
+                                <input id="groupid" type="hidden" class="form-control" value="<?php //$movieById[0]["movid"]?>">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label>Title</label>
-                                <input id="title" name="title" type="text" class="form-control" required>
+                                <label>Description</label>
+                                <input type="text" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label>Year</label>
-                                <input id="year" name="year" type="number" class="form-control" required>
+                                <label>SecurityId</label>
+                                <input type="number" class="form-control" required>
                             </div>
-                            <label>Categories</label>   <!-- fill categories -->
+                            <div class="form-group">
+                                <label>active</label>
+                                <input type="number" class="form-control" required>
+                            </div>
+
+                            <!--<label>Categories</label>   fill categories
                             <div class="form-group" style="padding-left: 40px" >
                                 <?php
                                 /*$i=1;
@@ -187,7 +201,7 @@
                                 <?php $i++;
                                 }*/?>
 
-                            </div>
+                            </div>-->
 
                         </div>
                         <div class="modal-footer">
@@ -200,16 +214,16 @@
         </div>
 
         <!-- Delete Modal HTML -->
-        <div id="deleteMovieModal" class="modal fade">
+        <div id="deleteGroupsModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="/admin/movie/1" method="post">
+                    <form action="/admin/group/1" method="post">
                         <div class="modal-header">
-                            <h4 class="modal-title">Delete Movie</h4>
+                            <h4 class="modal-title">Delete Group</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
-                            <p>Are you sure you want to delete this Movie?</p>
+                            <p>Are you sure you want to delete this Group?</p>
                             <p class="text-warning"><small>This action cannot be undone.</small></p>
                             <input id="movid" name="movid" type="hidden" class="form-control">
                         </div>
@@ -236,3 +250,54 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    $(document).ready(function() {
+        // Add new Group
+        $('#addGroupsModal').submit(function (event) {
+            event.preventDefault(); //prevent default action
+
+            let formData = {
+                'action': "AddGroup",
+                'data': $(this).serializeArray()
+            };
+
+            $.ajax({
+                url: "<?php echo HOME_URI . '/admin/groups';?>",
+                dataType: "json",
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+                    //$('#addPoiCategory')[0].reset();
+                    //$("#addGroupsModal").modal('hide');
+
+                    //mensagem de Success
+                    /*Swal.fire({
+                        title: 'Success!',
+                        text: data['message'],
+                        type: 'success',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        onClose: () => {
+                            location.reload();
+                        }
+                    });*/
+                },
+                error: function (data) {
+                    //mensagem de Error
+                    /*Swal.fire({
+                        title: 'Error!',
+                        text: data['message'],
+                        type: 'error',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        onClose: () => {
+                            location.reload();
+                        }
+                    });*/
+                }
+            });
+        });
+    });
+</script>
