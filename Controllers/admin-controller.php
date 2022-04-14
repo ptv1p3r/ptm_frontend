@@ -165,6 +165,7 @@ class AdminController extends MainController
             }
 
         } else {
+            //$this->userdata['groupsList'] = $modelo->getGroupList();
 
             /**Carrega os arquivos do view**/
 
