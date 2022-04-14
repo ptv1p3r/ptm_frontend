@@ -12,9 +12,9 @@
 
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
-        <li class="nav-item active"><a class="nav-link" href="<?php echo HOME_URI . '/admin/groups/1';?>"><span>Gestão de grupos</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URI . '/admin/comment/1';?>"><span>Comentários</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URI . '/admin/category/1';?>"><span>Categorias</span></a></li>
+        <li class="nav-item active"><a class="nav-link" href="<?php echo HOME_URL . '/admin/groups/1';?>"><span>Gestão de grupos</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/comment/1';?>"><span>Comentários</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/category/1';?>"><span>Categorias</span></a></li>
     </ul>
 
     <div id="content-wrapper">
@@ -106,7 +106,7 @@
                         <h4>Logout <i class="fa fa-lock"></i></h4>
                     </div>
                     <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
-                    <div class="modal-footer"><a href="<?php echo HOME_URI . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
+                    <div class="modal-footer"><a href="<?php echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
                 </div>
             </div>
         </div>

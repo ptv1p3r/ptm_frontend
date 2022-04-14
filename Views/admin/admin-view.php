@@ -24,7 +24,7 @@
                     </div>
                 <?php } ?>
 
-                <form action="<?php echo HOME_URI . '/admin/login/';?>" method="post">
+                <form action="<?php echo HOME_URL . '/admin/login/';?>" method="post">
                     <input name="user" type="text" class="form-control" placeholder="Username">
                     <br>
                     <input name="pass" type="password" class="form-control" placeholder="Password">
