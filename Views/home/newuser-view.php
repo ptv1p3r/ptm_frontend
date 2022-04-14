@@ -155,10 +155,10 @@ $(document).ready(function() {
                 Swal.fire({
                     title: 'Success!',
                     text: data['message'],
-                    type: 'success',
+                    icon: 'success',
                     showConfirmButton: false,
                     timer: 2000,
-                    onClose: () => {
+                    didClose: () => {
                         location.reload();
                     }
                 });
@@ -167,10 +167,10 @@ $(document).ready(function() {
                 Swal.fire({
                     title: 'Error!',
                     text: data['message'],
-                    type: 'error',
+                    icon: 'error',
                     showConfirmButton: false,
                     timer: 2000,
-                    onClose: () => {
+                    didClose: () => {
                         location.reload();
                     }
                 });
