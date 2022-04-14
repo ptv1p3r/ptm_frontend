@@ -18,6 +18,8 @@ class AdminModel extends MainModel {
         $this->controller = $controller; // Configura o controlador
 
         $this->parametros = $this->controller->parametros; // Configura os parâmetros
+
+        $this->userdata = $this->controller->userdata;
     }
 
     /*public function validateUser($username, $password){
@@ -33,150 +35,6 @@ class AdminModel extends MainModel {
         // Preenche a tabela com os dados
         return $query->fetchAll();
     }*/
-
-
-    /** CRUD GROUPS **/
-    /**
-     * Metodo que retorna Grupo pelo id
-     */
-    public function getGroupById($id) {
-        $result = null;
-
-        $url = API_URL . '/' . $id;
-
-        if (!empty($this->userdata['token'])){
-            $userToken = $this->userdata['token'];
-            $result = callAPI("GET", $url, '', $userToken );
-        }
-
-        return json_decode($result, true);
-    }
-    /**
-     * Metodo que retorna lista de Grupos
-     */
-    public function getGroupList() {
-        $result = null;
-
-        $url = API_URL . '/';
-
-        if (!empty($this->userdata['token'])){
-            $userToken = $this->userdata['token'];
-            $result = callAPI("GET", $url, '', $userToken );
-        }
-
-        return json_decode($result, true);
-    }
-
-    /**
-     * Metodo adiciona Grupo
-     */
-    public function addGroup($data) {
-        $result = null;
-        $normalizedData = array();
-
-        // Not active by default
-        $normalizedData['Active'] = "";
-
-        // get data from form array and package it to send to api
-        foreach ($data as $dataVector) {
-            foreach ($dataVector as $key => $value) {
-                switch ($dataVector['name']) { //gets <input name="">
-                    case "addGroupName":
-                        $normalizedData['Name'] = $value;
-                        break;
-
-                    case "addGroupDescription":
-                        $normalizedData['Description'] = $value;
-                        break;
-
-                    case "addGroupSecurityId":
-                        $normalizedData['SecurityId'] = $value;
-                        break;
-
-                    case "addGroupActive":
-                        $normalizedData['Active'] = "True";
-                        break;
-                }
-            }
-        }
-
-        $url = API_URL . '/';
-        if (!empty($this->userdata['token'])){
-            $userToken = $this->userdata['token'];
-            $result = callAPI("POST", $url, $normalizedData, $userToken );
-        }
-
-        return $result;
-    }
-
-    /**
-     * Metodo edita/update Grupo
-     */
-    public function updateGroup($data) {
-        $result = null;
-        $normalizedData = array();
-
-        // Not active by default
-        $normalizedData['Active'] = "";
-
-        // get data from form array and package it to send to api
-        foreach ($data as $dataVector) {
-            foreach ($dataVector as $key => $value) {
-                switch ($dataVector['name']){ //gets <input name="">
-                    case "editGroupName":
-                        $normalizedData['Name'] = $value;
-                        break;
-
-                    case "editGroupDescription":
-                        $normalizedData['Description'] = $value;
-                        break;
-
-                    case "editGroupSecurityId":
-                        $normalizedData['SecurityId'] = $value;
-                        break;
-
-                    case "editGroupActive":
-                        $normalizedData['Active'] = "True";
-                        break;
-                }
-            }
-        }
-
-        $url = API_URL . '/' . $normalizedData['Id'];
-        if (!empty($this->userdata['token'])){
-            $userToken = $this->userdata['token'];
-            $result = callAPI("POST", $url, $normalizedData, $userToken );
-        }
-
-        return $result;
-    }
-
-    /**
-     * Metodo delete Grupo
-     */
-    public function deleteGroup($data) {
-        $result = null;
-        $GroupId = null;
-
-        foreach ($data as $dataVector) {
-            foreach ($dataVector as $key => $value) {
-                switch ($dataVector['name']){ //gets input name=""
-                    case "deleteGroupId":
-                        $GroupId = $value;
-                        break;
-                }
-            }
-        }
-
-        $url = API_URL . '/' . $GroupId;
-
-        if (!empty($this->userdata['token'])){
-            $userToken = $this->userdata['token'];
-            $result = callAPI("DELETE", $url, '', $userToken );
-        }
-
-        return $result;
-    }
 
     /**
      * Metodo que retorna 10 categorias da BD
