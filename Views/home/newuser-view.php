@@ -99,8 +99,9 @@
     </div>
 </section>
 <!--New user register End-->
-<script>
 
+<script>
+    //Main functions from this view
     $(document).ready(function () {
 
         // New User
