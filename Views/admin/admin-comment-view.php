@@ -12,9 +12,9 @@
 
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
-        <li class="nav-item "><a class="nav-link" href="<?php echo HOME_URI . '/admin/movie/1';?>"><span>Gestão de Filmes</span></a></li>
-        <li class="nav-item active"><a class="nav-link" href="<?php echo HOME_URI . '/admin/comment/1';?>"><span>Comentários</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URI . '/admin/category/1';?>"><span>Categorias</span></a></li>
+        <li class="nav-item "><a class="nav-link" href="<?php echo HOME_URL . '/admin/movie/1';?>"><span>Gestão de Filmes</span></a></li>
+        <li class="nav-item active"><a class="nav-link" href="<?php echo HOME_URL . '/admin/comment/1';?>"><span>Comentários</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/category/1';?>"><span>Categorias</span></a></li>
 
     </ul>
 
@@ -76,12 +76,12 @@
                     <ul class="pagination">
                         <?php /*
                         if ($parametros[0] == null) { ?>
-                            <li class="page-item active"><a href="<?php echo HOME_URI . '/admin/comment/' . 1;?>" class="page-link">1</a></li>
+                            <li class="page-item active"><a href="<?php echo HOME_URL . '/admin/comment/' . 1;?>" class="page-link">1</a></li>
                         <?php } else {
                             for ($i = 1 ; $i <= ceil(count($comments)/10) ; $i++) { ?>
                                 <li class="page-item <?php if ($parametros[0] == $i) {
                                     echo "active";
-                                }?>"><a href="<?php echo HOME_URI . '/admin/comment/' . $i;?>" class="page-link"><?php echo $i?></a></li>
+                                }?>"><a href="<?php echo HOME_URL . '/admin/comment/' . $i;?>" class="page-link"><?php echo $i?></a></li>
                             <?php }
                         }*/
                         ?>
@@ -153,7 +153,7 @@
                         <h4>Logout <i class="fa fa-lock"></i></h4>
                     </div>
                     <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
-                    <div class="modal-footer"><a href="<?php echo HOME_URI . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
+                    <div class="modal-footer"><a href="<?php echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
                 </div>
             </div>
         </div>
