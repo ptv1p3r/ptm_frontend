@@ -12,9 +12,9 @@
 
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
-        <li class="nav-item active"><a class="nav-link" href="<?php echo HOME_URI . '/admin/groups/1';?>"><span>Gestão de grupos</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URI . '/admin/comment/1';?>"><span>Comentários</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URI . '/admin/category/1';?>"><span>Categorias</span></a></li>
+        <li class="nav-item active"><a class="nav-link" href="<?php echo HOME_URL . '/admin/groups/1';?>"><span>Gestão de grupos</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/comment/1';?>"><span>Comentários</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/category/1';?>"><span>Categorias</span></a></li>
     </ul>
 
     <div id="content-wrapper">
@@ -27,7 +27,7 @@
                             <h2>Manage <b>Groups</b></h2>
                         </div>
                         <div class="col-sm-6">
-                            <a href="#addGroupsModal" class="btn btn-success" data-toggle="modal"><i class="fas fa-plus-circle"></i><span>Add New Group</span></a>
+                            <a href="#addGroupModal" class="btn btn-success" data-toggle="modal"><i class="fas fa-plus-circle"></i><span>Add New Group</span></a>
                         </div>
                     </div>
                 </div>
@@ -55,8 +55,8 @@
                             <td><?php //echo $group["active"]?></td>
                             <td><?php //echo $group["dateModified"]?></td>
                             <td>
-                                <a href="#editGroupsModal" id="<?php //$group['id']?>" class="edit" data-toggle="modal"><i class="far fa-edit"></i></a>
-                                <a href="#deleteGroupsModal" class="delete" data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
+                                <a href="#editGroupModal" id="<?php //$group['id']?>" class="edit" data-toggle="modal"><i class="far fa-edit"></i></a>
+                                <a href="#deleteGroupModal" class="delete" data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
                             </td>
                         </tr>
                         </tbody>
@@ -86,12 +86,12 @@
                         </b> out of <b><?php //echo count($movies)?></b> entries</div>
                         <ul class="pagination">
                             <?php /*if ($parametros[0] == null) { ?>
-                                <li class="page-item active"><a href="<?php echo HOME_URI . '/admin/movie/' . 1;?>" class="page-link">1</a></li>
+                                <li class="page-item active"><a href="<?php echo HOME_URL . '/admin/movie/' . 1;?>" class="page-link">1</a></li>
                             <?php } else {
                                 for ($i = 1 ; $i <= ceil(count($movies)/10) ; $i++) { ?>
                                 <li class="page-item <?php if ($parametros[0] == $i) {
                                     echo "active";
-                                }?>"><a href="<?php echo HOME_URI . '/admin/movie/' . $i;?>" class="page-link"><?php echo $i?></a></li>
+                                }?>"><a href="<?php echo HOME_URL . '/admin/movie/' . $i;?>" class="page-link"><?php echo $i?></a></li>
                                 <?php }
                             }*/
                             ?>
@@ -246,7 +246,7 @@
                         <h4>Logout <i class="fa fa-lock"></i></h4>
                     </div>
                     <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
-                    <div class="modal-footer"><a href="<?php echo HOME_URI . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
+                    <div class="modal-footer"><a href="<?php echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
                 </div>
             </div>
         </div>
@@ -267,7 +267,7 @@
             };
 
             $.ajax({
-                url: "<?php echo HOME_URI . '/admin/groups';?>",
+                url: "<?php echo HOME_URL . '/admin/groups';?>",
                 dataType: "json",
                 type: 'POST',
                 data: formData,
@@ -275,29 +275,29 @@
                     $("#addGroupModal").modal('hide');
 
                     //mensagem de Success
-                    /*Swal.fire({
+                    Swal.fire({
                         title: 'Success!',
                         text: data['message'],
-                        type: 'success',
+                        icon: 'success',
                         showConfirmButton: false,
                         timer: 2000,
-                        onClose: () => {
+                        didClose: () => {
                             location.reload();
                         }
-                    });*/
+                    });
                 },
                 error: function (data) {
                     //mensagem de Error
-                    /*Swal.fire({
+                    Swal.fire({
                         title: 'Error!',
                         text: data['message'],
-                        type: 'error',
+                        icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
-                        onClose: () => {
+                        didClose: () => {
                             location.reload();
                         }
-                    });*/
+                    });
                 }
             });
         });
@@ -312,7 +312,7 @@
             };
 
             $.ajax({
-                url : "<?php echo HOME_URI . '/admin/groups';?>",
+                url : "<?php echo HOME_URL . '/admin/groups';?>",
                 dataType: "json",
                 type: 'POST',
                 data : formData,
@@ -322,10 +322,10 @@
                     /*Swal.fire({
                         title: 'Success!',
                         text: data['message'],
-                        type: 'success',
+                        icon: 'success',
                         showConfirmButton: false,
                         timer: 2000,
-                        onClose: () => {
+                        didClose: () => {
                             location.reload();
                         }
                     });*/
@@ -334,10 +334,10 @@
                     /*Swal.fire({
                         title: 'Error!',
                         text: data['message'],
-                        type: 'error',
+                        icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
-                        onClose: () => {
+                        didClose: () => {
                             location.reload();
                         }
                     });*/
@@ -354,7 +354,7 @@
             };
 
             $.ajax({
-                url : "<?php echo HOME_URI . '/admin/groups';?>",
+                url : "<?php echo HOME_URL . '/admin/groups';?>",
                 dataType: "json",
                 type: 'POST',
                 data : formData,
@@ -378,10 +378,10 @@
                     /*Swal.fire({
                         title: 'Error!',
                         text: data['message'],
-                        type: 'error',
+                        icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
-                        onClose: () => {
+                        didClose: () => {
                             location.reload();
                         }
                     });*/
@@ -400,7 +400,7 @@
             };
 
             $.ajax({
-                url : "<?php echo HOME_URI . '/admin/groups';?>",
+                url : "<?php echo HOME_URL . '/admin/groups';?>",
                 dataType: "json",
                 type: 'POST',
                 data : formData,
@@ -410,10 +410,10 @@
                     /*Swal.fire({
                         title: 'Success!',
                         text: data['message'],
-                        type: 'success',
+                        icon: 'success',
                         showConfirmButton: false,
                         timer: 2000,
-                        onClose: () => {
+                        didClose: () => {
                             location.reload();
                         }
                     });*/
@@ -422,10 +422,10 @@
                     /* Swal.fire({
                          title: 'Error!',
                          text: data['message'],
-                         type: 'error',
+                         icon: 'error',
                          showConfirmButton: false,
                          timer: 2000,
-                         onClose: () => {
+                         didClose: () => {
                              location.reload();
                          }
                      });*/
