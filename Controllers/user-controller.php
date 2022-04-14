@@ -12,19 +12,19 @@ class UserController extends MainController
 {
     public function index() {
         /**
-         * Carrega a página
+         * Page load
          * "/views/home/newuser-view.php"
          */
 
-        // Título da página
+        // Title page
         $this->title = 'User';
 
-        // Parametros da função
+        // Function parameters
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
 
         //$modelo = $this->load_model('user-model');
 
-        /** Carrega os arquivos do view **/
+        /** load files from view **/
         require ABSPATH . '/views/_includes/header.php';
         require ABSPATH . '/views/home/newuser-view.php';
         require ABSPATH . '/views/_includes/footer.php';
@@ -32,27 +32,36 @@ class UserController extends MainController
 
     public function newUser(){
         /**
-         * Carrega ação
+         * Load action
          */
 
-        // Título da página
+        // Title page
         $this->title = 'New User';
-        echo($_POST['action']);
 
-        // Parametros da função
+        // Function parameters
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
 
-        // processa chamadas ajax
+        //Load user-model
+        $model = $this->load_model('user-model');
+
+        // Ajax call flow process
         if(isset($_POST['action']) && !empty($_POST['action'])) {
             $action = $_POST['action'];
-            echo($action);
             $data = $_POST['data'];
-            echo($data);
-            echo('tomates');
 
-            $apiResponse = 'OK';
+            $apiResponse = json_decode($model->addUser($data),true); //decode to check message from api
+//            $apiResponse = 'OK';
+//            $apiResponse = json_encode($apiResponse); // encode package to send
+            //echo $apiResponse;
+            if ($apiResponse['message'] == "User added successfully"){
+                $apiResponse['code'] = 200;
+            } else {
+                $apiResponse['code'] = 400;
+            }
+
             $apiResponse = json_encode($apiResponse); // encode package to send
             echo $apiResponse;
+
         }
     }
 }
