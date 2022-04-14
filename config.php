@@ -13,7 +13,7 @@ define( 'ABSPATH', dirname( __FILE__ ) );
 define( 'UP_ABSPATH', ABSPATH . '/views/_uploads' );
 
 // URL da home
-define( 'HOME_URI', 'http://127.0.0.1' );
+define( 'HOME_URL', 'http://localhost' );
 
 // Nome do host da base de dados
 /*define( 'HOSTNAME', 'localhost' );
