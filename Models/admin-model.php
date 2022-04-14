@@ -51,6 +51,21 @@ class AdminModel extends MainModel {
 
         return json_decode($result, true);
     }
+    /**
+     * Metodo que retorna lista de Grupos
+     */
+    public function getGroupList() {
+        $result = null;
+
+        $url = API_URL . '/';
+
+        if (!empty($this->userdata['token'])){
+            $userToken = $this->userdata['token'];
+            $result = callAPI("GET", $url, '', $userToken );
+        }
+
+        return json_decode($result, true);
+    }
 
     /**
      * Metodo adiciona Grupo
