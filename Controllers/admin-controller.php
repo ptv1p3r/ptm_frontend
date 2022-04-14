@@ -101,6 +101,10 @@ class AdminController extends MainController
         $this->index();
     }*/
 
+    /**
+     * loads /admin/groups page and handles ajax
+     * @return void
+     */
     public function groups(){
         // Título da página
         $this->title = 'Admin - Grupos';
@@ -108,7 +112,7 @@ class AdminController extends MainController
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
 
-        $modelo = $this->load_model('admin-model');
+        $modelo = $this->load_model('groups-model');
 
         // processa chamadas ajax
         if(isset($_POST['action']) && !empty($_POST['action'])) {
