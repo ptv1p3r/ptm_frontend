@@ -54,7 +54,7 @@
                             <td><?php //echo $group["active"]?></td>
                             <td><?php //echo $group["dateModified"]?></td>
                             <td>
-                                <a href="#editGroupsModal" data-groupid="<?php //echo $group["id"]?>" data-title="<?php //echo $movie["title"]?>" data-year="<?php //echo $movie["year"]?>" class="edit" data-toggle="modal"><i class="far fa-edit"></i></a>
+                                <a href="#editGroupsModal" id="<?php //$group['id']?>" class="edit" data-toggle="modal"><i class="far fa-edit"></i></a>
                                 <a href="#deleteGroupsModal" class="delete" data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
                             </td>
                         </tr>
@@ -99,7 +99,7 @@
             </div>
 
         <!-- Add Modal HTML -->
-        <div id="addGroupsModal" class="modal fade">
+        <div id="addGroupModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form>
@@ -110,19 +110,19 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" required>
+                                <input type="text" class="form-control" name="addGroupName" required>
                             </div>
                             <div class="form-group">
                                 <label>Description</label>
-                                <input type="text" class="form-control" required>
+                                <input type="text" class="form-control" name="addGroupDescription" required>
                             </div>
                             <div class="form-group">
                                 <label>SecurityId</label>
-                                <input type="number" class="form-control" required>
+                                <input type="number" class="form-control" name="addGroupSecurityId" required>
                             </div>
                             <div class="form-group">
-                                <label>active</label>
-                                <input type="number" class="form-control" required>
+                                <label>Active</label>
+                                <input type="checkbox" class="form-control" name="addGroupActive" required>
                             </div>
 
                             <!-- <label>Categories</label>
@@ -153,7 +153,7 @@
         </div>
 
         <!-- Edit Modal HTML -->
-        <div id="editGroupsModal" class="modal fade">
+        <div id="editGroupModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form action="/admin/group/1" method="post">
@@ -168,19 +168,19 @@
 
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" required>
+                                <input type="text" class="form-control" name="editGroupName" required>
                             </div>
                             <div class="form-group">
                                 <label>Description</label>
-                                <input type="text" class="form-control" required>
+                                <input type="text" class="form-control" name="editGroupDescription" required>
                             </div>
                             <div class="form-group">
                                 <label>SecurityId</label>
-                                <input type="number" class="form-control" required>
+                                <input type="number" class="form-control" name="editGroupSecurityId" required>
                             </div>
                             <div class="form-group">
-                                <label>active</label>
-                                <input type="number" class="form-control" required>
+                                <label>Active</label>
+                                <input type="checkbox" class="form-control" name="editGroupActive" required>
                             </div>
 
                             <!--<label>Categories</label>   fill categories
@@ -214,7 +214,7 @@
         </div>
 
         <!-- Delete Modal HTML -->
-        <div id="deleteGroupsModal" class="modal fade">
+        <div id="deleteGroupModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form action="/admin/group/1" method="post">
@@ -225,7 +225,7 @@
                         <div class="modal-body">
                             <p>Are you sure you want to delete this Group?</p>
                             <p class="text-warning"><small>This action cannot be undone.</small></p>
-                            <input id="movid" name="movid" type="hidden" class="form-control">
+                            <input id="groupid" name="groupid" type="hidden" class="form-control">
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -254,8 +254,9 @@
 
 <script>
     $(document).ready(function() {
-        // Add new Group
-        $('#addGroupsModal').submit(function (event) {
+
+        // ajax to Add Group
+        $('#addGroupModal').submit(function (event) {
             event.preventDefault(); //prevent default action
 
             let formData = {
@@ -269,8 +270,7 @@
                 type: 'POST',
                 data: formData,
                 success: function (data) {
-                    //$('#addPoiCategory')[0].reset();
-                    //$("#addGroupsModal").modal('hide');
+                    $("#addGroupModal").modal('hide');
 
                     //mensagem de Success
                     /*Swal.fire({
@@ -299,5 +299,145 @@
                 }
             });
         });
+
+        // ajax to Edit Group
+        $('#editGroupModal').submit(function (event) {
+            event.preventDefault(); //prevent default action
+
+            let formData = {
+                'action' : "UpdateGroup",
+                'data'   : $(this).serializeArray()
+            };
+
+            $.ajax({
+                url : "<?php echo HOME_URI . '/admin/groups';?>",
+                dataType: "json",
+                type: 'POST',
+                data : formData,
+                success: function (data) {
+                    $("#editGroupModal").modal('hide');
+
+                    /*Swal.fire({
+                        title: 'Success!',
+                        text: data['message'],
+                        type: 'success',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        onClose: () => {
+                            location.reload();
+                        }
+                    });*/
+                },
+                error: function (data) {
+                    /*Swal.fire({
+                        title: 'Error!',
+                        text: data['message'],
+                        type: 'error',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        onClose: () => {
+                            location.reload();
+                        }
+                    });*/
+                }
+            });
+        });
+
+        // ajax to get data to Modal Edit Group
+        $('.edit').on('click', function(){
+
+            let formData = {
+                'action' : "GetGroup",
+                'data'   : $(this).attr('Id') //gets group id from edit button on table
+            };
+
+            $.ajax({
+                url : "<?php echo HOME_URI . '/admin/groups';?>",
+                dataType: "json",
+                type: 'POST',
+                data : formData,
+                success: function (data) {
+
+                    $("#editGroupId").val(data['data'][0]['Id']);
+                    $("#editGroupName").val(data['data'][0]['Name']);
+                    $("#editGroupDescription").val(data['data'][0]['Description']);
+                    $("#editGroupSecurityId").val(data['data'][0]['SecurityId']);
+
+                    if (data['data'][0]['Active'] === 1) {
+                        $("#editGroupActive").attr('checked', true);
+                    } else {
+                        $("#editGroupActive").attr('checked', false);
+                    }
+
+                    $("#editGroupModal").modal('show');
+
+                },
+                error: function (data) {
+                    /*Swal.fire({
+                        title: 'Error!',
+                        text: data['message'],
+                        type: 'error',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        onClose: () => {
+                            location.reload();
+                        }
+                    });*/
+                }
+            });
+
+        });
+
+        // ajax to Delete Group
+        $('#deleteGroupModal').submit(function(event){
+            event.preventDefault(); //prevent default action
+
+            let formData = {
+                'action' : "DeleteGroup",
+                'data'   : $(this).serializeArray()
+            };
+
+            $.ajax({
+                url : "<?php echo HOME_URI . '/admin/groups';?>",
+                dataType: "json",
+                type: 'POST',
+                data : formData,
+                success: function (data) {
+                    $("#deleteGroupModal").modal('hide');
+
+                    /*Swal.fire({
+                        title: 'Success!',
+                        text: data['message'],
+                        type: 'success',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        onClose: () => {
+                            location.reload();
+                        }
+                    });*/
+                },
+                error: function (data) {
+                    /* Swal.fire({
+                         title: 'Error!',
+                         text: data['message'],
+                         type: 'error',
+                         showConfirmButton: false,
+                         timer: 2000,
+                         onClose: () => {
+                             location.reload();
+                         }
+                     });*/
+                }
+            });
+        });
+
+        // ajax to get data to Modal Delete Group
+        $('.delete').on('click', function(){
+
+            $("#deleteGroupId").val($(this).attr('Id')); //gets group id from delete button on table
+            $("#deleteGroupModal").modal('show');
+
+        });
+
     });
 </script>
