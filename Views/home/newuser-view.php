@@ -10,21 +10,20 @@
                         <h4>É rápido e fácil.</h4>
                         <br>
                     </div>
-
-
-                    <form id="addNewuser">
+                    <!--Form init-->
+                    <form id="addNewUser">
                         <ul class="row">
                             <li class="col-md-12">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="name" placeholder="Nome completo"
-                                           required>
+                                <div class="form-group">
+                                    <input type="text" id="name" placeholder="Nome completo"  class="form-control" required>
                                 </div>
                             </li>
-                            <!--                            <li class="col-md-12">-->
-                            <!--                                <div class="input-group">-->
-                            <!--                                    <input type="text" class="form-control" id="entity" placeholder="Entidade" required>-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
+
+<!--                            <li class="col-md-12">-->
+<!--                                    <div class="input-group">-->
+<!--                                    <input type="text" class="form-control" id="entity" placeholder="Entidade" required>-->
+<!--                                    </div>-->
+<!--                                </li>-->
                             <!--                            <li class="col-md-12">-->
                             <!--                                <div class="input-group">-->
                             <!--                                    <input type="text" class="form-control" id="address" placeholder="Morada" required>-->
@@ -98,16 +97,15 @@
                                 </div>
                             </li>
                             <li class="col-md-12">
-                                <button type="submit" class="register" id="#addNewUser">Regista</button>
+<!--                                <button type="submit" class="register" id="addNewUser">Regista</button>-->
+                                <input type="submit" class="btn btn-success" value="test">
                             </li>
                         </ul>
                     </form>
                 </div>
             </div>
-
-            <button type="submit" class="btn" id="clickMe">Registe a sua conta</button>
-
-
+        </div>
+    </div>
             <!--   <div class="col-lg-4">
                    <div class="login-box">
                        <h3>Login Account</h3>
@@ -141,18 +139,18 @@ $(document).ready(function() {
     // New User
     $('#addNewUser').submit(function (event) {
         event.preventDefault(); //prevent default action
-
+        //alert('ola');
         let formData = {
             'action': "AddNewUser",
             'data': $(this).serializeArray()
         };
-
         $.ajax({
-            url: "<?php echo HOME_URL . '/user-controller';?>",
+            url: "<?php echo HOME_URL . '/user/newuser';?>",
             dataType: "json",
             type: 'POST',
             data: formData,
             success: function (data) {
+                console.log(data);
 
                 Swal.fire({
                     title: 'Success!',
@@ -180,8 +178,4 @@ $(document).ready(function() {
         });
     });
 });
-
-
-
-
 </script>
