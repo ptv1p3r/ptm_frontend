@@ -45,7 +45,8 @@
                     </tr>
                     </thead>
 
-                    <?php /*foreach ($groupsTable as $group) { */?>
+                    <?php /*if (!empty($this->userdata['groupsList']['data'])) {
+                                foreach ($this->userdata['groupsList']['data'] as $key => $group) {*/ ?>
                         <tbody>
                         <tr>
                             <td><?php //echo $group["id"]?></td>
@@ -59,7 +60,8 @@
                             </td>
                         </tr>
                         </tbody>
-                    <?php /* }*/?>
+                    <?php /*    }
+                            }*/?>
 
                 </table>
 
