@@ -40,6 +40,8 @@ class GroupModel extends MainModel {
     /** CRUD GROUPS **/
     /**
      * Metodo que retorna Grupo pelo id
+     * @param $id
+     * @return mixed
      */
     public function getGroupById($id) {
         $result = null;
@@ -53,8 +55,10 @@ class GroupModel extends MainModel {
 
         return json_decode($result, true);
     }
+
     /**
      * Metodo que retorna lista de Grupos
+     * @return mixed
      */
     public function getGroupList() {
         $result = null;
@@ -71,6 +75,8 @@ class GroupModel extends MainModel {
 
     /**
      * Metodo adiciona Grupo
+     * @param $data
+     * @return bool|string|void|null
      */
     public function addGroup($data) {
         $result = null;
@@ -113,6 +119,8 @@ class GroupModel extends MainModel {
 
     /**
      * Metodo edita/update Grupo
+     * @param $data
+     * @return bool|string|void|null
      */
     public function updateGroup($data) {
         $result = null;
@@ -155,6 +163,8 @@ class GroupModel extends MainModel {
 
     /**
      * Metodo delete Grupo
+     * @param $data
+     * @return bool|string|void|null
      */
     public function deleteGroup($data) {
         $result = null;
@@ -279,23 +289,6 @@ class GroupModel extends MainModel {
 
         $query = $this->db->query('SELECT * FROM `comments` limit ' . $startNumber.',10');
 
-
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
-        }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
-
-    /**
-     * Metodo que retorna todos os categorias com filmes
-     * @return array
-     */
-    /*public function getMovieCategories(){
-        $query = null;
-
-        $query = $this->db->query('SELECT * FROM `movies_categories`');
 
         // Verifica se a consulta está OK
         if ( ! $query ) {
