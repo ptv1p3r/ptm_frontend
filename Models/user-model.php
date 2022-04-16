@@ -47,21 +47,53 @@ class UserModel extends MainModel
                         $normalizedData['Name'] = $value;
                         break;
 
+                    case "addUserEntity":
+                        $normalizedData['Entity'] = $value;
+                        break;
+
                     case "addUserAddress":
                         $normalizedData['Address'] = $value;
                         break;
 
-                        //falta o resto dos campos do input
+                    case "addUserCodPost":
+                        $normalizedData['CodPost'] = $value;
+                        break;
+
+                    case "addUserLocality":
+                        $normalizedData['Locality'] = $value;
+                        break;
+
+                    case "addUserNif":
+                        $normalizedData['Nif'] = $value;
+                        break;
+
+                    case "addPoiCountry":
+                        $normalizedData['CGBO_COUNTRIES_ID'] = $value;
+                        break;
+
+                    case "addUserMobile":
+                        $normalizedData['Mobile'] = $value;
+                        break;
+
+                    case "addUserEmail":
+                        $normalizedData['Email'] = $value;
+                        break;
+
+                    case "addUserUserName":
+                        $normalizedData['Username'] = $value;
+                        break;
+
+                    case "addUserPassword":
+                        $normalizedData['Password'] = $value;
+                        break;
                 }
             }
         }
-
-        $url = API_URL . '/user/add';
+        $url = API_URL . '/user/addUser';
         if (!empty($this->userdata['token'])) {
             $userToken = $this->userdata['token'];
             $result = callAPI("POST", $url, $normalizedData, $userToken);
         }
-
         return $result;
     }
 
