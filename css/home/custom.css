@@ -7945,7 +7945,9 @@ section.wf100.p80.fcampaigns {
     -webkit-transition: all ease-in-out 0.3s;
 }
 
-/*Signup Modal Css*/
+/*********************************
+Modal Start
+*********************************/
 
 .modal-login {
     color: #636363;
@@ -8032,4 +8034,21 @@ section.wf100.p80.fcampaigns {
 .modal-login .btn:hover, .modal-login .btn:focus {
     background: #66bb6a;
     outline: none;
+}
+
+/*********************************
+Modal End
+*********************************/
+
+/**
+* 1. Centers the content.
+* 2. Feel free to change this, this sets the width
+* 3. Adds some internal 'padding' to the div
+*/
+.wrapper {
+    margin-right: auto; /* 1 */
+    margin-left: auto; /* 1 */
+    max-width:1160px; /* 2 */
+    padding-right: 10px; /* 3 */
+    padding-left: 10px; /* 3 */
 }
