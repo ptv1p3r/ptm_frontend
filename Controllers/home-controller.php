@@ -24,9 +24,9 @@ class HomeController extends MainController
 
         /*$modelo = $this->load_model('home-model');
 
-        $moviesTopRated = $modelo->getTopRatedList(4);
-        $moviesTopDownloaded = $modelo->getTopDownloaded(4);
-        $moviesLastAdded = $modelo->getLastAdded(4);*/
+        $ptmTopRated = $modelo->getTopRatedList(4);
+        $ptmTopDownloaded = $modelo->getTopDownloaded(4);
+        $ptmLastAdded = $modelo->getLastAdded(4);*/
 
         /** Carrega os arquivos do view **/
 

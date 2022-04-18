@@ -50,7 +50,7 @@ class SearchModel extends MainModel
         $query = null;
 
 
-        $query = $this->db->query('SELECT DISTINCT(year) as year FROM `movies` ORDER BY year DESC ');
+        $query = $this->db->query('SELECT DISTINCT(year) as year FROM `ptms` ORDER BY year DESC ');
 
 
         // Verifica se a consulta está OK
@@ -65,13 +65,13 @@ class SearchModel extends MainModel
      * Metodo que retorna todos os filmes existentes na BD
      * @return array
      */
-    public function getMovies($strSearchData = null){
+    public function getptms($strSearchData = null){
         $query = null;
 
         if ($strSearchData == null){
-            $query = $this->db->query('SELECT * FROM `movies`');
+            $query = $this->db->query('SELECT * FROM `ptms`');
         } else {
-            $query = $this->db->query('SELECT * FROM `movies` WHERE title LIKE \'%'.$strSearchData.'%\' ');
+            $query = $this->db->query('SELECT * FROM `ptms` WHERE title LIKE \'%'.$strSearchData.'%\' ');
         }
 
         // Verifica se a consulta está OK
@@ -82,10 +82,10 @@ class SearchModel extends MainModel
         return $query->fetchAll();
     }
 
-    public function getMoviesByYear($year = null){
+    public function getptmsByYear($year = null){
         $query = null;
 
-        $query = $this->db->query('SELECT * FROM `movies` WHERE year = '.$year.' ');
+        $query = $this->db->query('SELECT * FROM `ptms` WHERE year = '.$year.' ');
 
         // Verifica se a consulta está OK
         if ( ! $query ) {
@@ -95,10 +95,10 @@ class SearchModel extends MainModel
         return $query->fetchAll();
     }
 
-    public function getMoviesByRating($rating = null){
+    public function getptmsByRating($rating = null){
         $query = null;
 
-        $query = $this->db->query('SELECT * FROM `movies` WHERE rating_1 > '.$rating.' ');
+        $query = $this->db->query('SELECT * FROM `ptms` WHERE rating_1 > '.$rating.' ');
 
         // Verifica se a consulta está OK
         if ( ! $query ) {
@@ -108,10 +108,10 @@ class SearchModel extends MainModel
         return $query->fetchAll();
     }
 
-    public function getMoviesCategoriesById($catid = null){
+    public function getptmsCategoriesById($catid = null){
         $query = null;
 
-        $query = $this->db->query('SELECT `movid` FROM `movies_categories` WHERE catid = '.$catid.' ');
+        $query = $this->db->query('SELECT `movid` FROM `ptms_categories` WHERE catid = '.$catid.' ');
 
         // Verifica se a consulta está OK
         if ( ! $query ) {

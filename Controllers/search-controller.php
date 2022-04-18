@@ -29,23 +29,23 @@ class SearchController extends MainController
 
         $modelo = $this->load_model('search-model');
 
-        $movieCategories = $modelo->getCategories();
-        $movieYears = $modelo->getYears();
+        $ptmCategories = $modelo->getCategories();
+        $ptmYears = $modelo->getYears();
 
         if (isset($_POST['Search'])) {
-            $movies = $modelo->getMovies($_POST['Search']);
+            $ptms = $modelo->getptms($_POST['Search']);
             echo $urlContent[1] = null;
         } else {
-            $movies = $modelo->getMovies();
+            $ptms = $modelo->getptms();
         }
-        $movieCount = count($movies);
+        $ptmCount = count($ptms);
 
 
-        foreach ($movieCategories as $category) {
+        foreach ($ptmCategories as $category) {
             $categories  .= '<a class="dropdown-item" href="'. HOME_URI . '/search/category/' . $category['catid'] . '_1' .'">'.$category['name'].'</a>';
         }
 
-        foreach ($movieYears as $year) {
+        foreach ($ptmYears as $year) {
             $years  .= '<a class="dropdown-item" href="'. HOME_URI . '/search/year/' . $year['year'] . '_1' .'">'.$year['year'] .'</a>';
         }
 
@@ -56,8 +56,8 @@ class SearchController extends MainController
         $startCount = null;
 
         if ($urlContent[1] == null || $urlContent[1] == "" || $urlContent[1] == "1") {
-            if ($movieCount < 8) {
-                $count = $movieCount;
+            if ($ptmCount < 8) {
+                $count = $ptmCount;
             } else {
                 $count = 8;
             }
@@ -66,8 +66,8 @@ class SearchController extends MainController
 
         } else {
 
-            if ((8 * $urlContent[1]) > $movieCount) {
-                $count = $movieCount;
+            if ((8 * $urlContent[1]) > $ptmCount) {
+                $count = $ptmCount;
             } else {
                 $count = 8 * $urlContent[1];
             }
@@ -102,32 +102,32 @@ class SearchController extends MainController
 
         $modelo = $this->load_model('search-model');
 
-        $movieCat = $modelo->getCategories();
-        $movieYears = $modelo->getYears();
-        $allMovies = $modelo->getMovies();
+        $ptmCat = $modelo->getCategories();
+        $ptmYears = $modelo->getYears();
+        $allptms = $modelo->getptms();
 
-        $movies_categories = $modelo->getMoviesCategoriesById($urlContent[0]);
+        $ptms_categories = $modelo->getptmsCategoriesById($urlContent[0]);
 
-        $movies = array();
+        $ptms = array();
 
-        $movieCount = count($movies_categories);
+        $ptmCount = count($ptms_categories);
 
-        if ($movieCount != 0) {
-            for ($i = 0; $i < count($allMovies); $i++) {
-                for ($j = 0; $j < count($movies_categories); $j++) {
-                    if ($allMovies[$i]["movid"] == $movies_categories[$j]["movid"]) {
-                        array_push($movies, $allMovies[$i]);
+        if ($ptmCount != 0) {
+            for ($i = 0; $i < count($allptms); $i++) {
+                for ($j = 0; $j < count($ptms_categories); $j++) {
+                    if ($allptms[$i]["movid"] == $ptms_categories[$j]["movid"]) {
+                        array_push($ptms, $allptms[$i]);
                     }
                 }
             }
         }
 
 
-        foreach ($movieCat as $category) {
+        foreach ($ptmCat as $category) {
             $categories  .= '<a class="dropdown-item" href="'. HOME_URI . '/search/category/' . $category['catid'] . '_1' .'">'.$category['name'].'</a>';
         }
 
-        foreach ($movieYears as $year) {
+        foreach ($ptmYears as $year) {
             $years  .= '<a class="dropdown-item" href="'. HOME_URI . '/search/year/' . $year['year'] . '_1' .'">'.$year['year'].'</a>';
         }
 
@@ -137,8 +137,8 @@ class SearchController extends MainController
 
 
         if ($urlContent[1] == null || $urlContent[1] == "" || $urlContent[1] == "1") {
-            if ($movieCount < 8) {
-                $count = $movieCount;
+            if ($ptmCount < 8) {
+                $count = $ptmCount;
             } else {
                 $count = 8;
             }
@@ -147,8 +147,8 @@ class SearchController extends MainController
 
         } else {
 
-            if ((8 * $urlContent[1]) > $movieCount) {
-                $count = $movieCount;
+            if ((8 * $urlContent[1]) > $ptmCount) {
+                $count = $ptmCount;
             } else {
                 $count = 8 * $urlContent[1];
             }
@@ -182,17 +182,17 @@ class SearchController extends MainController
 
         $modelo = $this->load_model('search-model');
 
-        $movieCat = $modelo->getCategories();
-        $movieYears = $modelo->getYears();
-        $movies = $modelo->getMoviesByYear($urlContent[0]);
+        $ptmCat = $modelo->getCategories();
+        $ptmYears = $modelo->getYears();
+        $ptms = $modelo->getptmsByYear($urlContent[0]);
 
-        $movieCount = count($movies);
+        $ptmCount = count($ptms);
 
-        foreach ($movieCat as $category) {
+        foreach ($ptmCat as $category) {
             $categories  .= '<a class="dropdown-item" href="'. HOME_URI . '/search/category/' . $category['catid'] . '_1' .'">'.$category['name'].'</a>';
         }
 
-        foreach ($movieYears as $year) {
+        foreach ($ptmYears as $year) {
             $years  .= '<a class="dropdown-item" href="'. HOME_URI . '/search/year/' . $year['year'] . '_1' .'">'.$year['year'].'</a>';
         }
 
@@ -201,8 +201,8 @@ class SearchController extends MainController
         }
 
         if ($urlContent[1] == null || $urlContent[1] == "" || $urlContent[1] == "1") {
-            if ($movieCount < 8) {
-                $count = $movieCount;
+            if ($ptmCount < 8) {
+                $count = $ptmCount;
             } else {
                 $count = 8;
             }
@@ -211,8 +211,8 @@ class SearchController extends MainController
 
         } else {
 
-            if ((8 * $urlContent[1]) > $movieCount) {
-                $count = $movieCount;
+            if ((8 * $urlContent[1]) > $ptmCount) {
+                $count = $ptmCount;
             } else {
                 $count = 8 * $urlContent[1];
             }
@@ -246,17 +246,17 @@ class SearchController extends MainController
 
         $modelo = $this->load_model('search-model');
 
-        $movieCat = $modelo->getCategories();
-        $movieYears = $modelo->getYears();
-        $movies = $modelo->getMoviesByRating($urlContent[0]);
+        $ptmCat = $modelo->getCategories();
+        $ptmYears = $modelo->getYears();
+        $ptms = $modelo->getptmsByRating($urlContent[0]);
 
-        $movieCount = count($movies);
+        $ptmCount = count($ptms);
 
-        foreach ($movieCat as $category) {
+        foreach ($ptmCat as $category) {
             $categories  .= '<a class="dropdown-item" href="'. HOME_URI . '/search/category/' . $category['catid'] . '_1' .'">'.$category['name'].'</a>';
         }
 
-        foreach ($movieYears as $year) {
+        foreach ($ptmYears as $year) {
             $years  .= '<a class="dropdown-item" href="'. HOME_URI . '/search/year/' . $year['year'] . '_1' .'">'.$year['year'].'</a>';
         }
 
@@ -265,8 +265,8 @@ class SearchController extends MainController
         }
 
         if ($urlContent[1] == null || $urlContent[1] == "" || $urlContent[1] == "1") {
-            if ($movieCount < 8) {
-                $count = $movieCount;
+            if ($ptmCount < 8) {
+                $count = $ptmCount;
             } else {
                 $count = 8;
             }
@@ -275,8 +275,8 @@ class SearchController extends MainController
 
         } else {
 
-            if ((8 * $urlContent[1]) > $movieCount) {
-                $count = $movieCount;
+            if ((8 * $urlContent[1]) > $ptmCount) {
+                $count = $ptmCount;
             } else {
                 $count = 8 * $urlContent[1];
             }
@@ -301,13 +301,13 @@ class SearchController extends MainController
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
         $modelo = $this->load_model('search-model');
 
-        $movies = $modelo->getMovies($modelo->parametros[0]);
-        $movieCount = count($movies);
-        //print_r($movies);
+        $ptms = $modelo->getptms($modelo->parametros[0]);
+        $ptmCount = count($ptms);
+        //print_r($ptms);
         require ABSPATH . '/views/search/search-view.php';
 
-        //echo json_encode($movies);
-        //print_r($movies);
+        //echo json_encode($ptms);
+        //print_r($ptms);
 
     }
 }

@@ -249,33 +249,6 @@
                 </li>
             </ul>
             <ul class="topnav-right">
-                <li><a class="mdonate"
-                       href="/Images/home/donation.html"><span>Adote uma árvore</span></a>
-                </li>
-                <li><a class="search-icon" href="#search"> <i class="fas fa-search"></i> </a></li>
-                <li class="dropdown">
-                    <a class="cart-icon" href="#" role="button" id="cartdropdown" data-toggle="dropdown"> <i
-                                class="fas fa-shopping-cart"></i></a>
-                    <div class="dropdown-menu cart-box" aria-labelledby="cartdropdown">
-                        Recently added item(s)
-                        <ul class="list">
-                            <li class="item">
-                                <a href="#" class="preview-image"><img class="preview" src="/Images/home/pro.jpg"
-                                                                       alt=""></a>
-                                <div class="description"><a href="#">Sample Course</a> <strong class="price">1 x
-                                        $0</strong></div>
-                            </li>
-                            <li class="item">
-                                <a href="#" class="preview-image"><img class="preview" src="/Images/home/pro.jpg"
-                                                                       alt=""></a>
-                                <div class="description"><a href="#">Sample Course</a> <strong class="price">1 x
-                                        $0</strong></div>
-                            </li>
-                        </ul>
-                        <div class="total">Total: <strong>$44.95</strong></div>
-                        <div class="view-link"><a href="#">Proceed to Checkout</a> <a href="#">View cart </a></div>
-                    </div>
-                </li>
                 <li class="login-reg"><a href="" data-toggle="modal" data-target="#loginModal"></i> Login</a>
                     | <a href="<?php echo HOME_URL . '/user'; ?>">Signup</a>
                 </li>
@@ -283,3 +256,74 @@
         </div>
     </nav>
 </header>
+
+
+<!-- Login Modal HTML -->
+<div id="loginModal" class="modal fade">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-login">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="avatar">
+                        <img src="../../../Images/home/logo.png" alt="Avatar">
+                    </div>
+                    <h4 class="modal-title">Login</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="username" placeholder="Username"
+                                   required="required">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" name="password" placeholder="Password"
+                                   required="required">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block login-btn">Login</button>
+                        </div>
+                    </form>
+                    <div class="modal-footer">
+                        <a href="#">Esqueces-te a password?</a>
+                    </div>
+                    <br>
+                    <!--                    <div class="text-center text-muted delimiter">Usa a redes sociais</div>-->
+                    <!--                    <div class="d-flex justify-content-center social-buttons">-->
+                    <!--                        <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip"-->
+                    <!--                                data-placement="top" title="Twitter">-->
+                    <!--                            <i class="fab fa-twitter"></i>-->
+                    <!--                        </button>-->
+                    <!--                        <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip"-->
+                    <!--                                data-placement="top" title="Facebook">-->
+                    <!--                            <i class="fab fa-facebook"></i>-->
+                    <!--                        </button>-->
+                    <!--                        <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip"-->
+                    <!--                                data-placement="top" title="Linkedin">-->
+                    <!--                            <i class="fab fa-linkedin"></i>-->
+                    <!--                        </button>-->
+                    <!--                        </di>-->
+                    <!--                    </div>-->
+                    <!--                </div>-->
+                    <div class="modal-footer">
+                        <div class="modal-footer d-flex justify-content-center">
+                            <div class="signup-section">Ainda não és membro? <a
+                                        href="<?php echo HOME_URL . '/user'; ?>"
+                                        class="text-info"> Sign Up</a>.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Login Modal HTML -->
+
+
+<script>
+
+
+</script>
+
+

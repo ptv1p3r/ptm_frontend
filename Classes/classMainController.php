@@ -43,7 +43,7 @@ class MainController
     public function __construct ( $parametros = array() ) {
 
         // Instancia do DB
-        //$this->db = new TheMovieDB();
+        //$this->db = new ThePtmDB();
 
         // Parâmetros
         $this->parametros = $parametros;

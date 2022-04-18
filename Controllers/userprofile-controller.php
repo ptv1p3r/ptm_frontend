@@ -63,7 +63,7 @@ class UserProfileController extends MainController
 
                         $_POST['validation'] = "success";
 
-                        //$this->movie(1);
+                        //$this->ptm(1);
                     }
                 } else {
                     $_POST['validation'] = "failed";
