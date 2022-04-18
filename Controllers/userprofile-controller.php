@@ -28,7 +28,7 @@ class UserProfileController extends MainController
 
         /** load files from view **/
         require ABSPATH . '/views/_includes/user-header.php';
-        require ABSPATH . '/views/home/user-profile-view.php';
+        require ABSPATH . '/views/user/profile/user-profile-view.php';
         require ABSPATH . '/views/_includes/footer.php';
     }
 
