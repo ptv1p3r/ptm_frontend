@@ -60,15 +60,16 @@ class GroupModel extends MainModel {
      * Metodo que retorna lista de Grupos
      * @return mixed
      */
-    public function getGroupList() {
+    public function getGroupList()
+    {
         $result = null;
 
-        $url = API_URL . '/';
+        $url = API_URL . 'api/v1/groups/list';
 
-        if (!empty($this->userdata['token'])){
-            $userToken = $this->userdata['token'];
-            $result = callAPI("GET", $url, '', $userToken );
-        }
+        //if (!empty($this->userdata['token'])){
+            //$userToken = $this->userdata['token'];
+            $result = callAPI("GET", $url, '');/*, $userToken */
+        //}
 
         return json_decode($result, true);
     }
@@ -108,7 +109,7 @@ class GroupModel extends MainModel {
             }
         }
 
-        $url = API_URL . '/';
+        $url = API_URL . 'api/v1/groups/create';
         if (!empty($this->userdata['token'])){
             $userToken = $this->userdata['token'];
             $result = callAPI("POST", $url, $normalizedData, $userToken );
@@ -212,11 +213,11 @@ class GroupModel extends MainModel {
      * Metodo que retorna o filme pelo id
      * @return array
      */
-    /*public function getMovieById($intMovieId = null){
+    /*public function getgroupById($intgroupId = null){
         $query = null;
 
-        if ($intMovieId != null){
-            $query = $this->db->query('SELECT * FROM `movies` WHERE movid = '.$intMovieId);
+        if ($intgroupId != null){
+            $query = $this->db->query('SELECT * FROM `groups` WHERE movid = '.$intgroupId);
         }
 
         // Verifica se a consulta está OK
@@ -231,10 +232,10 @@ class GroupModel extends MainModel {
      * Metodo que retorna todos os filmes existentes na BD
      * @return array
      */
-    /*public function getMovies(){
+    /*public function getgroups(){
         $query = null;
 
-        $query = $this->db->query('SELECT * FROM `movies`');
+        $query = $this->db->query('SELECT * FROM `groups`');
 
 
         // Verifica se a consulta está OK
@@ -249,10 +250,10 @@ class GroupModel extends MainModel {
      * Metodo que retorna 10 filmes existentes na BD
      * @return array
      */
-    /*public function getMoviesTable($startNumber = null){
+    /*public function getgroupsTable($startNumber = null){
         $query = null;
 
-        $query = $this->db->query('SELECT * FROM `movies` limit ' . $startNumber.',10');
+        $query = $this->db->query('SELECT * FROM `groups` limit ' . $startNumber.',10');
 
         // Verifica se a consulta está OK
         if ( ! $query ) {
