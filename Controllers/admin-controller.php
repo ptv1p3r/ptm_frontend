@@ -23,7 +23,6 @@ class AdminController extends MainController
 
         $modelo = $this->load_model('admin-model');
 
-
         /** Carrega os arquivos do view **/
 
         require ABSPATH . '/views/_includes/admin-login-header.php';
@@ -169,8 +168,8 @@ class AdminController extends MainController
             }
 
         } else {
-            //$this->userdata['groupsList'] = $modelo->getGroupList();
 
+            $this->userdata['groupsList'] = $modelo->getGroupList();
             /**Carrega os arquivos do view**/
 
             require ABSPATH . '/views/_includes/admin-header.php';
@@ -179,96 +178,6 @@ class AdminController extends MainController
 
             require ABSPATH . '/views/_includes/admin-footer.php';
         }
-    }
-
-    public function comment(){
-        // Título da página
-        $this->title = 'Admin - Comment';
-
-        // Parametros da função
-        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
-
-        /*$modelo = $this->load_model('admin-model');
-
-        $comments = $modelo->getComments();
-
-        if ($parametros[0] == "" || $parametros[0] == "1") {
-            $commentsTable = $modelo->getCommentsTable(0);
-        } else {
-            $commentsTable = $modelo->getCommentsTable(($parametros[0]*10)-10);
-        }*/
-
-        /** Carrega os arquivos do view **/
-
-        require ABSPATH . '/views/_includes/admin-header.php';
-
-        require ABSPATH . '/views/admin/admin-comment-view.php';
-
-        require ABSPATH . '/views/_includes/admin-footer.php';
-
-    }
-
-    public function category(){
-        // Título da página
-        $this->title = 'Admin - Category';
-
-        // Parametros da função
-        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
-
-        //$modelo = $this->load_model('admin-login-model');
-
-        /*$modelo = $this->load_model('admin-model');
-
-
-        if (isset($_POST['nameToAdd'])) {
-            $modelo->setCategory($_POST['nameToAdd']);
-        }
-
-        if (isset($_POST['id']) && isset($_POST['name'])) {
-            $modelo->updateCategory($_POST["id"], $_POST['name']);
-        }
-
-        if (isset($_POST['id']) && !isset($_POST['name'])) {
-            $modelo->removeCategory($_POST['id']);
-        }
-
-        $categories = $modelo->getCategories();
-
-        if ($parametros[0] == "" || $parametros[0] == "1") {
-            $categoriesTable = $modelo->getTableCategories(0);
-        } else {
-            $categoriesTable = $modelo->getTableCategories(($parametros[0]*10)-10);
-        }*/
-
-
-
-        /** Carrega os arquivos do view **/
-
-        require ABSPATH . '/views/_includes/admin-header.php';
-
-        require ABSPATH . '/views/admin/admin-category-view.php';
-
-        require ABSPATH . '/views/_includes/admin-footer.php';
-
-    }
-
-    public function settings(){
-        // Título da página
-        $this->title = 'Admin - Settings';
-
-        // Parametros da função
-        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
-
-        //$modelo = $this->load_model('admin-model');
-
-        /** Carrega os arquivos do view **/
-
-        require ABSPATH . '/views/_includes/admin-header.php';
-
-        require ABSPATH . '/views/admin/admin-settings-view.php';
-
-        require ABSPATH . '/views/_includes/admin-footer.php';
-
     }
 
     /*public function movieById(){
