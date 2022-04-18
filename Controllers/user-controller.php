@@ -28,7 +28,7 @@ class UserController extends MainController
 
         /** load files from view **/
         require ABSPATH . '/views/_includes/header.php';
-        require ABSPATH . '/views/home/new-user-view.php';
+        require ABSPATH . '/views/user/registration/new-user-view.php';
         require ABSPATH . '/views/_includes/footer.php';
     }
 
