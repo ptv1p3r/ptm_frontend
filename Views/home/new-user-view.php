@@ -106,7 +106,7 @@
                                         <input type="checkbox" class="form-check-input" id="active">
                                         <!--secção dos termos temos de analisar isto com o grupo de direito-->
                                         <label class="form-check-label" for="exampleCheck1">Eu concordo com os termos <a
-                                                    href="<?php echo HOME_URL . '/rights'; ?>">Regulamento & Política de
+                                                    href="<?php echo HOME_URL . '/home/rights'; ?>">Regulamento & Política de
                                                 Privacidade</a></label>
                                     </div>
                                 </li>
