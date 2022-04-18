@@ -58,11 +58,11 @@ class AdminModel extends MainModel {
      * Metodo que retorna o filme pelo id
      * @return array
      */
-    /*public function getMovieById($intMovieId = null){
+    /*public function getgroupById($intgroupId = null){
         $query = null;
 
-        if ($intMovieId != null){
-            $query = $this->db->query('SELECT * FROM `movies` WHERE movid = '.$intMovieId);
+        if ($intgroupId != null){
+            $query = $this->db->query('SELECT * FROM `groups` WHERE movid = '.$intgroupId);
         }
 
         // Verifica se a consulta está OK
@@ -77,10 +77,10 @@ class AdminModel extends MainModel {
      * Metodo que retorna todos os filmes existentes na BD
      * @return array
      */
-    /*public function getMovies(){
+    /*public function getgroups(){
         $query = null;
 
-        $query = $this->db->query('SELECT * FROM `movies`');
+        $query = $this->db->query('SELECT * FROM `groups`');
 
 
         // Verifica se a consulta está OK
@@ -95,10 +95,10 @@ class AdminModel extends MainModel {
      * Metodo que retorna 10 filmes existentes na BD
      * @return array
      */
-    /*public function getMoviesTable($startNumber = null){
+    /*public function getgroupsTable($startNumber = null){
         $query = null;
 
-        $query = $this->db->query('SELECT * FROM `movies` limit ' . $startNumber.',10');
+        $query = $this->db->query('SELECT * FROM `groups` limit ' . $startNumber.',10');
 
         // Verifica se a consulta está OK
         if ( ! $query ) {
@@ -148,10 +148,10 @@ class AdminModel extends MainModel {
      * Metodo que retorna todos os categorias com filmes
      * @return array
      */
-    /*public function getMovieCategories(){
+    /*public function getgroupCategories(){
         $query = null;
 
-        $query = $this->db->query('SELECT * FROM `movies_categories`');
+        $query = $this->db->query('SELECT * FROM `groups_categories`');
 
         // Verifica se a consulta está OK
         if ( ! $query ) {
