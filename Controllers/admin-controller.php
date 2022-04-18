@@ -60,7 +60,7 @@ class AdminController extends MainController
 
                         $_POST['validation'] = "success";
 
-                        //$this->movie(1);
+                        //$this->group(1);
                     }
                 } else {
                     $_POST['validation'] = "failed";
@@ -180,7 +180,7 @@ class AdminController extends MainController
         }
     }
 
-    /*public function movieById(){
+    /*public function groupById(){
         // Título da página
 
         // Parametros da função
@@ -192,7 +192,7 @@ class AdminController extends MainController
 
         $ReturnData = $modelo->getDownloadLink($modelo->parametros[0]);
 
-        $data = $ReturnData[0]["movid"] . "#" . $ReturnData[0]["title"] . "#" .
+        $data = $ReturnData[0]["groupid"] . "#" . $ReturnData[0]["title"] . "#" .
             $ReturnData[0]["year"];
 
         echo $ReturnData;
