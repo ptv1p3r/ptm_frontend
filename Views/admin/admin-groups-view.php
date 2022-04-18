@@ -45,23 +45,23 @@
                     </tr>
                     </thead>
 
-                    <?php /*if (!empty($this->userdata['groupsList']['data'])) {
-                                foreach ($this->userdata['groupsList']['data'] as $key => $group) {*/ ?>
+                    <?php if (!empty($this->userdata['groupsList']['data'])) {
+                                foreach ($this->userdata['groupsList']['data'] as $key => $group) { ?>
                         <tbody>
                         <tr>
-                            <td><?php //echo $group["id"]?></td>
-                            <td><?php //echo $group["Description"]?></td>
-                            <td><?php //echo $group["SecurityId"]?></td>
-                            <td><?php //echo $group["active"]?></td>
-                            <td><?php //echo $group["dateModified"]?></td>
+                            <td><?php echo $group["id"]?></td>
+                            <td><?php echo $group["Description"]?></td>
+                            <td><?php echo $group["SecurityId"]?></td>
+                            <td><?php echo $group["active"]?></td>
+                            <td><?php echo $group["dateModified"]?></td>
                             <td>
-                                <a href="#editGroupModal" id="<?php //$group['id']?>" class="edit" data-toggle="modal"><i class="far fa-edit"></i></a>
+                                <a href="#editGroupModal" id="<?php echo $group['id']?>" class="edit" data-toggle="modal"><i class="far fa-edit"></i></a>
                                 <a href="#deleteGroupModal" class="delete" data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
                             </td>
                         </tr>
                         </tbody>
-                    <?php /*    }
-                            }*/?>
+                    <?php     }
+                            }?>
 
                 </table>
 
@@ -69,12 +69,12 @@
                 <div class="clearfix">
                     <div class="hint-text">Showing <b>
                             <?php
-                            /*if (10*$parametros[0] >= count($movies)) {
-                                echo count($movies);
+                            /*if (10*$parametros[0] >= count($groups)) {
+                                echo count($groups);
                             } else {
                                 if ($parametros[0] == null || $parametros[0] == "1") {
-                                    if (10 >= count($movies)) {
-                                        echo count($movies);
+                                    if (10 >= count($groups)) {
+                                        echo count($groups);
                                     } else {
                                         echo 10;
                                     }
@@ -83,15 +83,15 @@
                                 }
                             }*/
                             ?>
-                        </b> out of <b><?php //echo count($movies)?></b> entries</div>
+                        </b> out of <b><?php //echo count($groups)?></b> entries</div>
                         <ul class="pagination">
                             <?php /*if ($parametros[0] == null) { ?>
-                                <li class="page-item active"><a href="<?php echo HOME_URL . '/admin/movie/' . 1;?>" class="page-link">1</a></li>
+                                <li class="page-item active"><a href="<?php echo HOME_URL . '/admin/group/' . 1;?>" class="page-link">1</a></li>
                             <?php } else {
-                                for ($i = 1 ; $i <= ceil(count($movies)/10) ; $i++) { ?>
+                                for ($i = 1 ; $i <= ceil(count($groups)/10) ; $i++) { ?>
                                 <li class="page-item <?php if ($parametros[0] == $i) {
                                     echo "active";
-                                }?>"><a href="<?php echo HOME_URL . '/admin/movie/' . $i;?>" class="page-link"><?php echo $i?></a></li>
+                                }?>"><a href="<?php echo HOME_URL . '/admin/group/' . $i;?>" class="page-link"><?php echo $i?></a></li>
                                 <?php }
                             }*/
                             ?>
@@ -165,7 +165,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <input id="groupid" type="hidden" class="form-control" value="<?php //$movieById[0]["movid"]?>">
+                                <input id="groupid" type="hidden" class="form-control" value="<?php //$groupById[0]["groupid"]?>">
                             </div>
 
                             <div class="form-group">
