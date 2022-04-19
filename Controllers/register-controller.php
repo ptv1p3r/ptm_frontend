@@ -20,24 +20,13 @@ class RegisterController extends MainController
 
         // Title page
         $this->title = 'Register';
-        $countries = null;
 
         // Function parameters
         $parameters = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
         $model = $this->load_model('register-model');
 
-        echo($model);
-
-        $modelData = $model->getCountryList($model->parameters[0]);
-
-        echo($modelData);
-
-        foreach ($modelData as $country) {
-            echo($country);
-            $countries .= $country["name"].' / ';
-        }
-
+        $this->userdata['countryList'] = $model->getCountryList();
 
         /** load files from view **/
         require ABSPATH . '/views/_includes/header.php';
@@ -72,17 +61,17 @@ class RegisterController extends MainController
 
             echo($apiResponse);
 
-            if ($apiResponse['message'] == "User added successfully") {
+            if ($apiResponse['message'] == "Por favor, verifique o seu email para validar a conta.") {
                 $apiResponse['code'] = 200;
             } else {
                 $apiResponse['code'] = 400;
             }
 
             $apiResponse = json_encode($apiResponse); // encode package to send
-            echo $apiResponse;
+            //echo $apiResponse;
+
 
         }
     }
-
 
 }
