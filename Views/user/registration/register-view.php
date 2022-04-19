@@ -60,8 +60,9 @@
                                         <select name="industry" class="form-control customDropdown">
                                             <option value="" disabled selected>Selecione o País</option>
                                             <option value="financial-service">Portugal</option>
-                                            <!--                                        <option value="healthcare-lifescience">Healthcare & Life Science</option>-->
-                                            <!--                                        <option value="communications">Communications</option>-->
+                                            <option class="text-light"><h3><?php echo $contries;?></h3></option>
+
+
                                         </select>
                                     </div>
                                 </li>
@@ -95,12 +96,12 @@
                                                required>
                                     </div>
                                 </li>
-                                <li class="col-md-6">
+                               <!-- <li class="col-md-6">
                                     <div class="form-group input-group">
                                         <input type="text" id="password" placeholder="Repita a password"
                                                class="form-control" required>
                                     </div>
-                                </li>
+                                </li> -->
                                 <li class="col-md-12">
                                     <div class="input-group form-check">
                                         <input type="checkbox" class="form-check-input" id="active">
