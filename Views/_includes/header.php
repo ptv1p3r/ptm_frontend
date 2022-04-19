@@ -250,7 +250,7 @@
             </ul>
             <ul class="topnav-right">
                 <li class="login-reg"><a href="" data-toggle="modal" data-target="#loginModal"></i> Login</a>
-                    | <a href="<?php echo HOME_URL . '/user'; ?>">Signup</a>
+                    | <a href="<?php echo HOME_URL . '/register'; ?>">Signup</a>
                 </li>
             </ul>
         </div>
