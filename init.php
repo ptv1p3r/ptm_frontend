@@ -33,5 +33,5 @@ require_once ABSPATH . '/Classes/classMainModel.php';
 require_once ABSPATH . '/Classes/classPtmDB.php';
 require_once ABSPATH . '/Classes/classPtmMVC.php';
 
-$_AppPtm = new PtmMVC();
+$_AppMovie = new PtmMVC();
 
