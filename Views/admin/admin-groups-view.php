@@ -46,22 +46,24 @@
                     </thead>
 
                     <?php if (!empty($this->userdata['groupsList']['data'])) {
-                                foreach ($this->userdata['groupsList']['data'] as $key => $group) { ?>
-                        <tbody>
-                        <tr>
-                            <td><?php echo $group["Name"]?></td>
-                            <td><?php echo $group["Description"]?></td>
-                            <td><?php echo $group["SecurityId"]?></td>
-                            <td><?php echo $group["active"]?></td>
-                            <td><?php echo $group["dateModified"]?></td>
-                            <td>
-                                <a href="#editGroupModal" id="<?php echo $group['id']?>" class="edit" data-toggle="modal"><i class="far fa-edit"></i></a>
-                                <a href="#deleteGroupModal" class="delete" data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    <?php     }
-                            }?>
+                        foreach ($this->userdata['groupsList']['data'] as $key => $group) { ?>
+                            <tbody>
+                            <tr>
+                                <td><?php echo $group["Name"] ?></td>
+                                <td><?php echo $group["Description"] ?></td>
+                                <td><?php echo $group["SecurityId"] ?></td>
+                                <td><?php echo $group["active"] ?></td>
+                                <td><?php echo $group["dateModified"] ?></td>
+                                <td>
+                                    <a href="#editGroupModal" id="<?php echo $group['id'] ?>" class="edit"
+                                       data-toggle="modal"><i class="far fa-edit"></i></a>
+                                    <a href="#deleteGroupModal" class="delete" data-toggle="modal"><i
+                                                class="fas fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        <?php }
+                    } ?>
 
                 </table>
 
@@ -124,7 +126,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Active</label>
-                                <input type="checkbox" class="form-control" name="addGroupActive" required>
+                                <input type="checkbox" class="form-control" name="addGroupActive">
                             </div>
 
                             <!-- <label>Categories</label>
@@ -182,7 +184,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Active</label>
-                                <input type="checkbox" class="form-control" name="editGroupActive" required>
+                                <input type="checkbox" class="form-control" name="editGroupActive">
                             </div>
 
                             <!--<label>Categories</label>   fill categories
@@ -319,7 +321,7 @@
                 success: function (data) {
                     $("#editGroupModal").modal('hide');
 
-                    /*Swal.fire({
+                    Swal.fire({
                         title: 'Success!',
                         text: data['message'],
                         icon: 'success',
@@ -328,10 +330,10 @@
                         didClose: () => {
                             location.reload();
                         }
-                    });*/
+                    });
                 },
                 error: function (data) {
-                    /*Swal.fire({
+                    Swal.fire({
                         title: 'Error!',
                         text: data['message'],
                         icon: 'error',
@@ -340,7 +342,7 @@
                         didClose: () => {
                             location.reload();
                         }
-                    });*/
+                    });
                 }
             });
         });
@@ -375,7 +377,7 @@
 
                 },
                 error: function (data) {
-                    /*Swal.fire({
+                    Swal.fire({
                         title: 'Error!',
                         text: data['message'],
                         icon: 'error',
@@ -384,7 +386,7 @@
                         didClose: () => {
                             location.reload();
                         }
-                    });*/
+                    });
                 }
             });
 
@@ -407,7 +409,7 @@
                 success: function (data) {
                     $("#deleteGroupModal").modal('hide');
 
-                    /*Swal.fire({
+                    Swal.fire({
                         title: 'Success!',
                         text: data['message'],
                         icon: 'success',
@@ -416,10 +418,10 @@
                         didClose: () => {
                             location.reload();
                         }
-                    });*/
+                    });
                 },
                 error: function (data) {
-                    /* Swal.fire({
+                    Swal.fire({
                          title: 'Error!',
                          text: data['message'],
                          icon: 'error',
@@ -428,7 +430,7 @@
                          didClose: () => {
                              location.reload();
                          }
-                     });*/
+                    });
                 }
             });
         });
