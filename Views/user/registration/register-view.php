@@ -25,92 +25,95 @@
                             <ul class="row">
                                 <li class="col-md-12">
                                     <div class="form-group input-group">
-                                        <input type="text" id="name" placeholder="Nome completo" class="form-control"
+                                        <input type="text"  name="addUserName" placeholder="Nome completo" class="form-control"
                                                required>
                                     </div>
                                 </li>
                                 <li class="col-md-12">
                                     <div class="form-group input-group">
-                                        <input type="text" id="entity" placeholder="Entidade" class="form-control"
+                                        <input type="text"  name="addUserEntity" placeholder="Entidade" class="form-control"
                                                required>
                                     </div>
                                 </li>
-                                <li class="col-md-12">
-                                    <div class="form-group input-group">
-                                        <input type="text" id="address" placeholder="Morada" class="form-control"
-                                               required>
-                                    </div>
-                                </li>
-                                <li class="col-md-2">
-                                    <div class="form-group input-group">
-                                        <input type="text" id="codPost" placeholder="Código-postal" class="form-control"
-                                               required>
-                                    </div>
-                                </li>
-                                <li class="col-md-6">
-                                    <div class="form-group input-group">
-                                        <input type="text" id="locality" placeholder="Localidade" class="form-control"
-                                               required>
-                                    </div>
-                                </li>
-
-                                <!-Dropdown Menu with Countries-->
-                                <li class="col-md-4">
-                                    <div>
-                                        <select name="industry" class="form-control customDropdown">
-                                            <option value="" disabled selected>Selecione o País</option>
-                                            <option value="financial-service">Portugal</option>
-                                            <option class="text-light"><h3><?php echo $contries;?></h3></option>
-
-
-                                        </select>
-                                    </div>
-                                </li>
-                                <!-End Dropdown Menu with Countries-->
-
-                                <li class="col-md-6">
-                                    <div class="form-group input-group">
-                                        <input type="text" id="nif" placeholder="NIF" class="form-control" required>
-                                    </div>
-                                </li>
-                                <li class="col-md-6">
-                                    <div class="form-group input-group">
-                                        <input type="text" id="mobile" placeholder="Telefone" class="form-control"
-                                               required>
-                                    </div>
-                                </li>
-                                <li class="col-md-6">
-                                    <div class="form-group input-group">
-                                        <input type="text" id="email" placeholder="Email" class="form-control" required>
-                                    </div>
-                                </li>
-                                <li class="col-md-6">
-                                    <div class="form-group input-group">
-                                        <input type="text" id="username" placeholder="User Name" class="form-control"
-                                               required>
-                                    </div>
-                                </li>
-                                <li class="col-md-6">
-                                    <div class="form-group input-group">
-                                        <input type="text" id="password" placeholder="Password" class="form-control"
-                                               required>
-                                    </div>
-                                </li>
-                               <!-- <li class="col-md-6">
-                                    <div class="form-group input-group">
-                                        <input type="text" id="password" placeholder="Repita a password"
-                                               class="form-control" required>
-                                    </div>
-                                </li> -->
-                                <li class="col-md-12">
-                                    <div class="input-group form-check">
-                                        <input type="checkbox" class="form-check-input" id="active">
-                                        <!--secção dos termos temos de analisar isto com o grupo de direito-->
-                                        <label class="form-check-label" for="exampleCheck1">Eu concordo com os termos <a
-                                                    href="<?php echo HOME_URL . '/home/rights'; ?>">Regulamento & Política de
-                                                Privacidade</a></label>
-                                    </div>
-                                </li>
+<!--                                <li class="col-md-12">-->
+<!--                                    <div class="form-group input-group">-->
+<!--                                        <input type="text" id="address" placeholder="Morada" class="form-control"-->
+<!--                                               required>-->
+<!--                                    </div>-->
+<!--                                </li>-->
+<!--                                <li class="col-md-2">-->
+<!--                                    <div class="form-group input-group">-->
+<!--                                        <input type="text" id="codPost" placeholder="Código-postal" class="form-control"-->
+<!--                                               required>-->
+<!--                                    </div>-->
+<!--                                </li>-->
+<!--                                <li class="col-md-6">-->
+<!--                                    <div class="form-group input-group">-->
+<!--                                        <input type="text" id="locality" placeholder="Localidade" class="form-control"-->
+<!--                                               required>-->
+<!--                                    </div>-->
+<!--                                </li>-->
+<!---->
+<!--                                <!-Dropdown Menu with Countries-->-->
+<!--                                <li class="col-md-4">-->
+<!--                                    <div>-->
+<!--                                        <select id="locality" class="form-control customDropdown">-->
+<!--                                            <option value="" disabled selected>Selecione o País</option>-->
+<!--                                            --><?php //if (!empty($this->userdata['countryList'])) {
+//                                                foreach ($this->userdata['countryList'] as $key => $country) { ?>
+<!--                                                    <option class="text-light" value="--><?php //echo $country["id"] ?><!--">-->
+<!--                                                        --><?php //echo $country["name"] ?><!--</option>-->
+<!--                                                --><?php //}
+//                                            } ?>
+<!--                                        </select>-->
+<!--                                    </div>-->
+<!--                                </li>-->
+<!--                                <!-End Dropdown Menu with Countries-->-->
+<!---->
+<!--                                <li class="col-md-6">-->
+<!--                                    <div class="form-group input-group">-->
+<!--                                        <input type="text" id="nif" placeholder="NIF" class="form-control" required>-->
+<!--                                    </div>-->
+<!--                                </li>-->
+<!--                                <li class="col-md-6">-->
+<!--                                    <div class="form-group input-group">-->
+<!--                                        <input type="text" id="mobile" placeholder="Telefone" class="form-control"-->
+<!--                                               required>-->
+<!--                                    </div>-->
+<!--                                </li>-->
+<!--                                <li class="col-md-6">-->
+<!--                                    <div class="form-group input-group">-->
+<!--                                        <input type="text" id="email" placeholder="Email" class="form-control" required>-->
+<!--                                    </div>-->
+<!--                                </li>-->
+<!--                                <li class="col-md-6">-->
+<!--                                    <div class="form-group input-group">-->
+<!--                                        <input type="text" id="username" placeholder="User Name" class="form-control"-->
+<!--                                               required>-->
+<!--                                    </div>-->
+<!--                                </li>-->
+<!--                                <li class="col-md-6">-->
+<!--                                    <div class="form-group input-group">-->
+<!--                                        <input type="text" id="password" placeholder="Password" class="form-control"-->
+<!--                                               required>-->
+<!--                                    </div>-->
+<!--                                </li>-->
+<!--                                <!-- <li class="col-md-6">-->
+<!--                                     <div class="form-group input-group">-->
+<!--                                         <input type="text" id="password" placeholder="Repita a password"-->
+<!--                                                class="form-control" required>-->
+<!--                                     </div>-->
+<!--                                 </li> -->-->
+<!--                                <li class="col-md-12">-->
+<!--                                    <div class="input-group form-check">-->
+<!--                                        <input type="checkbox" class="form-check-input" id="active">-->
+<!--                                        <!--secção dos termos temos de analisar isto com o grupo de direito-->-->
+<!--                                        <label class="form-check-label" for="exampleCheck1">Eu concordo com os termos <a-->
+<!--                                                    href="--><?php //echo HOME_URL . '/home/rights'; ?><!--">Regulamento &-->
+<!--                                                Política de-->
+<!--                                                Privacidade</a></label>-->
+<!--                                    </div>-->
+<!--                                </li>-->
                                 <li class="col-md-12">
                                     <button type="submit" class="register">Regista a sua conta</button>
                                 </li>
@@ -125,52 +128,51 @@
     <!--New User Register End-->
 </div>
 
-    <!--Script's section-->
-    <script>
-        //Main functions from this view
-        $(document).ready(function () {
+<!--Script's section-->
+<script>
+    //Main functions from this view
+    $(document).ready(function () {
 
-            // New User
-            $('#addNewUser').submit(function (event) {
-                event.preventDefault(); //prevent default action
-                //alert('ola');
-                let formData = {
-                    'action': "AddNewUser",
-                    'data': $(this).serializeArray()
-                };
-                $.ajax({
-                    url: "<?php echo HOME_URL . '/user/newuser';?>",
-                    dataType: "json",
-                    type: 'POST',
-                    data: formData,
-                    success: function (data) {
-                        console.log(data);
+        // New User
+        $('#addNewUser').submit(function (event) {
+            event.preventDefault(); //prevent default action
+            let formData = {
+                'action': "AddNewUser",
+                'data': $(this).serializeArray()
+            };
+            $.ajax({
+                url: "<?php echo HOME_URL . '/newUserCreated';?>",
+                dataType: "json",
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+                    console.log(data);
 
-                        Swal.fire({
-                            title: 'Success!',
-                            text: data['message'],
-                            icon: 'success',
-                            showConfirmButton: false,
-                            timer: 2000,
-                            // didClose: () => {
-                            //     location.reload();
-                            // }
-                        });
-                    },
-                    error: function (data) {
-                        Swal.fire({
-                            title: 'Error!',
-                            text: data['message'],
-                            icon: 'error',
-                            showConfirmButton: false,
-                            timer: 2000,
-                            // didClose: () => {
-                            //     location.reload();
-                            // }
-                        });
-                    }
-                });
+                    Swal.fire({
+                        title: 'Conta criado com sucesso!',
+                        text: data['message'],
+                        icon: 'success',
+                        showConfirmButton: true,
+                        timer: 2000,
+                        didClose: () => {
+                            window.location = "<?php echo HOME_URL . '/home';?>";
+                        }
+                    });
+                },
+                error: function (data) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: data['message'],
+                        icon: 'error',
+                        showConfirmButton: false,
+                        //timer: 2000,
+                        // didClose: () => {
+                        //     location.reload();
+                        // }
+                    });
+                }
             });
         });
-    </script>
-    <!--Script's end section-->
+    });
+</script>
+<!--Script's end section-->
