@@ -49,7 +49,7 @@
                                 foreach ($this->userdata['groupsList']['data'] as $key => $group) { ?>
                         <tbody>
                         <tr>
-                            <td><?php echo $group["id"]?></td>
+                            <td><?php echo $group["Name"]?></td>
                             <td><?php echo $group["Description"]?></td>
                             <td><?php echo $group["SecurityId"]?></td>
                             <td><?php echo $group["active"]?></td>
