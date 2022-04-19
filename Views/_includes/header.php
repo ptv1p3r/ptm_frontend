@@ -308,7 +308,7 @@
                     <div class="modal-footer">
                         <div class="modal-footer d-flex justify-content-center">
                             <div class="signup-section">Ainda não és membro? <a
-                                        href="<?php echo HOME_URL . '/user'; ?>"
+                                        href="<?php echo HOME_URL . '/register'; ?>"
                                         class="text-info"> Sign Up</a>.
                             </div>
                         </div>
