@@ -23,6 +23,28 @@ class UserModel extends MainModel
     }
 
     /**
+     * Get country list
+     *
+     * @since 0.1
+     * @access public
+     */
+    public function getCountryList()
+    {
+        $result = null;
+
+        $url = API_URL . '/countries/list';
+
+        echo ($url);
+
+        if (!empty($this->userdata['token'])) {
+            //$userToken = $this->userdata['token'];
+            $result = callAPI("GET", $url, '', /*$userToken*/);
+        }
+
+        return json_decode($result, true);
+    }
+
+    /**
      * ADD new User
      *
      * @param $data
@@ -95,25 +117,5 @@ class UserModel extends MainModel
             $result = callAPI("POST", $url, $normalizedData, $userToken);
         }
         return $result;
-    }
-
-    /**
-     * Get country list
-     *
-     * @since 0.1
-     * @access public
-     */
-    public function getCountryList()
-    {
-        $result = null;
-
-        $url = API_URL . '/countries/list';
-
-        if (!empty($this->userdata['token'])) {
-            $userToken = $this->userdata['token'];
-            $result = callAPI("GET", $url, '', $userToken);
-        }
-
-        return json_decode($result, true);
     }
 }
