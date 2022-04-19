@@ -12,7 +12,7 @@
 
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
-        <li class="nav-item "><a class="nav-link" href="<?php echo HOME_URL . '/admin/movie/1';?>"><span>Gestão de Filmes</span></a></li>
+        <li class="nav-item "><a class="nav-link" href="<?php echo HOME_URL . '/admin/user/1';?>"><span>Gestão de users</span></a></li>
         <li class="nav-item active"><a class="nav-link" href="<?php echo HOME_URL . '/admin/comment/1';?>"><span>Comentários</span></a></li>
         <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/category/1';?>"><span>Categorias</span></a></li>
 
@@ -26,7 +26,7 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h2>Manage <b>Movie Comments</b></h2>
+                            <h2>Manage <b>user Comments</b></h2>
                         </div>
                     </div>
                 </div>
