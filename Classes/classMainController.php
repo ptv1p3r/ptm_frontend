@@ -35,6 +35,12 @@ class MainController
     public $parametros = array();
 
     /**
+     * user data
+     *
+     */
+    public $userdata= array();
+
+    /**
      * Construtor da classe
      *
      * Configura as propriedades e métodos da classe.
