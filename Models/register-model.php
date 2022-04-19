@@ -1,6 +1,6 @@
 <?php
 
-class UserModel extends MainModel
+class RegisterModel extends MainModel
 {
 
     /**
@@ -32,14 +32,13 @@ class UserModel extends MainModel
     {
         $result = null;
 
-        $url = API_URL . '/countries/list';
+        $url = API_URL . 'api/v1/countries/list';
 
-        echo ($url);
-
-        if (!empty($this->userdata['token'])) {
-            //$userToken = $this->userdata['token'];
-            $result = callAPI("GET", $url, '', /*$userToken*/);
-        }
+        $result = callAPI("GET", $url, ''/*, $userToken*/);
+//        if (!empty($this->userdata['token'])) {
+//            $userToken = $this->userdata['token'];
+//            $result = callAPI("GET", $url, '', $userToken);
+//        }
 
         return json_decode($result, true);
     }
@@ -57,20 +56,21 @@ class UserModel extends MainModel
         $result = null;
         $normalizedData = array();
 
-        // Not active by default
-        $normalizedData['IsActive'] = "";
-        $normalizedData['IsFeatured'] = "";
+
+//        // Not active by default
+//        $normalizedData['IsActive'] = "";
+//        $normalizedData['IsFeatured'] = "";
 
         // get data from form array and package it to send to api
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']) {
                     case "addUserName":
-                        $normalizedData['Name'] = $value;
+                        $normalizedData['name'] = $value;
                         break;
 
                     case "addUserEntity":
-                        $normalizedData['Entity'] = $value;
+                        $normalizedData['entity'] = $value;
                         break;
 
                     case "addUserAddress":
@@ -90,7 +90,7 @@ class UserModel extends MainModel
                         break;
 
                     case "addPoiCountry":
-                        $normalizedData['CGBO_COUNTRIES_ID'] = $value;
+                        $normalizedData['id'] = $value;
                         break;
 
                     case "addUserMobile":
@@ -111,7 +111,8 @@ class UserModel extends MainModel
                 }
             }
         }
-        $url = API_URL . '/user/addUser';
+        $url = API_URL . 'api/v1/users/create';
+//        $result = callAPI("POST", $url, $normalizedData, /*$userToken*/);
         if (!empty($this->userdata['token'])) {
             $userToken = $this->userdata['token'];
             $result = callAPI("POST", $url, $normalizedData, $userToken);
