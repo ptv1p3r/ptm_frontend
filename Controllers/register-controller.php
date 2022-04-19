@@ -9,26 +9,39 @@
 /**
  * user - Controller
  */
-class UserController extends MainController
+class RegisterController extends MainController
 {
     public function index()
     {
         /**
          * Page load
-         * "/views/home/new-user-view.php"
+         * "/views/home/register-view.php"
          */
 
         // Title page
-        $this->title = 'User';
+        $this->title = 'Register';
+        $countries = null;
 
         // Function parameters
-        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+        $parameters = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
-        //$modelo = $this->load_model('user-model');
+        $model = $this->load_model('register-model');
+
+        echo($model);
+
+        $modelData = $model->getCountryList($model->parameters[0]);
+
+        echo($modelData);
+
+        foreach ($modelData as $country) {
+            echo($country);
+            $countries .= $country["name"].' / ';
+        }
+
 
         /** load files from view **/
         require ABSPATH . '/views/_includes/header.php';
-        require ABSPATH . '/views/user/registration/new-user-view.php';
+        require ABSPATH . '/views/user/registration/register-view.php';
         require ABSPATH . '/views/_includes/footer.php';
     }
 
@@ -45,7 +58,7 @@ class UserController extends MainController
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
         //Load user-model
-        $model = $this->load_model('user-model');
+        $model = $this->load_model('register-model');
 
         // Ajax call flow process
         if (isset($_POST['action']) && !empty($_POST['action'])) {
@@ -70,4 +83,6 @@ class UserController extends MainController
 
         }
     }
+
+
 }
