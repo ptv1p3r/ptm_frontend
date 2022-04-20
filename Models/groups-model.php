@@ -107,6 +107,7 @@ class GroupsModel extends MainModel {
                         break;*/
                 }
 
+                // TODO: o active ira deixar de ser enviado
                 if ($dataVector['name'] == "addGroupActive"){
                     $normalizedData['active'] = "1";
                 } else {
@@ -162,6 +163,7 @@ class GroupsModel extends MainModel {
                         break;*/
                 }
 
+
                 if ($dataVector['name'] == "editGroupActive"){
                     $normalizedData['active'] = "1";
                 } else {
@@ -192,18 +194,18 @@ class GroupsModel extends MainModel {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']){ //gets input name=""
                     case "deleteGroupId":
-                        $GroupId = $value;
+                        $GroupId = $dataVector['value'];
                         break;
                 }
             }
         }
 
-        $url = API_URL . '/' . $GroupId;
+        $url = API_URL . 'api/v1/groups/delete/' . $GroupId;
 
-        if (!empty($this->userdata['token'])){
-            $userToken = $this->userdata['token'];
-            $result = callAPI("DELETE", $url, '', $userToken );
-        }
+        //if (!empty($this->userdata['token'])){
+            //$userToken = $this->userdata['token'];
+            $result = callAPI("DELETE", $url, ''/*, $userToken */);
+        //}
 
         return $result;
     }
