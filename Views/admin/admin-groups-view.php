@@ -58,8 +58,8 @@
                                 <td>
                                     <a href="#editGroupModal" id="<?php echo $group['id'] ?>" class="edit"
                                        data-toggle="modal"><i class="far fa-edit"></i></a>
-                                    <a href="#deleteGroupModal" class="delete" data-toggle="modal"><i
-                                                class="fas fa-trash-alt"></i></a>
+                                    <a href="#deleteGroupModal" id="<?php echo $group['id'] ?>" class="delete"
+                                       data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                             </tr>
                             </tbody>
@@ -210,7 +210,7 @@
                         <div class="modal-body">
                             <p>Are you sure you want to delete this Group?</p>
                             <p class="text-warning"><small>This action cannot be undone.</small></p>
-                            <input id="deleteGroupId" name="deleteGroupId" type="hidden" class="form-control">
+                            <input id="deleteGroupId" name="deleteGroupId" type="hidden" class="form-control" value="">
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -264,7 +264,7 @@
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            //location.reload();
+                            location.reload();
                         }
                     });
                 },
@@ -277,7 +277,7 @@
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            //location.reload();
+                            location.reload();
                         }
                     });
                 }
@@ -308,7 +308,7 @@
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            //location.reload();
+                            location.reload();
                         }
                     });
                 },
@@ -320,7 +320,7 @@
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            //location.reload();
+                            location.reload();
                         }
                     });
                 }
@@ -364,7 +364,7 @@
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            //location.reload();
+                            location.reload();
                         }
                     });
                 }
@@ -396,7 +396,7 @@
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            //location.reload();
+                            location.reload();
                         }
                     });
                 },
@@ -408,7 +408,7 @@
                          showConfirmButton: false,
                          timer: 2000,
                          didClose: () => {
-                             //location.reload();
+                             location.reload();
                          }
                     });
                 }
@@ -417,8 +417,8 @@
 
         // ajax to get data to Modal Delete Group
         $('.delete').on('click', function(){
-
-            $('[name="#deleteGroupId"]').val($(this).attr('id')); //gets group id from id="" attribute on delete button from table
+            let $deleteID = $(this).attr('id');
+            $('[name="deleteGroupId"]').val($deleteID); //gets group id from id="" attribute on delete button from table
             $("#deleteGroupModal").modal('show');
 
         });
