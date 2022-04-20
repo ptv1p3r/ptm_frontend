@@ -32,9 +32,9 @@ class HomeModel extends MainModel{
     /*public function getTopRatedList($intLimit = 0) {
 
         if ($intLimit > 0){
-            $query = $this->db->query('SELECT * FROM `movies` ORDER BY rating_1 DESC LIMIT ' . $intLimit);
+            $query = $this->db->query('SELECT * FROM `ptms` ORDER BY rating_1 DESC LIMIT ' . $intLimit);
         } else {
-            $query = $this->db->query('SELECT * FROM `movies` ORDER BY rating_1 DESC');
+            $query = $this->db->query('SELECT * FROM `ptms` ORDER BY rating_1 DESC');
         }
 
         // Verifica se a consulta está OK
@@ -52,9 +52,9 @@ class HomeModel extends MainModel{
     /*public function getTopDownloaded($intLimit = 0) {
 
         if ($intLimit > 0){
-            $query = $this->db->query('SELECT * FROM `movies` ORDER BY download_count DESC LIMIT ' . $intLimit);
+            $query = $this->db->query('SELECT * FROM `ptms` ORDER BY download_count DESC LIMIT ' . $intLimit);
         } else {
-            $query = $this->db->query('SELECT * FROM `movies` ORDER BY download_count DESC');
+            $query = $this->db->query('SELECT * FROM `ptms` ORDER BY download_count DESC');
         }
 
         // Verifica se a consulta está OK
@@ -72,9 +72,9 @@ class HomeModel extends MainModel{
     /*public function getLastAdded($intLimit = 0) {
 
         if ($intLimit > 0){
-            $query = $this->db->query('SELECT * FROM `movies` ORDER BY creation_timestamp DESC LIMIT ' . $intLimit);
+            $query = $this->db->query('SELECT * FROM `ptms` ORDER BY creation_timestamp DESC LIMIT ' . $intLimit);
         } else {
-            $query = $this->db->query('SELECT * FROM `movies` ORDER BY creation_timestamp DESC');
+            $query = $this->db->query('SELECT * FROM `ptms` ORDER BY creation_timestamp DESC');
         }
 
 

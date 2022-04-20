@@ -13,9 +13,9 @@ class PtmDB
 
     public $host    = 'localhost',
         $host_port  = 3306,
-        $db_name    = 'movie',
+        $db_name    = 'ptm',
         $password   = '',
-        $user       = 'movie',
+        $user       = 'ptm',
         $charset    = 'utf8',
         $pdo        = null,
         $error      = null,

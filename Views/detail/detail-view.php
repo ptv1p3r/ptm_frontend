@@ -11,34 +11,34 @@
 <div class="container-fluid" style="margin-top:30px">
     <div class="row">
         <div class="col-sm-1"></div>
-        <!-- Movie Picture -->
+        <!-- ptm Picture -->
         <div class="card" style="margin:10px auto;width: 200px;height: 300px">
-                <img class="card-img-top" src="<?php echo $movieData[0]["poster"]; ?>" alt="<?php echo $movieData[0]["title"]; ?>">
+                <img class="card-img-top" src="<?php echo $ptmData[0]["poster"]; ?>" alt="<?php echo $ptmData[0]["title"]; ?>">
             <div class="card-body">
-                <input type="hidden" id="movieId" name="movieId" value="<?php echo $movieData[0]["movid"]; ?>" />
+                <input type="hidden" id="ptmId" name="ptmId" value="<?php echo $ptmData[0]["movid"]; ?>" />
                 <button type="button"  id="btnDownload" class="btn btn-success" style="width: 160px">Download</button>
             </div>
         </div>
 
-        <!-- Movie Info -->
+        <!-- ptm Info -->
         <div class="col-sm-2">
             <br>
             <div class="text-light">In: <i>720p.BlueRay, 1080p.Web</i></div>
             <br style="line-height: 120px">
-            <p class="text-muted" id="imdb"><img src="../../Images/logo-imdb.svg"  alt="" width="24" height="24"> <?php echo $movieData[0]["rating_1"];?> <span style="color: green;"><i class="fas fa-star"></i></span></p>
-            <p class="fas fa-heart" style="color: green;"><span class="text-muted" id="voteCount"><i> Voted <?php echo $movieData[0]["vote_ok"] + $movieData[0]["vote_notok"];?> times</i></span></p>
-            <p class="text-muted" id="DownloadCount"><i>Downloaded <?php echo $movieData[0]["download_count"];?> times</i></p>
-            <p class="text-muted"><i><?php echo $movieData[0]["update_timestamp"];?></i></p>
+            <p class="text-muted" id="imdb"><img src="../../Images/logo-imdb.svg"  alt="" width="24" height="24"> <?php echo $ptmData[0]["rating_1"];?> <span style="color: green;"><i class="fas fa-star"></i></span></p>
+            <p class="fas fa-heart" style="color: green;"><span class="text-muted" id="voteCount"><i> Voted <?php echo $ptmData[0]["vote_ok"] + $ptmData[0]["vote_notok"];?> times</i></span></p>
+            <p class="text-muted" id="DownloadCount"><i>Downloaded <?php echo $ptmData[0]["download_count"];?> times</i></p>
+            <p class="text-muted"><i><?php echo $ptmData[0]["update_timestamp"];?></i></p>
         </div>
 
         <!-- Synopsis-->
         <div class="col-sm-4">
-            <div class="text-light"><h1><?php echo $movieData[0]["title"];?></h1></div>
-            <div class="text-light"><h2><?php echo $movieData[0]["year"];?></h2></div>
+            <div class="text-light"><h1><?php echo $ptmData[0]["title"];?></h1></div>
+            <div class="text-light"><h2><?php echo $ptmData[0]["year"];?></h2></div>
             <div class="text-light"><h3><?php echo $categories;?></h3></div>
             <br>
             <div class="text-light"><h5>Synopsis</h5></div>
-            <div><p class="text-justify text-muted"><?php echo $movieData[0]["description"];?></p></div>
+            <div><p class="text-justify text-muted"><?php echo $ptmData[0]["description"];?></p></div>
         </div>
         <div class="col-sm-3"></div>
     </div>
@@ -54,7 +54,7 @@
         <!-- Trailer -->
         <div class="col-sm-3 embed-responsive">
             <iframe class="embed-responsive-item"
-                    src="<?php echo $movieData[0]["media"];?>"
+                    src="<?php echo $ptmData[0]["media"];?>"
                     frameborder="0"
                     style="width: 400px; height: 250px"
                     allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
@@ -65,15 +65,15 @@
 
         <!-- Picture 1 -->
         <div class="col-sm-3 screenshot">
-            <a class="thumbnail" href="<?php echo $movieData[0]["image_1"];?>">
-                <img class="img-responsive" src="<?php echo $movieData[0]["image_1"];?>" alt=""  height="250" width="400">
+            <a class="thumbnail" href="<?php echo $ptmData[0]["image_1"];?>">
+                <img class="img-responsive" src="<?php echo $ptmData[0]["image_1"];?>" alt=""  height="250" width="400">
             </a>
 
         </div>
         <!-- Picture 2 -->
         <div class="col-sm-3 screenshot">
-            <a class="thumbnail" href="<?php echo $movieData[0]["image_2"];?>">
-                <img class="img-responsive" src="<?php echo $movieData[0]["image_2"];?>" alt=""  height="250" width="400">
+            <a class="thumbnail" href="<?php echo $ptmData[0]["image_2"];?>">
+                <img class="img-responsive" src="<?php echo $ptmData[0]["image_2"];?>" alt=""  height="250" width="400">
             </a>
         </div>
 

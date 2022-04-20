@@ -1,11 +1,11 @@
 //$(document).ready(function () {
    /*
-    var movieId = $('input[type=hidden]#movieId').val();
+    var ptmId = $('input[type=hidden]#ptmId').val();
 
     $('#btnDownload').click(function (){
         $.get("http://127.0.0.1/index/?path=",
             {
-                path: "detail/download/" + movieId,
+                path: "detail/download/" + ptmId,
             },
             function(data, status){
                 var dataReceived = data.split("#");
@@ -34,7 +34,7 @@
 
         $.get("http://127.0.0.1/index/?path=",
             {
-                path: "detail/voteUp/" + movieId,
+                path: "detail/voteUp/" + ptmId,
             },
             function(data, status){
                 $("#voteCount").text("Voted " + data + " times");
@@ -48,7 +48,7 @@
 
         $.get("http://127.0.0.1/index/?path=",
             {
-                path: "detail/voteDown/" + movieId,
+                path: "detail/voteDown/" + ptmId,
             },
             function(data, status){
                 $("#voteCount").text("Voted " + data + " times");
@@ -58,11 +58,11 @@
             });
     })
 
-    // $('#editMovieModal').click(function (){
+    // $('#editptmModal').click(function (){
     //     var movid = $(this).data('movid');
     //     $.get("http://127.0.0.1/index/?path=",
     //         {
-    //             path: "admin/getMovie/" + movid,
+    //             path: "admin/getptm/" + movid,
     //         },
     //         function(data, status){
     //             var dataReceived = data.split("#");
