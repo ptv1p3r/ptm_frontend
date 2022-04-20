@@ -45,14 +45,15 @@
                     </tr>
                     </thead>
 
-                    <?php if (!empty($this->userdata['groupsList']['data'])) {
-                        foreach ($this->userdata['groupsList']['data'] as $key => $group) { ?>
+                    <?php if (!empty($this->userdata['groupsList'])) {
+                        foreach ($this->userdata['groupsList'] as $key => $group) { ?>
                             <tbody>
                             <tr>
-                                <td><?php echo $group["Name"] ?></td>
-                                <td><?php echo $group["Description"] ?></td>
-                                <td><?php echo $group["SecurityId"] ?></td>
+                                <td><?php echo $group["name"] ?></td>
+                                <td><?php echo $group["description"] ?></td>
+                                <td><?php echo $group["securityId"] ?></td>
                                 <td><?php echo $group["active"] ?></td>
+                                <td><?php echo $group["dateCreated"] ?></td>
                                 <td><?php echo $group["dateModified"] ?></td>
                                 <td>
                                     <a href="#editGroupModal" id="<?php echo $group['id'] ?>" class="edit"
@@ -106,7 +107,7 @@
         <div id="addGroupModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form>
+                    <form id="addGroup">
                         <div class="modal-header">
                             <h4 class="modal-title">Add Group</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -160,14 +161,14 @@
         <div id="editGroupModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="/admin/group/1" method="post">
+                    <form id="editGroup">
                         <div class="modal-header">
                             <h4 class="modal-title">Edit Group</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <input id="groupid" type="hidden" class="form-control" value="<?php //$groupById[0]["groupid"]?>">
+                                <input id="editGroupId" name="editGroupId" type="hidden" class="form-control" value="">
                             </div>
 
                             <div class="form-group">
@@ -187,26 +188,6 @@
                                 <input type="checkbox" class="form-control" name="editGroupActive">
                             </div>
 
-                            <!--<label>Categories</label>   fill categories
-                            <div class="form-group" style="padding-left: 40px" >
-                                <?php
-                                /*$i=1;
-                                foreach ( $categories as $category) {?>
-
-                                    <div class="form-check form-check-inline col-md-3">
-                                        <input class="form-check-input" type="checkbox" id="<?php echo $category["catid"]?>"
-                                        <label class="form-check-label" for="<?php echo $category["catid"]?>"><?php echo $category["name"]?></label>
-                                    </div>
-
-                                    <?php if($i % 3 == 0) { ?>
-                                        </div>
-                                        <div class="form-group" style="padding-left: 40px">
-                                    <?php } ?>
-                                <?php $i++;
-                                }*/?>
-
-                            </div>-->
-
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -221,7 +202,7 @@
         <div id="deleteGroupModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="/admin/group/1" method="post">
+                    <form id="deleteGroup">
                         <div class="modal-header">
                             <h4 class="modal-title">Delete Group</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -229,7 +210,7 @@
                         <div class="modal-body">
                             <p>Are you sure you want to delete this Group?</p>
                             <p class="text-warning"><small>This action cannot be undone.</small></p>
-                            <input id="groupid" name="groupid" type="hidden" class="form-control">
+                            <input id="deleteGroupId" name="deleteGroupId" type="hidden" class="form-control">
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -258,16 +239,15 @@
 
 <script>
     $(document).ready(function() {
-
         // ajax to Add Group
-        $('#addGroupModal').submit(function (event) {
+        $('#addGroup').submit(function (event) {
             event.preventDefault(); //prevent default action
 
             let formData = {
                 'action': "AddGroup",
                 'data': $(this).serializeArray()
             };
-
+            console.log(formData)
             $.ajax({
                 url: "<?php echo HOME_URL . '/admin/groups';?>",
                 dataType: "json",
@@ -284,7 +264,7 @@
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
                     });
                 },
@@ -297,7 +277,7 @@
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
                     });
                 }
@@ -305,14 +285,14 @@
         });
 
         // ajax to Edit Group
-        $('#editGroupModal').submit(function (event) {
+        $('#editGroup').submit(function (event) {
             event.preventDefault(); //prevent default action
 
             let formData = {
                 'action' : "UpdateGroup",
                 'data'   : $(this).serializeArray()
             };
-
+            console.log(formData)
             $.ajax({
                 url : "<?php echo HOME_URL . '/admin/groups';?>",
                 dataType: "json",
@@ -328,7 +308,7 @@
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
                     });
                 },
@@ -340,7 +320,7 @@
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
                     });
                 }
@@ -352,7 +332,7 @@
 
             let formData = {
                 'action' : "GetGroup",
-                'data'   : $(this).attr('Id') //gets group id from edit button on table
+                'data'   : $(this).attr('id') //gets group id from id="" attribute on edit button from table
             };
 
             $.ajax({
@@ -362,15 +342,15 @@
                 data : formData,
                 success: function (data) {
 
-                    $("#editGroupId").val(data['data'][0]['Id']);
-                    $("#editGroupName").val(data['data'][0]['Name']);
-                    $("#editGroupDescription").val(data['data'][0]['Description']);
-                    $("#editGroupSecurityId").val(data['data'][0]['SecurityId']);
+                    $('[name="editGroupId"]').val(data[0]['id']);
+                    $('[name="editGroupName"]').val(data[0]['name']);
+                    $('[name="editGroupDescription"]').val(data[0]['description']);
+                    $('[name="editGroupSecurityId"]').val(data[0]['securityId']);
 
-                    if (data['data'][0]['Active'] === 1) {
-                        $("#editGroupActive").attr('checked', true);
+                    if (data[0]['active'] === 1) {
+                        $('[name="editGroupActive"]').attr('checked', true);
                     } else {
-                        $("#editGroupActive").attr('checked', false);
+                        $('[name="editGroupActive"]').attr('checked', false);
                     }
 
                     $("#editGroupModal").modal('show');
@@ -384,7 +364,7 @@
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
                     });
                 }
@@ -393,7 +373,7 @@
         });
 
         // ajax to Delete Group
-        $('#deleteGroupModal').submit(function(event){
+        $('#deleteGroup').submit(function(event){
             event.preventDefault(); //prevent default action
 
             let formData = {
@@ -416,7 +396,7 @@
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
                     });
                 },
@@ -428,7 +408,7 @@
                          showConfirmButton: false,
                          timer: 2000,
                          didClose: () => {
-                             location.reload();
+                             //location.reload();
                          }
                     });
                 }
@@ -438,7 +418,7 @@
         // ajax to get data to Modal Delete Group
         $('.delete').on('click', function(){
 
-            $("#deleteGroupId").val($(this).attr('Id')); //gets group id from delete button on table
+            $('[name="#deleteGroupId"]').val($(this).attr('id')); //gets group id from id="" attribute on delete button from table
             $("#deleteGroupModal").modal('show');
 
         });
