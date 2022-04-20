@@ -46,12 +46,12 @@ class GroupsModel extends MainModel {
     public function getGroupById($id) {
         $result = null;
 
-        $url = API_URL . '/' . $id;
+        $url = API_URL . 'api/v1/groups/view/' . $id;
 
-        if (!empty($this->userdata['token'])){
-            $userToken = $this->userdata['token'];
-            $result = callAPI("GET", $url, '', $userToken );
-        }
+        //if (!empty($this->userdata['token'])){
+            //$userToken = $this->userdata['token'];
+            $result = callAPI("GET", $url, '');/*, $userToken */
+        //}
 
         return json_decode($result, true);
     }
@@ -84,36 +84,42 @@ class GroupsModel extends MainModel {
         $normalizedData = array();
 
         // Not active by default
-        $normalizedData['Active'] = "";
+        $normalizedData['active'] = "";
 
         // get data from form array and package it to send to api
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']) { //gets <input name="">
                     case "addGroupName":
-                        $normalizedData['Name'] = $value;
+                        $normalizedData['name'] = $dataVector['value'];
                         break;
 
                     case "addGroupDescription":
-                        $normalizedData['Description'] = $value;
+                        $normalizedData['description'] = $dataVector['value'];
                         break;
 
                     case "addGroupSecurityId":
-                        $normalizedData['SecurityId'] = $value;
+                        $normalizedData['securityId'] = $dataVector['value'];
                         break;
 
-                    case "addGroupActive":
-                        $normalizedData['Active'] = "True";
-                        break;
+                    /*case "addGroupActive":
+                        $normalizedData['active'] = 1;
+                        break;*/
+                }
+
+                if ($dataVector['name'] == "addGroupActive"){
+                    $normalizedData['active'] = "1";
+                } else {
+                    $normalizedData['active'] = "0";
                 }
             }
         }
 
         $url = API_URL . 'api/v1/groups/create';
-        if (!empty($this->userdata['token'])){
-            $userToken = $this->userdata['token'];
-            $result = callAPI("POST", $url, $normalizedData, $userToken );
-        }
+        //if (!empty($this->userdata['token'])){
+            //$userToken = $this->userdata['token'];
+            $result = callAPI("POST", $url, $normalizedData/*, $userToken */);
+       // }
 
         return $result;
     }
@@ -125,39 +131,50 @@ class GroupsModel extends MainModel {
      */
     public function updateGroup($data) {
         $result = null;
+        $GroupId = null;
         $normalizedData = array();
 
         // Not active by default
-        $normalizedData['Active'] = "";
+        $normalizedData['active'] = "";
 
         // get data from form array and package it to send to api
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']){ //gets <input name="">
+                    case "editGroupId":
+                        $GroupId = $dataVector['value'];
+                        break;
+
                     case "editGroupName":
-                        $normalizedData['Name'] = $value;
+                        $normalizedData['name'] = $dataVector['value'];
                         break;
 
                     case "editGroupDescription":
-                        $normalizedData['Description'] = $value;
+                        $normalizedData['description'] = $dataVector['value'];
                         break;
 
                     case "editGroupSecurityId":
-                        $normalizedData['SecurityId'] = $value;
+                        $normalizedData['securityId'] = $dataVector['value'];
                         break;
 
-                    case "editGroupActive":
-                        $normalizedData['Active'] = "True";
-                        break;
+                    /*case "editGroupActive":
+                        $normalizedData['active'] = "1";
+                        break;*/
+                }
+
+                if ($dataVector['name'] == "editGroupActive"){
+                    $normalizedData['active'] = "1";
+                } else {
+                    $normalizedData['active'] = "0";
                 }
             }
         }
 
-        $url = API_URL . '/' . $normalizedData['Id'];
-        if (!empty($this->userdata['token'])){
-            $userToken = $this->userdata['token'];
-            $result = callAPI("POST", $url, $normalizedData, $userToken );
-        }
+        $url = API_URL . 'api/v1/groups/edit/' . $GroupId;
+        //if (!empty($this->userdata['token'])){
+            //$userToken = $this->userdata['token'];
+            $result = callAPI("PUT", $url, $normalizedData/*, $userToken */);
+       // }
 
         return $result;
     }
