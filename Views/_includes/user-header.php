@@ -248,82 +248,35 @@
                     </ul>
                 </li>
             </ul>
+
+
             <ul class="topnav-right">
-                <li class="login-reg"><a href="" data-toggle="modal" data-target="#loginModal"></i> Login</a>
-                    | <a href="<?php echo HOME_URL . '/register'; ?>">Signup</a>
+                <
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"
+                       href="" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                                class="fas fa-search fa-2x fa-fw" style="color: white; hoover:true"></i></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"
+                       href="" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                                class="fa fa-cog fa-2x fa-fw" style="color: white; hoover:true"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Alterar a conta</a></li>
+                        <li><a href="#">Definições</a></li>
+                        <li><a href="#">Mais qualquer coisa</a></li>
+                        <li><a href="#">Etc....</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"
+                       href="" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                                class="fas fa-sign-out-alt fa-2x fa-fw" style="color: white; hoover:true"></i></a>
                 </li>
             </ul>
         </div>
     </nav>
 </header>
-
-
-<!-- Login Modal HTML -->
-<div id="loginModal" class="modal fade">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-dialog modal-login">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="avatar">
-                        <img src="../../../Images/home/logo.png" alt="Avatar">
-                    </div>
-                    <h4 class="modal-title">Login</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="username" placeholder="Username"
-                                   required="required">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" name="password" placeholder="Password"
-                                   required="required">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-lg btn-block login-btn">Login</button>
-                        </div>
-                    </form>
-                    <div class="modal-footer">
-                        <a href="#">Esqueces-te a password?</a>
-                    </div>
-                    <br>
-                    <!--                    <div class="text-center text-muted delimiter">Usa a redes sociais</div>-->
-                    <!--                    <div class="d-flex justify-content-center social-buttons">-->
-                    <!--                        <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip"-->
-                    <!--                                data-placement="top" title="Twitter">-->
-                    <!--                            <i class="fab fa-twitter"></i>-->
-                    <!--                        </button>-->
-                    <!--                        <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip"-->
-                    <!--                                data-placement="top" title="Facebook">-->
-                    <!--                            <i class="fab fa-facebook"></i>-->
-                    <!--                        </button>-->
-                    <!--                        <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip"-->
-                    <!--                                data-placement="top" title="Linkedin">-->
-                    <!--                            <i class="fab fa-linkedin"></i>-->
-                    <!--                        </button>-->
-                    <!--                        </di>-->
-                    <!--                    </div>-->
-                    <!--                </div>-->
-                    <div class="modal-footer">
-                        <div class="modal-footer d-flex justify-content-center">
-                            <div class="signup-section">Ainda não és membro? <a
-                                        href="<?php echo HOME_URL . '/register'; ?>"
-                                        class="text-info"> Sign Up</a>.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End Login Modal HTML -->
-
-
-<script>
-
-
-</script>
-
-

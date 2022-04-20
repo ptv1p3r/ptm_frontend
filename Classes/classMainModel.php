@@ -55,7 +55,6 @@ class MainModel
     /**
      *
      * manages all User data
-     *
      */
     public $userdata;
 }

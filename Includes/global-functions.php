@@ -68,7 +68,14 @@ function timeCalculation($time){
     }
 }
 
-// Metodo que efetua os pedidos a api e retorna os valores
+/**
+ * Metodo que efetua os pedidos a api e retorna os valores
+ * @param $method
+ * @param $url
+ * @param $data
+ * @param string $token
+ * @return bool|string
+ */
 function callAPI($method, $url, $data, $token = ""){
     $curl = curl_init();
 
