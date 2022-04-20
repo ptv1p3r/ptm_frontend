@@ -155,7 +155,7 @@ class AdminController extends MainController
                     $data = $_POST['data'];
                     $apiResponse = json_decode($modelo->deleteGroup($data),true); //decode to check message from api
 
-                    if ($apiResponse['message'] == "Group deleted successfully"){
+                    if ($apiResponse['deleted']){
                         $apiResponse['code'] = 200;
                     } else {
                         $apiResponse['code'] = 400;
