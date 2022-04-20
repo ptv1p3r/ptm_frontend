@@ -35,9 +35,6 @@ class MainController
      */
     public $parametros = array();
 
-
-    public $userdata = array();
-
     /**
      * user data
      *

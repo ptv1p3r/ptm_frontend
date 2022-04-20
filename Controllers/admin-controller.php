@@ -179,25 +179,4 @@ class AdminController extends MainController
             require ABSPATH . '/views/_includes/admin-footer.php';
         }
     }
-
-    /*public function groupById(){
-        // Título da página
-
-        // Parametros da função
-        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
-
-        $modelo = $this->load_model('admin-model');
-
-        $ReturnData = null;
-
-        $ReturnData = $modelo->getDownloadLink($modelo->parametros[0]);
-
-        $data = $ReturnData[0]["groupid"] . "#" . $ReturnData[0]["title"] . "#" .
-            $ReturnData[0]["year"];
-
-        echo $ReturnData;
-    }*/
-
-    //login logout
-
 }
