@@ -54,8 +54,7 @@ class MainModel
 
     /**
      *
-     * Parâmetros da URL
-     *
+     * manages all User data
      */
     public $userdata;
 }
