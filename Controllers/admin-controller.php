@@ -126,7 +126,7 @@ class AdminController extends MainController
 
                     $apiResponse = json_decode($modelo->addGroup($data),true); //decode to check message from api
 
-                    if ($apiResponse['message'] == "Group added successfully"){
+                    if ($apiResponse['created']){
                         $apiResponse['code'] = 200;
                     } else {
                         $apiResponse['code'] = 400;
@@ -140,7 +140,7 @@ class AdminController extends MainController
                     $data = $_POST['data'];
                     $apiResponse = json_decode($modelo->updateGroup($data),true); //decode to check message from api
 
-                    if ($apiResponse['message'] == "Group updated successfully"){
+                    if ($apiResponse['updated']){
                         $apiResponse['code'] = 200;
                     } else {
                         $apiResponse['code'] = 400;
