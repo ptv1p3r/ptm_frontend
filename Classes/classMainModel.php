@@ -51,4 +51,10 @@ class MainModel
      *
      */
     public $parametros;
+
+    /**
+     *
+     * manages all User data
+     */
+    public $userdata;
 }

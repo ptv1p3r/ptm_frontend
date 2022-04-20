@@ -24,9 +24,9 @@ class HomeController extends MainController
 
         /*$modelo = $this->load_model('home-model');
 
-        $moviesTopRated = $modelo->getTopRatedList(4);
-        $moviesTopDownloaded = $modelo->getTopDownloaded(4);
-        $moviesLastAdded = $modelo->getLastAdded(4);*/
+        $ptmTopRated = $modelo->getTopRatedList(4);
+        $ptmTopDownloaded = $modelo->getTopDownloaded(4);
+        $ptmLastAdded = $modelo->getLastAdded(4);*/
 
         /** Carrega os arquivos do view **/
 
@@ -36,6 +36,27 @@ class HomeController extends MainController
 
         require ABSPATH . '/views/_includes/footer.php';
 
+    }
+
+    public function rights()
+    {
+        /**
+         * Page load
+         * "/views/home/rights-view.php"
+         */
+
+        // Title page
+        $this->title = 'User';
+
+        // Function parameters
+        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
+        //$modelo = $this->load_model('user-model');
+
+        /** load files from view **/
+        require ABSPATH . '/views/_includes/header.php';
+        require ABSPATH . '/views/home/rights-view.php';
+        require ABSPATH . '/views/_includes/footer.php';
     }
 
 }

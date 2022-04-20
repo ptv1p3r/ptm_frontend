@@ -31,7 +31,6 @@ class AdminController extends MainController
 
         require ABSPATH . '/views/_includes/admin-footer.php';
 
-
     }
 
     /*public function login() {
@@ -61,7 +60,7 @@ class AdminController extends MainController
 
                         $_POST['validation'] = "success";
 
-                        //$this->movie(1);
+                        //$this->group(1);
                     }
                 } else {
                     $_POST['validation'] = "failed";
@@ -101,131 +100,87 @@ class AdminController extends MainController
         $this->index();
     }*/
 
-    public function movie(){
+    /**
+     * loads /admin/groups page and handles ajax
+     * @return void
+     */
+    public function groups(){
         // Título da página
-        $this->title = 'Admin - Movies';
+        $this->title = 'Admin - Grupos';
 
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
 
-        /*$modelo = $this->load_model('admin-model');
+        $modelo = $this->load_model('groups-model');
 
-        $movies = $modelo->getMovies();
+        // processa chamadas ajax
+        if(isset($_POST['action']) && !empty($_POST['action'])) {
+            $action = $_POST['action'];
+            switch($action) {
+                case 'GetGroup' :
+                    echo json_encode($modelo->getGroupById($_POST['data']));
+                    break;
 
-        if ($parametros[0] == "" || $parametros[0] == "1") {
-            $moviesTable = $modelo->getMoviesTable(0);
+                case 'AddGroup' :
+                    $data = $_POST['data'];
+
+                    $apiResponse = json_decode($modelo->addGroup($data),true); //decode to check message from api
+
+                    if ($apiResponse['created']){
+                        $apiResponse['code'] = 200;
+                    } else {
+                        $apiResponse['code'] = 400;
+                    }
+
+                    $apiResponse = json_encode($apiResponse); // encode package to send
+                    echo $apiResponse;
+                    break;
+
+                case 'UpdateGroup' :
+                    $data = $_POST['data'];
+                    $apiResponse = json_decode($modelo->updateGroup($data),true); //decode to check message from api
+
+                    if ($apiResponse['updated']){
+                        $apiResponse['code'] = 200;
+                    } else {
+                        $apiResponse['code'] = 400;
+                    }
+
+                    $apiResponse = json_encode($apiResponse); // encode package to send
+                    echo $apiResponse;
+
+                    break;
+
+                case 'DeleteGroup' :
+                    $data = $_POST['data'];
+                    $apiResponse = json_decode($modelo->deleteGroup($data),true); //decode to check message from api
+
+                    if ($apiResponse['deleted']){
+                        $apiResponse['code'] = 200;
+                    } else {
+                        $apiResponse['code'] = 400;
+                    }
+
+                    $apiResponse = json_encode($apiResponse); // encode package to send
+                    echo $apiResponse;
+
+                    break;
+            }
+
         } else {
-            $moviesTable = $modelo->getMoviesTable(($parametros[0]*10)-10);
+
+            $this->userdata['groupsList'] = $modelo->getGroupList();
+            /**Carrega os arquivos do view**/
+
+            require ABSPATH . '/views/_includes/admin-header.php';
+
+            require ABSPATH . '/views/admin/admin-groups-view.php';
+
+            require ABSPATH . '/views/_includes/admin-footer.php';
         }
-
-
-        $categories = $modelo->getCategories();
-        $movieCategories = $modelo->getMovieCategories();
-
-        $movieById = $modelo->getMovieById($modelo->parametros[0]);
-        */
-
-        //Carrega os arquivos do view
-
-        require ABSPATH . '/views/_includes/admin-header.php';
-
-        require ABSPATH . '/views/admin/admin-movie-view.php';
-
-        require ABSPATH . '/views/_includes/admin-footer.php';
-
     }
 
-    public function comment(){
-        // Título da página
-        $this->title = 'Admin - Comment';
-
-        // Parametros da função
-        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
-
-        /*$modelo = $this->load_model('admin-model');
-
-        $comments = $modelo->getComments();
-
-        if ($parametros[0] == "" || $parametros[0] == "1") {
-            $commentsTable = $modelo->getCommentsTable(0);
-        } else {
-            $commentsTable = $modelo->getCommentsTable(($parametros[0]*10)-10);
-        }*/
-
-        // Carrega os arquivos do view
-
-        require ABSPATH . '/views/_includes/admin-header.php';
-
-        require ABSPATH . '/views/admin/admin-comment-view.php';
-
-        require ABSPATH . '/views/_includes/admin-footer.php';
-
-    }
-
-    public function category(){
-        // Título da página
-        $this->title = 'Admin - Category';
-
-        // Parametros da função
-        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
-
-        //$modelo = $this->load_model('admin-login-model');
-
-        /*$modelo = $this->load_model('admin-model');
-
-
-        if (isset($_POST['nameToAdd'])) {
-            $modelo->setCategory($_POST['nameToAdd']);
-        }
-
-        if (isset($_POST['id']) && isset($_POST['name'])) {
-            $modelo->updateCategory($_POST["id"], $_POST['name']);
-        }
-
-        if (isset($_POST['id']) && !isset($_POST['name'])) {
-            $modelo->removeCategory($_POST['id']);
-        }
-
-        $categories = $modelo->getCategories();
-
-        if ($parametros[0] == "" || $parametros[0] == "1") {
-            $categoriesTable = $modelo->getTableCategories(0);
-        } else {
-            $categoriesTable = $modelo->getTableCategories(($parametros[0]*10)-10);
-        }*/
-
-
-
-        // Carrega os arquivos do view
-
-        require ABSPATH . '/views/_includes/admin-header.php';
-
-        require ABSPATH . '/views/admin/admin-category-view.php';
-
-        require ABSPATH . '/views/_includes/admin-footer.php';
-
-    }
-
-    public function settings(){
-        // Título da página
-        $this->title = 'Admin - Settings';
-
-        // Parametros da função
-        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
-
-        //$modelo = $this->load_model('admin-model');
-
-        /** Carrega os arquivos do view **/
-
-        require ABSPATH . '/views/_includes/admin-header.php';
-
-        require ABSPATH . '/views/admin/admin-settings-view.php';
-
-        require ABSPATH . '/views/_includes/admin-footer.php';
-
-    }
-
-    /*public function movieById(){
+    /*public function groupById(){
         // Título da página
 
         // Parametros da função
@@ -237,7 +192,7 @@ class AdminController extends MainController
 
         $ReturnData = $modelo->getDownloadLink($modelo->parametros[0]);
 
-        $data = $ReturnData[0]["movid"] . "#" . $ReturnData[0]["title"] . "#" .
+        $data = $ReturnData[0]["groupid"] . "#" . $ReturnData[0]["title"] . "#" .
             $ReturnData[0]["year"];
 
         echo $ReturnData;

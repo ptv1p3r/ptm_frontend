@@ -62,12 +62,12 @@
 <br>
 
 
-<!-- Movies -->
+<!-- ptms -->
 <div class="container-fluid" style="margin-top:30px">
     <!-- Upper Pagination -->
     <div class="row justify-content-center">
         <ul class="pagination">
-            <?php for ($i = 1; $i <= ceil($movieCount / 8); $i++) { ?>
+            <?php for ($i = 1; $i <= ceil($ptmCount / 8); $i++) { ?>
                     <li class="page-item <?php if ($urlContent[1] == $i) {
                         echo "active";
                     } else if ($urlContent[1] == null && $i==1) {
@@ -81,20 +81,20 @@
     <br>
     <br>
 
-    <!-- Movies -->
+    <!-- ptms -->
     <div class="container-fluid">
         <div class="row " style="margin-bottom: 10%">
-            <?php if ($movieCount <= 4) {
-                for ($i = 0; $i < $movieCount; $i++) { ?>
+            <?php if ($ptmCount <= 4) {
+                for ($i = 0; $i < $ptmCount; $i++) { ?>
                     <div class="card" style="margin:10px auto;width: 200px;height: 300px">
-                        <a href="<?php echo HOME_URI . '/detail/view/' . $movies[$i]["movid"]; ?>">
-                            <img class="card-img-top" src="<?php echo $movies[$i]["poster"]; ?>"
-                                 alt="<?php echo $movies[$i]["title"]; ?>">
+                        <a href="<?php echo HOME_URI . '/detail/view/' . $ptms[$i]["movid"]; ?>">
+                            <img class="card-img-top" src="<?php echo $ptms[$i]["poster"]; ?>"
+                                 alt="<?php echo $ptms[$i]["title"]; ?>">
                         </a>
                         <div class="card-body">
-                            <h5 class="card-title text-white"><?php echo $movies[$i]["title"]; ?></h5>
-                            <p class="card-text text-muted"><?php echo $movies[$i]["year"]; ?></p>
-                            <a href="<?php echo HOME_URI . '/detail/view/' . $movies[$i]["movid"]; ?>"
+                            <h5 class="card-title text-white"><?php echo $ptms[$i]["title"]; ?></h5>
+                            <p class="card-text text-muted"><?php echo $ptms[$i]["year"]; ?></p>
+                            <a href="<?php echo HOME_URI . '/detail/view/' . $ptms[$i]["movid"]; ?>"
                                 class="btn btn-success">Detail</a>
                         </div>
                     </div>
@@ -103,14 +103,14 @@
             <?php } else {
                 for ($i = $startCount ; $i < $count; $i++) { ?>
                     <div class="card" style="margin:10px auto;width: 200px;height: 300px">
-                        <a href="<?php echo HOME_URI . '/detail/view/' . $movies[$i]["movid"]; ?>">
-                            <img class="card-img-top" src="<?php echo $movies[$i]["poster"]; ?>"
-                                 alt="<?php echo $movies[$i]["title"]; ?>">
+                        <a href="<?php echo HOME_URI . '/detail/view/' . $ptms[$i]["movid"]; ?>">
+                            <img class="card-img-top" src="<?php echo $ptms[$i]["poster"]; ?>"
+                                 alt="<?php echo $ptms[$i]["title"]; ?>">
                         </a>
                         <div class="card-body">
-                            <h5 class="card-title text-white"><?php echo $movies[$i]["title"]; ?></h5>
-                            <p class="card-text text-muted"><?php echo $movies[$i]["year"]; ?></p>
-                            <a href="<?php echo HOME_URI . '/detail/view/' . $movies[$i]["movid"]; ?>"
+                            <h5 class="card-title text-white"><?php echo $ptms[$i]["title"]; ?></h5>
+                            <p class="card-text text-muted"><?php echo $ptms[$i]["year"]; ?></p>
+                            <a href="<?php echo HOME_URI . '/detail/view/' . $ptms[$i]["movid"]; ?>"
                                class="btn btn-success">Detail</a>
                         </div>
                     </div>
@@ -131,7 +131,7 @@
     <!-- Lower Pagination -->
     <div class="row justify-content-center">
         <ul class="pagination">
-            <?php for ($i = 1; $i <= ceil($movieCount / 8); $i++) { ?>
+            <?php for ($i = 1; $i <= ceil($ptmCount / 8); $i++) { ?>
                 <li class="page-item <?php if ($urlContent[1] == $i) {
                     echo "active";
                 } else if ($urlContent[1] == null && $i==1) {

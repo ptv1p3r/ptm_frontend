@@ -12,22 +12,22 @@
 <!-- Top Rated
 <div class="container-fluid">
     <div class="text-light">
-        <h1>Download RealMovie: HD smallest size</h1>
+        <h1>Download Realptm: HD smallest size</h1>
     </div>
 </div>
 
 <div class="container-fluid">
     <p class="text-light text-center" style="font-size:160%;"><span class="fas fa-heart" style="color: green;"></span> TOP RATED</p>
     <div class="row " style="margin-bottom: 10%;">
-        <?php //foreach ($moviesTopRated as $movie) { ?>
+        <?php //foreach ($ptmsTopRated as $ptm) { ?>
             <div class="card" style="margin:10px auto;width: 200px;height: 300px">
-                <a class="card-link" href="<?php //echo HOME_URI . '/detail/view/' . $movie["movid"];?>">
-                    <img class="card-img-top" src="<?php //echo $movie["poster"]; ?>" alt="<?php //echo $movie["title"]; ?>">
+                <a class="card-link" href="<?php //echo HOME_URI . '/detail/view/' . $ptm["movid"];?>">
+                    <img class="card-img-top" src="<?php //echo $ptm["poster"]; ?>" alt="<?php //echo $ptm["title"]; ?>">
                 </a>
                 <div class="card-body">
-                    <h5 class="card-title text-white"><?php //echo $movie["title"]; ?></h5>
-                    <p class="card-text text-muted"><?php //echo $movie["year"]; ?></p>
-                    <a href="<?php // echo HOME_URI . '/detail/view/' . $movie["movid"];?>" class="btn btn-success">Details</a>
+                    <h5 class="card-title text-white"><?php //echo $ptm["title"]; ?></h5>
+                    <p class="card-text text-muted"><?php //echo $ptm["year"]; ?></p>
+                    <a href="<?php // echo HOME_URI . '/detail/view/' . $ptm["movid"];?>" class="btn btn-success">Details</a>
                 </div>
             </div>
          <?php //} ?>
@@ -37,15 +37,15 @@
 <div class="container-fluid">
     <p class="text-light text-center" style="font-size:160%;"><span class="fas fa-star" style="color: orange;"></span> TOP DOWNLOADED</p>
     <div class="row" style="margin-bottom: 10%;">
-        <?php //foreach ($moviesTopDownloaded as $movie) { ?>
+        <?php //foreach ($ptmsTopDownloaded as $ptm) { ?>
             <div class="card" style="margin:10px auto;width: 200px;height: 300px">
-                <a href="<?php //echo HOME_URI . '/detail/view/' . $movie["movid"];?>">
-                    <img class="card-img-top" src="<?php //echo $movie["poster"]; ?>" alt="<?php //echo $movie["title"]; ?>">
+                <a href="<?php //echo HOME_URI . '/detail/view/' . $ptm["movid"];?>">
+                    <img class="card-img-top" src="<?php //echo $ptm["poster"]; ?>" alt="<?php //echo $ptm["title"]; ?>">
                 </a>
                 <div class="card-body" >
-                    <h5 class="card-title text-white"><?php //echo $movie["title"]; ?></h5>
-                    <p class="card-text text-muted"><?php //echo $movie["year"]; ?></p>
-                    <a href="<?php //echo HOME_URI . '/detail/view/' . $movie["movid"];?>" class="btn btn-success">Details</a>
+                    <h5 class="card-title text-white"><?php //echo $ptm["title"]; ?></h5>
+                    <p class="card-text text-muted"><?php //echo $ptm["year"]; ?></p>
+                    <a href="<?php //echo HOME_URI . '/detail/view/' . $ptm["movid"];?>" class="btn btn-success">Details</a>
                 </div>
             </div>
         <?php // } ?>
@@ -55,15 +55,15 @@
 <div class="container-fluid">
     <p class="text-light text-center" style="font-size:160%;"><span class="fas fa-clock" ></span> LAST ADDED</p>
     <div class="row" style="margin-bottom: 10%;">
-        <?php //foreach ($moviesLastAdded as $movie) { ?>
+        <?php //foreach ($ptmsLastAdded as $ptm) { ?>
             <div class="card" style="margin:10px auto;width: 200px;height: 300px">
-                <a href="<?php // echo HOME_URI . '/detail/view/' . $movie["movid"];?>">
-                    <img class="card-img-top" src="<?php //echo $movie["poster"]; ?>" alt="<?php //echo $movie["title"]; ?>">
+                <a href="<?php // echo HOME_URI . '/detail/view/' . $ptm["movid"];?>">
+                    <img class="card-img-top" src="<?php //echo $ptm["poster"]; ?>" alt="<?php //echo $ptm["title"]; ?>">
                 </a>
                 <div class="card-body">
-                    <h5 class="card-title text-white"><?php //echo $movie["title"]; ?></h5>
-                    <p class="card-text text-muted"><?php // echo $movie["year"]; ?></p>
-                    <a href="<?php //echo HOME_URI . '/detail/view/' . $movie["movid"];?>" class="btn btn-success">Details</a>
+                    <h5 class="card-title text-white"><?php //echo $ptm["title"]; ?></h5>
+                    <p class="card-text text-muted"><?php // echo $ptm["year"]; ?></p>
+                    <a href="<?php //echo HOME_URI . '/detail/view/' . $ptm["movid"];?>" class="btn btn-success">Details</a>
                 </div>
             </div>
         <?php // } ?>
@@ -98,7 +98,6 @@
         </div>
         <img src="/Images/home/h2-slide2.jpg" alt="">
     </div>
-
     <div class="item">
         <div class="slider-caption h2slider">
             <div class="container">
@@ -230,8 +229,6 @@
     </div>
 </section>
 <!--About Section End-->
-
-
 <!--Urgent Causes Start-->
 <section class="urgent-causes wf100 p80">
     <div class="container">
