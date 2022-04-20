@@ -54,23 +54,23 @@ class RegisterController extends MainController
             $action = $_POST['action'];
             $data = $_POST['data'];
 
-            echo($data);
+//          echo($data);
 
             $apiResponse = json_decode($model->addUser($data), true); //decode to check message from api
 //          $apiResponse = 'OK';
 
-            echo($apiResponse);
+       //     echo($apiResponse);
 
-            if ($apiResponse['message'] == "Por favor, verifique o seu email para validar a conta.") {
-                $apiResponse['code'] = 200;
-            } else {
+            //TODO Rever as o status para ver a mensagem para mandar o correto
+
+            if (!$apiResponse['created']) {
                 $apiResponse['code'] = 400;
+            } else {
+                $apiResponse['code'] = 200;
             }
 
             $apiResponse = json_encode($apiResponse); // encode package to send
-            //echo $apiResponse;
-
-
+            echo $apiResponse;
         }
     }
 

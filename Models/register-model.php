@@ -58,65 +58,81 @@ class RegisterModel extends MainModel
 
 
 //        // Not active by default
-//        $normalizedData['IsActive'] = "";
-//        $normalizedData['IsFeatured'] = "";
+//        $normalizedData['active'] = '0';
+
+        //Manually injected user group data
+        $normalizedData['groupId'] = 1;
 
         // get data from form array and package it to send to api
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']) {
                     case "addUserName":
-                        $normalizedData['name'] = $value;
+                        $normalizedData['name'] = $dataVector['value'];
                         break;
 
                     case "addUserEntity":
-                        $normalizedData['entity'] = $value;
-                        break;
-
-                    case "addUserAddress":
-                        $normalizedData['Address'] = $value;
-                        break;
-
-                    case "addUserCodPost":
-                        $normalizedData['CodPost'] = $value;
-                        break;
-
-                    case "addUserLocality":
-                        $normalizedData['Locality'] = $value;
-                        break;
-
-                    case "addUserNif":
-                        $normalizedData['Nif'] = $value;
-                        break;
-
-                    case "addPoiCountry":
-                        $normalizedData['id'] = $value;
-                        break;
-
-                    case "addUserMobile":
-                        $normalizedData['Mobile'] = $value;
+                        $normalizedData['entity'] = strlen($dataVector['value']) > 0 ? $dataVector['value'] : NULL;
                         break;
 
                     case "addUserEmail":
-                        $normalizedData['Email'] = $value;
-                        break;
-
-                    case "addUserUserName":
-                        $normalizedData['Username'] = $value;
+                        $normalizedData['email'] = $dataVector['value'];
                         break;
 
                     case "addUserPassword":
-                        $normalizedData['Password'] = $value;
+                        $normalizedData['password'] = $dataVector['value'];
                         break;
+
+                    case "addUserDateBirth":
+                        $normalizedData['dateBirth'] = $dataVector['value'];
+                        break;
+
+                    case "addUserAddress":
+                        $normalizedData['address'] = $dataVector['value'];
+                        break;
+
+                    case "addUserCodPost":
+                        $normalizedData['codPost'] = $dataVector['value'];
+                        break;
+
+                    case "addUserGender":
+                        $normalizedData['genderId'] = 1;
+                        break;
+
+                    case "addUserLocality":
+                        $normalizedData['locality'] = $dataVector['value'];
+                        break;
+
+                    case "addUserMobile":
+                        $normalizedData['mobile'] = $dataVector['value'];
+                        break;
+
+                    case "addUserNif":
+                        $normalizedData['nif'] = $dataVector['value'];
+                        break;
+
+                    case "addUserCountry":
+                        $normalizedData['countryId'] = (int)$dataVector['value'];
+                        break;
+
                 }
+                /*
+                // TODO: o active irá deixar de ser enviado
+                if ($dataVector['name'] == "addUserActive") {
+                    $normalizedData['active'] = "1";
+                } else {
+                    $normalizedData['active'] = "0";
+                }*/
             }
         }
         $url = API_URL . 'api/v1/users/create';
-//        $result = callAPI("POST", $url, $normalizedData, /*$userToken*/);
-        if (!empty($this->userdata['token'])) {
-            $userToken = $this->userdata['token'];
-            $result = callAPI("POST", $url, $normalizedData, $userToken);
-        }
+
+        // if (!empty($this->userdata['token'])) {
+        //   $userToken = $this->userdata['token'];
+        $result = callAPI("POST", $url, $normalizedData, /*$userToken*/);
+        //}
         return $result;
     }
+
+
 }
