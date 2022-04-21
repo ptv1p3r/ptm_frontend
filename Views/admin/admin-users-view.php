@@ -62,7 +62,7 @@
                                 <td><?php echo $user["name"]?></td>
                                 <td><?php echo $user["entity"]?></td>
                                 <td><?php echo $user["email"]?></td>
-                                <td><?php echo /*getCountryById(*/$user["groupId"]?></td>
+                                <td><?php echo /*getGroupById(*/$user["groupId"]?></td>
                                 <td><?php echo $user["dateBirth"]?></td>
                                 <td><?php echo $user["address"]?></td>
                                 <td><?php echo $user["codPost"]?></td>
@@ -70,7 +70,7 @@
                                 <td><?php echo $user["locality"]?></td>
                                 <td><?php echo $user["mobile"]?></td>
                                 <td><?php echo $user["nif"]?></td>
-                                <td><?php echo $user["countryId"]?></td>
+                                <td><?php echo /*getCountryById(*/$user["countryId"]?></td>
                                 <td><?php echo $user["active"]?></td>
                                 <td><?php echo $user["activationDate"]?></td>
                                 <td><?php echo $user["dateCreated"]?></td>
@@ -237,7 +237,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <input id="userid" type="hidden" class="form-control" value="<?php //$movieById[0]["movid"]?>">
+                                <input id="editUserId" name="editGroupId" type="hidden" class="form-control" value="">
                             </div>
 
                             <div class="form-group">
@@ -245,17 +245,85 @@
                                 <input type="text" class="form-control" name="editUserName" required>
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
-                                <input type="text" class="form-control" name="editUserDescription" required>
+                                <label>Entity</label>
+                                <input type="text" class="form-control" name="editUserEntity" >
                             </div>
                             <div class="form-group">
-                                <label>SecurityId</label>
-                                <input type="number" class="form-control" name="editUserSecurityId" required>
+                                <label>Email</label>
+                                <input type="email" class="form-control" name="editUserEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" class="form-control" name="editUserPassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label>GroupId</label>
+                                <input type="text" class="form-control" name="editUserGroupId" required>
+
+                                <!--<select id="editUserGroupId" class="form-select" name="editUserGroupId" >
+                                    <option value="" disabled selected>Grupo</option>
+                                    <?php /*if (!empty($this->userdata['groupList'])) {
+                                        foreach ($this->userdata['groupList'] as $key => $group) { */?>
+                                            <option value="<?php //echo $group['id'] ?>"><?php //echo $group["name"] ?></option>
+                                        <?php /*}
+                                    }*/ ?>
+                                </select>-->
+                            </div>
+                            <div class="form-group">
+                                <label>DateBirth</label>
+                                <input type="text" class="form-control" name="editUserDateBirth" placeholder="yyyy-mm-dd" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Address</label>
+                                <input type="text" class="form-control" name="editUserAddress" required>
+                            </div>
+                            <div class="form-group">
+                                <label>CodPost</label>
+                                <input type="text" class="form-control" name="editUserCodPost" required>
+                            </div>
+                            <div class="form-group">
+                                <label>GenderId</label>
+                                <input type="text" class="form-control" name="editUserGenderId" required>
+
+                                <!--<select id="editUserGenderId" class="form-select" name="editUserGenderId" >
+                                    <option value="" disabled selected>Género</option>
+                                    <?php /*if (!empty($this->userdata['genderList'])) {
+                                        foreach ($this->userdata['genderList'] as $key => $gender) { */?>
+                                            <option value="<?php //echo $gender['id'] ?>"><?php //echo $gender["name"] ?></option>
+                                        <?php /*}
+                                    }*/ ?>
+                                </select>-->
+                            </div>
+                            <div class="form-group">
+                                <label>Locality</label>
+                                <input type="text" class="form-control" name="editUserLocality" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Mobile</label>
+                                <input type="text" class="form-control" name="editUserMobile" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Nif</label>
+                                <input type="text" class="form-control" name="editUserNif" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Country</label>
+                                <select class="form-select" name="editUserCountryId" id="editUserCountryId">
+                                    <option value="" disabled selected>Selecione o País</option>
+                                    <?php if (!empty($this->userdata['countryList'])) {
+                                        foreach ($this->userdata['countryList'] as $key => $country) { ?>
+                                            <option value="<?php echo $country['id'] ?>"><?php echo $country["name"] ?></option>
+                                        <?php }
+                                    } ?>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Active</label>
-                                <input type="checkbox" class="form-control" name="editUserActive" required>
+                                <input type="checkbox" class="form-control" name="editUserActive">
                             </div>
+
+
+
 
                             <!--<label>Categories</label>   fill categories
                             <div class="form-group" style="padding-left: 40px" >
@@ -274,7 +342,6 @@
                                 <?php } ?>
                             <?php $i++;
                             }*/?>
-
                             </div>-->
 
                         </div>
@@ -299,7 +366,7 @@
                         <div class="modal-body">
                             <p>Are you sure you want to delete this User?</p>
                             <p class="text-warning"><small>This action cannot be undone.</small></p>
-                            <input id="userid" name="userid" type="hidden" class="form-control">
+                            <input id="deleteUserId" name="deleteUserId" type="hidden" class="form-control">
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -391,28 +458,28 @@
                 success: function (data) {
                     $("#editUserModal").modal('hide');
 
-                    /*Swal.fire({
+                    Swal.fire({
                         title: 'Success!',
                         text: data['message'],
                         icon: 'success',
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                           // location.reload();
                         }
-                    });*/
+                    });
                 },
                 error: function (data) {
-                    /*Swal.fire({
+                    Swal.fire({
                         title: 'Error!',
                         text: data['message'],
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
-                    });*/
+                    });
                 }
             });
         });
@@ -432,31 +499,41 @@
                 data : formData,
                 success: function (data) {
 
-                    $("#editUserId").val(data['data'][0]['Id']);
-                    $("#editUserName").val(data['data'][0]['Name']);
-                    $("#editUserDescription").val(data['data'][0]['Description']);
-                    $("#editUserSecurityId").val(data['data'][0]['SecurityId']);
+                    $('[name="editUserId"]').val(data[0]['id']);
+                    $('[name="editUserName"]').val(data[0]['name']);
+                    $('[name="editUserEntity"]').val(data[0]['entity']);
+                    $('[name="editUserEmail"]').val(data[0]['email']);
+                    $('[name="editUserPassword"]').val(data[0]['password']);
+                    $('[name="editUserGroupId"]').val(data[0]['groupId']);
+                    $('[name="editUserDateBirth"]').val(data[0]['dateBirth']);
+                    $('[name="editUserAddress"]').val(data[0]['address']);
+                    $('[name="editUserCodPost"]').val(data[0]['codPost']);
+                    $('[name="editUserGenderId"]').val(data[0]['genderId']);
+                    $('[name="editUserLocality"]').val(data[0]['locality']);
+                    $('[name="editUserMobile"]').val(data[0]['mobile']);
+                    $('[name="editUserNif"]').val(data[0]['nif']);
+                    $('[name="editUserCountryId"]').val(data[0]['countryId']);
 
-                    if (data['data'][0]['Active'] === 1) {
-                        $("#editUserActive").attr('checked', true);
+                    if (data[0]['active'] === 1) {
+                        $('[name="editUserActive"]').attr('checked', true);
                     } else {
-                        $("#editUserActive").attr('checked', false);
+                        $('[name="editUserActive"]').attr('checked', false);
                     }
 
                     $("#editUserModal").modal('show');
 
                 },
                 error: function (data) {
-                    /*Swal.fire({
+                    Swal.fire({
                         title: 'Error!',
                         text: data['message'],
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
-                    });*/
+                    });
                 }
             });
 
@@ -479,36 +556,36 @@
                 success: function (data) {
                     $("#deleteUserModal").modal('hide');
 
-                    /*Swal.fire({
+                    Swal.fire({
                         title: 'Success!',
                         text: data['message'],
                         icon: 'success',
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
-                    });*/
+                    });
                 },
                 error: function (data) {
-                    /* Swal.fire({
-                         title: 'Error!',
-                         text: data['message'],
-                         icon: 'error',
-                         showConfirmButton: false,
-                         timer: 2000,
-                         didClose: () => {
-                             location.reload();
-                         }
-                     });*/
+                    Swal.fire({
+                        title: 'Error!',
+                        text: data['message'],
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        didClose: () => {
+                            //location.reload();
+                        }
+                    });
                 }
             });
         });
 
         // ajax to get data to Modal Delete User
         $('.delete').on('click', function(){
-
-            $("#deleteUserId").val($(this).attr('Id')); //gets user id from delete button on table
+            let $deleteID = $(this).attr('id');
+            $('[name="deleteUserId"]').val($deleteID); //gets group id from id="" attribute on delete button from table
             $("#deleteUserModal").modal('show');
 
         });
