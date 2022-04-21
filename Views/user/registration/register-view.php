@@ -25,37 +25,43 @@
                             <ul class="row">
                                 <li class="col-md-12">
                                     <div class="form-group input-group">
-                                        <input type="text"  name="addUserName" placeholder="Nome completo" class="form-control"
+                                        <input type="text" name="addUserName" placeholder="Nome completo"
+                                               class="form-control"
                                                required>
                                     </div>
                                 </li>
                                 <li class="col-md-12">
                                     <div class="form-group input-group">
-                                        <input type="text"  name="addUserEntity" placeholder="Entidade" class="form-control"
-                                               >
+                                        <input type="text" name="addUserEntity" placeholder="Entidade"
+                                               class="form-control"
+                                        >
                                     </div>
                                 </li>
                                 <li class="col-md-12">
                                     <div class="form-group input-group">
-                                        <input type="text"  name="addUserGender" placeholder="Género" class="form-control"
+                                        <input type="text" name="addUserGender" placeholder="Género"
+                                               class="form-control"
                                                required>
                                     </div>
                                 </li>
                                 <li class="col-md-12">
                                     <div class="form-group input-group">
-                                        <input type="text" name="addUserAddress" placeholder="Morada" class="form-control"
+                                        <input type="text" name="addUserAddress" placeholder="Morada"
+                                               class="form-control"
                                                required>
                                     </div>
                                 </li>
                                 <li class="col-md-2">
                                     <div class="form-group input-group">
-                                        <input type="text" name="addUserCodPost" placeholder="Código-postal" class="form-control"
+                                        <input type="text" name="addUserCodPost" placeholder="Código-postal"
+                                               class="form-control"
                                                required>
                                     </div>
                                 </li>
                                 <li class="col-md-6">
                                     <div class="form-group input-group">
-                                        <input type="text" name="addUserLocality" placeholder="Localidade" class="form-control"
+                                        <input type="text" name="addUserLocality" placeholder="Localidade"
+                                               class="form-control"
                                                required>
                                     </div>
                                 </li>
@@ -63,11 +69,12 @@
                                 <!-Dropdown Menu with Countries-->
                                 <li class="col-md-4">
                                     <div>
-                                        <select name="addUserCountry" id="addUserCountry" class="form-control customDropdown">
+                                        <select name="addUserCountry" id="addUserCountry"
+                                                class="form-control customDropdown">
                                             <option value="" disabled selected>Selecione o País</option>
                                             <?php if (!empty($this->userdata['countryList'])) {
                                                 foreach ($this->userdata['countryList'] as $key => $country) { ?>
-                                                    <option  value="<?php echo $country['id'] ?>">
+                                                    <option value="<?php echo $country['id'] ?>">
                                                         <?php echo $country["name"] ?></option>
                                                 <?php }
                                             } ?>
@@ -78,29 +85,33 @@
 
                                 <li class="col-md-6">
                                     <div class="form-group input-group">
-                                        <input type="text" name="addUserNif" placeholder="NIF" class="form-control" required>
-                                    </div>
-                                </li>
-                                <li class="col-md-6">
-                                    <div class="form-group input-group">
-                                        <input type="text" name="addUserMobile" placeholder="Telefone" class="form-control"
+                                        <input type="text" name="addUserNif" placeholder="NIF" class="form-control"
                                                required>
                                     </div>
                                 </li>
                                 <li class="col-md-6">
                                     <div class="form-group input-group">
-                                        <input type="text" name="addUserEmail" placeholder="Email" class="form-control" required>
-                                    </div>
-                                </li>
-                                <li class="col-md-6">
-                                    <div class="form-group input-group">
-                                        <input type="text" name="addUserDateBirth" placeholder="yyyy-mm-dd" class="form-control"
+                                        <input type="text" name="addUserMobile" placeholder="Telefone"
+                                               class="form-control"
                                                required>
                                     </div>
                                 </li>
                                 <li class="col-md-6">
                                     <div class="form-group input-group">
-                                        <input type="text" name="addUserPassword" placeholder="Password" class="form-control"
+                                        <input type="text" name="addUserEmail" placeholder="Email" class="form-control"
+                                               required>
+                                    </div>
+                                </li>
+                                <li class="col-md-6">
+                                    <div class="form-group input-group">
+                                        <input type="date" name="addUserDateBirth" class="form-control"
+                                               required>
+                                    </div>
+                                </li>
+                                <li class="col-md-6">
+                                    <div class="form-group input-group">
+                                        <input type="text" name="addUserPassword" placeholder="Password"
+                                               class="form-control"
                                                required>
                                     </div>
                                 </li>
@@ -112,7 +123,7 @@
                                  </li> -->
                                 <li class="col-md-12">
                                     <div class="input-group form-check">
-                                        <input type="checkbox" class="form-check-input">
+                                        <input type="checkbox" id="checkBtn" class="form-check-input">
                                         <!--secção dos termos temos de analisar isto com o grupo de direito-->
                                         <label class="form-check-label" for="exampleCheck1">Eu concordo com os termos <a
                                                     href="<?php echo HOME_URL . '/home/rights'; ?>">Regulamento &
@@ -136,49 +147,67 @@
 
 <!--Script's section-->
 <script>
+
     //Main functions from this view
     $(document).ready(function () {
-
-        // New User
         $('#addNewUser').submit(function (event) {
             event.preventDefault(); //prevent default action
-            let formData = {
-                'action': "AddNewUser",
-                'data': $(this).serializeArray()
-            };
-            $.ajax({
-                url: "<?php echo HOME_URL . '/register/newuser';?>",
-                dataType: "json",
-                type: 'POST',
-                data: formData,
-                success: function (data) {
-                    console.log(data);
+            let chk_status = $("#checkBtn").prop('checked');
+            if (chk_status) {
+                let formData = {
+                    'action': "AddNewUser",
+                    'data': $(this).serializeArray()
+                };
+                $.ajax({
+                    url: "<?php echo HOME_URL . '/register/newuser';?>",
+                    dataType: "json",
+                    type: 'POST',
+                    data: formData,
+                    success: function (data) {
+                        console.log(data);
 
-                    Swal.fire({
-                        title: 'Conta criado com sucesso!',
-                        text: data['message'],
-                        icon: 'success',
-                        showConfirmButton: true,
-                        //timer: 2000,
-                        didClose: () => {
-                            window.location = "<?php echo HOME_URL . '/home';?>";
-                        }
-                    });
-                },
-                error: function (data) {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: data['message'],
-                        icon: 'error',
-                        showConfirmButton: false,
-                        //timer: 2000,
-                        // didClose: () => {
-                        //     location.reload();
-                        // }
-                    });
-                }
-            });
+                        Swal.fire({
+                            title: 'Conta criado com sucesso!',
+                            text: data['message'],
+                            icon: 'success',
+                            showConfirmButton: true,
+                            //timer: 2000,
+                            didClose: () => {
+                                window.location = "<?php echo HOME_URL . '/home';?>";
+                            }
+                        });
+                    },
+                    error: function (data) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data['message'],
+                            icon: 'error',
+                            showConfirmButton: false,
+                            //timer: 2000,
+                            // didClose: () => {
+                            //     location.reload();
+                            // }
+                        });
+                    }
+                });
+            } else {
+
+                alert('batatas');
+            }
         });
+
     });
+    // New User
+
+
+    /*
+            //Date control
+            let dateControl = document.querySelector('input[type="date"]');
+            dateControl.value = '2017-06-01';
+            console.log(typeof (dateControl.value));*/
+
+    //Validation Form Rules
+
+
 </script>
 <!--Script's end section-->
