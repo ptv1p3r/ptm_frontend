@@ -12,15 +12,15 @@
 
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
-        <li class="nav-item active"><a class="nav-link" href="<?php echo HOME_URL . '/admin/groups/1';?>"><span>Gestão de grupos</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/users/1';?>"><span>Gestão de utilizadoress</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/security/1';?>"><span>Categorias</span></a></li>
+        <li class="nav-item active"><a class="nav-link" href="<?php echo HOME_URL . '/admin/groups';?>"><span>Gestão de grupos</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/users';?>"><span>Gestão de utilizadores</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/security';?>"><span>Gestão de securitys</span></a></li>
     </ul>
 
     <div id="content-wrapper">
         <!-- DataTables -->
         <div class="container">
-            <div class="table-wrapper">
+            <div class="table-wrapper" style="overflow: auto">
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-6">
@@ -60,23 +60,43 @@
                     </tr>
                     </thead>
 
-                    <?php /*if (!empty($this->securitydata['securitysList']['data'])) {
-                                foreach ($this->securitydata['securitysList']['data'] as $key => $security) {*/ ?>
-                    <tbody>
-                    <tr>
-                        <td><?php //echo $security["id"]?></td>
-                        <td><?php //echo $security["Description"]?></td>
-                        <td><?php //echo $security["SecurityId"]?></td>
-                        <td><?php //echo $security["active"]?></td>
-                        <td><?php //echo $security["dateModified"]?></td>
-                        <td>
-                            <a href="#editSecurityModal" id="<?php //$security['id']?>" class="edit" data-toggle="modal"><i class="far fa-edit"></i></a>
-                            <a href="#deleteSecurityModal" class="delete" data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
-                        </td>
-                    </tr>
-                    </tbody>
-                    <?php /*    }
-                            }*/?>
+                    <?php if (!empty($this->securitydata['securitysList']['data'])) {
+                        foreach ($this->securitydata['securitysList']['data'] as $key => $security) { ?>
+                            <tbody>
+                            <tr>
+                                <td><?php echo $security["homeLogin"]?></td>
+                                <td><?php echo $security["admLogin"]?></td>
+                                <td><?php echo $security["usersCreate"]?></td>
+                                <td><?php echo $security["usersRead"]?></td>
+                                <td><?php echo $security["usersUpdate"]?></td>
+                                <td><?php echo $security["usersDelete"]?></td>
+                                <td><?php echo $security["usersGroupsCreate"]?></td>
+                                <td><?php echo $security["usersGroupsRead"]?></td>
+                                <td><?php echo $security["usersGroupsUpdate"]?></td>
+                                <td><?php echo $security["usersGroupsDelete"]?></td>
+                                <td><?php echo $security["treesCreate"]?></td>
+                                <td><?php echo $security["treesRead"]?></td>
+                                <td><?php echo $security["treesUpdate"]?></td>
+                                <td><?php echo $security["treesDelete"]?></td>
+                                <td><?php echo $security["treesTypeCreate"]?></td>
+                                <td><?php echo $security["treesTypeRead"]?></td>
+                                <td><?php echo $security["treesTypeUpdate"]?></td>
+                                <td><?php echo $security["treesTypeDelete"]?></td>
+                                <td><?php echo $security["treesImagesCreate"]?></td>
+                                <td><?php echo $security["treesImagesRead"]?></td>
+                                <td><?php echo $security["treesImagesUpdate"]?></td>
+                                <td><?php echo $security["treesImagesDelete"]?></td>
+
+                                <td>
+                                    <a href="#editSecurityModal" id="<?php echo $security['id'] ?>" class="edit"
+                                       data-toggle="modal"><i class="far fa-edit"></i></a>
+                                    <a href="#deleteSecurityModal" id="<?php echo $security['id'] ?>" class="delete"
+                                       data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        <?php }
+                    } ?>
 
                 </table>
 
@@ -119,45 +139,100 @@
         <div id="addSecurityModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form>
+                    <form id="addSecurity">
                         <div class="modal-header">
                             <h4 class="modal-title">Add Security</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control" name="addSecurityName" required>
+                                <label>homeLogin</label>
+                                <input type="checkbox" class="form-control" name="addSecurityHomeLogin">
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
-                                <input type="text" class="form-control" name="addSecurityDescription" required>
+                                <label>admLogin</label>
+                                <input type="checkbox" class="form-control" name="addSecurityAdmLogin">
                             </div>
                             <div class="form-group">
-                                <label>SecurityId</label>
-                                <input type="number" class="form-control" name="addSecuritySecurityId" required>
+                                <label>usersCreate</label>
+                                <input type="checkbox" class="form-control" name="addSecurityUsersCreate">
                             </div>
                             <div class="form-group">
-                                <label>Active</label>
-                                <input type="checkbox" class="form-control" name="addSecurityActive" required>
+                                <label>usersRead</label>
+                                <input type="checkbox" class="form-control" name="addSecurityUsersRead">
                             </div>
-
-                            <!-- <label>Categories</label>
-                            <div class="form-group" style="padding-left: 40px" >
-                                    <?php /*foreach ( $categories as $category) {?>
-
-                                        <div class="form-check form-check-inline col-md-3">
-                                            <input class="form-check-input" type="checkbox" id="<?php echo $category["catid"]?>">
-                                            <label class="form-check-label" for="<?php echo $category["catid"]?>"><?php echo $category["name"]?></label>
-                                        </div>
-
-                                        <?php if($category["catid"] % 3 == 0) { ?>
-                                            </div>
-                                            <div class="form-group" style="padding-left: 40px">
-                                        <?php } ?>
-                                    <?php }*/?>
-
-                            </div>-->
+                            <div class="form-group">
+                                <label>usersUpdate</label>
+                                <input type="checkbox" class="form-control" name="addSecurityUsersUpdate">
+                            </div>
+                            <div class="form-group">
+                                <label>usersDelete</label>
+                                <input type="checkbox" class="form-control" name="addSecurityUsersDelete">
+                            </div>
+                            <div class="form-group">
+                                <label>usersGroupsCreate</label>
+                                <input type="checkbox" class="form-control" name="addSecurityUsersGroupsCreate">
+                            </div>
+                            <div class="form-group">
+                                <label>usersGroupsRead</label>
+                                <input type="checkbox" class="form-control" name="addSecurityUsersGroupsRead">
+                            </div>
+                            <div class="form-group">
+                                <label>usersGroupsUpdate</label>
+                                <input type="checkbox" class="form-control" name="addSecurityUsersGroupsUpdate">
+                            </div>
+                            <div class="form-group">
+                                <label>usersGroupsDelete</label>
+                                <input type="checkbox" class="form-control" name="addSecurityUsersGroupsDelete">
+                            </div>
+                            <div class="form-group">
+                                <label>treesCreate</label>
+                                <input type="checkbox" class="form-control" name="addSecurityTreesCreate">
+                            </div>
+                            <div class="form-group">
+                                <label>treesRead</label>
+                                <input type="checkbox" class="form-control" name="addSecurityTreesRead">
+                            </div>
+                            <div class="form-group">
+                                <label>treesUpdate</label>
+                                <input type="checkbox" class="form-control" name="addSecurityTreesUpdate">
+                            </div>
+                            <div class="form-group">
+                                <label>treesDelete</label>
+                                <input type="checkbox" class="form-control" name="addSecurityTreesDelete">
+                            </div>
+                            <div class="form-group">
+                                <label>treesTypeCreate</label>
+                                <input type="checkbox" class="form-control" name="addSecurityTreesTypeCreate">
+                            </div>
+                            <div class="form-group">
+                                <label>treesTypeRead</label>
+                                <input type="checkbox" class="form-control" name="addSecurityTreesTypeRead">
+                            </div>
+                            <div class="form-group">
+                                <label>treesTypeUpdate</label>
+                                <input type="checkbox" class="form-control" name="addSecurityTreesTypeUpdate">
+                            </div>
+                            <div class="form-group">
+                                <label>treesTypeDelete</label>
+                                <input type="checkbox" class="form-control" name="addSecurityTreesTypeDelete">
+                            </div>
+                            <div class="form-group">
+                                <label>treesImagesCreate</label>
+                                <input type="checkbox" class="form-control" name="addSecurityTreesImagesCreate">
+                            </div>
+                            <div class="form-group">
+                                <label>treesImagesRead</label>
+                                <input type="checkbox" class="form-control" name="addSecurityTreesImagesRead">
+                            </div>
+                            <div class="form-group">
+                                <label>treesImagesUpdate</label>
+                                <input type="checkbox" class="form-control" name="addSecurityTreesImagesUpdate">
+                            </div>
+                            <div class="form-group">
+                                <label>treesImagesDelete</label>
+                                <input type="checkbox" class="form-control" name="addSecurityTreesImagesDelete">
+                            </div>
 
                         </div>
                         <div class="modal-footer">
@@ -173,31 +248,99 @@
         <div id="editSecurityModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="/admin/security/1" method="post">
+                    <form id="editSecurity">
                         <div class="modal-header">
                             <h4 class="modal-title">Edit Security</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <input id="securityid" type="hidden" class="form-control" value="<?php //$movieById[0]["movid"]?>">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control" name="editSecurityName" required>
+                                <label>homeLogin</label>
+                                <input type="checkbox" class="form-control" name="editSecurityHomeLogin">
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
-                                <input type="text" class="form-control" name="editSecurityDescription" required>
+                                <label>admLogin</label>
+                                <input type="checkbox" class="form-control" name="editSecurityAdmLogin">
                             </div>
                             <div class="form-group">
-                                <label>SecurityId</label>
-                                <input type="number" class="form-control" name="editSecuritySecurityId" required>
+                                <label>usersCreate</label>
+                                <input type="checkbox" class="form-control" name="editSecurityUsersCreate">
                             </div>
                             <div class="form-group">
-                                <label>Active</label>
-                                <input type="checkbox" class="form-control" name="editSecurityActive" required>
+                                <label>usersRead</label>
+                                <input type="checkbox" class="form-control" name="editSecurityUsersRead">
+                            </div>
+                            <div class="form-group">
+                                <label>usersUpdate</label>
+                                <input type="checkbox" class="form-control" name="editSecurityUsersUpdate">
+                            </div>
+                            <div class="form-group">
+                                <label>usersDelete</label>
+                                <input type="checkbox" class="form-control" name="editSecurityUsersDelete">
+                            </div>
+                            <div class="form-group">
+                                <label>usersGroupsCreate</label>
+                                <input type="checkbox" class="form-control" name="editSecurityUsersGroupsCreate">
+                            </div>
+                            <div class="form-group">
+                                <label>usersGroupsRead</label>
+                                <input type="checkbox" class="form-control" name="editSecurityUsersGroupsRead">
+                            </div>
+                            <div class="form-group">
+                                <label>usersGroupsUpdate</label>
+                                <input type="checkbox" class="form-control" name="editSecurityUsersGroupsUpdate">
+                            </div>
+                            <div class="form-group">
+                                <label>usersGroupsDelete</label>
+                                <input type="checkbox" class="form-control" name="editSecurityUsersGroupsDelete">
+                            </div>
+                            <div class="form-group">
+                                <label>treesCreate</label>
+                                <input type="checkbox" class="form-control" name="editSecurityTreesCreate">
+                            </div>
+                            <div class="form-group">
+                                <label>treesRead</label>
+                                <input type="checkbox" class="form-control" name="editSecurityTreesRead">
+                            </div>
+                            <div class="form-group">
+                                <label>treesUpdate</label>
+                                <input type="checkbox" class="form-control" name="editSecurityTreesUpdate">
+                            </div>
+                            <div class="form-group">
+                                <label>treesDelete</label>
+                                <input type="checkbox" class="form-control" name="editSecurityTreesDelete">
+                            </div>
+                            <div class="form-group">
+                                <label>treesTypeCreate</label>
+                                <input type="checkbox" class="form-control" name="editSecurityTreesTypeCreate">
+                            </div>
+                            <div class="form-group">
+                                <label>treesTypeRead</label>
+                                <input type="checkbox" class="form-control" name="editSecurityTreesTypeRead">
+                            </div>
+                            <div class="form-group">
+                                <label>treesTypeUpdate</label>
+                                <input type="checkbox" class="form-control" name="editSecurityTreesTypeUpdate">
+                            </div>
+                            <div class="form-group">
+                                <label>treesTypeDelete</label>
+                                <input type="checkbox" class="form-control" name="editSecurityTreesTypeDelete">
+                            </div>
+                            <div class="form-group">
+                                <label>treesImagesCreate</label>
+                                <input type="checkbox" class="form-control" name="editSecurityTreesImagesCreate">
+                            </div>
+                            <div class="form-group">
+                                <label>treesImagesRead</label>
+                                <input type="checkbox" class="form-control" name="editSecurityTreesImagesRead">
+                            </div>
+                            <div class="form-group">
+                                <label>treesImagesUpdate</label>
+                                <input type="checkbox" class="form-control" name="editSecurityTreesImagesUpdate">
+                            </div>
+                            <div class="form-group">
+                                <label>treesImagesDelete</label>
+                                <input type="checkbox" class="form-control" name="editSecurityTreesImagesDelete">
                             </div>
 
                             <!--<label>Categories</label>   fill categories
@@ -234,7 +377,7 @@
         <div id="deleteSecurityModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="/admin/security/1" method="post">
+                    <form id="deleteSecurity">
                         <div class="modal-header">
                             <h4 class="modal-title">Delete Security</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -242,7 +385,7 @@
                         <div class="modal-body">
                             <p>Are you sure you want to delete this Security?</p>
                             <p class="text-warning"><small>This action cannot be undone.</small></p>
-                            <input id="securityid" name="securityid" type="hidden" class="form-control">
+                            <input id="deleteSecurityId" name="deleteSecurityId" type="hidden" class="form-control">
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -297,7 +440,7 @@
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
                     });
                 },
@@ -310,7 +453,7 @@
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
                     });
                 }
@@ -334,28 +477,28 @@
                 success: function (data) {
                     $("#editSecurityModal").modal('hide');
 
-                    /*Swal.fire({
+                    Swal.fire({
                         title: 'Success!',
                         text: data['message'],
                         icon: 'success',
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
-                    });*/
+                    });
                 },
                 error: function (data) {
-                    /*Swal.fire({
+                    Swal.fire({
                         title: 'Error!',
                         text: data['message'],
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
-                    });*/
+                    });
                 }
             });
         });
@@ -375,31 +518,66 @@
                 data : formData,
                 success: function (data) {
 
-                    $("#editSecurityId").val(data['data'][0]['Id']);
-                    $("#editSecurityName").val(data['data'][0]['Name']);
-                    $("#editSecurityDescription").val(data['data'][0]['Description']);
-                    $("#editSecuritySecurityId").val(data['data'][0]['SecurityId']);
+                    if (data[0]['homeLogin'] === 1) {
+                        $('[name="editSecurityHomeLogin"]').attr('checked', true); } else { $('[name="editSecurityHomeLogin"]').attr('checked', false); }
+                    if (data[0]['admLogin'] === 1) {
+                        $('[name="editSecurityAdmLogin"]').attr('checked', true); } else { $('[name="editSecurityAdmLogin"]').attr('checked', false);}
+                    if (data[0]['usersCreate'] === 1) {
+                        $('[name="editSecurityUsersCreate"]').attr('checked', true); } else { $('[name="editSecurityUsersCreate"]').attr('checked', false);}
+                    if (data[0]['usersRead'] === 1) {
+                        $('[name="editSecurityUsersRead"]').attr('checked', true); } else { $('[name="editSecurityUsersRead"]').attr('checked', false);}
+                    if (data[0]['usersUpdate'] === 1) {
+                        $('[name="editSecurityUsersUpdate"]').attr('checked', true); } else { $('[name="editSecurityUsersUpdate"]').attr('checked', false);}
+                    if (data[0]['usersDelete'] === 1) {
+                        $('[name="editSecurityUsersDelete"]').attr('checked', true); } else { $('[name="editSecurityUsersDelete"]').attr('checked', false);}
+                    if (data[0]['usersGroupsCreate'] === 1) {
+                        $('[name="editSecurityUsersGroupsCreate"]').attr('checked', true); } else { $('[name="editSecurityUsersGroupsCreate"]').attr('checked', false); }
+                    if (data[0]['usersGroupsRead'] === 1) {
+                        $('[name="editSecurityUsersGroupsRead"]').attr('checked', true); } else { $('[name="editSecurityUsersGroupsRead"]').attr('checked', false); }
+                    if (data[0]['usersGroupsUpdate'] === 1) {
+                        $('[name="editSecurityUsersGroupsUpdate"]').attr('checked', true); } else { $('[name="editSecurityUsersGroupsUpdate"]').attr('checked', false);}
+                    if (data[0]['usersGroupsDelete'] === 1) {
+                        $('[name="editSecurityUsersGroupsDelete"]').attr('checked', true); } else { $('[name="editSecurityUsersGroupsDelete"]').attr('checked', false);}
+                    if (data[0]['treesCreate'] === 1) {
+                        $('[name="editSecurityTreesCreate"]').attr('checked', true); } else { $('[name="editSecurityTreesCreate"]').attr('checked', false);}
+                    if (data[0]['treesRead'] === 1) {
+                        $('[name="editSecurityTreesRead"]').attr('checked', true); } else { $('[name="editSecurityTreesRead"]').attr('checked', false); }
+                    if (data[0]['treesUpdate'] === 1) {
+                        $('[name="editSecurityTreesUpdate"]').attr('checked', true); } else { $('[name="editSecurityTreesUpdate"]').attr('checked', false);}
+                    if (data[0]['treesDelete'] === 1) {
+                        $('[name="editSecurityTreesDelete"]').attr('checked', true); } else { $('[name="editSecurityTreesDelete"]').attr('checked', false); }
+                    if (data[0]['treesTypeCreate'] === 1) {
+                        $('[name="editSecurityTreesTypeCreate"]').attr('checked', true); } else { $('[name="editSecurityTreesTypeCreate"]').attr('checked', false); }
+                    if (data[0]['treesTypeRead'] === 1) {
+                        $('[name="editSecurityTreesTypeRead"]').attr('checked', true); } else { $('[name="editSecurityTreesTypeRead"]').attr('checked', false); }
+                    if (data[0]['treesTypeUpdate'] === 1) {
+                        $('[name="editSecurityTreesTypeUpdate"]').attr('checked', true); } else { $('[name="editSecurityTreesTypeUpdate"]').attr('checked', false); }
+                    if (data[0]['treesTypeDelete'] === 1) {
+                        $('[name="editSecurityTreesTypeDelete"]').attr('checked', true); } else { $('[name="editSecurityTreesTypeDelete"]').attr('checked', false);}
+                    if (data[0]['treesImagesCreate'] === 1) {
+                        $('[name="editSecurityTreesImagesCreate"]').attr('checked', true); } else { $('[name="editSecurityTreesImagesCreate"]').attr('checked', false); }
+                    if (data[0]['treesImagesRead'] === 1) {
+                        $('[name="editSecurityTreesImagesRead"]').attr('checked', true); } else { $('[name="editSecurityTreesImagesRead"]').attr('checked', false);}
+                    if (data[0]['treesImagesUpdate'] === 1) {
+                        $('[name="editSecurityTreesImagesUpdate"]').attr('checked', true); } else { $('[name="editSecurityTreesImagesUpdate"]').attr('checked', false);}
+                    if (data[0]['treesImagesDelete'] === 1) {
+                        $('[name="editSecurityTreesImagesDelete"]').attr('checked', true); } else { $('[name="editSecurityTreesImagesDelete"]').attr('checked', false);}
 
-                    if (data['data'][0]['Active'] === 1) {
-                        $("#editSecurityActive").attr('checked', true);
-                    } else {
-                        $("#editSecurityActive").attr('checked', false);
-                    }
 
                     $("#editSecurityModal").modal('show');
 
                 },
                 error: function (data) {
-                    /*Swal.fire({
+                    Swal.fire({
                         title: 'Error!',
                         text: data['message'],
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
-                    });*/
+                    });
                 }
             });
 
@@ -422,36 +600,36 @@
                 success: function (data) {
                     $("#deleteSecurityModal").modal('hide');
 
-                    /*Swal.fire({
+                    Swal.fire({
                         title: 'Success!',
                         text: data['message'],
                         icon: 'success',
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
-                    });*/
+                    });
                 },
                 error: function (data) {
-                    /* Swal.fire({
-                         title: 'Error!',
-                         text: data['message'],
-                         icon: 'error',
-                         showConfirmButton: false,
-                         timer: 2000,
-                         didClose: () => {
-                             location.reload();
-                         }
-                     });*/
+                    Swal.fire({
+                        title: 'Error!',
+                        text: data['message'],
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        didClose: () => {
+                            //location.reload();
+                        }
+                    });
                 }
             });
         });
 
         // ajax to get data to Modal Delete Security
         $('.delete').on('click', function(){
-
-            $("#deleteSecurityId").val($(this).attr('Id')); //gets security id from delete button on table
+            let $deleteID = $(this).attr('id');
+            $('[name="deleteSecurityId"]').val($deleteID); //gets group id from id="" attribute on delete button from table
             $("#deleteSecurityModal").modal('show');
 
         });
