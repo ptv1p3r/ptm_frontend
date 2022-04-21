@@ -206,7 +206,8 @@ class AdminController extends MainController
 
                     $apiResponse = json_decode($modelo->addUser($data),true); //decode to check message from api
 
-                    if ($apiResponse['message'] == "User added successfully"){
+                // TODO rever a validaçao da response que vem da api
+                    if ($apiResponse['created']){
                         $apiResponse['code'] = 200;
                     } else {
                         $apiResponse['code'] = 400;
@@ -220,7 +221,7 @@ class AdminController extends MainController
                     $data = $_POST['data'];
                     $apiResponse = json_decode($modelo->updateUser($data),true); //decode to check message from api
 
-                    if ($apiResponse['message'] == "User updated successfully"){
+                    if ($apiResponse['updated']){
                         $apiResponse['code'] = 200;
                     } else {
                         $apiResponse['code'] = 400;
@@ -235,7 +236,7 @@ class AdminController extends MainController
                     $data = $_POST['data'];
                     $apiResponse = json_decode($modelo->deleteUser($data),true); //decode to check message from api
 
-                    if ($apiResponse['message'] == "User deleted successfully"){
+                    if ($apiResponse['deleted']){
                         $apiResponse['code'] = 200;
                     } else {
                         $apiResponse['code'] = 400;
@@ -248,8 +249,8 @@ class AdminController extends MainController
             }
 
         } else {
-            //$this->userdata['UsersList'] = $modelo->getUserList();
-
+            $this->userdata['usersList'] = $modelo->getUserList();
+            $this->userdata['countryList'] = $modelo->getCountryList();
             /**Carrega os arquivos do view**/
 
             require ABSPATH . '/views/_includes/admin-header.php';
