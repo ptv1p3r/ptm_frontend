@@ -86,6 +86,8 @@ class SecurityModel extends MainModel {
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']) { //gets <input name="">
+
+                    //TODO: mudar cases para validar checkboxes
                     case "addSecurityHomeLogin":
                         $normalizedData['homeLogin'] = $dataVector['value'];
                         break;
