@@ -207,10 +207,10 @@ class AdminController extends MainController
                     $apiResponse = json_decode($modelo->addUser($data),true); //decode to check message from api
 
                 // TODO rever a validaçao da response que vem da api
-                    if ($apiResponse['created']){
-                        $apiResponse['code'] = 200;
-                    } else {
+                    if (!$apiResponse['created']){
                         $apiResponse['code'] = 400;
+                    } else {
+                        $apiResponse['code'] = 200;
                     }
 
                     $apiResponse = json_encode($apiResponse); // encode package to send
@@ -221,10 +221,10 @@ class AdminController extends MainController
                     $data = $_POST['data'];
                     $apiResponse = json_decode($modelo->updateUser($data),true); //decode to check message from api
 
-                    if ($apiResponse['updated']){
-                        $apiResponse['code'] = 200;
-                    } else {
+                    if (!$apiResponse['updated']){
                         $apiResponse['code'] = 400;
+                    } else {
+                        $apiResponse['code'] = 200;
                     }
 
                     $apiResponse = json_encode($apiResponse); // encode package to send
@@ -236,10 +236,10 @@ class AdminController extends MainController
                     $data = $_POST['data'];
                     $apiResponse = json_decode($modelo->deleteUser($data),true); //decode to check message from api
 
-                    if ($apiResponse['deleted']){
-                        $apiResponse['code'] = 200;
-                    } else {
+                    if (!$apiResponse['deleted']){
                         $apiResponse['code'] = 400;
+                    } else {
+                        $apiResponse['code'] = 200;
                     }
 
                     $apiResponse = json_encode($apiResponse); // encode package to send
