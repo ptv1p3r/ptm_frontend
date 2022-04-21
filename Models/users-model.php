@@ -37,6 +37,46 @@ class UsersModel extends MainModel {
     }*/
 
 
+    /**
+     * Get country list
+     *
+     * @access public
+     */
+    public function getCountryList()
+    {
+        $result = null;
+
+        $url = API_URL . 'api/v1/countries/list';
+
+        //if (!empty($this->userdata['token'])) {
+            //$userToken = $this->userdata['token'];
+            $result = callAPI("GET", $url, ''/*, $userToken*/);
+        //}
+
+        return json_decode($result, true);
+    }
+
+    /**
+     * Get country by id
+     *
+     * @param $id
+     * @access public
+     * @return mixed
+     */
+    public function getCountryById($id)
+    {
+        $result = null;
+
+        $url = API_URL . 'api/v1/countries/view/' . $id;
+
+        //if (!empty($this->userdata['token'])) {
+        //$userToken = $this->userdata['token'];
+        $result = callAPI("GET", $url, ''/*, $userToken*/);
+        //}
+
+        return json_decode($result, true);
+    }
+
     /** CRUD USERS **/
     /**
      * Metodo que retorna User pelo id
@@ -46,12 +86,12 @@ class UsersModel extends MainModel {
     public function getUserById($id) {
         $result = null;
 
-        $url = API_URL . '/' . $id;
+        $url = API_URL . 'api/v1/users/view/' . $id;
 
-        if (!empty($this->userdata['token'])){
-            $userToken = $this->userdata['token'];
-            $result = callAPI("GET", $url, '', $userToken );
-        }
+        //if (!empty($this->userdata['token'])){
+            //$userToken = $this->userdata['token'];
+            $result = callAPI("GET", $url, ''/*, $userToken */);
+       // }
 
         return json_decode($result, true);
     }
@@ -63,12 +103,12 @@ class UsersModel extends MainModel {
     public function getUserList() {
         $result = null;
 
-        $url = API_URL . '/';
+        $url = API_URL . 'api/v1/users/list';
 
-        if (!empty($this->userdata['token'])){
-            $userToken = $this->userdata['token'];
-            $result = callAPI("GET", $url, '', $userToken );
-        }
+        //if (!empty($this->userdata['token'])){
+            //$userToken = $this->userdata['token'];
+            $result = callAPI("GET", $url, ''/*, $userToken */);
+        //}
 
         return json_decode($result, true);
     }
@@ -83,36 +123,79 @@ class UsersModel extends MainModel {
         $normalizedData = array();
 
         // Not active by default
-        $normalizedData['Active'] = "";
+        //$normalizedData['active'] = "";
 
         // get data from form array and package it to send to api
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']) { //gets <input name="">
                     case "addUserName":
-                        $normalizedData['Name'] = $value;
+                        $normalizedData['name'] = $dataVector['value'];
                         break;
 
-                    case "addUserDescription":
-                        $normalizedData['Description'] = $value;
+                    case "addUserEntity":
+                        // TODO - a validaçao se estiver vazio(null) nao esta a funcionar
+                        $normalizedData['entity'] = strlen($dataVector['value']) > 0 ? $dataVector['value'] : NULL;
                         break;
 
-                    case "addUserSecurityId":
-                        $normalizedData['SecurityId'] = $value;
+                    case "addUserEmail":
+                        $normalizedData['email'] = $dataVector['value'];
                         break;
 
-                    case "addUserActive":
-                        $normalizedData['Active'] = "True";
+                    case "addUserPassword":
+                        $normalizedData['password'] = $dataVector['value'];
+                        break;
+
+                    case "addUserGroupId":
+                        $normalizedData['groupId'] = $dataVector['value'];
+                        break;
+
+                    case "addUserDateBirth":
+                        $normalizedData['dateBirth'] = $dataVector['value'];
+                        break;
+
+                    case "addUserAddress":
+                        $normalizedData['address'] = $dataVector['value'];
+                        break;
+
+                    case "addUserCodPost":
+                        $normalizedData['codPost'] = $dataVector['value'];
+                        break;
+
+                    case "addUserGenderId":
+                        $normalizedData['genderId'] = $dataVector['value'];
+                        break;
+
+                    case "addUserLocality":
+                        $normalizedData['locality'] = $dataVector['value'];
+                        break;
+
+                    case "addUserMobile":
+                        $normalizedData['mobile'] = $dataVector['value'];
+                        break;
+
+                    case "addUserNif":
+                        $normalizedData['nif'] = $dataVector['value'];
+                        break;
+
+                    case "addUserCountryId":
+                        $normalizedData['countryId'] = (int)$dataVector['value'];
                         break;
                 }
+
+                /*if ($dataVector['name'] == "addUserActive"){
+                    $normalizedData['active'] = "1";
+                } else {
+                    $normalizedData['active'] = "0";
+                }*/
             }
         }
 
-        $url = API_URL . '/';
-        if (!empty($this->userdata['token'])){
-            $userToken = $this->userdata['token'];
-            $result = callAPI("POST", $url, $normalizedData, $userToken );
-        }
+        $url = API_URL . 'api/v1/users/create';
+        //if (!empty($this->userdata['token'])){
+            //$userToken = $this->userdata['token'];
+            $result = callAPI("POST", $url, $normalizedData/*, $userToken */);
+        //}
 
         return $result;
     }
@@ -152,11 +235,11 @@ class UsersModel extends MainModel {
             }
         }
 
-        $url = API_URL . '/' . $normalizedData['Id'];
-        if (!empty($this->userdata['token'])){
-            $userToken = $this->userdata['token'];
-            $result = callAPI("PUT", $url, $normalizedData, $userToken );
-        }
+        $url = API_URL . 'api/v1/users/edit/' . $normalizedData['id'];
+        //if (!empty($this->userdata['token'])){
+            //$userToken = $this->userdata['token'];
+            $result = callAPI("PUT", $url, $normalizedData/*, $userToken */);
+        //}
 
         return $result;
     }
@@ -180,12 +263,12 @@ class UsersModel extends MainModel {
             }
         }
 
-        $url = API_URL . '/' . $UserId;
+        $url = API_URL . 'api/v1/users/delete/' . $UserId;
 
-        if (!empty($this->userdata['token'])){
-            $userToken = $this->userdata['token'];
-            $result = callAPI("DELETE", $url, '', $userToken );
-        }
+        //if (!empty($this->userdata['token'])){
+            //$userToken = $this->userdata['token'];
+            $result = callAPI("DELETE", $url, ''/*, $userToken */);
+        //}
 
         return $result;
     }
