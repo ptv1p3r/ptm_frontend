@@ -134,7 +134,7 @@ class UsersModel extends MainModel {
                         break;
 
                     case "addUserEntity":
-                        // TODO - a validaçao se estiver vazio(null) nao esta a funcionar
+                        //TODO: a validaçao se estiver vazio(null) nao esta a funcionar
                         $normalizedData['entity'] = strlen($dataVector['value']) > 0 ? $dataVector['value'] : NULL;
                         break;
 
@@ -207,35 +207,83 @@ class UsersModel extends MainModel {
      */
     public function updateUser($data) {
         $result = null;
+        $UserId = null;
         $normalizedData = array();
 
         // Not active by default
-        $normalizedData['Active'] = "";
+        $normalizedData['active'] = "";
 
         // get data from form array and package it to send to api
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']){ //gets <input name="">
-                    case "editUserName":
-                        $normalizedData['Name'] = $value;
+                    case "editUserId":
+                        $UserId = $dataVector['value'];
                         break;
 
-                    case "editUserDescription":
-                        $normalizedData['Description'] = $value;
+                    case "addUserName":
+                        $normalizedData['name'] = $dataVector['value'];
                         break;
 
-                    case "editUserSecurityId":
-                        $normalizedData['SecurityId'] = $value;
+                    case "addUserEntity":
+                        //TODO: a validaçao se estiver vazio(null) nao esta a funcionar
+                        $normalizedData['entity'] = strlen($dataVector['value']) > 0 ? $dataVector['value'] : NULL;
                         break;
 
-                    case "editUserActive":
-                        $normalizedData['Active'] = "True";
+                    case "addUserEmail":
+                        $normalizedData['email'] = $dataVector['value'];
                         break;
+
+                    case "addUserPassword":
+                        $normalizedData['password'] = $dataVector['value'];
+                        break;
+
+                    case "addUserGroupId":
+                        $normalizedData['groupId'] = $dataVector['value'];
+                        break;
+
+                    case "addUserDateBirth":
+                        $normalizedData['dateBirth'] = $dataVector['value'];
+                        break;
+
+                    case "addUserAddress":
+                        $normalizedData['address'] = $dataVector['value'];
+                        break;
+
+                    case "addUserCodPost":
+                        $normalizedData['codPost'] = $dataVector['value'];
+                        break;
+
+                    case "addUserGenderId":
+                        $normalizedData['genderId'] = $dataVector['value'];
+                        break;
+
+                    case "addUserLocality":
+                        $normalizedData['locality'] = $dataVector['value'];
+                        break;
+
+                    case "addUserMobile":
+                        $normalizedData['mobile'] = $dataVector['value'];
+                        break;
+
+                    case "addUserNif":
+                        $normalizedData['nif'] = $dataVector['value'];
+                        break;
+
+                    case "addUserCountryId":
+                        $normalizedData['countryId'] = (int)$dataVector['value'];
+                        break;
+                }
+
+                if ($dataVector['name'] == "editUserActive"){
+                    $normalizedData['active'] = "1";
+                } else {
+                    $normalizedData['active'] = "0";
                 }
             }
         }
 
-        $url = API_URL . 'api/v1/users/edit/' . $normalizedData['id'];
+        $url = API_URL . 'api/v1/users/edit/' . $UserId;
         //if (!empty($this->userdata['token'])){
             //$userToken = $this->userdata['token'];
             $result = callAPI("PUT", $url, $normalizedData/*, $userToken */);
