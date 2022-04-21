@@ -12,15 +12,15 @@
 
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
-        <li class="nav-item active"><a class="nav-link" href="<?php echo HOME_URL . '/admin/groups/1';?>"><span>Gestão de grupos</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/users/1';?>"><span>Gestão de utilizadoress</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/category/1';?>"><span>Gestão de securitys</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/groups';?>"><span>Gestão de grupos</span></a></li>
+        <li class="nav-item active"><a class="nav-link" href="<?php echo HOME_URL . '/admin/users';?>"><span>Gestão de utilizadores</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/category';?>"><span>Gestão de securitys</span></a></li>
     </ul>
 
     <div id="content-wrapper">
         <!-- DataTables -->
         <div class="container">
-            <div class="table-wrapper">
+            <div class="table-wrapper" style="overflow: auto">
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-6">
@@ -35,33 +35,57 @@
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>SecurityId</th>
+                        <th>name</th>
+                        <th>entity</th>
+                        <th>email</th>
+                        <th>groupId</th>
+                        <th>dateBirth</th>
+                        <th>address</th>
+                        <th>codPost</th>
+                        <th>genderId</th>
+                        <th>locality</th>
+                        <th>mobile</th>
+                        <th>nif</th>
+                        <th>countryId</th>
                         <th>active</th>
+                        <th>activationDate</th>
                         <th>dateCreated</th>
                         <th>dateModified</th>
-                        <th></th>
+                        <th>lastLogin</th>
                     </tr>
                     </thead>
 
-                    <?php /*if (!empty($this->userdata['usersList']['data'])) {
-                                foreach ($this->userdata['usersList']['data'] as $key => $user) {*/ ?>
-                    <tbody>
-                    <tr>
-                        <td><?php //echo $user["id"]?></td>
-                        <td><?php //echo $user["Description"]?></td>
-                        <td><?php //echo $user["SecurityId"]?></td>
-                        <td><?php //echo $user["active"]?></td>
-                        <td><?php //echo $user["dateModified"]?></td>
-                        <td>
-                            <a href="#editUserModal" id="<?php //$user['id']?>" class="edit" data-toggle="modal"><i class="far fa-edit"></i></a>
-                            <a href="#deleteUserModal" class="delete" data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
-                        </td>
-                    </tr>
-                    </tbody>
-                    <?php /*    }
-                            }*/?>
+                    <?php if (!empty($this->userdata['usersList'])) {
+                        foreach ($this->userdata['usersList'] as $key => $user) { ?>
+                            <tbody>
+                            <tr>
+                                <td><?php echo $user["name"]?></td>
+                                <td><?php echo $user["entity"]?></td>
+                                <td><?php echo $user["email"]?></td>
+                                <td><?php echo /*getCountryById(*/$user["groupId"]?></td>
+                                <td><?php echo $user["dateBirth"]?></td>
+                                <td><?php echo $user["address"]?></td>
+                                <td><?php echo $user["codPost"]?></td>
+                                <td><?php echo $user["genderId"]?></td>
+                                <td><?php echo $user["locality"]?></td>
+                                <td><?php echo $user["mobile"]?></td>
+                                <td><?php echo $user["nif"]?></td>
+                                <td><?php echo $user["countryId"]?></td>
+                                <td><?php echo $user["active"]?></td>
+                                <td><?php echo $user["activationDate"]?></td>
+                                <td><?php echo $user["dateCreated"]?></td>
+                                <td><?php echo $user["dateModified"]?></td>
+                                <td><?php echo $user["lastLogin"]?></td>
+                                <td>
+                                    <a href="#editUserModal" id="<?php echo $user['id']?>" class="edit"
+                                       data-toggle="modal"><i class="far fa-edit"></i></a>
+                                    <a href="#deleteUserModal" id="<?php echo $user['id']?>" class="delete"
+                                       data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        <?php }
+                    } ?>
 
                 </table>
 
@@ -104,7 +128,7 @@
         <div id="addUserModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form>
+                    <form id="addUser">
                         <div class="modal-header">
                             <h4 class="modal-title">Add User</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -115,33 +139,81 @@
                                 <input type="text" class="form-control" name="addUserName" required>
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
-                                <input type="text" class="form-control" name="addUserDescription" required>
+                                <label>Entity</label>
+                                <input type="text" class="form-control" name="addUserEntity" >
                             </div>
                             <div class="form-group">
-                                <label>SecurityId</label>
-                                <input type="number" class="form-control" name="addUserSecurityId" required>
+                                <label>Email</label>
+                                <input type="email" class="form-control" name="addUserEmail" required>
                             </div>
                             <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" class="form-control" name="addUserPassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label>GroupId</label>
+                                <input type="text" class="form-control" name="addUserGroupId" required>
+
+                                <!--<select id="addUserGroupId" class="form-select" name="addUserGroupId" >
+                                    <option value="" disabled selected>Grupo</option>
+                                    <?php /*if (!empty($this->userdata['groupList'])) {
+                                        foreach ($this->userdata['groupList'] as $key => $group) { */?>
+                                            <option value="<?php //echo $group['id'] ?>"><?php //echo $group["name"] ?></option>
+                                        <?php /*}
+                                    }*/ ?>
+                                </select>-->
+                            </div>
+                            <div class="form-group">
+                                <label>DateBirth</label>
+                                <input type="text" class="form-control" name="addUserDateBirth" placeholder="yyyy-mm-dd" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Address</label>
+                                <input type="text" class="form-control" name="addUserAddress" required>
+                            </div>
+                            <div class="form-group">
+                                <label>CodPost</label>
+                                <input type="text" class="form-control" name="addUserCodPost" required>
+                            </div>
+                            <div class="form-group">
+                                <label>GenderId</label>
+                                <input type="text" class="form-control" name="addUserGenderId" required>
+
+                                <!--<select id="addUserGenderId" class="form-select" name="addUserGenderId" >
+                                    <option value="" disabled selected>Género</option>
+                                    <?php /*if (!empty($this->userdata['genderList'])) {
+                                        foreach ($this->userdata['genderList'] as $key => $gender) { */?>
+                                            <option value="<?php //echo $gender['id'] ?>"><?php //echo $gender["name"] ?></option>
+                                        <?php /*}
+                                    }*/ ?>
+                                </select>-->
+                            </div>
+                            <div class="form-group">
+                                <label>Locality</label>
+                                <input type="text" class="form-control" name="addUserLocality" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Mobile</label>
+                                <input type="text" class="form-control" name="addUserMobile" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Nif</label>
+                                <input type="text" class="form-control" name="addUserNif" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Country</label>
+                                <select class="form-select" name="addUserCountryId" id="addUserCountryId">
+                                    <option value="" disabled selected>Selecione o País</option>
+                                    <?php if (!empty($this->userdata['countryList'])) {
+                                        foreach ($this->userdata['countryList'] as $key => $country) { ?>
+                                            <option value="<?php echo $country['id'] ?>"><?php echo $country["name"] ?></option>
+                                        <?php }
+                                    } ?>
+                                </select>
+                            </div>
+                            <!--<div class="form-group">
                                 <label>Active</label>
-                                <input type="checkbox" class="form-control" name="addUserActive" required>
-                            </div>
-
-                            <!-- <label>Categories</label>
-                            <div class="form-group" style="padding-left: 40px" >
-                                    <?php /*foreach ( $categories as $category) {?>
-
-                                        <div class="form-check form-check-inline col-md-3">
-                                            <input class="form-check-input" type="checkbox" id="<?php echo $category["catid"]?>">
-                                            <label class="form-check-label" for="<?php echo $category["catid"]?>"><?php echo $category["name"]?></label>
-                                        </div>
-
-                                        <?php if($category["catid"] % 3 == 0) { ?>
-                                            </div>
-                                            <div class="form-group" style="padding-left: 40px">
-                                        <?php } ?>
-                                    <?php }*/?>
-
+                                <input type="checkbox" class="form-control" name="addUserActive">
                             </div>-->
 
                         </div>
@@ -158,7 +230,7 @@
         <div id="editUserModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="/admin/users/1" method="post">
+                    <form id="editUser">
                         <div class="modal-header">
                             <h4 class="modal-title">Edit User</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -219,7 +291,7 @@
         <div id="deleteUserModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="/admin/users/1" method="post">
+                    <form id="deleteUser">
                         <div class="modal-header">
                             <h4 class="modal-title">Delete User</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -258,7 +330,7 @@
     $(document).ready(function() {
 
         // ajax to Add User
-        $('#addUserModal').submit(function (event) {
+        $('#addUser').submit(function (event) {
             event.preventDefault(); //prevent default action
 
             let formData = {
@@ -282,7 +354,7 @@
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
                     });
                 },
@@ -295,7 +367,7 @@
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
                     });
                 }
@@ -303,7 +375,7 @@
         });
 
         // ajax to Edit User
-        $('#editUserModal').submit(function (event) {
+        $('#editUser').submit(function (event) {
             event.preventDefault(); //prevent default action
 
             let formData = {
@@ -391,7 +463,7 @@
         });
 
         // ajax to Delete User
-        $('#deleteUserModal').submit(function(event){
+        $('#deleteUser').submit(function(event){
             event.preventDefault(); //prevent default action
 
             let formData = {
