@@ -179,4 +179,84 @@ class AdminController extends MainController
             require ABSPATH . '/views/_includes/admin-footer.php';
         }
     }
+
+    /**
+     * loads /admin/security page and handles ajax
+     * @return void
+     */
+    public function security(){
+        // Título da página
+        $this->title = 'Admin - Utilizadoress';
+
+        // Parametros da função
+        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
+
+        $modelo = $this->load_model('security-model');
+
+        // processa chamadas ajax
+        if(isset($_POST['action']) && !empty($_POST['action'])) {
+            $action = $_POST['action'];
+            switch($action) {
+                case 'GetUser' :
+                    echo json_encode($modelo->getUserById($_POST['data']));
+                    break;
+
+                case 'AddUser' :
+                    $data = $_POST['data'];
+
+                    $apiResponse = json_decode($modelo->addUser($data),true); //decode to check message from api
+
+                    if ($apiResponse['message'] == "User added successfully"){
+                        $apiResponse['code'] = 200;
+                    } else {
+                        $apiResponse['code'] = 400;
+                    }
+
+                    $apiResponse = json_encode($apiResponse); // encode package to send
+                    echo $apiResponse;
+                    break;
+
+                case 'UpdateUser' :
+                    $data = $_POST['data'];
+                    $apiResponse = json_decode($modelo->updateUser($data),true); //decode to check message from api
+
+                    if ($apiResponse['message'] == "User updated successfully"){
+                        $apiResponse['code'] = 200;
+                    } else {
+                        $apiResponse['code'] = 400;
+                    }
+
+                    $apiResponse = json_encode($apiResponse); // encode package to send
+                    echo $apiResponse;
+
+                    break;
+
+                case 'DeleteUser' :
+                    $data = $_POST['data'];
+                    $apiResponse = json_decode($modelo->deleteUser($data),true); //decode to check message from api
+
+                    if ($apiResponse['message'] == "User deleted successfully"){
+                        $apiResponse['code'] = 200;
+                    } else {
+                        $apiResponse['code'] = 400;
+                    }
+
+                    $apiResponse = json_encode($apiResponse); // encode package to send
+                    echo $apiResponse;
+
+                    break;
+            }
+
+        } else {
+            //$this->userdata['SecurityList'] = $modelo->getUserList();
+
+            /**Carrega os arquivos do view**/
+
+            require ABSPATH . '/views/_includes/admin-header.php';
+
+            require ABSPATH . '/views/admin/admin-security-view.php';
+
+            require ABSPATH . '/views/_includes/admin-footer.php';
+        }
+    }
 }
