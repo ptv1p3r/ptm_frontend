@@ -45,6 +45,19 @@ class AdminController extends MainController
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
 
+        // obriga o login para aceder à pagina
+        if ( ! $this->logged_in ) {
+
+            // Se não; garante o logout
+            $this->logout();
+
+            // Redireciona para a página de login
+            $this->goto_login();
+
+            // Garante que o script não vai passar daqui
+            return;
+        }
+
         $modelo = $this->load_model('admin-model');
 
         /** Carrega os arquivos do view **/
@@ -68,7 +81,8 @@ class AdminController extends MainController
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
 
-       /* if ( ! $this->logged_in ) {
+        // obriga o login para aceder à pagina
+        if ( ! $this->logged_in ) {
 
             // Se não; garante o logout
             $this->logout();
@@ -78,7 +92,7 @@ class AdminController extends MainController
 
             // Garante que o script não vai passar daqui
             return;
-        }*/
+        }
 
         $modelo = $this->load_model('groups-model');
 
