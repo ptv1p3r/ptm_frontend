@@ -246,17 +246,18 @@ class UserLogin
     }
 
     /**
+     * TODO: ver soluçao para login url
      * Vai para a página de login
      */
     protected function goto_login() {
         // Verifica se a URL da HOME está configurada
         if ( defined( 'HOME_URL' ) ) {
             // Configura a URL de login
-            $login_uri  = HOME_URL . '/Login/';
+            $login_uri = HOME_URL . '/admin/';
 
             // A página em que o usuário estava
             if ( !isset( $_SESSION['goto_url'] ) ) {
-//                $_SESSION['goto_url'] = urlencode( $_SERVER['REQUEST_URI'] );
+                //$_SESSION['goto_url'] = urlencode( $_SERVER['REQUEST_URI'] );
                 $_SESSION['goto_url'] = $login_uri;
             }
 
