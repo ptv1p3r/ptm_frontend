@@ -11,7 +11,7 @@ class AdminController extends MainController
 
     /**
      * Carrega a página
-     * "/views/admin/admin-view.php"
+     * "/views/admin/admin-login-view.php"
      */
     public function index() {
 
@@ -27,78 +27,35 @@ class AdminController extends MainController
 
         require ABSPATH . '/views/_includes/admin-login-header.php';
 
-        require ABSPATH . '/views/admin/admin-view.php';
+        require ABSPATH . '/views/admin/admin-login-view.php';
 
         require ABSPATH . '/views/_includes/admin-footer.php';
 
     }
 
-    /*public function login() {
+    /**
+     * Carrega a página
+     * "/views/admin/admin-dashboard-view.php"
+     */
+    public function dashboard() {
+
         // Título da página
-        $this->title = 'Admin';
+        $this->title = 'Admin - Dashboard';
 
         // Parametros da função
-        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
 
         $modelo = $this->load_model('admin-model');
 
-        if (isset($_POST["submit"])) {
-            if (!empty($_POST['user']) && !empty($_POST['pass'])) {
-                $user = $_POST['user'];
-                $pass = $_POST['pass'];
+        /** Carrega os arquivos do view **/
 
-                $validate = $modelo->validateUser($user, $pass);
+        require ABSPATH . '/views/_includes/admin-header.php';
 
-                if ($validate != null) {
-                    if ($user == $validate[0]['username'] && $pass == $validate[0]['password']) {
+        require ABSPATH . '/views/admin/admin-dashboard-view.php';
 
-                        if(!isset($_SESSION)) {
-                            session_start();
-                        }
+        require ABSPATH . '/views/_includes/admin-footer.php';
 
-                        $_SESSION['sess_user'] = $user;
-
-                        $_POST['validation'] = "success";
-
-                        //$this->group(1);
-                    }
-                } else {
-                    $_POST['validation'] = "failed";
-
-                    $this->index();
-                }
-
-            } else {
-                $_POST['validation'] = "failed";
-
-                $this->index();
-            }
-
-        } else {
-            $this->index();
-        }
-    }*/
-
-    /*public function logout() {
-        // Título da página
-        $this->title = 'Admin';
-
-        // Parametros da função
-        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
-
-        $modelo = $this->load_model('admin-model');
-
-
-        $helper = array_keys($_SESSION);
-        foreach ($helper as $key){
-            unset($_SESSION[$key]);
-        }
-
-        //unset($_SESSION['sess_user']);
-        session_destroy();
-
-        $this->index();
-    }*/
+    }
 
     /**
      * loads /admin/groups page and handles ajax
@@ -110,6 +67,18 @@ class AdminController extends MainController
 
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
+
+       /* if ( ! $this->logged_in ) {
+
+            // Se não; garante o logout
+            $this->logout();
+
+            // Redireciona para a página de login
+            $this->goto_login();
+
+            // Garante que o script não vai passar daqui
+            return;
+        }*/
 
         $modelo = $this->load_model('groups-model');
 
@@ -177,6 +146,58 @@ class AdminController extends MainController
             require ABSPATH . '/views/admin/admin-groups-view.php';
 
             require ABSPATH . '/views/_includes/admin-footer.php';
+        }
+    }
+
+
+    /**
+     * Login
+     * @return void
+     */
+    public function login() {
+        // Título da página
+        $this->title = 'Admin';
+
+        // Parametros da função
+        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
+        $modelo = $this->load_model('admin-model');
+
+        if (isset($_POST["submit"])) {
+            if (!empty($_POST['user']) && !empty($_POST['pass'])) {
+                $user = $_POST['user'];
+                $pass = $_POST['pass'];
+
+                $validate = $modelo->validateUser($user, $pass);
+
+                if ($validate != null) {
+                    // validar se login é valido e guardar tokens para a $_SESSION
+                    if ($user == $validate[0]['username'] && $pass == $validate[0]['password']) {
+
+                        if(!isset($_SESSION)) {
+                            session_start();
+                        }
+
+                        $_SESSION['sess_user'] = $user;
+
+                        $_POST['validation'] = "success";
+
+                        //$this->group(1);
+                    }
+                } else {
+                    $_POST['validation'] = "failed";
+
+                    $this->index();
+                }
+
+            } else {
+                $_POST['validation'] = "failed";
+
+                $this->index();
+            }
+
+        } else {
+            $this->index();
         }
     }
 }
