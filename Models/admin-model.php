@@ -22,19 +22,18 @@ class AdminModel extends MainModel {
         $this->userdata = $this->controller->userdata;
     }
 
-    /*public function validateUser($username, $password){
-        $query = null;
+    public function validateUser($username, $password){
+        $result = null;
 
-        $query = $this->db->query('SELECT * FROM login WHERE username=\'' . $username . '\' 
-                                                          AND password=\'' . $password . '\'');
+        $data = null;
+        $data["email"] = $username;
+        $data["password"] = $password;
 
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
-        }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
+        $url = API_URL . 'api/v1/groups/login';
+        $result = callAPI("GET", $url, $data);
+
+        return json_decode($result, true);
+    }
 
     /**
      * Metodo que retorna 10 categorias da BD
