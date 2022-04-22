@@ -7,9 +7,15 @@
  */
 
 /**
+ * require class userlogin so the
+ * controllers can access login functions
+ */
+require_once ABSPATH . '/Classes/classUserLogin.php';
+
+/**
  * MainModel - Modelo geral
  */
-class MainModel
+class MainModel extends UserLogin
 {
     /**
      *
@@ -56,5 +62,5 @@ class MainModel
      *
      * manages all User data
      */
-    public $userdata;
+    //public $userdata;
 }

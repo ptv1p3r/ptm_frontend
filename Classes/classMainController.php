@@ -7,13 +7,19 @@
  */
 
 /**
+ * require class userlogin so the
+ * controllers can access login functions
+ */
+require_once ABSPATH . '/Classes/classUserLogin.php';
+
+/**
  * classMainController.php
  * MainController -
  * Todos os controllers deverão
  * estender essa classe
  *
  */
-class MainController
+class MainController extends UserLogin
 {
 
     /**
@@ -39,7 +45,7 @@ class MainController
      * user data
      *
      */
-    public $userdata= array();
+    //public $userdata= array();
 
     /**
      * Construtor da classe
