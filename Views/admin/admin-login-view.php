@@ -7,6 +7,7 @@
  */
 ?>
 <?php if ( ! defined('ABSPATH')) exit; ?>
+
 <div class="container">
 
     <div class="row  justify-content-center align-items-center" style="margin-top: 100px">
@@ -24,7 +25,7 @@
                     </div>
                 <?php } ?>
 
-                <form action="<?php echo HOME_URL . '/admin/login/';?>" method="post">
+                <form action="<?php echo HOME_URL . '/admin/login';?>" method="post">
                     <input name="user" type="text" class="form-control" placeholder="Username">
                     <br>
                     <input name="pass" type="password" class="form-control" placeholder="Password">
