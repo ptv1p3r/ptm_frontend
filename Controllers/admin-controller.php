@@ -178,25 +178,45 @@ class AdminController extends MainController
         $modelo = $this->load_model('admin-model');
 
         if (isset($_POST["submit"])) {
-            if (!empty($_POST['user']) && !empty($_POST['pass'])) {
-                $user = $_POST['user'];
+            if (!empty($_POST['email']) && !empty($_POST['pass'])) {
+                $email = $_POST['email'];
                 $pass = $_POST['pass'];
 
-                $validate = $modelo->validateUser($user, $pass);
+                $response = $modelo->validateUser($email, $pass);
 
-                if ($validate != null) {
+                if ($response != null) {
                     // validar se login é valido e guardar tokens para a $_SESSION
-                    if ($user == $validate[0]['username'] && $pass == $validate[0]['password']) {
+                    //TODO: login, fazer validaçao correta de responce da api
+                    if ($response["auth"] == true) {
 
                         if(!isset($_SESSION)) {
                             session_start();
                         }
 
-                        $_SESSION['sess_user'] = $user;
+                        // user passa a estar logged in e entao a ter acesso a paginas admin
+                        $this->logged_in = true;
+
+                        // Recria o ID da sessão
+                        $session_id = session_id();
+
+                        // Atualiza user
+                        $_SESSION['userdata']['email'] = $email;
+
+                        // Atualiza a senha
+                        $_SESSION['userdata']['password'] = $pass;
+
+                        // Atualiza o token
+                        $_SESSION['userdata']['token'] = $response["accessToken"];
+
+                        // Atualiza o token
+                        $_SESSION['userdata']['refreshToken'] = $response["refreshToken"];
+
+                        // Atualiza o ID da sessão
+                        $_SESSION['userdata']['user_session_id'] = $session_id;
 
                         $_POST['validation'] = "success";
+                        $this->dashboard();
 
-                        //$this->group(1);
                     }
                 } else {
                     $_POST['validation'] = "failed";
@@ -214,4 +234,6 @@ class AdminController extends MainController
             $this->index();
         }
     }
+
+
 }
