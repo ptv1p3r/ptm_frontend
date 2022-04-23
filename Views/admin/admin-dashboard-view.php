@@ -1,6 +1,8 @@
 
 <?php if ( ! defined('ABSPATH')) exit; ?>
 
+<?php if ( $this->login_required && ! $this->logged_in ) return; ?>
+
 <!-- TODO: adicionar css e js necessario para tabelas e graficos-->
 
 <div id="wrapper">
