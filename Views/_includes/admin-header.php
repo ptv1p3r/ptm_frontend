@@ -55,7 +55,7 @@
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="<?php echo HOME_URL . '/admin/settings';?>"><i class="fas fa-cog"></i> Settings</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <a class="dropdown-item" href="<?php echo HOME_URL . '/admin/logout';?>"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
         </li>
     </ul>
