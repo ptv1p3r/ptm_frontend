@@ -7,12 +7,6 @@
  */
 
 /**
- * require class userlogin so the
- * controllers can access login functions
- */
-require_once ABSPATH . '/Classes/classUserLogin.php';
-
-/**
  * classMainController.php
  * MainController -
  * Todos os controllers deverão
@@ -42,10 +36,13 @@ class MainController extends UserLogin
     public $parametros = array();
 
     /**
-     * user data
+     * $login_required
      *
+     * Se a página precisa de login
+     *
+     * @access public
      */
-    //public $userdata= array();
+    public $login_required = false;
 
     /**
      * Construtor da classe
@@ -61,6 +58,9 @@ class MainController extends UserLogin
 
         // Parâmetros
         $this->parametros = $parametros;
+
+        // Verifica o login
+        $this->check_userlogin();
 
     }
 
