@@ -26,7 +26,7 @@
                 <?php } ?>
 
                 <form action="<?php echo HOME_URL . '/admin/login';?>" method="post">
-                    <input name="user" type="text" class="form-control" placeholder="Username">
+                    <input name="email" type="email" class="form-control" placeholder="Email">
                     <br>
                     <input name="pass" type="password" class="form-control" placeholder="Password">
                     <br>
