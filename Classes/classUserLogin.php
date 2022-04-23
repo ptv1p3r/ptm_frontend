@@ -114,7 +114,7 @@ class UserLogin
             return;
         }
 
-        $url = API_URL . '/v1/entity/login';
+        $url = API_URL . 'api/v1/login';
         $data = array(
             'email' => $email,
             'password' => $password
@@ -124,17 +124,17 @@ class UserLogin
         $response = json_decode($result, true);
 
         //verifica dados de retorno da api
-        if(boolval($response['ok']) == true){
-            if (array_key_exists("id", $response)) {
-                $userId = (int) $response['id'];
+        if(boolval($response['auth']) == true){
+            /*if (array_key_exists("id", $response)) {
+                $userid = $response['id'];
+            }*/
+
+            if (array_key_exists("accessToken", $response)) {
+                $userToken = $response['accessToken'];
             }
 
-            if (array_key_exists("token", $response)) {
-                $userToken = $response['token'];
-            }
-
-            if (array_key_exists("expire", $response)) {
-                $TokenExpire = $response['expire'];
+            if (array_key_exists("refreshToken", $response)) {
+                $userRefreshToken = $response['refreshToken'];
             }
 
 //            if (array_key_exists("message", $response)) {
@@ -143,7 +143,7 @@ class UserLogin
 //            }
 
             // Verifica se o ID e token existe
-            if ( empty( $userId ) || empty( $userToken ) ){
+            if ( empty( $userToken ) || empty( $userRefreshToken ) ){
                 $this->logged_in = false;
                 $this->login_error = 'User do not exists.';
 
@@ -153,9 +153,9 @@ class UserLogin
                 return;
             }
 
-            $url = API_URL . '/v1/entity/' . $userId;
+            /*$url = API_URL . '/v1/entity/' . $userId;
             $result = callAPI("GET", $url, '', $userToken );
-            $response = json_decode($result, true);
+            $response = json_decode($result, true);*/
 
             // Se for um post
             if ( $post ) {
@@ -174,10 +174,10 @@ class UserLogin
                 $_SESSION['userdata']['password'] = $password;
 
                 // Atualiza o token
-                $_SESSION['userdata']['token'] = $userToken;
+                $_SESSION['userdata']['accessToken'] = $userToken;
 
                 // Atualiza o token
-                $_SESSION['userdata']['tokenExpire'] = $TokenExpire;
+                $_SESSION['userdata']['refreshToken'] = $TokenExpire;
 
                 // Atualiza o ID da sessão
                 $_SESSION['userdata']['user_session_id'] = $session_id;
