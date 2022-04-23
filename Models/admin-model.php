@@ -22,7 +22,7 @@ class AdminModel extends MainModel {
         $this->userdata = $this->controller->userdata;
     }
 
-    public function validateUser($username, $password){
+    /*public function validateUser($username, $password){
         $result = null;
 
         $data = null;
@@ -33,7 +33,7 @@ class AdminModel extends MainModel {
         $result = callAPI("POST", $url, $data);
 
         return json_decode($result, true);
-    }
+    }*/
 
     /**
      * Metodo que retorna 10 categorias da BD
