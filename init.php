@@ -26,12 +26,12 @@ if ( ! defined('DEBUG') || DEBUG === false ) {
     ini_set("display_errors", 1);
 
 }
-
+require_once ABSPATH . '/Classes/classUserLogin.php';
 require_once ABSPATH . '/Includes/global-functions.php';
 require_once ABSPATH . '/Classes/classMainController.php';
 require_once ABSPATH . '/Classes/classMainModel.php';
 require_once ABSPATH . '/Classes/classPtmDB.php';
 require_once ABSPATH . '/Classes/classPtmMVC.php';
 
-$_AppMovie = new PtmMVC();
+$_AppPtm = new PtmMVC();
 
