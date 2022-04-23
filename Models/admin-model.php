@@ -29,8 +29,8 @@ class AdminModel extends MainModel {
         $data["email"] = $username;
         $data["password"] = $password;
 
-        $url = API_URL . 'api/v1/groups/login';
-        $result = callAPI("GET", $url, $data);
+        $url = API_URL . 'api/v1/login';
+        $result = callAPI("POST", $url, $data);
 
         return json_decode($result, true);
     }
