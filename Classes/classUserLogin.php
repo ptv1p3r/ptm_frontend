@@ -253,7 +253,7 @@ class UserLogin
         // Verifica se a URL da HOME está configurada
         if ( defined( 'HOME_URL' ) ) {
             // Configura a URL de login
-            $login_uri = HOME_URL . '/admin/';
+            $login_uri = HOME_URL . '/admin';
 
             // A página em que o usuário estava
             if ( !isset( $_SESSION['goto_url'] ) ) {
