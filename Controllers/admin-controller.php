@@ -49,7 +49,7 @@ class AdminController extends MainController
         if (isset($_POST["submit"])) {
             if (!empty($_POST['email']) && !empty($_POST['pass'])) {
                 $email = $_POST['email'];
-                $pass = $_POST['pass'];
+                $pass = hash('sha256', $_POST['pass']);
 
                 $response = $modelo->validateUser($email, $pass);
 
@@ -84,6 +84,7 @@ class AdminController extends MainController
                         $_SESSION['userdata']['user_session_id'] = $session_id;
 
                         $_POST['validation'] = "success";
+                        $_SESSION['goto_url'] = '/admin/dashboard';
                         $this->goto_page(HOME_URL . '/admin/dashboard');
 
                     }
@@ -234,7 +235,11 @@ class AdminController extends MainController
         }
     }
 
+    function applogout(){
+        $_SESSION['goto_url'] = '/admin';
 
+        $this->logout(true);
+    }
 
 
 }
