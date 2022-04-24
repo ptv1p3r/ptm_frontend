@@ -38,7 +38,7 @@
 
 <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand mr-1" href="<?php echo HOME_URL . '/admin/groups';?>"> <img src="<?php echo HOME_URL . '/Images/logo.png';?>" alt="" width="48">Project Tree Management</a>
+    <a class="navbar-brand mr-1" href="<?php echo HOME_URL . '/admin/dashboard';?>"> <img src="<?php echo HOME_URL . '/Images/logo.png';?>" alt="" width="48">Project Tree Management</a>
 
     <!-- Spacing -->
     <a class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
@@ -55,7 +55,7 @@
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="<?php echo HOME_URL . '/admin/settings';?>"><i class="fas fa-cog"></i> Settings</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="<?php echo HOME_URL . '/admin/logout';?>"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <a class="dropdown-item" href="<?php echo HOME_URL . '/admin/applogout';?>"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
         </li>
     </ul>
