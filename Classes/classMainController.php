@@ -36,6 +36,15 @@ class MainController extends UserLogin
     public $parametros = array();
 
     /**
+     * $permission_required
+     *
+     * Permissão necessária
+     *
+     * @access public
+     */
+    public $permission_required = 'any';
+
+    /**
      * $login_required
      *
      * Se a página precisa de login
