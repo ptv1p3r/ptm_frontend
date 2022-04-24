@@ -48,10 +48,10 @@ class GroupsModel extends MainModel {
 
         $url = API_URL . 'api/v1/groups/view/' . $id;
 
-        //if (!empty($this->userdata['token'])){
-            //$userToken = $this->userdata['token'];
-            $result = callAPI("GET", $url, '');/*, $userToken */
-        //}
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
 
         return json_decode($result, true);
     }
@@ -66,10 +66,10 @@ class GroupsModel extends MainModel {
 
         $url = API_URL . 'api/v1/groups/list';
 
-        //if (!empty($this->userdata['token'])){
-            //$userToken = $this->userdata['token'];
-            $result = callAPI("GET", $url, '');/*, $userToken */
-        //}
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
 
         return json_decode($result, true);
     }
@@ -117,10 +117,10 @@ class GroupsModel extends MainModel {
         }
 
         $url = API_URL . 'api/v1/groups/create';
-        //if (!empty($this->userdata['token'])){
-            //$userToken = $this->userdata['token'];
-            $result = callAPI("POST", $url, $normalizedData/*, $userToken */);
-       // }
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("POST", $url, $normalizedData, $userToken);
+        }
 
         return $result;
     }
@@ -173,10 +173,10 @@ class GroupsModel extends MainModel {
         }
 
         $url = API_URL . 'api/v1/groups/edit/' . $GroupId;
-        //if (!empty($this->userdata['token'])){
-            //$userToken = $this->userdata['token'];
-            $result = callAPI("PUT", $url, $normalizedData/*, $userToken */);
-       // }
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("PUT", $url, $normalizedData, $userToken);
+        }
 
         return $result;
     }
@@ -202,10 +202,10 @@ class GroupsModel extends MainModel {
 
         $url = API_URL . 'api/v1/groups/delete/' . $GroupId;
 
-        //if (!empty($this->userdata['token'])){
-            //$userToken = $this->userdata['token'];
-            $result = callAPI("DELETE", $url, ''/*, $userToken */);
-        //}
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("DELETE", $url, '', $userToken);
+        }
 
         return $result;
     }
