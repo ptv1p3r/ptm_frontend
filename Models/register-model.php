@@ -125,7 +125,7 @@ class RegisterModel extends MainModel
                 }*/
             }
         }
-        $url = API_URL . 'api/v1/users/create';
+        $url = API_URL . 'api/v1/users/register';
 
         // if (!empty($this->userdata['token'])) {
         //   $userToken = $this->userdata['token'];
