@@ -53,6 +53,7 @@ class RegisterController extends MainController
         if (isset($_POST['action']) && !empty($_POST['action'])) {
             $action = $_POST['action'];
             $data = $_POST['data'];
+            $data[11]['value'] = hash('sha256', $data[11]['value']);
 
 //          echo($data);
 
