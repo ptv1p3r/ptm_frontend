@@ -54,7 +54,7 @@ class AdminController extends MainController
                 $response = $modelo->validateUser($email, $pass);
 
                 if ($response != null) {
-                    // validar se login é valido e guardar tokens para a $_SESSION
+                    // verifica se a autenticaçao esta correta e guarda tokens para a $_SESSION
                     //TODO: login, fazer validaçao correta de responce da api
                     if (boolval($response["auth"]) == true) {
 
