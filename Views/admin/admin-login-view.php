@@ -30,6 +30,8 @@
                     <br>
                     <input name="pass" type="password" class="form-control" placeholder="Password">
                     <br>
+
+                    <!-- TODO: substituir action="" por ajax para login-->
                     <input type="submit" name="submit" class="btn btn-success form-control" value="Login"/>
                 </form>
             </div>
