@@ -271,17 +271,19 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="loginUser">
+<!--                    <form method="post" action="--><?//= HOME_URL . '/home/login'; ?><!--">-->
                         <div class="form-group">
-                            <input type="text" class="form-control" name="username" placeholder="Username"
+                            <input type="email" class="form-control" name="email" placeholder="Username"
                                    required="required">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" name="password" placeholder="Password"
+                            <input type="password" class="form-control" name="pass" placeholder="Password"
                                    required="required">
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary btn-lg btn-block login-btn">Login</button>
+<!--                            <input type="submit" name='submit' class="btn btn-primary btn-lg btn-block login-btn">Login</input>-->
                         </div>
                     </form>
                     <div class="modal-footer">
@@ -323,6 +325,54 @@
 
 <script>
 
+    //Main functions from this view
+    $(document).ready(function () {
+        $('#loginUser').submit(function (event) {
+            event.preventDefault(); //prevent default action
+            // let chk_status = $("#checkBtn").prop('checked');
+            // if (chk_status) {
+                let formData = {
+                    'action': "Login",
+                    'data': $(this).serializeArray()
+                };
+                $.ajax({
+                    url: "<?php echo HOME_URL . '/home/login';?>",
+                    dataType: "json",
+                    type: 'POST',
+                    data: formData,
+                    success: function (data) {
+                        console.log(data);
+
+                        Swal.fire({
+                            title: 'Login com sucesso!',
+                            text: data['message'],
+                            icon: 'success',
+                            // showConfirmButton: true,
+                            timer: 2000,
+                            //didClose: () => {
+                            //    window.location = "<?php //echo HOME_URL . '/home';?>//";
+                            //}
+                        });
+                    },
+                    error: function (data) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data['message'],
+                            icon: 'error',
+                            showConfirmButton: false,
+                            //timer: 2000,
+                            // didClose: () => {
+                            //     location.reload();
+                            // }
+                        });
+                    }
+                });
+            } else {
+
+                alert('batatas');
+            }
+        });
+    // });
 
 </script>
 
