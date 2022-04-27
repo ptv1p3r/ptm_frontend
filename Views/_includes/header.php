@@ -8,6 +8,8 @@
 ?>
 <?php if (!defined('ABSPATH')) exit; ?>
 
+<?php if ( $this->login_required && ! $this->logged_in ) return; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -95,7 +97,8 @@
 <!--Header Start-->
 <header class="header-style-2">
     <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="<?php echo HOME_URL . '/'; ?>"><img src="../../Images/home/logo.png" alt=""></a>
+
+        <a class="navbar-brand" href="<?php echo HOME_URL . '/'; ?>"><img src="Images/logo/adoteUma.png" alt=""></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
                     class="fas fa-bars"></i></button>
@@ -265,16 +268,15 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="avatar">
-                        <img src="../../../Images/home/logo.png" alt="Avatar">
+                        <img src="Images/logo/adoteUma.png" alt="Avatar">
                     </div>
                     <h4 class="modal-title">Login</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
                     <form id="loginUser">
-<!--                    <form method="post" action="--><?//= HOME_URL . '/home/login'; ?><!--">-->
                         <div class="form-group">
-                            <input type="email" class="form-control" name="email" placeholder="Username"
+                            <input type="email" class="form-control" name="email" placeholder="Email"
                                    required="required">
                         </div>
                         <div class="form-group">
@@ -335,14 +337,13 @@
                     'action': "Login",
                     'data': $(this).serializeArray()
                 };
+
                 $.ajax({
                     url: "<?php echo HOME_URL . '/home/login';?>",
                     dataType: "json",
                     type: 'POST',
                     data: formData,
                     success: function (data) {
-                        console.log(data);
-
                         Swal.fire({
                             title: 'Login com sucesso!',
                             text: data['message'],
