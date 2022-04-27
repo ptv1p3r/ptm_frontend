@@ -22,15 +22,27 @@ class AdminLoginModel extends MainModel {
         $this->userdata = $this->controller->userdata;
     }
 
-    public function validateUser($username, $password){
+    public function validateUser($data){
         $result = null;
+        $normalizedData = array();
 
-        $data = null;
-        $data["email"] = $username;
-        $data["password"] = $password;
+        // get data from form array and package it to send to api
+        foreach ($data as $dataVector) {
+            foreach ($dataVector as $key => $value) {
+                switch ($dataVector['name']) { //gets <input name="">
+                    case "email":
+                        $normalizedData['email'] = $dataVector['value'];
+                        break;
+
+                    case "pass":
+                        $normalizedData['password'] = $dataVector['value'];
+                        break;
+                }
+            }
+        }
 
         $url = API_URL . 'api/v1/login';
-        $result = callAPI("POST", $url, $data);
+        $result = callAPI("POST", $url, $normalizedData);
 
         return json_decode($result, true);
     }
