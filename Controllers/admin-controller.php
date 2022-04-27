@@ -46,63 +46,73 @@ class AdminController extends MainController
 
         $modelo = $this->load_model('admin-login-model');
 
-        if (isset($_POST["submit"])) {
-            if (!empty($_POST['email']) && !empty($_POST['pass'])) {
-                $email = $_POST['email'];
-                $pass = hash('sha256', $_POST['pass']);
+        if(isset($_POST['action']) && !empty($_POST['action'])) {
+            $action = $_POST['action'];
+            switch ($action) {
+                case 'Login' :
+                    //encripta a pass
+                    $_POST['data'][1]['value'] = hash('sha256', $_POST['data'][1]['value']);
 
-                $response = $modelo->validateUser($email, $pass);
+                    $response = $modelo->validateUser($_POST['data']);
 
-                if ($response != null) {
-                    // verifica se a autenticaçao esta correta e guarda tokens para a $_SESSION
-                    //TODO: login, fazer validaçao correta de responce da api
-                    if (boolval($response["auth"]) == true) {
+                    if ($response != null) {
+                        // verifica se a autenticaçao esta correta e guarda tokens para a $_SESSION
+                        //TODO: login, fazer validaçao correta de responce da api
+                        if (boolval($response["auth"]) == true) {
 
-                        if(!isset($_SESSION)) {
-                            session_start();
+                            if (!isset($_SESSION)) {
+                                session_start();
+                            }
+
+                            // user passa a estar logged in e entao a ter acesso a paginas admin
+                            $this->logged_in = true;
+
+                            // Recria o ID da sessão
+                            $session_id = session_id();
+
+                            // Atualiza user
+                            $_SESSION['userdata']['email'] = $_POST['data'][0]['value'];
+
+                            // Atualiza a senha
+                            $_SESSION['userdata']['password'] = $_POST['data'][1]['value'];
+
+                            // Atualiza o token
+                            $_SESSION['userdata']['accessToken'] = $response["accessToken"];
+
+                            // Atualiza o token
+                            $_SESSION['userdata']['refreshToken'] = $response["refreshToken"];
+
+                            // Atualiza o ID da sessão
+                            $_SESSION['userdata']['user_session_id'] = $session_id;
+
+                            //$_POST['validation'] = "success";
+
+                            $_SESSION['goto_url'] = '/admin/dashboard';
+                            //$this->goto_page(HOME_URL . '/admin/dashboard');
+                            echo $response["code"] = 200;
+                            break;
+
+                        } else {
+                            //$_POST['validation'] = "failed";
+                            //$this->index();
+
+                            echo $response["code"] = 400;
                         }
 
-                        // user passa a estar logged in e entao a ter acesso a paginas admin
-                        $this->logged_in = true;
+                    } else {
+                        //$_POST['validation'] = "failed";
+                        //$this->index();
 
-                        // Recria o ID da sessão
-                        $session_id = session_id();
-
-                        // Atualiza user
-                        $_SESSION['userdata']['email'] = $email;
-
-                        // Atualiza a senha
-                        $_SESSION['userdata']['password'] = $pass;
-
-                        // Atualiza o token
-                        $_SESSION['userdata']['accessToken'] = $response["accessToken"];
-
-                        // Atualiza o token
-                        $_SESSION['userdata']['refreshToken'] = $response["refreshToken"];
-
-                        // Atualiza o ID da sessão
-                        $_SESSION['userdata']['user_session_id'] = $session_id;
-
-                        $_POST['validation'] = "success";
-                        $_SESSION['goto_url'] = '/admin/dashboard';
-                        $this->goto_page(HOME_URL . '/admin/dashboard');
-
+                        echo $response["code"] = 400;
                     }
-                } else {
-                    $_POST['validation'] = "failed";
-
-                    $this->index();
-                }
-
-            } else {
-                $_POST['validation'] = "failed";
-
-                $this->index();
             }
-
         } else {
-            $this->index();
+            //$_POST['validation'] = "failed";
+            //$this->index();
+
+            echo $response["code"] = 400;
         }
+
     }
 
     /**
