@@ -159,7 +159,7 @@
                     'data': $(this).serializeArray()
                 };
                 $.ajax({
-                    url: "<?php echo HOME_URL . '/register/newuser';?>",
+                    url: "<?php echo HOME_URL . '/register/new-user';?>",
                     dataType: "json",
                     type: 'POST',
                     data: formData,
@@ -191,23 +191,10 @@
                     }
                 });
             } else {
-
                 alert('batatas');
             }
         });
-
     });
-    // New User
-
-
-    /*
-            //Date control
-            let dateControl = document.querySelector('input[type="date"]');
-            dateControl.value = '2017-06-01';
-            console.log(typeof (dateControl.value));*/
-
-    //Validation Form Rules
-
 
 </script>
 <!--Script's end section-->

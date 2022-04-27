@@ -13,7 +13,7 @@ class RegisterModel extends MainModel
     public function __construct($db = false, $controller = null)
     {
 
-        $this->db = $db; // Configura o DB (PDO)
+//        $this->db = $db; // Configura o DB (PDO)
 
         $this->controller = $controller; // Configura o controlador
 
@@ -33,6 +33,8 @@ class RegisterModel extends MainModel
         $result = null;
 
         $url = API_URL . 'api/v1/countries/list';
+
+
 
         $result = callAPI("GET", $url, ''/*, $userToken*/);
 //        if (!empty($this->userdata['token'])) {
@@ -127,10 +129,14 @@ class RegisterModel extends MainModel
         }
         $url = API_URL . 'api/v1/users/register';
 
-        // if (!empty($this->userdata['token'])) {
-        //   $userToken = $this->userdata['token'];
-        $result = callAPI("POST", $url, $normalizedData, /*$userToken*/);
-        //}
+        //TODO: ainda não consigo ligar o token, dá erro
+
+        $result = callAPI("POST", $url, $normalizedData,/* $userToken*/);
+
+//        if (!empty($_SESSION['userdata']['accessToken'])){
+//            $userToken = $_SESSION['userdata']['accessToken'];
+//            $result = callAPI("POST", $url, $normalizedData, $userToken);
+//        }
         return $result;
     }
 
