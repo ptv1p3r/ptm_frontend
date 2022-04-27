@@ -1711,7 +1711,7 @@ Home Page 2 Start
 }
 
 header.header-style-2 {
-    background: #1b5e20;
+    background: url(../../Images/home/footerbg.jpg);;
 }
 
 header.header-style-2 .navbar {
@@ -1720,7 +1720,7 @@ header.header-style-2 .navbar {
 }
 
 header.header-style-2 .navbar-brand {
-    background: #33691e;
+    background:url(../../Images/home/footerbg.jpg);
     width: 270px;
     text-align: center;
     padding: 13px 0;
