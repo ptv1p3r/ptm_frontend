@@ -6,7 +6,7 @@
  * Time: 20:13
  */
 
-class HomeLoginModel extends MainModel
+class UserLoginModel extends MainModel
 {
 
     public $db; // PDO
@@ -23,16 +23,32 @@ class HomeLoginModel extends MainModel
         $this->userdata = $this->controller->userdata;
     }
 
-    public function validateUser($username, $password)
+    /**
+     * Method to validate user login
+     * @return
+     */
+
+    public function validateUser($data)
     {
         $result = null;
+        $normalizedData = array();
 
-        $data = null;
-        $data["email"] = $username;
-        $data["password"] = $password;
+        foreach ($data as $dataVector) {
+            foreach ($dataVector as $key => $value) {
+                switch ($dataVector['name']) { //gets <input name="">
+                    case "email":
+                        $normalizedData['email'] = $dataVector['value'];
+                        break;
+
+                    case "pass":
+                        $normalizedData['password'] = $dataVector['value'];
+                        break;
+                }
+            }
+        }
 
         $url = API_URL . 'api/v1/login';
-        $result = callAPI("POST", $url, $data);
+        $result = callAPI("POST", $url, $normalizedData);
 
         return json_decode($result, true);
     }
