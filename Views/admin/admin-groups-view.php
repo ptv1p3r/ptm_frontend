@@ -242,7 +242,7 @@
                 'action': "AddGroup",
                 'data': $(this).serializeArray()
             };
-            console.log(formData)
+
             $.ajax({
                 url: "<?php echo HOME_URL . '/admin/groups';?>",
                 dataType: "json",
@@ -250,29 +250,31 @@
                 data: formData,
                 success: function (data) {
                     $("#addGroupModal").modal('hide');
-
+                    console.log(data)
                     //mensagem de Success
                     Swal.fire({
                         title: 'Success!',
-                        text: data['message'],
+                        text: data.body.message,
                         icon: 'success',
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
                     });
+
                 },
                 error: function (data) {
+                    console.log(data)
                     //mensagem de Error
                     Swal.fire({
                         title: 'Error!',
-                        text: data['message'],
+                        text: data.body.message,
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
                     });
                 }
@@ -287,7 +289,7 @@
                 'action' : "UpdateGroup",
                 'data'   : $(this).serializeArray()
             };
-            console.log(formData)
+
             $.ajax({
                 url : "<?php echo HOME_URL . '/admin/groups';?>",
                 dataType: "json",
