@@ -35,14 +35,14 @@ class RegisterModel extends MainModel
         $url = API_URL . 'api/v1/countries/list';
 
 
-
         $result = callAPI("GET", $url, ''/*, $userToken*/);
 //        if (!empty($this->userdata['token'])) {
 //            $userToken = $this->userdata['token'];
 //            $result = callAPI("GET", $url, '', $userToken);
 //        }
 
-        return json_decode($result, true);
+        return json_decode(json_encode($result), true);
+        // return json_decode($result, true);
     }
 
     /**
@@ -131,13 +131,15 @@ class RegisterModel extends MainModel
 
         //TODO: ainda não consigo ligar o token, dá erro
 
-        $result = callAPI("POST", $url, $normalizedData,/* $userToken*/);
-
-//        if (!empty($_SESSION['userdata']['accessToken'])){
-//            $userToken = $_SESSION['userdata']['accessToken'];
-//            $result = callAPI("POST", $url, $normalizedData, $userToken);
-//        }
-        return $result;
+        $result = callAPI("POST", $url, $normalizedData/*, $userToken*/);
+/*
+        if (!empty($_SESSION['userdata']['accessToken'])) {
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("POST", $url, $normalizedData, $userToken);
+        }*/
+//       return $result;
+        return json_decode(json_encode($result), true);
+      //  echo($result);
     }
 
 
