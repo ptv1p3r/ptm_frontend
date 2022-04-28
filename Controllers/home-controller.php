@@ -40,7 +40,6 @@ class HomeController extends MainController
 
     }
 
-
     /**
      * Login
      * @return void
@@ -48,7 +47,7 @@ class HomeController extends MainController
     public function login()
     {
         // Título da página
-        $this->title = 'User login';
+        $this->title = 'User - Login';
 
         // Parametros da função
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -64,12 +63,14 @@ class HomeController extends MainController
 
                     $response = $modelo->validateUser($_POST['data']);
 
-
                     if ($response != null) {
-                        // verifica se a autenticaçao esta correta e guarda tokens para a $_SESSION
-                        //TODO: login, fazer validaçao correta de responce da api
-                        if (boolval($response["auth"]) == true) {
+                        //transforma o $result[body] em array
+                        //$responseBody =  json_decode($response["body"], true);
 
+                        // verifica se a autenticaçao esta correta e guarda tokens para a $_SESSION
+                        if ($response['statusCode'] === 200) {
+
+                            //se nao existir uma SESSAO iniciada, inicia
                             if (!isset($_SESSION)) {
                                 session_start();
                             }
@@ -87,48 +88,83 @@ class HomeController extends MainController
                             $_SESSION['userdata']['password'] = $_POST['data'][1]['value'];
 
                             // Atualiza o token
-                            $_SESSION['userdata']['accessToken'] = $response["accessToken"];
+                            $_SESSION['userdata']['accessToken'] = $response["body"]["accessToken"];
 
                             // Atualiza o token
-                            $_SESSION['userdata']['refreshToken'] = $response["refreshToken"];
+                            $_SESSION['userdata']['refreshToken'] = $response["body"]["refreshToken"];
 
                             // Atualiza o ID da sessão
                             $_SESSION['userdata']['user_session_id'] = $session_id;
 
-
                             //$_POST['validation'] = "success";
 
-                            $_SESSION['goto_url'] = '/home';
-                            //$this->goto_page(HOME_URL . '/dashboard');
-                            echo $response["code"] = 200;
-
+                            $_SESSION['goto_url'] = '/home/dashboard';
+                            //$this->goto_page(HOME_URL . '/admin/dashboard');
+                            echo $response["statusCode"];
+                            break;
 
                         } else {
                             //$_POST['validation'] = "failed";
                             //$this->index();
 
-                            echo $response["code"] = 400;
+                            echo $response["statusCode"];
                         }
 
                     } else {
                         //$_POST['validation'] = "failed";
                         //$this->index();
 
-                        echo $response["code"] = 400;
+                        echo $response["statusCode"];
                     }
             }
         } else {
             //$_POST['validation'] = "failed";
             //$this->index();
 
-            echo $response["code"] = 400;
+            //echo $response["statusCode"];
         }
+    }
+
+    /**
+     * Carrega a página
+     * "/views/admin/admin-dashboard-view.php"
+     */
+    public function dashboard() {
+
+        // Título da página
+        $this->title = 'User - Dashboard';
+
+        // Parametros da função
+        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
+
+        // obriga o login para aceder à pagina
+        if ( ! $this->logged_in ) {
+
+            // Se não; garante o logout
+            $this->logout();
+
+            // Redireciona para a página de login
+            $this->goto_login();
+
+            // Garante que o script não vai passar daqui
+            return;
+        }
+
+        $modelo = $this->load_model('admin-model');
+
+        /** Carrega os arquivos do view **/
+
+        require ABSPATH . '/views/_includes/user-header.php';
+
+        require ABSPATH . '/views/user/profile/user-dashboard-view.php';
+
+        require ABSPATH . '/views/_includes/footer.php';
 
     }
 
 
     /**
-     * Login
+     * Logout
      * @return void
      */
 
@@ -138,6 +174,7 @@ class HomeController extends MainController
 
         $this->logout(true);
     }
+
 
     public function rights()
     {
