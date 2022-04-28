@@ -24,9 +24,11 @@ class RegisterController extends MainController
         // Function parameters
         $parameters = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
-        $model = $this->load_model('register-model');
 
-        $this->userdata['countryList'] = $model->getCountryList();
+        $model = $this->load_model('register-model');
+        $getCountryModel = $model->getCountryList();
+
+        $this->userdata['countryList'] = $getCountryModel['body'];
 
         /** load files from view **/
         require ABSPATH . '/views/_includes/header.php';
@@ -44,7 +46,7 @@ class RegisterController extends MainController
         $this->title = 'New User';
 
         // Function parameters
-        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+        $parameters = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
         //Load user-model
         $model = $this->load_model('register-model');
@@ -55,24 +57,24 @@ class RegisterController extends MainController
             $data = $_POST['data'];
             $data[11]['value'] = hash('sha256', $data[11]['value']);
 
-//          echo($data);
+            //$apiResponse = json_decode($model->addUser($data), true); //decode to check message from api
+            $apiResponse = $model->addUser($data); //decode to check message from api
 
-            $apiResponse = json_decode($model->addUser($data), true); //decode to check message from api
-//          $apiResponse = 'OK';
+            // quando statusCode = 201, a response nao vem com campo mensagem
+            // entao é criado e encoded para ser enviado
+            if ($apiResponse['statusCode'] === 201){ // 201 created
+                $apiResponse["body"]['message'] = "Created with success!";
 
-       //     echo($apiResponse);
-
-            //TODO Rever as o status para ver a mensagem para mandar o correto
-
-            if (!$apiResponse['created']) {
-                $apiResponse['code'] = 400;
-            } else {
-                $apiResponse['code'] = 200;
+                $apiResponse = json_encode($apiResponse);// encode package to send
+                die ($apiResponse);
             }
 
-            $apiResponse = json_encode($apiResponse); // encode package to send
-            echo $apiResponse;
+            // se statsCode nao for 201, entao api response ja vem com um campo mensagem
+            // assim so precisamos de fazer encode para ser enviado
+            $apiResponse = json_encode($apiResponse);// encode package to send
+            die($apiResponse);
+
+
         }
     }
-
 }
