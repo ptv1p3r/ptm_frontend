@@ -22,26 +22,11 @@ class GroupsModel extends MainModel {
         $this->userdata = $this->controller->userdata;
     }
 
-    /*public function validateUser($username, $password){
-        $query = null;
-
-        $query = $this->db->query('SELECT * FROM login WHERE username=\'' . $username . '\' 
-                                                          AND password=\'' . $password . '\'');
-
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
-        }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
-
-
     /** CRUD GROUPS **/
     /**
      * Metodo que retorna Grupo pelo id
      * @param $id
-     * @return mixed
+    // * @return mixed
      */
     public function getGroupById($id) {
         $result = null;
@@ -52,8 +37,8 @@ class GroupsModel extends MainModel {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
-
-        return json_decode($result, true);
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
     /**
@@ -70,14 +55,14 @@ class GroupsModel extends MainModel {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
-
-        return json_decode($result, true);
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
     /**
      * Metodo adiciona Grupo
      * @param $data
-     * @return bool|string|void|null
+     * @return array|null
      */
     public function addGroup($data) {
         $result = null;
@@ -122,13 +107,14 @@ class GroupsModel extends MainModel {
             $result = callAPI("POST", $url, $normalizedData, $userToken);
         }
 
-        return $result;
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
     /**
      * Metodo edita/update Grupo
      * @param $data
-     * @return bool|string|void|null
+     * @return mixed
      */
     public function updateGroup($data) {
         $result = null;
@@ -178,13 +164,14 @@ class GroupsModel extends MainModel {
             $result = callAPI("PUT", $url, $normalizedData, $userToken);
         }
 
-        return $result;
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
     /**
      * Metodo delete Grupo
      * @param $data
-     * @return bool|string|void|null
+     * @return mixed
      */
     public function deleteGroup($data) {
         $result = null;
@@ -207,7 +194,8 @@ class GroupsModel extends MainModel {
             $result = callAPI("DELETE", $url, '', $userToken);
         }
 
-        return $result;
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
     /**
