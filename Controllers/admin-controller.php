@@ -194,20 +194,23 @@ class AdminController extends MainController
                     break;
 
                 case 'AddGroup' :
-
                     $data = $_POST['data'];
                     $apiResponse = $modelo->addGroup($data); //decode to check message from api
 
+                    // quando statusCode = 201, a response nao vem com campo mensagem
+                    // entao é criado e encoded para ser enviado
                     if ($apiResponse['statusCode'] === 201){ // 201 created
                         $apiResponse["body"]['message'] = "Created with success!";
 
                         $apiResponse = json_encode($apiResponse);// encode package to send
                         echo $apiResponse;
-                    } else {
-                        $apiResponse = json_encode($apiResponse);// encode package to send
-                        die($apiResponse);
+                        break;
                     }
 
+                    // se statsCode nao for 201, entao api response ja vem com um campo mensagem
+                    // assim so precisamos de fazer encode para ser enviado
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo($apiResponse);
                     break;
 
                 case 'UpdateGroup' :
