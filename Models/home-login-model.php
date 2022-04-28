@@ -6,7 +6,7 @@
  * Time: 20:13
  */
 
-class UserLoginModel extends MainModel
+class HomeLoginModel extends MainModel
 {
 
     public $db; // PDO
@@ -24,15 +24,16 @@ class UserLoginModel extends MainModel
     }
 
     /**
-     * Method to validate user login
-     * @return
+     * metodo que valida o login
+     * @param $data
+     * @return mixed
      */
-
     public function validateUser($data)
     {
         $result = null;
         $normalizedData = array();
 
+        // get data from form array and package it to send to api
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']) { //gets <input name="">
@@ -50,6 +51,7 @@ class UserLoginModel extends MainModel
         $url = API_URL . 'api/v1/login';
         $result = callAPI("POST", $url, $normalizedData);
 
-        return json_decode($result, true);
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 }
