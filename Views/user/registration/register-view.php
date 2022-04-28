@@ -98,7 +98,7 @@
                                 </li>
                                 <li class="col-md-6">
                                     <div class="form-group input-group">
-                                        <input type="text" name="addUserEmail" placeholder="Email" class="form-control"
+                                        <input type="email" name="addUserEmail" placeholder="Email" class="form-control"
                                                required>
                                     </div>
                                 </li>
@@ -159,36 +159,51 @@
                     'data': $(this).serializeArray()
                 };
                 $.ajax({
-                    url: "<?php echo HOME_URL . '/register/new-user';?>",
+                    url: "<?php echo HOME_URL . '/register/newUser';?>",
                     dataType: "json",
                     type: 'POST',
                     data: formData,
                     success: function (data) {
-                        console.log(data);
-
-                        Swal.fire({
-                            title: 'Conta criado com sucesso!',
-                            text: data['message'],
-                            icon: 'success',
-                            showConfirmButton: true,
-                            //timer: 2000,
-                            didClose: () => {
-                                window.location = "<?php echo HOME_URL . '/home';?>";
-                            }
-                        });
+                        if (data.statusCode === 201) {
+                            //mensagem de Success
+                            Swal.fire({
+                                title: 'Success!',
+                                text: data.body.message,
+                                icon: 'success',
+                                showConfirmButton: false,
+                                timer: 2000,
+                                didClose: () => {
+                                    //location.reload();
+                                }
+                            });
+                        } else {
+                            //mensagem de Error
+                            Swal.fire({
+                                title: 'Error!',
+                                text: data.body.message,
+                                icon: 'error',
+                                showConfirmButton: false,
+                                timer: 2000,
+                                didClose: () => {
+                                    //location.reload();
+                                }
+                            });
+                        }
                     },
                     error: function (data) {
+                        //mensagem de Error
                         Swal.fire({
                             title: 'Error!',
-                            text: data['message'],
+                            text: "Connection error, please try again.",
                             icon: 'error',
                             showConfirmButton: false,
-                            //timer: 2000,
-                            // didClose: () => {
-                            //     location.reload();
-                            // }
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
                         });
                     }
+
                 });
             } else {
                 alert('batatas');
