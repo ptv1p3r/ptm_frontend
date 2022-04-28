@@ -114,27 +114,34 @@ class UserLogin
             return;
         }
 
-        $url = API_URL . '/v1/entity/login';
+        $url = API_URL . 'api/v1/login';
         $data = array(
             'email' => $email,
             'password' => $password
         );
 
+        //apanha a msg da api
         $result = callAPI("POST", $url, $data );
-        $response = json_decode($result, true);
+
+        /*
+         * encode de toda a msg para string de json, pois o encode so aceita strings
+         * e em seguida, decode de msg json para array
+         * desta é mais simples acessar o conteudo
+        */
+        $response = json_decode(json_encode($result), true);
 
         //verifica dados de retorno da api
-        if(boolval($response['ok']) == true){
-            if (array_key_exists("id", $response)) {
-                $userId = (int) $response['id'];
+        if($response['statusCode'] === 200){
+            /*if (array_key_exists("id", $response)) {
+                $userid = $response['id'];
+            }*/
+
+            if (array_key_exists("accessToken", $response["body"])) {
+                $userToken = $response["body"]['accessToken'];
             }
 
-            if (array_key_exists("token", $response)) {
-                $userToken = $response['token'];
-            }
-
-            if (array_key_exists("expire", $response)) {
-                $TokenExpire = $response['expire'];
+            if (array_key_exists("refreshToken", $response["body"])) {
+                $userRefreshToken = $response["body"]['refreshToken'];
             }
 
 //            if (array_key_exists("message", $response)) {
@@ -142,8 +149,8 @@ class UserLogin
 //                $_SESSION["message"] = $response['message'];
 //            }
 
-            // Verifica se o ID e token existe
-            if ( empty( $userId ) || empty( $userToken ) ){
+            // Verifica se o $userToken e $userRefreshToken existe
+            if ( empty( $userToken ) || empty( $userRefreshToken ) ){
                 $this->logged_in = false;
                 $this->login_error = 'User do not exists.';
 
@@ -153,9 +160,9 @@ class UserLogin
                 return;
             }
 
-            $url = API_URL . '/v1/entity/' . $userId;
+            /*$url = API_URL . '/v1/entity/' . $userId;
             $result = callAPI("GET", $url, '', $userToken );
-            $response = json_decode($result, true);
+            $response = json_decode($result, true);*/
 
             // Se for um post
             if ( $post ) {
@@ -165,7 +172,7 @@ class UserLogin
                 $session_id = session_id();
 
                 // Envia os dados de utilizador para a sessão
-                $_SESSION['userdata'] = $response;
+                $_SESSION['userdata'] = $responseBody;
 
                 // Atualiza user
                 $_SESSION['userdata']['email'] = $email;
@@ -174,10 +181,10 @@ class UserLogin
                 $_SESSION['userdata']['password'] = $password;
 
                 // Atualiza o token
-                $_SESSION['userdata']['token'] = $userToken;
+                $_SESSION['userdata']['accessToken'] = $userToken;
 
                 // Atualiza o token
-                $_SESSION['userdata']['tokenExpire'] = $TokenExpire;
+                $_SESSION['userdata']['refreshToken'] = $userRefreshToken;
 
                 // Atualiza o ID da sessão
                 $_SESSION['userdata']['user_session_id'] = $session_id;
@@ -246,17 +253,18 @@ class UserLogin
     }
 
     /**
+     * TODO: ver soluçao para login url, parametrizar?
      * Vai para a página de login
      */
     protected function goto_login() {
         // Verifica se a URL da HOME está configurada
         if ( defined( 'HOME_URL' ) ) {
             // Configura a URL de login
-            $login_uri  = HOME_URL . '/Login/';
+            $login_uri = HOME_URL . '/home';
 
             // A página em que o usuário estava
             if ( !isset( $_SESSION['goto_url'] ) ) {
-//                $_SESSION['goto_url'] = urlencode( $_SERVER['REQUEST_URI'] );
+                //$_SESSION['goto_url'] = urlencode( $_SERVER['REQUEST_URI'] );
                 $_SESSION['goto_url'] = $login_uri;
             }
 
