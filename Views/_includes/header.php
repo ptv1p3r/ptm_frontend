@@ -8,7 +8,7 @@
 ?>
 <?php if (!defined('ABSPATH')) exit; ?>
 
-<?php if ( $this->login_required && ! $this->logged_in ) return; ?>
+<?php if ($this->login_required && !$this->logged_in) return; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -274,7 +274,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form id="loginUser">
+                    <form id="doLogin">
                         <div class="form-group">
                             <input type="email" class="form-control" name="email" placeholder="Email"
                                    required="required">
@@ -285,7 +285,7 @@
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary btn-lg btn-block login-btn">Login</button>
-<!--                            <input type="submit" name='submit' class="btn btn-primary btn-lg btn-block login-btn">Login</input>-->
+                            <!--                            <input type="submit" name='submit' class="btn btn-primary btn-lg btn-block login-btn">Login</input>-->
                         </div>
                     </form>
                     <div class="modal-footer">
@@ -329,51 +329,37 @@
 
     //Main functions from this view
     $(document).ready(function () {
-        $('#loginUser').submit(function (event) {
+        // ajax to login
+        $('#doLogin').submit(function (event) {
             event.preventDefault(); //prevent default action
-            // let chk_status = $("#checkBtn").prop('checked');
-            // if (chk_status) {
-                let formData = {
-                    'action': "Login",
-                    'data': $(this).serializeArray()
-                };
 
-                $.ajax({
-                    url: "<?php echo HOME_URL . '/home/login';?>",
-                    dataType: "json",
-                    type: 'POST',
-                    data: formData,
-                    success: function (data) {
-                        Swal.fire({
-                            title: 'Login com sucesso!',
-                            text: data['message'],
-                            icon: 'success',
-                            // showConfirmButton: true,
-                            timer: 2000,
-                            //didClose: () => {
-                            //    window.location = "<?php //echo HOME_URL . '/home';?>//";
-                            //}
-                        });
-                    },
-                    error: function (data) {
-                        Swal.fire({
-                            title: 'Error!',
-                            text: data['message'],
-                            icon: 'error',
-                            showConfirmButton: false,
-                            //timer: 2000,
-                            // didClose: () => {
-                            //     location.reload();
-                            // }
-                        });
+            let formData = {
+                'action': "Login",
+                'data': $(this).serializeArray()
+            };
+
+            $.ajax({
+                url: "<?php echo HOME_URL . '/home/login';?>",
+                dataType: "json",
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+
+                    if (data === 200) {
+                        alert("Logging in!", "success");
+                        location.reload();
+                    } else {
+                        alert("Invalid Email/Password!", "danger");
                     }
-                });
-            } else {
 
-                alert('batatas');
-            }
+                },
+                error: function (data) {
+                    alert("Connection error, please try again.", "danger");
+                }
+            });
         });
-    // });
+    });
+
 
 </script>
 
