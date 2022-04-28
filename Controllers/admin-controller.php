@@ -56,10 +56,13 @@ class AdminController extends MainController
                     $response = $modelo->validateUser($_POST['data']);
 
                     if ($response != null) {
-                        // verifica se a autenticaçao esta correta e guarda tokens para a $_SESSION
-                        //TODO: login, fazer validaçao correta de responce da api
-                        if (boolval($response["auth"]) == true) {
+                        //transforma o $result[body] em array
+                        //$responseBody =  json_decode($response["body"], true);
 
+                        // verifica se a autenticaçao esta correta e guarda tokens para a $_SESSION
+                        if ($response['statusCode'] === 200) {
+
+                            //se nao existir uma SESSAO iniciada, inicia
                             if (!isset($_SESSION)) {
                                 session_start();
                             }
@@ -77,10 +80,10 @@ class AdminController extends MainController
                             $_SESSION['userdata']['password'] = $_POST['data'][1]['value'];
 
                             // Atualiza o token
-                            $_SESSION['userdata']['accessToken'] = $response["accessToken"];
+                            $_SESSION['userdata']['accessToken'] = $response["body"]["accessToken"];
 
                             // Atualiza o token
-                            $_SESSION['userdata']['refreshToken'] = $response["refreshToken"];
+                            $_SESSION['userdata']['refreshToken'] = $response["body"]["refreshToken"];
 
                             // Atualiza o ID da sessão
                             $_SESSION['userdata']['user_session_id'] = $session_id;
@@ -89,28 +92,28 @@ class AdminController extends MainController
 
                             $_SESSION['goto_url'] = '/admin/dashboard';
                             //$this->goto_page(HOME_URL . '/admin/dashboard');
-                            echo $response["code"] = 200;
+                            echo $response["statusCode"];
                             break;
 
                         } else {
                             //$_POST['validation'] = "failed";
                             //$this->index();
 
-                            echo $response["code"] = 400;
+                            echo $response["statusCode"];
                         }
 
                     } else {
                         //$_POST['validation'] = "failed";
                         //$this->index();
 
-                        echo $response["code"] = 400;
+                        echo $response["statusCode"];
                     }
             }
         } else {
             //$_POST['validation'] = "failed";
             //$this->index();
 
-            echo $response["code"] = 400;
+            //echo $response["statusCode"];
         }
 
     }
@@ -183,27 +186,33 @@ class AdminController extends MainController
             $action = $_POST['action'];
             switch($action) {
                 case 'GetGroup' :
-                    echo json_encode($modelo->getGroupById($_POST['data']));
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->getGroupById($data);
+                    $apiResponseBody = json_encode($apiResponse["body"]);
+
+                    echo $apiResponseBody;
                     break;
 
                 case 'AddGroup' :
+
                     $data = $_POST['data'];
+                    $apiResponse = $modelo->addGroup($data); //decode to check message from api
 
-                    $apiResponse = json_decode($modelo->addGroup($data),true); //decode to check message from api
+                    if ($apiResponse['statusCode'] === 201){ // 201 created
+                        $apiResponse["body"]['message'] = "Created with success!";
 
-                    if ($apiResponse['created']){
-                        $apiResponse['code'] = 200;
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
                     } else {
-                        $apiResponse['code'] = 400;
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        die($apiResponse);
                     }
 
-                    $apiResponse = json_encode($apiResponse); // encode package to send
-                    echo $apiResponse;
                     break;
 
                 case 'UpdateGroup' :
                     $data = $_POST['data'];
-                    $apiResponse = json_decode($modelo->updateGroup($data),true); //decode to check message from api
+                    $apiResponse = $modelo->updateGroup($data); //decode to check message from api
 
                     if ($apiResponse['updated']){
                         $apiResponse['code'] = 200;
@@ -233,8 +242,8 @@ class AdminController extends MainController
             }
 
         } else {
-
-            $this->userdata['groupsList'] = $modelo->getGroupList();
+            $groupsList = $modelo->getGroupList();
+            $this->userdata['groupsList'] = $groupsList["body"];
             /**Carrega os arquivos do view**/
 
             require ABSPATH . '/views/_includes/admin-header.php';
