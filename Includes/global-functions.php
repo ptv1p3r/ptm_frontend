@@ -74,7 +74,8 @@ function timeCalculation($time){
  * @param $url
  * @param $data
  * @param string $token
- * @return bool|string
+// * @return bool|string
+ * @return array
  */
 function callAPI($method, $url, $data, $token = ""){
     $curl = curl_init();
@@ -110,12 +111,29 @@ function callAPI($method, $url, $data, $token = ""){
         'Authorization: ' . $token,
         'Content-Type: application/json'
     ));
+    curl_setopt($curl, CURLOPT_HEADER, true);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 
     // EXECUTE:
     $result = curl_exec($curl);
+
+    //gets status code from api response
+    $http_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+    //gets header size from api response
+    $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+
+    //gets body from api response
+    $body = substr($result, $header_size);
+
+    //final response array construction
+    $resultArray = array(
+        "statusCode" => $http_status,
+        "body" => json_decode($body,true) //decode json body from api response
+    );
+
     if(!$result){die("Connection Failure");}
     curl_close($curl);
-    return $result;
+    return $resultArray;
 }
