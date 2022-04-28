@@ -22,6 +22,11 @@ class AdminLoginModel extends MainModel {
         $this->userdata = $this->controller->userdata;
     }
 
+    /**
+     * metodo que valida o login
+     * @param $data
+     * @return mixed
+     */
     public function validateUser($data){
         $result = null;
         $normalizedData = array();
@@ -44,7 +49,8 @@ class AdminLoginModel extends MainModel {
         $url = API_URL . 'api/v1/login';
         $result = callAPI("POST", $url, $normalizedData);
 
-        return json_decode($result, true);
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
     /**
