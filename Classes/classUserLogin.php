@@ -120,21 +120,28 @@ class UserLogin
             'password' => $password
         );
 
+        //apanha a msg da api
         $result = callAPI("POST", $url, $data );
-        $response = json_decode($result, true);
+
+        /*
+         * encode de toda a msg para string de json, pois o encode so aceita strings
+         * e em seguida, decode de msg json para array
+         * desta é mais simples acessar o conteudo
+        */
+        $response = json_decode(json_encode($result), true);
 
         //verifica dados de retorno da api
-        if(boolval($response['auth']) == true){
+        if($response['statusCode'] === 200){
             /*if (array_key_exists("id", $response)) {
                 $userid = $response['id'];
             }*/
 
-            if (array_key_exists("accessToken", $response)) {
-                $userToken = $response['accessToken'];
+            if (array_key_exists("accessToken", $response["body"])) {
+                $userToken = $response["body"]['accessToken'];
             }
 
-            if (array_key_exists("refreshToken", $response)) {
-                $userRefreshToken = $response['refreshToken'];
+            if (array_key_exists("refreshToken", $response["body"])) {
+                $userRefreshToken = $response["body"]['refreshToken'];
             }
 
 //            if (array_key_exists("message", $response)) {
@@ -142,7 +149,7 @@ class UserLogin
 //                $_SESSION["message"] = $response['message'];
 //            }
 
-            // Verifica se o ID e token existe
+            // Verifica se o $userToken e $userRefreshToken existe
             if ( empty( $userToken ) || empty( $userRefreshToken ) ){
                 $this->logged_in = false;
                 $this->login_error = 'User do not exists.';
@@ -165,7 +172,7 @@ class UserLogin
                 $session_id = session_id();
 
                 // Envia os dados de utilizador para a sessão
-                $_SESSION['userdata'] = $response;
+                $_SESSION['userdata'] = $responseBody;
 
                 // Atualiza user
                 $_SESSION['userdata']['email'] = $email;
@@ -177,7 +184,7 @@ class UserLogin
                 $_SESSION['userdata']['accessToken'] = $userToken;
 
                 // Atualiza o token
-                $_SESSION['userdata']['refreshToken'] = $TokenExpire;
+                $_SESSION['userdata']['refreshToken'] = $userRefreshToken;
 
                 // Atualiza o ID da sessão
                 $_SESSION['userdata']['user_session_id'] = $session_id;
@@ -246,7 +253,7 @@ class UserLogin
     }
 
     /**
-     * TODO: ver soluçao para login url
+     * TODO: ver soluçao para login url, parametrizar?
      * Vai para a página de login
      */
     protected function goto_login() {
