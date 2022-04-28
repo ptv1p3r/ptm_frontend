@@ -250,26 +250,39 @@
                 data: formData,
                 success: function (data) {
                     $("#addGroupModal").modal('hide');
-                    console.log(data)
-                    //mensagem de Success
-                    Swal.fire({
-                        title: 'Success!',
-                        text: data.body.message,
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        didClose: () => {
-                            //location.reload();
-                        }
-                    });
+
+                    if (data.statusCode === 201){
+                        //mensagem de Success
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.body.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    } else {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    }
 
                 },
                 error: function (data) {
-                    console.log(data)
                     //mensagem de Error
                     Swal.fire({
                         title: 'Error!',
-                        text: data.body.message,
+                        text: "Connection error, please try again.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
