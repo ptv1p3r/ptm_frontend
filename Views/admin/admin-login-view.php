@@ -60,15 +60,16 @@
                 data: formData,
                 success: function (data) {
 
-                    if(data == 200){
+                    if(data === 200){
                         alert("Logging in!", "success");
                         location.reload();
                     } else {
                         alert("Invalid Email/Password!", "danger");
                     }
 
-
-
+                },
+                error: function (data) {
+                    alert("Connection error, please try again.", "danger");
                 }
             });
         });
