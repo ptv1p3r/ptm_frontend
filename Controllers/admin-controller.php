@@ -24,7 +24,6 @@ class AdminController extends MainController
         $modelo = $this->load_model('admin-login-model');
 
         /** Carrega os arquivos do view **/
-
         require ABSPATH . '/views/_includes/admin-login-header.php';
 
         require ABSPATH . '/views/admin/admin-login-view.php';
@@ -67,7 +66,7 @@ class AdminController extends MainController
                                 session_start();
                             }
 
-                            // user passa a estar logged in e entao a ter acesso a paginas admin
+                            // user passa a estar logged in
                             $this->logged_in = true;
 
                             // Recria o ID da sessão
@@ -100,6 +99,7 @@ class AdminController extends MainController
                             //$this->index();
 
                             echo $response["statusCode"];
+                            break;
                         }
 
                     } else {
@@ -107,14 +107,12 @@ class AdminController extends MainController
                         //$this->index();
 
                         echo $response["statusCode"];
+                        break;
                     }
-            }
-        } else {
-            //$_POST['validation'] = "failed";
-            //$this->index();
 
-            //echo $response["statusCode"];
+            }
         }
+
 
     }
 
@@ -146,7 +144,6 @@ class AdminController extends MainController
         $modelo = $this->load_model('admin-model');
 
         /** Carrega os arquivos do view **/
-
         require ABSPATH . '/views/_includes/admin-header.php';
 
         require ABSPATH . '/views/admin/admin-dashboard-view.php';
@@ -217,38 +214,42 @@ class AdminController extends MainController
                     $data = $_POST['data'];
                     $apiResponse = $modelo->updateGroup($data); //decode to check message from api
 
-                    if ($apiResponse['updated']){
-                        $apiResponse['code'] = 200;
-                    } else {
-                        $apiResponse['code'] = 400;
+                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Updated with success!";
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
                     }
 
-                    $apiResponse = json_encode($apiResponse); // encode package to send
-                    echo $apiResponse;
-
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo($apiResponse);
                     break;
 
                 case 'DeleteGroup' :
                     $data = $_POST['data'];
-                    $apiResponse = json_decode($modelo->deleteGroup($data),true); //decode to check message from api
+                    $apiResponse = $modelo->deleteGroup($data); //decode to check message from api
 
-                    if ($apiResponse['deleted']){
-                        $apiResponse['code'] = 200;
-                    } else {
-                        $apiResponse['code'] = 400;
+                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Deleted with success!";
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
                     }
 
-                    $apiResponse = json_encode($apiResponse); // encode package to send
-                    echo $apiResponse;
-
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo($apiResponse);
                     break;
             }
 
         } else {
             $groupsList = $modelo->getGroupList();
-            $this->userdata['groupsList'] = $groupsList["body"];
-            /**Carrega os arquivos do view**/
+            if ($groupsList["statusCode"] != 401){
+                $this->userdata['groupsList'] = $groupsList["body"];
+            }
 
+            /**Carrega os arquivos do view**/
             require ABSPATH . '/views/_includes/admin-header.php';
 
             require ABSPATH . '/views/admin/admin-groups-view.php';
