@@ -64,28 +64,28 @@
                         foreach ($this->securitydata['securitysList']['data'] as $key => $security) { ?>
                             <tbody>
                             <tr>
-                                <td><?php echo $security["homeLogin"]?></td>
-                                <td><?php echo $security["admLogin"]?></td>
-                                <td><?php echo $security["usersCreate"]?></td>
-                                <td><?php echo $security["usersRead"]?></td>
-                                <td><?php echo $security["usersUpdate"]?></td>
-                                <td><?php echo $security["usersDelete"]?></td>
-                                <td><?php echo $security["usersGroupsCreate"]?></td>
-                                <td><?php echo $security["usersGroupsRead"]?></td>
-                                <td><?php echo $security["usersGroupsUpdate"]?></td>
-                                <td><?php echo $security["usersGroupsDelete"]?></td>
-                                <td><?php echo $security["treesCreate"]?></td>
-                                <td><?php echo $security["treesRead"]?></td>
-                                <td><?php echo $security["treesUpdate"]?></td>
-                                <td><?php echo $security["treesDelete"]?></td>
-                                <td><?php echo $security["treesTypeCreate"]?></td>
-                                <td><?php echo $security["treesTypeRead"]?></td>
-                                <td><?php echo $security["treesTypeUpdate"]?></td>
-                                <td><?php echo $security["treesTypeDelete"]?></td>
-                                <td><?php echo $security["treesImagesCreate"]?></td>
-                                <td><?php echo $security["treesImagesRead"]?></td>
-                                <td><?php echo $security["treesImagesUpdate"]?></td>
-                                <td><?php echo $security["treesImagesDelete"]?></td>
+                                <td><?php echo $security["homeLogin"] ?></td>
+                                <td><?php echo $security["admLogin"] ?></td>
+                                <td><?php echo $security["usersCreate"] ?></td>
+                                <td><?php echo $security["usersRead"] ?></td>
+                                <td><?php echo $security["usersUpdate"] ?></td>
+                                <td><?php echo $security["usersDelete"] ?></td>
+                                <td><?php echo $security["usersGroupsCreate"] ?></td>
+                                <td><?php echo $security["usersGroupsRead"] ?></td>
+                                <td><?php echo $security["usersGroupsUpdate"] ?></td>
+                                <td><?php echo $security["usersGroupsDelete"] ?></td>
+                                <td><?php echo $security["treesCreate"] ?></td>
+                                <td><?php echo $security["treesRead"] ?></td>
+                                <td><?php echo $security["treesUpdate"] ?></td>
+                                <td><?php echo $security["treesDelete"] ?></td>
+                                <td><?php echo $security["treesTypeCreate"] ?></td>
+                                <td><?php echo $security["treesTypeRead"] ?></td>
+                                <td><?php echo $security["treesTypeUpdate"] ?></td>
+                                <td><?php echo $security["treesTypeDelete"] ?></td>
+                                <td><?php echo $security["treesImagesCreate"] ?></td>
+                                <td><?php echo $security["treesImagesRead"] ?></td>
+                                <td><?php echo $security["treesImagesUpdate"] ?></td>
+                                <td><?php echo $security["treesImagesDelete"] ?></td>
 
                                 <td>
                                     <a href="#editSecurityModal" id="<?php echo $security['id'] ?>" class="edit"
@@ -96,7 +96,12 @@
                             </tr>
                             </tbody>
                         <?php }
-                    } ?>
+                    } else { ?>
+                        <tbody>
+                        <tr>
+                        </tr>
+                        </tbody>
+                    <?php } ?>
 
                 </table>
 
@@ -432,23 +437,38 @@
                 success: function (data) {
                     $("#addSecurityModal").modal('hide');
 
-                    //mensagem de Success
-                    Swal.fire({
-                        title: 'Success!',
-                        text: data['message'],
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        didClose: () => {
-                            //location.reload();
-                        }
-                    });
+                    if (data.statusCode === 201){
+                        //mensagem de Success
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.body.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    }
+
                 },
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
                         title: 'Error!',
-                        text: data['message'],
+                        text: "Connection error, please try again.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -477,21 +497,38 @@
                 success: function (data) {
                     $("#editSecurityModal").modal('hide');
 
-                    Swal.fire({
-                        title: 'Success!',
-                        text: data['message'],
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        didClose: () => {
-                            //location.reload();
-                        }
-                    });
+                    if (data.statusCode === 200){
+                        //mensagem de Success
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.body.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    }
+
                 },
                 error: function (data) {
+                    //mensagem de Error
                     Swal.fire({
                         title: 'Error!',
-                        text: data['message'],
+                        text: "Connection error, please try again.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -600,21 +637,38 @@
                 success: function (data) {
                     $("#deleteSecurityModal").modal('hide');
 
-                    Swal.fire({
-                        title: 'Success!',
-                        text: data['message'],
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        didClose: () => {
-                            //location.reload();
-                        }
-                    });
+                    if (data.statusCode === 200){
+                        //mensagem de Success
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.body.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    }
+
                 },
                 error: function (data) {
+                    //mensagem de Error
                     Swal.fire({
                         title: 'Error!',
-                        text: data['message'],
+                        text: "Connection error, please try again.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
