@@ -114,42 +114,48 @@ class UserLogin
             return;
         }
 
-        $url = API_URL . 'api/v1/login';
+        /*$url = API_URL . 'api/v1/login';
         $data = array(
             'email' => $email,
             'password' => $password
+        );*/
+
+        //TODO: ja esta a fazer refresh de Token
+        // mas falta implementar validaçao para que so faça o refresh de Token quando o accessToken passar da validade(15min)
+
+        //vai gerar novo accessToken atravez do refreshToken e email
+        $url = API_URL . 'api/v1/refresh';
+        $data = array(
+            'email' => $email,
+            'refreshToken' => $userdata["refreshToken"]
         );
+        $result = callAPI("POST", $url, $data ); //apanha a accessToken
 
-        //apanha a msg da api
-        $result = callAPI("POST", $url, $data );
 
-        /*
-         * encode de toda a msg para string de json, pois o encode so aceita strings
-         * e em seguida, decode de msg json para array
-         * desta é mais simples acessar o conteudo
-        */
+        //encode de toda a msg para string de json, pois o encode so aceita strings
+        //e em seguida, decode de msg json para array
         $response = json_decode(json_encode($result), true);
 
         //verifica dados de retorno da api
         if($response['statusCode'] === 200){
-            /*if (array_key_exists("id", $response)) {
-                $userid = $response['id'];
-            }*/
 
             if (array_key_exists("accessToken", $response["body"])) {
                 $userToken = $response["body"]['accessToken'];
+
+                // Atualiza o accessToken
+                $_SESSION['userdata']['accessToken'] = $userToken;
             }
 
-            if (array_key_exists("refreshToken", $response["body"])) {
-                $userRefreshToken = $response["body"]['refreshToken'];
+            if (array_key_exists("refreshToken", $userdata)) {
+                $userRefreshToken = $userdata["refreshToken"];
             }
 
-//            if (array_key_exists("message", $response)) {
-//                echo $response['message'];
-//                $_SESSION["message"] = $response['message'];
-//            }
+            /*if (array_key_exists("message", $response)) {
+              echo $response['message'];
+              $_SESSION["message"] = $response['message'];
+            }*/
 
-            // Verifica se o $userToken e $userRefreshToken existe
+            // Verifica se o $userToken e $userRefreshToken existe, se nao
             if ( empty( $userToken ) || empty( $userRefreshToken ) ){
                 $this->logged_in = false;
                 $this->login_error = 'User do not exists.';
