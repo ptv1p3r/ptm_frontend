@@ -32,7 +32,6 @@ class GroupsModel extends MainModel {
         $result = null;
 
         $url = API_URL . 'api/v1/groups/view/' . $id;
-        // TODO: usar $this->userdata em vez de $_SESSION ?
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
@@ -50,7 +49,6 @@ class GroupsModel extends MainModel {
         $result = null;
 
         $url = API_URL . 'api/v1/groups/list';
-
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
@@ -186,7 +184,6 @@ class GroupsModel extends MainModel {
         }
 
         $url = API_URL . 'api/v1/groups/delete/' . $GroupId;
-
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("DELETE", $url, '', $userToken);
