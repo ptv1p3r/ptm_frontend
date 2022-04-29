@@ -114,61 +114,50 @@ class UserLogin
             return;
         }
 
-        /*$url = API_URL . 'api/v1/login';
+        $url = API_URL . 'api/v1/login';
         $data = array(
             'email' => $email,
             'password' => $password
-        );*/
-
-        //TODO: ja esta a fazer refresh de Token
-        // mas falta implementar validaçao para que so faça o refresh de Token quando o accessToken passar da validade(15min)
-
-        //vai gerar novo accessToken atravez do refreshToken e email
-        $url = API_URL . 'api/v1/refresh';
-        $data = array(
-            'email' => $email,
-            'refreshToken' => $userdata["refreshToken"]
         );
-        $result = callAPI("POST", $url, $data ); //apanha a accessToken
+        $result = callAPI("POST", $url, $data );
 
-
-        //encode de toda a msg para string de json, pois o encode so aceita strings
-        //e em seguida, decode de msg json para array
+        //trasforma toda a msg em array para facil acesso aos dados
         $response = json_decode(json_encode($result), true);
 
         //verifica dados de retorno da api
         if($response['statusCode'] === 200){
-
-            if (array_key_exists("accessToken", $response["body"])) {
-                $userToken = $response["body"]['accessToken'];
-
-                // Atualiza o accessToken
-                $_SESSION['userdata']['accessToken'] = $userToken;
-            }
-
-            if (array_key_exists("refreshToken", $userdata)) {
-                $userRefreshToken = $userdata["refreshToken"];
-            }
-
-            /*if (array_key_exists("message", $response)) {
-              echo $response['message'];
-              $_SESSION["message"] = $response['message'];
+            /*if (array_key_exists("id", $response)) {
+                $userid = $response['id'];
             }*/
 
-            // Verifica se o $userToken e $userRefreshToken existe, se nao
+            //verifica se existe accessToken na response
+            if (array_key_exists("accessToken", $response["body"])) {
+                $userToken = $response["body"]['accessToken'];
+            }
+
+            //verifica se existe refreshToken na response
+            if (array_key_exists("refreshToken", $response["body"])) {
+                $userRefreshToken = $response["body"]['refreshToken'];
+            }
+
+            // assegura que o $userToken e $userRefreshToken nao estao vazios
             if ( empty( $userToken ) || empty( $userRefreshToken ) ){
                 $this->logged_in = false;
                 $this->login_error = 'User do not exists.';
 
-                // Remove qualquer sessão que possa existir sobre o usuário
+                // remove qualquer sessão que possa existir do user
                 $this->logout();
 
                 return;
             }
 
-            /*$url = API_URL . '/v1/entity/' . $userId;
+            /*$url = API_URL . 'api/v1/users/view/' . $userId;
             $result = callAPI("GET", $url, '', $userToken );
-            $response = json_decode($result, true);*/
+            $response = json_decode(json_encode($result), true);
+
+            $url = API_URL . 'api/v1/group/' . $response["body"]["groupId"];
+            $result = callAPI("GET", $url, '', $userToken );
+            $userGroupPermissions = json_decode(json_encode($result), true);*/
 
             // Se for um post
             if ( $post ) {
@@ -195,12 +184,10 @@ class UserLogin
                 // Atualiza o ID da sessão
                 $_SESSION['userdata']['user_session_id'] = $session_id;
 
-                // Atualiza o ID da sessão na base de dados
-//                $query = $this->db->query(
-//                    'UPDATE users SET user_session_id = ? WHERE user_id = ?',
-//                    array( $session_id, $user_id )
-//                );
             }
+
+            // Obtém um array com as permissões de usuário
+            //$_SESSION['userdata']['user_permissions'] = unserialize( $fetch['user_permissions'] );
 
             // Configura a propriedade dizendo que o usuário está logado
             $this->logged_in = true;
@@ -281,6 +268,23 @@ class UserLogin
         }
 
         return;
+    }
+
+    //TODO: ja esta a fazer refresh de Token
+    // mas falta implementar validaçao para que so faça o refresh de Token quando o accessToken passar da validade
+    protected function userTokenRefresh(){
+
+        //vai gerar novo accessToken atravez do refreshToken e email
+        $url = API_URL . 'api/v1/refresh';
+        $data = array(
+            'email' => $email,
+            'refreshToken' => $refreshToken
+        );
+        $result = callAPI("POST", $url, $data ); //apanha novo accessToken
+
+        //trasforma toda a msg em array para facil acesso aos dados
+        $response = json_decode(json_encode($result), true);
+
     }
 
     /**
