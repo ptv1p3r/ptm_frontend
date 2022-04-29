@@ -95,7 +95,8 @@
 <!--Header Start-->
 <header class="header-style-2">
     <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="<?php echo HOME_URL . '/'; ?>"><img src="../../Images/home/logo.png" alt=""></a>
+        <a class="navbar-brand" href="<?php echo HOME_URL . '/home/dashboard'; ?>"><img src="Images/logo/adoteUma.png"
+                                                                                        alt=""></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
                     class="fas fa-bars"></i></button>
@@ -263,19 +264,33 @@
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
                                 class="fa fa-cog fa-2x fa-fw" style="color: white; hoover:true"></i></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Alterar a conta</a></li>
-                        <li><a href="#">Definições</a></li>
+                        <li><a href="<?php echo HOME_URL . '/home/settings'; ?>">Definições</a></li>
                         <li><a href="#">Mais qualquer coisa</a></li>
                         <li><a href="#">Etc....</a></li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle"
-                       href="" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="modal" data-target="#logoutModal"
+                       role="button"
+                       aria-haspopup="true" aria-expanded="false" data-toggle="tooltip" data-placement="bottom"
+                       title="Sair"><i
                                 class="fas fa-sign-out-alt fa-2x fa-fw" style="color: white; hoover:true"></i></a>
                 </li>
             </ul>
         </div>
     </nav>
 </header>
+
+<!-- Logout Modal HTML -->
+<div id="logoutModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Logout <i class="fa fa-lock"></i></h4>
+            </div>
+            <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
+            <div class="modal-footer"><a href="<?php echo HOME_URL . '/home/homelogout'; ?>"
+                                         class="btn btn-danger btn-block">Logout</a></div>
+        </div>
+    </div>
+</div>
