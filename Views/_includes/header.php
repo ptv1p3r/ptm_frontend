@@ -326,7 +326,6 @@
 
 
 <script>
-
     //Main functions from this view
     $(document).ready(function () {
         // ajax to login
@@ -359,8 +358,6 @@
             });
         });
     });
-
-
 </script>
 
 
