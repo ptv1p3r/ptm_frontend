@@ -59,11 +59,17 @@
                             </tr>
                             </tbody>
                         <?php }
-                    } ?>
+                    } else { ?>
+                        <tbody>
+                        <tr>
+                        </tr>
+                        </tbody>
+                    <?php } ?>
 
                 </table>
 
-                <!-- Pagination -->
+
+                <!-- TODO: views pagination -->
                 <div class="clearfix">
                     <div class="hint-text">Showing <b>
                             <?php
@@ -124,24 +130,6 @@
                                 <label>Active</label>
                                 <input type="checkbox" class="form-control" name="addGroupActive">
                             </div>
-
-                            <!-- <label>Categories</label>
-                            <div class="form-group" style="padding-left: 40px" >
-                                    <?php /*foreach ( $categories as $category) {?>
-
-                                        <div class="form-check form-check-inline col-md-3">
-                                            <input class="form-check-input" type="checkbox" id="<?php echo $category["catid"]?>">
-                                            <label class="form-check-label" for="<?php echo $category["catid"]?>"><?php echo $category["name"]?></label>
-                                        </div>
-
-                                        <?php if($category["catid"] % 3 == 0) { ?>
-                                            </div>
-                                            <div class="form-group" style="padding-left: 40px">
-                                        <?php } ?>
-                                    <?php }*/?>
-
-                            </div>-->
-
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -260,7 +248,7 @@
                             showConfirmButton: false,
                             timer: 2000,
                             didClose: () => {
-                                //location.reload();
+                                location.reload();
                             }
                         });
                     } else {
@@ -311,26 +299,43 @@
                 success: function (data) {
                     $("#editGroupModal").modal('hide');
 
-                    Swal.fire({
-                        title: 'Success!',
-                        text: data['message'],
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        didClose: () => {
-                            location.reload();
-                        }
-                    });
+                    if (data.statusCode === 200){
+                        //mensagem de Success
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.body.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    }
+
                 },
                 error: function (data) {
+                    //mensagem de Error
                     Swal.fire({
                         title: 'Error!',
-                        text: data['message'],
+                        text: "Connection error, please try again.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
                     });
                 }
@@ -369,7 +374,7 @@
                 error: function (data) {
                     Swal.fire({
                         title: 'Error!',
-                        text: data['message'],
+                        text: data.body.message,
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -399,27 +404,44 @@
                 success: function (data) {
                     $("#deleteGroupModal").modal('hide');
 
+                    if (data.statusCode === 200){
+                        //mensagem de Success
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.body.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    }
+
+                },
+                error: function (data) {
+                    //mensagem de Error
                     Swal.fire({
-                        title: 'Success!',
-                        text: data['message'],
-                        icon: 'success',
+                        title: 'Error!',
+                        text: "Connection error, please try again.",
+                        icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
-                    });
-                },
-                error: function (data) {
-                    Swal.fire({
-                         title: 'Error!',
-                         text: data['message'],
-                         icon: 'error',
-                         showConfirmButton: false,
-                         timer: 2000,
-                         didClose: () => {
-                             location.reload();
-                         }
                     });
                 }
             });
