@@ -59,33 +59,38 @@
                         foreach ($this->userdata['usersList'] as $key => $user) { ?>
                             <tbody>
                             <tr>
-                                <td><?php echo $user["name"]?></td>
-                                <td><?php echo $user["entity"]?></td>
-                                <td><?php echo $user["email"]?></td>
-                                <td><?php echo /*getGroupById(*/$user["groupId"]?></td>
-                                <td><?php echo $user["dateBirth"]?></td>
-                                <td><?php echo $user["address"]?></td>
-                                <td><?php echo $user["codPost"]?></td>
-                                <td><?php echo $user["genderId"]?></td>
-                                <td><?php echo $user["locality"]?></td>
-                                <td><?php echo $user["mobile"]?></td>
-                                <td><?php echo $user["nif"]?></td>
-                                <td><?php echo /*getCountryById(*/$user["countryId"]?></td>
-                                <td><?php echo $user["active"]?></td>
-                                <td><?php echo $user["activationDate"]?></td>
-                                <td><?php echo $user["dateCreated"]?></td>
-                                <td><?php echo $user["dateModified"]?></td>
-                                <td><?php echo $user["lastLogin"]?></td>
+                                <td><?php echo $user["name"] ?></td>
+                                <td><?php echo $user["entity"] ?></td>
+                                <td><?php echo $user["email"] ?></td>
+                                <td><?php echo /*getGroupById(*/$user["groupId"] ?></td>
+                                <td><?php echo $user["dateBirth"] ?></td>
+                                <td><?php echo $user["address"] ?></td>
+                                <td><?php echo $user["codPost"] ?></td>
+                                <td><?php echo $user["genderId"] ?></td>
+                                <td><?php echo $user["locality"] ?></td>
+                                <td><?php echo $user["mobile"] ?></td>
+                                <td><?php echo $user["nif"] ?></td>
+                                <td><?php echo /*getCountryById(*/$user["countryId"] ?></td>
+                                <td><?php echo $user["active"] ?></td>
+                                <td><?php echo $user["activationDate"] ?></td>
+                                <td><?php echo $user["dateCreated"] ?></td>
+                                <td><?php echo $user["dateModified"] ?></td>
+                                <td><?php echo $user["lastLogin"] ?></td>
                                 <td>
-                                    <a href="#editUserModal" id="<?php echo $user['id']?>" class="edit"
+                                    <a href="#editUserModal" id="<?php echo $user['id'] ?>" class="edit"
                                        data-toggle="modal"><i class="far fa-edit"></i></a>
-                                    <a href="#deleteUserModal" id="<?php echo $user['id']?>" class="delete"
+                                    <a href="#deleteUserModal" id="<?php echo $user['id'] ?>" class="delete"
                                        data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                             </tr>
                             </tbody>
                         <?php }
-                    } ?>
+                    } else { ?>
+                        <tbody>
+                        <tr>
+                        </tr>
+                        </tbody>
+                    <?php } ?>
 
                 </table>
 
@@ -413,23 +418,38 @@
                 success: function (data) {
                     $("#addUserModal").modal('hide');
 
-                    //mensagem de Success
-                    Swal.fire({
-                        title: 'Success!',
-                        text: data['message'],
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        didClose: () => {
-                            //location.reload();
-                        }
-                    });
+                    if (data.statusCode === 201){
+                        //mensagem de Success
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.body.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    }
+
                 },
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
                         title: 'Error!',
-                        text: data['message'],
+                        text: "Connection error, please try again.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -458,21 +478,38 @@
                 success: function (data) {
                     $("#editUserModal").modal('hide');
 
-                    Swal.fire({
-                        title: 'Success!',
-                        text: data['message'],
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        didClose: () => {
-                           // location.reload();
-                        }
-                    });
+                    if (data.statusCode === 200){
+                        //mensagem de Success
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.body.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    }
+
                 },
                 error: function (data) {
+                    //mensagem de Error
                     Swal.fire({
                         title: 'Error!',
-                        text: data['message'],
+                        text: "Connection error, please try again.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -556,21 +593,38 @@
                 success: function (data) {
                     $("#deleteUserModal").modal('hide');
 
-                    Swal.fire({
-                        title: 'Success!',
-                        text: data['message'],
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        didClose: () => {
-                            //location.reload();
-                        }
-                    });
+                    if (data.statusCode === 200){
+                        //mensagem de Success
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.body.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    }
+
                 },
                 error: function (data) {
+                    //mensagem de Error
                     Swal.fire({
                         title: 'Error!',
-                        text: data['message'],
+                        text: "Connection error, please try again.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
