@@ -75,7 +75,7 @@ class HomeController extends MainController
                                 session_start();
                             }
 
-                            // user passa a estar logged in e entao a ter acesso a paginas admin
+                            // user passa a estar logged in e entao a ter acesso a paginas home
                             $this->logged_in = true;
 
                             // Recria o ID da sessão
@@ -99,7 +99,7 @@ class HomeController extends MainController
                             //$_POST['validation'] = "success";
 
                             $_SESSION['goto_url'] = '/home/dashboard';
-                            //$this->goto_page(HOME_URL . '/admin/dashboard');
+                            //$this->goto_page(HOME_URL . '/home/dashboard');
                             echo $response["statusCode"];
                             break;
 
@@ -127,7 +127,7 @@ class HomeController extends MainController
 
     /**
      * Carrega a página
-     * "/views/admin/admin-dashboard-view.php"
+     * "/views/home/user-dashboard-view.php"
      */
     public function dashboard() {
 
@@ -150,7 +150,7 @@ class HomeController extends MainController
             return;
         }
 
-        $modelo = $this->load_model('admin-model');
+        //$modelo = $this->load_model('home-model');
 
         /** Carrega os arquivos do view **/
 
@@ -168,9 +168,9 @@ class HomeController extends MainController
      * @return void
      */
 
-    function applogout()
+    function homelogout()
     {
-        $_SESSION['goto_url'] = '/home';
+        $_SESSION['goto_url'] = '/';
 
         $this->logout(true);
     }
@@ -195,6 +195,44 @@ class HomeController extends MainController
         require ABSPATH . '/views/_includes/header.php';
         require ABSPATH . '/views/home/rights-view.php';
         require ABSPATH . '/views/_includes/footer.php';
+    }
+
+    /**
+     * Carrega a página
+     * "/views/home/user-dashboard-view.php"
+     */
+
+    public function settings() {
+
+        // Título da página
+        $this->title = 'User - Settings';
+
+        // Parametros da função
+        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
+
+        // obriga o login para aceder à pagina
+        if ( ! $this->logged_in ) {
+
+            // Se não; garante o logout
+            $this->logout();
+
+            // Redireciona para a página de login
+            $this->goto_login();
+
+            // Garante que o script não vai passar daqui
+            return;
+        }
+
+        //$modelo = $this->load_model('user-model');
+
+        /** Carrega os arquivos do view **/
+
+        require ABSPATH . '/views/_includes/user-header.php';
+
+        require ABSPATH . '/views/user/profile/user-settings-view.php';
+
+        require ABSPATH . '/views/_includes/footer.php';
+
     }
 
 }
