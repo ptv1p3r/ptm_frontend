@@ -38,7 +38,7 @@ class AdminController extends MainController
      */
     public function login() {
         // Título da página
-        $this->title = 'Admin';
+        $this->title = 'Logging in...';
 
         // Parametros da função
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -49,64 +49,89 @@ class AdminController extends MainController
             $action = $_POST['action'];
             switch ($action) {
                 case 'Login' :
-                    //encripta a pass
+                    // encripta a pass
                     $_POST['data'][1]['value'] = hash('sha256', $_POST['data'][1]['value']);
 
-                    $response = $modelo->validateUser($_POST['data']);
+                    $valResponse = $modelo->validateUser($_POST['data']);
 
-                    if ($response != null) {
-                        //transforma o $result[body] em array
-                        //$responseBody =  json_decode($response["body"], true);
+                    if ($valResponse != null) {
+                        //$permResponse = $modelo->userPermissions($_POST['data']);
 
-                        // verifica se a autenticaçao esta correta e guarda tokens para a $_SESSION
-                        if ($response['statusCode'] === 200) {
+                        // verifica se autenticaçao com sucesso
+                        if ($valResponse['statusCode'] === 200) {
 
-                            //se nao existir uma SESSAO iniciada, inicia
+                            // se nao existir uma sessão iniciada, inicia
                             if (!isset($_SESSION)) {
                                 session_start();
                             }
 
-                            // user passa a estar logged in
-                            $this->logged_in = true;
+                            // verifica se existe accessToken na response
+                            if (array_key_exists("accessToken", $valResponse["body"])) {
+                                $userToken = $valResponse["body"]["accessToken"];
+                            }
+
+                            // verifica se existe refreshToken na response
+                            if (array_key_exists("refreshToken", $valResponse["body"])) {
+                                $userRefreshToken = $valResponse["body"]['refreshToken'];
+                            }
+
+                            // assegura que o $userToken e $userRefreshToken nao estao vazios
+                            if ( empty( $userToken ) || empty( $userRefreshToken ) ){
+                                $this->logged_in = false;
+                                $this->login_error = 'User do not exists.';
+
+                                // remove qualquer sessão que possa existir do user
+                                $this->logout();
+
+                                echo $valResponse["statusCode"];
+                                return;
+                            }
 
                             // Recria o ID da sessão
                             $session_id = session_id();
 
-                            // Atualiza user
+                            // Atualiza userdata
+                            //$_SESSION['userdata'] = $_POST['data'][0]['value'];
+
+                            // Atualiza email
                             $_SESSION['userdata']['email'] = $_POST['data'][0]['value'];
 
                             // Atualiza a senha
                             $_SESSION['userdata']['password'] = $_POST['data'][1]['value'];
 
                             // Atualiza o token
-                            $_SESSION['userdata']['accessToken'] = $response["body"]["accessToken"];
+                            $_SESSION['userdata']['accessToken'] = $userToken;
 
                             // Atualiza o token
-                            $_SESSION['userdata']['refreshToken'] = $response["body"]["refreshToken"];
+                            $_SESSION['userdata']['refreshToken'] = $userRefreshToken;
 
                             // Atualiza o ID da sessão
                             $_SESSION['userdata']['user_session_id'] = $session_id;
 
-                            //$_POST['validation'] = "success";
+                            // user passa a estar logged in
+                            $this->logged_in = true;
 
+                            //rediriciona para a dashboard quando ajax fizer window.reload()
                             $_SESSION['goto_url'] = '/admin/dashboard';
-                            //$this->goto_page(HOME_URL . '/admin/dashboard');
-                            echo $response["statusCode"];
+
+                            echo $valResponse["statusCode"];
                             break;
 
                         } else {
-                            //$_POST['validation'] = "failed";
-                            //$this->index();
+                            // remove qualquer sessão que possa existir do user
+                            $this->logged_in = false;
+                            $this->logout();
 
-                            echo $response["statusCode"];
+                            echo $valResponse["statusCode"];
                             break;
                         }
 
                     } else {
-                        //$_POST['validation'] = "failed";
-                        //$this->index();
+                        // remove qualquer sessão que possa existir do user
+                        $this->logged_in = false;
+                        $this->logout();
 
-                        echo $response["statusCode"];
+                        echo $valResponse["statusCode"];
                         break;
                     }
 
@@ -198,6 +223,19 @@ class AdminController extends MainController
                     // entao é criado e encoded para ser enviado
                     if ($apiResponse['statusCode'] === 201){ // 201 created
                         $apiResponse["body"]['message'] = "Created with success!";
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //ver table de permissoes
+                        //callAPI();
+
+                        /*if(nao tiver permissao)
+                         //$apiResponse["body"]['message'] = "You have no permission!";
+                        */
 
                         $apiResponse = json_encode($apiResponse);// encode package to send
                         echo $apiResponse;
