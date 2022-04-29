@@ -22,21 +22,6 @@ class SecurityModel extends MainModel {
         $this->userdata = $this->controller->userdata;
     }
 
-    /*public function validateUser($username, $password){
-        $query = null;
-
-        $query = $this->db->query('SELECT * FROM login WHERE username=\'' . $username . '\'
-                                                          AND password=\'' . $password . '\'');
-
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
-        }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
-
-
     /** CRUD SECURITY **/
     /**
      * Metodo que retorna Security pelo id
@@ -48,12 +33,12 @@ class SecurityModel extends MainModel {
 
         $url = API_URL . 'api/v1/security/view/' . $id;
 
-        //if (!empty($this->userdata['token'])){
-            //$userToken = $this->userdata['token'];
-            $result = callAPI("GET", $url, ''/*, $userToken */);
-        //}
-
-        return json_decode($result, true);
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
     /**
@@ -65,18 +50,18 @@ class SecurityModel extends MainModel {
 
         $url = API_URL . 'api/v1/security/list';
 
-        if (!empty($this->userdata['token'])){
-            $userToken = $this->userdata['token'];
-            $result = callAPI("GET", $url, '', $userToken );
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
         }
-
-        return json_decode($result, true);
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
     /**
      * Metodo adiciona Security
      * @param $data
-     * @return bool|string|void|null
+     * @return mixed
      */
     public function addSecurity($data) {
         $result = null;
@@ -180,18 +165,20 @@ class SecurityModel extends MainModel {
         }
 
         $url = API_URL . 'api/v1/security/create';
-        if (!empty($this->userdata['token'])){
-            $userToken = $this->userdata['token'];
-            $result = callAPI("POST", $url, $normalizedData, $userToken );
+
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("POST", $url, $normalizedData, $userToken);
         }
 
-        return $result;
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
     /**
      * Metodo edita/update Security
      * @param $data
-     * @return bool|string|void|null
+     * @return mixed
      */
     public function updateSecurity($data) {
         $result = null;
@@ -301,18 +288,20 @@ class SecurityModel extends MainModel {
         }
 
         $url = API_URL . 'api/v1/security/edit/' . $SecurityId;
-        if (!empty($this->userdata['token'])){
-            $userToken = $this->userdata['token'];
-            $result = callAPI("POST", $url, $normalizedData, $userToken );
+
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("PUT", $url, $normalizedData, $userToken);
         }
 
-        return $result;
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
     /**
      * Metodo delete Security
      * @param $data
-     * @return bool|string|void|null
+     * @return mixed
      */
     public function deleteSecurity($data) {
         $result = null;
@@ -330,12 +319,13 @@ class SecurityModel extends MainModel {
 
         $url = API_URL . 'api/v1/security/delete/' . $SecurityId;
 
-        if (!empty($this->userdata['token'])){
-            $userToken = $this->userdata['token'];
-            $result = callAPI("DELETE", $url, '', $userToken );
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("DELETE", $url, '', $userToken);
         }
 
-        return $result;
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
 }
