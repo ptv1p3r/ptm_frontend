@@ -22,45 +22,9 @@ class UsersModel extends MainModel {
         $this->userdata = $this->controller->userdata;
     }
 
-    /*public function validateUser($username, $password){
-        $query = null;
-
-        $query = $this->db->query('SELECT * FROM login WHERE username=\'' . $username . '\'
-                                                          AND password=\'' . $password . '\'');
-
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
-        }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
-
-
-    /**
-     * Get country list
-     *
-     * @access public
-     */
-    public function getCountryList()
-    {
-        $result = null;
-
-        $url = API_URL . 'api/v1/countries/list';
-
-        //if (!empty($this->userdata['token'])) {
-            //$userToken = $this->userdata['token'];
-            $result = callAPI("GET", $url, ''/*, $userToken*/);
-        //}
-
-        return json_decode($result, true);
-    }
-
     /**
      * Get country by id
-     *
      * @param $id
-     * @access public
      * @return mixed
      */
     public function getCountryById($id)
@@ -69,12 +33,30 @@ class UsersModel extends MainModel {
 
         $url = API_URL . 'api/v1/countries/view/' . $id;
 
-        //if (!empty($this->userdata['token'])) {
-        //$userToken = $this->userdata['token'];
-        $result = callAPI("GET", $url, ''/*, $userToken*/);
-        //}
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
 
-        return json_decode($result, true);
+    /**
+     * Get country list
+     * @access public
+     */
+    public function getCountryList()
+    {
+        $result = null;
+
+        $url = API_URL . 'api/v1/countries/list';
+
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
     /** CRUD USERS **/
@@ -88,12 +70,12 @@ class UsersModel extends MainModel {
 
         $url = API_URL . 'api/v1/users/view/' . $id;
 
-        //if (!empty($this->userdata['token'])){
-            //$userToken = $this->userdata['token'];
-            $result = callAPI("GET", $url, ''/*, $userToken */);
-       // }
-
-        return json_decode($result, true);
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
     /**
@@ -105,18 +87,18 @@ class UsersModel extends MainModel {
 
         $url = API_URL . 'api/v1/users/list';
 
-        //if (!empty($this->userdata['token'])){
-            //$userToken = $this->userdata['token'];
-            $result = callAPI("GET", $url, ''/*, $userToken */);
-        //}
-
-        return json_decode($result, true);
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
     /**
      * Metodo adiciona User
      * @param $data
-     * @return bool|string|void|null
+     * @return mixed
      */
     public function addUser($data) {
         $result = null;
@@ -192,18 +174,20 @@ class UsersModel extends MainModel {
         }
 
         $url = API_URL . 'api/v1/users/create';
-        //if (!empty($this->userdata['token'])){
-            //$userToken = $this->userdata['token'];
-            $result = callAPI("POST", $url, $normalizedData/*, $userToken */);
-        //}
 
-        return $result;
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("POST", $url, $normalizedData, $userToken);
+        }
+
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
     /**
      * Metodo edita/update User
      * @param $data
-     * @return bool|string|void|null
+     * @return mixed
      */
     public function updateUser($data) {
         $result = null;
@@ -284,18 +268,20 @@ class UsersModel extends MainModel {
         }
 
         $url = API_URL . 'api/v1/users/edit/' . $UserId;
-        //if (!empty($this->userdata['token'])){
-            //$userToken = $this->userdata['token'];
-            $result = callAPI("PUT", $url, $normalizedData/*, $userToken */);
-        //}
 
-        return $result;
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("PUT", $url, $normalizedData, $userToken);
+        }
+
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
     /**
      * Metodo delete User
      * @param $data
-     * @return bool|string|void|null
+     * @return mixed
      */
     public function deleteUser($data) {
         $result = null;
@@ -313,12 +299,13 @@ class UsersModel extends MainModel {
 
         $url = API_URL . 'api/v1/users/delete/' . $UserId;
 
-        //if (!empty($this->userdata['token'])){
-            //$userToken = $this->userdata['token'];
-            $result = callAPI("DELETE", $url, ''/*, $userToken */);
-        //}
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("DELETE", $url, '', $userToken);
+        }
 
-        return $result;
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
 }
