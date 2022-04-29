@@ -32,7 +32,7 @@ class GroupsModel extends MainModel {
         $result = null;
 
         $url = API_URL . 'api/v1/groups/view/' . $id;
-        // TODO: usar $this->userdata em vez de $_SESSION
+        // TODO: usar $this->userdata em vez de $_SESSION ?
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
@@ -92,7 +92,6 @@ class GroupsModel extends MainModel {
                         break;*/
                 }
 
-                // TODO: o active ira deixar de ser enviado
                 if ($dataVector['name'] == "addGroupActive"){
                     $normalizedData['active'] = "1";
                 } else {
@@ -148,7 +147,6 @@ class GroupsModel extends MainModel {
                         $normalizedData['active'] = "1";
                         break;*/
                 }
-
 
                 if ($dataVector['name'] == "editGroupActive"){
                     $normalizedData['active'] = "1";
