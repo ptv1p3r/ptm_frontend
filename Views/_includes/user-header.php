@@ -22,7 +22,8 @@
     <!--  CSS links -->
     <!-- BootStrap 4.1.3 -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- Twitter Bootstrap 4.1.1 -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.js"></script>
     <!-- Popper 1.14.3 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
             integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
@@ -41,12 +42,12 @@
     <!-- Template original CSS links -->
     <!--  CSS custom que não pode ser apagado-->
     <link href="../../css/home/custom.css" rel="stylesheet">
-    <!--    <link href="../../css/home/prettyPhoto.css" rel="stylesheet">-->
+       <link href="../../css/home/prettyPhoto.css" rel="stylesheet">
 
     <!--     <link href="css/home/color.css" rel="stylesheet">-->
     <!--     <link href="css/home/responsive.css" rel="stylesheet">-->
     <!--     <link href="css/home/owl.carousel.min.css" rel="stylesheet">-->
-    <!--     <link href="css/home/bootstrap.min.css" rel="stylesheet">-->
+    <!-- <link href="../../css/home/bootstrap.min.css" rel="stylesheet">    -->
 
     <!--     <link href="css/home/all.min.css" rel="stylesheet">-->
 
