@@ -25,6 +25,8 @@ class HomeController extends MainController
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
 
+
+
         /** Carrega os arquivos do view **/
 
         require ABSPATH . '/views/_includes/header.php';
@@ -206,6 +208,13 @@ class HomeController extends MainController
         // Parametros da função
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
+        $dropModel = $this->load_model('register-model');
+        $getCountryModel = $dropModel->getCountryList();
+        $getGenderModel = $dropModel->getGenderList();
+
+        $this->userdata['countryList'] = $getCountryModel['body'];
+        $this->userdata['genderList'] = $getGenderModel['body'];
+
         // obriga o login para aceder à pagina
         if (!$this->logged_in) {
 
@@ -221,9 +230,52 @@ class HomeController extends MainController
 
         $model = $this->load_model('user-settings-model');
 
-        $getUserModel = $model->getUserByEmail($_SESSION['userdata']['email']);
+        // processa chamadas ajax
+        if(isset($_POST['action']) && !empty($_POST['action'])) {
+            $action = $_POST['action'];
+            switch($action) {
+                case 'GetUser' :
+                    $data = $_POST['userdata'];
+//                    $apiResponse = $model->getUserByEmail($_SESSION['userdata']['email']);
+                    $apiResponse = $model->getUserByEmail($data);
+                    $apiResponseBody = json_encode($apiResponse["body"]);
 
-        $this->userdata['userList'] = $getUserModel['body'];
+                    echo $apiResponseBody;
+                    break;
+
+                case 'UpdateUser' :
+                    $data = $_POST['data'];
+
+                    $apiResponse = $model->updateUser($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Updated with success!";
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo($apiResponse);
+                    break;
+
+
+
+            }
+
+
+            }else{
+
+            $getUserModel = $model->getUserByEmail($_SESSION['userdata']['email']);
+
+            $this->userdata['userList'] = $getUserModel['body'];
+
+
+        }
+
+
+
 
 
 
@@ -238,6 +290,9 @@ class HomeController extends MainController
         require ABSPATH . '/views/_includes/footer.php';
 
     }
+
+
+
 
 
 }
