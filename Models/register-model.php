@@ -46,6 +46,29 @@ class RegisterModel extends MainModel
     }
 
     /**
+     * Get gender list
+     *
+     * @since 0.1
+     * @access public
+     */
+    public function getGenderList()
+    {
+        $result = null;
+
+        $url = API_URL . 'api/v1/genders/list';
+
+
+        $result = callAPI("GET", $url, ''/*, $userToken*/);
+//        if (!empty($this->userdata['token'])) {
+//            $userToken = $this->userdata['token'];
+//            $result = callAPI("GET", $url, '', $userToken);
+//        }
+
+        return json_decode(json_encode($result), true);
+        // return json_decode($result, true);
+    }
+
+    /**
      * ADD new User
      *
      * @param $data
@@ -57,6 +80,9 @@ class RegisterModel extends MainModel
     {
         $result = null;
         $normalizedData = array();
+
+
+
 
 
 //        // Not active by default
@@ -98,7 +124,7 @@ class RegisterModel extends MainModel
                         break;
 
                     case "addUserGender":
-                        $normalizedData['genderId'] = 1;
+                        $normalizedData['genderId'] = $dataVector['value'];
                         break;
 
                     case "addUserLocality":
