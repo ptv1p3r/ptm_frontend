@@ -39,13 +39,6 @@
                                 </li>
                                 <li class="col-md-12">
                                     <div class="form-group input-group">
-                                        <input type="text" name="addUserGender" placeholder="Género"
-                                               class="form-control"
-                                               required>
-                                    </div>
-                                </li>
-                                <li class="col-md-12">
-                                    <div class="form-group input-group">
                                         <input type="text" name="addUserAddress" placeholder="Morada"
                                                class="form-control"
                                                required>
@@ -96,18 +89,37 @@
                                                required>
                                     </div>
                                 </li>
+
+                                <!-Dropdown Menu with Gender-->
                                 <li class="col-md-6">
-                                    <div class="form-group input-group">
-                                        <input type="email" name="addUserEmail" placeholder="Email" class="form-control"
-                                               required>
+                                    <div>
+                                        <select name="addUserGender" id="addUserGender"
+                                                class="form-control customDropdown">
+                                            <option value="" disabled selected>Sexo</option>
+                                            <?php if (!empty($this->userdata['genderList'])) {
+                                                foreach ($this->userdata['genderList'] as $key => $gender) { ?>
+                                                    <option value="<?php echo $gender['id'] ?>">
+                                                        <?php echo $gender["name"] ?></option>
+                                                <?php }
+                                            } ?>
+                                        </select>
                                     </div>
                                 </li>
+                                <!-End Dropdown Menu with Gender-->
+
                                 <li class="col-md-6">
                                     <div class="form-group input-group">
                                         <input type="date" name="addUserDateBirth" class="form-control"
                                                required>
                                     </div>
                                 </li>
+                                <li class="col-md-6">
+                                    <div class="form-group input-group">
+                                        <input type="email" name="addUserEmail" placeholder="Email" class="form-control"
+                                               required>
+                                    </div>
+                                </li>
+
                                 <li class="col-md-6">
                                     <div class="form-group input-group">
                                         <input type="text" name="addUserPassword" placeholder="Password"
