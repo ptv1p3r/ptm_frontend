@@ -65,7 +65,7 @@
     <title><?php echo $this->title ?></title>
 
 </head>
-<body>
+<body class>
 
 
 <!-- left side of navbar
@@ -265,7 +265,7 @@
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
                                 class="fa fa-cog fa-2x fa-fw" style="color: white; hoover:true"></i></a>
                     <ul class="dropdown-menu">
-                        <li><a href="<?php echo HOME_URL . '/home/settings'; ?>">Definições</a></li>
+                        <li><a href="<?php echo HOME_URL . '/home/usersettings'; ?>">Definições</a></li>
                         <li><a href="#">Mais qualquer coisa</a></li>
                         <li><a href="#">Etc....</a></li>
                     </ul>
@@ -277,10 +277,36 @@
                        title="Sair"><i
                                 class="fas fa-sign-out-alt fa-2x fa-fw" style="color: white; hoover:true"></i></a>
                 </li>
+
+
+                <li class="burger"> <a href="#"><i class="fas fa-bars"></i> Menu</a> </li>
+
+
             </ul>
         </div>
     </nav>
 </header>
+
+
+
+<nav class="sidenav">
+    <ul class="main">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="events-grid.html">Events</a></li>
+        <li><a href="causes.html">Causes</a></li>
+        <li><a href="projects-grid.html">Projects</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="shop-two.html">Shop</a></li>
+        <li><a href="contact-one.html">Contact</a></li>
+    </ul>
+</nav>
+
+<div class="overlay"></div>
+
+
+
+
 
 <!-- Logout Modal HTML -->
 <div id="logoutModal" class="modal fade">
@@ -295,3 +321,5 @@
         </div>
     </div>
 </div>
+
+
