@@ -26,6 +26,10 @@ class UserSettingsModel extends MainModel
         $this->parametros = $this->controller->parametros; // Configura os parâmetros
     }
 
+    /**
+     * Metodo que retorna o User
+     * @return mixed
+     */
 
     public function getUserByEmail($email) {
         $result = null;
@@ -42,7 +46,7 @@ class UserSettingsModel extends MainModel
 
 
     /**
-     * Metodo que retorna lista de Grupos
+     * Metodo que retorna a lista User
      * @return mixed
      */
     public function getUserList()
@@ -58,6 +62,96 @@ class UserSettingsModel extends MainModel
         //trasforma toda a msg em string json para poder ser enviado
         return json_decode(json_encode($result), true);
     }
+
+
+    /**
+     * Metodo edita/update User
+     * @param $email
+     * @return mixed
+     */
+    public function updateUser($data) {
+
+        $result = null;
+        $email = null;
+        $normalizedData = array();
+
+//        // Not active by default
+//        $normalizedData['active'] = "";
+
+        // get data from form array and package it to send to api
+        foreach ($data as $dataVector) {
+            foreach ($dataVector as $key => $value) {
+                switch ($dataVector['name']){ //gets <input name="">
+
+                    case "editUserEmail":
+                        $email = $dataVector['value'];
+                        break;
+
+                    case "editUserName":
+                        $normalizedData['name'] = $dataVector['value'];
+                        break;
+
+                    case "editUserEntity":
+                        $normalizedData['entity'] = $dataVector['value'];
+                        break;
+
+                    case "editUserAddress":
+                        $normalizedData['address'] = $dataVector['value'];
+                        break;
+
+                    case "editUserCodPost":
+                        $normalizedData['codPost'] = $dataVector['value'];
+                        break;
+
+                    case "editUserLocality":
+                        $normalizedData['locality'] = $dataVector['value'];
+                        break;
+
+                    case "editUserCountry":
+                        $normalizedData['countryId'] = $dataVector['value'];
+                        break;
+
+                    case "editUserNif":
+                        $normalizedData['nif'] = $dataVector['value'];
+                        break;
+
+                    case "editUserMobile":
+                        $normalizedData['mobile'] = $dataVector['value'];
+                        break;
+
+                    case "addUserGender":
+                        $normalizedData['genderId'] = $dataVector['value'];
+                        break;
+
+                    case "editUserDateBirth":
+                        $normalizedData['dateBirth'] = $dataVector['value'];
+                        break;
+
+
+                    /*case "editGroupActive":
+                        $normalizedData['active'] = "1";
+                        break;*/
+                }
+
+//                if ($dataVector['name'] == "editGroupActive"){
+//                    $normalizedData['active'] = "1";
+//                } else {
+//                    $normalizedData['active'] = "0";
+//                }
+            }
+        }
+
+        $url = API_URL . 'api/v1/users/edit/' . $email;
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("PUT", $url, $normalizedData, $userToken);
+        }
+
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+
 
 
 
