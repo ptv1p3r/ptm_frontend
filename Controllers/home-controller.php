@@ -24,11 +24,6 @@ class HomeController extends MainController
         // Parametros da função
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
-        /*$modelo = $this->load_model('home-model');
-
-        $ptmTopRated = $modelo->getTopRatedList(4);
-        $ptmTopDownloaded = $modelo->getTopDownloaded(4);
-        $ptmLastAdded = $modelo->getLastAdded(4);*/
 
         /** Carrega os arquivos do view **/
 
@@ -156,7 +151,7 @@ class HomeController extends MainController
 
         require ABSPATH . '/views/_includes/user-header.php';
 
-        require ABSPATH . '/views/user/profile/user-dashboard-view.php';
+        require ABSPATH . '/views/home/home-view.php';
 
         require ABSPATH . '/views/_includes/footer.php';
 
@@ -199,19 +194,20 @@ class HomeController extends MainController
 
     /**
      * Carrega a página
-     * "/views/home/user-dashboard-view.php"
+     * "/views/home/user-settings-view.php"
      */
 
-    public function settings() {
+    public function userSettings()
+    {
 
         // Título da página
         $this->title = 'User - Settings';
 
         // Parametros da função
-        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
+        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
         // obriga o login para aceder à pagina
-        if ( ! $this->logged_in ) {
+        if (!$this->logged_in) {
 
             // Se não; garante o logout
             $this->logout();
@@ -223,7 +219,15 @@ class HomeController extends MainController
             return;
         }
 
-        //$modelo = $this->load_model('user-model');
+        $model = $this->load_model('user-settings-model');
+
+        $getUserModel = $model->getUserByEmail($_SESSION['userdata']['email']);
+
+        $this->userdata['userList'] = $getUserModel['body'];
+
+
+
+
 
         /** Carrega os arquivos do view **/
 
@@ -234,6 +238,7 @@ class HomeController extends MainController
         require ABSPATH . '/views/_includes/footer.php';
 
     }
+
 
 }
 
