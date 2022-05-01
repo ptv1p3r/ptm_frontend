@@ -26,7 +26,7 @@ class GroupsModel extends MainModel {
     /**
      * Metodo que retorna Grupo pelo id
      * @param $id
-    // * @return mixed
+     * @return mixed
      */
     public function getGroupById($id) {
         $result = null;
