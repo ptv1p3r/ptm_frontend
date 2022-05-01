@@ -25,8 +25,6 @@ class HomeController extends MainController
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
 
-
-
         /** Carrega os arquivos do view **/
 
         require ABSPATH . '/views/_includes/header.php';
@@ -126,16 +124,17 @@ class HomeController extends MainController
      * Carrega a página
      * "/views/home/user-dashboard-view.php"
      */
-    public function dashboard() {
+    public function dashboard()
+    {
 
         // Título da página
         $this->title = 'User - Dashboard';
 
         // Parametros da função
-        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
+        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
         // obriga o login para aceder à pagina
-        if ( ! $this->logged_in ) {
+        if (!$this->logged_in) {
 
             // Se não; garante o logout
             $this->logout();
@@ -191,6 +190,7 @@ class HomeController extends MainController
         /** load files from view **/
         require ABSPATH . '/views/_includes/header.php';
         require ABSPATH . '/views/home/rights-view.php';
+//        require ABSPATH . '/views/user/profile/user-dashboard-view.php';
         require ABSPATH . '/views/_includes/footer.php';
     }
 
@@ -231,9 +231,9 @@ class HomeController extends MainController
         $model = $this->load_model('user-settings-model');
 
         // processa chamadas ajax
-        if(isset($_POST['action']) && !empty($_POST['action'])) {
+        if (isset($_POST['action']) && !empty($_POST['action'])) {
             $action = $_POST['action'];
-            switch($action) {
+            switch ($action) {
                 case 'GetUser' :
                     $data = $_POST['userdata'];
 //                    $apiResponse = $model->getUserByEmail($_SESSION['userdata']['email']);
@@ -248,7 +248,7 @@ class HomeController extends MainController
 
                     $apiResponse = $model->updateUser($data); //decode to check message from api
 
-                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
+                    if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
                         $apiResponse["body"]['message'] = "Updated with success!";
 
                         $apiResponse = json_encode($apiResponse);// encode package to send
@@ -260,26 +260,31 @@ class HomeController extends MainController
                     echo($apiResponse);
                     break;
 
+                case 'DeleteUser' :
+                    $data = $_POST['data'];
+                    $apiResponse = $model->deleteUser($data); //decode to check message from api
 
+                    if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Deleted with success!";
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo($apiResponse);
+                    break;
 
             }
 
-
-            }else{
+        } else {
 
             $getUserModel = $model->getUserByEmail($_SESSION['userdata']['email']);
 
             $this->userdata['userList'] = $getUserModel['body'];
 
-
         }
-
-
-
-
-
-
-
 
         /** Carrega os arquivos do view **/
 
@@ -290,9 +295,6 @@ class HomeController extends MainController
         require ABSPATH . '/views/_includes/footer.php';
 
     }
-
-
-
 
 
 }
