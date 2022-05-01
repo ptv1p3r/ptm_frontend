@@ -49,16 +49,19 @@ class AdminController extends MainController
             $action = $_POST['action'];
             switch ($action) {
                 case 'Login' :
-                    // encripta a pass
-                    $_POST['data'][1]['value'] = hash('sha256', $_POST['data'][1]['value']);
+                    $_POST['data'][1]['value'] = hash('sha256', $_POST['data'][1]['value']); // encripta a pass
+
+                    $userEmail = $_POST['data'][0]['value'];
+                    $userPass = $_POST['data'][1]['value'];
 
                     $valResponse = $modelo->validateUser($_POST['data']);
 
                     if ($valResponse != null) {
-                        //$permResponse = $modelo->userPermissions($_POST['data']);
 
                         // verifica se autenticaçao com sucesso
                         if ($valResponse['statusCode'] === 200) {
+
+                            //$permResponse = $modelo->userPermissions($_POST['data']);
 
                             // se nao existir uma sessão iniciada, inicia
                             if (!isset($_SESSION)) {
@@ -87,17 +90,21 @@ class AdminController extends MainController
                                 return;
                             }
 
+                            $url = API_URL . 'api/v1/users/view/' . $userEmail;
+                            $result = callAPI("GET", $url, '', $userToken );
+                            $response = json_decode(json_encode($result), true);
+
                             // Recria o ID da sessão
                             $session_id = session_id();
 
                             // Atualiza userdata
-                            //$_SESSION['userdata'] = $_POST['data'][0]['value'];
+                            $_SESSION['userdata'] = $response["body"][0];
 
                             // Atualiza email
-                            $_SESSION['userdata']['email'] = $_POST['data'][0]['value'];
+                            $_SESSION['userdata']['email'] = $userEmail;
 
                             // Atualiza a senha
-                            $_SESSION['userdata']['password'] = $_POST['data'][1]['value'];
+                            $_SESSION['userdata']['password'] = $userPass;
 
                             // Atualiza o token
                             $_SESSION['userdata']['accessToken'] = $userToken;
@@ -210,7 +217,19 @@ class AdminController extends MainController
                 case 'GetGroup' :
                     $data = $_POST['data'];
                     $apiResponse = $modelo->getGroupById($data);
-                    $apiResponseBody = json_encode($apiResponse["body"]);
+                    $apiResponseBody = array();
+
+                    if ($apiResponse['statusCode'] === 200) { // 200 success
+                        $apiResponseBody = json_encode($apiResponse["body"]);
+                    }
+
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        ////faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->getGroupById($data);
+                        $apiResponseBody = json_encode($apiResponse["body"]);
+                    }
 
                     echo $apiResponseBody;
                     break;
@@ -218,6 +237,8 @@ class AdminController extends MainController
                 case 'AddGroup' :
                     $data = $_POST['data'];
                     $apiResponse = $modelo->addGroup($data); //decode to check message from api
+
+                    // TODO: fazer try catch caso o token der expire, vai buscar e tenta novamente o addGroup
 
                     // quando statusCode = 201, a response nao vem com campo mensagem
                     // entao é criado e encoded para ser enviado
@@ -230,6 +251,9 @@ class AdminController extends MainController
                     }
 
                     if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
                         //ver table de permissoes
                         //callAPI();
 
@@ -283,7 +307,14 @@ class AdminController extends MainController
 
         } else {
             $groupsList = $modelo->getGroupList();
-            if ($groupsList["statusCode"] != 401){
+            if ($groupsList["statusCode"] === 200){
+                $this->userdata['groupsList'] = $groupsList["body"];
+            }
+            if ($groupsList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $groupsList = $modelo->getGroupList();
                 $this->userdata['groupsList'] = $groupsList["body"];
             }
 
