@@ -151,7 +151,7 @@ class UserLogin
                 return;
             }
 
-            /*$url = API_URL . 'api/v1/users/view/' . $userId;
+            /*$url = API_URL . 'api/v1/users/view/' . $userEmail;
             $result = callAPI("GET", $url, '', $userToken );
             $response = json_decode(json_encode($result), true);
 
@@ -270,20 +270,25 @@ class UserLogin
         return;
     }
 
-    //TODO: ja esta a fazer refresh de Token
-    // mas falta implementar validaçao para que so faça o refresh de Token quando o accessToken passar da validade
+    /**
+     * Faz a renovaçao do accessToken do user
+     *
+     * @return void
+     */
     protected function userTokenRefresh(){
-
         //vai gerar novo accessToken atravez do refreshToken e email
         $url = API_URL . 'api/v1/refresh';
         $data = array(
-            'email' => $email,
-            'refreshToken' => $refreshToken
+            'email' => $_SESSION['userdata']['email'],
+            'refreshToken' => $_SESSION['userdata']['refreshToken']
         );
         $result = callAPI("POST", $url, $data ); //apanha novo accessToken
 
-        //trasforma toda a msg em array para facil acesso aos dados
+        // trasforma toda a msg em array para facil acesso aos dados
         $response = json_decode(json_encode($result), true);
+
+        // Atualiza o token na sessao
+        $_SESSION['userdata']['accessToken'] = $response["body"]["accessToken"];
 
     }
 
