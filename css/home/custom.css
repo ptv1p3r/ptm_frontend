@@ -7577,14 +7577,14 @@ Sidebar Menu Start
 ========================================== */
 
 nav.sidenav {
-    background-color: #2a2a2a;
+    background-color: rgba(42, 42, 42, 0.8);
     position: fixed;
     z-index: 9999;
     top: 0;
     right: 0;
     height: 100%;
     max-width: 515px;
-    width: 100%;
+    /*width: 100%;*/
     padding: 100px 40px 60px 40px;
     overflow-y: auto;
     -webkit-transform: translateX(100%);
@@ -8054,9 +8054,9 @@ Modal End
 }
 
 
-/*********************************
-Settings profile Start
-*********************************/
+/*!**********************************/
+/*Settings profile Start*/
+/**********************************!*/
 
 
 .emp-profile{
@@ -8163,6 +8163,53 @@ Settings profile Start
     font-size: 16px;
     color: #66bb6a;
 }
+
+/*********************************
+NEW Settings profile End
+*********************************/
+
+.profile-tab-nav {
+    min-width: 250px;
+}
+
+.tab-content {
+    flex: 1;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.nav-pills a.nav-link {
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0;
+    color: #333;
+}
+.nav-pills a.nav-link i {
+    width: 20px;
+}
+
+.img-circle img {
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+    border: 5px solid #fff;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+    color: #fff;
+    background-color:  #66bb6a;
+
+}
+
+.btn-success{
+    color: #fff;
+    background-color: #66bb6a;
+    border-color: #66bb6a;
+}
+
+
 
 /*********************************
 Settings profile End
