@@ -31,15 +31,18 @@ class UserSettingsModel extends MainModel
      * @return mixed
      */
 
-    public function getUserByEmail($email) {
+    public function getUserByEmail($email)
+    {
         $result = null;
 
-        $url = API_URL . 'api/v1/users/view/'.$email;
+        $url = API_URL . 'api/v1/users/view/' . $email;
 
-        if (!empty($_SESSION['userdata']['accessToken'])){
+        if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
+
+        var_dump($result);
         //trasforma toda a msg em string json para poder ser enviado
         return json_decode(json_encode($result), true);
     }
@@ -55,7 +58,7 @@ class UserSettingsModel extends MainModel
 
         $url = API_URL . 'api/v1/user/list';
 
-        if (!empty($_SESSION['userdata']['accessToken'])){
+        if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
@@ -69,7 +72,8 @@ class UserSettingsModel extends MainModel
      * @param $email
      * @return mixed
      */
-    public function updateUser($data) {
+    public function updateUser($data)
+    {
 
         $result = null;
         $email = null;
@@ -81,7 +85,7 @@ class UserSettingsModel extends MainModel
         // get data from form array and package it to send to api
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
-                switch ($dataVector['name']){ //gets <input name="">
+                switch ($dataVector['name']) { //gets <input name="">
 
                     case "editUserEmail":
                         $email = $dataVector['value'];
@@ -142,7 +146,7 @@ class UserSettingsModel extends MainModel
         }
 
         $url = API_URL . 'api/v1/users/edit/' . $email;
-        if (!empty($_SESSION['userdata']['accessToken'])){
+        if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("PUT", $url, $normalizedData, $userToken);
         }
@@ -151,8 +155,38 @@ class UserSettingsModel extends MainModel
         return json_decode(json_encode($result), true);
     }
 
+    /**
+     * Metodo delete Grupo
+     * @param $data
+     * @return mixed
+     */
+    public function deleteUser($data)
+    {
+        $result = null;
+        $email = null;
 
+        //TODO precisa ser revisto
+        $GroupId = null;
 
+        foreach ($data as $dataVector) {
+            foreach ($dataVector as $key => $value) {
+                switch ($dataVector['name']) { //gets input name=""
+                    case "deleteUser":
+                        $GroupId = $dataVector['value'];
+                        break;
+                }
+            }
+        }
+
+        $url = API_URL . 'api/v1/users/delete/' . $email;
+        if (!empty($_SESSION['userdata']['accessToken'])) {
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("DELETE", $url, '', $userToken);
+        }
+
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
 
 
 }
