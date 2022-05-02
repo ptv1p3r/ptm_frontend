@@ -114,6 +114,99 @@ class AdminController extends MainController
     }
 
     /**
+     * loads /admin/security page and handles ajax
+     * @return void
+     */
+    public function security(){
+        // Título da página
+        $this->title = 'Admin - Securitys';
+
+        // Parametros da função
+        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
+
+        $modelo = $this->load_model('security-model');
+
+        // processa chamadas ajax
+        if(isset($_POST['action']) && !empty($_POST['action'])) {
+            $action = $_POST['action'];
+            switch($action) {
+                case 'GetSecurity' :
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->getSecurityById($data);
+                    $apiResponseBody = json_encode($apiResponse["body"]);
+
+                    echo $apiResponseBody;
+                    break;
+
+                case 'AddSecurity' :
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->addSecurity($data); //decode to check message from api
+
+                    // quando statusCode = 201, a response nao vem com campo mensagem
+                    // entao é criado e encoded para ser enviado
+                    if ($apiResponse['statusCode'] === 201){ // 201 created
+                        $apiResponse["body"]['message'] = "Created with success!";
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    // se statsCode nao for 201, entao api response ja vem com um campo mensagem
+                    // assim so precisamos de fazer encode para ser enviado
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo($apiResponse);
+                    break;
+
+                case 'UpdateSecurity' :
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->updateSecurity($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Updated with success!";
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo($apiResponse);
+                    break;
+
+                case 'DeleteSecurity' :
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->deleteSecurity($data); //decode to check message from api
+                
+                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Deleted with success!";
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo($apiResponse);
+                    break;
+            }
+
+        } else {
+            $securityList = $modelo->getSecurityList();
+            if ($securityList["statusCode"] != 401){
+                $this->userdata['securityList'] = $securityList["body"];
+            }
+
+            /**Carrega os arquivos do view**/
+            require ABSPATH . '/views/_includes/admin-header.php';
+
+            require ABSPATH . '/views/admin/admin-security-view.php';
+
+            require ABSPATH . '/views/_includes/admin-footer.php';
+        }
+    }
+      
+    /**
      * loads /admin/users page and handles ajax
      * @return void
      */
