@@ -119,7 +119,7 @@ class AdminController extends MainController
      */
     public function security(){
         // Título da página
-        $this->title = 'Admin - Utilizadoress';
+        $this->title = 'Admin - Securitys';
 
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
@@ -177,7 +177,7 @@ class AdminController extends MainController
                 case 'DeleteSecurity' :
                     $data = $_POST['data'];
                     $apiResponse = $modelo->deleteSecurity($data); //decode to check message from api
-
+                
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
                         $apiResponse["body"]['message'] = "Deleted with success!";
 
@@ -201,6 +201,105 @@ class AdminController extends MainController
             require ABSPATH . '/views/_includes/admin-header.php';
 
             require ABSPATH . '/views/admin/admin-security-view.php';
+
+            require ABSPATH . '/views/_includes/admin-footer.php';
+        }
+    }
+      
+    /**
+     * loads /admin/users page and handles ajax
+     * @return void
+     */
+    public function users(){
+        // Título da página
+        $this->title = 'Admin - Utilizadoress';
+
+        // Parametros da função
+        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
+
+        $modelo = $this->load_model('users-model');
+
+        // processa chamadas ajax
+        if(isset($_POST['action']) && !empty($_POST['action'])) {
+            $action = $_POST['action'];
+            switch($action) {
+                case 'GetUser' :
+                    $data = $_POST['data'];
+                    echo $apiResponse = $modelo->getUserById($data);
+                    $apiResponseBody = json_encode($apiResponse["body"]);
+
+                    echo $apiResponseBody;
+                    break;
+
+                case 'AddUser' :
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->addUser($data); //decode to check message from api
+
+                    // quando statusCode = 201, a response nao vem com campo mensagem
+                    // entao é criado e encoded para ser enviado
+                    if ($apiResponse['statusCode'] === 201){ // 201 created
+                        $apiResponse["body"]['message'] = "Created with success!";
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    // se statsCode nao for 201, entao api response ja vem com um campo mensagem
+                    // assim so precisamos de fazer encode para ser enviado
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo($apiResponse);
+                    break;
+
+
+                case 'UpdateUser' :
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->updateUser($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Updated with success!";
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo($apiResponse);
+                    break;
+
+                case 'DeleteUser' :
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->deleteUser($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Deleted with success!";
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo($apiResponse);
+                    break;
+            }
+
+        } else {
+            $userList = $modelo->getUserList();
+            if ($userList["statusCode"] != 401){
+                $this->userdata['usersList'] = $userList["body"];
+            }
+
+            $countryList = $modelo->getCountryList();
+            if ($countryList["statusCode"] != 401){
+                $this->userdata['countryList'] = $countryList["body"];
+            }
+
+            /**Carrega os arquivos do view**/
+            require ABSPATH . '/views/_includes/admin-header.php';
+
+            require ABSPATH . '/views/admin/admin-users-view.php';
 
             require ABSPATH . '/views/_includes/admin-footer.php';
         }
