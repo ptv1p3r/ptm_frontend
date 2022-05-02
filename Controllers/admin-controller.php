@@ -224,7 +224,7 @@ class AdminController extends MainController
                     }
 
                     if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
-                        ////faz o refresh do accessToken
+                        //faz o refresh do accessToken
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->getGroupById($data);
