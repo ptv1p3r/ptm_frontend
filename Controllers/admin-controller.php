@@ -238,8 +238,6 @@ class AdminController extends MainController
                     $data = $_POST['data'];
                     $apiResponse = $modelo->addGroup($data); //decode to check message from api
 
-                    // TODO: fazer try catch caso o token der expire, vai buscar e tenta novamente o addGroup
-
                     // quando statusCode = 201, a response nao vem com campo mensagem
                     // entao é criado e encoded para ser enviado
                     if ($apiResponse['statusCode'] === 201){ // 201 created
