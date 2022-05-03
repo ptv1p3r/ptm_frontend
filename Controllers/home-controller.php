@@ -141,6 +141,7 @@ class HomeController extends MainController
 
         // Título da página
         $this->title = 'User - Dashboard';
+        $this->permission_required = 'Login';
 
         // Parametros da função
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -178,7 +179,7 @@ class HomeController extends MainController
 
     function homelogout()
     {
-        $_SESSION['goto_url'] = '/';
+        $_SESSION['goto_url'] = '/home';
 
         $this->logout(true);
     }
@@ -246,24 +247,46 @@ class HomeController extends MainController
             $action = $_POST['action'];
             switch ($action) {
                 case 'GetUser' :
-                    $data = $_POST['data'];
-//                    $apiResponse = $model->getUserByEmail($_SESSION['userdata']['email']);
-                    $apiResponse = $model->getUserByEmail($data);
 
+                    $data = $_POST['data'];
+                    $apiResponse = $model->getUserByEmail($data);
+                    $apiResponseBody = array();
+
+
+                    if ($apiResponse['statusCode'] === 200) { // 200 success
                     $apiResponseBody = json_encode($apiResponse["body"]);
+                    }
+
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $model->getUserByEmail($data);
+                        $apiResponseBody = json_encode($apiResponse["body"]);
+                    }
+
                     echo $apiResponseBody;
                     break;
 
                 case 'UpdateUser' :
 
                     $data= $_POST['data'];
-
-
-                    $apiResponse = json_decode($model->updateUser($data),true); //decode to check message from api
+//                    $data[10]['value'] = hash('sha256', $data[10]['value']);
+                    $apiResponse = $model->updateUser($data); //decode to check message from api
 
                     if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
                         $apiResponse["body"]['message'] = "Updated with success!";
 
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $model->updateUser($data); //decode to check message from api
                         $apiResponse = json_encode($apiResponse);// encode package to send
                         echo $apiResponse;
                         break;
@@ -285,10 +308,19 @@ class HomeController extends MainController
                         break;
                     }
 
+                    if ($apiResponse['statusCode'] === 401) { // 200 OK, successful
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $model->deleteUser($data); //decode to check message from api
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
                     $apiResponse = json_encode($apiResponse);// encode package to send
                     echo($apiResponse);
                     break;
-
             }
 
         } else {
