@@ -42,7 +42,7 @@ class UserSettingsModel extends MainModel
             $result = callAPI("GET", $url, '', $userToken);
         }
 
-        var_dump($result);
+
         //trasforma toda a msg em string json para poder ser enviado
         return json_decode(json_encode($result), true);
     }
@@ -76,19 +76,21 @@ class UserSettingsModel extends MainModel
     {
 
         $result = null;
-        $email = null;
         $normalizedData = array();
 
 //        // Not active by default
 //        $normalizedData['active'] = "";
+
+        //Manually injected user group data
+        $normalizedData['groupId'] = 1;
 
         // get data from form array and package it to send to api
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']) { //gets <input name="">
 
-                    case "editUserEmail":
-                        $email = $dataVector['value'];
+                    case "editUserId":
+                        $userId = $dataVector['value'];
                         break;
 
                     case "editUserName":
@@ -112,7 +114,7 @@ class UserSettingsModel extends MainModel
                         break;
 
                     case "editUserCountry":
-                        $normalizedData['countryId'] = $dataVector['value'];
+                        $normalizedData['countryId'] =(int)$dataVector['value'];
                         break;
 
                     case "editUserNif":
@@ -123,12 +125,16 @@ class UserSettingsModel extends MainModel
                         $normalizedData['mobile'] = $dataVector['value'];
                         break;
 
-                    case "addUserGender":
-                        $normalizedData['genderId'] = $dataVector['value'];
+                    case "editUserGender":
+                        $normalizedData['genderId'] = (int)$dataVector['value'];
                         break;
 
                     case "editUserDateBirth":
                         $normalizedData['dateBirth'] = $dataVector['value'];
+                        break;
+
+                    case "editUserPassword":
+                        $normalizedData['password'] = $dataVector['value'];
                         break;
 
 
@@ -145,7 +151,7 @@ class UserSettingsModel extends MainModel
             }
         }
 
-        $url = API_URL . 'api/v1/users/edit/' . $email;
+        $url = API_URL . 'api/v1/users/edit/' . $userId;
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("PUT", $url, $normalizedData, $userToken);
@@ -163,22 +169,19 @@ class UserSettingsModel extends MainModel
     public function deleteUser($data)
     {
         $result = null;
-        $email = null;
-
-        //TODO precisa ser revisto
-        $GroupId = null;
+        $UserId = null;
 
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']) { //gets input name=""
-                    case "deleteUser":
-                        $GroupId = $dataVector['value'];
+                    case "deleteUserId":
+                        $UserId = $dataVector['value'];
                         break;
                 }
             }
         }
 
-        $url = API_URL . 'api/v1/users/delete/' . $email;
+        $url = API_URL . 'api/v1/users/delete/' . $UserId;
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("DELETE", $url, '', $userToken);
