@@ -11,10 +11,9 @@ class AdminController extends MainController
 
     /**
      * Carrega a página
-     * "/views/admin/admin-dashboard-view.php"
+     * "/views/admin/admin-login-view.php"
      */
     public function index() {
-
         // Título da página
         $this->title = 'Admin - Login';
 
@@ -57,11 +56,8 @@ class AdminController extends MainController
                     $valResponse = $modelo->validateUser($_POST['data']);
 
                     if ($valResponse != null) {
-
                         // verifica se autenticaçao com sucesso
                         if ($valResponse['statusCode'] === 200) {
-
-                            //$permResponse = $modelo->userPermissions($_POST['data']);
 
                             // se nao existir uma sessão iniciada, inicia
                             if (!isset($_SESSION)) {
@@ -90,17 +86,33 @@ class AdminController extends MainController
                                 return;
                             }
 
+                            //apanha dados do user
                             $url = API_URL . 'api/v1/users/view/' . $userEmail;
                             $result = callAPI("GET", $url, '', $userToken );
-                            $response = json_decode(json_encode($result), true);
+                            $userData= json_decode(json_encode($result), true);
+
+                            //apanha permissioes do user
+                            $url = API_URL . 'api/v1/groups/view/' . $userData["body"][0]["groupId"];
+                            $result = callAPI("GET", $url, '', $userToken );
+                            $userPermissions = json_decode(json_encode($result), true);
+
+                            //TODO: fix construçao correta do $permissionsArray
+                            //constroi array de permissoes do user
+                            $permissionsArray = array();
+                            foreach ($userPermissions["body"][0] as $key => $value) {
+                                if ($key && ($value == 1)){
+                                    $permissionsArray[] = $key;
+                                }
+                            }
 
                             // Recria o ID da sessão
                             $session_id = session_id();
 
-                            //TODO: guardar tabela de permissions do user na sessao
-
                             // Atualiza userdata
-                            $_SESSION['userdata'] = $response["body"][0];
+                            $_SESSION['userdata'] = $userData["body"][0];
+
+                            // Atualiza user permissions
+                            $_SESSION['userdata']["user_permissions"] = $permissionsArray;
 
                             // Atualiza email
                             $_SESSION['userdata']['email'] = $userEmail;
@@ -131,7 +143,6 @@ class AdminController extends MainController
                             $_SESSION['goto_url'] = '/admin';
 
                             // remove qualquer sessão que possa existir do user
-                            $this->logged_in = false;
                             $this->logout();
 
                             echo $valResponse["statusCode"];
@@ -143,7 +154,6 @@ class AdminController extends MainController
                         $_SESSION['goto_url'] = '/admin';
 
                         // remove qualquer sessão que possa existir do user
-                        $this->logged_in = false;
                         $this->logout();
 
                         echo $valResponse["statusCode"];
@@ -161,7 +171,6 @@ class AdminController extends MainController
      * "/views/admin/admin-dashboard-view.php"
      */
     public function dashboard() {
-
         // Título da página
         $this->title = 'Admin - Dashboard';
         $this->permission_required = 'admLogin';
@@ -183,14 +192,14 @@ class AdminController extends MainController
         }
 
         //Verifica se o usuário tem a permissão para acessar essa página
-        /*if (!$this->check_permissions($this->permission_required, $this->userdata['user_permissions'])) {
+        if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
 
             // Exibe uma mensagem
             echo 'Você não tem permissões para acessar essa página.';
 
             // Finaliza aqui
             return;
-        }*/
+        }
 
         $modelo = $this->load_model('admin-model');
 
@@ -210,7 +219,7 @@ class AdminController extends MainController
     public function groups(){
         // Título da página
         $this->title = 'Admin - Grupos';
-        $this->permission_required = 'admLogin';
+        $this->permission_required = 'userGroupsRead';
 
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
@@ -228,6 +237,16 @@ class AdminController extends MainController
             return;
         }
 
+        //Verifica se o usuário tem a permissão para acessar essa página
+        if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+
+            // Exibe uma mensagem
+            echo 'Você não tem permissões para acessar essa página.';
+
+            // Finaliza aqui
+            return;
+        }
+
         $modelo = $this->load_model('groups-model');
 
         // processa chamadas ajax
@@ -235,16 +254,14 @@ class AdminController extends MainController
             $action = $_POST['action'];
             switch($action) {
                 case 'GetGroup' :
-                    //TODO: fazer validaçao de permissions para cada açao do CRUD.
-                    // ver qual a melhor maneira para fazer.
-                    $this->permission_required = 'userGroupsRead';
+                    /*$this->permission_required = 'userGroupsRead';
 
-                    //ver table de permissoes
-                    /*if(!$this->check_permissions($this->permission_required, $this->userdata['user_permissions'])){
-                        //$apiResponse["body"]['message'] = "You have no permission!";
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
 
-                        //echo $apiResponse;
-                        //break;
+                        echo json_encode($apiResponse);
+                        break;
                     }*/
 
                     $data = $_POST['data'];
@@ -268,6 +285,14 @@ class AdminController extends MainController
 
                 case 'AddGroup' :
                     $this->permission_required = 'userGroupsCreate';
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }
 
                     $data = $_POST['data'];
                     $apiResponse = $modelo->addGroup($data); //decode to check message from api
@@ -302,6 +327,14 @@ class AdminController extends MainController
                 case 'UpdateGroup' :
                     $this->permission_required = 'userGroupsUpdate';
 
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }
+
                     $data = $_POST['data'];
                     $apiResponse = $modelo->updateGroup($data); //decode to check message from api
 
@@ -330,6 +363,14 @@ class AdminController extends MainController
 
                 case 'DeleteGroup' :
                     $this->permission_required = 'userGroupsDelete';
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }
 
                     $data = $_POST['data'];
                     $apiResponse = $modelo->deleteGroup($data); //decode to check message from api
