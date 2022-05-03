@@ -186,7 +186,7 @@
                                 showConfirmButton: false,
                                 timer: 2000,
                                 didClose: () => {
-                                    //location.reload();
+                                    window.location.href="<?php echo HOME_URL . '/home';?>";
                                 }
                             });
                         } else {
