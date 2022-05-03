@@ -260,7 +260,7 @@
                         </div>
                         <div class="form-group">
                             <label>Password:</label>
-                            <input type="password" class="form-control" name="editUserPassword">
+                            <input type="password"  class="form-control" name="editUserPassword">
                         </div>
                         <div class="form-group">
                             <label>Data de aniversário:</label>
@@ -369,6 +369,7 @@
                     $('[name="editUserLocality"]').val(data[0]['locality']);
                     $('[name="editUserMobile"]').val(data[0]['mobile']);
                     $('[name="editUserNif"]').val(data[0]['nif']);
+                    $('[name="editUserPass"]').val(data[0]['password']);
 
                     // //TODO ver como aparece os países
                     // $('[name="editUserCountry"]').val(data[0]['countryId']);
@@ -415,7 +416,7 @@
                 type: 'POST',
                 data: formData,
                 success: function (data) {
-                    if (data.statusCode === 201) {
+                    if (data.statusCode === 200) {
                         //mensagem de Success
                         Swal.fire({
                             title: 'Success!',
@@ -424,7 +425,7 @@
                             showConfirmButton: false,
                             timer: 2000,
                             didClose: () => {
-                                //location.reload();
+                                location.reload();
                             }
                         });
                     } else {
