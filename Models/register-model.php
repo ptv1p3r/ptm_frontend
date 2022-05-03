@@ -124,7 +124,7 @@ class RegisterModel extends MainModel
                         break;
 
                     case "addUserGender":
-                        $normalizedData['genderId'] = $dataVector['value'];
+                        $normalizedData['genderId'] = (int)$dataVector['value'];
                         break;
 
                     case "addUserLocality":
