@@ -90,13 +90,12 @@
                                     <p><?php echo $user["locality"] ?></p>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>País</label>
-
-<!--                                 Falta ver o pais selecionado-->
-
-                                    <p><?php echo $user["countryId"] ?></p>
+                                    <?php foreach($this->userdata['countryList'] as $key=>$val) { ?>
+                                       <?php echo ($val['id'] == $user["countryId"])?"<p>".$val['name']."</p>":'';?>
+                                    <?php } ?>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -107,8 +106,10 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Sexo</label>
-                                    <p><?php echo $user["genderId"] ?></p>
+                                    <label>Gênero</label>
+                                    <?php foreach($this->userdata['genderList'] as $key=>$val) { ?>
+                                        <?php echo ($val['id'] == $user["genderId"])?"<p>".$val['name']."</p>":'';?>
+                                    <?php } ?>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -124,9 +125,9 @@
                                 </div>
                             </div>
                         </div>
-
                         <div>
-                            <button class="btn btn-success" data-toggle="modal" data-target="#editUserModal">Editar
+                            <button class="btn edit btn-success" id="<?php echo $user["email"]; ?>" data-toggle="modal"
+                                    data-target="#editUserModal">Editar
                             </button>
                             <!--                            <button class="btn btn-light">Cancel</button>-->
                         </div>
@@ -200,77 +201,66 @@
 
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
-
-
                 <div class="modal-body">
-
-
-                    <form id="updateUser">
-
-
+                    <form class="updateUser">
                         <div class="form-group">
-                            <label>Email:</label>
-
+                            <input id="editUserId" name="editUserId" type="hidden" class="form-control"
+                                   value="<?php echo $user["id"] ?>">
                         </div>
 
                         <div class="form-group">
                             <label>Nome:</label>
                             <input type="text" class="form-control" name="editUserName"
-                                   value="<?php echo $user["name"] ?>">
+                                   value="">
                         </div>
 
                         <div class="form-group">
                             <label>Entidade:</label>
-                            <input type="text" class="form-control" name="editUserEntity">
+                            <input type="text" class="form-control" name="editUserEntity" value="">
+
                         </div>
 
                         <div class="form-group">
                             <label>Morada:</label>
-                            <input type="text" class="form-control" name="editUserAddress">
+                            <input type="text" class="form-control" name="editUserAddress" value="">
                         </div>
 
                         <div class="form-group">
                             <label>Código-postal:</label>
-                            <input type="text" class="form-control" name="editUserCodPost">
+                            <input type="text" class="form-control" name="editUserCodPost" value="">
                         </div>
 
                         <div class="form-group">
                             <label>Localidade:</label>
-                            <input type="text" class="form-control" name="editUserLocality">
+                            <input type="text" class="form-control" name="editUserLocality" value="">
                         </div>
                         <div class="form-group">
                             <label>País:</label>
-                            <select name="editUserCountry" id="editUserCountry"
-                                    class="form-control customDropdown">
-                                <option value="" disabled selected>Selecione o País</option>
-                                <?php if (!empty($this->userdata['countryList'])) {
-                                    foreach ($this->userdata['countryList'] as $key => $country) { ?>
-                                        <option value="<?php echo $country['id'] ?>">
-                                            <?php echo $country["name"] ?></option>
-                                    <?php }
-                                } ?>
+                            <select class="form-control" id="editUserCountry" name="editUserCountry">
+                                <?php foreach($this->userdata['countryList'] as $key=>$val) { ?>
+                                    <option value="<?php echo $val['id']; ?>" <?php echo ($val['id'] == $user["countryId"])?'selected="selected"':''?> > <?php echo $val['name']; ?></option>
+                                <?php } ?>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Nif:</label>
-                            <input type="text" class="form-control" name="editUserNif">
+                            <input type="text" class="form-control" name="editUserNif" value="">
                         </div>
                         <div class="form-group">
                             <label>Telefone:</label>
                             <input type="text" class="form-control" name="editUserMobile">
                         </div>
                         <div class="form-group">
-                            <label>Sexo:</label>
-                            <select name="editUserGender" id="addUserGender"
-                                    class="form-control customDropdown">
-                                <option value="" disabled selected>Sexo</option>
-                                <?php if (!empty($this->userdata['genderList'])) {
-                                    foreach ($this->userdata['genderList'] as $key => $gender) { ?>
-                                        <option value="<?php echo $gender['id'] ?>">
-                                            <?php echo $gender["name"] ?></option>
-                                    <?php }
-                                } ?>
+                            <label>País:</label>
+                            <select class="form-control" id="editUserGender" name="editUserGender">
+                                <?php foreach($this->userdata['genderList'] as $key=>$val) { ?>
+                                    <option value="<?php echo $val['id']; ?>" <?php echo ($val['id'] == $user["genderId"])?'selected="selected"':''?> > <?php echo $val['name']; ?></option>
+                                <?php } ?>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Password:</label>
+                            <input type="password" class="form-control" name="editUserPassword">
                         </div>
                         <div class="form-group">
                             <label>Data de aniversário:</label>
@@ -292,221 +282,258 @@
 <!-- End Edit Profile Modal HTML -->
 
 
-<!-- Start User delete account Modal HTML -->
+<!-- Delete Modal HTML -->
 <div id="deleteUserModal" class="modal fade">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4>Remover <i class='fa fa-warning'></i></i></h4>
-            </div>
-
-
-            <div class="modal-body"><i class="fa fa-question-circle"></i> De certeza que deseja remover a sua conta?
-            </div>
-            <div class="modal-footer"><a href="<?php echo HOME_URL . '/home/homelogout'; ?>"
-                                         class="btn btn-danger btn-block">Remover</a></div>
-            <input type="button" class="btn btn-default" data-dismiss="modal" value="Voltar">
+            <form id="deleteUser">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Group</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>De certeza que deseja remover a sua conta?</p>
+                    <p class="text-warning"><small>Esta ação não pode ser desfeita.</small></p>
+                    <input id="deleteUserId" name="deleteUserId" type="hidden" class="form-control">
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Voltar">
+                    <input type="submit" class="btn btn-danger" value="Apagar">
+                </div>
+            </form>
         </div>
     </div>
 </div>
-<!-- End User delete account Modal HTML -->
 
 
 <!--Script's section-->
 <script>
 
-    //// ajax to get data to Modal Edit User
-    $('.edit').on('click', function () {
-        let formData = {
-            'action': "GetUser",
-            'data': $(this).attr('email') //gets group id from id="" attribute on edit button from table
-        };
-        $.ajax({
-            url: "<?php echo HOME_URL . '/home/userSettings';?>",
-            dataType: "json",
-            type: 'POST',
-            data: formData,
-            success: function (data) {
-
-                //TODO Os dados chegam aqui, mas não aparecem
-
-
-                $('[name="editUserName"]').val(data['userdata']['name']);
-                $('[name="editUserEntity"]').val(data['userdata']['entity']);
-                $('[name="editUserDateBirth"]').val(data['userdata']['dateBirth']);
-                $('[name="editUserAddress"]').val(data['userdata']['address']);
-                $('[name="editUserCodPost"]').val(data['userdata']['codPost']);
-
-                //TODO ver como aparece os países
-                $('[name="editUserGender"]').val(data['userdata']['genderId']);
-                $('[name="editUserLocality"]').val(data['userdata']['locality']);
-                $('[name="editUserMobile"]').val(data['userdata']['mobile']);
-                $('[name="editUserNif"]').val(data['userdata']['nif']);
-
-                //TODO ver como aparece os países
-                $('[name="editUserCountry"]').val(data['userdata']['countryId']);
-
-
-                // $('[name="editGroupDescription"]').val(data[0]['description']);
-                // $('[name="editGroupSecurityId"]').val(data[0]['securityId']);
-
-                // if (data[0]['active'] === 1) {
-                //     $('[name="editGroupActive"]').attr('checked', true);
-                // } else {
-                //     $('[name="editGroupActive"]').attr('checked', false);
-                // }
-
-                // $("#editUserModal").modal('show');
-            },
-            error: function (data) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: data.body.message,
-                    icon: 'error',
-                    showConfirmButton: false,
-                    timer: 2000,
-                    didClose: () => {
-                        location.reload();
-                    }
-                });
-            }
-        });
-    });
-
-    // ajax to update modal data  Edit User
-    $('#updateUser').submit(function (event) {
-        event.preventDefault(); //prevent default action
-        // let chk_status = $("#checkBtn").prop('checked');
-        // if (chk_status) {
-        let formData = {
-            'action': "UpdateUser",
-            'data': $(this).serializeArray()
-        };
-        $.ajax({
-            url: "<?php echo HOME_URL . '/home/userSettings';?>",
-            dataType: "json",
-            type: 'POST',
-            data: formData,
-            success: function (data) {
-                if (data.statusCode === 201) {
-                    //mensagem de Success
-                    Swal.fire({
-                        title: 'Success!',
-                        text: data.body.message,
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        didClose: () => {
-                            //location.reload();
-                        }
-                    });
-                } else {
-                    //mensagem de Error
-                    Swal.fire({
-                        title: 'Error!',
-                        text: data.body.message,
-                        icon: 'error',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        didClose: () => {
-                            //location.reload();
-                        }
-                    });
-                }
-            },
-            error: function (data) {
-                //mensagem de Error
-                Swal.fire({
-                    title: 'Error!',
-                    text: "Connection error, please try again.",
-                    icon: 'error',
-                    showConfirmButton: false,
-                    timer: 2000,
-                    didClose: () => {
-                        //location.reload();
-                    }
-                });
-            }
-
-        });
-        // } else {
-        //     alert('batatas');
-        // }
-    });
-
-    // ajax to Delete User
-    $('#deleteUser').submit(function (event) {
-        event.preventDefault(); //prevent default action
-
-        let formData = {
-            'action': "DeleteUser",
-            'data': $(this).serializeArray()
-        };
-
-        $.ajax({
-            url: "<?php echo HOME_URL . '/home/userSettings';?>",
-            dataType: "json",
-            type: 'POST',
-            data: formData,
-            success: function (data) {
-                $("#deleteGroupModal").modal('hide');
-
-                if (data.statusCode === 200) {
-                    //mensagem de Success
-                    Swal.fire({
-                        title: 'Success!',
-                        text: data.body.message,
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        didClose: () => {
-                            location.reload();
-                        }
-                    });
-                } else {
-                    //mensagem de Error
-                    Swal.fire({
-                        title: 'Error!',
-                        text: data.body.message,
-                        icon: 'error',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        didClose: () => {
-                            //location.reload();
-                        }
-                    });
-                }
-
-            },
-            error: function (data) {
-                //mensagem de Error
-                Swal.fire({
-                    title: 'Error!',
-                    text: "Connection error, please try again.",
-                    icon: 'error',
-                    showConfirmButton: false,
-                    timer: 2000,
-                    didClose: () => {
-                        //location.reload();
-                    }
-                });
-            }
-        });
-    });
-
-    function checkPasswordMatch() {
-        let password = $("#txtNewPassword").val();
-        let confirmPassword = $("#txtConfirmPassword").val();
-        if (password != confirmPassword)
-            $("#CheckPasswordMatch").html("Passwords does not match!");
-        else
-            $("#CheckPasswordMatch").html("Passwords match.");
-    }
-
     $(document).ready(function () {
-        $("#txtConfirmPassword").keyup(checkPasswordMatch);
-    });
 
+         // $("#userCountry").val(data[$user["name"]);
+
+        // Adds Localities to dropdown
+        //$('#editCountry').on('change', function() {
+        //
+        //    // Reset dropdown values
+        //    // $('#editLocality').empty().append('<option></option>');
+        //    $('#editPoiCity').empty().append('<option></option>');
+        //
+        //    let formData = {
+        //        'action': "GetLocalities",
+        //        'data': $('#editPoiCountry').val()
+        //    };
+        //
+        //    // Adds Localities to dropdown
+        //    $.ajax({
+        //        url: "<?php //echo HOME_URL . '/PoiAdm';?>//",
+        //        dataType: "json",
+        //        type: 'POST',
+        //        data : formData,
+        //        success: function (json) {
+        //            $.each(json['data'], function(i, obj){
+        //                $('#userCountry').append($('<option>').text(obj['Name']).attr('value', obj['Id']));
+        //            });
+        //        }
+        //    });
+        //});
+
+        //////// ajax to get data to Modal Edit User
+        $('.edit').on('click', function () {
+            let formData = {
+                'action': "GetUser",
+                'data': $(this).attr('id') //gets group id from id="" attribute on edit button from table
+            };
+            $.ajax({
+                url: "<?php echo HOME_URL . '/home/userSettings';?>",
+                dataType: "json",
+                type: 'POST',
+                data: formData,
+
+                success: function (data) {
+
+                    //TODO Os dados chegam aqui, mas não aparecem
+
+
+
+                    $('[name="editUserId"]').val(data[0]['id']);
+                    $('[name="editUserName"]').val(data[0]['name']);
+                    $('[name="editUserEntity"]').val(data[0]['entity']);
+                    $('[name="editUserDateBirth"]').val(data[0]['dateBirth']);
+                    $('[name="editUserAddress"]').val(data[0]['address']);
+                    $('[name="editUserCodPost"]').val(data[0]['codPost']);
+
+                    //TODO ver como aparece os países
+
+                    $('[name="editUserLocality"]').val(data[0]['locality']);
+                    $('[name="editUserMobile"]').val(data[0]['mobile']);
+                    $('[name="editUserNif"]').val(data[0]['nif']);
+
+                    // //TODO ver como aparece os países
+                    // $('[name="editUserCountry"]').val(data[0]['countryId']);
+                    // $('[name="editUserGender"]').val(data[0]['genderId']);
+
+                    // $('[name="editGroupDescription"]').val(data[0]['description']);
+                    // $('[name="editGroupSecurityId"]').val(data[0]['securityId']);
+
+                    // if (data[0]['active'] === 1) {
+                    //     $('[name="editGroupActive"]').attr('checked', true);
+                    // } else {
+                    //     $('[name="editGroupActive"]').attr('checked', false);
+                    // }
+
+                    // $("#editUserModal").modal('show');
+                },
+                error: function (data) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: data.body,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        // timer: 2000,
+                        // didClose: () => {
+                        //     location.reload();
+                        // }
+                    });
+                }
+            });
+        });
+
+        // ajax to update modal data  Edit User
+        $('.updateUser').submit(function (event) {
+            event.preventDefault(); //prevent default action
+            // let chk_status = $("#checkBtn").prop('checked');
+            // if (chk_status) {
+            let formData = {
+                'action': "UpdateUser",
+                'data': $(this).serializeArray(),
+            };
+            $.ajax({
+                url: "<?php echo HOME_URL . '/home/userSettings';?>",
+                dataType: "json",
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+                    if (data.statusCode === 201) {
+                        //mensagem de Success
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.body.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    } else {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    }
+                },
+                error: function (data) {
+                    //mensagem de Error
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Connection error, please try again.",
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        didClose: () => {
+                            //location.reload();
+                        }
+                    });
+                }
+
+            });
+            // } else {
+            //     alert('batatas');
+            // }
+        });
+
+        // ajax to Delete User
+        $('#deleteUser').submit(function (event) {
+            event.preventDefault(); //prevent default action
+
+            let formData = {
+                'action': "DeleteUser",
+                'data': $(this).serializeArray()
+            };
+
+            $.ajax({
+                url: "<?php echo HOME_URL . '/home/userSettings';?>",
+                dataType: "json",
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+                    $("#deleteUserModal").modal('hide');
+
+                    if (data.statusCode === 200) {
+                        //mensagem de Success
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.body.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    }
+
+                },
+                error: function (data) {
+                    //mensagem de Error
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Connection error, please try again.",
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        didClose: () => {
+                            //location.reload();
+                        }
+                    });
+                }
+            });
+        });
+
+        function checkPasswordMatch() {
+            let password = $("#txtNewPassword").val();
+            let confirmPassword = $("#txtConfirmPassword").val();
+            if (password != confirmPassword)
+                $("#CheckPasswordMatch").html("Passwords does not match!");
+            else
+                $("#CheckPasswordMatch").html("Passwords match.");
+        }
+
+        $(document).ready(function () {
+            $("#txtConfirmPassword").keyup(checkPasswordMatch);
+        });
+    });
 
 </script>
 <!--Script's end section-->
