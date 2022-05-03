@@ -27,8 +27,10 @@ class RegisterController extends MainController
 
         $model = $this->load_model('register-model');
         $getCountryModel = $model->getCountryList();
+        $getGenderModel = $model->getGenderList();
 
         $this->userdata['countryList'] = $getCountryModel['body'];
+        $this->userdata['genderList'] = $getGenderModel['body'];
 
         /** load files from view **/
         require ABSPATH . '/views/_includes/header.php';
