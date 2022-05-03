@@ -97,6 +97,8 @@ class AdminController extends MainController
                             // Recria o ID da sessão
                             $session_id = session_id();
 
+                            //TODO: guardar tabela de permissions do user na sessao
+
                             // Atualiza userdata
                             $_SESSION['userdata'] = $response["body"][0];
 
@@ -156,6 +158,7 @@ class AdminController extends MainController
 
         // Título da página
         $this->title = 'Admin - Dashboard';
+        $this->permission_required = 'admLogin';
 
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
@@ -170,6 +173,16 @@ class AdminController extends MainController
             $this->goto_login();
 
             // Garante que o script não vai passar daqui
+            return;
+        }
+
+        //Verifica se o usuário tem a permissão para acessar essa página
+        if (!$this->check_permissions($this->permission_required, $this->userdata['user_permissions'])) {
+
+            // Exibe uma mensagem
+            echo 'Você não tem permissões para acessar essa página.';
+
+            // Finaliza aqui
             return;
         }
 
@@ -191,12 +204,13 @@ class AdminController extends MainController
     public function groups(){
         // Título da página
         $this->title = 'Admin - Grupos';
+        $this->permission_required = 'admLogin';
 
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
 
         // obriga o login para aceder à pagina
-        if ( ! $this->logged_in ) {
+        if ( ! $this->logged_in) {
 
             // Se não; garante o logout
             $this->logout();
@@ -215,6 +229,18 @@ class AdminController extends MainController
             $action = $_POST['action'];
             switch($action) {
                 case 'GetGroup' :
+                    //TODO: fazer validaçao de permissions para cada açao do CRUD.
+                    // ver qual a melhor maneira para fazer.
+                    $this->permission_required = 'userGroupsRead';
+
+                    //ver table de permissoes
+                    /*if(!$this->check_permissions($this->permission_required, $this->userdata['user_permissions'])){
+                        //$apiResponse["body"]['message'] = "You have no permission!";
+
+                        //echo $apiResponse;
+                        //break;
+                    }*/
+
                     $data = $_POST['data'];
                     $apiResponse = $modelo->getGroupById($data);
                     $apiResponseBody = array();
@@ -235,6 +261,8 @@ class AdminController extends MainController
                     break;
 
                 case 'AddGroup' :
+                    $this->permission_required = 'userGroupsCreate';
+
                     $data = $_POST['data'];
                     $apiResponse = $modelo->addGroup($data); //decode to check message from api
 
@@ -252,12 +280,7 @@ class AdminController extends MainController
                         //faz o refresh do accessToken
                         $this->userTokenRefresh();
 
-                        //ver table de permissoes
-                        //callAPI();
-
-                        /*if(nao tiver permissao)
-                         //$apiResponse["body"]['message'] = "You have no permission!";
-                        */
+                        $apiResponse = $modelo->addGroup($data); //decode to check message from api
 
                         $apiResponse = json_encode($apiResponse);// encode package to send
                         echo $apiResponse;
@@ -267,10 +290,12 @@ class AdminController extends MainController
                     // se statsCode nao for 201, entao api response ja vem com um campo mensagem
                     // assim so precisamos de fazer encode para ser enviado
                     $apiResponse = json_encode($apiResponse);// encode package to send
-                    echo($apiResponse);
+                    echo $apiResponse;
                     break;
 
                 case 'UpdateGroup' :
+                    $this->permission_required = 'userGroupsUpdate';
+
                     $data = $_POST['data'];
                     $apiResponse = $modelo->updateGroup($data); //decode to check message from api
 
@@ -282,11 +307,24 @@ class AdminController extends MainController
                         break;
                     }
 
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->updateGroup($data); //decode to check message from api
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
                     $apiResponse = json_encode($apiResponse);// encode package to send
-                    echo($apiResponse);
+                    echo $apiResponse;
                     break;
 
                 case 'DeleteGroup' :
+                    $this->permission_required = 'userGroupsDelete';
+
                     $data = $_POST['data'];
                     $apiResponse = $modelo->deleteGroup($data); //decode to check message from api
 
@@ -298,8 +336,19 @@ class AdminController extends MainController
                         break;
                     }
 
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->deleteGroup($data); //decode to check message from api
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
                     $apiResponse = json_encode($apiResponse);// encode package to send
-                    echo($apiResponse);
+                    echo $apiResponse;
                     break;
             }
 
