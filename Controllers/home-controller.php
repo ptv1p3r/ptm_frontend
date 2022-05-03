@@ -25,14 +25,26 @@ class HomeController extends MainController
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
 
-        /** Carrega os arquivos do view **/
+        // obriga o login para aceder à pagina
+        if (!$this->logged_in) {
 
-        require ABSPATH . '/views/_includes/header.php';
+            /** Carrega os arquivos do view **/
 
-        require ABSPATH . '/views/home/home-view.php';
+            require ABSPATH . '/views/_includes/header.php';
 
-        require ABSPATH . '/views/_includes/footer.php';
+            require ABSPATH . '/views/home/home-view.php';
 
+            require ABSPATH . '/views/_includes/footer.php';
+        }else{
+
+            /** Carrega os arquivos do view **/
+
+            require ABSPATH . '/views/_includes/user-header.php';
+
+            require ABSPATH . '/views/home/home-view.php';
+
+            require ABSPATH . '/views/_includes/footer.php';
+        }
     }
 
     /**
@@ -190,7 +202,6 @@ class HomeController extends MainController
         /** load files from view **/
         require ABSPATH . '/views/_includes/header.php';
         require ABSPATH . '/views/home/rights-view.php';
-//        require ABSPATH . '/views/user/profile/user-dashboard-view.php';
         require ABSPATH . '/views/_includes/footer.php';
     }
 
@@ -235,18 +246,20 @@ class HomeController extends MainController
             $action = $_POST['action'];
             switch ($action) {
                 case 'GetUser' :
-                    $data = $_POST['userdata'];
+                    $data = $_POST['data'];
 //                    $apiResponse = $model->getUserByEmail($_SESSION['userdata']['email']);
                     $apiResponse = $model->getUserByEmail($data);
-                    $apiResponseBody = json_encode($apiResponse["body"]);
 
+                    $apiResponseBody = json_encode($apiResponse["body"]);
                     echo $apiResponseBody;
                     break;
 
                 case 'UpdateUser' :
-                    $data = $_POST['data'];
 
-                    $apiResponse = $model->updateUser($data); //decode to check message from api
+                    $data= $_POST['data'];
+
+
+                    $apiResponse = json_decode($model->updateUser($data),true); //decode to check message from api
 
                     if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
                         $apiResponse["body"]['message'] = "Updated with success!";
@@ -284,18 +297,14 @@ class HomeController extends MainController
 
             $this->userdata['userList'] = $getUserModel['body'];
 
+            /** Carrega os arquivos do view **/
+
+            require ABSPATH . '/views/_includes/user-header.php';
+
+            require ABSPATH . '/views/user/profile/user-settings-view.php';
+
+            require ABSPATH . '/views/_includes/footer.php';
         }
-
-        /** Carrega os arquivos do view **/
-
-        require ABSPATH . '/views/_includes/user-header.php';
-
-        require ABSPATH . '/views/user/profile/user-settings-view.php';
-
-        require ABSPATH . '/views/_includes/footer.php';
-
     }
-
-
 }
 
