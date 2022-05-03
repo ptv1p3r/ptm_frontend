@@ -145,6 +145,7 @@
                                 </li>
                                 <li class="col-md-12">
                                     <button type="submit" class="register">Regista a sua conta</button>
+                                    <div id="loader" class="lds-dual-ring hidden overlay"></div>
                                 </li>
                             </ul>
                         </form>
@@ -201,6 +202,8 @@
                                 }
                             });
                         }
+                    },complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                        $('#loader').addClass('hidden')
                     },
                     error: function (data) {
                         //mensagem de Error
@@ -214,7 +217,7 @@
                                 //location.reload();
                             }
                         });
-                    }
+                    },
 
                 });
             } else {
@@ -222,6 +225,7 @@
             }
         });
     });
+
 
 </script>
 <!--Script's end section-->
