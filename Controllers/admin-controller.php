@@ -127,6 +127,9 @@ class AdminController extends MainController
                             break;
 
                         } else {
+                            //rediriciona para a dashboard quando ajax fizer window.reload()
+                            $_SESSION['goto_url'] = '/admin';
+
                             // remove qualquer sessão que possa existir do user
                             $this->logged_in = false;
                             $this->logout();
@@ -136,6 +139,9 @@ class AdminController extends MainController
                         }
 
                     } else {
+                        //rediriciona para a dashboard quando ajax fizer window.reload()
+                        $_SESSION['goto_url'] = '/admin';
+
                         // remove qualquer sessão que possa existir do user
                         $this->logged_in = false;
                         $this->logout();
@@ -177,14 +183,14 @@ class AdminController extends MainController
         }
 
         //Verifica se o usuário tem a permissão para acessar essa página
-        if (!$this->check_permissions($this->permission_required, $this->userdata['user_permissions'])) {
+        /*if (!$this->check_permissions($this->permission_required, $this->userdata['user_permissions'])) {
 
             // Exibe uma mensagem
             echo 'Você não tem permissões para acessar essa página.';
 
             // Finaliza aqui
             return;
-        }
+        }*/
 
         $modelo = $this->load_model('admin-model');
 
@@ -374,7 +380,7 @@ class AdminController extends MainController
         }
     }
 
-    function applogout(){
+    public function applogout(){
         $_SESSION['goto_url'] = '/admin';
 
         $this->logout(true);
