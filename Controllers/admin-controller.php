@@ -89,19 +89,42 @@ class AdminController extends MainController
                             //apanha dados do user
                             $url = API_URL . 'api/v1/users/view/' . $userEmail;
                             $result = callAPI("GET", $url, '', $userToken );
-                            $userData= json_decode(json_encode($result), true);
+                            $userData = json_decode(json_encode($result), true);
 
                             //apanha permissioes do user
                             $url = API_URL . 'api/v1/groups/view/' . $userData["body"][0]["groupId"];
                             $result = callAPI("GET", $url, '', $userToken );
                             $userPermissions = json_decode(json_encode($result), true);
 
-                            //TODO: fix construçao correta do $permissionsArray
                             //constroi array de permissoes do user
                             $permissionsArray = array();
                             foreach ($userPermissions["body"][0] as $key => $value) {
-                                if ($key && ($value == 1)){
-                                    $permissionsArray[] = $key;
+                                switch ($key){
+                                    case "homeLogin":
+                                    case "admLogin":
+                                    case "usersCreate":
+                                    case "usersRead":
+                                    case "usersUpdate":
+                                    case "usersDelete":
+                                    case "userGroupsCreate":
+                                    case "userGroupsRead":
+                                    case "userGroupsUpdate":
+                                    case "userGroupsDelete":
+                                    case "treesCreate":
+                                    case "treesRead":
+                                    case "treesUpdate":
+                                    case "treesDelete":
+                                    case "treeTypeCreate":
+                                    case "treeTypeRead":
+                                    case "treeTypeUpdate":
+                                    case "treeTypeDelete":
+                                    case "treeImagesCreate":
+                                    case "treeImagesRead":
+                                    case "treeImagesUpdate":
+                                    case "treeImagesDelete":
+                                        if ($value == 1){ $permissionsArray[] = $key; }
+                                        break;
+
                                 }
                             }
 
