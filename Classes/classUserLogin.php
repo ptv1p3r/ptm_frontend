@@ -319,6 +319,9 @@ class UserLogin
      * @final
      * @return bool|void
      */
+    //TODO: FIX check_permissions()
+    // verificar mais que um $required por pagina
+    // exemplo:  $this->permission_required = array('admLogin', 'userGroupRead');
     final protected function check_permissions(
         $required = 'any',
         $user_permissions = array('any')
