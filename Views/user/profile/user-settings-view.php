@@ -42,10 +42,20 @@
                             <i class="fa fa-user text-center mr-1"></i>
                             Opções
                         </a>
-                        <!--                        <a class="nav-link" id="application-tab" data-toggle="pill" href="#application" role="tab" aria-controls="application" aria-selected="false">-->
-                        <!--                            <i class="fa fa-tv text-center mr-1"></i>-->
-                        <!--                            Application-->
-                        <!--                        </a>-->
+
+                        <!--                        Teste premissões-->
+                        <?php $this->permission_required = 'treeRead';
+                        if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) { ?>
+                            <a class="nav-link" id="application-tab" data-toggle="pill" href="#application" role="tab"
+                               aria-controls="application" aria-selected="false">
+                                <i class="fa fa-tv text-center mr-1"></i>
+                                Test Permissões
+                            </a>
+                            <?php
+                        }
+                        ?>
+
+
                         <!--                        <a class="nav-link" id="notification-tab" data-toggle="pill" href="#notification" role="tab" aria-controls="notification" aria-selected="false">-->
                         <!--                            <i class="fa fa-bell text-center mr-1"></i>-->
                         <!--                            Notification-->
@@ -93,8 +103,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>País</label>
-                                    <?php foreach($this->userdata['countryList'] as $key=>$val) { ?>
-                                       <?php echo ($val['id'] == $user["countryId"])?"<p>".$val['name']."</p>":'';?>
+                                    <?php foreach ($this->userdata['countryList'] as $key => $val) { ?>
+                                        <?php echo ($val['id'] == $user["countryId"]) ? "<p>" . $val['name'] . "</p>" : ''; ?>
                                     <?php } ?>
                                 </div>
                             </div>
@@ -107,8 +117,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Gênero</label>
-                                    <?php foreach($this->userdata['genderList'] as $key=>$val) { ?>
-                                        <?php echo ($val['id'] == $user["genderId"])?"<p>".$val['name']."</p>":'';?>
+                                    <?php foreach ($this->userdata['genderList'] as $key => $val) { ?>
+                                        <?php echo ($val['id'] == $user["genderId"]) ? "<p>" . $val['name'] . "</p>" : ''; ?>
                                     <?php } ?>
                                 </div>
                             </div>
@@ -137,7 +147,10 @@
                     <!--Edit password tab section-->
                     <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
                         <h3 class="mb-4">Password Settings</h3>
-
+                        <div class="form-group">
+                            <input id="editUserId" name="editUserId" type="hidden" class="form-control"
+                                   value="<?php echo $user["id"] ?>">
+                        </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -150,24 +163,25 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nova password</label>
-                                    <input type="password" id="txtNewPassword" class="form-control">
+                                    <input type="password" id="password" class="form-control">
                                     <p class="registrationFormAlert" style="color:green;" id="CheckPasswordMatch">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Confirma a nova password</label>
-                                    <input type="password" id="txtConfirmPassword" class="form-control">
+                                    <input type="password" id="confPass" class="form-control">
                                 </div>
                             </div>
                         </div>
                         <div>
-                            <button class="btn btn-success">Salvar</button>
+                            <button class="btn btn-success save">Salvar</button>
                             <!--                            <button class="btn btn-light">Cancel</button>-->
                         </div>
                     </div>
                     <!--End Edit password tab section-->
 
+                    <!--Remove account tab section-->
                     <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
                         <h3 class="mb-4">Remover conta</h3>
                         <div class="row">
@@ -184,8 +198,20 @@
                             <button class="btn btn-light">Cancelar</button>
                         </div>
                     </div>
+                    <!--Remove account tab section-->
 
 
+                    <!--Test premissions account tab section-->
+
+                    <div class="tab-pane fade" id="application" role="tabpanel" aria-labelledby="security-tab">
+                        <h3 class="mb-4">Remover conta</h3>
+                        <div class="row">
+                        </div>
+                        <div>
+                            Teste premissoes
+                        </div>
+                    </div>
+                    <!--Test premissions account tab section-->
                 </div>
             </div>
         </div>
@@ -237,8 +263,8 @@
                         <div class="form-group">
                             <label>País:</label>
                             <select class="form-control" id="editUserCountry" name="editUserCountry">
-                                <?php foreach($this->userdata['countryList'] as $key=>$val) { ?>
-                                    <option value="<?php echo $val['id']; ?>" <?php echo ($val['id'] == $user["countryId"])?'selected="selected"':''?> > <?php echo $val['name']; ?></option>
+                                <?php foreach ($this->userdata['countryList'] as $key => $val) { ?>
+                                    <option value="<?php echo $val['id']; ?>" <?php echo ($val['id'] == $user["countryId"]) ? 'selected="selected"' : '' ?> > <?php echo $val['name']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -253,14 +279,14 @@
                         <div class="form-group">
                             <label>País:</label>
                             <select class="form-control" id="editUserGender" name="editUserGender">
-                                <?php foreach($this->userdata['genderList'] as $key=>$val) { ?>
-                                    <option value="<?php echo $val['id']; ?>" <?php echo ($val['id'] == $user["genderId"])?'selected="selected"':''?> > <?php echo $val['name']; ?></option>
+                                <?php foreach ($this->userdata['genderList'] as $key => $val) { ?>
+                                    <option value="<?php echo $val['id']; ?>" <?php echo ($val['id'] == $user["genderId"]) ? 'selected="selected"' : '' ?> > <?php echo $val['name']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Password:</label>
-                            <input type="password"  class="form-control" name="editUserPassword">
+                            <input type="password" class="form-control" name="editUserPassword">
                         </div>
                         <div class="form-group">
                             <label>Data de aniversário:</label>
@@ -311,33 +337,29 @@
 
     $(document).ready(function () {
 
-         // $("#userCountry").val(data[$user["name"]);
 
-        // Adds Localities to dropdown
-        //$('#editCountry').on('change', function() {
-        //
-        //    // Reset dropdown values
-        //    // $('#editLocality').empty().append('<option></option>');
-        //    $('#editPoiCity').empty().append('<option></option>');
-        //
-        //    let formData = {
-        //        'action': "GetLocalities",
-        //        'data': $('#editPoiCountry').val()
-        //    };
-        //
-        //    // Adds Localities to dropdown
-        //    $.ajax({
-        //        url: "<?php //echo HOME_URL . '/PoiAdm';?>//",
-        //        dataType: "json",
-        //        type: 'POST',
-        //        data : formData,
-        //        success: function (json) {
-        //            $.each(json['data'], function(i, obj){
-        //                $('#userCountry').append($('<option>').text(obj['Name']).attr('value', obj['Id']));
-        //            });
-        //        }
-        //    });
-        //});
+        $('.save').on('click', function () {
+
+            let password = $('#txtNewPassword').val();
+            let confPass = $('#txtNewPassword').val();
+
+        formArray = {
+           password, confPass
+        }
+
+            console.log(formArray);
+
+            //$.ajax({
+            //    url: "<?php //echo HOME_URL . '/home/userSettings';?>//",
+            //    dataType: "json",
+            //    type: 'PATCH',
+            //    data: formData,
+            //
+            //    success: function (data) {
+
+
+        });
+
 
         //////// ajax to get data to Modal Edit User
         $('.edit').on('click', function () {
@@ -356,33 +378,17 @@
                     //TODO Os dados chegam aqui, mas não aparecem
 
 
-
                     $('[name="editUserId"]').val(data[0]['id']);
                     $('[name="editUserName"]').val(data[0]['name']);
                     $('[name="editUserEntity"]').val(data[0]['entity']);
                     $('[name="editUserDateBirth"]').val(data[0]['dateBirth']);
                     $('[name="editUserAddress"]').val(data[0]['address']);
                     $('[name="editUserCodPost"]').val(data[0]['codPost']);
-
-                    //TODO ver como aparece os países
-
                     $('[name="editUserLocality"]').val(data[0]['locality']);
                     $('[name="editUserMobile"]').val(data[0]['mobile']);
                     $('[name="editUserNif"]').val(data[0]['nif']);
                     $('[name="editUserPass"]').val(data[0]['password']);
 
-                    // //TODO ver como aparece os países
-                    // $('[name="editUserCountry"]').val(data[0]['countryId']);
-                    // $('[name="editUserGender"]').val(data[0]['genderId']);
-
-                    // $('[name="editGroupDescription"]').val(data[0]['description']);
-                    // $('[name="editGroupSecurityId"]').val(data[0]['securityId']);
-
-                    // if (data[0]['active'] === 1) {
-                    //     $('[name="editGroupActive"]').attr('checked', true);
-                    // } else {
-                    //     $('[name="editGroupActive"]').attr('checked', false);
-                    // }
 
                     // $("#editUserModal").modal('show');
                 },
@@ -521,6 +527,12 @@
                 }
             });
         });
+
+        $(".listen").keyup(function () {
+            $(this).attr("name", "user-field-updated");
+            console.log('batatas')
+        })
+
 
         function checkPasswordMatch() {
             let password = $("#txtNewPassword").val();
