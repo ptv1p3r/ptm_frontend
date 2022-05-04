@@ -35,7 +35,7 @@ class HomeController extends MainController
             require ABSPATH . '/views/home/home-view.php';
 
             require ABSPATH . '/views/_includes/footer.php';
-        }else{
+        } else {
 
             /** Carrega os arquivos do view **/
 
@@ -68,18 +68,85 @@ class HomeController extends MainController
                     //encripta a pass
                     $_POST['data'][1]['value'] = hash('sha256', $_POST['data'][1]['value']);
 
-                    $response = $modelo->validateUser($_POST['data']);
+                    $userEmail = $_POST['data'][0]['value'];
+                    $userPass = $_POST['data'][1]['value'];
 
-                    if ($response != null) {
+                    $valResponse = $modelo->validateUser($_POST['data']);
+
+                    if ($valResponse != null) {
                         //transforma o $result[body] em array
                         //$responseBody =  json_decode($response["body"], true);
 
                         // verifica se a autenticaçao esta correta e guarda tokens para a $_SESSION
-                        if ($response['statusCode'] === 200) {
+                        if ($valResponse['statusCode'] === 200) {
 
                             //se nao existir uma SESSAO iniciada, inicia
                             if (!isset($_SESSION)) {
                                 session_start();
+                            }
+
+                            // verifica se existe accessToken na response
+                            if (array_key_exists("accessToken", $valResponse["body"])) {
+                                $userToken = $valResponse["body"]["accessToken"];
+                            }
+
+                            // verifica se existe refreshToken na response
+                            if (array_key_exists("refreshToken", $valResponse["body"])) {
+                                $userRefreshToken = $valResponse["body"]['refreshToken'];
+                            }
+
+                            // assegura que o $userToken e $userRefreshToken nao estao vazios
+                            if (empty($userToken) || empty($userRefreshToken)) {
+                                $this->logged_in = false;
+                                $this->login_error = 'User do not exists.';
+
+                                // remove qualquer sessão que possa existir do user
+                                $this->logout();
+
+                                echo $valResponse["statusCode"];
+                                return;
+
+                            }
+
+                            //apanha dados do user
+                            $url = API_URL . 'api/v1/users/view/' . $userEmail;
+                            $result = callAPI("GET", $url, '', $userToken);
+                            $userData = json_decode(json_encode($result), true);
+
+                            //apanha permissioes do user
+                            $url = API_URL . 'api/v1/groups/view/' . $userData["body"][0]["groupId"];
+                            $result = callAPI("GET", $url, '', $userToken);
+                            $userPermissions = json_decode(json_encode($result), true);
+
+                            //constroi array de permissoes do user
+                            $permissionsArray = array();
+                            foreach ($userPermissions["body"][0] as $key => $value) {
+                                switch ($key){
+                                    case "homeLogin":
+                                    case "admLogin":
+                                    case "usersCreate":
+                                    case "usersRead":
+                                    case "usersUpdate":
+                                    case "usersDelete":
+                                    case "userGroupsCreate":
+                                    case "userGroupsRead":
+                                    case "userGroupsUpdate":
+                                    case "userGroupsDelete":
+                                    case "treesCreate":
+                                    case "treesRead":
+                                    case "treesUpdate":
+                                    case "treesDelete":
+                                    case "treeTypeCreate":
+                                    case "treeTypeRead":
+                                    case "treeTypeUpdate":
+                                    case "treeTypeDelete":
+                                    case "treeImagesCreate":
+                                    case "treeImagesRead":
+                                    case "treeImagesUpdate":
+                                    case "treeImagesDelete":
+                                        if ($value == 1){ $permissionsArray[] = $key; }
+                                        break;
+                                }
                             }
 
                             // user passa a estar logged in e entao a ter acesso a paginas home
@@ -88,47 +155,57 @@ class HomeController extends MainController
                             // Recria o ID da sessão
                             $session_id = session_id();
 
+                            // Atualiza userdata
+                            $_SESSION['userdata'] = $userData["body"][0];
+
+                            // Atualiza user permissions
+                            $_SESSION['userdata']["user_permissions"] = $permissionsArray;
+
                             // Atualiza user
-                            $_SESSION['userdata']['email'] = $_POST['data'][0]['value'];
+                            $_SESSION['userdata']['email'] = $userEmail;
 
                             // Atualiza a senha
-                            $_SESSION['userdata']['password'] = $_POST['data'][1]['value'];
+                            $_SESSION['userdata']['password'] = $userPass;
 
                             // Atualiza o token
-                            $_SESSION['userdata']['accessToken'] = $response["body"]["accessToken"];
+                            $_SESSION['userdata']['accessToken'] = $valResponse["body"]["accessToken"];
 
                             // Atualiza o token
-                            $_SESSION['userdata']['refreshToken'] = $response["body"]["refreshToken"];
+                            $_SESSION['userdata']['refreshToken'] = $valResponse["body"]["refreshToken"];
 
                             // Atualiza o ID da sessão
                             $_SESSION['userdata']['user_session_id'] = $session_id;
 
-                            //$_POST['validation'] = "success";
+                            // user passa a estar logged in
+                            $this->logged_in = true;
 
                             $_SESSION['goto_url'] = '/home/dashboard';
-                            //$this->goto_page(HOME_URL . '/home/dashboard');
-                            echo $response["statusCode"];
+
+                            echo $valResponse["statusCode"];
                             break;
 
                         } else {
-                            //$_POST['validation'] = "failed";
-                            //$this->index();
+                            //rediriciona para a dashboard quando ajax fizer window.reload()
+                            $_SESSION['goto_url'] = '/home';
 
-                            echo $response["statusCode"];
+                            // remove qualquer sessão que possa existir do user
+                            $this->logout();
+
+                            echo $valResponse["statusCode"];
+                            break;
                         }
 
                     } else {
-                        //$_POST['validation'] = "failed";
-                        //$this->index();
+                        //rediriciona para a dashboard quando ajax fizer window.reload()
+                        $_SESSION['goto_url'] = '/home';
 
-                        echo $response["statusCode"];
+                        // remove qualquer sessão que possa existir do user
+                        $this->logout();
+
+                        echo $valResponse["statusCode"];
+                        break;
                     }
             }
-        } else {
-            //$_POST['validation'] = "failed";
-            //$this->index();
-
-            //echo $response["statusCode"];
         }
     }
 
@@ -141,7 +218,7 @@ class HomeController extends MainController
 
         // Título da página
         $this->title = 'User - Dashboard';
-        $this->permission_required = 'Login';
+        $this->permission_required = 'homeLogin';
 
         // Parametros da função
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -157,6 +234,16 @@ class HomeController extends MainController
 
             // Garante que o script não vai passar daqui
             return;
+        }
+
+        if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+
+            // Exibe uma mensagem
+            echo 'Você não tem permissões para aceder a esta página.';
+
+            // Finaliza aqui
+            return;
+
         }
 
         //$modelo = $this->load_model('home-model');
@@ -216,6 +303,7 @@ class HomeController extends MainController
 
         // Título da página
         $this->title = 'User - Settings';
+        $this->permission_required = 'usersRead';
 
         // Parametros da função
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -247,14 +335,13 @@ class HomeController extends MainController
             $action = $_POST['action'];
             switch ($action) {
                 case 'GetUser' :
-
                     $data = $_POST['data'];
                     $apiResponse = $model->getUserByEmail($data);
                     $apiResponseBody = array();
 
 
                     if ($apiResponse['statusCode'] === 200) { // 200 success
-                    $apiResponseBody = json_encode($apiResponse["body"]);
+                        $apiResponseBody = json_encode($apiResponse["body"]);
                     }
 
                     if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
@@ -269,10 +356,22 @@ class HomeController extends MainController
                     break;
 
                 case 'UpdateUser' :
+                    $this->permission_required = 'usersUpdate';
 
-                    $data= $_POST['data'];
-//                    $data[10]['value'] = hash('sha256', $data[10]['value']);
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }
+
+                    $data = $_POST['data'];
+
+
+
                     $apiResponse = $model->updateUser($data); //decode to check message from api
+
 
                     if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
                         $apiResponse["body"]['message'] = "Updated with success!";
@@ -283,7 +382,7 @@ class HomeController extends MainController
                         break;
                     }
 
-                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
                         $this->userTokenRefresh();
 
                         $apiResponse = $model->updateUser($data); //decode to check message from api
@@ -297,6 +396,16 @@ class HomeController extends MainController
                     break;
 
                 case 'DeleteUser' :
+                    $this->permission_required = 'usersDelete';
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }
+
                     $data = $_POST['data'];
                     $apiResponse = $model->deleteUser($data); //decode to check message from api
 
