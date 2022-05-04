@@ -282,6 +282,7 @@
             });
         });
 
+        //TODO: utilizar PATCH para update de dados
         // ajax to Edit Group
         $('#editGroup').submit(function (event) {
             event.preventDefault(); //prevent default action
