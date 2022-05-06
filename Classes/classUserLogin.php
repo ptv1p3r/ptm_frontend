@@ -323,19 +323,30 @@ class UserLogin
     // verificar mais que um $required por pagina
     // exemplo:  $this->permission_required = array('admLogin', 'userGroupRead');
     final protected function check_permissions(
-        $required = 'any',
+        $required = array('any'),
         $user_permissions = array('any')
-    ) {
-        if ( ! is_array( $user_permissions ) ) {
+    )
+    {
+        if (!is_array($user_permissions)) {
             return;
         }
 
         // Se o usuário não tiver permissão
-        if ( ! in_array( $required, $user_permissions ) ) {
+        if (!$this->in_array_all($required, $user_permissions)) {
             // Retorna falso
             return false;
         } else {
             return true;
         }
+    }
+
+    /**
+     * Metodo que vai comparar se o que existe num array, tambem existe no outro
+     * @param $needles
+     * @param $haystack
+     * @return bool
+     */
+    final protected function in_array_all($needles, $haystack) {
+        return empty(array_diff($needles, $haystack));
     }
 }
