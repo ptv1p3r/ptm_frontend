@@ -298,9 +298,9 @@
 
                     formDataChanged.push(emptyArray);
                 }
-            });*/
+            });
 
-            /*let formData = {
+            let formData = {
                 'action' : "UpdateGroup",
                 'data'   : formDataChanged
             };*/
