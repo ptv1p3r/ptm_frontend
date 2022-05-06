@@ -196,7 +196,7 @@ class AdminController extends MainController
     public function dashboard() {
         // Título da página
         $this->title = 'Admin - Dashboard';
-        $this->permission_required = 'admLogin';
+        $this->permission_required = array('admLogin');
 
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
@@ -242,7 +242,7 @@ class AdminController extends MainController
     public function groups(){
         // Título da página
         $this->title = 'Admin - Grupos';
-        $this->permission_required = 'userGroupsRead';
+        $this->permission_required = array('admLogin','userGroupsRead');
 
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
@@ -277,16 +277,6 @@ class AdminController extends MainController
             $action = $_POST['action'];
             switch($action) {
                 case 'GetGroup' :
-                    /*$this->permission_required = 'userGroupsRead';
-
-                    //Verifica se o user tem a permissão para realizar operaçao
-                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
-
-                        echo json_encode($apiResponse);
-                        break;
-                    }*/
-
                     $data = $_POST['data'];
                     $apiResponse = $modelo->getGroupById($data);
                     $apiResponseBody = array();
@@ -307,7 +297,7 @@ class AdminController extends MainController
                     break;
 
                 case 'AddGroup' :
-                    $this->permission_required = 'userGroupsCreate';
+                    $this->permission_required = array('userGroupsCreate');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
@@ -348,7 +338,7 @@ class AdminController extends MainController
                     break;
 
                 case 'UpdateGroup' :
-                    $this->permission_required = 'userGroupsUpdate';
+                    $this->permission_required = array('userGroupsUpdate');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
@@ -385,7 +375,7 @@ class AdminController extends MainController
                     break;
 
                 case 'DeleteGroup' :
-                    $this->permission_required = 'userGroupsDelete';
+                    $this->permission_required = array('userGroupsDelete');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
@@ -444,6 +434,10 @@ class AdminController extends MainController
         }
     }
 
+    /**
+     * Metodo para logout
+     * @return void
+     */
     public function applogout(){
         $_SESSION['goto_url'] = '/admin';
 
