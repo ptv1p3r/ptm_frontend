@@ -140,10 +140,6 @@ class GroupsModel extends MainModel {
                     case "editGroupSecurityId":
                         $normalizedData['securityId'] = $dataVector['value'];
                         break;
-
-                    /*case "editGroupActive":
-                        $normalizedData['active'] = "1";
-                        break;*/
                 }
 
                 if ($dataVector['name'] == "editGroupActive"){
@@ -163,6 +159,58 @@ class GroupsModel extends MainModel {
         //trasforma toda a msg em string json para poder ser enviado
         return json_decode(json_encode($result), true);
     }
+
+    /**
+     * Metodo edita/update Grupo com patch
+     * @param $data
+     * @return mixed
+     */
+    /*public function updateGroup($data) {
+        $result = null;
+        $GroupId = null;
+        $normalizedData = array();
+
+        // Not active by default
+        $normalizedData['active'] = "";
+
+        // get data from form array and package it to send to api
+        foreach ($data as $dataVector) {
+            foreach ($dataVector as $key => $value) {
+                switch ($dataVector['name']){ //gets <input name="">
+                    case "editGroupId":
+                        $GroupId = $dataVector['value'];
+                        break;
+
+                    case "editGroupName":
+                        $normalizedData['name'] = $dataVector['value'];
+                        break;
+
+                    case "editGroupDescription":
+                        $normalizedData['description'] = $dataVector['value'];
+                        break;
+
+                    case "editGroupSecurityId":
+                        $normalizedData['securityId'] = $dataVector['value'];
+                        break;
+                }
+
+                if ($dataVector['name'] == "editGroupActive"){
+                    $normalizedData['active'] = "1";
+                } else {
+                    $normalizedData['active'] = "0";
+                }
+            }
+        }
+
+        $url = API_URL . 'api/v1/groups/edit/' . $GroupId;
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("PATCH", $url, $normalizedData, $userToken);
+        }
+
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }*/
 
     /**
      * Metodo delete Grupo
