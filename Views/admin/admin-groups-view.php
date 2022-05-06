@@ -282,14 +282,32 @@
             });
         });
 
-        //TODO: utilizar PATCH para update de dados
+        //TODO: utilizar PATCH para update de dados (DONE BUT NOT FULLY TESTED, no API PATCH for groups yet)
         // ajax to Edit Group
         $('#editGroup').submit(function (event) {
             event.preventDefault(); //prevent default action
 
-            let formData = {
+            //Ve se a data dos inputs mudou para formar so a data necessaria para o PATCH
+            /*let formDataChanged = [];
+            $('#editGroup input').each(function() { //para cada input vai ver
+                if($(this).attr('name') === "editGroupId" || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
+                    let emptyArray = { name: "", value: "" };
+
+                    emptyArray.name = $(this).attr('name');
+                    emptyArray.value = $(this).val();
+
+                    formDataChanged.push(emptyArray);
+                }
+            });*/
+
+            /*let formData = {
                 'action' : "UpdateGroup",
-                'data'   : $(this).serializeArray()
+                'data'   : formDataChanged
+            };*/
+
+            let formData = {
+                'action': "UpdateGroup",
+                'data': $(this).serializeArray()
             };
 
             $.ajax({
@@ -369,8 +387,13 @@
                         $('[name="editGroupActive"]').attr('checked', false);
                     }
 
-                    $("#editGroupModal").modal('show');
+                    //atribui atributo .data("lastValue") a cada input do form editGroup
+                    // para se poder comparar entre os dados anteriores e os current
+                    /*$('#editGroup input').each(function() {
+                        $(this).data('lastValue', $(this).val());
+                    });*/
 
+                    $("#editGroupModal").modal('show');
                 },
                 error: function (data) {
                     Swal.fire({
