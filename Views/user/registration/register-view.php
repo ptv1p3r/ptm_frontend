@@ -127,12 +127,15 @@
                                                required>
                                     </div>
                                 </li>
-                                <!-- <li class="col-md-6">
-                                     <div class="form-group input-group">
-                                         <input type="text" id="password" placeholder="Repita a password"
-                                                class="form-control" required>
-                                     </div>
-                                 </li> -->
+
+                                <!-- Image loader -->
+                                <div class="loaderOverlay lds-dual-ring hidden" id="loader" >
+                                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="50" cy="50" r="46"/>
+                                    </svg>
+                                </div>
+                                <!-- Image loader -->
+
                                 <li class="col-md-12">
                                     <div class="input-group form-check">
                                         <input type="checkbox" id="checkBtn" class="form-check-input">
@@ -165,51 +168,36 @@
     $(document).ready(function () {
         $('#addNewUser').submit(function (event) {
             event.preventDefault(); //prevent default action
-            let chk_status = $("#checkBtn").prop('checked');
-            if (chk_status) {
-                let formData = {
-                    'action': "AddNewUser",
-                    'data': $(this).serializeArray()
-                };
-                $.ajax({
-                    url: "<?php echo HOME_URL . '/register/newUser';?>",
-                    dataType: "json",
-                    type: 'POST',
-                    data: formData,
-                    success: function (data) {
-                        if (data.statusCode === 201) {
-                            //mensagem de Success
-                            Swal.fire({
-                                title: 'Success!',
-                                text: data.body.message,
-                                icon: 'success',
-                                showConfirmButton: false,
-                                timer: 2000,
-                                didClose: () => {
-                                    window.location.href="<?php echo HOME_URL . '/home';?>";
-                                }
-                            });
-                        } else {
-                            //mensagem de Error
-                            Swal.fire({
-                                title: 'Error!',
-                                text: data.body.message,
-                                icon: 'error',
-                                showConfirmButton: false,
-                                timer: 2000,
-                                didClose: () => {
-                                    //location.reload();
-                                }
-                            });
-                        }
-                    },complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
-                        $('#loader').addClass('hidden')
-                    },
-                    error: function (data) {
+            let formData = {
+                'action': "AddNewUser",
+                'data': $(this).serializeArray()
+            };
+            $.ajax({
+                url: "<?php echo HOME_URL . '/register/newUser';?>",
+                dataType: "json",
+                type: 'POST',
+                data: formData,
+                beforeSend: function () { // Load the spinner.
+                    $('#loader').removeClass('hidden')
+                },
+                success: function (data) {
+                    if (data.statusCode === 201) {
+                        //mensagem de Success
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.body.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                window.location.href = "<?php echo HOME_URL . '/home';?>";
+                            }
+                        });
+                    } else {
                         //mensagem de Error
                         Swal.fire({
                             title: 'Error!',
-                            text: "Connection error, please try again.",
+                            text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
                             timer: 2000,
@@ -217,12 +205,24 @@
                                 //location.reload();
                             }
                         });
-                    },
-
-                });
-            } else {
-                alert('batatas');
-            }
+                    }
+                }, complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
+                },
+                error: function (data) {
+                    //mensagem de Error
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Connection error, please try again.",
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        didClose: () => {
+                            //location.reload();
+                        }
+                    });
+                },
+            });
         });
     });
 
