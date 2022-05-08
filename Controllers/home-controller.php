@@ -308,12 +308,6 @@ class HomeController extends MainController
         // Parametros da função
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
-        $dropModel = $this->load_model('register-model');
-        $getCountryModel = $dropModel->getCountryList();
-        $getGenderModel = $dropModel->getGenderList();
-
-        $this->userdata['countryList'] = $getCountryModel['body'];
-        $this->userdata['genderList'] = $getGenderModel['body'];
 
         // obriga o login para aceder à pagina
         if (!$this->logged_in) {
@@ -329,6 +323,7 @@ class HomeController extends MainController
         }
 
         $model = $this->load_model('user-settings-model');
+        $dropModel = $this->load_model('register-model');
 
         // processa chamadas ajax
         if (isset($_POST['action']) && !empty($_POST['action'])) {
@@ -434,8 +429,25 @@ class HomeController extends MainController
 
         } else {
 
+
+            $getCountryModel = $dropModel->getCountryList();
+            $getGenderModel = $dropModel->getGenderList();
+
             $getUserModel = $model->getUserByEmail($_SESSION['userdata']['email']);
 
+            $this->userdata['countryList'] = $getCountryModel['body'];
+            $this->userdata['genderList'] = $getGenderModel['body'];
+
+
+            if ($getUserModel['statusCode'] === 200) { // 200 OK, successful
+                $this->userdata['userList'] = $getUserModel['body'];
+            }
+
+            if ($getUserModel['statusCode'] === 401) {  // 200 OK, successful
+                $this->userTokenRefresh();
+                $getUserModel = $model->getUserByEmail($_SESSION['userdata']['email']);
+                $this->userdata['userList'] = $getUserModel['body'];
+            }
             $this->userdata['userList'] = $getUserModel['body'];
 
             /** Carrega os arquivos do view **/
