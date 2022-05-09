@@ -26,6 +26,7 @@ if ( ! defined('DEBUG') || DEBUG === false ) {
     ini_set("display_errors", 1);
 
 }
+
 require_once ABSPATH . '/Classes/classUserLogin.php';
 require_once ABSPATH . '/Includes/global-functions.php';
 require_once ABSPATH . '/Classes/classMainController.php';
