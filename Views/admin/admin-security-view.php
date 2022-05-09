@@ -240,6 +240,22 @@
                                 <label>treesImagesDelete</label>
                                 <input type="checkbox" class="form-control" name="addSecurityTreesImagesDelete">
                             </div>
+                            <div class="form-group">
+                                <label>SecurityCreate</label>
+                                <input type="checkbox" class="form-control" name="addSecurityCreate">
+                            </div>
+                            <div class="form-group">
+                                <label>SecurityRead</label>
+                                <input type="checkbox" class="form-control" name="addSecurityRead">
+                            </div>
+                            <div class="form-group">
+                                <label>SecurityUpdate</label>
+                                <input type="checkbox" class="form-control" name="addSecurityUpdate">
+                            </div>
+                            <div class="form-group">
+                                <label>SecurityDelete</label>
+                                <input type="checkbox" class="form-control" name="addSecurityDelete">
+                            </div>
 
                         </div>
                         <div class="modal-footer">
@@ -261,6 +277,9 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
+                            <div class="form-group">
+                                <input id="editSecurityId" name="editSecurityId" type="hidden" class="form-control">
+                            </div>
                             <div class="form-group">
                                 <label>homeLogin</label>
                                 <input type="checkbox" class="form-control" name="editSecurityHomeLogin">
@@ -349,26 +368,22 @@
                                 <label>treesImagesDelete</label>
                                 <input type="checkbox" class="form-control" name="editSecurityTreesImagesDelete">
                             </div>
-
-                            <!--<label>Categories</label>   fill categories
-                            <div class="form-group" style="padding-left: 40px" >
-                                <?php
-                            /*$i=1;
-                            foreach ( $categories as $category) {?>
-
-                                <div class="form-check form-check-inline col-md-3">
-                                    <input class="form-check-input" type="checkbox" id="<?php echo $category["catid"]?>"
-                                    <label class="form-check-label" for="<?php echo $category["catid"]?>"><?php echo $category["name"]?></label>
-                                </div>
-
-                                <?php if($i % 3 == 0) { ?>
-                                    </div>
-                                    <div class="form-group" style="padding-left: 40px">
-                                <?php } ?>
-                            <?php $i++;
-                            }*/?>
-
-                            </div>-->
+                            <div class="form-group">
+                                <label>SecurityCreate</label>
+                                <input type="checkbox" class="form-control" name="addSecurityCreate">
+                            </div>
+                            <div class="form-group">
+                                <label>SecurityRead</label>
+                                <input type="checkbox" class="form-control" name="addSecurityRead">
+                            </div>
+                            <div class="form-group">
+                                <label>SecurityUpdate</label>
+                                <input type="checkbox" class="form-control" name="addSecurityUpdate">
+                            </div>
+                            <div class="form-group">
+                                <label>SecurityDelete</label>
+                                <input type="checkbox" class="form-control" name="addSecurityDelete">
+                            </div>
 
                         </div>
                         <div class="modal-footer">
@@ -423,7 +438,7 @@
     $(document).ready(function() {
 
         // ajax to Add Security
-        $('#addSecurityModal').submit(function (event) {
+        $('#addSecurity').submit(function (event) {
             event.preventDefault(); //prevent default action
 
             let formData = {
@@ -483,7 +498,7 @@
         });
 
         // ajax to Edit Security
-        $('#editSecurityModal').submit(function (event) {
+        $('#editSecurity').submit(function (event) {
             event.preventDefault(); //prevent default action
 
             let formData = {
@@ -623,7 +638,7 @@
         });
 
         // ajax to Delete Security
-        $('#deleteSecurityModal').submit(function(event){
+        $('#deleteSecurity').submit(function(event){
             event.preventDefault(); //prevent default action
 
             let formData = {
