@@ -205,56 +205,56 @@ class AdminUsersModel extends MainModel {
                         $UserId = $dataVector['value'];
                         break;
 
-                    case "addUserName":
+                    case "editUserName":
                         $normalizedData['name'] = $dataVector['value'];
                         break;
 
-                    case "addUserEntity":
+                    case "editUserEntity":
                         //TODO: a validaçao se estiver vazio(null) nao esta a funcionar
                         $normalizedData['entity'] = strlen($dataVector['value']) > 0 ? $dataVector['value'] : NULL;
                         break;
 
-                    case "addUserEmail":
+                    case "editUserEmail":
                         $normalizedData['email'] = $dataVector['value'];
                         break;
 
-                    case "addUserPassword":
+                    case "editUserPassword":
                         $normalizedData['password'] = $dataVector['value'];
                         break;
 
-                    case "addUserGroupId":
+                    case "editUserGroupId":
                         $normalizedData['groupId'] = $dataVector['value'];
                         break;
 
-                    case "addUserDateBirth":
+                    case "editUserDateBirth":
                         $normalizedData['dateBirth'] = $dataVector['value'];
                         break;
 
-                    case "addUserAddress":
+                    case "editUserAddress":
                         $normalizedData['address'] = $dataVector['value'];
                         break;
 
-                    case "addUserCodPost":
+                    case "editUserCodPost":
                         $normalizedData['codPost'] = $dataVector['value'];
                         break;
 
-                    case "addUserGenderId":
+                    case "editUserGenderId":
                         $normalizedData['genderId'] = $dataVector['value'];
                         break;
 
-                    case "addUserLocality":
+                    case "editUserLocality":
                         $normalizedData['locality'] = $dataVector['value'];
                         break;
 
-                    case "addUserMobile":
+                    case "editUserMobile":
                         $normalizedData['mobile'] = $dataVector['value'];
                         break;
 
-                    case "addUserNif":
+                    case "editUserNif":
                         $normalizedData['nif'] = $dataVector['value'];
                         break;
 
-                    case "addUserCountryId":
+                    case "editUserCountryId":
                         $normalizedData['countryId'] = (int)$dataVector['value'];
                         break;
                 }
