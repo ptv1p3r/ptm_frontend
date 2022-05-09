@@ -289,7 +289,7 @@
                         </div>
                     </form>
                     <div class="modal-footer">
-                        <a href="#">Esqueces-te a password?</a>
+                        <a href="<?php echo HOME_URL . '/register/recover'; ?>">Esqueces-te a password?</a>
                     </div>
                     <br>
                     <!--                    <div class="text-center text-muted delimiter">Usa a redes sociais</div>-->
@@ -309,11 +309,11 @@
                     <!--                        </di>-->
                     <!--                    </div>-->
                     <!--                </div>-->
-                    <div class="modal-footer">
+                    <div>
                         <div class="modal-footer d-flex justify-content-center">
-                            <div class="signup-section">Ainda não és membro? <a
+                            <div >Ainda não és membro? <a
                                         href="<?php echo HOME_URL . '/register'; ?>"
-                                        class="text-info"> Sign Up</a>.
+                                        class="text-info"> Sign Up</a>
                             </div>
                         </div>
                     </div>
