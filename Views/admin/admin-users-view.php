@@ -79,7 +79,7 @@
                                 <td><?php echo $user["dateModified"] ?></td>
                                 <td><?php echo $user["lastLogin"] ?></td>
                                 <td>
-                                    <a href="#editUserModal" id="<?php echo $user['id'] ?>" class="edit"
+                                    <a href="#editUserModal" id="<?php echo $user['email'] ?>" class="edit"
                                        data-toggle="modal"><i class="far fa-edit"></i></a>
                                     <a href="#deleteUserModal" id="<?php echo $user['id'] ?>" class="delete"
                                        data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
@@ -244,7 +244,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <input id="editUserId" name="editGroupId" type="hidden" class="form-control" value="">
+                                <input id="editUserId" name="editUserId" type="hidden" class="form-control" value="">
                             </div>
 
                             <div class="form-group">
@@ -328,28 +328,6 @@
                                 <label>Active</label>
                                 <input type="checkbox" class="form-control" name="editUserActive">
                             </div>
-
-
-
-
-                            <!--<label>Categories</label>   fill categories
-                            <div class="form-group" style="padding-left: 40px" >
-                                <?php
-                            /*$i=1;
-                            foreach ( $categories as $category) {?>
-
-                                <div class="form-check form-check-inline col-md-3">
-                                    <input class="form-check-input" type="checkbox" id="<?php echo $category["catid"]?>"
-                                    <label class="form-check-label" for="<?php echo $category["catid"]?>"><?php echo $category["name"]?></label>
-                                </div>
-
-                                <?php if($i % 3 == 0) { ?>
-                                    </div>
-                                    <div class="form-group" style="padding-left: 40px">
-                                <?php } ?>
-                            <?php $i++;
-                            }*/?>
-                            </div>-->
 
                         </div>
                         <div class="modal-footer">
@@ -528,7 +506,7 @@
 
             let formData = {
                 'action' : "GetUser",
-                'data'   : $(this).attr('Id') //gets user id from edit button on table
+                'data'   : $(this).attr('id') //gets user id from edit button on table
             };
 
             $.ajax({
