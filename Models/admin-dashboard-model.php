@@ -6,7 +6,7 @@
  * Time: 20:13
  */
 
-class AdminModel extends MainModel {
+class AdminDashboardModel extends MainModel {
 
     public $db; // PDO
 

@@ -6,7 +6,7 @@
  * Time: 20:13
  */
 
-class SecurityModel extends MainModel {
+class AdminSecurityModel extends MainModel {
 
     public $db; // PDO
 

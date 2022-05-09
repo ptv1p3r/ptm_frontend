@@ -6,7 +6,7 @@
  * Time: 20:13
  */
 
-class UsersModel extends MainModel {
+class AdminUsersModel extends MainModel {
 
     public $db; // PDO
 

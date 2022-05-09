@@ -6,7 +6,7 @@
  * Time: 20:13
  */
 
-class GroupsModel extends MainModel {
+class AdminGroupsModel extends MainModel {
 
     public $db; // PDO
 

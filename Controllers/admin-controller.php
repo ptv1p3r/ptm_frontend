@@ -218,7 +218,7 @@ class AdminController extends MainController
             return;
         }
 
-        $modelo = $this->load_model('admin-model');
+        $modelo = $this->load_model('admin-dashboard-model');
 
         /** Carrega os arquivos do view **/
         require ABSPATH . '/views/_includes/admin-header.php';
@@ -264,7 +264,7 @@ class AdminController extends MainController
             return;
         }
 
-        $modelo = $this->load_model('groups-model');
+        $modelo = $this->load_model('admin-groups-model');
 
         // processa chamadas ajax
         if(isset($_POST['action']) && !empty($_POST['action'])) {
@@ -439,7 +439,7 @@ class AdminController extends MainController
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
 
-        $modelo = $this->load_model('security-model');
+        $modelo = $this->load_model('admin-security-model');
 
         // processa chamadas ajax
         if(isset($_POST['action']) && !empty($_POST['action'])) {
@@ -532,7 +532,7 @@ class AdminController extends MainController
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
 
-        $modelo = $this->load_model('users-model');
+        $modelo = $this->load_model('admin-users-model');
 
         // processa chamadas ajax
         if(isset($_POST['action']) && !empty($_POST['action'])) {
