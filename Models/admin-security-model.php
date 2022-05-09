@@ -71,95 +71,113 @@ class AdminSecurityModel extends MainModel {
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']) { //gets <input name="">
-
-                    //TODO: mudar cases para validar checkboxes
                     case "addSecurityHomeLogin":
-                        $normalizedData['homeLogin'] = $dataVector['value'];
+                        $normalizedData['homeLogin'] = "1";
                         break;
 
                     case "addSecurityAdmLogin":
-                        $normalizedData['admLogin'] = $dataVector['value'];
+                        $normalizedData['admLogin'] = "1";
                         break;
 
                     case "addSecurityUsersCreate":
-                        $normalizedData['usersCreate'] = $dataVector['value'];
+                        $normalizedData['usersCreate'] = "1";
                         break;
 
                     case "addSecurityUsersRead":
-                        $normalizedData['usersRead'] = $dataVector['value'];
+                        $normalizedData['usersRead'] = "1";
                         break;
 
                     case "addSecurityUsersUpdate":
-                        $normalizedData['usersUpdate'] = $dataVector['value'];
+                        $normalizedData['usersUpdate'] = "1";
                         break;
 
                     case "addSecurityUsersDelete":
-                        $normalizedData['usersDelete'] = $dataVector['value'];
+                        $normalizedData['usersDelete'] = "1";
                         break;
 
                     case "addSecurityUsersGroupsCreate":
-                        $normalizedData['usersGroupsCreate'] = $dataVector['value'];
+                        $normalizedData['usersGroupsCreate'] = "1";
                         break;
 
                     case "addSecurityUsersGroupsRead":
-                        $normalizedData['usersGroupsRead'] = $dataVector['value'];
+                        $normalizedData['usersGroupsRead'] = "1";
                         break;
 
                     case "addSecurityUsersGroupsUpdate":
-                        $normalizedData['usersGroupsUpdate'] = $dataVector['value'];
+                        $normalizedData['usersGroupsUpdate'] = "1";
                         break;
 
                     case "addSecurityUsersGroupsDelete":
-                        $normalizedData['usersGroupsDelete'] = $dataVector['value'];
+                        $normalizedData['usersGroupsDelete'] = "1";
                         break;
 
                     case "addSecurityTreesCreate":
-                        $normalizedData['treesCreate'] = $dataVector['value'];
+                        $normalizedData['treesCreate'] = "1";
                         break;
 
                     case "addSecurityTreesRead":
-                        $normalizedData['treesRead'] = $dataVector['value'];
+                        $normalizedData['treesRead'] = "1";
                         break;
 
                     case "addSecurityTreesUpdate":
-                        $normalizedData['treesUpdate'] = $dataVector['value'];
+                        $normalizedData['treesUpdate'] = "1";
                         break;
 
                     case "addSecurityTreesDelete":
-                        $normalizedData['treesDelete'] = $dataVector['value'];
+                        $normalizedData['treesDelete'] = "1";
                         break;
 
                     case "addSecurityTreesTypeCreate":
-                        $normalizedData['treesTypeCreate'] = $dataVector['value'];
+                        $normalizedData['treesTypeCreate'] = "1";
                         break;
 
                     case "addSecurityTreesTypeRead":
-                        $normalizedData['treesTypeRead'] = $dataVector['value'];
+                        $normalizedData['treesTypeRead'] = "1";
                         break;
 
                     case "addSecurityTreesTypeUpdate":
-                        $normalizedData['treesTypeUpdate'] = $dataVector['value'];
+                        $normalizedData['treesTypeUpdate'] = "1";
                         break;
 
                     case "addSecurityTreesTypeDelete":
-                        $normalizedData['treesTypeDelete'] = $dataVector['value'];
+                        $normalizedData['treesTypeDelete'] = "1";
                         break;
 
                     case "addSecurityTreesImagesCreate":
-                        $normalizedData['treesImagesCreate'] = $dataVector['value'];
+                        $normalizedData['treesImagesCreate'] = "1";
                         break;
 
                     case "addSecurityTreesImagesRead":
-                        $normalizedData['treesImagesRead'] = $dataVector['value'];
+                        $normalizedData['treesImagesRead'] = "1";
                         break;
 
                     case "addSecurityTreesImagesUpdate":
-                        $normalizedData['treesImagesUpdate'] = $dataVector['value'];
+                        $normalizedData['treesImagesUpdate'] = "1";
                         break;
 
                     case "addSecurityTreesImagesDelete":
-                        $normalizedData['treesImagesDelete'] = $dataVector['value'];
+                        $normalizedData['treesImagesDelete'] = "1";
                         break;
+
+                    case "addSecurityCreate":
+                        $normalizedData['securityCreate'] = "1";
+                        break;
+
+                    case "addSecurityRead":
+                        $normalizedData['securityRead'] = "1";
+                        break;
+
+                    case "addSecurityUpdate":
+                        $normalizedData['securityUpdate'] = "1";
+                        break;
+
+                    case "addSecurityDelete":
+                        $normalizedData['securityDelete'] = "1";
+                        break;
+
+                    default:
+                        //caso checkbox esteja unchecked, mete o value a 0, false
+                        $normalizedData[$dataVector['name']] = "0";
                 }
             }
         }
@@ -185,9 +203,6 @@ class AdminSecurityModel extends MainModel {
         $SecurityId = null;
         $normalizedData = array();
 
-        // Not active by default
-        $normalizedData['Active'] = "";
-
         // get data from form array and package it to send to api
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
@@ -197,92 +212,112 @@ class AdminSecurityModel extends MainModel {
                         break;
 
                     case "editSecurityHomeLogin":
-                        $normalizedData['homeLogin'] = $dataVector['value'];
+                        $normalizedData['homeLogin'] = "1";
                         break;
 
                     case "editSecurityAdmLogin":
-                        $normalizedData['admLogin'] = $dataVector['value'];
+                        $normalizedData['admLogin'] = "1";
                         break;
 
                     case "editSecurityUsersCreate":
-                        $normalizedData['usersCreate'] = $dataVector['value'];
+                        $normalizedData['usersCreate'] = "1";
                         break;
 
                     case "editSecurityUsersRead":
-                        $normalizedData['usersRead'] = $dataVector['value'];
+                        $normalizedData['usersRead'] = "1";
                         break;
 
                     case "editSecurityUsersUpdate":
-                        $normalizedData['usersUpdate'] = $dataVector['value'];
+                        $normalizedData['usersUpdate'] = "1";
                         break;
 
                     case "editSecurityUsersDelete":
-                        $normalizedData['usersDelete'] = $dataVector['value'];
+                        $normalizedData['usersDelete'] = "1";
                         break;
 
                     case "editSecurityUsersGroupsCreate":
-                        $normalizedData['usersGroupsCreate'] = $dataVector['value'];
+                        $normalizedData['usersGroupsCreate'] = "1";
                         break;
 
                     case "editSecurityUsersGroupsRead":
-                        $normalizedData['usersGroupsRead'] = $dataVector['value'];
+                        $normalizedData['usersGroupsRead'] = "1";
                         break;
 
                     case "editSecurityUsersGroupsUpdate":
-                        $normalizedData['usersGroupsUpdate'] = $dataVector['value'];
+                        $normalizedData['usersGroupsUpdate'] = "1";
                         break;
 
                     case "editSecurityUsersGroupsDelete":
-                        $normalizedData['usersGroupsDelete'] = $dataVector['value'];
+                        $normalizedData['usersGroupsDelete'] = "1";
                         break;
 
                     case "editSecurityTreesCreate":
-                        $normalizedData['treesCreate'] = $dataVector['value'];
+                        $normalizedData['treesCreate'] = "1";
                         break;
 
                     case "editSecurityTreesRead":
-                        $normalizedData['treesRead'] = $dataVector['value'];
+                        $normalizedData['treesRead'] = "1";
                         break;
 
                     case "editSecurityTreesUpdate":
-                        $normalizedData['treesUpdate'] = $dataVector['value'];
+                        $normalizedData['treesUpdate'] = "1";
                         break;
 
                     case "editSecurityTreesDelete":
-                        $normalizedData['treesDelete'] = $dataVector['value'];
+                        $normalizedData['treesDelete'] = "1";
                         break;
 
                     case "editSecurityTreesTypeCreate":
-                        $normalizedData['treesTypeCreate'] = $dataVector['value'];
+                        $normalizedData['treesTypeCreate'] = "1";
                         break;
 
                     case "editSecurityTreesTypeRead":
-                        $normalizedData['treesTypeRead'] = $dataVector['value'];
+                        $normalizedData['treesTypeRead'] = "1";
                         break;
 
                     case "editSecurityTreesTypeUpdate":
-                        $normalizedData['treesTypeUpdate'] = $dataVector['value'];
+                        $normalizedData['treesTypeUpdate'] = "1";
                         break;
 
                     case "editSecurityTreesTypeDelete":
-                        $normalizedData['treesTypeDelete'] = $dataVector['value'];
+                        $normalizedData['treesTypeDelete'] = "1";
                         break;
 
                     case "editSecurityTreesImagesCreate":
-                        $normalizedData['treesImagesCreate'] = $dataVector['value'];
+                        $normalizedData['treesImagesCreate'] = "1";
                         break;
 
                     case "editSecurityTreesImagesRead":
-                        $normalizedData['treesImagesRead'] = $dataVector['value'];
+                        $normalizedData['treesImagesRead'] = "1";
                         break;
 
                     case "editSecurityTreesImagesUpdate":
-                        $normalizedData['treesImagesUpdate'] = $dataVector['value'];
+                        $normalizedData['treesImagesUpdate'] = "1";
                         break;
 
                     case "editSecurityTreesImagesDelete":
-                        $normalizedData['treesImagesDelete'] = $dataVector['value'];
+                        $normalizedData['treesImagesDelete'] = "1";
                         break;
+
+                    case "addSecurityCreate":
+                        $normalizedData['securityCreate'] = "1";
+                        break;
+
+                    case "addSecurityRead":
+                        $normalizedData['securityRead'] = "1";
+                        break;
+
+                    case "addSecurityUpdate":
+                        $normalizedData['securityUpdate'] = "1";
+                        break;
+
+                    case "addSecurityDelete":
+                        $normalizedData['securityDelete'] = "1";
+                        break;
+
+                    default:
+                        //caso checkbox esteja unchecked, mete o value a 0, false
+                        $normalizedData[$dataVector['name']] = "0";
                 }
             }
         }
