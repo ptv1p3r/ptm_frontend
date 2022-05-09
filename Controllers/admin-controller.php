@@ -507,6 +507,7 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->addSecurity($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Created with success!";
                     }
 
                     if ($apiResponse['statusCode'] === 201){ // 201 created
@@ -540,6 +541,7 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->updateSecurity($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Updated with success!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
@@ -573,6 +575,7 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->deleteSecurity($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Deleted with success!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
@@ -690,6 +693,7 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->addUser($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Created with success!";
                     }
 
                     if ($apiResponse['statusCode'] === 201){ // 201 created
@@ -724,6 +728,7 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->updateUser($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Updated with success!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
@@ -757,6 +762,7 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->deleteUser($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Deleted with success!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
