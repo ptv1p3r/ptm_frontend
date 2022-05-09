@@ -282,7 +282,6 @@
             });
         });
 
-        //TODO: utilizar PATCH para update de dados (DONE BUT NOT FULLY TESTED, no API PATCH for groups yet)
         // ajax to Edit Group
         $('#editGroup').submit(function (event) {
             event.preventDefault(); //prevent default action
