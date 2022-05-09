@@ -82,7 +82,7 @@ class UserSettingsModel extends MainModel
 //        $normalizedData['active'] = "";
 
         //Manually injected user group data
-        $normalizedData['groupId'] = 1;
+        //$normalizedData['groupId'] = 1;
 
         // get data from form array and package it to send to api
         foreach ($data as $dataVector) {
@@ -154,7 +154,7 @@ class UserSettingsModel extends MainModel
         $url = API_URL . 'api/v1/users/edit/' . $userId;
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
-            $result = callAPI("PUT", $url, $normalizedData, $userToken);
+            $result = callAPI("PATCH", $url, $normalizedData, $userToken);
         }
 
         //trasforma toda a msg em string json para poder ser enviado
