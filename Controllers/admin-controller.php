@@ -116,6 +116,10 @@ class AdminController extends MainController
                                     case "treeImagesRead":
                                     case "treeImagesUpdate":
                                     case "treeImagesDelete":
+                                    case "securityCreate":
+                                    case "securityRead":
+                                    case "securityUpdate":
+                                    case "securityDelete":
                                         if ($value == 1){ $permissionsArray[] = $key; }
                                         break;
 
@@ -435,9 +439,33 @@ class AdminController extends MainController
     public function security(){
         // Título da página
         $this->title = 'Admin - Securitys';
+        $this->permission_required = array('admLogin'/*,'securityRead'*/);
 
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
+
+        // obriga o login para aceder à pagina
+        if ( ! $this->logged_in ) {
+
+            // Se não; garante o logout
+            $this->logout();
+
+            // Redireciona para a página de login
+            $this->goto_login();
+
+            // Garante que o script não vai passar daqui
+            return;
+        }
+
+        //Verifica se o usuário tem a permissão para acessar essa página
+        if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+
+            // Exibe uma mensagem
+            echo 'Você não tem permissões para acessar essa página.';
+
+            // Finaliza aqui
+            return;
+        }
 
         $modelo = $this->load_model('admin-security-model');
 
@@ -528,9 +556,33 @@ class AdminController extends MainController
     public function users(){
         // Título da página
         $this->title = 'Admin - Utilizadoress';
+        $this->permission_required = array('admLogin','usersRead');
 
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
+
+        // obriga o login para aceder à pagina
+        if ( ! $this->logged_in ) {
+
+            // Se não; garante o logout
+            $this->logout();
+
+            // Redireciona para a página de login
+            $this->goto_login();
+
+            // Garante que o script não vai passar daqui
+            return;
+        }
+
+        //Verifica se o usuário tem a permissão para acessar essa página
+        if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+
+            // Exibe uma mensagem
+            echo 'Você não tem permissões para acessar essa página.';
+
+            // Finaliza aqui
+            return;
+        }
 
         $modelo = $this->load_model('admin-users-model');
 
@@ -627,9 +679,33 @@ class AdminController extends MainController
     public function settings() {
         // Título da página
         $this->title = 'Admin - Settings';
+        $this->permission_required = array('admLogin');
 
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
+
+        // obriga o login para aceder à pagina
+        if ( ! $this->logged_in ) {
+
+            // Se não; garante o logout
+            $this->logout();
+
+            // Redireciona para a página de login
+            $this->goto_login();
+
+            // Garante que o script não vai passar daqui
+            return;
+        }
+
+        //Verifica se o usuário tem a permissão para acessar essa página
+        if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+
+            // Exibe uma mensagem
+            echo 'Você não tem permissões para acessar essa página.';
+
+            // Finaliza aqui
+            return;
+        }
 
         //$modelo = $this->load_model('admin-login-model');
 
