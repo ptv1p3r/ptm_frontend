@@ -782,7 +782,7 @@ class AdminController extends MainController
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
-                $userList = $modelo->getSecurityList();
+                $userList = $modelo->getUserList();
                 $this->userdata['usersList'] = $userList["body"];
             }
 
