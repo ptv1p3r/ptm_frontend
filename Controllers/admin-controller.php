@@ -406,6 +406,7 @@ class AdminController extends MainController
             }
 
         } else {
+            //get group list
             $groupsList = $modelo->getGroupList();
             if ($groupsList["statusCode"] === 200){
                 $this->userdata['groupsList'] = $groupsList["body"];
@@ -588,6 +589,7 @@ class AdminController extends MainController
             }
 
         } else {
+            //get securitys list
             $securityList = $modelo->getSecurityList();
             if ($securityList["statusCode"] === 200){
                 $this->userdata['securityList'] = $securityList["body"];
@@ -652,18 +654,44 @@ class AdminController extends MainController
             switch($action) {
                 case 'GetUser' :
                     $data = $_POST['data'];
-                    echo $apiResponse = $modelo->getUserById($data);
-                    $apiResponseBody = json_encode($apiResponse["body"]);
+                    $apiResponse = $modelo->getUserById($data);
+                    $apiResponseBody = array();
+
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->getUserById($data);
+                    }
+
+                    if ($apiResponse['statusCode'] === 200) { // 200 success
+                        $apiResponseBody = json_encode($apiResponse["body"]);
+                    }
 
                     echo $apiResponseBody;
                     break;
 
                 case 'AddUser' :
+                    //$this->permission_required = array('SecurityCreate');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }
+
                     $data = $_POST['data'];
                     $apiResponse = $modelo->addUser($data); //decode to check message from api
 
-                    // quando statusCode = 201, a response nao vem com campo mensagem
-                    // entao é criado e encoded para ser enviado
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->addUser($data); //decode to check message from api
+                    }
+
                     if ($apiResponse['statusCode'] === 201){ // 201 created
                         $apiResponse["body"]['message'] = "Created with success!";
 
@@ -672,16 +700,31 @@ class AdminController extends MainController
                         break;
                     }
 
-                    // se statsCode nao for 201, entao api response ja vem com um campo mensagem
-                    // assim so precisamos de fazer encode para ser enviado
                     $apiResponse = json_encode($apiResponse);// encode package to send
-                    echo($apiResponse);
+                    echo $apiResponse;
                     break;
 
 
                 case 'UpdateUser' :
+                    //$this->permission_required = array('SecurityUpdate');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }
+
                     $data = $_POST['data'];
                     $apiResponse = $modelo->updateUser($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->updateUser($data); //decode to check message from api
+                    }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
                         $apiResponse["body"]['message'] = "Updated with success!";
@@ -692,12 +735,29 @@ class AdminController extends MainController
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
-                    echo($apiResponse);
+                    echo $apiResponse;
                     break;
 
                 case 'DeleteUser' :
+                    //$this->permission_required = array('SecurityDelete');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }
+
                     $data = $_POST['data'];
                     $apiResponse = $modelo->deleteUser($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->deleteUser($data); //decode to check message from api
+                    }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
                         $apiResponse["body"]['message'] = "Deleted with success!";
@@ -708,16 +768,25 @@ class AdminController extends MainController
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
-                    echo($apiResponse);
+                    echo $apiResponse;
                     break;
             }
 
         } else {
+            //get users list
             $userList = $modelo->getUserList();
-            if ($userList["statusCode"] != 401){
+            if ($userList["statusCode"] === 200){
+                $this->userdata['usersList'] = $userList["body"];
+            }
+            if ($userList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $userList = $modelo->getSecurityList();
                 $this->userdata['usersList'] = $userList["body"];
             }
 
+            //get country list
             $countryList = $modelo->getCountryList();
             if ($countryList["statusCode"] != 401){
                 $this->userdata['countryList'] = $countryList["body"];
