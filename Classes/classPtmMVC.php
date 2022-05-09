@@ -9,6 +9,10 @@
  * TheMovieMVC - Gere Models, Controllers e Views
  *
  */
+
+// propriety so php doesnt show deprecated methods
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
+
 class PtmMVC
 
 {

@@ -114,48 +114,49 @@ class UserLogin
             return;
         }
 
-        $url = API_URL . '/v1/entity/login';
+        $url = API_URL . 'api/v1/login';
         $data = array(
             'email' => $email,
             'password' => $password
         );
-
         $result = callAPI("POST", $url, $data );
-        $response = json_decode($result, true);
+
+        //trasforma toda a msg em array para facil acesso aos dados
+        $response = json_decode(json_encode($result), true);
 
         //verifica dados de retorno da api
-        if(boolval($response['ok']) == true){
-            if (array_key_exists("id", $response)) {
-                $userId = (int) $response['id'];
+        if($response['statusCode'] === 200){
+            /*if (array_key_exists("id", $response)) {
+                $userid = $response['id'];
+            }*/
+
+            //verifica se existe accessToken na response
+            if (array_key_exists("accessToken", $response["body"])) {
+                $userToken = $response["body"]['accessToken'];
             }
 
-            if (array_key_exists("token", $response)) {
-                $userToken = $response['token'];
+            //verifica se existe refreshToken na response
+            if (array_key_exists("refreshToken", $response["body"])) {
+                $userRefreshToken = $response["body"]['refreshToken'];
             }
 
-            if (array_key_exists("expire", $response)) {
-                $TokenExpire = $response['expire'];
-            }
-
-//            if (array_key_exists("message", $response)) {
-//                echo $response['message'];
-//                $_SESSION["message"] = $response['message'];
-//            }
-
-            // Verifica se o ID e token existe
-            if ( empty( $userId ) || empty( $userToken ) ){
+            // assegura que o $userToken e $userRefreshToken nao estao vazios
+            if ( empty( $userToken ) || empty( $userRefreshToken ) ){
                 $this->logged_in = false;
                 $this->login_error = 'User do not exists.';
 
-                // Remove qualquer sessão que possa existir sobre o usuário
+                // remove qualquer sessão que possa existir do user
                 $this->logout();
 
                 return;
             }
 
-            $url = API_URL . '/v1/entity/' . $userId;
+            /*$url = API_URL . 'api/v1/users/view/' . $userEmail;
             $result = callAPI("GET", $url, '', $userToken );
-            $response = json_decode($result, true);
+            $response = json_decode(json_encode($result), true);
+            $url = API_URL . 'api/v1/group/' . $response["body"]["groupId"];
+            $result = callAPI("GET", $url, '', $userToken );
+            $userGroupPermissions = json_decode(json_encode($result), true);*/
 
             // Se for um post
             if ( $post ) {
@@ -165,7 +166,7 @@ class UserLogin
                 $session_id = session_id();
 
                 // Envia os dados de utilizador para a sessão
-                $_SESSION['userdata'] = $response;
+                $_SESSION['userdata'] = $responseBody;
 
                 // Atualiza user
                 $_SESSION['userdata']['email'] = $email;
@@ -174,20 +175,18 @@ class UserLogin
                 $_SESSION['userdata']['password'] = $password;
 
                 // Atualiza o token
-                $_SESSION['userdata']['token'] = $userToken;
+                $_SESSION['userdata']['accessToken'] = $userToken;
 
                 // Atualiza o token
-                $_SESSION['userdata']['tokenExpire'] = $TokenExpire;
+                $_SESSION['userdata']['refreshToken'] = $userRefreshToken;
 
                 // Atualiza o ID da sessão
                 $_SESSION['userdata']['user_session_id'] = $session_id;
 
-                // Atualiza o ID da sessão na base de dados
-//                $query = $this->db->query(
-//                    'UPDATE users SET user_session_id = ? WHERE user_id = ?',
-//                    array( $session_id, $user_id )
-//                );
             }
+
+            // Obtém um array com as permissões de usuário
+            //$_SESSION['userdata']['user_permissions'] = unserialize( $fetch['user_permissions'] );
 
             // Configura a propriedade dizendo que o usuário está logado
             $this->logged_in = true;
@@ -252,11 +251,11 @@ class UserLogin
         // Verifica se a URL da HOME está configurada
         if ( defined( 'HOME_URL' ) ) {
             // Configura a URL de login
-            $login_uri  = HOME_URL . '/Login/';
+            $login_uri = HOME_URL . $_SESSION['goto_url'];
 
             // A página em que o usuário estava
             if ( !isset( $_SESSION['goto_url'] ) ) {
-//                $_SESSION['goto_url'] = urlencode( $_SERVER['REQUEST_URI'] );
+                //$_SESSION['goto_url'] = urlencode( $_SERVER['REQUEST_URI'] );
                 $_SESSION['goto_url'] = $login_uri;
             }
 
@@ -267,6 +266,28 @@ class UserLogin
         }
 
         return;
+    }
+
+    /**
+     * Faz a renovaçao do accessToken do user
+     *
+     * @return void
+     */
+    protected function userTokenRefresh(){
+        //vai gerar novo accessToken atravez do refreshToken e email
+        $url = API_URL . 'api/v1/refresh';
+        $data = array(
+            'email' => $_SESSION['userdata']['email'],
+            'refreshToken' => $_SESSION['userdata']['refreshToken']
+        );
+        $result = callAPI("POST", $url, $data ); //apanha novo accessToken
+
+        // trasforma toda a msg em array para facil acesso aos dados
+        $response = json_decode(json_encode($result), true);
+
+        // Atualiza o token na sessao
+        $_SESSION['userdata']['accessToken'] = $response["body"]["accessToken"];
+
     }
 
     /**

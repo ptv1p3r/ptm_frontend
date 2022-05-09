@@ -8,6 +8,8 @@
 ?>
 <?php if (!defined('ABSPATH')) exit; ?>
 
+<?php if ($this->login_required && !$this->logged_in) return; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,6 +39,15 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Polifill -->
     <!--      <script href="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js%22%3E</script>-->
+    <!-- Lib Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+          integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+          crossorigin=""/>
+
+
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+            integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+            crossorigin=""></script>
 
     <!-- Template original CSS links -->
     <!--  CSS custom que não pode ser apagado-->
@@ -95,7 +106,8 @@
 <!--Header Start-->
 <header class="header-style-2">
     <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="<?php echo HOME_URL . '/'; ?>"><img src="../../Images/home/logo.png" alt=""></a>
+
+        <a class="navbar-brand" href="<?php echo HOME_URL . '/'; ?>"><img src="Images/logo/adoteUma.png" alt=""></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
                     class="fas fa-bars"></i></button>
@@ -265,27 +277,28 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="avatar">
-                        <img src="../../../Images/home/logo.png" alt="Avatar">
+                        <img src="Images/logo/adoteUma.png" alt="Avatar">
                     </div>
                     <h4 class="modal-title">Login</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="doLogin">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="username" placeholder="Username"
+                            <input type="email" class="form-control" name="email" placeholder="Email"
                                    required="required">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" name="password" placeholder="Password"
+                            <input type="password" class="form-control" name="pass" placeholder="Password"
                                    required="required">
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary btn-lg btn-block login-btn">Login</button>
+                            <!--                            <input type="submit" name='submit' class="btn btn-primary btn-lg btn-block login-btn">Login</input>-->
                         </div>
                     </form>
                     <div class="modal-footer">
-                        <a href="#">Esqueces-te a password?</a>
+                        <a href="<?php echo HOME_URL . '/register/recover'; ?>">Esqueces-te a password?</a>
                     </div>
                     <br>
                     <!--                    <div class="text-center text-muted delimiter">Usa a redes sociais</div>-->
@@ -305,11 +318,11 @@
                     <!--                        </di>-->
                     <!--                    </div>-->
                     <!--                </div>-->
-                    <div class="modal-footer">
+                    <div>
                         <div class="modal-footer d-flex justify-content-center">
-                            <div class="signup-section">Ainda não és membro? <a
+                            <div >Ainda não és membro? <a
                                         href="<?php echo HOME_URL . '/register'; ?>"
-                                        class="text-info"> Sign Up</a>.
+                                        class="text-info"> Sign Up</a>
                             </div>
                         </div>
                     </div>
@@ -322,8 +335,38 @@
 
 
 <script>
+    //Main functions from this view
+    $(document).ready(function () {
+        // ajax to login
+        $('#doLogin').submit(function (event) {
+            event.preventDefault(); //prevent default action
 
+            let formData = {
+                'action': "Login",
+                'data': $(this).serializeArray()
+            };
 
+            $.ajax({
+                url: "<?php echo HOME_URL . '/home/login';?>",
+                dataType: "json",
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+
+                    if (data === 200) {
+                        alert("Logging in!", "success");
+                        location.reload();
+                    } else {
+                        alert("Invalid Email/Password!", "danger");
+                    }
+
+                },
+                error: function (data) {
+                    alert("Connection error, please try again.", "danger");
+                }
+            });
+        });
+    });
 </script>
 
 
