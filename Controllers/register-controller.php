@@ -79,4 +79,27 @@ class RegisterController extends MainController
 
         }
     }
+
+    public function recover()
+    {
+        /**
+         * Page load
+         * "/views/home/recover-view.php"
+         */
+
+        // Title page
+        $this->title = 'User';
+
+        // Function parameters
+        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
+        //$modelo = $this->load_model('user-model');
+
+        /** load files from view **/
+        require ABSPATH . '/views/_includes/header.php';
+        require ABSPATH . '/views/user/registration/recover-view.php';
+        require ABSPATH . '/views/_includes/footer.php';
+    }
+
+
 }
