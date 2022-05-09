@@ -8331,3 +8331,8 @@ circle {
         transform: rotate(-1turn);
     }
 }
+
+/*********************************
+Map Leaflet CSS
+*********************************/
+#map { height: 500px; }
