@@ -154,6 +154,7 @@ class UserLogin
             /*$url = API_URL . 'api/v1/users/view/' . $userEmail;
             $result = callAPI("GET", $url, '', $userToken );
             $response = json_decode(json_encode($result), true);
+
             $url = API_URL . 'api/v1/group/' . $response["body"]["groupId"];
             $result = callAPI("GET", $url, '', $userToken );
             $userGroupPermissions = json_decode(json_encode($result), true);*/
@@ -319,19 +320,30 @@ class UserLogin
      * @return bool|void
      */
     final protected function check_permissions(
-        $required = 'any',
+        $required = array('any'),
         $user_permissions = array('any')
-    ) {
-        if ( ! is_array( $user_permissions ) ) {
+    )
+    {
+        if (!is_array($user_permissions)) {
             return;
         }
 
         // Se o usuário não tiver permissão
-        if ( ! in_array( $required, $user_permissions ) ) {
+        if (!$this->in_array_all($required, $user_permissions)) {
             // Retorna falso
             return false;
         } else {
             return true;
         }
+    }
+
+    /**
+     * Metodo que vai comparar se o que existe num array, tambem existe no outro
+     * @param $needles
+     * @param $haystack
+     * @return bool
+     */
+    final protected function in_array_all($needles, $haystack) {
+        return empty(array_diff($needles, $haystack));
     }
 }

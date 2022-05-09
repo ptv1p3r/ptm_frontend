@@ -6,7 +6,7 @@
  * Time: 20:13
  */
 
-class AdminModel extends MainModel {
+class AdminLoginModel extends MainModel {
 
     public $db; // PDO
 
@@ -22,18 +22,36 @@ class AdminModel extends MainModel {
         $this->userdata = $this->controller->userdata;
     }
 
-    /*public function validateUser($username, $password){
+    /**
+     * metodo que valida o login
+     * @param $data
+     * @return mixed
+     */
+    public function validateUser($data){
         $result = null;
+        $normalizedData = array();
 
-        $data = null;
-        $data["email"] = $username;
-        $data["password"] = $password;
+        // get data from form array and package it to send to api
+        foreach ($data as $dataVector) {
+            foreach ($dataVector as $key => $value) {
+                switch ($dataVector['name']) { //gets <input name="">
+                    case "email":
+                        $normalizedData['email'] = $dataVector['value'];
+                        break;
+
+                    case "pass":
+                        $normalizedData['password'] = $dataVector['value'];
+                        break;
+                }
+            }
+        }
 
         $url = API_URL . 'api/v1/login';
-        $result = callAPI("POST", $url, $data);
+        $result = callAPI("POST", $url, $normalizedData);
 
-        return json_decode($result, true);
-    }*/
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
 
     /**
      * Metodo que retorna 10 categorias da BD

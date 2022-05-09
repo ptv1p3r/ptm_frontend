@@ -1,20 +1,15 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: lmore
- * Date: 26/01/2019
- * Time: 15:28
- */
-?>
+
 <?php if ( ! defined('ABSPATH')) exit; ?>
+
+<?php if ( $this->login_required && ! $this->logged_in ) return; ?>
 
 <div id="wrapper">
 
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
-        <li class="nav-item active"><a class="nav-link" href="<?php echo HOME_URL . '/admin/groups/1';?>"><span>Gestão de grupos</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/users/1';?>"><span>Gestão de utilizadores</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/security/1';?>"><span>Gestão de securitys</span></a></li>
+        <li class="nav-item active"><a class="nav-link" href="<?php echo HOME_URL . '/admin/groups';?>"><span>Gestão de grupos</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/users';?>"><span>Gestão de utilizadores</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/security';?>"><span>Gestão de securitys</span></a></li>
     </ul>
 
     <div id="content-wrapper">
@@ -64,11 +59,17 @@
                             </tr>
                             </tbody>
                         <?php }
-                    } ?>
+                    } else { ?>
+                        <tbody>
+                        <tr>
+                        </tr>
+                        </tbody>
+                    <?php } ?>
 
                 </table>
 
-                <!-- Pagination -->
+
+                <!-- TODO: views pagination -->
                 <div class="clearfix">
                     <div class="hint-text">Showing <b>
                             <?php
@@ -129,24 +130,6 @@
                                 <label>Active</label>
                                 <input type="checkbox" class="form-control" name="addGroupActive">
                             </div>
-
-                            <!-- <label>Categories</label>
-                            <div class="form-group" style="padding-left: 40px" >
-                                    <?php /*foreach ( $categories as $category) {?>
-
-                                        <div class="form-check form-check-inline col-md-3">
-                                            <input class="form-check-input" type="checkbox" id="<?php echo $category["catid"]?>">
-                                            <label class="form-check-label" for="<?php echo $category["catid"]?>"><?php echo $category["name"]?></label>
-                                        </div>
-
-                                        <?php if($category["catid"] % 3 == 0) { ?>
-                                            </div>
-                                            <div class="form-group" style="padding-left: 40px">
-                                        <?php } ?>
-                                    <?php }*/?>
-
-                            </div>-->
-
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -247,7 +230,7 @@
                 'action': "AddGroup",
                 'data': $(this).serializeArray()
             };
-            console.log(formData)
+
             $.ajax({
                 url: "<?php echo HOME_URL . '/admin/groups';?>",
                 dataType: "json",
@@ -256,28 +239,43 @@
                 success: function (data) {
                     $("#addGroupModal").modal('hide');
 
-                    //mensagem de Success
-                    Swal.fire({
-                        title: 'Success!',
-                        text: data['message'],
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        didClose: () => {
-                            location.reload();
-                        }
-                    });
+                    if (data.statusCode === 201){
+                        //mensagem de Success
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.body.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    }
+
                 },
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
                         title: 'Error!',
-                        text: data['message'],
+                        text: "Connection error, please try again.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
                     });
                 }
@@ -288,11 +286,29 @@
         $('#editGroup').submit(function (event) {
             event.preventDefault(); //prevent default action
 
+            //Ve se a data dos inputs mudou para formar so a data necessaria para o PATCH
+            /*let formDataChanged = [];
+            $('#editGroup input').each(function() { //para cada input vai ver
+                if($(this).attr('name') === "editGroupId" || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
+                    let emptyArray = { name: "", value: "" };
+
+                    emptyArray.name = $(this).attr('name');
+                    emptyArray.value = $(this).val();
+
+                    formDataChanged.push(emptyArray);
+                }
+            });
+
             let formData = {
                 'action' : "UpdateGroup",
-                'data'   : $(this).serializeArray()
+                'data'   : formDataChanged
+            };*/
+
+            let formData = {
+                'action': "UpdateGroup",
+                'data': $(this).serializeArray()
             };
-            console.log(formData)
+
             $.ajax({
                 url : "<?php echo HOME_URL . '/admin/groups';?>",
                 dataType: "json",
@@ -301,26 +317,43 @@
                 success: function (data) {
                     $("#editGroupModal").modal('hide');
 
-                    Swal.fire({
-                        title: 'Success!',
-                        text: data['message'],
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        didClose: () => {
-                            location.reload();
-                        }
-                    });
+                    if (data.statusCode === 200){
+                        //mensagem de Success
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.body.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    }
+
                 },
                 error: function (data) {
+                    //mensagem de Error
                     Swal.fire({
                         title: 'Error!',
-                        text: data['message'],
+                        text: "Connection error, please try again.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
                     });
                 }
@@ -353,13 +386,18 @@
                         $('[name="editGroupActive"]').attr('checked', false);
                     }
 
-                    $("#editGroupModal").modal('show');
+                    //atribui atributo .data("lastValue") a cada input do form editGroup
+                    // para se poder comparar entre os dados anteriores e os current
+                    /*$('#editGroup input').each(function() {
+                        $(this).data('lastValue', $(this).val());
+                    });*/
 
+                    $("#editGroupModal").modal('show');
                 },
                 error: function (data) {
                     Swal.fire({
                         title: 'Error!',
-                        text: data['message'],
+                        text: data.body.message,
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -389,27 +427,44 @@
                 success: function (data) {
                     $("#deleteGroupModal").modal('hide');
 
+                    if (data.statusCode === 200){
+                        //mensagem de Success
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.body.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    }
+
+                },
+                error: function (data) {
+                    //mensagem de Error
                     Swal.fire({
-                        title: 'Success!',
-                        text: data['message'],
-                        icon: 'success',
+                        title: 'Error!',
+                        text: "Connection error, please try again.",
+                        icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
                         didClose: () => {
-                            location.reload();
+                            //location.reload();
                         }
-                    });
-                },
-                error: function (data) {
-                    Swal.fire({
-                         title: 'Error!',
-                         text: data['message'],
-                         icon: 'error',
-                         showConfirmButton: false,
-                         timer: 2000,
-                         didClose: () => {
-                             location.reload();
-                         }
                     });
                 }
             });

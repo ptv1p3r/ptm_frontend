@@ -76,7 +76,8 @@ function timeCalculation($time)
  * @param $url
  * @param $data
  * @param string $token
- * @return bool|string
+// * @return bool|string
+ * @return array
  */
 function callAPI($method, $url, $data, $token = "")
 {
@@ -95,6 +96,11 @@ function callAPI($method, $url, $data, $token = "")
             break;
         case "DELETE":
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+            if ($data)
+                curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+            break;
+        case "PATCH":
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PATCH");
             if ($data)
                 curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
             break;
@@ -145,5 +151,4 @@ function callAPI($method, $url, $data, $token = "")
     }
     curl_close($curl);
     return $resultArray;
-
 }

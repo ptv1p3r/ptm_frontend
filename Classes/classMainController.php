@@ -68,7 +68,7 @@ class MainController extends UserLogin
         // Parâmetros
         $this->parametros = $parametros;
 
-        //check user login
+        // Verifica o login
         $this->check_userlogin();
 
     }

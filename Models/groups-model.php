@@ -22,21 +22,6 @@ class GroupsModel extends MainModel {
         $this->userdata = $this->controller->userdata;
     }
 
-    /*public function validateUser($username, $password){
-        $query = null;
-
-        $query = $this->db->query('SELECT * FROM login WHERE username=\'' . $username . '\' 
-                                                          AND password=\'' . $password . '\'');
-
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
-        }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
-
-
     /** CRUD GROUPS **/
     /**
      * Metodo que retorna Grupo pelo id
@@ -47,13 +32,12 @@ class GroupsModel extends MainModel {
         $result = null;
 
         $url = API_URL . 'api/v1/groups/view/' . $id;
-
-        //if (!empty($this->userdata['token'])){
-            //$userToken = $this->userdata['token'];
-            $result = callAPI("GET", $url, '');/*, $userToken */
-        //}
-
-        return json_decode($result, true);
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
     /**
@@ -65,19 +49,18 @@ class GroupsModel extends MainModel {
         $result = null;
 
         $url = API_URL . 'api/v1/groups/list';
-
-        //if (!empty($this->userdata['token'])){
-            //$userToken = $this->userdata['token'];
-            $result = callAPI("GET", $url, '');/*, $userToken */
-        //}
-
-        return json_decode($result, true);
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
     /**
      * Metodo adiciona Grupo
      * @param $data
-     * @return bool|string|void|null
+     * @return array|null
      */
     public function addGroup($data) {
         $result = null;
@@ -107,7 +90,6 @@ class GroupsModel extends MainModel {
                         break;*/
                 }
 
-                // TODO: o active ira deixar de ser enviado
                 if ($dataVector['name'] == "addGroupActive"){
                     $normalizedData['active'] = "1";
                 } else {
@@ -117,18 +99,19 @@ class GroupsModel extends MainModel {
         }
 
         $url = API_URL . 'api/v1/groups/create';
-        //if (!empty($this->userdata['token'])){
-            //$userToken = $this->userdata['token'];
-            $result = callAPI("POST", $url, $normalizedData/*, $userToken */);
-       // }
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("POST", $url, $normalizedData, $userToken);
+        }
 
-        return $result;
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
     /**
      * Metodo edita/update Grupo
      * @param $data
-     * @return bool|string|void|null
+     * @return mixed
      */
     public function updateGroup($data) {
         $result = null;
@@ -157,12 +140,7 @@ class GroupsModel extends MainModel {
                     case "editGroupSecurityId":
                         $normalizedData['securityId'] = $dataVector['value'];
                         break;
-
-                    /*case "editGroupActive":
-                        $normalizedData['active'] = "1";
-                        break;*/
                 }
-
 
                 if ($dataVector['name'] == "editGroupActive"){
                     $normalizedData['active'] = "1";
@@ -173,18 +151,71 @@ class GroupsModel extends MainModel {
         }
 
         $url = API_URL . 'api/v1/groups/edit/' . $GroupId;
-        //if (!empty($this->userdata['token'])){
-            //$userToken = $this->userdata['token'];
-            $result = callAPI("PUT", $url, $normalizedData/*, $userToken */);
-       // }
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("PUT", $url, $normalizedData, $userToken);
+        }
 
-        return $result;
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
+
+    /**
+     * Metodo edita/update Grupo com patch
+     * @param $data
+     * @return mixed
+     */
+    /*public function updateGroup($data) {
+        $result = null;
+        $GroupId = null;
+        $normalizedData = array();
+
+        // Not active by default
+        $normalizedData['active'] = "";
+
+        // get data from form array and package it to send to api
+        foreach ($data as $dataVector) {
+            foreach ($dataVector as $key => $value) {
+                switch ($dataVector['name']){ //gets <input name="">
+                    case "editGroupId":
+                        $GroupId = $dataVector['value'];
+                        break;
+
+                    case "editGroupName":
+                        $normalizedData['name'] = $dataVector['value'];
+                        break;
+
+                    case "editGroupDescription":
+                        $normalizedData['description'] = $dataVector['value'];
+                        break;
+
+                    case "editGroupSecurityId":
+                        $normalizedData['securityId'] = $dataVector['value'];
+                        break;
+                }
+
+                if ($dataVector['name'] == "editGroupActive"){
+                    $normalizedData['active'] = "1";
+                } else {
+                    $normalizedData['active'] = "0";
+                }
+            }
+        }
+
+        $url = API_URL . 'api/v1/groups/edit/' . $GroupId;
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("PATCH", $url, $normalizedData, $userToken);
+        }
+
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }*/
 
     /**
      * Metodo delete Grupo
      * @param $data
-     * @return bool|string|void|null
+     * @return mixed
      */
     public function deleteGroup($data) {
         $result = null;
@@ -201,13 +232,13 @@ class GroupsModel extends MainModel {
         }
 
         $url = API_URL . 'api/v1/groups/delete/' . $GroupId;
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("DELETE", $url, '', $userToken);
+        }
 
-        //if (!empty($this->userdata['token'])){
-            //$userToken = $this->userdata['token'];
-            $result = callAPI("DELETE", $url, ''/*, $userToken */);
-        //}
-
-        return $result;
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
     /**
