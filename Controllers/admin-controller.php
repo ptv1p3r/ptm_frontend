@@ -471,17 +471,43 @@ class AdminController extends MainController
                 case 'GetSecurity' :
                     $data = $_POST['data'];
                     $apiResponse = $modelo->getSecurityById($data);
-                    $apiResponseBody = json_encode($apiResponse["body"]);
+                    $apiResponseBody = array();
+
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->getSecurityById($data);
+                    }
+
+                    if ($apiResponse['statusCode'] === 200) { // 200 success
+                        $apiResponseBody = json_encode($apiResponse["body"]);
+                    }
 
                     echo $apiResponseBody;
                     break;
 
                 case 'AddSecurity' :
+                    //$this->permission_required = array('SecurityCreate');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }
+
                     $data = $_POST['data'];
                     $apiResponse = $modelo->addSecurity($data); //decode to check message from api
 
-                    // quando statusCode = 201, a response nao vem com campo mensagem
-                    // entao é criado e encoded para ser enviado
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->addSecurity($data); //decode to check message from api
+                    }
+
                     if ($apiResponse['statusCode'] === 201){ // 201 created
                         $apiResponse["body"]['message'] = "Created with success!";
 
@@ -490,15 +516,30 @@ class AdminController extends MainController
                         break;
                     }
 
-                    // se statsCode nao for 201, entao api response ja vem com um campo mensagem
-                    // assim so precisamos de fazer encode para ser enviado
                     $apiResponse = json_encode($apiResponse);// encode package to send
-                    echo($apiResponse);
+                    echo $apiResponse;
                     break;
 
                 case 'UpdateSecurity' :
+                    //$this->permission_required = array('SecurityUpdate');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }
+
                     $data = $_POST['data'];
                     $apiResponse = $modelo->updateSecurity($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->updateSecurity($data); //decode to check message from api
+                    }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
                         $apiResponse["body"]['message'] = "Updated with success!";
@@ -509,13 +550,30 @@ class AdminController extends MainController
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
-                    echo($apiResponse);
+                    echo $apiResponse;
                     break;
 
                 case 'DeleteSecurity' :
+                    //$this->permission_required = array('SecurityDelete');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }
+
                     $data = $_POST['data'];
                     $apiResponse = $modelo->deleteSecurity($data); //decode to check message from api
-                
+
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->deleteSecurity($data); //decode to check message from api
+                    }
+
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
                         $apiResponse["body"]['message'] = "Deleted with success!";
 
@@ -525,13 +583,20 @@ class AdminController extends MainController
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
-                    echo($apiResponse);
+                    echo $apiResponse;
                     break;
             }
 
         } else {
             $securityList = $modelo->getSecurityList();
-            if ($securityList["statusCode"] != 401){
+            if ($securityList["statusCode"] === 200){
+                $this->userdata['securityList'] = $securityList["body"];
+            }
+            if ($securityList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $securityList = $modelo->getSecurityList();
                 $this->userdata['securityList'] = $securityList["body"];
             }
 
