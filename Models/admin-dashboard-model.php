@@ -6,7 +6,7 @@
  * Time: 20:13
  */
 
-class AdminModel extends MainModel {
+class AdminDashboardModel extends MainModel {
 
     public $db; // PDO
 
@@ -23,17 +23,16 @@ class AdminModel extends MainModel {
     }
 
     /*public function validateUser($username, $password){
-        $query = null;
+        $result = null;
 
-        $query = $this->db->query('SELECT * FROM login WHERE username=\'' . $username . '\' 
-                                                          AND password=\'' . $password . '\'');
+        $data = null;
+        $data["email"] = $username;
+        $data["password"] = $password;
 
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
-        }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
+        $url = API_URL . 'api/v1/login';
+        $result = callAPI("POST", $url, $data);
+
+        return json_decode($result, true);
     }*/
 
     /**

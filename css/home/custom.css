@@ -1711,7 +1711,7 @@ Home Page 2 Start
 }
 
 header.header-style-2 {
-    background: #1b5e20;
+    background: url(../../Images/home/footerbg.jpg);;
 }
 
 header.header-style-2 .navbar {
@@ -1720,7 +1720,7 @@ header.header-style-2 .navbar {
 }
 
 header.header-style-2 .navbar-brand {
-    background: #33691e;
+    background:url(../../Images/home/footerbg.jpg);
     width: 270px;
     text-align: center;
     padding: 13px 0;
@@ -5586,7 +5586,7 @@ select.customDropdown {
     cursor: pointer;
 }
 
-.login-box button.login-btn:hover, .myaccount-form button.register:hover {
+.login-box button.login-btn:hover, .myaccount-form button.register:hover{
     background: #1b5e20;
     color: #fff;
 }
@@ -7577,14 +7577,14 @@ Sidebar Menu Start
 ========================================== */
 
 nav.sidenav {
-    background-color: #2a2a2a;
+    background-color: rgba(42, 42, 42, 0.8);
     position: fixed;
     z-index: 9999;
     top: 0;
     right: 0;
     height: 100%;
     max-width: 515px;
-    width: 100%;
+    /*width: 100%;*/
     padding: 100px 40px 60px 40px;
     overflow-y: auto;
     -webkit-transform: translateX(100%);
@@ -8052,3 +8052,287 @@ Modal End
     padding-right: 10px; /* 3 */
     padding-left: 10px; /* 3 */
 }
+
+
+/*!**********************************/
+/*Settings profile Start*/
+/**********************************!*/
+
+
+.emp-profile{
+    padding: 3%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    border-radius: 0.5rem;
+    background: #fff;
+}
+.profile-img{
+    text-align: center;
+}
+.profile-img img{
+    width: 70%;
+    height: 100%;
+}
+.profile-img .file {
+    position: relative;
+    overflow: hidden;
+    margin-top: -20%;
+    width: 70%;
+    border: none;
+    border-radius: 0;
+    font-size: 15px;
+    background: #212529b8;
+}
+.profile-img .file input {
+    position: absolute;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}
+.profile-head h5{
+    color: #333;
+}
+.profile-head h6{
+    color: #66bb6a;
+}
+.profile-edit-btn{
+    width: 100%;
+    border: 0;
+    border-radius: 5px;
+    /*line-height: 53px;*/
+    background: #66bb6a;
+    color: #fff;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.profile-edit-btn:hover{
+    background: #1b5e20;
+    color: #fff;
+}
+
+.proile-rating{
+    font-size: 12px;
+    color: #818182;
+    margin-top: 5%;
+}
+.proile-rating span{
+    color: #495057;
+    font-size: 15px;
+    font-weight: 600;
+}
+.profile-head .nav-tabs{
+    margin-bottom:5%;
+}
+.profile-head .nav-tabs .nav-link{
+    font-weight:600;
+    border: none;
+}
+.profile-head .nav-tabs .nav-link.active{
+    border: none;
+    border-bottom:2px solid #66bb6a;
+}
+.profile-work{
+    padding: 14%;
+    margin-top: -15%;
+}
+.profile-work p{
+    font-size: 12px;
+    color: #818182;
+    font-weight: 600;
+    margin-top: 10%;
+}
+.profile-work a{
+    text-decoration: none;
+    color: #495057;
+    font-weight: 600;
+    font-size: 20px;
+}
+.profile-work ul{
+    list-style: none;
+}
+.profile-tab label{
+    font-weight: 600;
+    font-size: 16px;
+}
+.profile-tab p{
+    font-weight: 600;
+    font-size: 16px;
+    color: #66bb6a;
+}
+
+/*********************************
+NEW Settings profile End
+*********************************/
+
+.profile-tab-nav {
+    min-width: 250px;
+}
+
+.tab-content {
+    flex: 1;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.nav-pills a.nav-link {
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0;
+    color: #333;
+}
+.nav-pills a.nav-link i {
+    width: 20px;
+}
+
+.img-circle img {
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+    border: 5px solid #fff;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+    color: #fff;
+    background-color:  #66bb6a;
+
+}
+
+.btn-success{
+    color: #fff;
+    background-color: #66bb6a;
+    border-color: #66bb6a;
+}
+
+/*********************************
+Settings profile End
+*********************************/
+
+
+/*********************************
+Loader registration Start
+*********************************/
+
+/*!*Add an overlay to the entire page blocking any further presses to buttons or other elements.*!*/
+/*.overlay {*/
+/*    position: fixed;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 100%;*/
+/*    height: 100vh;*/
+/*    background: rgba(0,0,0,.8);*/
+/*    z-index: 999;*/
+/*    opacity: 1;*/
+/*    transition: all 0.5s;*/
+/*}*/
+
+/*!*Spinner Styles*!*/
+/*.lds-dual-ring {*/
+/*    display: inline-block;*/
+/*    width: auto;*/
+/*    height: auto;*/
+/*}*/
+/*.lds-dual-ring:after {*/
+/*    content: " ";*/
+/*    display: block;*/
+/*    width: 64px;*/
+/*    height: 64px;*/
+/*    margin: 5% auto;*/
+/*    border-radius: 50%;*/
+/*    border: 6px solid #fff;*/
+/*    border-color: #fff transparent #fff transparent;*/
+/*    animation: lds-dual-ring 1.2s linear infinite;*/
+/*}*/
+/*!*@keyframes lds-dual-ring {*!*/
+/*!*    0% {*!*/
+/*!*        transform: rotate(0deg);*!*/
+/*!*    }*!*/
+/*!*    100% {*!*/
+/*!*        transform: rotate(360deg);*!*/
+/*!*    }*!*/
+/*!*}*!*/
+
+/*********************************
+Loader registration End
+*********************************/
+
+/*body {*/
+/*    margin: 0;*/
+/*    min-height: 100vh;*/
+/*    display: grid;*/
+/*    place-items: center;*/
+
+/*}*/
+
+/*Hidden class for adding and removing*/
+.lds-dual-ring.hidden {
+    display: none;
+}
+
+.loaderOverlay{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: rgba(0,0,0,.8);
+    z-index: 999;
+    opacity: 1;
+    transition: all 0.5s;
+    /*overflow: hidden;*/
+    /*50% 50% no-repeat rgb(249,249,249);*/
+}
+
+
+svg.loader {
+    /*position: fixed;*/
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /*width: 50%;*/
+    max-width: 10rem;
+    animation: rotate 3.6s linear infinite;
+
+}
+
+circle {
+    fill: none;
+    stroke: #66bb6a;
+    stroke-width: 8px;
+    stroke-dasharray: 300;
+    animation: outline 2s cubic-bezier(0.77,0,0.18,1) infinite;
+}
+
+@keyframes outline {
+    0% {
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dashoffset: 300;
+    }
+    100% {
+        stroke-dashoffset: 600;
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0turn);
+    }
+    to {
+        transform: rotate(-1turn);
+    }
+}
+
+/*********************************
+Map Leaflet CSS
+*********************************/
+#map { height: 500px; }

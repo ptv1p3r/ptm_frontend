@@ -13,7 +13,7 @@
  * estender essa classe
  *
  */
-class MainController
+class MainController extends UserLogin
 {
 
     /**
@@ -35,14 +35,23 @@ class MainController
      */
     public $parametros = array();
 
-
-    public $userdata = array();
+    /**
+     * $permission_required
+     *
+     * Permissão necessária
+     *
+     * @access public
+     */
+    public $permission_required = 'any';
 
     /**
-     * user data
+     * $login_required
      *
+     * Se a página precisa de login
+     *
+     * @access public
      */
-    public $userdata= array();
+    public $login_required = false;
 
     /**
      * Construtor da classe
@@ -58,6 +67,9 @@ class MainController
 
         // Parâmetros
         $this->parametros = $parametros;
+
+        // Verifica o login
+        $this->check_userlogin();
 
     }
 
