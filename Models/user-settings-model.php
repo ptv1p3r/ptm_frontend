@@ -114,7 +114,7 @@ class UserSettingsModel extends MainModel
                         break;
 
                     case "editUserCountry":
-                        $normalizedData['countryId'] =(int)$dataVector['value'];
+                        $normalizedData['countryId'] = (int)$dataVector['value'];
                         break;
 
                     case "editUserNif":
@@ -148,6 +148,44 @@ class UserSettingsModel extends MainModel
 //                } else {
 //                    $normalizedData['active'] = "0";
 //                }
+            }
+        }
+
+        $url = API_URL . 'api/v1/users/edit/' . $userId;
+        if (!empty($_SESSION['userdata']['accessToken'])) {
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("PATCH", $url, $normalizedData, $userToken);
+        }
+
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+    /**
+     * Metodo edita/update User
+     * @param $email
+     * @return mixed
+     */
+    public function updatePassUser($data)
+    {
+
+        $result = null;
+        $normalizedData = array();
+
+        // get data from form array and package it to send to api
+        foreach ($data as $dataVector) {
+            foreach ($dataVector as $key => $value) {
+                switch ($dataVector['name']) { //gets <input name="">
+
+                    case "passEditUserId":
+                        $userId = $dataVector['value'];
+                        break;
+
+                    case "newPass":
+                        $normalizedData['password'] = $dataVector['value'];
+                        break;
+
+                }
             }
         }
 

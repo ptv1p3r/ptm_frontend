@@ -145,40 +145,46 @@
                     <!--End profile tab section-->
 
                     <!--Edit password tab section-->
+
                     <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
                         <h3 class="mb-4">Password Settings</h3>
-                        <div class="form-group">
-                            <input id="editUserId" name="editUserId" type="hidden" class="form-control"
-                                   value="<?php echo $user["id"] ?>">
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Password antiga</label>
-                                    <input type="password" class="form-control">
+                        <form id="updatePass">
+                            <div class="form-group">
+                                <input id="passEditUserId" name="passEditUserId" type="hidden" class="form-control"
+                                       value="<?php echo $user["id"] ?>">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Password antiga</label>
+                                        <input type="password" id="oldPass" name="oldPass" class="form-control">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Nova password</label>
-                                    <input type="password" id="password" class="form-control">
-                                    <p class="registrationFormAlert" style="color:green;" id="CheckPasswordMatch">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Nova password</label>
+                                        <input type="password" id="pass" name="newPass" class="form-control">
+                                        <p class="registrationFormAlert" style="color:green;" id="CheckPasswordMatch">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Confirma a nova password</label>
+                                        <input type="password" id="verify" name="confPass" class="form-control"><span id="verifyNote" class="badge-warning hidden">Password don't match</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Confirma a nova password</label>
-                                    <input type="password" id="confPass" class="form-control">
+                            <div>
+                                <div class="modal-footer">
+                                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                    <input type="submit" class="btn btn-info" value="Save">
                                 </div>
                             </div>
-                        </div>
-                        <div>
-                            <button class="btn btn-success save">Salvar</button>
-                            <!--                            <button class="btn btn-light">Cancel</button>-->
-                        </div>
+                        </form>
                     </div>
+
                     <!--End Edit password tab section-->
 
                     <!--Remove account tab section-->
@@ -333,15 +339,7 @@
 
 <!--Script's section-->
 <script>
-
     $(document).ready(function () {
-
-        $('.save').on('click', function () {
-
-            guardar(); //guardar data
-
-        });
-
 
         //////// ajax to get data to Modal Edit User
         $('.edit').on('click', function () {
@@ -523,23 +521,76 @@
             });
         });
 
-        $(".listen").keyup(function () {
-            $(this).attr("name", "user-field-updated");
-            console.log('batatas')
-        })
+        // ajax to update modal data  Edit User
+        $('#updatePass').submit(function (event) {
+            event.preventDefault(); //prevent default action
+
+            // let formDataChanged = [
+            //     pass
+            // ];
+            // $('#updatePass input').each(function () { //para cada input vai ver
+            //    if ($(this).attr('name') === "passEditUserId" || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
+            //        let emptyArray = {name: "", value: ""};
+            //        emptyArray.name = $(this).attr('name');
+            //        emptyArray.value = $(this).val();
+            //        formDataChanged.push(emptyArray);
+            //    }
+            // });
+            let formData = {
+                'action': "UpdateUserPass",
+                'data': $(this).serializeArray()
+            };
+
+            $.ajax({
+                url: "<?php echo HOME_URL . '/home/userSettings';?>",
+                dataType: "json",
+                type: 'POST',
+                data: formData,
+                success: function (data) {
 
 
-        function checkPasswordMatch() {
-            let password = $("#txtNewPassword").val();
-            let confirmPassword = $("#txtConfirmPassword").val();
-            if (password != confirmPassword)
-                $("#CheckPasswordMatch").html("Passwords does not match!");
-            else
-                $("#CheckPasswordMatch").html("Passwords match.");
-        }
 
-        $(document).ready(function () {
-            $("#txtConfirmPassword").keyup(checkPasswordMatch);
+                    if (data.statusCode === 200) {
+                        //mensagem de Success
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.body.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    }
+                },
+                error: function (data) {
+                    //mensagem de Error
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Connection error, please try again.",
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        didClose: () => {
+                            //location.reload();
+                        }
+                    });
+                }
+
+            });
         });
     });
 
