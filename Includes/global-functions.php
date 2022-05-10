@@ -99,11 +99,6 @@ function callAPI($method, $url, $data, $token = "")
             if ($data)
                 curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
             break;
-        case "PATCH":
-            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PATCH");
-            if ($data)
-                curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
-            break;
         case "GET":
             if ($data)
                 curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
