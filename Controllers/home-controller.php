@@ -220,7 +220,7 @@ class HomeController extends MainController
 
         // Título da página
         $this->title = 'User - Dashboard';
-        $this->permission_required = 'homeLogin';
+        $this->permission_required = array('homeLogin');
 
         // Parametros da função
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -305,7 +305,7 @@ class HomeController extends MainController
 
         // Título da página
         $this->title = 'User - Settings';
-        $this->permission_required = 'usersRead';
+        $this->permission_required = array('usersRead');
 
         // Parametros da função
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -353,7 +353,7 @@ class HomeController extends MainController
                     break;
 
                 case 'UpdateUser' :
-                    $this->permission_required = 'usersUpdate';
+                    $this->permission_required = array('usersUpdate');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
@@ -391,7 +391,7 @@ class HomeController extends MainController
                     break;
 
                 case 'UpdateUserPass' :
-                    $this->permission_required = 'usersUpdate';
+                    $this->permission_required = array('usersUpdate');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
@@ -415,25 +415,29 @@ class HomeController extends MainController
 
                     //Check password with DB
                     if($oldPassVal != $_SESSION['userdata']['password']){
-                        echo 'Palavra passe não coincide!';
+                        //Array with status code message
+                        $response = array();
+                        $response["body"]['message'] = 'Palavra passe incorreta!';
+                        $response['statusCode'] = 0;
+                        echo json_encode($response);
                         break;
-
-//TODO
-//                        $apiResponse["body"]['message'] = "Updated with success!";
-//                        $apiResponse = json_encode($apiResponse);// encode package to send
-//                        echo $apiResponse;
-//                        break;
-
-
                     }
                     //Validate if the new pass is the sames as old one
                     if($newPassVal == $oldPassVal ){
-                        echo 'Palavra é igual.';
+                        //Array with status code message
+                        $response = array();
+                        $response["body"]['message'] = 'A nova palavra passe não pode ser igual à antiga!';
+                        $response['statusCode'] = 1;
+                        echo json_encode($response);
                         break;
                     }
                     //Validate if the new pass is equal to conf
                     if($newPassVal != $confPassVal ){
-                        echo 'Palavras passes não coincidem!';
+                        //Array with status code message
+                        $response = array();
+                        $response["body"]['message'] = 'Palavra passe não coincide!';
+                        $response['statusCode'] = 2;
+                        echo json_encode($response);
                         break;
                     }
 
@@ -446,6 +450,7 @@ class HomeController extends MainController
 
 
                         $apiResponse = json_encode($apiResponse);// encode package to send
+                        $_SESSION['userdata']['password'] = $newPassVal;
                         echo $apiResponse;
                         break;
                     }
@@ -455,6 +460,7 @@ class HomeController extends MainController
 
                         $apiResponse = $model->updateUser($data); //decode to check message from api
                         $apiResponse = json_encode($apiResponse);// encode package to send
+                        $_SESSION['userdata']['password'] = $newPassVal;
                         echo $apiResponse;
                         break;
                     }
@@ -464,7 +470,7 @@ class HomeController extends MainController
                     break;
 
                 case 'DeleteUser' :
-                    $this->permission_required = 'usersDelete';
+                    $this->permission_required = array('usersDelete');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
