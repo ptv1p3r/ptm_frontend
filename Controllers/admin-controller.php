@@ -984,7 +984,7 @@ class AdminController extends MainController
             }
 
         } else {
-            $this->userdata['groupsList'] = "";
+            $this->userdata['treesList'] = "";
 
             /**Carrega os arquivos do view**/
             require ABSPATH . '/views/_includes/admin-header.php';
