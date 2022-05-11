@@ -19,14 +19,20 @@
         <!-- DataTables -->
         <div class="container">
             <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2>Manage <b>Trees</b></h2>
-                        </div>
-                        <div class="col-sm-6">
-                            <a href="#addTreeModal" class="btn btn-success" data-toggle="modal"><i class="fas fa-plus-circle"></i><span>Add New Tree</span></a>
-                        </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <!--Map area div-->
+                        <div id="map"></div>
+                    </div>
+                </div>
+
+                <div class="row table-title">
+                    <div class="col-sm-6">
+                        <h2>Manage <b>Trees</b></h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="#addTreeModal" class="btn btn-success" data-toggle="modal"><i class="fas fa-plus-circle"></i><span>Add New Tree</span></a>
                     </div>
                 </div>
 
@@ -227,6 +233,48 @@
 
 <script>
     $(document).ready(function() {
+
+        // TreesMap
+        var greenIcon = L.icon({
+            iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-green.png',
+            shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
+
+            iconSize: [38, 95], // size of the icon
+            shadowSize: [50, 64], // size of the shadow
+            iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+
+        var blueIcon = L.icon({
+            iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-red.png',
+            shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
+
+            iconSize: [38, 95], // size of the icon
+            shadowSize: [50, 64], // size of the shadow
+            iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+
+        let map = L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
+
+        var marker = L.marker([37.3174025204363, -8.566799289969723], {icon: greenIcon}).addTo(map);
+        var marker = L.marker([37.280008400415554, -8.554293570462498], {icon: blueIcon}).addTo(map);
+
+
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            // attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
+        }).addTo(map);
+
+
+
+        //CRUD
         // ajax to Add Group
         $('#addTree').submit(function (event) {
             event.preventDefault(); //prevent default action
