@@ -8,10 +8,10 @@
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
         <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/dashboard';?>"><span>Dashboard</span></a></li>
-        <li class="nav-item active"><a class="nav-link" href="<?php echo HOME_URL . '/admin/groups';?>"><span>Gestão de grupos</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/groups';?>"><span>Gestão de grupos</span></a></li>
         <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/users';?>"><span>Gestão de utilizadores</span></a></li>
         <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/security';?>"><span>Gestão de securitys</span></a></li>
-        <li class="nav-item "><a class="nav-link" href="<?php echo HOME_URL . '/admin/trees';?>"><span>Gestão de trees</span></a></li>
+        <li class="nav-item active"><a class="nav-link" href="<?php echo HOME_URL . '/admin/trees';?>"><span>Gestão de trees</span></a></li>
         <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/settings';?>"><span>Settings</span></a></li>
     </ul>
 
@@ -22,10 +22,10 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h2>Manage <b>Groups</b></h2>
+                            <h2>Manage <b>Trees</b></h2>
                         </div>
                         <div class="col-sm-6">
-                            <a href="#addGroupModal" class="btn btn-success" data-toggle="modal"><i class="fas fa-plus-circle"></i><span>Add New Group</span></a>
+                            <a href="#addTreeModal" class="btn btn-success" data-toggle="modal"><i class="fas fa-plus-circle"></i><span>Add New Tree</span></a>
                         </div>
                     </div>
                 </div>
@@ -33,9 +33,10 @@
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>SecurityId</th>
+                        <th>name</th>
+                        <th>typeId</th>
+                        <th>lat</th>
+                        <th>lng</th>
                         <th>active</th>
                         <th>dateCreated</th>
                         <th>dateModified</th>
@@ -43,20 +44,21 @@
                     </tr>
                     </thead>
 
-                    <?php if (!empty($this->userdata['groupsList'])) {
-                        foreach ($this->userdata['groupsList'] as $key => $group) { ?>
+                    <?php if (!empty($this->userdata['treesList'])) {
+                        foreach ($this->userdata['treesList'] as $key => $tree) { ?>
                             <tbody>
                             <tr>
-                                <td><?php echo $group["name"] ?></td>
-                                <td><?php echo $group["description"] ?></td>
-                                <td><?php echo $group["securityId"] ?></td>
-                                <td><?php echo $group["active"] ?></td>
-                                <td><?php echo $group["dateCreated"] ?></td>
-                                <td><?php echo $group["dateModified"] ?></td>
+                                <td><?php echo $tree["name"] ?></td>
+                                <td><?php echo $tree["typeId"] ?></td>
+                                <td><?php echo $tree["lat"] ?></td>
+                                <td><?php echo $tree["lng"] ?></td>
+                                <td><?php echo $tree["active"] ?></td>
+                                <td><?php echo $tree["dateCreated"] ?></td>
+                                <td><?php echo $tree["dateModified"] ?></td>
                                 <td>
-                                    <a href="#editGroupModal" id="<?php echo $group['id'] ?>" class="edit"
+                                    <a href="#editTreeModal" id="<?php echo $tree['id'] ?>" class="edit"
                                        data-toggle="modal"><i class="far fa-edit"></i></a>
-                                    <a href="#deleteGroupModal" id="<?php echo $group['id'] ?>" class="delete"
+                                    <a href="#deleteTreeModal" id="<?php echo $tree['id'] ?>" class="delete"
                                        data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                             </tr>
@@ -76,12 +78,12 @@
                 <div class="clearfix">
                     <div class="hint-text">Showing <b>
                             <?php
-                            /*if (10*$parametros[0] >= count($groups)) {
-                                echo count($groups);
+                            /*if (10*$parametros[0] >= count($trees)) {
+                                echo count($trees);
                             } else {
                                 if ($parametros[0] == null || $parametros[0] == "1") {
-                                    if (10 >= count($groups)) {
-                                        echo count($groups);
+                                    if (10 >= count($trees)) {
+                                        echo count($trees);
                                     } else {
                                         echo 10;
                                     }
@@ -90,30 +92,30 @@
                                 }
                             }*/
                             ?>
-                        </b> out of <b><?php //echo count($groups)?></b> entries</div>
-                        <ul class="pagination">
-                            <?php /*if ($parametros[0] == null) { ?>
+                        </b> out of <b><?php //echo count($trees)?></b> entries</div>
+                    <ul class="pagination">
+                        <?php /*if ($parametros[0] == null) { ?>
                                 <li class="page-item active"><a href="<?php echo HOME_URL . '/admin/group/' . 1;?>" class="page-link">1</a></li>
                             <?php } else {
-                                for ($i = 1 ; $i <= ceil(count($groups)/10) ; $i++) { ?>
+                                for ($i = 1 ; $i <= ceil(count($trees)/10) ; $i++) { ?>
                                 <li class="page-item <?php if ($parametros[0] == $i) {
                                     echo "active";
                                 }?>"><a href="<?php echo HOME_URL . '/admin/group/' . $i;?>" class="page-link"><?php echo $i?></a></li>
                                 <?php }
                             }*/
-                            ?>
-                        </ul>
-                    </div>
+                        ?>
+                    </ul>
                 </div>
             </div>
+        </div>
 
         <!-- Add Modal HTML -->
-        <div id="addGroupModal" class="modal fade">
+        <div id="addTreeModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="addGroup">
+                    <form id="addTree">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Group</h4>
+                            <h4 class="modal-title">Add Tree</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
@@ -144,12 +146,12 @@
         </div>
 
         <!-- Edit Modal HTML -->
-        <div id="editGroupModal" class="modal fade">
+        <div id="editTreeModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="editGroup">
+                    <form id="editTree">
                         <div class="modal-header">
-                            <h4 class="modal-title">Edit Group</h4>
+                            <h4 class="modal-title">Edit Tree</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
@@ -185,16 +187,16 @@
         </div>
 
         <!-- Delete Modal HTML -->
-        <div id="deleteGroupModal" class="modal fade">
+        <div id="deleteTreeModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="deleteGroup">
+                    <form id="deleteTree">
                         <div class="modal-header">
-                            <h4 class="modal-title">Delete Group</h4>
+                            <h4 class="modal-title">Delete Tree</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
-                            <p>Are you sure you want to delete this Group?</p>
+                            <p>Are you sure you want to delete this Tree?</p>
                             <p class="text-warning"><small>This action cannot be undone.</small></p>
                             <input id="deleteGroupId" name="deleteGroupId" type="hidden" class="form-control" value="">
                         </div>
@@ -226,21 +228,21 @@
 <script>
     $(document).ready(function() {
         // ajax to Add Group
-        $('#addGroup').submit(function (event) {
+        $('#addTree').submit(function (event) {
             event.preventDefault(); //prevent default action
 
             let formData = {
-                'action': "AddGroup",
+                'action': "AddTree",
                 'data': $(this).serializeArray()
             };
 
             $.ajax({
-                url: "<?php echo HOME_URL . '/admin/groups';?>",
+                url: "<?php echo HOME_URL . '/admin/trees';?>",
                 dataType: "json",
                 type: 'POST',
                 data: formData,
                 success: function (data) {
-                    $("#addGroupModal").modal('hide');
+                    $("#addTreeModal").modal('hide');
 
                     if (data.statusCode === 201){
                         //mensagem de Success
@@ -286,13 +288,13 @@
         });
 
         // ajax to Edit Group
-        $('#editGroup').submit(function (event) {
+        $('#editTree').submit(function (event) {
             event.preventDefault(); //prevent default action
 
             //Ve se a data dos inputs mudou para formar so a data necessaria para o PATCH
             /*let formDataChanged = [];
-            $('#editGroup input').each(function() { //para cada input vai ver
-                if($(this).attr('name') === "editGroupId" || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
+            $('#editTree input').each(function() { //para cada input vai ver
+                if($(this).attr('name') === "editTreeId" || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
                     let emptyArray = { name: "", value: "" };
 
                     emptyArray.name = $(this).attr('name');
@@ -303,22 +305,22 @@
             });
 
             let formData = {
-                'action' : "UpdateGroup",
+                'action' : "UpdateTree",
                 'data'   : formDataChanged
             };*/
 
             let formData = {
-                'action': "UpdateGroup",
+                'action': "UpdateTree",
                 'data': $(this).serializeArray()
             };
 
             $.ajax({
-                url : "<?php echo HOME_URL . '/admin/groups';?>",
+                url : "<?php echo HOME_URL . '/admin/trees';?>",
                 dataType: "json",
                 type: 'POST',
                 data : formData,
                 success: function (data) {
-                    $("#editGroupModal").modal('hide');
+                    $("#editTreeModal").modal('hide');
 
                     if (data.statusCode === 200){
                         //mensagem de Success
@@ -363,39 +365,39 @@
             });
         });
 
-        // ajax to get data to Modal Edit Group
+        // ajax to get data to Modal Edit Tree
         $('.edit').on('click', function(){
 
             let formData = {
-                'action' : "GetGroup",
-                'data'   : $(this).attr('id') //gets group id from id="" attribute on edit button from table
+                'action' : "GetTree",
+                'data'   : $(this).attr('id') //gets tree id from id="" attribute on edit button from table
             };
 
             $.ajax({
-                url : "<?php echo HOME_URL . '/admin/groups';?>",
+                url : "<?php echo HOME_URL . '/admin/trees';?>",
                 dataType: "json",
                 type: 'POST',
                 data : formData,
                 success: function (data) {
 
-                    $('[name="editGroupId"]').val(data[0]['id']);
-                    $('[name="editGroupName"]').val(data[0]['name']);
-                    $('[name="editGroupDescription"]').val(data[0]['description']);
-                    $('[name="editGroupSecurityId"]').val(data[0]['securityId']);
+                    $('[name="editTreeId"]').val(data[0]['id']);
+                    $('[name="editTreeName"]').val(data[0]['name']);
+                    $('[name="editTreeDescription"]').val(data[0]['description']);
+                    $('[name="editTreeSecurityId"]').val(data[0]['securityId']);
 
                     if (data[0]['active'] === 1) {
-                        $('[name="editGroupActive"]').attr('checked', true);
+                        $('[name="editTreeActive"]').attr('checked', true);
                     } else {
-                        $('[name="editGroupActive"]').attr('checked', false);
+                        $('[name="editTreeActive"]').attr('checked', false);
                     }
 
-                    //atribui atributo .data("lastValue") a cada input do form editGroup
+                    //atribui atributo .data("lastValue") a cada input do form editTree
                     // para se poder comparar entre os dados anteriores e os current
-                    /*$('#editGroup input').each(function() {
+                    /*$('#editTree input').each(function() {
                         $(this).data('lastValue', $(this).val());
                     });*/
 
-                    $("#editGroupModal").modal('show');
+                    $("#editTreeModal").modal('show');
                 },
                 error: function (data) {
                     Swal.fire({
@@ -413,22 +415,22 @@
 
         });
 
-        // ajax to Delete Group
-        $('#deleteGroup').submit(function(event){
+        // ajax to Delete Tree
+        $('#deleteTree').submit(function(event){
             event.preventDefault(); //prevent default action
 
             let formData = {
-                'action' : "DeleteGroup",
+                'action' : "DeleteTree",
                 'data'   : $(this).serializeArray()
             };
 
             $.ajax({
-                url : "<?php echo HOME_URL . '/admin/groups';?>",
+                url : "<?php echo HOME_URL . '/admin/trees';?>",
                 dataType: "json",
                 type: 'POST',
                 data : formData,
                 success: function (data) {
-                    $("#deleteGroupModal").modal('hide');
+                    $("#deleteTreeModal").modal('hide');
 
                     if (data.statusCode === 200){
                         //mensagem de Success
@@ -473,11 +475,11 @@
             });
         });
 
-        // ajax to get data to Modal Delete Group
+        // ajax to get data to Modal Delete Tree
         $('.delete').on('click', function(){
             let $deleteID = $(this).attr('id');
-            $('[name="deleteGroupId"]').val($deleteID); //gets group id from id="" attribute on delete button from table
-            $("#deleteGroupModal").modal('show');
+            $('[name="deleteTreeId"]').val($deleteID); //gets tree id from id="" attribute on delete button from table
+            $("#deleteTreeModal").modal('show');
 
         });
 

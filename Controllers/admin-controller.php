@@ -26,7 +26,7 @@ class AdminController extends MainController
     }
 
     /**
-     * Login
+     * Metodo para Login
      * @return void
      */
     public function login() {
@@ -234,7 +234,8 @@ class AdminController extends MainController
     }
 
     /**
-     * loads /admin/groups page and handles ajax
+     * Carrega a página
+     * "/views/admin/admin-groups-view.php"
      * @return void
      */
     public function groups(){
@@ -429,193 +430,8 @@ class AdminController extends MainController
     }
 
     /**
-     * loads /admin/security page and handles ajax
-     * @return void
-     */
-    public function security(){
-        // Título da página
-        $this->title = 'Admin - Securitys';
-        $this->permission_required = array('admLogin'/*,'securityRead'*/);
-
-        // Parametros da função
-        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
-
-        // obriga o login para aceder à pagina
-        if ( ! $this->logged_in ) {
-
-            // Se não; garante o logout
-            $this->logout();
-
-            // Redireciona para a página de login
-            $this->goto_login();
-
-            // Garante que o script não vai passar daqui
-            return;
-        }
-
-        //Verifica se o usuário tem a permissão para acessar essa página
-        if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
-
-            // Exibe uma mensagem
-            echo 'Você não tem permissões para acessar essa página.';
-
-            // Finaliza aqui
-            return;
-        }
-
-        $modelo = $this->load_model('admin-security-model');
-
-        // processa chamadas ajax
-        if(isset($_POST['action']) && !empty($_POST['action'])) {
-            $action = $_POST['action'];
-            switch($action) {
-                case 'GetSecurity' :
-                    $data = $_POST['data'];
-                    $apiResponse = $modelo->getSecurityById($data);
-                    $apiResponseBody = array();
-
-                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
-                        //faz o refresh do accessToken
-                        $this->userTokenRefresh();
-
-                        $apiResponse = $modelo->getSecurityById($data);
-                    }
-
-                    if ($apiResponse['statusCode'] === 200) { // 200 success
-                        $apiResponseBody = json_encode($apiResponse["body"]);
-                    }
-
-                    echo $apiResponseBody;
-                    break;
-
-                case 'AddSecurity' :
-                    //$this->permission_required = array('SecurityCreate');
-
-                    //Verifica se o user tem a permissão para realizar operaçao
-                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
-
-                        echo json_encode($apiResponse);
-                        break;
-                    }
-
-                    $data = $_POST['data'];
-                    $apiResponse = $modelo->addSecurity($data); //decode to check message from api
-
-                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
-                        //faz o refresh do accessToken
-                        $this->userTokenRefresh();
-
-                        $apiResponse = $modelo->addSecurity($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Created with success!";
-                    }
-
-                    if ($apiResponse['statusCode'] === 201){ // 201 created
-                        $apiResponse["body"]['message'] = "Created with success!";
-
-                        $apiResponse = json_encode($apiResponse);// encode package to send
-                        echo $apiResponse;
-                        break;
-                    }
-
-                    $apiResponse = json_encode($apiResponse);// encode package to send
-                    echo $apiResponse;
-                    break;
-
-                case 'UpdateSecurity' :
-                    //$this->permission_required = array('SecurityUpdate');
-
-                    //Verifica se o user tem a permissão para realizar operaçao
-                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
-
-                        echo json_encode($apiResponse);
-                        break;
-                    }
-
-                    $data = $_POST['data'];
-                    $apiResponse = $modelo->updateSecurity($data); //decode to check message from api
-
-                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
-                        //faz o refresh do accessToken
-                        $this->userTokenRefresh();
-
-                        $apiResponse = $modelo->updateSecurity($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Updated with success!";
-                    }
-
-                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Updated with success!";
-
-                        $apiResponse = json_encode($apiResponse);// encode package to send
-                        echo $apiResponse;
-                        break;
-                    }
-
-                    $apiResponse = json_encode($apiResponse);// encode package to send
-                    echo $apiResponse;
-                    break;
-
-                case 'DeleteSecurity' :
-                    //$this->permission_required = array('SecurityDelete');
-
-                    //Verifica se o user tem a permissão para realizar operaçao
-                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
-
-                        echo json_encode($apiResponse);
-                        break;
-                    }
-
-                    $data = $_POST['data'];
-                    $apiResponse = $modelo->deleteSecurity($data); //decode to check message from api
-
-                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
-                        //faz o refresh do accessToken
-                        $this->userTokenRefresh();
-
-                        $apiResponse = $modelo->deleteSecurity($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Deleted with success!";
-                    }
-
-                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Deleted with success!";
-
-                        $apiResponse = json_encode($apiResponse);// encode package to send
-                        echo $apiResponse;
-                        break;
-                    }
-
-                    $apiResponse = json_encode($apiResponse);// encode package to send
-                    echo $apiResponse;
-                    break;
-            }
-
-        } else {
-            //get securitys list
-            $securityList = $modelo->getSecurityList();
-            if ($securityList["statusCode"] === 200){
-                $this->userdata['securityList'] = $securityList["body"];
-            }
-            if ($securityList["statusCode"] === 401){
-                //faz o refresh do accessToken
-                $this->userTokenRefresh();
-
-                $securityList = $modelo->getSecurityList();
-                $this->userdata['securityList'] = $securityList["body"];
-            }
-
-            /**Carrega os arquivos do view**/
-            require ABSPATH . '/views/_includes/admin-header.php';
-
-            require ABSPATH . '/views/admin/admin-security-view.php';
-
-            require ABSPATH . '/views/_includes/admin-footer.php';
-        }
-    }
-      
-    /**
-     * loads /admin/users page and handles ajax
+     * Carrega a página
+     * "/views/admin/admin-users-view.php"
      * @return void
      */
     public function users(){
@@ -806,6 +622,380 @@ class AdminController extends MainController
             require ABSPATH . '/views/_includes/admin-footer.php';
         }
     }
+
+    /**
+     * Carrega a página
+     * "/views/admin/admin-securitys-view.php"
+     * @return void
+     */
+    public function security(){
+        // Título da página
+        $this->title = 'Admin - Securitys';
+        $this->permission_required = array('admLogin'/*,'securityRead'*/);
+
+        // Parametros da função
+        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
+
+        // obriga o login para aceder à pagina
+        if ( ! $this->logged_in ) {
+
+            // Se não; garante o logout
+            $this->logout();
+
+            // Redireciona para a página de login
+            $this->goto_login();
+
+            // Garante que o script não vai passar daqui
+            return;
+        }
+
+        //Verifica se o usuário tem a permissão para acessar essa página
+        if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+
+            // Exibe uma mensagem
+            echo 'Você não tem permissões para acessar essa página.';
+
+            // Finaliza aqui
+            return;
+        }
+
+        $modelo = $this->load_model('admin-security-model');
+
+        // processa chamadas ajax
+        if(isset($_POST['action']) && !empty($_POST['action'])) {
+            $action = $_POST['action'];
+            switch($action) {
+                case 'GetSecurity' :
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->getSecurityById($data);
+                    $apiResponseBody = array();
+
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->getSecurityById($data);
+                    }
+
+                    if ($apiResponse['statusCode'] === 200) { // 200 success
+                        $apiResponseBody = json_encode($apiResponse["body"]);
+                    }
+
+                    echo $apiResponseBody;
+                    break;
+
+                case 'AddSecurity' :
+                    //$this->permission_required = array('SecurityCreate');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }
+
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->addSecurity($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->addSecurity($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Created with success!";
+                    }
+
+                    if ($apiResponse['statusCode'] === 201){ // 201 created
+                        $apiResponse["body"]['message'] = "Created with success!";
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo $apiResponse;
+                    break;
+
+                case 'UpdateSecurity' :
+                    //$this->permission_required = array('SecurityUpdate');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }
+
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->updateSecurity($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->updateSecurity($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Updated with success!";
+                    }
+
+                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Updated with success!";
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo $apiResponse;
+                    break;
+
+                case 'DeleteSecurity' :
+                    //$this->permission_required = array('SecurityDelete');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }
+
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->deleteSecurity($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->deleteSecurity($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Deleted with success!";
+                    }
+
+                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Deleted with success!";
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo $apiResponse;
+                    break;
+            }
+
+        } else {
+            //get securitys list
+            $securityList = $modelo->getSecurityList();
+            if ($securityList["statusCode"] === 200){
+                $this->userdata['securityList'] = $securityList["body"];
+            }
+            if ($securityList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $securityList = $modelo->getSecurityList();
+                $this->userdata['securityList'] = $securityList["body"];
+            }
+
+            /**Carrega os arquivos do view**/
+            require ABSPATH . '/views/_includes/admin-header.php';
+
+            require ABSPATH . '/views/admin/admin-security-view.php';
+
+            require ABSPATH . '/views/_includes/admin-footer.php';
+        }
+    }
+
+    /**
+     * Carrega a página
+     * "/views/admin/admin-trees-view.php"
+     * @return void
+     */
+    public function trees(){
+        // Título da página
+        $this->title = 'Admin - Árvores';
+        //$this->permission_required = array('admLogin','userGroupsRead');
+
+        // Parametros da função
+        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
+
+        // obriga o login para aceder à pagina
+        if ( ! $this->logged_in) {
+
+            // Se não; garante o logout
+            $this->logout();
+
+            // Redireciona para a página de login
+            $this->goto_login();
+
+            // Garante que o script não vai passar daqui
+            return;
+        }
+
+        //Verifica se o usuário tem a permissão para acessar essa página
+        /*if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+
+            // Exibe uma mensagem
+            echo 'Você não tem permissões para acessar essa página.';
+
+            // Finaliza aqui
+            return;
+        }*/
+
+        $modelo = $this->load_model('admin-groups-model');
+
+        // processa chamadas ajax
+        if(isset($_POST['action']) && !empty($_POST['action'])) {
+            $action = $_POST['action'];
+            switch($action) {
+                case 'GetTree' :
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->getTreeById($data);
+                    $apiResponseBody = array();
+
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->getTreeById($data);
+                    }
+
+                    if ($apiResponse['statusCode'] === 200) { // 200 success
+                        $apiResponseBody = json_encode($apiResponse["body"]);
+                    }
+
+                    echo $apiResponseBody;
+                    break;
+
+                case 'AddTree' :
+                    //$this->permission_required = array('userGroupsCreate');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    /*if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }*/
+
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->addTree($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->addTree($data); //decode to check message from api
+                    }
+
+                    // quando statusCode = 201, a response nao vem com campo mensagem
+                    // entao é criado e encoded para ser enviado
+                    if ($apiResponse['statusCode'] === 201){ // 201 created
+                        $apiResponse["body"]['message'] = "Created with success!";
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    // se statsCode nao for 201, entao api response ja vem com um campo mensagem
+                    // assim so precisamos de fazer encode para ser enviado
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo $apiResponse;
+                    break;
+
+                case 'UpdateTree' :
+                    //$this->permission_required = array('userGroupsUpdate');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    /*if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }*/
+
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->updateTree($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->updateTree($data); //decode to check message from api
+
+                        /*$apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;*/
+                    }
+
+                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Updated with success!";
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo $apiResponse;
+                    break;
+
+                case 'DeleteGroup' :
+                    //$this->permission_required = array('userGroupsDelete');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    /*if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }*/
+
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->deleteTree($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->deleteTree($data); //decode to check message from api
+
+                        /*$apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;*/
+                    }
+
+                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Deleted with success!";
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo $apiResponse;
+                    break;
+            }
+
+        } else {
+            $this->userdata['groupsList'] = "";
+
+            /**Carrega os arquivos do view**/
+            require ABSPATH . '/views/_includes/admin-header.php';
+
+            require ABSPATH . '/views/admin/admin-groups-view.php';
+
+            require ABSPATH . '/views/_includes/admin-footer.php';
+        }
+    }
+
+
 
     /**
      * Carrega a página
