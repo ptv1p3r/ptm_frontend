@@ -121,7 +121,7 @@ class HomeController extends MainController
                             //constroi array de permissoes do user
                             $permissionsArray = array();
                             foreach ($userPermissions["body"][0] as $key => $value) {
-                                switch ($key){
+                                switch ($key) {
                                     case "homeLogin":
                                     case "admLogin":
                                     case "usersCreate":
@@ -144,7 +144,9 @@ class HomeController extends MainController
                                     case "treeImagesRead":
                                     case "treeImagesUpdate":
                                     case "treeImagesDelete":
-                                        if ($value == 1){ $permissionsArray[] = $key; }
+                                        if ($value == 1) {
+                                            $permissionsArray[] = $key;
+                                        }
                                         break;
                                 }
                             }
@@ -218,7 +220,7 @@ class HomeController extends MainController
 
         // Título da página
         $this->title = 'User - Dashboard';
-        $this->permission_required = 'homeLogin';
+        $this->permission_required = array('homeLogin');
 
         // Parametros da função
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -303,7 +305,7 @@ class HomeController extends MainController
 
         // Título da página
         $this->title = 'User - Settings';
-        $this->permission_required = 'usersRead';
+        $this->permission_required = array('usersRead');
 
         // Parametros da função
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -351,10 +353,10 @@ class HomeController extends MainController
                     break;
 
                 case 'UpdateUser' :
-                    $this->permission_required = 'usersUpdate';
+                    $this->permission_required = array('usersUpdate');
 
                     //Verifica se o user tem a permissão para realizar operaçao
-                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                    if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
                         $apiResponse["body"]['message'] = "You have no permission!";
 
                         echo json_encode($apiResponse);
@@ -362,8 +364,6 @@ class HomeController extends MainController
                     }
 
                     $data = $_POST['data'];
-
-
 
                     $apiResponse = $model->updateUser($data); //decode to check message from api
 
@@ -390,11 +390,90 @@ class HomeController extends MainController
                     echo($apiResponse);
                     break;
 
-                case 'DeleteUser' :
-                    $this->permission_required = 'usersDelete';
+                case 'UpdateUserPass' :
+                    $this->permission_required = array('usersUpdate');
 
                     //Verifica se o user tem a permissão para realizar operaçao
-                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                    if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }
+
+
+                    $data = $_POST['data'];
+                    $data[1]['value'] = hash('sha256', $data[1]['value']);
+                    $data[2]['value'] = hash('sha256', $data[2]['value']);
+                    $data[3]['value'] = hash('sha256', $data[3]['value']);
+
+
+                    $oldPassVal = $data[1]['value'];
+                    $newPassVal = $data[2]['value'];
+                    $confPassVal = $data[3]['value'];
+
+
+                    //Check password with DB
+                    if($oldPassVal != $_SESSION['userdata']['password']){
+                        //Array with status code message
+                        $response = array();
+                        $response["body"]['message'] = 'Palavra passe incorreta!';
+                        $response['statusCode'] = 0;
+                        echo json_encode($response);
+                        break;
+                    }
+                    //Validate if the new pass is the sames as old one
+                    if($newPassVal == $oldPassVal ){
+                        //Array with status code message
+                        $response = array();
+                        $response["body"]['message'] = 'A nova palavra passe não pode ser igual à antiga!';
+                        $response['statusCode'] = 1;
+                        echo json_encode($response);
+                        break;
+                    }
+                    //Validate if the new pass is equal to conf
+                    if($newPassVal != $confPassVal ){
+                        //Array with status code message
+                        $response = array();
+                        $response["body"]['message'] = 'Palavra passe não coincide!';
+                        $response['statusCode'] = 2;
+                        echo json_encode($response);
+                        break;
+                    }
+
+
+                    $apiResponse = $model->updatePassUser($data); //decode to check message from api
+
+
+                    if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Updated with success!";
+
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        $_SESSION['userdata']['password'] = $newPassVal;
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $model->updateUser($data); //decode to check message from api
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        $_SESSION['userdata']['password'] = $newPassVal;
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo($apiResponse);
+                    break;
+
+                case 'DeleteUser' :
+                    $this->permission_required = array('usersDelete');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
                         $apiResponse["body"]['message'] = "You have no permission!";
 
                         echo json_encode($apiResponse);

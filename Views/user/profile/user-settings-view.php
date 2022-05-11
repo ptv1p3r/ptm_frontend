@@ -18,7 +18,6 @@
             <div class="bg-white rounded-lg d-block d-sm-flex">
                 <div class="profile-tab-nav border-right">
 
-
                     <!--                    Podemos utilizar para colocar uma imagem de utilizador-->
                     <!--                    <div class="p-4">-->
                     <!--                        <div class="fa-xing-square text-center mb-3">-->
@@ -44,7 +43,7 @@
                         </a>
 
                         <!--                        Teste premissões-->
-                        <?php $this->permission_required = 'treeRead';
+                        <?php $this->permission_required = array('treeRead');
                         if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) { ?>
                             <a class="nav-link" id="application-tab" data-toggle="pill" href="#application" role="tab"
                                aria-controls="application" aria-selected="false">
@@ -54,8 +53,6 @@
                             <?php
                         }
                         ?>
-
-
                         <!--                        <a class="nav-link" id="notification-tab" data-toggle="pill" href="#notification" role="tab" aria-controls="notification" aria-selected="false">-->
                         <!--                            <i class="fa fa-bell text-center mr-1"></i>-->
                         <!--                            Notification-->
@@ -147,37 +144,46 @@
                     <!--Edit password tab section-->
                     <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
                         <h3 class="mb-4">Password Settings</h3>
-                        <div class="form-group">
-                            <input id="editUserId" name="editUserId" type="hidden" class="form-control"
-                                   value="<?php echo $user["id"] ?>">
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Password antiga</label>
-                                    <input type="password" class="form-control">
+                        <form id="updatePass">
+                            <div class="form-group">
+                                <input id="passEditUserId" name="passEditUserId" type="hidden" class="form-control"
+                                       value="<?php echo $user["id"] ?>">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Password antiga</label>
+                                        <input type="password" id="oldPass" name="oldPass" class="form-control"
+                                               required>
+                                        <span id="verifyOldPass" class="badge-warning hidden"></span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Nova password</label>
-                                    <input type="password" id="password" class="form-control">
-                                    <p class="registrationFormAlert" style="color:green;" id="CheckPasswordMatch">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Nova password</label>
+                                        <input type="password" id="pass" name="newPass" class="form-control"
+                                               required>
+                                        <span id="verifyEqualPass" class="badge-warning hidden"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Confirma a nova password</label>
+                                        <input type="password" id="verify" name="confPass" class="form-control"
+                                               required>
+                                        <span id="verifyMatchPass" class="badge-warning hidden"></span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Confirma a nova password</label>
-                                    <input type="password" id="confPass" class="form-control">
+                            <div>
+                                <div class="modal-footer">
+                                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                    <input type="submit" class="btn btn-info" value="Save">
                                 </div>
                             </div>
-                        </div>
-                        <div>
-                            <button class="btn btn-success save">Salvar</button>
-                            <!--                            <button class="btn btn-light">Cancel</button>-->
-                        </div>
+                        </form>
                     </div>
                     <!--End Edit password tab section-->
 
@@ -200,11 +206,9 @@
                     </div>
                     <!--Remove account tab section-->
 
-
                     <!--Test premissions account tab section-->
-
                     <div class="tab-pane fade" id="application" role="tabpanel" aria-labelledby="security-tab">
-                        <h3 class="mb-4">Remover conta</h3>
+                        <h3 class="mb-4">Teste das premissoes </h3>
                         <div class="row">
                         </div>
                         <div>
@@ -333,17 +337,9 @@
 
 <!--Script's section-->
 <script>
-
     $(document).ready(function () {
 
-        $('.save').on('click', function () {
-
-            guardar(); //guardar data
-
-        });
-
-
-        //////// ajax to get data to Modal Edit User
+        // ajax to get data to Modal Edit User
         $('.edit').on('click', function () {
             let formData = {
                 'action': "GetUser",
@@ -392,7 +388,6 @@
                 }
             });
         });
-
         // ajax to update modal data  Edit User
         $('#updateUser').submit(function (event) {
             event.preventDefault(); //prevent default action
@@ -462,7 +457,6 @@
             //     alert('batatas');
             // }
         });
-
         // ajax to Delete User
         $('#deleteUser').submit(function (event) {
             event.preventDefault(); //prevent default action
@@ -522,25 +516,83 @@
                 }
             });
         });
+        // ajax to update modal data  Edit User
+        $('#updatePass').submit(function (event) {
+            event.preventDefault(); //prevent default action
+            let formData = {
+                'action': "UpdateUserPass",
+                'data': $(this).serializeArray()
+            };
+            $.ajax({
+                url: "<?php echo HOME_URL . '/home/userSettings';?>",
+                dataType: "json",
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+                    //Status response error messages
 
-        $(".listen").keyup(function () {
-            $(this).attr("name", "user-field-updated");
-            console.log('batatas')
-        })
-
-
-        function checkPasswordMatch() {
-            let password = $("#txtNewPassword").val();
-            let confirmPassword = $("#txtConfirmPassword").val();
-            if (password != confirmPassword)
-                $("#CheckPasswordMatch").html("Passwords does not match!");
-            else
-                $("#CheckPasswordMatch").html("Passwords match.");
-        }
-
-        $(document).ready(function () {
-            $("#txtConfirmPassword").keyup(checkPasswordMatch);
+                    //Success response
+                    if (data.statusCode === 200) {
+                        //mensagem de Success
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.body.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                location.reload();
+                            }
+                        });
+                    } else if (data.statusCode === 400) {
+                        //Error message
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    } else {
+                        if (data.statusCode == 0) {
+                            $('#verifyOldPass').text(data.body.message);
+                            $('#verifyOldPass').show();
+                        }
+                        if (data.statusCode == 1) {
+                            $('#verifyEqualPass').text(data.body.message);
+                            $('#verifyEqualPass').show();
+                        }
+                        if (data.statusCode == 2) {
+                            $('#verifyMatchPass').text(data.body.message);
+                            $('#verifyMatchPass').show();
+                        }
+                    }
+                },
+                error: function (data) {
+                    //mensagem de Error
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Connection error, please try again.",
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        didClose: () => {
+                            //location.reload();
+                        }
+                    });
+                }
+            });
         });
+        //function handler spn messages
+        $('#updatePass').click(function () {
+            $(this).parent().find('#verifyOldPass').hide();
+            $(this).parent().find('#verifyEqualPass').hide();
+            $(this).parent().find('#verifyMatchPass').hide();
+        });
+
     });
 
 </script>
