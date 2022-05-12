@@ -127,19 +127,23 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" name="addGroupName" required>
+                                <input type="text" class="form-control" name="addTreeName" required>
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
-                                <input type="text" class="form-control" name="addGroupDescription" required>
+                                <label>TypeId</label>
+                                <input type="text" class="form-control" name="addTreeTypeId" required>
                             </div>
                             <div class="form-group">
-                                <label>SecurityId</label>
-                                <input type="number" class="form-control" name="addGroupSecurityId" required>
+                                <label>Latitude</label>
+                                <input type="number" class="form-control" name="addTreeLat" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Longitude</label>
+                                <input type="number" class="form-control" name="addTreeLng" required>
                             </div>
                             <div class="form-group">
                                 <label>Active</label>
-                                <input type="checkbox" class="form-control" name="addGroupActive">
+                                <input type="checkbox" class="form-control" name="addTreeActive">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -162,24 +166,28 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <input id="editGroupId" name="editGroupId" type="hidden" class="form-control" value="">
+                                <input id="editTreeId" name="editTreeId" type="hidden" class="form-control" value="">
                             </div>
 
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" name="editGroupName" required>
+                                <input type="text" class="form-control" name="editTreeName" required>
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
-                                <input type="text" class="form-control" name="editGroupDescription" required>
+                                <label>TypeId</label>
+                                <input type="text" class="form-control" name="editTreeTypeId" required>
                             </div>
                             <div class="form-group">
-                                <label>SecurityId</label>
-                                <input type="number" class="form-control" name="editGroupSecurityId" required>
+                                <label>Latitude</label>
+                                <input type="number" class="form-control" name="editTreeLat" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Longitude</label>
+                                <input type="number" class="form-control" name="editTreeLng" required>
                             </div>
                             <div class="form-group">
                                 <label>Active</label>
-                                <input type="checkbox" class="form-control" name="editGroupActive">
+                                <input type="checkbox" class="form-control" name="editTreeActive">
                             </div>
 
                         </div>
@@ -204,7 +212,7 @@
                         <div class="modal-body">
                             <p>Are you sure you want to delete this Tree?</p>
                             <p class="text-warning"><small>This action cannot be undone.</small></p>
-                            <input id="deleteGroupId" name="deleteGroupId" type="hidden" class="form-control" value="">
+                            <input id="deleteTreeId" name="deleteTreeId" type="hidden" class="form-control" value="">
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -430,8 +438,9 @@
 
                     $('[name="editTreeId"]').val(data[0]['id']);
                     $('[name="editTreeName"]').val(data[0]['name']);
-                    $('[name="editTreeDescription"]').val(data[0]['description']);
-                    $('[name="editTreeSecurityId"]').val(data[0]['securityId']);
+                    $('[name="editTreeTypeId"]').val(data[0]['typeId']);
+                    $('[name="editTreeLat"]').val(data[0]['lat']);
+                    $('[name="editTreeLng"]').val(data[0]['lng']);
 
                     if (data[0]['active'] === 1) {
                         $('[name="editTreeActive"]').attr('checked', true);
