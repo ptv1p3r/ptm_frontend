@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: V1p3r
- * Date: 17/10/2018
- * Time: 20:13
- */
 
 class AdminTreesModel extends MainModel {
 
@@ -31,7 +25,7 @@ class AdminTreesModel extends MainModel {
     public function getTreeById($id) {
         $result = null;
 
-        $url = API_URL . 'api/v1/groups/view/' . $id;
+        $url = API_URL . 'api/v1/trees/view/' . $id;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
@@ -48,7 +42,7 @@ class AdminTreesModel extends MainModel {
     {
         $result = null;
 
-        $url = API_URL . 'api/v1/groups/list';
+        $url = API_URL . 'api/v1/trees/list';
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
@@ -73,24 +67,24 @@ class AdminTreesModel extends MainModel {
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']) { //gets <input name="">
-                    case "addGroupName":
+                    case "addTreeName":
                         $normalizedData['name'] = $dataVector['value'];
                         break;
 
-                    case "addGroupDescription":
-                        $normalizedData['description'] = $dataVector['value'];
+                    case "addTreeTypeId":
+                        $normalizedData['typeId'] = $dataVector['value'];
                         break;
 
-                    case "addGroupSecurityId":
-                        $normalizedData['securityId'] = $dataVector['value'];
+                    case "addTreeLat":
+                        $normalizedData['lat'] = $dataVector['value'];
                         break;
 
-                    /*case "addGroupActive":
-                        $normalizedData['active'] = 1;
-                        break;*/
+                    case "addTreeLng":
+                        $normalizedData['lng'] = $dataVector['value'];
+                        break;
                 }
 
-                if ($dataVector['name'] == "addGroupActive"){
+                if ($dataVector['name'] == "addTreeActive"){
                     $normalizedData['active'] = "1";
                 } else {
                     $normalizedData['active'] = "0";
@@ -98,7 +92,101 @@ class AdminTreesModel extends MainModel {
             }
         }
 
-        $url = API_URL . 'api/v1/groups/create';
+        $url = API_URL . 'api/v1/trees/create';
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("POST", $url, $normalizedData, $userToken);
+        }
+
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+    /**
+     * Metodo adiciona TreeType
+     * @param $data
+     * @return array|null
+     */
+    public function addTreeType($data) {
+        $result = null;
+        $normalizedData = array();
+
+        // Not active by default
+        $normalizedData['active'] = "";
+
+        // get data from form array and package it to send to api
+        foreach ($data as $dataVector) {
+            foreach ($dataVector as $key => $value) {
+                switch ($dataVector['name']) { //gets <input name="">
+                    case "addTreeTypeName":
+                        $normalizedData['name'] = $dataVector['value'];
+                        break;
+
+                    case "addTreeTypeDescription":
+                        $normalizedData['description'] = $dataVector['value'];
+                        break;
+                }
+
+                if ($dataVector['name'] == "addTreeTypeActive"){
+                    $normalizedData['active'] = "1";
+                } else {
+                    $normalizedData['active'] = "0";
+                }
+            }
+        }
+
+        $url = API_URL . 'api/v1/trees/create';
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("POST", $url, $normalizedData, $userToken);
+        }
+
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+    /**
+     * Metodo adiciona TreeImages
+     * @param $data
+     * @return array|null
+     */
+    public function addTreeImages($data) {
+        $result = null;
+        $normalizedData = array();
+
+        // Not active by default
+        $normalizedData['active'] = "";
+
+        // get data from form array and package it to send to api
+        foreach ($data as $dataVector) {
+            foreach ($dataVector as $key => $value) {
+                switch ($dataVector['name']) { //gets <input name="">
+                    case "addTreeImageTreeId":
+                        $normalizedData['treeId'] = $dataVector['value'];
+                        break;
+
+                    case "addTreeImagePath":
+                        $normalizedData['path'] = $dataVector['value'];
+                        break;
+
+                    case "addTreeImageSize":
+                        $normalizedData['size'] = $dataVector['value'];
+                        break;
+
+                    case "addTreeImagePosition":
+                        $normalizedData['position'] = $dataVector['value'];
+                        break;
+                }
+
+                if ($dataVector['name'] == "addTreeImageActive"){
+                    $normalizedData['active'] = "1";
+                } else {
+                    $normalizedData['active'] = "0";
+                }
+            }
+        }
+
+        $url = API_URL . 'api/v1/trees/create';
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("POST", $url, $normalizedData, $userToken);
@@ -115,7 +203,7 @@ class AdminTreesModel extends MainModel {
      */
     public function updateTree($data) {
         $result = null;
-        $GroupId = null;
+        $TreeId = null;
         $normalizedData = array();
 
         // Not active by default
@@ -125,24 +213,24 @@ class AdminTreesModel extends MainModel {
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']){ //gets <input name="">
-                    case "editGroupId":
-                        $GroupId = $dataVector['value'];
-                        break;
-
-                    case "editGroupName":
+                    case "editTreeName":
                         $normalizedData['name'] = $dataVector['value'];
                         break;
 
-                    case "editGroupDescription":
-                        $normalizedData['description'] = $dataVector['value'];
+                    case "editTreeTypeId":
+                        $normalizedData['typeId'] = $dataVector['value'];
                         break;
 
-                    case "editGroupSecurityId":
-                        $normalizedData['securityId'] = $dataVector['value'];
+                    case "editTreeLat":
+                        $normalizedData['lat'] = $dataVector['value'];
+                        break;
+
+                    case "editTreeLng":
+                        $normalizedData['lng'] = $dataVector['value'];
                         break;
                 }
 
-                if ($dataVector['name'] == "editGroupActive"){
+                if ($dataVector['name'] == "editTreeActive"){
                     $normalizedData['active'] = "1";
                 } else {
                     $normalizedData['active'] = "0";
@@ -150,7 +238,103 @@ class AdminTreesModel extends MainModel {
             }
         }
 
-        $url = API_URL . 'api/v1/groups/edit/' . $GroupId;
+        $url = API_URL . 'api/v1/trees/edit/' . $TreeId;
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("PUT", $url, $normalizedData, $userToken);
+        }
+
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+    /**
+     * Metodo edita/update TreeType
+     * @param $data
+     * @return mixed
+     */
+    public function updateTreeType($data) {
+        $result = null;
+        $TreeId = null;
+        $normalizedData = array();
+
+        // Not active by default
+        $normalizedData['active'] = "";
+
+        // get data from form array and package it to send to api
+        foreach ($data as $dataVector) {
+            foreach ($dataVector as $key => $value) {
+                switch ($dataVector['name']){ //gets <input name="">
+                    case "editTreeTypeName":
+                        $normalizedData['name'] = $dataVector['value'];
+                        break;
+
+                    case "editTreeTypeDescription":
+                        $normalizedData['description'] = $dataVector['value'];
+                        break;
+                }
+
+                if ($dataVector['name'] == "editTreeTypeActive"){
+                    $normalizedData['active'] = "1";
+                } else {
+                    $normalizedData['active'] = "0";
+                }
+            }
+        }
+
+        $url = API_URL . 'api/v1/trees/edit/' . $TreeId;
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("PUT", $url, $normalizedData, $userToken);
+        }
+
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+    /**
+     * Metodo edita/update TreeImage
+     * @param $data
+     * @return mixed
+     */
+    public function updateTreeImage($data) {
+        $result = null;
+        $TreeId = null;
+        $normalizedData = array();
+
+        // Not active by default
+        $normalizedData['active'] = "";
+
+        // get data from form array and package it to send to api
+        foreach ($data as $dataVector) {
+            foreach ($dataVector as $key => $value) {
+                switch ($dataVector['name']){ //gets <input name="">
+                    case "editTreeImageTreeId":
+                        $normalizedData['treeId'] = $dataVector['value'];
+                        break;
+
+                    case "editTreeImagePath":
+                        $normalizedData['path'] = $dataVector['value'];
+                        break;
+
+                    case "editTreeImageSize":
+                        $normalizedData['size'] = $dataVector['value'];
+                        break;
+
+                    case "editTreeImagePosition":
+                        $normalizedData['position'] = $dataVector['value'];
+                        break;
+                }
+
+                if ($dataVector['name'] == "editTreeImageActive"){
+                    $normalizedData['active'] = "1";
+                } else {
+                    $normalizedData['active'] = "0";
+                }
+            }
+        }
+
+        $url = API_URL . 'api/v1/trees/edit/' . $TreeId;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("PUT", $url, $normalizedData, $userToken);
@@ -224,14 +408,72 @@ class AdminTreesModel extends MainModel {
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']){ //gets input name=""
-                    case "deleteGroupId":
+                    case "deleteTreeId":
                         $GroupId = $dataVector['value'];
                         break;
                 }
             }
         }
 
-        $url = API_URL . 'api/v1/groups/delete/' . $GroupId;
+        $url = API_URL . 'api/v1/trees/delete/' . $GroupId;
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("DELETE", $url, '', $userToken);
+        }
+
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+    /**
+     * Metodo delete TreeType
+     * @param $data
+     * @return mixed
+     */
+    public function deleteTreeType($data) {
+        $result = null;
+        $TreeTypeId = null;
+
+        foreach ($data as $dataVector) {
+            foreach ($dataVector as $key => $value) {
+                switch ($dataVector['name']){ //gets input name=""
+                    case "deleteTreeTypeId":
+                        $GroupId = $dataVector['value'];
+                        break;
+                }
+            }
+        }
+
+        $url = API_URL . 'api/v1/trees/delete/' . $TreeTypeId;
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("DELETE", $url, '', $userToken);
+        }
+
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+    /**
+     * Metodo delete TreeImage
+     * @param $data
+     * @return mixed
+     */
+    public function deleteTreeImage($data) {
+        $result = null;
+        $TreeImageId = null;
+
+        foreach ($data as $dataVector) {
+            foreach ($dataVector as $key => $value) {
+                switch ($dataVector['name']){ //gets input name=""
+                    case "deleteTreeImageId":
+                        $GroupId = $dataVector['value'];
+                        break;
+                }
+            }
+        }
+
+        $url = API_URL . 'api/v1/trees/delete/' . $TreeImageId;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("DELETE", $url, '', $userToken);
