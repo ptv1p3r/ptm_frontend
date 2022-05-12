@@ -280,6 +280,14 @@
             accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
         }).addTo(map);
 
+        var popup = L.popup();
+        function onMapClick(e) {
+            popup
+                .setLatLng(e.latlng)
+                .setContent("LAT: " + e.latlng.lat + " LNG: " + e.latlng.lng)
+                .openOn(map);
+        }
+        map.on('click', onMapClick);
 
 
         //CRUD
