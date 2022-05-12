@@ -11,7 +11,7 @@
 <div class="container">
 
     <div class="row  justify-content-center align-items-center" style="margin-top: 100px">
-        <img src="../../Images/logo.png" alt="">
+        <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png' ?>" alt="Adote uma árvore.">
         <h1 class="text-light">Project Tree Management</h1>
     </div>
 
