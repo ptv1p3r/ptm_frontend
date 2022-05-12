@@ -818,7 +818,7 @@ class AdminController extends MainController
     public function trees(){
         // Título da página
         $this->title = 'Admin - Árvores';
-        //$this->permission_required = array('admLogin','userGroupsRead');
+        $this->permission_required = array('admLogin','treesRead');
 
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
@@ -837,14 +837,14 @@ class AdminController extends MainController
         }
 
         //Verifica se o usuário tem a permissão para acessar essa página
-        /*if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+        if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
 
             // Exibe uma mensagem
             echo 'Você não tem permissões para acessar essa página.';
 
             // Finaliza aqui
             return;
-        }*/
+        }
 
         $modelo = $this->load_model('admin-groups-model');
 
@@ -872,15 +872,15 @@ class AdminController extends MainController
                     break;
 
                 case 'AddTree' :
-                    //$this->permission_required = array('userGroupsCreate');
+                    $this->permission_required = array('treesCreate');
 
                     //Verifica se o user tem a permissão para realizar operaçao
-                    /*if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
                         $apiResponse["body"]['message'] = "You have no permission!";
 
                         echo json_encode($apiResponse);
                         break;
-                    }*/
+                    }
 
                     $data = $_POST['data'];
                     $apiResponse = $modelo->addTree($data); //decode to check message from api
@@ -909,15 +909,15 @@ class AdminController extends MainController
                     break;
 
                 case 'UpdateTree' :
-                    //$this->permission_required = array('userGroupsUpdate');
+                    $this->permission_required = array('treesUpdate');
 
                     //Verifica se o user tem a permissão para realizar operaçao
-                    /*if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
                         $apiResponse["body"]['message'] = "You have no permission!";
 
                         echo json_encode($apiResponse);
                         break;
-                    }*/
+                    }
 
                     $data = $_POST['data'];
                     $apiResponse = $modelo->updateTree($data); //decode to check message from api
@@ -945,16 +945,16 @@ class AdminController extends MainController
                     echo $apiResponse;
                     break;
 
-                case 'DeleteGroup' :
-                    //$this->permission_required = array('userGroupsDelete');
+                case 'DeleteTree' :
+                    $this->permission_required = array('treesDelete');
 
                     //Verifica se o user tem a permissão para realizar operaçao
-                    /*if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
                         $apiResponse["body"]['message'] = "You have no permission!";
 
                         echo json_encode($apiResponse);
                         break;
-                    }*/
+                    }
 
                     $data = $_POST['data'];
                     $apiResponse = $modelo->deleteTree($data); //decode to check message from api
