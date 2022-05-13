@@ -38,7 +38,7 @@ class RegisterController extends MainController
         require ABSPATH . '/views/_includes/footer.php';
     }
 
-
+// Function create a new user
     public function newUser()
     {
         /**
@@ -79,7 +79,7 @@ class RegisterController extends MainController
 
         }
     }
-
+//Function recover account password
     public function recover()
     {
         /**
@@ -88,7 +88,7 @@ class RegisterController extends MainController
          */
 
         // Title page
-        $this->title = 'User';
+        $this->title = 'Recover password';
 
         // Function parameters
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -100,6 +100,31 @@ class RegisterController extends MainController
         require ABSPATH . '/views/user/registration/recover-view.php';
         require ABSPATH . '/views/_includes/footer.php';
     }
+
+
+//Function password replace
+    public function passRecover()
+    {
+        /**
+         * Page load
+         * "/views/home/pass-change-view.php"
+         */
+
+        // Title page
+        $this->title = 'Password replace';
+
+        // Function parameters
+        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
+        //$modelo = $this->load_model('user-model');
+
+        /** load files from view **/
+        require ABSPATH . '/views/_includes/header.php';
+        require ABSPATH . '/views/user/registration/pass-change-view.php';
+        require ABSPATH . '/views/_includes/footer.php';
+    }
+
+
 
 
 }
