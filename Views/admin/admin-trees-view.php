@@ -244,8 +244,8 @@
 
         // TreesMap
         var greenIcon = L.icon({
-            iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-green.png',
-            shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
+            iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/mapMarker.png'?>',
+            shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
 
             iconSize: [38, 95], // size of the icon
             shadowSize: [50, 64], // size of the shadow
@@ -255,8 +255,8 @@
         });
 
         var blueIcon = L.icon({
-            iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-red.png',
-            shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
+            iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/blue-mapMarker.png'?>',
+            shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
 
             iconSize: [38, 95], // size of the icon
             shadowSize: [50, 64], // size of the shadow
@@ -298,7 +298,7 @@
                 .setLatLng(e.latlng)
                 .setContent(
                     `
-                    <div class="card" style="width: 12rem; border: unset">
+                    <div class="card" style="width: 10rem; border: unset">
                       <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'?>" class="card-img-top" alt="">
                       <div class="card-body">
                         <h5 class="card-title">Arvore exemplo</h5>
@@ -312,6 +312,7 @@
                     `
                 )
                 .openOn(map);
+            //map.flyTo([e.latlng.lat, e.latlng.lng], 15);
         }
 
 
