@@ -267,8 +267,8 @@
 
         let map = L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
 
-        var marker = L.marker([37.3174025204363, -8.566799289969723], {icon: greenIcon}).addTo(map);
-        var marker = L.marker([37.280008400415554, -8.554293570462498], {icon: blueIcon}).addTo(map);
+        var marker = L.marker([37.3174025204363, -8.566799289969723], {icon: greenIcon, user: 'none'}).addTo(map).on("click", markerOnClick);
+        var marker = L.marker([37.280008400415554, -8.554293570462498], {icon: blueIcon, user: 'user1'}).addTo(map).on("click", markerOnClick);
 
 
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -280,15 +280,39 @@
             accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
         }).addTo(map);
 
-        //map popups
-        var popup = L.popup();
+        //popup on map click
+        /*var popupMap = L.popup();
         function onMapClick(e) {
-            popup
+            popupMap
                 .setLatLng(e.latlng)
                 .setContent("LAT: " + e.latlng.lat + " LNG: " + e.latlng.lng)
                 .openOn(map);
         }
-        map.on('click', onMapClick);
+        map.on('click', onMapClick);*/
+
+        //popup on marker click
+        var popupMarker = L.popup();
+        function markerOnClick(e)
+        {
+            popupMarker
+                .setLatLng(e.latlng)
+                .setContent(
+                    `
+                    <div class="card" style="width: 12rem; border: unset">
+                      <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'?>" class="card-img-top" alt="">
+                      <div class="card-body">
+                        <h5 class="card-title">Arvore exemplo</h5>
+                        <p class="card-text">Algo sobre a arvore.</p>
+                        <p class="card-text">Padrinho: ` + this.options.user + `</p>
+                        <p class="card-text">Latitude: ` + e.latlng.lat + `</p>
+                        <p class="card-text">Longitude: ` + e.latlng.lng + `</p>
+                        <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+                      </div>
+                    </div>
+                    `
+                )
+                .openOn(map);
+        }
 
 
         //CRUD
