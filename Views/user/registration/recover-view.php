@@ -22,12 +22,12 @@
                             <br>
                         </div>
                         <!--Form Init-->
-                        <form id="addNewUser">
+                        <form id="recPass">
                             <ul class="row">
 
                                 <li class="col-md-12">
                                     <div class="form-group input-group">
-                                        <input type="email" name="addUserEmail" placeholder="Email" class="form-control"
+                                        <input type="email" name="userEmail" placeholder="Email" class="form-control"
                                                required>
                                     </div>
                                 </li>
@@ -60,66 +60,66 @@
 <script>
 
     //Main functions from this view
-    //$(document).ready(function () {
-    //    $('#addNewUser').submit(function (event) {
-    //        event.preventDefault(); //prevent default action
-    //        let formData = {
-    //            'action': "AddNewUser",
-    //            'data': $(this).serializeArray()
-    //        };
-    //        $.ajax({
-    //            url: "<?php //echo HOME_URL . '/register/newUser';?>//",
-    //            dataType: "json",
-    //            type: 'POST',
-    //            data: formData,
-    //            beforeSend: function () { // Load the spinner.
-    //                $('#loader').removeClass('hidden')
-    //            },
-    //            success: function (data) {
-    //                if (data.statusCode === 201) {
-    //                    //mensagem de Success
-    //                    Swal.fire({
-    //                        title: 'Success!',
-    //                        text: data.body.message,
-    //                        icon: 'success',
-    //                        showConfirmButton: false,
-    //                        timer: 2000,
-    //                        didClose: () => {
-    //                            window.location.href = "<?php //echo HOME_URL . '/home';?>//";
-    //                        }
-    //                    });
-    //                } else {
-    //                    //mensagem de Error
-    //                    Swal.fire({
-    //                        title: 'Error!',
-    //                        text: data.body.message,
-    //                        icon: 'error',
-    //                        showConfirmButton: false,
-    //                        timer: 2000,
-    //                        didClose: () => {
-    //                            //location.reload();
-    //                        }
-    //                    });
-    //                }
-    //            }, complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
-    //                $('#loader').addClass('hidden')
-    //            },
-    //            error: function (data) {
-    //                //mensagem de Error
-    //                Swal.fire({
-    //                    title: 'Error!',
-    //                    text: "Connection error, please try again.",
-    //                    icon: 'error',
-    //                    showConfirmButton: false,
-    //                    timer: 2000,
-    //                    didClose: () => {
-    //                        //location.reload();
-    //                    }
-    //                });
-    //            },
-    //        });
-    //    });
-    //});
+    $(document).ready(function () {
+        $('#recPass').submit(function (event) {
+            event.preventDefault(); //prevent default action
+            let formData = {
+                'action': "RecoverPass",
+                'data': $(this).serializeArray()
+            };
+            $.ajax({
+                url: "<?php echo HOME_URL . '/register/recover';?>",
+                dataType: "json",
+                type: 'POST',
+                data: formData,
+                beforeSend: function () { // Load the spinner.
+                    $('#loader').removeClass('hidden')
+                },
+                success: function (data) {
+                    if (data.statusCode === 200) {
+                        //mensagem de Success
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.body.message,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            // timer: 3000,
+                            didClose: () => {
+                                window.location.href = "<?php echo HOME_URL . '/home';?>";
+                            }
+                        });
+                    } else {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    }
+                }, complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
+                },
+                error: function (data) {
+                    //mensagem de Error
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Connection error, please try again.",
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        didClose: () => {
+                            //location.reload();
+                        }
+                    });
+                },
+            });
+        });
+    });
 
 
 </script>
