@@ -71,16 +71,28 @@ class AdminTreesModel extends MainModel {
                         $normalizedData['name'] = $dataVector['value'];
                         break;
 
+                    case "addTreeNameCommon":
+                        $normalizedData['nameCommon'] = $dataVector['value'];
+                        break;
+
+                    case "addTreeDescription":
+                        $normalizedData['description'] = $dataVector['value'];
+                        break;
+
+                    case "addTreeObservations":
+                        $normalizedData['observations'] = $dataVector['value'];
+                        break;
+
                     case "addTreeTypeId":
-                        $normalizedData['typeId'] = $dataVector['value'];
+                        $normalizedData['typeId'] = (int) $dataVector['value'];
                         break;
 
                     case "addTreeLat":
-                        $normalizedData['lat'] = $dataVector['value'];
+                        $normalizedData['lat'] = (float) $dataVector['value'];
                         break;
 
                     case "addTreeLng":
-                        $normalizedData['lng'] = $dataVector['value'];
+                        $normalizedData['lng'] = (float) $dataVector['value'];
                         break;
                 }
 
@@ -213,20 +225,36 @@ class AdminTreesModel extends MainModel {
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']){ //gets <input name="">
+                    case "editTreeId":
+                        $TreeId = $dataVector['value'];
+                        break;
+
                     case "editTreeName":
                         $normalizedData['name'] = $dataVector['value'];
                         break;
 
+                    case "editTreeNameCommon":
+                        $normalizedData['nameCommon'] = $dataVector['value'];
+                        break;
+
+                    case "editTreeDescription":
+                        $normalizedData['description'] = $dataVector['value'];
+                        break;
+
+                    case "editTreeObservations":
+                        $normalizedData['observations'] = $dataVector['value'];
+                        break;
+
                     case "editTreeTypeId":
-                        $normalizedData['typeId'] = $dataVector['value'];
+                        $normalizedData['typeId'] = (int) $dataVector['value'];
                         break;
 
                     case "editTreeLat":
-                        $normalizedData['lat'] = $dataVector['value'];
+                        $normalizedData['lat'] = (float) $dataVector['value'];
                         break;
 
                     case "editTreeLng":
-                        $normalizedData['lng'] = $dataVector['value'];
+                        $normalizedData['lng'] = (float) $dataVector['value'];
                         break;
                 }
 
