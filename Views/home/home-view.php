@@ -903,42 +903,118 @@
 <!--InstaGram End-->
 
 <script>
-    var greenIcon = L.icon({
-        iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-green.png',
-        shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
 
-        iconSize: [38, 95], // size of the icon
-        shadowSize: [50, 64], // size of the shadow
-        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-        shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+
+    $(document).ready(function () {
+
+        // TreesMap
+        var greenIcon = L.icon({
+            iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/mapMarker.png'?>',
+            shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
+
+            iconSize: [38, 95], // size of the icon
+            shadowSize: [50, 64], // size of the shadow
+            iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+
+        var blueIcon = L.icon({
+            iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/blue-mapMarker.png'?>',
+            shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
+
+            iconSize: [38, 95], // size of the icon
+            shadowSize: [50, 64], // size of the shadow
+            iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+
+        let map = L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
+
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
+        }).addTo(map);
+
+        //function to load all trees from API
+        function mapLoadTrees() {
+            <?php if (!empty($this->userdata['allTreesList'])) {
+            foreach ($this->userdata['allTreesList'] as $key => $tree) {?>
+            marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
+                icon: greenIcon,
+                user: 'none'
+            }).addTo(map).on("click", markerOnClick);
+            <?php }
+            }?>
+        }
+        mapLoadTrees();
+
+
+        //function to load user private trees from API
+        function mapUserLoadTrees() {
+            <?php if (!empty($this->userdata['getTreesList'])) {
+            foreach ($this->userdata['getTreesList'] as $key => $tree) {?>
+            marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
+                icon: greenIcon,
+                user: 'none'
+            }).addTo(map).on("click", markerOnClick);
+            <?php }
+            }?>
+        }
+        mapUserLoadTrees();
+
+
+
+        //popup on map click
+        /*var popupMap = L.popup();
+        function onMapClick(e) {
+            popupMap
+                .setLatLng(e.latlng)
+                .setContent("LAT: " + e.latlng.lat + " LNG: " + e.latlng.lng)
+                .openOn(map);
+        }
+        map.on('click', onMapClick);*/
+
+        //popup on marker click
+        var popupMarker = L.popup();
+
+        function markerOnClick(e) {
+            popupMarker
+                .setLatLng(e.latlng)
+                .setContent(
+                    `
+                    <div class="card" style="width: 10rem; border: unset">
+                      <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'?>" class="card-img-top" alt="">
+                      <div class="card-body">
+                        <h5 class="card-title">Arvore exemplo</h5>
+                        <p class="card-text">Algo sobre a arvore.</p>
+                        <p class="card-text">Padrinho: ` + this.options.user + `</p>
+                        <p class="card-text">Latitude: ` + e.latlng.lat + `</p>
+                        <p class="card-text">Longitude: ` + e.latlng.lng + `</p>
+                        <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+                      </div>
+                    </div>
+                    `
+                )
+                .openOn(map);
+            //map.flyTo([e.latlng.lat, e.latlng.lng], 15);
+        }
+
+//chamada ajax para mostrar a árvore ??? Ajax
+//         Necessita de manda o userId e o treeId para o controlador
+
+
+        var locPalm = new L.LatLng(26.5,-80.184);
+        var locBroward = new L.LatLng(26.114, -80.216);
+        function zoomTo(location) {
+            map.setView(location, map.getZoom());
+        }
+
     });
-
-    var blueIcon = L.icon({
-        iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-red.png',
-        shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
-
-        iconSize: [38, 95], // size of the icon
-        shadowSize: [50, 64], // size of the shadow
-        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-        shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
-    });
-
-    let map = L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
-
-    var marker = L.marker([37.3174025204363, -8.566799289969723], {icon: greenIcon}).addTo(map);
-    var marker = L.marker([37.280008400415554, -8.554293570462498], {icon: blueIcon}).addTo(map);
-
-
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-        // attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox/streets-v11',
-        tileSize: 512,
-        zoomOffset: -1,
-        accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
-    }).addTo(map);
 
 
 </script>
