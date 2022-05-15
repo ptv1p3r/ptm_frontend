@@ -848,7 +848,7 @@ class AdminController extends MainController
             return;
         }
 
-        $modelo = $this->load_model('admin-groups-model');
+        $modelo = $this->load_model('admin-trees-model');
 
         // processa chamadas ajax
         if(isset($_POST['action']) && !empty($_POST['action'])) {
@@ -986,7 +986,17 @@ class AdminController extends MainController
             }
 
         } else {
-            $this->userdata['treesList'] = "";
+            $treesList = $modelo->getTreeList();
+            if ($treesList["statusCode"] === 200){
+                $this->userdata['treesList'] = $treesList["body"];
+            }
+            if ($treesList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $treesList = $modelo->getTreeList();
+                $this->userdata['treesList'] = $treesList["body"];
+            }
 
             /**Carrega os arquivos do view**/
             require ABSPATH . '/views/_includes/admin-header.php';
