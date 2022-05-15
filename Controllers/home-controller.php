@@ -22,22 +22,28 @@ class HomeController extends MainController
         $this->title = 'Home';
 
         // Parametros da função
-        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+//        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
 
         // obriga o login para aceder à pagina
         if (!$this->logged_in) {
 
-            /** Carrega os arquivos do view **/
+
+            //Load all trees into home view
+            $model = $this->load_model('user-trees-model');
+            $allTrees = $model->getAllTrees();
+            $this->userdata['allTreesList'] = $allTrees['body'];
+
+
+            /** Load public files view **/
 
             require ABSPATH . '/views/_includes/header.php';
 
             require ABSPATH . '/views/home/home-view.php';
 
             require ABSPATH . '/views/_includes/footer.php';
-        } else {
 
-            /** Carrega os arquivos do view **/
+        } else {
 
             require ABSPATH . '/views/_includes/user-header.php';
 
@@ -46,6 +52,7 @@ class HomeController extends MainController
             require ABSPATH . '/views/_includes/footer.php';
         }
     }
+
 
     /**
      * Login
@@ -223,7 +230,7 @@ class HomeController extends MainController
         $this->permission_required = array('homeLogin');
 
         // Parametros da função
-        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+//        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
         // obriga o login para aceder à pagina
         if (!$this->logged_in) {
@@ -248,7 +255,46 @@ class HomeController extends MainController
 
         }
 
-        //$modelo = $this->load_model('home-model');
+        //Load all specif trees
+        $model = $this->load_model('user-trees-model');
+
+
+        if (isset($_POST['action']) && !empty($_POST['action'])) {
+            $action = $_POST['action'];
+            switch ($action) {
+                case 'GetTree' :
+                    $data = $_POST['data'];
+                    $apiResponse = $model->getTreeById($data);
+                    $apiResponseBody = array();
+
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $model->getTreeById($data);
+                    }
+
+                    if ($apiResponse['statusCode'] === 200) { // 200 success
+                        $apiResponseBody = json_encode($apiResponse["body"]);
+                    }
+
+                    echo $apiResponseBody;
+                    break;
+            }
+        }else{
+            $treesList = $model->getTreesList();
+            if ($treesList["statusCode"] === 200){
+                $this->userdata['treesList'] = $treesList["body"];
+            }
+            if ($treesList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $treesList = $model->getTreeList();
+                $this->userdata['treesList'] = $treesList["body"];
+            }
+        }
+
 
         /** Carrega os arquivos do view **/
 
@@ -414,7 +460,7 @@ class HomeController extends MainController
 
 
                     //Check password with DB
-                    if($oldPassVal != $_SESSION['userdata']['password']){
+                    if ($oldPassVal != $_SESSION['userdata']['password']) {
                         //Array with status code message
                         $response = array();
                         $response["body"]['message'] = 'Palavra passe incorreta!';
@@ -423,7 +469,7 @@ class HomeController extends MainController
                         break;
                     }
                     //Validate if the new pass is the sames as old one
-                    if($newPassVal == $oldPassVal ){
+                    if ($newPassVal == $oldPassVal) {
                         //Array with status code message
                         $response = array();
                         $response["body"]['message'] = 'A nova palavra passe não pode ser igual à antiga!';
@@ -432,7 +478,7 @@ class HomeController extends MainController
                         break;
                     }
                     //Validate if the new pass is equal to conf
-                    if($newPassVal != $confPassVal ){
+                    if ($newPassVal != $confPassVal) {
                         //Array with status code message
                         $response = array();
                         $response["body"]['message'] = 'Palavra passe não coincide!';
