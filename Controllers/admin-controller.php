@@ -410,14 +410,14 @@ class AdminController extends MainController
             //get group list
             $groupsList = $modelo->getGroupList();
             if ($groupsList["statusCode"] === 200){
-                $this->userdata['groupsList'] = $groupsList["body"];
+                $this->userdata['groupsList'] = $groupsList["body"]["groups"];
             }
             if ($groupsList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $groupsList = $modelo->getGroupList();
-                $this->userdata['groupsList'] = $groupsList["body"];
+                $this->userdata['groupsList'] = $groupsList["body"]["groups"];
             }
 
             /**Carrega os arquivos do view**/
@@ -600,20 +600,20 @@ class AdminController extends MainController
             //get users list
             $userList = $modelo->getUserList();
             if ($userList["statusCode"] === 200){
-                $this->userdata['usersList'] = $userList["body"];
+                $this->userdata['usersList'] = $userList["body"]["users"];
             }
             if ($userList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $userList = $modelo->getUserList();
-                $this->userdata['usersList'] = $userList["body"];
+                $this->userdata['usersList'] = $userList["body"]["users"];
             }
 
             //get country list
             $countryList = $modelo->getCountryList();
             if ($countryList["statusCode"] != 401){
-                $this->userdata['countryList'] = $countryList["body"];
+                $this->userdata['countryList'] = $countryList["body"]["countries"];
             }
 
             /**Carrega os arquivos do view**/
@@ -793,14 +793,14 @@ class AdminController extends MainController
             //get securitys list
             $securityList = $modelo->getSecurityList();
             if ($securityList["statusCode"] === 200){
-                $this->userdata['securityList'] = $securityList["body"];
+                $this->userdata['securityList'] = $securityList["body"]["securities"];
             }
             if ($securityList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $securityList = $modelo->getSecurityList();
-                $this->userdata['securityList'] = $securityList["body"];
+                $this->userdata['securityList'] = $securityList["body"]["securities"];
             }
 
             /**Carrega os arquivos do view**/
@@ -988,14 +988,14 @@ class AdminController extends MainController
         } else {
             $treesList = $modelo->getTreeList();
             if ($treesList["statusCode"] === 200){
-                $this->userdata['treesList'] = $treesList["body"];
+                $this->userdata['treesList'] = $treesList["body"]["trees"];
             }
             if ($treesList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $treesList = $modelo->getTreeList();
-                $this->userdata['treesList'] = $treesList["body"];
+                $this->userdata['treesList'] = $treesList["body"]["trees"];
             }
 
             /**Carrega os arquivos do view**/
