@@ -62,28 +62,32 @@ class RecoverModel extends MainModel
     {
         $result = null;
         $normalizedData = array();
+        $UserId = null;
 
         // get data from form array and package it to send to api
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']) {
 
-                    case "userEmail":
-                        $normalizedData['email'] = $dataVector['value'];
+                    case "userId":
+                        $UserId = $dataVector['value'];
                         break;
 
+                    case "userToken":
+                        $normalizedData['token'] = $dataVector['value'];
+                        break;
+
+                    case "newPass":
+                        $normalizedData['password'] = $dataVector['value'];
+                        break;
 
                 }
             }
         }
-        $url = API_URL . 'api/v1/recover';
+        $url = API_URL . 'api/v1/recover/id' . $UserId;
         $result = callAPI("POST", $url, $normalizedData/*, $userToken*/);
         return json_decode(json_encode($result), true);
 
     }
-
-
-
-
 
 }
