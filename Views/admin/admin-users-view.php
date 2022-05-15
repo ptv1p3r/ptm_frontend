@@ -73,7 +73,15 @@
                                 <td><?php echo $user["locality"] ?></td>
                                 <td><?php echo $user["mobile"] ?></td>
                                 <td><?php echo $user["nif"] ?></td>
-                                <td><?php echo /*getCountryById(*/$user["countryId"] ?></td>
+                                <td><?php
+                                    if (!empty($this->userdata['countryList'])) {
+                                        foreach ($this->userdata['countryList'] as $key => $country) {
+                                            if ( $country["id"] == $user["countryId"]){
+                                                echo $country["name"];
+                                            }
+                                        }
+                                    }
+                                    ?></td>
                                 <td><?php echo $user["active"] ?></td>
                                 <td><?php echo $user["activationDate"] ?></td>
                                 <td><?php echo $user["dateCreated"] ?></td>
@@ -260,10 +268,10 @@
                                 <label>Email</label>
                                 <input type="email" class="form-control" name="editUserEmail" required>
                             </div>
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label>Password</label>
                                 <input type="password" class="form-control" name="editUserPassword" required>
-                            </div>
+                            </div>-->
                             <div class="form-group">
                                 <label>GroupId</label>
                                 <input type="text" class="form-control" name="editUserGroupId" required>
@@ -446,10 +454,28 @@
         $('#editUser').submit(function (event) {
             event.preventDefault(); //prevent default action
 
+            //Ve se a data dos inputs mudou para formar so a data necessaria para o PATCH
+            let formDataChanged = [];
+            $('#editUser input').each(function() { //para cada input vai ver
+                if($(this).attr('name') === "editUserId" || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
+                    let emptyArray = { name: "", value: "" };
+
+                    emptyArray.name = $(this).attr('name');
+                    emptyArray.value = $(this).val();
+
+                    formDataChanged.push(emptyArray);
+                }
+            });
+
             let formData = {
                 'action' : "UpdateUser",
-                'data'   : $(this).serializeArray()
+                'data'   : formDataChanged
             };
+
+           /* let formData = {
+                'action' : "UpdateUser",
+                'data'   : $(this).serializeArray()
+            };*/
 
             $.ajax({
                 url : "<?php echo HOME_URL . '/admin/users';?>",
@@ -521,7 +547,7 @@
                     $('[name="editUserName"]').val(data[0]['name']);
                     $('[name="editUserEntity"]').val(data[0]['entity']);
                     $('[name="editUserEmail"]').val(data[0]['email']);
-                    $('[name="editUserPassword"]').val(data[0]['password']);
+                    //$('[name="editUserPassword"]').val(data[0]['password']);
                     $('[name="editUserGroupId"]').val(data[0]['groupId']);
                     $('[name="editUserDateBirth"]').val(data[0]['dateBirth']);
                     $('[name="editUserAddress"]').val(data[0]['address']);
@@ -537,6 +563,12 @@
                     } else {
                         $('[name="editUserActive"]').attr('checked', false);
                     }
+
+                    //atribui atributo .data("lastValue") a cada input do form editGroup
+                    // para se poder comparar entre os dados anteriores e os current
+                    $('#editUser input').each(function() {
+                        $(this).data('lastValue', $(this).val());
+                    });
 
                     $("#editUserModal").modal('show');
 
