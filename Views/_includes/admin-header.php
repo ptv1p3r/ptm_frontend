@@ -1,11 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: lmore
- * Date: 26/01/2019
- * Time: 12:03
- */
-?>
+<?php ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,7 +22,9 @@
     <!--dashboard charts-->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
 
+    <!-- fontawesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="<?php echo auto_version('../../css/sb-admin.css'); ?>">
     <link rel="stylesheet" href="<?php echo auto_version('../../css/ptm.css'); ?>">
@@ -37,6 +32,8 @@
     <!-- Lib Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+
+
 
     <script src=<?php echo auto_version('../../js/global-functions.js'); ?>></script>
 
@@ -56,8 +53,7 @@
     <!-- Navbar -->
     <ul class="navbar-nav ml-auto ml-md-2">
         <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="" id="userDropdown" role="button"
-               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img src="<?php echo HOME_URL . '/Images/user.png' ?>" alt="User space" height="48">
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
