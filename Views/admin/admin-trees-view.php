@@ -40,6 +40,9 @@
                     <thead>
                     <tr>
                         <th>name</th>
+                        <th>nameCommon</th>
+                        <th>description</th>
+                        <th>observations</th>
                         <th>typeId</th>
                         <th>lat</th>
                         <th>lng</th>
@@ -55,6 +58,9 @@
                             <tbody>
                             <tr>
                                 <td><?php echo $tree["name"] ?></td>
+                                <td><?php echo $tree["nameCommon"] ?></td>
+                                <td><?php echo $tree["description"] ?></td>
+                                <td><?php echo $tree["observations"] ?></td>
                                 <td><?php echo $tree["typeId"] ?></td>
                                 <td><?php echo $tree["lat"] ?></td>
                                 <td><?php echo $tree["lng"] ?></td>
@@ -130,16 +136,28 @@
                                 <input type="text" class="form-control" name="addTreeName" required>
                             </div>
                             <div class="form-group">
+                                <label>NameCommon</label>
+                                <input type="text" class="form-control" name="addTreeNameCommon" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <input type="text" class="form-control" name="addTreeDescription" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Observations</label>
+                                <input type="text" class="form-control" name="addTreeObservations" required>
+                            </div>
+                            <div class="form-group">
                                 <label>TypeId</label>
                                 <input type="text" class="form-control" name="addTreeTypeId" required>
                             </div>
                             <div class="form-group">
                                 <label>Latitude</label>
-                                <input type="number" class="form-control" name="addTreeLat" required>
+                                <input type="number" step="any" class="form-control" name="addTreeLat" required>
                             </div>
                             <div class="form-group">
                                 <label>Longitude</label>
-                                <input type="number" class="form-control" name="addTreeLng" required>
+                                <input type="number" step="any" class="form-control" name="addTreeLng" required>
                             </div>
                             <div class="form-group">
                                 <label>Active</label>
@@ -174,16 +192,28 @@
                                 <input type="text" class="form-control" name="editTreeName" required>
                             </div>
                             <div class="form-group">
+                                <label>NameCommon</label>
+                                <input type="text" class="form-control" name="editTreeNameCommon" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <input type="text" class="form-control" name="editTreeDescription" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Observations</label>
+                                <input type="text" class="form-control" name="editTreeObservations" required>
+                            </div>
+                            <div class="form-group">
                                 <label>TypeId</label>
                                 <input type="text" class="form-control" name="editTreeTypeId" required>
                             </div>
                             <div class="form-group">
                                 <label>Latitude</label>
-                                <input type="number" class="form-control" name="editTreeLat" required>
+                                <input type="number" step="any" class="form-control" name="editTreeLat" required>
                             </div>
                             <div class="form-group">
                                 <label>Longitude</label>
-                                <input type="number" class="form-control" name="editTreeLng" required>
+                                <input type="number" step="any" class="form-control" name="editTreeLng" required>
                             </div>
                             <div class="form-group">
                                 <label>Active</label>
@@ -270,6 +300,10 @@
         var marker = L.marker([37.3174025204363, -8.566799289969723], {icon: greenIcon, user: 'none'}).addTo(map).on("click", markerOnClick);
         var marker = L.marker([37.280008400415554, -8.554293570462498], {icon: blueIcon, user: 'user1'}).addTo(map).on("click", markerOnClick);
 
+
+        function mapLoadTrees(treeList){
+
+        }
 
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             // attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -472,6 +506,9 @@
 
                     $('[name="editTreeId"]').val(data[0]['id']);
                     $('[name="editTreeName"]').val(data[0]['name']);
+                    $('[name="editTreeNameCommon"]').val(data[0]['nameCommon']);
+                    $('[name="editTreeDescription"]').val(data[0]['description']);
+                    $('[name="editTreeObservations"]').val(data[0]['observations']);
                     $('[name="editTreeTypeId"]').val(data[0]['typeId']);
                     $('[name="editTreeLat"]').val(data[0]['lat']);
                     $('[name="editTreeLng"]').val(data[0]['lng']);
