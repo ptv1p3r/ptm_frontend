@@ -39,6 +39,7 @@
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
+                        <!--<th>user</th>-->
                         <th>name</th>
                         <th>nameCommon</th>
                         <th>description</th>
@@ -57,6 +58,17 @@
                         foreach ($this->userdata['treesList'] as $key => $tree) { ?>
                             <tbody>
                             <tr>
+                                <!--<td>
+                                    <?php
+                                        /*if (!empty($this->userdata['userTreeList'])) {
+                                            foreach ($this->userdata['userTreeList'] as $key => $userTree) {
+                                                if ($userTree["treeId"] == $tree["id"]) {
+                                                    echo $userTree["userId"];
+                                                }
+                                            }
+                                        }*/
+                                    ?>
+                                </td>-->
                                 <td><?php echo $tree["name"] ?></td>
                                 <td><?php echo $tree["nameCommon"] ?></td>
                                 <td><?php echo $tree["description"] ?></td>
@@ -121,6 +133,8 @@
             </div>
         </div>
 
+
+
         <!-- Add Modal HTML -->
         <div id="addTreeModal" class="modal fade">
             <div class="modal-dialog">
@@ -131,6 +145,18 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
+                            <div class="form-group">
+                                <label>user</label>
+                                <select id="addUserTree" class="form-select" name="addUserTree" >
+                                    <option value="" disabled selected>Utilizador</option>
+                                    <?php if (!empty($this->userdata['userList'])) {
+                                        foreach ($this->userdata['userList'] as $key => $user) { ?>
+                                    <option value="<?php echo $user['id'] ?>"> <?php echo $user["name"] . ", ". $user["email"] ?> </option>
+                                    <?php }
+                                    } ?>
+                                </select>
+                            </div>
+
                             <div class="form-group">
                                 <label>Name</label>
                                 <input type="text" class="form-control" name="addTreeName" required>
@@ -185,6 +211,15 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <input id="editTreeId" name="editTreeId" type="hidden" class="form-control" value="">
+                            </div>
+
+                            <div class="form-group">
+                                <label>user</label>
+                                <!--<select id="editUserTree" class="form-select" name="editUserTree" >
+                                    <?php /*foreach ($this->userdata['userList'] as $key => $user) { */?>
+                                        <option value="<?php /*echo $user['id']; */?>" <?php /*echo ($user['id'] == bwb3r["countryId"]) ? 'selected="selected"' : '' */?> > <?php /*echo $user['name']; */?></option>
+                                    <?php /*} */?>
+                                </select>-->
                             </div>
 
                             <div class="form-group">
@@ -266,6 +301,7 @@
             </div>
         </div>
     </div>
+
 </div>
 
 
