@@ -998,6 +998,18 @@ class AdminController extends MainController
                 $this->userdata['treesList'] = $treesList["body"]["trees"];
             }
 
+            $userList = $modelo->getUserList();
+            if ($userList["statusCode"] === 200){
+                $this->userdata['userList'] = $userList["body"]["users"];
+            }
+            if ($userList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $userList = $modelo->getUserList();
+                $this->userdata['userList'] = $userList["body"]["users"];
+            }
+
             /**Carrega os arquivos do view**/
             require ABSPATH . '/views/_includes/admin-header.php';
 
