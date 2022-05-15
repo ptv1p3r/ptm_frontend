@@ -134,7 +134,7 @@ class RegisterController extends MainController
     {
         /**
          * Page load
-         * "/views/home/pass-change-view.php"
+         * "/views/home/pass-recover-view.php"
          */
 
         // Title page
@@ -145,24 +145,18 @@ class RegisterController extends MainController
 
 
 //
-        $userId = $parameter[0];
-        $userToken = $parameter[1];
-
-
-
-
-
-        echo "<pre>";
-
-        var_dump( $userId);
-
-        echo "</pre>";
-
-        echo "<pre>";
-
-        var_dump( $userToken);
-
-        echo "</pre>";
+//
+//        echo "<pre>";
+//
+//        var_dump( $userId);
+//
+//        echo "</pre>";
+//
+//        echo "<pre>";
+//
+//        var_dump( $userToken);
+//
+//        echo "</pre>";
 
 
 
@@ -173,14 +167,15 @@ class RegisterController extends MainController
             $action = $_POST['action'];
             $data = $_POST['data'];
 
-
-
-            $newData[]['name']=
-
-
-
-
+            //password ecription
             $data[0]['value'] = hash('sha256', $data[0]['value']);
+
+            $data[1]['userId'] = $parameter[0];
+            $data[2]['userToken'] = $parameter[1];
+
+
+
+
 
             //$apiResponse = json_decode($model->addUser($data), true); //decode to check message from api
             $apiResponse = $model->passRecover($data); //decode to check message from api
@@ -202,7 +197,7 @@ class RegisterController extends MainController
         }
         /** load files from view **/
         require ABSPATH . '/views/_includes/header.php';
-        require ABSPATH . '/views/user/registration/recover-view.php';
+        require ABSPATH . '/views/user/registration/pass-recover-view.php';
         require ABSPATH . '/views/_includes/footer.php';
 
     }
