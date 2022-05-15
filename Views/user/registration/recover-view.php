@@ -22,7 +22,7 @@
                             <br>
                         </div>
                         <!--Form Init-->
-                        <form id="recPass">
+                        <form id="recover">
                             <ul class="row">
 
                                 <li class="col-md-12">
@@ -61,10 +61,10 @@
 
     //Main functions from this view
     $(document).ready(function () {
-        $('#recPass').submit(function (event) {
+        $('#recover').submit(function (event) {
             event.preventDefault(); //prevent default action
             let formData = {
-                'action': "RecoverPass",
+                'action': "recover",
                 'data': $(this).serializeArray()
             };
             $.ajax({
