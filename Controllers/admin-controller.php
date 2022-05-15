@@ -491,7 +491,7 @@ class AdminController extends MainController
                     break;
 
                 case 'AddUser' :
-                    //$this->permission_required = array('SecurityCreate');
+                    $this->permission_required = array('usersCreate');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
@@ -502,6 +502,7 @@ class AdminController extends MainController
                     }
 
                     $data = $_POST['data'];
+                    $data[3]['value'] = hash('sha256', $data[3]['value']); // encripta a pass
                     $apiResponse = $modelo->addUser($data); //decode to check message from api
 
                     if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
@@ -526,7 +527,7 @@ class AdminController extends MainController
 
 
                 case 'UpdateUser' :
-                    //$this->permission_required = array('SecurityUpdate');
+                    $this->permission_required = array('usersUpdate');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
@@ -537,6 +538,7 @@ class AdminController extends MainController
                     }
 
                     $data = $_POST['data'];
+                    //$data[4]['value'] = hash('sha256', $data[4]['value']); // encripta a pass
                     $apiResponse = $modelo->updateUser($data); //decode to check message from api
 
                     if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
@@ -560,7 +562,7 @@ class AdminController extends MainController
                     break;
 
                 case 'DeleteUser' :
-                    //$this->permission_required = array('SecurityDelete');
+                    $this->permission_required = array('usersDelete');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
