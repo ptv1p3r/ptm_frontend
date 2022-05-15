@@ -296,23 +296,23 @@
         });
 
         let map = L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
-
-        var marker = L.marker([37.3174025204363, -8.566799289969723], {icon: greenIcon, user: 'none'}).addTo(map).on("click", markerOnClick);
-        var marker = L.marker([37.280008400415554, -8.554293570462498], {icon: blueIcon, user: 'user1'}).addTo(map).on("click", markerOnClick);
-
-
-        function mapLoadTrees(treeList){
-
-        }
-
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-            // attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 18,
             id: 'mapbox/streets-v11',
             tileSize: 512,
             zoomOffset: -1,
             accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
         }).addTo(map);
+
+        //function to load all trees from API
+        function mapLoadTrees(){
+            <?php if (!empty($this->userdata['treesList'])) {
+                foreach ($this->userdata['treesList'] as $key => $tree) {?>
+                    marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {icon: greenIcon, user: 'none'}).addTo(map).on("click", markerOnClick);
+            <?php }
+            }?>
+        }
+        mapLoadTrees();
 
         //popup on map click
         /*var popupMap = L.popup();
