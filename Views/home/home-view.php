@@ -184,8 +184,13 @@
 
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Monchique</li>
+                    <li class="breadcrumb-item">
+                        <button class="btn btn-outline-success" id="monTarget">Monchique</button>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <button class="btn btn-outline-success" id="marTarget">Marmelete</button>
+                    </li>
+                    <!--                    <li class="breadcrumb-item active" aria-current="page">Marmelete</li>-->
                 </ol>
             </nav>
 
@@ -930,7 +935,30 @@
             popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
 
+        // $("$monchMap").on("click", function(){
+        //     // $(this).hide();
+        //     L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
+        //
+        // });
+
         let map = L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
+
+        $("#monTarget").click(function () {
+            map.flyTo([37.319518557906285, -8.556156285649438], 13, {
+                animate: true,
+                duration: 2 // in seconds
+
+            });
+        });
+
+        $("#marTarget").click(function () {
+            map.flyTo([37.3119, -8.6671], 13, {
+                animate: true,
+                duration: 2 // in seconds
+
+            });
+        });
+
 
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             maxZoom: 18,
@@ -951,6 +979,7 @@
             <?php }
             }?>
         }
+
         mapLoadTrees();
 
 
@@ -965,8 +994,8 @@
             <?php }
             }?>
         }
-        mapUserLoadTrees();
 
+        mapUserLoadTrees();
 
 
         //popup on map click
@@ -1003,18 +1032,8 @@
                 .openOn(map);
             //map.flyTo([e.latlng.lat, e.latlng.lng], 15);
         }
-
-//chamada ajax para mostrar a árvore ??? Ajax
-//         Necessita de manda o userId e o treeId para o controlador
-
-
-        var locPalm = new L.LatLng(26.5,-80.184);
-        var locBroward = new L.LatLng(26.114, -80.216);
-        function zoomTo(location) {
-            map.setView(location, map.getZoom());
-        }
-
-    });
+    })
+    ;
 
 
 </script>
