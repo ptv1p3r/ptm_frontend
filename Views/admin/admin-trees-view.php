@@ -53,14 +53,14 @@
                         <th></th>
                     </tr>
                     </thead>
-
-
                     <tbody>
                         <?php if (!empty($this->userdata['treesList'])) {
                             foreach ($this->userdata['treesList'] as $key => $tree) { ?>
                             <tr>
                                 <!--<td>
                                     <?php
+                                //TODO: ver como é para ficar o esquema de paginas, onde se coloca a associaçao de user->tree
+                                // na view do user ou na das trees ?
                                         /*if (!empty($this->userdata['userTreeList'])) {
                                             foreach ($this->userdata['userTreeList'] as $key => $userTree) {
                                                 if ($userTree["treeId"] == $tree["id"]) {
