@@ -70,7 +70,7 @@
     <link rel="icon" href="/Images/home/favicon.png">
 
     <!--  Script auto-version-->
-    <script src="<?php echo auto_version('../../js/global-functions.js'); ?>"></script>
+<!--    <script src="--><?php //echo auto_version('../../js/global-functions.js'); ?><!--"></script>-->
 
     <title><?php echo $this->title ?></title>
 
@@ -107,7 +107,7 @@
 <header class="header-style-2">
     <nav class="navbar navbar-expand-lg">
 
-        <a class="navbar-brand" href="<?php echo HOME_URL . '/'; ?>"><img src="Images/logo/adoteUma.png" alt=""></a>
+        <a class="navbar-brand" href="<?php echo HOME_URL . '/'; ?>"><img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'; ?>" alt=""></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
                     class="fas fa-bars"></i></button>
@@ -277,7 +277,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="avatar">
-                        <img src="Images/logo/adoteUma.png" alt="Avatar">
+                        <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'; ?>" alt="Avatar">
                     </div>
                     <h4 class="modal-title">Login</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

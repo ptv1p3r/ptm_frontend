@@ -65,6 +65,9 @@ class RegisterModel extends MainModel
         $result = null;
         $normalizedData = array();
 
+        //Manually injected user group data
+        $normalizedData['groupId'] = 1;
+
         // get data from form array and package it to send to api
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {

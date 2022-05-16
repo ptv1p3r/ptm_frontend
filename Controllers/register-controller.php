@@ -29,8 +29,8 @@ class RegisterController extends MainController
         $getCountryModel = $model->getCountryList();
         $getGenderModel = $model->getGenderList();
 
-        $this->userdata['countryList'] = $getCountryModel['body'];
-        $this->userdata['genderList'] = $getGenderModel['body'];
+        $this->userdata['countryList'] = $getCountryModel['body']['countries'];
+        $this->userdata['genderList'] = $getGenderModel['body']['genders'];
 
         /** load files from view **/
         require ABSPATH . '/views/_includes/header.php';
@@ -134,7 +134,7 @@ class RegisterController extends MainController
     {
         /**
          * Page load
-         * "/views/home/pass-recover-view.php"
+         * "/views/user/registration/pass-recover-view.php"
          */
 
         // Title page
@@ -144,7 +144,8 @@ class RegisterController extends MainController
         $parameter = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
 
-//
+        $userId = $parameter[0];
+        $userToken = $parameter[1];
 //
 //        echo "<pre>";
 //
@@ -160,41 +161,55 @@ class RegisterController extends MainController
 
 
 
-        $model = $this->load_model('recover-model');
+//        $model = $this->load_model('recover-model');
+
+
+
 
 //        // Ajax call flow process
-        if (isset($_POST['action']) && !empty($_POST['action'])) {
-            $action = $_POST['action'];
-            $data = $_POST['data'];
-
-            //password ecription
-            $data[0]['value'] = hash('sha256', $data[0]['value']);
-
-            $data[1]['userId'] = $parameter[0];
-            $data[2]['userToken'] = $parameter[1];
-
-
-
-
-
-            //$apiResponse = json_decode($model->addUser($data), true); //decode to check message from api
-            $apiResponse = $model->passRecover($data); //decode to check message from api
-
-
-            // quando statusCode = 201, a response nao vem com campo mensagem
-            // entao é criado e encoded para ser enviado
-            if ($apiResponse['statusCode'] === 200) { // 200 ok
-                $apiResponse["body"]['message'] = "Consulte o seu email para repor a palavra passe!";
-
-                $apiResponse = json_encode($apiResponse);// encode package to send
-                die ($apiResponse);
-            }
-
-            // se statsCode nao for 201, entao api response ja vem com um campo mensagem
-            // assim so precisamos de fazer encode para ser enviado
-            $apiResponse = json_encode($apiResponse);// encode package to send
-
-        }
+//        if (isset($_POST['action']) && !empty($_POST['action'])) {
+//            $action = $_POST['action'];
+//            $data = $_POST['data'];
+//
+//            echo "<pre>";
+//
+//            var_dump( $data);
+//
+//            echo "</pre>";
+//
+//
+//
+//            //password ecription
+//            $data[0]['value'] = hash('sha256', $data[0]['value']);
+//
+//
+//
+//            $data[1]['userId'] = $parameter[0];
+//            $data[2]['userToken'] = $parameter[1];
+//
+//
+//
+//
+//
+//
+//            //$apiResponse = json_decode($model->addUser($data), true); //decode to check message from api
+//            $apiResponse = $model->passRecover($data); //decode to check message from api
+//
+//
+//            // quando statusCode = 201, a response nao vem com campo mensagem
+//            // entao é criado e encoded para ser enviado
+//            if ($apiResponse['statusCode'] === 200) { // 200 ok
+//                $apiResponse["body"]['message'] = "Consulte o seu email para repor a palavra passe!";
+//
+//                $apiResponse = json_encode($apiResponse);// encode package to send
+//                die ($apiResponse);
+//            }
+//
+//            // se statsCode nao for 201, entao api response ja vem com um campo mensagem
+//            // assim so precisamos de fazer encode para ser enviado
+//            $apiResponse = json_encode($apiResponse);// encode package to send
+//
+//        }
         /** load files from view **/
         require ABSPATH . '/views/_includes/header.php';
         require ABSPATH . '/views/user/registration/pass-recover-view.php';
