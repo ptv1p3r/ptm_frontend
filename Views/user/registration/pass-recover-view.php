@@ -96,7 +96,7 @@
             console.log(formData);
 
             $.ajax({
-                url: "<?php echo HOME_URL . '/register/passrecover';?>",
+                url: "<?php echo HOME_URL . '/register/passRecover';?>",
                 //url: "<?php //echo API_URL . 'register/passrecover';?>//",
                 dataType: "json",
                 type: 'POST',
@@ -105,7 +105,7 @@
                     $('#loader').removeClass('hidden')
                 },
                 success: function (data) {
-                    if (data.statusCode === 201) {
+                    if (data.statusCode === 200) {
                         //mensagem de Success
                         Swal.fire({
                             title: 'Success!',

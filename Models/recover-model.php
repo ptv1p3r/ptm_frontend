@@ -58,24 +58,25 @@ class RecoverModel extends MainModel
      * @since 0.1
      * @access public
      */
-    public function passRecover($data)
+    public function passRecover($data,$userId,$userToken)
     {
         $result = null;
         $normalizedData = array();
-        $UserId = null;
+
+
 
         // get data from form array and package it to send to api
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']) {
 
-                    case "userId":
-                        $UserId = $dataVector['value'];
-                        break;
-
-                    case "userToken":
-                        $normalizedData['token'] = $dataVector['value'];
-                        break;
+//                    case "userId":
+//                        $UserId = $dataVector['value'];
+//                        break;
+////
+//                    case "userToken":
+//                        $normalizedData['token'] = $userToken;
+//                        break;
 
                     case "newPass":
                         $normalizedData['password'] = $dataVector['value'];
@@ -84,9 +85,12 @@ class RecoverModel extends MainModel
                 }
             }
         }
-        $url = API_URL . 'api/v1/recover/id' . $UserId;
+        $normalizedData['token'] = $userToken;
+        $url = API_URL . 'api/v1/recover/id' . $userId;
         $result = callAPI("POST", $url, $normalizedData/*, $userToken*/);
         return json_decode(json_encode($result), true);
+
+
 
     }
 
