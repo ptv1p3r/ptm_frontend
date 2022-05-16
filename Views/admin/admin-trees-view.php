@@ -36,7 +36,7 @@
                     </div>
                 </div>
 
-                <table class="table table-striped table-hover">
+                <table id="treesTable" class="table table-striped table-hover">
                     <thead>
                     <tr>
                         <!--<th>user</th>-->
@@ -54,9 +54,10 @@
                     </tr>
                     </thead>
 
-                    <?php if (!empty($this->userdata['treesList'])) {
-                        foreach ($this->userdata['treesList'] as $key => $tree) { ?>
-                            <tbody>
+
+                    <tbody>
+                        <?php if (!empty($this->userdata['treesList'])) {
+                            foreach ($this->userdata['treesList'] as $key => $tree) { ?>
                             <tr>
                                 <!--<td>
                                     <?php
@@ -86,15 +87,12 @@
                                        data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                             </tr>
-                            </tbody>
                         <?php }
                     } else { ?>
-                        <tbody>
                         <tr>
                         </tr>
-                        </tbody>
                     <?php } ?>
-
+                    </tbody>
                 </table>
 
 
@@ -307,6 +305,12 @@
 
 <script>
     $(document).ready(function() {
+        //DATATABLES
+        $('#treesTable').DataTable({
+            rowReorder: true,
+            responsive: true
+        });
+
 
         // TreesMap
         var greenIcon = L.icon({

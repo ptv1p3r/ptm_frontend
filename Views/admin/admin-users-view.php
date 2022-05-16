@@ -35,7 +35,7 @@
                     </div>
                 </div>
 
-                <table class="table table-striped table-hover">
+                <table id="usersTable" class="table table-striped table-hover">
                     <thead>
                     <tr>
                         <th>name</th>
@@ -57,10 +57,9 @@
                         <th>lastLogin</th>
                     </tr>
                     </thead>
-
+                    <tbody>
                     <?php if (!empty($this->userdata['usersList'])) {
                         foreach ($this->userdata['usersList'] as $key => $user) { ?>
-                            <tbody>
                             <tr>
                                 <td><?php echo $user["name"] ?></td>
                                 <td><?php echo $user["entity"] ?></td>
@@ -94,15 +93,12 @@
                                        data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                             </tr>
-                            </tbody>
                         <?php }
                     } else { ?>
-                        <tbody>
                         <tr>
                         </tr>
-                        </tbody>
                     <?php } ?>
-
+                    </tbody>
                 </table>
 
                 <!-- Pagination -->
@@ -389,6 +385,12 @@
 
 <script>
     $(document).ready(function() {
+        //DATATABLES
+        $('#usersTable').DataTable({
+            rowReorder: true,
+            responsive: true
+            //dom: 'Qfrtip'
+        });
 
         // ajax to Add User
         $('#addUser').submit(function (event) {

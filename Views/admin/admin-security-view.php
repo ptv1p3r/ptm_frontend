@@ -35,7 +35,7 @@
                     </div>
                 </div>
 
-                <table class="table table-striped table-hover">
+                <table id="securitiesTable" class="table table-striped table-hover">
                     <thead>
                     <tr>
                         <th>homeLogin</th>
@@ -62,10 +62,9 @@
                         <th>treesImagesDelete</th>
                     </tr>
                     </thead>
-
+                    <tbody>
                     <?php if (!empty($this->securitydata['securitysList']['data'])) {
                         foreach ($this->securitydata['securitysList']['data'] as $key => $security) { ?>
-                            <tbody>
                             <tr>
                                 <td><?php echo $security["homeLogin"] ?></td>
                                 <td><?php echo $security["admLogin"] ?></td>
@@ -97,15 +96,12 @@
                                        data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                             </tr>
-                            </tbody>
                         <?php }
                     } else { ?>
-                        <tbody>
                         <tr>
                         </tr>
-                        </tbody>
                     <?php } ?>
-
+                    </tbody>
                 </table>
 
                 <!-- Pagination -->
@@ -437,6 +433,12 @@
 
 <script>
     $(document).ready(function() {
+        //DATATABLES
+        $('#securitiesTable').DataTable({
+            rowReorder: true,
+            responsive: true
+        });
+
 
         // ajax to Add Security
         $('#addSecurity').submit(function (event) {

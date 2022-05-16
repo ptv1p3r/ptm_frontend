@@ -30,7 +30,7 @@
                     </div>
                 </div>
 
-                <table class="table table-striped table-hover">
+                <table id="groupsTable" class="table table-striped table-hover">
                     <thead>
                     <tr>
                         <th>Name</th>
@@ -42,10 +42,9 @@
                         <th></th>
                     </tr>
                     </thead>
-
+                    <tbody>
                     <?php if (!empty($this->userdata['groupsList'])) {
                         foreach ($this->userdata['groupsList'] as $key => $group) { ?>
-                            <tbody>
                             <tr>
                                 <td><?php echo $group["name"] ?></td>
                                 <td><?php echo $group["description"] ?></td>
@@ -60,15 +59,12 @@
                                        data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                             </tr>
-                            </tbody>
                         <?php }
                     } else { ?>
-                        <tbody>
                         <tr>
                         </tr>
-                        </tbody>
                     <?php } ?>
-
+                    </tbody>
                 </table>
 
 
@@ -225,6 +221,12 @@
 
 <script>
     $(document).ready(function() {
+        //DATATABLES
+        $('#groupsTable').DataTable({
+            rowReorder: true,
+            responsive: true
+        });
+
         // ajax to Add Group
         $('#addGroup').submit(function (event) {
             event.preventDefault(); //prevent default action
