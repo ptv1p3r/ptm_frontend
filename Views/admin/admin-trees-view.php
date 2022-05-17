@@ -69,7 +69,7 @@
                     </div>
                     <div class="col-sm-6">
                         <!--TODO: FIX all modals not opening (see bootstrap docs for modals)-->
-                        <a href="#addTreeModal" class="btn btn-success" data-toggle="modal"><i class="fas fa-plus-circle"></i><span>Add New Tree</span></a>
+                        <a href="#addTreeModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTreeModal"><i class="fas fa-plus-circle"></i><span>Add New Tree</span></a>
                     </div>
                 </div>
 
@@ -82,7 +82,6 @@
                         <table id="treesTable" class="table table-striped table-hover">
                             <thead>
                             <tr>
-                                <!--<th>user</th>-->
                                 <th>name</th>
                                 <th>nameCommon</th>
                                 <th>description</th>
@@ -90,9 +89,9 @@
                                 <th>typeId</th>
                                 <th>lat</th>
                                 <th>lng</th>
-                                <th>active</th>
+                                <!--<th>active</th>
                                 <th>dateCreated</th>
-                                <th>dateModified</th>
+                                <th>dateModified</th>-->
                                 <th></th>
                             </tr>
                             </thead>
@@ -100,19 +99,6 @@
                             <?php if (!empty($this->userdata['treesList'])) {
                                 foreach ($this->userdata['treesList'] as $key => $tree) { ?>
                                     <tr>
-                                        <!--<td>
-                                    <?php
-                                        //TODO: ver como é para ficar o esquema de paginas, onde se coloca a associaçao de user->tree
-                                        // na view do user ou na das trees ?
-                                        /*if (!empty($this->userdata['userTreeList'])) {
-                                            foreach ($this->userdata['userTreeList'] as $key => $userTree) {
-                                                if ($userTree["treeId"] == $tree["id"]) {
-                                                    echo $userTree["userId"];
-                                                }
-                                            }
-                                        }*/
-                                        ?>
-                                </td>-->
                                         <td><?php echo $tree["name"] ?></td>
                                         <td><?php echo $tree["nameCommon"] ?></td>
                                         <td><?php echo $tree["description"] ?></td>
@@ -120,14 +106,12 @@
                                         <td><?php echo $tree["typeId"] ?></td>
                                         <td><?php echo $tree["lat"] ?></td>
                                         <td><?php echo $tree["lng"] ?></td>
-                                        <td><?php echo $tree["active"] ?></td>
-                                        <td><?php echo $tree["dateCreated"] ?></td>
-                                        <td><?php echo $tree["dateModified"] ?></td>
+                                        <!--<td><?php //echo $tree["active"] ?></td>
+                                        <td><?php //echo $tree["dateCreated"] ?></td>
+                                        <td><?php //echo $tree["dateModified"] ?></td>-->
                                         <td>
-                                            <a href="#editTreeModal" id="<?php echo $tree['id'] ?>" class="edit"
-                                               data-toggle="modal"><i class="far fa-edit"></i></a>
-                                            <a href="#deleteTreeModal" id="<?php echo $tree['id'] ?>" class="delete"
-                                               data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
+                                            <a href="#editTreeModal" id="<?php echo $tree['id'] ?>" class="edit" data-bs-toggle="modal" data-bs-target="#editTreeModal"><i class="far fa-edit"></i></a>
+                                            <a href="#deleteTreeModal" id="<?php echo $tree['id'] ?>" class="delete" data-bs-toggle="modal" data-bs-target="#deleteTreeModal"><i class="fas fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
                                 <?php }
@@ -145,27 +129,15 @@
 
     <!-- MODALS -->
     <!-- Add Modal HTML -->
-    <div id="addTreeModal" class="modal fade">
+    <div id="addTreeModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form id="addTree">
                     <div class="modal-header">
                         <h4 class="modal-title">Add Tree</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label>user</label>
-                            <select id="addUserTree" class="form-select" name="addUserTree" >
-                                <option value="" disabled selected>Utilizador</option>
-                                <?php if (!empty($this->userdata['userList'])) {
-                                    foreach ($this->userdata['userList'] as $key => $user) { ?>
-                                <option value="<?php echo $user['id'] ?>"> <?php echo $user["name"] . ", ". $user["email"] ?> </option>
-                                <?php }
-                                } ?>
-                            </select>
-                        </div>
-
                         <div class="form-group">
                             <label>Name</label>
                             <input type="text" class="form-control" name="addTreeName" required>
@@ -196,11 +168,11 @@
                         </div>
                         <div class="form-group">
                             <label>Active</label>
-                            <input type="checkbox" class="form-control" name="addTreeActive">
+                            <input type="checkbox" class="form-control form-check-input" name="addTreeActive">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <input type="submit" class="btn btn-success" value="Add">
                     </div>
                 </form>
@@ -209,26 +181,17 @@
     </div>
 
     <!-- Edit Modal HTML -->
-    <div id="editTreeModal" class="modal fade">
+    <div id="editTreeModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form id="editTree">
                     <div class="modal-header">
                         <h4 class="modal-title">Edit Tree</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
                             <input id="editTreeId" name="editTreeId" type="hidden" class="form-control" value="">
-                        </div>
-
-                        <div class="form-group">
-                            <label>user</label>
-                            <!--<select id="editUserTree" class="form-select" name="editUserTree" >
-                                <?php /*foreach ($this->userdata['userList'] as $key => $user) { */?>
-                                    <option value="<?php /*echo $user['id']; */?>" <?php /*echo ($user['id'] == bwb3r["countryId"]) ? 'selected="selected"' : '' */?> > <?php /*echo $user['name']; */?></option>
-                                <?php /*} */?>
-                            </select>-->
                         </div>
 
                         <div class="form-group">
@@ -261,13 +224,13 @@
                         </div>
                         <div class="form-group">
                             <label>Active</label>
-                            <input type="checkbox" class="form-control" name="editTreeActive">
+                            <input type="checkbox" class="form-control form-check-input" name="editTreeActive">
                         </div>
 
                     </div>
                     <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                        <input type="submit" class="btn btn-info" value="Save">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <input type="submit" class="btn btn-success" value="Save">
                     </div>
                 </form>
             </div>
@@ -275,13 +238,13 @@
     </div>
 
     <!-- Delete Modal HTML -->
-    <div id="deleteTreeModal" class="modal fade">
+    <div id="deleteTreeModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form id="deleteTree">
                     <div class="modal-header">
                         <h4 class="modal-title">Delete Tree</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <p>Are you sure you want to delete this Tree?</p>
@@ -289,7 +252,7 @@
                         <input id="deleteTreeId" name="deleteTreeId" type="hidden" class="form-control" value="">
                     </div>
                     <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <input type="submit" class="btn btn-danger" value="Delete">
                     </div>
                 </form>
@@ -297,7 +260,7 @@
         </div>
     </div>
 
-    <!-- Logout Modal HTML -->
+    <!-- Logout Modal HTML
     <div id="logoutModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -308,16 +271,17 @@
                 <div class="modal-footer"><a href="<?php echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
             </div>
         </div>
-    </div>
+    </div>-->
 
 
 <script>
     $(document).ready(function() {
         //DATATABLES
-        $('#treesTable').DataTable({
+        //TODO: datatables error when no data on table? see whats goin on
+        /*$('#treesTable').DataTable({
             rowReorder: true,
             responsive: true
-        });
+        });*/
 
 
         // TreesMap
