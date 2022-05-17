@@ -10,10 +10,8 @@
 <?php if ( ! defined('ABSPATH')) exit; ?>
 
 
-<div>
-    <p class="text-muted text-center">Copyright ISMAT &copy;<?php echo date('Y');?> -
-        Design & Developed By: EI Ismat</p>
-</div>
-
+    <div>
+        <p class="text-muted text-center">Copyright ISMAT &copy;<?php echo date('Y');?> - Design & Developed By: EI Ismat</p>
+    </div>
 </body>
 </html>

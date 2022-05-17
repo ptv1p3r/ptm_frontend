@@ -42,36 +42,33 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">-->
 
 
-
     <script src=<?php echo auto_version('../../js/global-functions.js'); ?>></script>
-
 </head>
 
 <body>
+    <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-<nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+        <a class="navbar-brand mr-1" href="<?php echo HOME_URL . '/admin/dashboard';?>"> <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png';?>" alt="Dashboard" width="48">Project Tree Management</a>
 
-    <a class="navbar-brand mr-1" href="<?php echo HOME_URL . '/admin/dashboard';?>"> <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png';?>" alt="Dashboard" width="48">Project Tree Management</a>
+        <!-- Spacing -->
+        <a class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+            <a href="<?php echo HOME_URL . '/home';?>" target="_blank"><img src="<?php echo HOME_URL . '/Images/home.png';?>" alt="Pagina principal" width="24"></a>
+        </a>
 
-    <!-- Spacing -->
-    <a class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-        <a href="<?php echo HOME_URL . '/home';?>" target="_blank"><img src="<?php echo HOME_URL . '/Images/home.png';?>" alt="Pagina principal" width="24"></a>
-    </a>
-
-    <!-- Navbar -->
-    <ul class="navbar-nav ml-auto ml-md-2">
-        <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src="<?php echo HOME_URL . '/Images/user.png' ?>" alt="User space" height="48">
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="<?php echo HOME_URL . '/admin/settings';?>"><i class="fas fa-cog"></i> Settings</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="<?php echo HOME_URL . '/admin/applogout';?>"><i class="fas fa-sign-out-alt"></i> Logout</a>
-            </div>
-        </li>
-    </ul>
-</nav>
+        <!-- Navbar -->
+        <ul class="navbar-nav ml-auto ml-md-2">
+            <li class="nav-item dropdown no-arrow">
+                <a class="nav-link dropdown-toggle" href="" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="<?php echo HOME_URL . '/Images/user.png' ?>" alt="User space" height="48">
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                    <a class="dropdown-item" href="<?php echo HOME_URL . '/admin/settings';?>"><i class="fas fa-cog"></i> Settings</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="<?php echo HOME_URL . '/admin/applogout';?>"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
 
 
 
