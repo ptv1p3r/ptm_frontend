@@ -3,64 +3,107 @@
 
 <?php if ( $this->login_required && ! $this->logged_in ) return; ?>
 
-<div id="wrapper">
+<div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+        <!-- Sidebar -->
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <div class="sb-sidenav-menu-heading">Core</div>
+                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/dashboard';?>">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        Dashboard
+                    </a>
+                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/groups';?>">
+                        <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                        Grupos
+                    </a>
+                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/users';?>">
+                        <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                        Utilizadores
+                    </a>
+                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/security';?>">
+                        <div class="sb-nav-link-icon"><i class="fas fa-lock"></i></div>
+                        Tabela de segurança
+                    </a>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tree"></i></div>
+                        Árvores/Utilizadores
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="<?php echo HOME_URL . '/admin/trees';?>">Dashboard</a>
+                            <a class="nav-link active" href="<?php echo HOME_URL . '/admin/trees';?>">Árvores</a>
+                        </nav>
+                    </div>
 
-    <!-- Sidebar -->
-    <ul class="sidebar navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/dashboard';?>"><span>Dashboard</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/groups';?>"><span>Grupos</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/users';?>"><span>Utilizadores</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/security';?>"><span>Tabela de segurança</span></a></li>
-        <li class="nav-item active"><a class="nav-link" href="<?php echo HOME_URL . '/admin/trees';?>"><span>Árvores</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/settings';?>"><span>Definições</span></a></li>
-    </ul>
+                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/settings';?>">
+                        <div class="sb-nav-link-icon"><i class="fas fa-gear"></i></div>
+                        Definições
+                    </a>
+                </div>
+            </div>
+            <div class="sb-sidenav-footer">
+                <div class="small">Logged in as:</div>
+                Start Bootstrap
+            </div>
+        </nav>
+    </div>
 
-    <div id="content-wrapper">
-        <!-- DataTables -->
-        <div class="container">
-            <div class="table-wrapper">
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <!--<h1 class="mt-4">Árvores</h1>-->
 
-                <div class="row">
+                <div class="row mt-4">
                     <div class="col-sm-12">
                         <!--Map area div-->
                         <div id="map"></div>
                     </div>
                 </div>
 
-                <div class="row table-title">
+                <div class="row">
                     <div class="col-sm-6">
                         <h2>Manage <b>Trees</b></h2>
                     </div>
                     <div class="col-sm-6">
+                        <!--TODO: FIX all modals not opening (see bootstrap docs for modals)-->
                         <a href="#addTreeModal" class="btn btn-success" data-toggle="modal"><i class="fas fa-plus-circle"></i><span>Add New Tree</span></a>
                     </div>
                 </div>
 
-                <table id="treesTable" class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <!--<th>user</th>-->
-                        <th>name</th>
-                        <th>nameCommon</th>
-                        <th>description</th>
-                        <th>observations</th>
-                        <th>typeId</th>
-                        <th>lat</th>
-                        <th>lng</th>
-                        <th>active</th>
-                        <th>dateCreated</th>
-                        <th>dateModified</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($this->userdata['treesList'])) {
-                            foreach ($this->userdata['treesList'] as $key => $tree) { ?>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        DataTable Example
+                    </div>
+                    <div class="card-body">
+                        <table id="treesTable" class="table table-striped table-hover">
+                            <thead>
                             <tr>
-                                <!--<td>
+                                <!--<th>user</th>-->
+                                <th>name</th>
+                                <th>nameCommon</th>
+                                <th>description</th>
+                                <th>observations</th>
+                                <th>typeId</th>
+                                <th>lat</th>
+                                <th>lng</th>
+                                <th>active</th>
+                                <th>dateCreated</th>
+                                <th>dateModified</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php if (!empty($this->userdata['treesList'])) {
+                                foreach ($this->userdata['treesList'] as $key => $tree) { ?>
+                                    <tr>
+                                        <!--<td>
                                     <?php
-                                //TODO: ver como é para ficar o esquema de paginas, onde se coloca a associaçao de user->tree
-                                // na view do user ou na das trees ?
+                                        //TODO: ver como é para ficar o esquema de paginas, onde se coloca a associaçao de user->tree
+                                        // na view do user ou na das trees ?
                                         /*if (!empty($this->userdata['userTreeList'])) {
                                             foreach ($this->userdata['userTreeList'] as $key => $userTree) {
                                                 if ($userTree["treeId"] == $tree["id"]) {
@@ -68,239 +111,204 @@
                                                 }
                                             }
                                         }*/
-                                    ?>
+                                        ?>
                                 </td>-->
-                                <td><?php echo $tree["name"] ?></td>
-                                <td><?php echo $tree["nameCommon"] ?></td>
-                                <td><?php echo $tree["description"] ?></td>
-                                <td><?php echo $tree["observations"] ?></td>
-                                <td><?php echo $tree["typeId"] ?></td>
-                                <td><?php echo $tree["lat"] ?></td>
-                                <td><?php echo $tree["lng"] ?></td>
-                                <td><?php echo $tree["active"] ?></td>
-                                <td><?php echo $tree["dateCreated"] ?></td>
-                                <td><?php echo $tree["dateModified"] ?></td>
-                                <td>
-                                    <a href="#editTreeModal" id="<?php echo $tree['id'] ?>" class="edit"
-                                       data-toggle="modal"><i class="far fa-edit"></i></a>
-                                    <a href="#deleteTreeModal" id="<?php echo $tree['id'] ?>" class="delete"
-                                       data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
-                                </td>
-                            </tr>
-                        <?php }
-                    } else { ?>
-                        <tr>
-                        </tr>
-                    <?php } ?>
-                    </tbody>
-                </table>
-
-
-                <!-- TODO: views pagination -->
-                <div class="clearfix">
-                    <div class="hint-text">Showing <b>
-                            <?php
-                            /*if (10*$parametros[0] >= count($trees)) {
-                                echo count($trees);
-                            } else {
-                                if ($parametros[0] == null || $parametros[0] == "1") {
-                                    if (10 >= count($trees)) {
-                                        echo count($trees);
-                                    } else {
-                                        echo 10;
-                                    }
-                                } else {
-                                    echo 10*$parametros[0];
-                                }
-                            }*/
-                            ?>
-                        </b> out of <b><?php //echo count($trees)?></b> entries</div>
-                    <ul class="pagination">
-                        <?php /*if ($parametros[0] == null) { ?>
-                                <li class="page-item active"><a href="<?php echo HOME_URL . '/admin/group/' . 1;?>" class="page-link">1</a></li>
-                            <?php } else {
-                                for ($i = 1 ; $i <= ceil(count($trees)/10) ; $i++) { ?>
-                                <li class="page-item <?php if ($parametros[0] == $i) {
-                                    echo "active";
-                                }?>"><a href="<?php echo HOME_URL . '/admin/group/' . $i;?>" class="page-link"><?php echo $i?></a></li>
+                                        <td><?php echo $tree["name"] ?></td>
+                                        <td><?php echo $tree["nameCommon"] ?></td>
+                                        <td><?php echo $tree["description"] ?></td>
+                                        <td><?php echo $tree["observations"] ?></td>
+                                        <td><?php echo $tree["typeId"] ?></td>
+                                        <td><?php echo $tree["lat"] ?></td>
+                                        <td><?php echo $tree["lng"] ?></td>
+                                        <td><?php echo $tree["active"] ?></td>
+                                        <td><?php echo $tree["dateCreated"] ?></td>
+                                        <td><?php echo $tree["dateModified"] ?></td>
+                                        <td>
+                                            <a href="#editTreeModal" id="<?php echo $tree['id'] ?>" class="edit"
+                                               data-toggle="modal"><i class="far fa-edit"></i></a>
+                                            <a href="#deleteTreeModal" id="<?php echo $tree['id'] ?>" class="delete"
+                                               data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
                                 <?php }
-                            }*/
-                        ?>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-
-
-        <!-- Add Modal HTML -->
-        <div id="addTreeModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form id="addTree">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Add Tree</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label>user</label>
-                                <select id="addUserTree" class="form-select" name="addUserTree" >
-                                    <option value="" disabled selected>Utilizador</option>
-                                    <?php if (!empty($this->userdata['userList'])) {
-                                        foreach ($this->userdata['userList'] as $key => $user) { ?>
-                                    <option value="<?php echo $user['id'] ?>"> <?php echo $user["name"] . ", ". $user["email"] ?> </option>
-                                    <?php }
-                                    } ?>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control" name="addTreeName" required>
-                            </div>
-                            <div class="form-group">
-                                <label>NameCommon</label>
-                                <input type="text" class="form-control" name="addTreeNameCommon" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Description</label>
-                                <input type="text" class="form-control" name="addTreeDescription" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Observations</label>
-                                <input type="text" class="form-control" name="addTreeObservations" required>
-                            </div>
-                            <div class="form-group">
-                                <label>TypeId</label>
-                                <input type="text" class="form-control" name="addTreeTypeId" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Latitude</label>
-                                <input type="number" step="any" class="form-control" name="addTreeLat" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Longitude</label>
-                                <input type="number" step="any" class="form-control" name="addTreeLng" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Active</label>
-                                <input type="checkbox" class="form-control" name="addTreeActive">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-success" value="Add">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Edit Modal HTML -->
-        <div id="editTreeModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form id="editTree">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Edit Tree</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <input id="editTreeId" name="editTreeId" type="hidden" class="form-control" value="">
-                            </div>
-
-                            <div class="form-group">
-                                <label>user</label>
-                                <!--<select id="editUserTree" class="form-select" name="editUserTree" >
-                                    <?php /*foreach ($this->userdata['userList'] as $key => $user) { */?>
-                                        <option value="<?php /*echo $user['id']; */?>" <?php /*echo ($user['id'] == bwb3r["countryId"]) ? 'selected="selected"' : '' */?> > <?php /*echo $user['name']; */?></option>
-                                    <?php /*} */?>
-                                </select>-->
-                            </div>
-
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control" name="editTreeName" required>
-                            </div>
-                            <div class="form-group">
-                                <label>NameCommon</label>
-                                <input type="text" class="form-control" name="editTreeNameCommon" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Description</label>
-                                <input type="text" class="form-control" name="editTreeDescription" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Observations</label>
-                                <input type="text" class="form-control" name="editTreeObservations" required>
-                            </div>
-                            <div class="form-group">
-                                <label>TypeId</label>
-                                <input type="text" class="form-control" name="editTreeTypeId" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Latitude</label>
-                                <input type="number" step="any" class="form-control" name="editTreeLat" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Longitude</label>
-                                <input type="number" step="any" class="form-control" name="editTreeLng" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Active</label>
-                                <input type="checkbox" class="form-control" name="editTreeActive">
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-info" value="Save">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Delete Modal HTML -->
-        <div id="deleteTreeModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form id="deleteTree">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Delete Tree</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Are you sure you want to delete this Tree?</p>
-                            <p class="text-warning"><small>This action cannot be undone.</small></p>
-                            <input id="deleteTreeId" name="deleteTreeId" type="hidden" class="form-control" value="">
-                        </div>
-                        <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-danger" value="Delete">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Logout Modal HTML -->
-        <div id="logoutModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4>Logout <i class="fa fa-lock"></i></h4>
+                            } else { ?>
+                                <tr>
+                                </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
-                    <div class="modal-footer"><a href="<?php echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
                 </div>
+            </div>
+        </main>
+
+
+    <!-- MODALS -->
+    <!-- Add Modal HTML -->
+    <div id="addTreeModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="addTree">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Tree</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>user</label>
+                            <select id="addUserTree" class="form-select" name="addUserTree" >
+                                <option value="" disabled selected>Utilizador</option>
+                                <?php if (!empty($this->userdata['userList'])) {
+                                    foreach ($this->userdata['userList'] as $key => $user) { ?>
+                                <option value="<?php echo $user['id'] ?>"> <?php echo $user["name"] . ", ". $user["email"] ?> </option>
+                                <?php }
+                                } ?>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" name="addTreeName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>NameCommon</label>
+                            <input type="text" class="form-control" name="addTreeNameCommon" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" class="form-control" name="addTreeDescription" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Observations</label>
+                            <input type="text" class="form-control" name="addTreeObservations" required>
+                        </div>
+                        <div class="form-group">
+                            <label>TypeId</label>
+                            <input type="text" class="form-control" name="addTreeTypeId" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Latitude</label>
+                            <input type="number" step="any" class="form-control" name="addTreeLat" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Longitude</label>
+                            <input type="number" step="any" class="form-control" name="addTreeLng" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Active</label>
+                            <input type="checkbox" class="form-control" name="addTreeActive">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <input type="submit" class="btn btn-success" value="Add">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 
-</div>
+    <!-- Edit Modal HTML -->
+    <div id="editTreeModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="editTree">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Tree</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input id="editTreeId" name="editTreeId" type="hidden" class="form-control" value="">
+                        </div>
+
+                        <div class="form-group">
+                            <label>user</label>
+                            <!--<select id="editUserTree" class="form-select" name="editUserTree" >
+                                <?php /*foreach ($this->userdata['userList'] as $key => $user) { */?>
+                                    <option value="<?php /*echo $user['id']; */?>" <?php /*echo ($user['id'] == bwb3r["countryId"]) ? 'selected="selected"' : '' */?> > <?php /*echo $user['name']; */?></option>
+                                <?php /*} */?>
+                            </select>-->
+                        </div>
+
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" name="editTreeName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>NameCommon</label>
+                            <input type="text" class="form-control" name="editTreeNameCommon" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" class="form-control" name="editTreeDescription" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Observations</label>
+                            <input type="text" class="form-control" name="editTreeObservations" required>
+                        </div>
+                        <div class="form-group">
+                            <label>TypeId</label>
+                            <input type="text" class="form-control" name="editTreeTypeId" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Latitude</label>
+                            <input type="number" step="any" class="form-control" name="editTreeLat" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Longitude</label>
+                            <input type="number" step="any" class="form-control" name="editTreeLng" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Active</label>
+                            <input type="checkbox" class="form-control" name="editTreeActive">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <input type="submit" class="btn btn-info" value="Save">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Modal HTML -->
+    <div id="deleteTreeModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="deleteTree">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Delete Tree</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this Tree?</p>
+                        <p class="text-warning"><small>This action cannot be undone.</small></p>
+                        <input id="deleteTreeId" name="deleteTreeId" type="hidden" class="form-control" value="">
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <input type="submit" class="btn btn-danger" value="Delete">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Modal HTML -->
+    <div id="logoutModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Logout <i class="fa fa-lock"></i></h4>
+                </div>
+                <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
+                <div class="modal-footer"><a href="<?php echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
+            </div>
+        </div>
+    </div>
 
 
 <script>
