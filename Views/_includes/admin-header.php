@@ -12,15 +12,16 @@
 
     <title>SB Admin - Dashboard</title>
 
+    <!--jquery 3.6.0-->
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
     <!--bootstrap 5.1.3-->
     <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->
-    <link rel="stylesheet" href="<?php echo auto_version('../../css/admin/sb-admin.css'); ?>">
+    <link rel="stylesheet" href="<?php echo auto_version('../../css/admin/sb-admin.css'); ?>"><!--bootstrap 5.1.3 modif. by sb-admin team-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-    <!--custom-->
+    <!--custom css & js-->
     <script src=<?php echo auto_version('../../js/admin/custom.js'); ?>></script>
     <link rel="stylesheet" href="<?php echo auto_version('../../css/admin/custom.css'); ?>">
 
