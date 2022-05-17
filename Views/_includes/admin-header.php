@@ -14,7 +14,15 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <!--bootstrap 5.1.3-->
+    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="<?php echo auto_version('../../css/admin/sb-admin.css'); ?>">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <!--custom-->
+    <script src=<?php echo auto_version('../../js/admin/custom.js'); ?>></script>
+    <link rel="stylesheet" href="<?php echo auto_version('../../css/admin/custom.css'); ?>">
 
     <!--Sweet alerts-->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -24,10 +32,6 @@
 
     <!-- fontawesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="<?php echo auto_version('../../css/sb-admin.css'); ?>">
-    <link rel="stylesheet" href="<?php echo auto_version('../../css/ptm.css'); ?>">
 
     <!-- Lib Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin=""/>
@@ -46,26 +50,21 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
-
-        <a class="navbar-brand mr-1" href="<?php echo HOME_URL . '/admin/dashboard';?>"> <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png';?>" alt="Dashboard" width="48">Project Tree Management</a>
-
-        <!-- Spacing -->
-        <a class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-            <a href="<?php echo HOME_URL . '/home';?>" target="_blank"><img src="<?php echo HOME_URL . '/Images/home.png';?>" alt="Pagina principal" width="24"></a>
-        </a>
-
-        <!-- Navbar -->
-        <ul class="navbar-nav ml-auto ml-md-2">
-            <li class="nav-item dropdown no-arrow">
-                <a class="nav-link dropdown-toggle" href="" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="<?php echo HOME_URL . '/Images/user.png' ?>" alt="User space" height="48">
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="<?php echo HOME_URL . '/admin/settings';?>"><i class="fas fa-cog"></i> Settings</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="<?php echo HOME_URL . '/admin/applogout';?>"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                </div>
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="<?php echo HOME_URL . '/admin/dashboard';?>"> <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png';?>" alt="Dashboard" width="48"> Project Tree Management</a>
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="<?php echo HOME_URL . '/admin/settings';?>">Settings</a></li>
+                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><a class="dropdown-item" href="<?php echo HOME_URL . '/admin/applogout';?>">Logout</a></li>
+                </ul>
             </li>
         </ul>
     </nav>
