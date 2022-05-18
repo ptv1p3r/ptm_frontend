@@ -192,7 +192,18 @@ class AdminController extends MainController
     public function dashboard() {
         // Título da página
         $this->title = 'Admin - Dashboard';
+
+        // Permissoes da pagina
         $this->permission_required = array('admLogin');
+
+        // Estado da sidebar
+        // se ja existir uma active tab
+        if (isset($_SESSION["sidebar"]["active_tab"])) {
+            //remove a currently active
+            unset($_SESSION["sidebar"]["active_tab"]);
+            //e dá set a uma nova active tab
+            $_SESSION["sidebar"]["active_tab"]["dashboard"] = true;
+        }
 
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
@@ -239,7 +250,18 @@ class AdminController extends MainController
     public function groups(){
         // Título da página
         $this->title = 'Admin - Grupos';
+
+        // Permissoes da pagina
         $this->permission_required = array('admLogin','userGroupsRead');
+
+        // Estado da sidebar
+        // se ja existir uma active tab
+        if (isset($_SESSION["sidebar"]["active_tab"])) {
+            //remove a currently active
+            unset($_SESSION["sidebar"]["active_tab"]);
+            //e dá set a uma nova active tab
+            $_SESSION["sidebar"]["active_tab"]["groups"] = true;
+        }
 
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
@@ -434,8 +456,19 @@ class AdminController extends MainController
      */
     public function users(){
         // Título da página
-        $this->title = 'Admin - Utilizadoress';
+        $this->title = 'Admin - Utilizadores';
+
+        // Permissoes da pagina
         $this->permission_required = array('admLogin','usersRead');
+
+        // Estado da sidebar
+        // se ja existir uma active tab
+        if (isset($_SESSION["sidebar"]["active_tab"])) {
+            //remove a currently active
+            unset($_SESSION["sidebar"]["active_tab"]);
+            //e dá set a uma nova active tab
+            $_SESSION["sidebar"]["active_tab"]["users"] = true;
+        }
 
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
@@ -631,7 +664,18 @@ class AdminController extends MainController
     public function security(){
         // Título da página
         $this->title = 'Admin - Tabela de segurança';
+
+        // Permissoes da pagina
         $this->permission_required = array('admLogin'/*,'securityRead'*/);
+
+        // Estado da sidebar
+        // se ja existir uma active tab
+        if (isset($_SESSION["sidebar"]["active_tab"])) {
+            //remove a currently active
+            unset($_SESSION["sidebar"]["active_tab"]);
+            //e dá set a uma nova active tab
+            $_SESSION["sidebar"]["active_tab"]["securities"] = true;
+        }
 
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
@@ -812,13 +856,81 @@ class AdminController extends MainController
 
     /**
      * Carrega a página
+     * "/views/admin/admin-dashboard-view.php"
+     */
+    public function trees_dashboard() {
+        // Título da página
+        $this->title = 'Admin - Trees dashboard';
+
+        // Permissoes da pagina
+        $this->permission_required = array('admLogin');
+
+        // Estado da sidebar
+        // se ja existir uma active tab
+        if (isset($_SESSION["sidebar"]["active_tab"])) {
+            //remove a currently active
+            unset($_SESSION["sidebar"]["active_tab"]);
+            //e dá set a uma nova active tab
+            $_SESSION["sidebar"]["active_tab"]["trees_dashboard"] = true;
+        }
+
+        // Parametros da função
+        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
+
+        // obriga o login para aceder à pagina
+        if ( ! $this->logged_in ) {
+
+            // Se não; garante o logout
+            $this->logout();
+
+            // Redireciona para a página de login
+            $this->goto_login();
+
+            // Garante que o script não vai passar daqui
+            return;
+        }
+
+        //Verifica se o usuário tem a permissão para acessar essa página
+        if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+
+            // Exibe uma mensagem
+            echo 'Você não tem permissões para acessar essa página.';
+
+            // Finaliza aqui
+            return;
+        }
+
+        $modelo = $this->load_model('admin-dashboard-model');
+
+        /** Carrega os arquivos do view **/
+        require ABSPATH . '/views/_includes/admin-header.php';
+
+        require ABSPATH . '/views/admin/admin-trees-dashboard-view.php';
+
+        require ABSPATH . '/views/_includes/admin-footer.php';
+
+    }
+
+    /**
+     * Carrega a página
      * "/views/admin/admin-trees-view.php"
      * @return void
      */
     public function trees(){
         // Título da página
         $this->title = 'Admin - Árvores';
+
+        // Permissoes da pagina
         $this->permission_required = array('admLogin','treesRead');
+
+        // Estado da sidebar
+        // se ja existir uma active tab
+        if (isset($_SESSION["sidebar"]["active_tab"])) {
+            //remove a currently active
+            unset($_SESSION["sidebar"]["active_tab"]);
+            //e dá set a uma nova active tab
+            $_SESSION["sidebar"]["active_tab"]["trees"] = true;
+        }
 
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
@@ -1026,7 +1138,18 @@ class AdminController extends MainController
     public function settings() {
         // Título da página
         $this->title = 'Admin - Definições';
+
+        // Permissoes da pagina
         $this->permission_required = array('admLogin');
+
+        // Estado da sidebar
+        // se ja existir uma active tab
+        if (isset($_SESSION["sidebar"]["active_tab"])) {
+            //remove a currently active
+            unset($_SESSION["sidebar"]["active_tab"]);
+            //e dá set a uma nova active tab
+            $_SESSION["sidebar"]["active_tab"]["settings"] = true;
+        }
 
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
