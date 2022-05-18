@@ -21,7 +21,7 @@ class AdminController extends MainController
 
         require ABSPATH . '/views/admin/admin-login-view.php';
 
-        require ABSPATH . '/views/_includes/admin-footer.php';
+        require ABSPATH . '/views/_includes/admin-login-footer.php';
 
     }
 
