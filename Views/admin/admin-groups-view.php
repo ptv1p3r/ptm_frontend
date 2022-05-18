@@ -4,52 +4,9 @@
 <?php if ( $this->login_required && ! $this->logged_in ) return; ?>
 
 <div id="layoutSidenav">
-    <div id="layoutSidenav_nav">
-        <!-- Sidebar -->
-        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-            <div class="sb-sidenav-menu">
-                <div class="nav">
-                    <div class="sb-sidenav-menu-heading">Core</div>
-                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/dashboard';?>">
-                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                        Dashboard
-                    </a>
-                    <a class="nav-link active" href="<?php echo HOME_URL . '/admin/groups';?>">
-                        <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                        Grupos
-                    </a>
-                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/users';?>">
-                        <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-                        Utilizadores
-                    </a>
-                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/security';?>">
-                        <div class="sb-nav-link-icon"><i class="fas fa-lock"></i></div>
-                        Tabela de segurança
-                    </a>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                        <div class="sb-nav-link-icon"><i class="fas fa-tree"></i></div>
-                        Árvores/Utilizadores
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                        <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="<?php echo HOME_URL . '/admin/trees';?>">Dashboard</a>
-                            <a class="nav-link" href="<?php echo HOME_URL . '/admin/trees';?>">Árvores</a>
-                        </nav>
-                    </div>
 
-                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/settings';?>">
-                        <div class="sb-nav-link-icon"><i class="fas fa-gear"></i></div>
-                        Definições
-                    </a>
-                </div>
-            </div>
-            <div class="sb-sidenav-footer">
-                <div class="small">Logged in as:</div>
-                <?php echo $_SESSION["userdata"]["name"] ?>
-            </div>
-        </nav>
-    </div>
+    <!-- import sidebar -->
+    <?php require ABSPATH . '/views/_includes/admin-sidebar.php'?>
 
     <div id="layoutSidenav_content">
         <main>
