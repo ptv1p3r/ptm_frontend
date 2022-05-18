@@ -268,7 +268,7 @@
                     <h4>Logout <i class="fa fa-lock"></i></h4>
                 </div>
                 <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
-                <div class="modal-footer"><a href="<?php echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
+                <div class="modal-footer"><a href="<?php //echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
             </div>
         </div>
     </div>-->
