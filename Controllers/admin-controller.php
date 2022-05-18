@@ -30,8 +30,6 @@ class AdminController extends MainController
      * @return void
      */
     public function login() {
-        // Título da página
-        $this->title = 'Logging in...';
 
         // Parametros da função
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -632,7 +630,7 @@ class AdminController extends MainController
      */
     public function security(){
         // Título da página
-        $this->title = 'Admin - Securitys';
+        $this->title = 'Admin - Tabela de segurança';
         $this->permission_required = array('admLogin'/*,'securityRead'*/);
 
         // Parametros da função
@@ -1027,7 +1025,7 @@ class AdminController extends MainController
      */
     public function settings() {
         // Título da página
-        $this->title = 'Admin - Settings';
+        $this->title = 'Admin - Definições';
         $this->permission_required = array('admLogin');
 
         // Parametros da função
