@@ -54,75 +54,75 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <!--<h1 class="mt-4">Árvores</h1>-->
-
-                <div class="row mt-4">
-                    <div class="col-sm-12">
-                        <!--Map area div-->
-                        <div id="map"></div>
-                    </div>
-                </div>
-
+                <h1 class="mt-4">Gestão de <b>Árvores</b></h1>
                 <div class="row">
-                    <div class="col-sm-6">
-                        <h2>Manage <b>Trees</b></h2>
-                    </div>
-                    <div class="col-sm-6">
-                        <a href="#addTreeModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTreeModal">
-                            <i class="fas fa-plus-circle"></i><span>Add New Tree</span>
-                        </a>
-                    </div>
-                </div>
 
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-table me-1"></i>
-                        DataTable Example
+                    <div class="col-xl-12 col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                Mapa
+                            </div>
+                            <div class="card-body">
+                                <!--Map area div-->
+                                <div id="map"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <table id="treesTable" class="table table-striped table-hover">
-                            <thead>
-                            <tr>
-                                <th>name</th>
-                                <th>nameCommon</th>
-                                <th>description</th>
-                                <th>observations</th>
-                                <th>typeId</th>
-                                <th>lat</th>
-                                <th>lng</th>
-                                <!--<th>active</th>
-                                <th>dateCreated</th>
-                                <th>dateModified</th>-->
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php if (!empty($this->userdata['treesList'])) {
-                                foreach ($this->userdata['treesList'] as $key => $tree) { ?>
+
+                    <div class="col-xl-12 col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <a href="#addTreeModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTreeModal">
+                                    <i class="fas fa-plus-circle"></i><span>Add New Tree</span>
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <table id="treesTable" class="table table-striped table-hover">
+                                    <thead>
                                     <tr>
-                                        <td><?php echo $tree["name"] ?></td>
-                                        <td><?php echo $tree["nameCommon"] ?></td>
-                                        <td><?php echo $tree["description"] ?></td>
-                                        <td><?php echo $tree["observations"] ?></td>
-                                        <td><?php echo $tree["typeId"] ?></td>
-                                        <td><?php echo $tree["lat"] ?></td>
-                                        <td><?php echo $tree["lng"] ?></td>
-                                        <!--<td><?php //echo $tree["active"] ?></td>
-                                        <td><?php //echo $tree["dateCreated"] ?></td>
-                                        <td><?php //echo $tree["dateModified"] ?></td>-->
-                                        <td>
-                                            <a href="#editTreeModal" id="<?php echo $tree['id'] ?>" class="edit" data-bs-toggle="modal" data-bs-target="#editTreeModal"><i class="far fa-edit"></i></a>
-                                            <a href="#deleteTreeModal" id="<?php echo $tree['id'] ?>" class="delete" data-bs-toggle="modal" data-bs-target="#deleteTreeModal"><i class="fas fa-trash-alt"></i></a>
-                                        </td>
+                                        <th>name</th>
+                                        <th>nameCommon</th>
+                                        <th>description</th>
+                                        <th>observations</th>
+                                        <th>typeId</th>
+                                        <th>lat</th>
+                                        <th>lng</th>
+                                        <!--<th>active</th>
+                                        <th>dateCreated</th>
+                                        <th>dateModified</th>-->
+                                        <th></th>
                                     </tr>
-                                <?php }
-                            } else { ?>
-                                <tr>
-                                </tr>
-                            <?php } ?>
-                            </tbody>
-                        </table>
+                                    </thead>
+                                    <tbody>
+                                    <?php if (!empty($this->userdata['treesList'])) {
+                                        foreach ($this->userdata['treesList'] as $key => $tree) { ?>
+                                            <tr>
+                                                <td><?php echo $tree["name"] ?></td>
+                                                <td><?php echo $tree["nameCommon"] ?></td>
+                                                <td><?php echo $tree["description"] ?></td>
+                                                <td><?php echo $tree["observations"] ?></td>
+                                                <td><?php echo $tree["typeId"] ?></td>
+                                                <td><?php echo $tree["lat"] ?></td>
+                                                <td><?php echo $tree["lng"] ?></td>
+                                                <!--<td><?php //echo $tree["active"] ?></td>
+                                                <td><?php //echo $tree["dateCreated"] ?></td>
+                                                <td><?php //echo $tree["dateModified"] ?></td>-->
+                                                <td>
+                                                    <a href="#editTreeModal" id="<?php echo $tree['id'] ?>" class="edit" data-bs-toggle="modal" data-bs-target="#editTreeModal"><i class="far fa-edit"></i></a>
+                                                    <a href="#deleteTreeModal" id="<?php echo $tree['id'] ?>" class="delete" data-bs-toggle="modal" data-bs-target="#deleteTreeModal"><i class="fas fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>
+                                        <?php }
+                                    } else { ?>
+                                        <tr>
+                                        </tr>
+                                    <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </main>
