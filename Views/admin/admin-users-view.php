@@ -1,12 +1,7 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: lmore
- * Date: 26/01/2019
- * Time: 15:28
- */
-?>
+
 <?php if ( ! defined('ABSPATH')) exit; ?>
+
+<?php if ( $this->login_required && ! $this->logged_in ) return; ?>
 
 <div id="layoutSidenav">
     <div id="layoutSidenav_nav">

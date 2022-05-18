@@ -1,6 +1,8 @@
 
 <?php if ( ! defined('ABSPATH')) exit; ?>
 
+<?php if ( $this->login_required && ! $this->logged_in ) return; ?>
+
 <div id="layoutSidenav">
     <div id="layoutSidenav_nav">
         <!-- Sidebar -->
