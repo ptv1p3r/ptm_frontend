@@ -278,7 +278,11 @@
 <script>
     $(document).ready(function() {
         //DATATABLES
-        //TODO: datatables error when no data on table? see whats goin on
+        /*TODO:
+           datatables error when no data on table? see whats goin on.
+           also remove classes on table, because of datatables own styles, to remove conflicts.
+           see about simple-datatables too, https://github.com/fiduswriter/Simple-DataTables/wiki/Getting-Started#install
+        */
         /*$('#treesTable').DataTable({
             rowReorder: true,
             responsive: true
