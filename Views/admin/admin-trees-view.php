@@ -130,7 +130,7 @@
 
     <!-- MODALS -->
     <!-- Add Modal HTML -->
-    <div id="addTreeModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeModalLabel" aria-hidden="true">
+    <div id="addTreeModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeModal-Label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form id="addTree">
@@ -182,7 +182,7 @@
     </div>
 
     <!-- Edit Modal HTML -->
-    <div id="editTreeModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeModalLabel" aria-hidden="true">
+    <div id="editTreeModal" class="modal fade" tabindex="-1" aria-labelledby="editTreeModal-Label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form id="editTree">
@@ -239,7 +239,7 @@
     </div>
 
     <!-- Delete Modal HTML -->
-    <div id="deleteTreeModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeModalLabel" aria-hidden="true">
+    <div id="deleteTreeModal" class="modal fade" tabindex="-1" aria-labelledby="deleteTreeModal-Label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form id="deleteTree">
