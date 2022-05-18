@@ -8,142 +8,152 @@
 ?>
 <?php if ( ! defined('ABSPATH')) exit; ?>
 
-<div id="wrapper">
+<div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+        <!-- Sidebar -->
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <div class="sb-sidenav-menu-heading">Core</div>
+                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/dashboard';?>">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        Dashboard
+                    </a>
+                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/groups';?>">
+                        <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                        Grupos
+                    </a>
+                    <a class="nav-link active" href="<?php echo HOME_URL . '/admin/users';?>">
+                        <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                        Utilizadores
+                    </a>
+                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/security';?>">
+                        <div class="sb-nav-link-icon"><i class="fas fa-lock"></i></div>
+                        Tabela de segurança
+                    </a>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tree"></i></div>
+                        Árvores/Utilizadores
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="<?php echo HOME_URL . '/admin/trees';?>">Dashboard</a>
+                            <a class="nav-link" href="<?php echo HOME_URL . '/admin/trees';?>">Árvores</a>
+                        </nav>
+                    </div>
 
-    <!-- Sidebar -->
-    <ul class="sidebar navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/dashboard';?>"><span>Dashboard</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/groups';?>"><span>Grupos</span></a></li>
-        <li class="nav-item active"><a class="nav-link" href="<?php echo HOME_URL . '/admin/users';?>"><span>Utilizadores</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/security';?>"><span>Tabela de segurança</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/trees';?>"><span>Árvores</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/settings';?>"><span>Definições</span></a></li>
-    </ul>
+                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/settings';?>">
+                        <div class="sb-nav-link-icon"><i class="fas fa-gear"></i></div>
+                        Definições
+                    </a>
+                </div>
+            </div>
+            <div class="sb-sidenav-footer">
+                <div class="small">Logged in as:</div>
+                <?php echo $_SESSION["userdata"]["name"] ?>
+            </div>
+        </nav>
+    </div>
 
-    <div id="content-wrapper">
-        <!-- DataTables -->
-        <div class="container">
-            <div class="table-wrapper" style="overflow: auto">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2>Manage <b>User</b></h2>
-                        </div>
-                        <div class="col-sm-6">
-                            <a href="#addUserModal" class="btn btn-success" data-toggle="modal"><i class="fas fa-plus-circle"></i><span>Add New User</span></a>
-                        </div>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2>Manage <b>User</b></h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="#addUserModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal"><i class="fas fa-plus-circle"></i><span>Add New User</span></a>
                     </div>
                 </div>
 
-                <table id="usersTable" class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>name</th>
-                        <th>entity</th>
-                        <th>email</th>
-                        <th>groupId</th>
-                        <th>dateBirth</th>
-                        <th>address</th>
-                        <th>codPost</th>
-                        <th>genderId</th>
-                        <th>locality</th>
-                        <th>mobile</th>
-                        <th>nif</th>
-                        <th>countryId</th>
-                        <th>active</th>
-                        <th>activationDate</th>
-                        <th>dateCreated</th>
-                        <th>dateModified</th>
-                        <th>lastLogin</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php if (!empty($this->userdata['usersList'])) {
-                        foreach ($this->userdata['usersList'] as $key => $user) { ?>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        DataTable Example
+                    </div>
+                    <div class="card-body">
+                        <table id="usersTable" class="table table-striped table-hover">
+                            <thead>
                             <tr>
-                                <td><?php echo $user["name"] ?></td>
-                                <td><?php echo $user["entity"] ?></td>
-                                <td><?php echo $user["email"] ?></td>
-                                <td><?php echo /*getGroupById(*/$user["groupId"] ?></td>
-                                <td><?php echo $user["dateBirth"] ?></td>
-                                <td><?php echo $user["address"] ?></td>
-                                <td><?php echo $user["codPost"] ?></td>
-                                <td><?php echo $user["genderId"] ?></td>
-                                <td><?php echo $user["locality"] ?></td>
-                                <td><?php echo $user["mobile"] ?></td>
-                                <td><?php echo $user["nif"] ?></td>
-                                <td><?php
-                                    if (!empty($this->userdata['countryList'])) {
-                                        foreach ($this->userdata['countryList'] as $key => $country) {
-                                            if ( $country["id"] == $user["countryId"]){
-                                                echo $country["name"];
-                                            }
-                                        }
-                                    }
-                                    ?></td>
-                                <td><?php echo $user["active"] ?></td>
-                                <td><?php echo $user["activationDate"] ?></td>
-                                <td><?php echo $user["dateCreated"] ?></td>
-                                <td><?php echo $user["dateModified"] ?></td>
-                                <td><?php echo $user["lastLogin"] ?></td>
-                                <td>
-                                    <a href="#editUserModal" id="<?php echo $user['email'] ?>" class="edit"
-                                       data-toggle="modal"><i class="far fa-edit"></i></a>
-                                    <a href="#deleteUserModal" id="<?php echo $user['id'] ?>" class="delete"
-                                       data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
-                                </td>
+                                <th>name</th>
+                                <th>entity</th>
+                                <th>email</th>
+                                <th>groupId</th>
+                                <th>dateBirth</th>
+                                <th>address</th>
+                                <th>codPost</th>
+                                <th>genderId</th>
+                                <th>locality</th>
+                                <th>mobile</th>
+                                <th>nif</th>
+                                <th>countryId</th>
+                                <th>active</th>
+                                <th>activationDate</th>
+                                <th>dateCreated</th>
+                                <th>dateModified</th>
+                                <th>lastLogin</th>
                             </tr>
-                        <?php }
-                    } else { ?>
-                        <tr>
-                        </tr>
-                    <?php } ?>
-                    </tbody>
-                </table>
-
-                <!-- Pagination -->
-                <div class="clearfix">
-                    <div class="hint-text">Showing <b>
-                            <?php
-                            /*if (10*$parametros[0] >= count($movies)) {
-                                echo count($movies);
-                            } else {
-                                if ($parametros[0] == null || $parametros[0] == "1") {
-                                    if (10 >= count($movies)) {
-                                        echo count($movies);
-                                    } else {
-                                        echo 10;
-                                    }
-                                } else {
-                                    echo 10*$parametros[0];
-                                }
-                            }*/
-                            ?>
-                        </b> out of <b><?php //echo count($movies)?></b> entries</div>
-                    <ul class="pagination">
-                        <?php /*if ($parametros[0] == null) { ?>
-                                <li class="page-item active"><a href="<?php echo HOME_URL . '/admin/movie/' . 1;?>" class="page-link">1</a></li>
-                            <?php } else {
-                                for ($i = 1 ; $i <= ceil(count($movies)/10) ; $i++) { ?>
-                                <li class="page-item <?php if ($parametros[0] == $i) {
-                                    echo "active";
-                                }?>"><a href="<?php echo HOME_URL . '/admin/movie/' . $i;?>" class="page-link"><?php echo $i?></a></li>
+                            </thead>
+                            <tbody>
+                            <?php if (!empty($this->userdata['usersList'])) {
+                                foreach ($this->userdata['usersList'] as $key => $user) { ?>
+                                    <tr>
+                                        <td><?php echo $user["name"] ?></td>
+                                        <td><?php echo $user["entity"] ?></td>
+                                        <td><?php echo $user["email"] ?></td>
+                                        <td><?php echo /*getGroupById(*/$user["groupId"] ?></td>
+                                        <td><?php echo $user["dateBirth"] ?></td>
+                                        <td><?php echo $user["address"] ?></td>
+                                        <td><?php echo $user["codPost"] ?></td>
+                                        <td><?php echo $user["genderId"] ?></td>
+                                        <td><?php echo $user["locality"] ?></td>
+                                        <td><?php echo $user["mobile"] ?></td>
+                                        <td><?php echo $user["nif"] ?></td>
+                                        <td><?php
+                                            if (!empty($this->userdata['countryList'])) {
+                                                foreach ($this->userdata['countryList'] as $key => $country) {
+                                                    if ( $country["id"] == $user["countryId"]){
+                                                        echo $country["name"];
+                                                    }
+                                                }
+                                            }
+                                            ?></td>
+                                        <td><?php echo $user["active"] ?></td>
+                                        <td><?php echo $user["activationDate"] ?></td>
+                                        <td><?php echo $user["dateCreated"] ?></td>
+                                        <td><?php echo $user["dateModified"] ?></td>
+                                        <td><?php echo $user["lastLogin"] ?></td>
+                                        <td>
+                                            <a href="#editUserModal" id="<?php echo $user['email'] ?>" class="edit"
+                                               data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="far fa-edit"></i></a>
+                                            <a href="#deleteUserModal" id="<?php echo $user['id'] ?>" class="delete"
+                                               data-bs-toggle="modal" data-bs-target="#deleteUserModal"><i class="fas fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
                                 <?php }
-                            }*/
-                        ?>
-                    </ul>
+                            } else { ?>
+                                <tr>
+                                </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
+        </main>
+
 
         <!-- Add Modal HTML -->
-        <div id="addUserModal" class="modal fade">
+        <div id="addUserModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="addUser">
                         <div class="modal-header">
                             <h4 class="modal-title">Add User</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
@@ -225,12 +235,12 @@
                             </div>
                             <!--<div class="form-group">
                                 <label>Active</label>
-                                <input type="checkbox" class="form-control" name="addUserActive">
+                                <input type="checkbox" class="form-control form-check-input" name="addTreeActive">
                             </div>-->
 
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             <input type="submit" class="btn btn-success" value="Add">
                         </div>
                     </form>
@@ -239,13 +249,13 @@
         </div>
 
         <!-- Edit Modal HTML -->
-        <div id="editUserModal" class="modal fade">
+        <div id="editUserModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="editUser">
                         <div class="modal-header">
                             <h4 class="modal-title">Edit User</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
@@ -331,13 +341,13 @@
                             </div>
                             <div class="form-group">
                                 <label>Active</label>
-                                <input type="checkbox" class="form-control" name="editUserActive">
+                                <input type="checkbox" class="form-control form-check-input" name="editTreeActive">
                             </div>
 
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-info" value="Save">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-success" value="Save">
                         </div>
                     </form>
                 </div>
@@ -345,13 +355,13 @@
         </div>
 
         <!-- Delete Modal HTML -->
-        <div id="deleteUserModal" class="modal fade">
+        <div id="deleteUserModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="deleteUser">
                         <div class="modal-header">
                             <h4 class="modal-title">Delete User</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <p>Are you sure you want to delete this User?</p>
@@ -359,7 +369,7 @@
                             <input id="deleteUserId" name="deleteUserId" type="hidden" class="form-control">
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             <input type="submit" class="btn btn-danger" value="Delete">
                         </div>
                     </form>
@@ -367,7 +377,7 @@
             </div>
         </div>
 
-        <!-- Logout Modal HTML -->
+        <!-- Logout Modal HTML
         <div id="logoutModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -375,10 +385,10 @@
                         <h4>Logout <i class="fa fa-lock"></i></h4>
                     </div>
                     <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
-                    <div class="modal-footer"><a href="<?php echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
+                    <div class="modal-footer"><a href="<?php //echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
 </div>
 
@@ -386,11 +396,11 @@
 <script>
     $(document).ready(function() {
         //DATATABLES
-        $('#usersTable').DataTable({
+        /*$('#usersTable').DataTable({
             rowReorder: true,
             responsive: true
             //dom: 'Qfrtip'
-        });
+        });*/
 
         // ajax to Add User
         $('#addUser').submit(function (event) {
