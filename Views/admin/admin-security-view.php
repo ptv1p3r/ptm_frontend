@@ -74,30 +74,30 @@
                     <div class="card-body">
                         <table id="securitiesTable" class="table table-striped table-hover">
                             <thead>
-                            <tr>
-                                <th>homeLogin</th>
-                                <th>admLogin</th>
-                                <th>usersCreate</th>
-                                <th>usersRead</th>
-                                <th>usersUpdate</th>
-                                <th>usersDelete</th>
-                                <th>usersGroupsCreate</th>
-                                <th>usersGroupsRead</th>
-                                <th>usersGroupsUpdate</th>
-                                <th>usersGroupsDelete</th>
-                                <th>treesCreate</th>
-                                <th>treesRead</th>
-                                <th>treesUpdate</th>
-                                <th>treesDelete</th>
-                                <th>treesTypeCreate</th>
-                                <th>treesTypeRead</th>
-                                <th>treesTypeUpdate</th>
-                                <th>treesTypeDelete</th>
-                                <th>treesImagesCreate</th>
-                                <th>treesImagesRead</th>
-                                <th>treesImagesUpdate</th>
-                                <th>treesImagesDelete</th>
-                            </tr>
+                                <tr>
+                                    <th>homeLogin</th>
+                                    <th>admLogin</th>
+                                    <th>usersCreate</th>
+                                    <th>usersRead</th>
+                                    <th>usersUpdate</th>
+                                    <th>usersDelete</th>
+                                    <th>usersGroupsCreate</th>
+                                    <th>usersGroupsRead</th>
+                                    <th>usersGroupsUpdate</th>
+                                    <th>usersGroupsDelete</th>
+                                    <th>treesCreate</th>
+                                    <th>treesRead</th>
+                                    <th>treesUpdate</th>
+                                    <th>treesDelete</th>
+                                    <th>treesTypeCreate</th>
+                                    <th>treesTypeRead</th>
+                                    <th>treesTypeUpdate</th>
+                                    <th>treesTypeDelete</th>
+                                    <th>treesImagesCreate</th>
+                                    <th>treesImagesRead</th>
+                                    <th>treesImagesUpdate</th>
+                                    <th>treesImagesDelete</th>
+                                </tr>
                             </thead>
                             <tbody>
                             <?php if (!empty($this->securitydata['securitysList']['data'])) {
@@ -434,8 +434,7 @@
                 </div>
             </div>
         </div>-->
-    </div>
-</div>
+
 
 
 <script>
