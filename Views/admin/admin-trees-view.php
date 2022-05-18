@@ -57,16 +57,9 @@
                 <h1 class="mt-4">Gestão de <b>Árvores</b></h1>
                 <div class="row">
 
-                    <div class="col-xl-12 col-md-12">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                Mapa
-                            </div>
-                            <div class="card-body">
-                                <!--Map area div-->
-                                <div id="map"></div>
-                            </div>
-                        </div>
+                    <div class="col-xl-12 col-md-12 mb-4">
+                        <!--Map area div-->
+                        <div id="map"></div>
                     </div>
 
                     <div class="col-xl-12 col-md-12">

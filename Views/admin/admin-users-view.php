@@ -54,90 +54,86 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-
+                <h1 class="mt-4">Gestão de <b>grupos</b></h1>
                 <div class="row">
-                    <div class="col-sm-6">
-                        <h2>Manage <b>User</b></h2>
-                    </div>
-                    <div class="col-sm-6">
-                        <a href="#addUserModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">
-                            <i class="fas fa-plus-circle"></i><span>Add New User</span>
-                        </a>
-                    </div>
-                </div>
 
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-table me-1"></i>
-                        DataTable Example
-                    </div>
-                    <div class="card-body">
-                        <table id="usersTable" class="table table-striped table-hover">
-                            <thead>
-                            <tr>
-                                <th>name</th>
-                                <th>entity</th>
-                                <th>email</th>
-                                <th>groupId</th>
-                                <th>dateBirth</th>
-                                <th>address</th>
-                                <th>codPost</th>
-                                <th>genderId</th>
-                                <th>locality</th>
-                                <th>mobile</th>
-                                <th>nif</th>
-                                <th>countryId</th>
-                                <th>active</th>
-                                <th>activationDate</th>
-                                <th>dateCreated</th>
-                                <th>dateModified</th>
-                                <th>lastLogin</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php if (!empty($this->userdata['usersList'])) {
-                                foreach ($this->userdata['usersList'] as $key => $user) { ?>
+                    <div class="col-xl-12 col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <a href="#addUserModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                                    <i class="fas fa-plus-circle"></i><span>Add New User</span>
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <table id="usersTable" class="table table-striped table-hover">
+                                    <thead>
                                     <tr>
-                                        <td><?php echo $user["name"] ?></td>
-                                        <td><?php echo $user["entity"] ?></td>
-                                        <td><?php echo $user["email"] ?></td>
-                                        <td><?php echo /*getGroupById(*/$user["groupId"] ?></td>
-                                        <td><?php echo $user["dateBirth"] ?></td>
-                                        <td><?php echo $user["address"] ?></td>
-                                        <td><?php echo $user["codPost"] ?></td>
-                                        <td><?php echo $user["genderId"] ?></td>
-                                        <td><?php echo $user["locality"] ?></td>
-                                        <td><?php echo $user["mobile"] ?></td>
-                                        <td><?php echo $user["nif"] ?></td>
-                                        <td><?php
-                                            if (!empty($this->userdata['countryList'])) {
-                                                foreach ($this->userdata['countryList'] as $key => $country) {
-                                                    if ( $country["id"] == $user["countryId"]){
-                                                        echo $country["name"];
-                                                    }
-                                                }
-                                            }
-                                            ?></td>
-                                        <td><?php echo $user["active"] ?></td>
-                                        <td><?php echo $user["activationDate"] ?></td>
-                                        <td><?php echo $user["dateCreated"] ?></td>
-                                        <td><?php echo $user["dateModified"] ?></td>
-                                        <td><?php echo $user["lastLogin"] ?></td>
-                                        <td>
-                                            <a href="#editUserModal" id="<?php echo $user['email'] ?>" class="edit"
-                                               data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="far fa-edit"></i></a>
-                                            <a href="#deleteUserModal" id="<?php echo $user['id'] ?>" class="delete"
-                                               data-bs-toggle="modal" data-bs-target="#deleteUserModal"><i class="fas fa-trash-alt"></i></a>
-                                        </td>
+                                        <th>name</th>
+                                        <th>entity</th>
+                                        <th>email</th>
+                                        <th>groupId</th>
+                                        <th>dateBirth</th>
+                                        <th>address</th>
+                                        <th>codPost</th>
+                                        <th>genderId</th>
+                                        <th>locality</th>
+                                        <th>mobile</th>
+                                        <th>nif</th>
+                                        <th>countryId</th>
+                                        <th>active</th>
+                                        <th>activationDate</th>
+                                        <th>dateCreated</th>
+                                        <th>dateModified</th>
+                                        <th>lastLogin</th>
                                     </tr>
-                                <?php }
-                            } else { ?>
-                                <tr>
-                                </tr>
-                            <?php } ?>
-                            </tbody>
-                        </table>
+                                    </thead>
+                                    <tbody>
+                                    <?php if (!empty($this->userdata['usersList'])) {
+                                        foreach ($this->userdata['usersList'] as $key => $user) { ?>
+                                            <tr>
+                                                <td><?php echo $user["name"] ?></td>
+                                                <td><?php echo $user["entity"] ?></td>
+                                                <td><?php echo $user["email"] ?></td>
+                                                <td><?php echo /*getGroupById(*/$user["groupId"] ?></td>
+                                                <td><?php echo $user["dateBirth"] ?></td>
+                                                <td><?php echo $user["address"] ?></td>
+                                                <td><?php echo $user["codPost"] ?></td>
+                                                <td><?php echo $user["genderId"] ?></td>
+                                                <td><?php echo $user["locality"] ?></td>
+                                                <td><?php echo $user["mobile"] ?></td>
+                                                <td><?php echo $user["nif"] ?></td>
+                                                <td><?php
+                                                    if (!empty($this->userdata['countryList'])) {
+                                                        foreach ($this->userdata['countryList'] as $key => $country) {
+                                                            if ( $country["id"] == $user["countryId"]){
+                                                                echo $country["name"];
+                                                            }
+                                                        }
+                                                    }
+                                                    ?></td>
+                                                <td><?php echo $user["active"] ?></td>
+                                                <td><?php echo $user["activationDate"] ?></td>
+                                                <td><?php echo $user["dateCreated"] ?></td>
+                                                <td><?php echo $user["dateModified"] ?></td>
+                                                <td><?php echo $user["lastLogin"] ?></td>
+                                                <td>
+                                                    <a href="#editUserModal" id="<?php echo $user['email'] ?>" class="edit"
+                                                       data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="far fa-edit"></i></a>
+                                                    <a href="#deleteUserModal" id="<?php echo $user['id'] ?>" class="delete"
+                                                       data-bs-toggle="modal" data-bs-target="#deleteUserModal"><i class="fas fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>
+                                        <?php }
+                                    } else { ?>
+                                        <tr>
+                                        </tr>
+                                    <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </main>

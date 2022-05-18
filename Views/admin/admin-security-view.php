@@ -54,93 +54,89 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-
+                <h1 class="mt-4">Gestão de tabelas de <b>segurança</b></h1>
                 <div class="row">
-                    <div class="col-sm-6">
-                        <h2>Manage <b>Security</b></h2>
-                    </div>
-                    <div class="col-sm-6">
-                        <a href="#addSecurityModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addSecurityModal">
-                            <i class="fas fa-plus-circle"></i><span>Add New Security</span>
-                        </a>
-                    </div>
-                </div>
 
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-table me-1"></i>
-                        DataTable Example
-                    </div>
-                    <div class="card-body">
-                        <table id="securitiesTable" class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>homeLogin</th>
-                                    <th>admLogin</th>
-                                    <th>usersCreate</th>
-                                    <th>usersRead</th>
-                                    <th>usersUpdate</th>
-                                    <th>usersDelete</th>
-                                    <th>usersGroupsCreate</th>
-                                    <th>usersGroupsRead</th>
-                                    <th>usersGroupsUpdate</th>
-                                    <th>usersGroupsDelete</th>
-                                    <th>treesCreate</th>
-                                    <th>treesRead</th>
-                                    <th>treesUpdate</th>
-                                    <th>treesDelete</th>
-                                    <th>treesTypeCreate</th>
-                                    <th>treesTypeRead</th>
-                                    <th>treesTypeUpdate</th>
-                                    <th>treesTypeDelete</th>
-                                    <th>treesImagesCreate</th>
-                                    <th>treesImagesRead</th>
-                                    <th>treesImagesUpdate</th>
-                                    <th>treesImagesDelete</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <?php if (!empty($this->securitydata['securitysList']['data'])) {
-                                foreach ($this->securitydata['securitysList']['data'] as $key => $security) { ?>
-                                    <tr>
-                                        <td><?php echo $security["homeLogin"] ?></td>
-                                        <td><?php echo $security["admLogin"] ?></td>
-                                        <td><?php echo $security["usersCreate"] ?></td>
-                                        <td><?php echo $security["usersRead"] ?></td>
-                                        <td><?php echo $security["usersUpdate"] ?></td>
-                                        <td><?php echo $security["usersDelete"] ?></td>
-                                        <td><?php echo $security["usersGroupsCreate"] ?></td>
-                                        <td><?php echo $security["usersGroupsRead"] ?></td>
-                                        <td><?php echo $security["usersGroupsUpdate"] ?></td>
-                                        <td><?php echo $security["usersGroupsDelete"] ?></td>
-                                        <td><?php echo $security["treesCreate"] ?></td>
-                                        <td><?php echo $security["treesRead"] ?></td>
-                                        <td><?php echo $security["treesUpdate"] ?></td>
-                                        <td><?php echo $security["treesDelete"] ?></td>
-                                        <td><?php echo $security["treesTypeCreate"] ?></td>
-                                        <td><?php echo $security["treesTypeRead"] ?></td>
-                                        <td><?php echo $security["treesTypeUpdate"] ?></td>
-                                        <td><?php echo $security["treesTypeDelete"] ?></td>
-                                        <td><?php echo $security["treesImagesCreate"] ?></td>
-                                        <td><?php echo $security["treesImagesRead"] ?></td>
-                                        <td><?php echo $security["treesImagesUpdate"] ?></td>
-                                        <td><?php echo $security["treesImagesDelete"] ?></td>
+                    <div class="col-xl-12 col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <a href="#addSecurityModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addSecurityModal">
+                                    <i class="fas fa-plus-circle"></i><span>Add New Security</span>
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <table id="securitiesTable" class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>homeLogin</th>
+                                            <th>admLogin</th>
+                                            <th>usersCreate</th>
+                                            <th>usersRead</th>
+                                            <th>usersUpdate</th>
+                                            <th>usersDelete</th>
+                                            <th>usersGroupsCreate</th>
+                                            <th>usersGroupsRead</th>
+                                            <th>usersGroupsUpdate</th>
+                                            <th>usersGroupsDelete</th>
+                                            <th>treesCreate</th>
+                                            <th>treesRead</th>
+                                            <th>treesUpdate</th>
+                                            <th>treesDelete</th>
+                                            <th>treesTypeCreate</th>
+                                            <th>treesTypeRead</th>
+                                            <th>treesTypeUpdate</th>
+                                            <th>treesTypeDelete</th>
+                                            <th>treesImagesCreate</th>
+                                            <th>treesImagesRead</th>
+                                            <th>treesImagesUpdate</th>
+                                            <th>treesImagesDelete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php if (!empty($this->securitydata['securitysList']['data'])) {
+                                        foreach ($this->securitydata['securitysList']['data'] as $key => $security) { ?>
+                                            <tr>
+                                                <td><?php echo $security["homeLogin"] ?></td>
+                                                <td><?php echo $security["admLogin"] ?></td>
+                                                <td><?php echo $security["usersCreate"] ?></td>
+                                                <td><?php echo $security["usersRead"] ?></td>
+                                                <td><?php echo $security["usersUpdate"] ?></td>
+                                                <td><?php echo $security["usersDelete"] ?></td>
+                                                <td><?php echo $security["usersGroupsCreate"] ?></td>
+                                                <td><?php echo $security["usersGroupsRead"] ?></td>
+                                                <td><?php echo $security["usersGroupsUpdate"] ?></td>
+                                                <td><?php echo $security["usersGroupsDelete"] ?></td>
+                                                <td><?php echo $security["treesCreate"] ?></td>
+                                                <td><?php echo $security["treesRead"] ?></td>
+                                                <td><?php echo $security["treesUpdate"] ?></td>
+                                                <td><?php echo $security["treesDelete"] ?></td>
+                                                <td><?php echo $security["treesTypeCreate"] ?></td>
+                                                <td><?php echo $security["treesTypeRead"] ?></td>
+                                                <td><?php echo $security["treesTypeUpdate"] ?></td>
+                                                <td><?php echo $security["treesTypeDelete"] ?></td>
+                                                <td><?php echo $security["treesImagesCreate"] ?></td>
+                                                <td><?php echo $security["treesImagesRead"] ?></td>
+                                                <td><?php echo $security["treesImagesUpdate"] ?></td>
+                                                <td><?php echo $security["treesImagesDelete"] ?></td>
 
-                                        <td>
-                                            <a href="#editSecurityModal" id="<?php echo $security['id'] ?>" class="edit"
-                                               data-bs-toggle="modal" data-bs-target="#editSecurityModal"><i class="far fa-edit"></i></a>
-                                            <a href="#deleteSecurityModal" id="<?php echo $security['id'] ?>" class="delete"
-                                               data-bs-toggle="modal" data-bs-target="#deleteSecurityModal"><i class="fas fa-trash-alt"></i></a>
-                                        </td>
-                                    </tr>
-                                <?php }
-                            } else { ?>
-                                <tr>
-                                </tr>
-                            <?php } ?>
-                            </tbody>
-                        </table>
+                                                <td>
+                                                    <a href="#editSecurityModal" id="<?php echo $security['id'] ?>" class="edit"
+                                                       data-bs-toggle="modal" data-bs-target="#editSecurityModal"><i class="far fa-edit"></i></a>
+                                                    <a href="#deleteSecurityModal" id="<?php echo $security['id'] ?>" class="delete"
+                                                       data-bs-toggle="modal" data-bs-target="#deleteSecurityModal"><i class="fas fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>
+                                        <?php }
+                                    } else { ?>
+                                        <tr>
+                                        </tr>
+                                    <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </main>

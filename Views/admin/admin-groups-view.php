@@ -54,61 +54,57 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-
+                <h1 class="mt-4">Gestão de <b>grupos</b></h1>
                 <div class="row">
-                    <div class="col-sm-6">
-                        <h2>Manage <b>Groups</b></h2>
-                    </div>
-                    <div class="col-sm-6">
-                        <a href="#addGroupModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addGroupModal">
-                            <i class="fas fa-plus-circle"></i><span>Add New Group</span>
-                        </a>
-                    </div>
-                </div>
 
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-table me-1"></i>
-                        DataTable Example
-                    </div>
-                    <div class="card-body">
-                        <table id="groupsTable" class="table table-striped table-hover">
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>SecurityId</th>
-                                <th>active</th>
-                                <th>dateCreated</th>
-                                <th>dateModified</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php if (!empty($this->userdata['groupsList'])) {
-                                foreach ($this->userdata['groupsList'] as $key => $group) { ?>
+                    <div class="col-xl-12 col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <a href="#addGroupModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addGroupModal">
+                                    <i class="fas fa-plus-circle"></i><span>Add New Group</span>
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <table id="groupsTable" class="table table-striped table-hover">
+                                    <thead>
                                     <tr>
-                                        <td><?php echo $group["name"] ?></td>
-                                        <td><?php echo $group["description"] ?></td>
-                                        <td><?php echo $group["securityId"] ?></td>
-                                        <td><?php echo $group["active"] ?></td>
-                                        <td><?php echo $group["dateCreated"] ?></td>
-                                        <td><?php echo $group["dateModified"] ?></td>
-                                        <td>
-                                            <a href="#editGroupModal" id="<?php echo $group['id'] ?>" class="edit"
-                                               data-bs-toggle="modal" data-bs-target="#editGroupModal"><i class="far fa-edit"></i></a>
-                                            <a href="#deleteGroupModal" id="<?php echo $group['id'] ?>" class="delete"
-                                               data-bs-toggle="modal" data-bs-target="#deleteGroupModal"><i class="fas fa-trash-alt"></i></a>
-                                        </td>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>SecurityId</th>
+                                        <th>active</th>
+                                        <th>dateCreated</th>
+                                        <th>dateModified</th>
+                                        <th></th>
                                     </tr>
-                                <?php }
-                            } else { ?>
-                                <tr>
-                                </tr>
-                            <?php } ?>
-                            </tbody>
-                        </table>
+                                    </thead>
+                                    <tbody>
+                                    <?php if (!empty($this->userdata['groupsList'])) {
+                                        foreach ($this->userdata['groupsList'] as $key => $group) { ?>
+                                            <tr>
+                                                <td><?php echo $group["name"] ?></td>
+                                                <td><?php echo $group["description"] ?></td>
+                                                <td><?php echo $group["securityId"] ?></td>
+                                                <td><?php echo $group["active"] ?></td>
+                                                <td><?php echo $group["dateCreated"] ?></td>
+                                                <td><?php echo $group["dateModified"] ?></td>
+                                                <td>
+                                                    <a href="#editGroupModal" id="<?php echo $group['id'] ?>" class="edit"
+                                                       data-bs-toggle="modal" data-bs-target="#editGroupModal"><i class="far fa-edit"></i></a>
+                                                    <a href="#deleteGroupModal" id="<?php echo $group['id'] ?>" class="delete"
+                                                       data-bs-toggle="modal" data-bs-target="#deleteGroupModal"><i class="fas fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>
+                                        <?php }
+                                    } else { ?>
+                                        <tr>
+                                        </tr>
+                                    <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </main>
