@@ -60,7 +60,9 @@
                         <h2>Manage <b>Groups</b></h2>
                     </div>
                     <div class="col-sm-6">
-                        <a href="#addGroupModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addGroupModal"><i class="fas fa-plus-circle"></i><span>Add New Group</span></a>
+                        <a href="#addGroupModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addGroupModal">
+                            <i class="fas fa-plus-circle"></i><span>Add New Group</span>
+                        </a>
                     </div>
                 </div>
 

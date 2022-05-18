@@ -65,7 +65,9 @@
                         <h2>Manage <b>User</b></h2>
                     </div>
                     <div class="col-sm-6">
-                        <a href="#addUserModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal"><i class="fas fa-plus-circle"></i><span>Add New User</span></a>
+                        <a href="#addUserModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                            <i class="fas fa-plus-circle"></i><span>Add New User</span>
+                        </a>
                     </div>
                 </div>
 

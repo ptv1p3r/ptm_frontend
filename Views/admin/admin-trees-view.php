@@ -68,8 +68,9 @@
                         <h2>Manage <b>Trees</b></h2>
                     </div>
                     <div class="col-sm-6">
-                        <!--TODO: FIX all modals not opening (see bootstrap docs for modals)-->
-                        <a href="#addTreeModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTreeModal"><i class="fas fa-plus-circle"></i><span>Add New Tree</span></a>
+                        <a href="#addTreeModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTreeModal">
+                            <i class="fas fa-plus-circle"></i><span>Add New Tree</span>
+                        </a>
                     </div>
                 </div>
 
