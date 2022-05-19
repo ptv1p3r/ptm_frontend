@@ -3,8 +3,10 @@
 
 <?php if ( $this->login_required && ! $this->logged_in ) return; ?>
 
-<div id="layoutSidenav">
+<!-- AJAX loader -->
+<div id="loader" class="lds-dual-ring hidden overlay"></div>
 
+<div id="layoutSidenav">
     <!-- import sidebar -->
     <?php require ABSPATH . '/views/_includes/admin-sidebar.php'?>
 
@@ -344,6 +346,9 @@
                 dataType: "json",
                 type: 'POST',
                 data: formData,
+                beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    $('#loader').removeClass('hidden')
+                },
                 success: function (data) {
                     $("#addUserModal").modal('hide');
 
@@ -386,6 +391,9 @@
                             //location.reload();
                         }
                     });
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
                 }
             });
         });
@@ -422,6 +430,9 @@
                 dataType: "json",
                 type: 'POST',
                 data : formData,
+                beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    $('#loader').removeClass('hidden')
+                },
                 success: function (data) {
                     $("#editUserModal").modal('hide');
 
@@ -464,6 +475,9 @@
                             //location.reload();
                         }
                     });
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
                 }
             });
         });
@@ -481,6 +495,9 @@
                 dataType: "json",
                 type: 'POST',
                 data : formData,
+                beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    $('#loader').removeClass('hidden')
+                },
                 success: function (data) {
 
                     $('[name="editUserId"]').val(data[0]['id']);
@@ -524,6 +541,9 @@
                             //location.reload();
                         }
                     });
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
                 }
             });
 
@@ -543,6 +563,9 @@
                 dataType: "json",
                 type: 'POST',
                 data : formData,
+                beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    $('#loader').removeClass('hidden')
+                },
                 success: function (data) {
                     $("#deleteUserModal").modal('hide');
 
@@ -585,6 +608,9 @@
                             //location.reload();
                         }
                     });
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
                 }
             });
         });
