@@ -58,6 +58,7 @@
 
                 <!-- trees -->
                 <?php if (isset($_COOKIE["sidebar_collapsed_trees"]) && $_COOKIE['sidebar_collapsed_trees'] == "true") { ?>
+                    <!-- sidebar tab collapsed -->
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#trees_collapse" aria-expanded="false" aria-controls="collapseLayouts">
                         <div class="sb-nav-link-icon"><i class="fas fa-tree"></i></div>
                         Árvores
@@ -83,6 +84,7 @@
                         </nav>
                     </div>
                 <?php } else { ?>
+                    <!-- sidebar tab open -->
                     <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#trees_collapse" aria-expanded="false" aria-controls="collapseLayouts">
                         <div class="sb-nav-link-icon"><i class="fas fa-tree"></i></div>
                         Árvores
@@ -133,10 +135,10 @@
 <script>
     // function to get sidebar collapsed tab state
     $('#trees_collapse').on('show.bs.collapse', function () {
-        // collapsed
+        // not collapsed/open
         document.cookie = "sidebar_collapsed_trees=false; expires=false; path=/";
     }).on('hide.bs.collapse', function () {
-        // not collapsed
+        // collapsed
         document.cookie = "sidebar_collapsed_trees=true; expires=false; path=/";
     });
 
