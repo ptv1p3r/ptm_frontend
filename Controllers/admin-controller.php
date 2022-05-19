@@ -201,7 +201,7 @@ class AdminController extends MainController
         if (isset($_SESSION["sidebar"]["active_tab"])) {
             //remove a currently active
             unset($_SESSION["sidebar"]["active_tab"]);
-            //e dá set a uma nova active tab
+            //e atribui uma nova active tab
             $_SESSION["sidebar"]["active_tab"]["dashboard"] = true;
         }
 
@@ -466,7 +466,7 @@ class AdminController extends MainController
         if (isset($_SESSION["sidebar"]["active_tab"])) {
             //remove a currently active
             unset($_SESSION["sidebar"]["active_tab"]);
-            //e dá set a uma nova active tab
+            //e atribui uma nova active tab
             $_SESSION["sidebar"]["active_tab"]["users"] = true;
         }
 
@@ -673,7 +673,7 @@ class AdminController extends MainController
         if (isset($_SESSION["sidebar"]["active_tab"])) {
             //remove a currently active
             unset($_SESSION["sidebar"]["active_tab"]);
-            //e dá set a uma nova active tab
+            //e atribui uma nova active tab
             $_SESSION["sidebar"]["active_tab"]["securities"] = true;
         }
 
@@ -870,7 +870,7 @@ class AdminController extends MainController
         if (isset($_SESSION["sidebar"]["active_tab"])) {
             //remove a currently active
             unset($_SESSION["sidebar"]["active_tab"]);
-            //e dá set a uma nova active tab
+            //e atribui uma nova active tab
             $_SESSION["sidebar"]["active_tab"]["trees_dashboard"] = true;
         }
 
@@ -928,7 +928,7 @@ class AdminController extends MainController
         if (isset($_SESSION["sidebar"]["active_tab"])) {
             //remove a currently active
             unset($_SESSION["sidebar"]["active_tab"]);
-            //e dá set a uma nova active tab
+            //e atribui uma nova active tab
             $_SESSION["sidebar"]["active_tab"]["trees"] = true;
         }
 
@@ -1147,7 +1147,7 @@ class AdminController extends MainController
         if (isset($_SESSION["sidebar"]["active_tab"])) {
             //remove a currently active
             unset($_SESSION["sidebar"]["active_tab"]);
-            //e dá set a uma nova active tab
+            //e atribui uma nova active tab
             $_SESSION["sidebar"]["active_tab"]["settings"] = true;
         }
 
