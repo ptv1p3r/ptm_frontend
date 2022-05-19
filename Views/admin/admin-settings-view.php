@@ -3,8 +3,10 @@
 
 <?php if ( $this->login_required && ! $this->logged_in ) return; ?>
 
-<div id="layoutSidenav">
+<!-- AJAX loader -->
+<div id="loader" class="lds-dual-ring hidden overlay"></div>
 
+<div id="layoutSidenav">
     <!-- import sidebar -->
     <?php require ABSPATH . '/views/_includes/admin-sidebar.php'?>
 
