@@ -52,7 +52,7 @@
                 <?php } else { ?>
                     <a class="nav-link" href="<?php echo HOME_URL . '/admin/security';?>">
                         <div class="sb-nav-link-icon"><i class="fas fa-lock"></i></div>
-                        Tabela de segurança
+                        Tabelas de segurança
                     </a>
                 <?php } ?>
 
