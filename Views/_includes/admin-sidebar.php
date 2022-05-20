@@ -81,6 +81,13 @@
                                 <a class="nav-link" href="<?php echo HOME_URL . '/admin/trees';?>">Árvores</a>
                             <?php } ?>
 
+                            <!-- trees users -->
+                            <?php if (isset($_SESSION["sidebar"]["active_tab"]["trees_users"]) && $_SESSION["sidebar"]["active_tab"]["trees_users"] === true) { ?>
+                                <a class="nav-link active" href="<?php echo HOME_URL . '/admin/trees_users';?>">Árvores-Utilizadores</a>
+                            <?php } else { ?>
+                                <a class="nav-link" href="<?php echo HOME_URL . '/admin/trees_users';?>">Árvores-Utilizadores</a>
+                            <?php } ?>
+
                         </nav>
                     </div>
                 <?php } else { ?>
@@ -105,6 +112,13 @@
                                 <a class="nav-link active" href="<?php echo HOME_URL . '/admin/trees';?>">Árvores</a>
                             <?php } else { ?>
                                 <a class="nav-link" href="<?php echo HOME_URL . '/admin/trees';?>">Árvores</a>
+                            <?php } ?>
+
+                            <!-- trees users -->
+                            <?php if (isset($_SESSION["sidebar"]["active_tab"]["trees_users"]) && $_SESSION["sidebar"]["active_tab"]["trees_users"] === true) { ?>
+                                <a class="nav-link active" href="<?php echo HOME_URL . '/admin/trees_users';?>">Árvores-Utilizadores</a>
+                            <?php } else { ?>
+                                <a class="nav-link" href="<?php echo HOME_URL . '/admin/trees_users';?>">Árvores-Utilizadores</a>
                             <?php } ?>
 
                         </nav>
