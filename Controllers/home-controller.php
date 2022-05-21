@@ -32,7 +32,7 @@ class HomeController extends MainController
             //Load all trees into home view
             $model = $this->load_model('user-trees-model');
             $allTrees = $model->getAllTrees();
-            $this->userdata['allTreesList'] = $allTrees['body'];
+            $this->userdata['allTreesList'] = $allTrees['body']['trees'];
 
 
             /** Load public files view **/
