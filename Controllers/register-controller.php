@@ -138,36 +138,12 @@ class RegisterController extends MainController
      * Function password replace
      * "/views/user/registration/pass-recover-view.php"
      */
-    public
-    function passRecover()
-    {
+    public function passRecover() {
         // Title page
         $this->title = 'ReporPalavraPasse';
 
         // Function parameters
-        $parameter = (func_num_args() >= 1) ? func_get_arg(0) : array();
-
-//        echo "<pre>";
-////        echo $parameter[1];
-//        var_dump($parameter);
-//        echo "</pre>";
-
-//
-
-
-//        $userToken = $parameter[1];
-
-
-//        echo "<pre>";
-//        echo $user_id;
-//////        var_dump($userToken);
-//        echo "</pre>";
-//
-//        echo "<pre>";
-//        echo $userToken;
-////        var_dump($userToken);
-//        echo "</pre>";
-
+        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
 
         $model = $this->load_model('recover-model');
 
@@ -175,56 +151,57 @@ class RegisterController extends MainController
         // Ajax call flow process
         if (isset($_POST['action']) && !empty($_POST['action'])) {
             $action = $_POST['action'];
-            $data = $_POST['data'];
+            switch ($action) {
+                case 'PassRecover' :
+                    $data = $_POST['data'];
+
+                    //password ecription
+                    $data[0]['value'] = hash('sha256', $data[0]['value']);
+                    $data[1]['value'] = hash('sha256', $data[1]['value']);
 
 
-            $user_id = null;
-            $user_token = null;
-            if (isset($parameter) && !empty($parameter)) {
-                $user_id = chk_array($parameter, 1);
-                $user_token = chk_array($parameter, 0);
+                    $newPassVal = $data[0]['value'];
+                    $confPassVal = $data[1]['value'];
+
+                    //Validate if the new pass is equal to conf
+                    if($newPassVal != $confPassVal ){
+                        //Array with status code message
+                        $response = array();
+                        $response["body"]['message'] = 'Palavra passe não coincide!';
+                        $response['statusCode'] = 0;
+                        echo json_encode($response);
+                        break;
+                    }
+
+
+
+                    $user_id = null;
+                    $user_token = null;
+                    if (isset($parametros) && !empty($parametros)) {
+                        $user_id = chk_array($parametros, 0);
+                        $user_token = chk_array($parametros, 1);
+                    }
+
+                    $apiResponse = $model->passRecover($data, $user_id, $user_token); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 200) { // 200 ok
+                        $apiResponse["body"]['message'] = "Palavra passe alterada com sucesso!";
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo $apiResponse;
+                    break;
             }
-
-//
-//            echo "<pre>";
-////            echo $userToken;
-//            var_dump($data);
-//            echo "</pre>";
-
-
-            //password ecription
-            $data[0]['value'] = hash('sha256', $data[0]['value']);
-
-
-            //$apiResponse = json_decode($model->addUser($data), true); //decode to check message from api
-            $apiResponse = $model->passRecover($data, $user_id, $user_token); //decode to check message from api
-
-//            echo "<pre>";
-            var_dump($apiResponse);
-//            echo "</pre>";
-
-//
-            // quando statusCode = 201, a response nao vem com campo mensagem
-            // entao é criado e encoded para ser enviado
-            if ($apiResponse['statusCode'] === 200) { // 200 ok
-                $apiResponse["body"]['message'] = "Palavra passe alterada com sucesso!";
-
-                $apiResponse = json_encode($apiResponse);// encode package to send
-                die ($apiResponse);
-            }
-
-            // se statsCode nao for 201, entao api response ja vem com um campo mensagem
-            // assim so precisamos de fazer encode para ser enviado
-            $apiResponse = json_encode($apiResponse);// encode package to send
-
         } else {
-
             /** load files from view **/
             require ABSPATH . '/views/_includes/header.php';
+
             require ABSPATH . '/views/user/registration/pass-recover-view.php';
+
             require ABSPATH . '/views/_includes/footer.php';
         }
 
-
     }
+
+
 }
