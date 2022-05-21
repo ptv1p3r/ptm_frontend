@@ -1120,7 +1120,7 @@ class AdminController extends MainController
         $this->title = 'Admin - Árvores-Utilizadores';
 
         // Permissoes da pagina
-        $this->permission_required = array('admLogin','treesRead','usersRead'/*,'usersTreesRead'*/);
+        $this->permission_required = array('admLogin'/*,'usersTreesRead'*/);
 
         // Estado da sidebar
         // se ja existir uma active tab
@@ -1335,7 +1335,7 @@ class AdminController extends MainController
         $this->title = 'Admin - Tipos de árvores';
 
         // Permissoes da pagina
-        $this->permission_required = array('admLogin','treesRead','usersRead'/*,'usersTreesRead'*/);
+        $this->permission_required = array('admLogin','treeTypeRead');
 
         // Estado da sidebar
         // se ja existir uma active tab
@@ -1398,7 +1398,7 @@ class AdminController extends MainController
                     break;
 
                 case 'AddTreeType' :
-                    /*$this->permission_required = array('usersTreesCreate');
+                    $this->permission_required = array('treeTypeCreate');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
@@ -1406,7 +1406,7 @@ class AdminController extends MainController
 
                         echo json_encode($apiResponse);
                         break;
-                    }*/
+                    }
 
                     $data = $_POST['data'];
                     $apiResponse = $modelo->addTreeType($data); //decode to check message from api
@@ -1432,7 +1432,7 @@ class AdminController extends MainController
                     break;
 
                 case 'UpdateTreeType' :
-                    /*$this->permission_required = array('usersTreesUpdate');
+                    $this->permission_required = array('treeTypeUpdate');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
@@ -1440,7 +1440,7 @@ class AdminController extends MainController
 
                         echo json_encode($apiResponse);
                         break;
-                    }*/
+                    }
 
                     $data = $_POST['data'];
                     $apiResponse = $modelo->updateTreeType($data); //decode to check message from api
@@ -1455,10 +1455,6 @@ class AdminController extends MainController
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
                         $apiResponse["body"]['message'] = "Updated with success!";
-
-                        $apiResponse = json_encode($apiResponse);// encode package to send
-                        echo $apiResponse;
-                        break;
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -1466,7 +1462,7 @@ class AdminController extends MainController
                     break;
 
                 case 'DeleteTreeType' :
-                    /*$this->permission_required = array('usersTreesDelete');
+                    $this->permission_required = array('treeTypeDelete');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
@@ -1474,7 +1470,7 @@ class AdminController extends MainController
 
                         echo json_encode($apiResponse);
                         break;
-                    }*/
+                    }
 
                     $data = $_POST['data'];
                     $apiResponse = $modelo->deleteTreeType($data); //decode to check message from api
