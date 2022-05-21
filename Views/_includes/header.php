@@ -17,14 +17,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-
     <!-- JQuery 3.6.0 -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <!--  CSS links -->
     <!-- BootStrap 4.1.3 -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <!-- Popper 1.14.3 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
             integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
@@ -38,39 +37,36 @@
     <!-- SweetAlerts 2 -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Polifill -->
-    <!--      <script href="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js%22%3E</script>-->
+<!--   <script href="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js%22%3E</script>'"/>-->
     <!-- Lib Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
           integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
           crossorigin=""/>
-
-
+    <!-- Lib JS Leaflet -->
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
             integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
             crossorigin=""></script>
 
     <!-- Template original CSS links -->
     <!--  CSS custom que não pode ser apagado-->
-    <link href="../../css/home/custom.css" rel="stylesheet">
+    <link href="<?php echo HOME_URL . '/'; ?>css/home/custom.css" rel="stylesheet">
     <!--    <link href="../../css/home/prettyPhoto.css" rel="stylesheet">-->
 
-    <!--     <link href="css/home/color.css" rel="stylesheet">-->
-    <!--     <link href="css/home/responsive.css" rel="stylesheet">-->
-    <!--     <link href="css/home/owl.carousel.min.css" rel="stylesheet">-->
-    <!--     <link href="css/home/bootstrap.min.css" rel="stylesheet">-->
+<!--         <link href="css/home/color.css" rel="stylesheet">-->
+<!--         <link href="css/home/responsive.css" rel="stylesheet">-->
+<!--         <link href="css/home/owl.carousel.min.css" rel="stylesheet">-->
+<!--         <link href="css/home/bootstrap.min.css" rel="stylesheet">-->
 
     <!--     <link href="css/home/all.min.css" rel="stylesheet">-->
-
     <!--  END CSS links -->
 
     <!--     <script src="js/home/jquery-3.3.1.min.js"></script>-->
 
-
     <!--  Icon do template-->
-    <link rel="icon" href="/Images/home/favicon.png">
+    <link rel="icon" href="<?php echo HOME_URL . '/'; ?>Images/home/favicon.png">
 
     <!--  Script auto-version-->
-    <script src="<?php echo auto_version('../../js/global-functions.js'); ?>"></script>
+<!--    <script src="--><?php //echo auto_version('../../js/global-functions.js'); ?><!--"></script>-->
 
     <title><?php echo $this->title ?></title>
 
@@ -107,7 +103,7 @@
 <header class="header-style-2">
     <nav class="navbar navbar-expand-lg">
 
-        <a class="navbar-brand" href="<?php echo HOME_URL . '/'; ?>"><img src="Images/logo/adoteUma.png" alt=""></a>
+        <a class="navbar-brand" href="<?php echo HOME_URL . '/'; ?>"><img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'; ?>" alt=""></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
                     class="fas fa-bars"></i></button>
@@ -277,7 +273,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="avatar">
-                        <img src="Images/logo/adoteUma.png" alt="Avatar">
+                        <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'; ?>" alt="Avatar">
                     </div>
                     <h4 class="modal-title">Login</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

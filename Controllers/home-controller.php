@@ -514,8 +514,8 @@ class HomeController extends MainController
 
             $getUserModel = $model->getUserByEmail($_SESSION['userdata']['email']);
 
-            $this->userdata['countryList'] = $getCountryModel['body'];
-            $this->userdata['genderList'] = $getGenderModel['body'];
+            $this->userdata['countryList'] = $getCountryModel['body']['countries'];
+            $this->userdata['genderList'] = $getGenderModel['body']['genders'];
 
 
             if ($getUserModel['statusCode'] === 200) { // 200 OK, successful
