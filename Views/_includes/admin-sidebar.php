@@ -88,6 +88,13 @@
                                 <a class="nav-link" href="<?php echo HOME_URL . '/admin/trees_users';?>">Árvores-Utilizadores</a>
                             <?php } ?>
 
+                            <!-- tree types -->
+                            <?php if (isset($_SESSION["sidebar"]["active_tab"]["tree_types"]) && $_SESSION["sidebar"]["active_tab"]["tree_types"] === true) { ?>
+                                <a class="nav-link active" href="<?php echo HOME_URL . '/admin/tree_types';?>">Tipos de árvores</a>
+                            <?php } else { ?>
+                                <a class="nav-link" href="<?php echo HOME_URL . '/admin/tree_types';?>">Tipos de árvores</a>
+                            <?php } ?>
+
                         </nav>
                     </div>
                 <?php } else { ?>
@@ -119,6 +126,13 @@
                                 <a class="nav-link active" href="<?php echo HOME_URL . '/admin/trees_users';?>">Árvores-Utilizadores</a>
                             <?php } else { ?>
                                 <a class="nav-link" href="<?php echo HOME_URL . '/admin/trees_users';?>">Árvores-Utilizadores</a>
+                            <?php } ?>
+
+                            <!-- tree types -->
+                            <?php if (isset($_SESSION["sidebar"]["active_tab"]["tree_types"]) && $_SESSION["sidebar"]["active_tab"]["tree_types"] === true) { ?>
+                                <a class="nav-link active" href="<?php echo HOME_URL . '/admin/tree_types';?>">Tipos de árvores</a>
+                            <?php } else { ?>
+                                <a class="nav-link" href="<?php echo HOME_URL . '/admin/tree_types';?>">Tipos de árvores</a>
                             <?php } ?>
 
                         </nav>
