@@ -1349,6 +1349,199 @@ class AdminController extends MainController
         }
     }
 
+    /**
+     * Carrega a página
+     * "/views/admin/admin-tree-types-view.php"
+     * @return void
+     */
+    public function tree_types(){
+        // Título da página
+        $this->title = 'Admin - Tipos de árvores';
+
+        // Permissoes da pagina
+        $this->permission_required = array('admLogin','treesRead','usersRead'/*,'usersTreesRead'*/);
+
+        // Estado da sidebar
+        // se ja existir uma active tab
+        if (isset($_SESSION["sidebar"]["active_tab"])) {
+            //remove a currently active
+            unset($_SESSION["sidebar"]["active_tab"]);
+            //e atribui uma nova active tab
+            $_SESSION["sidebar"]["active_tab"]["tree_types"] = true;
+        }
+
+        // Parametros da função
+        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
+
+        // obriga o login para aceder à pagina
+        if ( ! $this->logged_in) {
+
+            // Se não; garante o logout
+            $this->logout();
+
+            // Redireciona para a página de login
+            $this->goto_login();
+
+            // Garante que o script não vai passar daqui
+            return;
+        }
+
+        //Verifica se o usuário tem a permissão para acessar essa página
+        if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+
+            // Exibe uma mensagem
+            echo 'Você não tem permissões para acessar essa página.';
+
+            // Finaliza aqui
+            return;
+        }
+
+        $modelo = $this->load_model('admin-tree-types-model');
+
+        // processa chamadas ajax
+        if(isset($_POST['action']) && !empty($_POST['action'])) {
+            $action = $_POST['action'];
+            switch($action) {
+                case 'GetTreeType' :
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->getTreeTypeById($data);
+                    $apiResponseBody = array();
+
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->getTreeTypeById($data);
+                    }
+
+                    if ($apiResponse['statusCode'] === 200) { // 200 success
+                        $apiResponseBody = json_encode($apiResponse["body"]);
+                    }
+
+                    echo $apiResponseBody;
+                    break;
+
+                case 'AddTreeType' :
+                    /*$this->permission_required = array('usersTreesCreate');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }*/
+
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->addTreeType($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->addTreeType($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Created with success!";
+                    }
+
+                    // quando statusCode = 201, a response nao vem com campo mensagem
+                    // entao é criado e encoded para ser enviado
+                    if ($apiResponse['statusCode'] === 201){ // 201 created
+                        $apiResponse["body"]['message'] = "Created with success!";
+                    }
+
+                    // se statsCode nao for 201, entao api response ja vem com um campo mensagem
+                    // assim so precisamos de fazer encode para ser enviado
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo $apiResponse;
+                    break;
+
+                case 'UpdateTreeType' :
+                    /*$this->permission_required = array('usersTreesUpdate');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }*/
+
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->updateTreeType($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->updateTreeType($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Updated with success!";
+                    }
+
+                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Updated with success!";
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo $apiResponse;
+                    break;
+
+                case 'DeleteTreeType' :
+                    /*$this->permission_required = array('usersTreesDelete');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }*/
+
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->deleteTreeType($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->deleteTreeType($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Deleted with success!";
+                    }
+
+                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Deleted with success!";
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo $apiResponse;
+                    break;
+            }
+
+        } else {
+            $treeTypesList = $modelo->getTreeTypeList();
+            if ($treeTypesList["statusCode"] === 200){
+                $this->userdata['treeTypesList'] = $treeTypesList["body"]["types"];
+            }
+            if ($treeTypesList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $treeTypesList = $modelo->getTreeTypeList();
+                $this->userdata['treeTypesList'] = $treeTypesList["body"]["types"];
+            }
+
+
+            /**Carrega os arquivos do view**/
+            require ABSPATH . '/views/_includes/admin-header.php';
+
+            require ABSPATH . '/views/admin/admin-tree-types-view.php';
+
+            require ABSPATH . '/views/_includes/admin-footer.php';
+        }
+    }
 
 
     /**
