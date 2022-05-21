@@ -180,43 +180,52 @@
 <!--About Section Start-->
 <section class="home2-about wf100 p100 gallery">
     <div class="container">
-        <div class="row">
+        <!--Map Section Start-->
+        <div class="mapGo">
+            <div class="row">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mapDirect">
+                        <li class="breadcrumb">
+                            <button class="btn btn-outline-success" id="monTarget">Monchique</button>
+                        </li>
+                        <li class="breadcrumb">
+                            <button class="btn btn-outline-success" id="marTarget">Marmelete</button>
+                        </li>
+                        <li class="breadcrumb">
+                            <button class="btn btn-outline-success" id="marTarget">Casais</button>
+                        </li>
+                        <li class="breadcrumb">
+                            <button class="btn btn-outline-success" id="marTarget">Alferce</button>
+                        </li>
+                        <li class="breadcrumb">
+                            <button class="btn btn-outline-success" id="marTarget">Fóia</button>
+                        </li>
+                    </ol>
+                </nav>
 
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <button class="btn btn-outline-success" id="monTarget">Monchique</button>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <button class="btn btn-outline-success" id="marTarget">Marmelete</button>
-                    </li>
-                    <!--                    <li class="breadcrumb-item active" aria-current="page">Marmelete</li>-->
-                </ol>
-            </nav>
-
-            <div class="col-md-12">
-
-                <!--Map area div-->
-                <div id="map"></div>
+                <div class="col-md-12">
+                    <!--Map area start-->
+                    <div id="map"></div>
+                    <!--Map area end-->
+                </div>
 
             </div>
-
-
         </div>
-        <div class="col-md-12">
-            <div class="h2-about-txt">
-                <h3>Sobre o iniciativa</h3>
-                <p></p>
-                <!--                    <h2>Eco-friendly products can be made from scratch.</h2>-->
-                <p> Para a melhoria da qualidade de vida dos habitantes da nossa serra, ao mesmo tempo que se contribui
-                    para o aumento da floresta e com isso, aumentar a resiliência dos ecossistemas, espécies e habitats
-                    aos efeitos das alterações climáticas. </p>
-                <!--                    <a class="aboutus" href="#">More About us</a>-->
-            </div>
-        </div>
-
-
+        <!--Map Section Start-->
+        <!--        <div class="col-md-12">-->
+        <!--            <div class="h2-about-txt">-->
+        <!--                <h3>Sobre o iniciativa</h3>-->
+        <!--                <p></p>-->
+        <!--                              <h2>Eco-friendly products can be made from scratch.</h2>-->
+        <!--                <p> Para a melhoria da qualidade de vida dos habitantes da nossa serra, ao mesmo tempo que se contribui-->
+        <!--                    para o aumento da floresta e com isso, aumentar a resiliência dos ecossistemas, espécies e habitats-->
+        <!--                    aos efeitos das alterações climáticas. </p>-->
+        <!--                           <a class="aboutus" href="#">More About us</a>-->
+        <!--            </div>-->
+        <!--        </div>-->
     </div>
+
+
     <div class="home-facts counter pt80">
         <div class="container">
             <div class="row">
@@ -1032,8 +1041,8 @@
                 .openOn(map);
             //map.flyTo([e.latlng.lat, e.latlng.lng], 15);
         }
-    })
-    ;
+
+    });
 
 
 </script>
