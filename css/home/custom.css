@@ -8335,4 +8335,44 @@ circle {
 /*********************************
 Map Leaflet CSS
 *********************************/
+
+/*********************************
+Leaflet CSS Height property
+*********************************/
+
 #map { height: 500px; }
+
+
+
+
+/*********************************
+Map Tab GoTo Point leaflet CSS
+*********************************/
+
+.mapGo .row{
+    justify-content: center;
+}
+
+.mapDirect .btn{
+    /*background: white;*/
+    font-size: 2rem;
+}
+
+.mapDirect .btn-outline-success{
+    color:  #66bb6a;
+    background: white;
+    border: white;
+    box-shadow: 0 10px 10px 0 rgba(0,102,0,0.24), 0 17px 50px 0 rgba(0,102,0,0.19);
+}
+
+.breadcrumb{
+    background: white;
+}
+
+/*********************************
+Map Tab GoTo Point leaflet CSS
+*********************************/
+
+/*********************************
+END Map Leaflet CSS
+*********************************/
