@@ -78,7 +78,7 @@
         $('#recPass').submit(function (event) {
             event.preventDefault(); //prevent default action
             let formData = {
-                'action': "passRecover",
+                'action': "PassRecover",
                 'data': $(this).serializeArray()
             };
 
@@ -108,11 +108,11 @@
                     } else if (data.statusCode === 400) {
                         //Error message
                         Swal.fire({
-                            title: 'Error!',
-                            text: data.body.message,
+                            title: 'Erro!',
+                            text: 'A palavra-passe não pode ser idêntica à anterior!',
                             icon: 'error',
                             showConfirmButton: false,
-                            timer: 2000,
+                            // timer: 2000,
                             didClose: () => {
                                 //location.reload();
                             }
@@ -154,7 +154,6 @@
     $("#show-password1").change(function () {
         $(this).prop("checked") ? $("#verify").prop("type", "text") : $("#verify").prop("type", "password");
     });
-
 
 </script>
 <!--Script's end section-->
