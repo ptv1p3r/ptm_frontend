@@ -22,8 +22,9 @@ body {
     background: #435d7d;
     color: #fff;
     padding: 16px 30px;
-    margin: -20px -25px 10px;
-    border-radius: 3px 3px 0 0;
+    /*margin: -20px -25px 10px;*/
+    margin: 0;
+    /*border-radius: 3px 3px 0 0;*/
 }
 .table-title h2 {
     margin: 5px 0 0;
@@ -231,3 +232,8 @@ table.table .avatar {
 .modal form label {
     font-weight: normal;
 }
+
+/*********************************
+Map Leaflet CSS
+*********************************/
+#map { height: 500px; }
