@@ -165,9 +165,11 @@
     $('#trees_collapse').on('show.bs.collapse', function () {
         // not collapsed/open
         document.cookie = "sidebar_collapsed_trees=false; expires=false; path=/";
+        //sessionStorage.setItem("sidebar_collapsed_trees", "false");
     }).on('hide.bs.collapse', function () {
         // collapsed
         document.cookie = "sidebar_collapsed_trees=true; expires=false; path=/";
+        //sessionStorage.setItem("sidebar_collapsed_trees", "true");
     });
 
 </script>

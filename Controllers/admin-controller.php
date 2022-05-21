@@ -339,10 +339,6 @@ class AdminController extends MainController
                     // entao é criado e encoded para ser enviado
                     if ($apiResponse['statusCode'] === 201){ // 201 created
                         $apiResponse["body"]['message'] = "Created with success!";
-
-                        $apiResponse = json_encode($apiResponse);// encode package to send
-                        echo $apiResponse;
-                        break;
                     }
 
                     // se statsCode nao for 201, entao api response ja vem com um campo mensagem
@@ -378,10 +374,6 @@ class AdminController extends MainController
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
                         $apiResponse["body"]['message'] = "Updated with success!";
-
-                        $apiResponse = json_encode($apiResponse);// encode package to send
-                        echo $apiResponse;
-                        break;
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -546,10 +538,6 @@ class AdminController extends MainController
 
                     if ($apiResponse['statusCode'] === 201){ // 201 created
                         $apiResponse["body"]['message'] = "Created with success!";
-
-                        $apiResponse = json_encode($apiResponse);// encode package to send
-                        echo $apiResponse;
-                        break;
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -582,10 +570,6 @@ class AdminController extends MainController
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
                         $apiResponse["body"]['message'] = "Updated with success!";
-
-                        $apiResponse = json_encode($apiResponse);// encode package to send
-                        echo $apiResponse;
-                        break;
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -616,10 +600,6 @@ class AdminController extends MainController
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
                         $apiResponse["body"]['message'] = "Deleted with success!";
-
-                        $apiResponse = json_encode($apiResponse);// encode package to send
-                        echo $apiResponse;
-                        break;
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -1260,10 +1240,6 @@ class AdminController extends MainController
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
                         $apiResponse["body"]['message'] = "Updated with success!";
-
-                        $apiResponse = json_encode($apiResponse);// encode package to send
-                        echo $apiResponse;
-                        break;
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
