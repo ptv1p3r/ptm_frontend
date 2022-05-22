@@ -34,7 +34,13 @@
                                     <tr>
                                         <th>userId</th>
                                         <th>treeId</th>
-                                        <th>active</th>
+                                        <th>active
+                                            <select id='GetActive'>
+                                                <option value=''>All</option>
+                                                <option value='1'>Active</option>
+                                                <option value='0'>Inactive</option>
+                                            </select>
+                                        </th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -177,15 +183,20 @@
 <script>
     $(document).ready(function() {
         //DATATABLES
-        /*TODO:
-           datatables error when no data on table? see whats goin on.
-           also remove classes on table, because of datatables own styles, to remove conflicts.
-           see about simple-datatables too, https://github.com/fiduswriter/Simple-DataTables/wiki/Getting-Started#install
-        */
-        /*$('#treesTable').DataTable({
+        //Configura a dataTable
+        var table = $('#treesTable').DataTable({
             rowReorder: true,
-            responsive: true
-        });*/
+            responsive: true,
+            columnDefs: [ {
+                targets: [3],
+                orderable: false,
+            }]
+        });
+        //filtra table se ativo, inativo ou mostra todos
+        $('#GetActive').on('change', function() {
+            let selectedItem = $(this).children("option:selected").val();
+            table.columns(3).search(selectedItem).draw();
+        })
 
 
         // TreesMap
