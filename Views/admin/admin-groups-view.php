@@ -35,7 +35,8 @@
                                                 <option value=''>All</option>
                                                 <option value='1'>Active</option>
                                                 <option value='0'>Inactive</option>
-                                            </select></th>
+                                            </select>
+                                        </th>
                                         <th>dateCreated</th>
                                         <th>dateModified</th>
                                         <th></th>
