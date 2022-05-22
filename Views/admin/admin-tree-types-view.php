@@ -188,14 +188,14 @@
             rowReorder: true,
             responsive: true,
             columnDefs: [ {
-                targets: [3],
+                targets: [2,3],
                 orderable: false,
             }]
         });
         //filtra table se ativo, inativo ou mostra todos
         $('#GetActive').on('change', function() {
             let selectedItem = $(this).children("option:selected").val();
-            table.columns(3).search(selectedItem).draw();
+            table.columns(2).search(selectedItem).draw();
         })
 
 

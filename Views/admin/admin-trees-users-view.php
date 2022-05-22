@@ -29,7 +29,7 @@
                                 </a>
                             </div>
                             <div class="card-body">
-                                <table id="treesTable" class="table table-striped table-hover">
+                                <table id="treesUsersTable" class="table table-striped table-hover">
                                     <thead>
                                     <tr>
                                         <th>userId</th>
@@ -184,18 +184,18 @@
     $(document).ready(function() {
         //DATATABLES
         //Configura a dataTable
-        var table = $('#treesTable').DataTable({
+        var table = $('#treesUsersTable').DataTable({
             rowReorder: true,
             responsive: true,
             columnDefs: [ {
-                targets: [3],
+                targets: [2,3],
                 orderable: false,
             }]
         });
         //filtra table se ativo, inativo ou mostra todos
         $('#GetActive').on('change', function() {
             let selectedItem = $(this).children("option:selected").val();
-            table.columns(3).search(selectedItem).draw();
+            table.columns(2).search(selectedItem).draw();
         })
 
 

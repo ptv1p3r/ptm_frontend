@@ -237,7 +237,7 @@
             rowReorder: true,
             responsive: true,
             columnDefs: [ {
-                targets: [7],
+                targets: [7,8],
                 orderable: false,
             }]
         });
