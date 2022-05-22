@@ -39,9 +39,13 @@
                                         <th>typeId</th>
                                         <th>lat</th>
                                         <th>lng</th>
-                                        <!--<th>active</th>
-                                        <th>dateCreated</th>
-                                        <th>dateModified</th>-->
+                                        <th>active
+                                            <select id='GetActive'>
+                                                <option value=''>All</option>
+                                                <option value='1'>Active</option>
+                                                <option value='0'>Inactive</option>
+                                            </select>
+                                        </th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -56,9 +60,7 @@
                                                 <td><?php echo $tree["typeId"] ?></td>
                                                 <td><?php echo $tree["lat"] ?></td>
                                                 <td><?php echo $tree["lng"] ?></td>
-                                                <!--<td><?php //echo $tree["active"] ?></td>
-                                                <td><?php //echo $tree["dateCreated"] ?></td>
-                                                <td><?php //echo $tree["dateModified"] ?></td>-->
+                                                <td><?php echo $tree["active"] ?></td>
                                                 <td>
                                                     <a href="#editTreeModal" id="<?php echo $tree['id'] ?>" class="edit" data-bs-toggle="modal" data-bs-target="#editTreeModal"><i class="far fa-edit"></i></a>
                                                     <a href="#deleteTreeModal" id="<?php echo $tree['id'] ?>" class="delete" data-bs-toggle="modal" data-bs-target="#deleteTreeModal"><i class="fas fa-trash-alt"></i></a>
@@ -230,15 +232,20 @@
 <script>
     $(document).ready(function() {
         //DATATABLES
-        /*TODO:
-           datatables error when no data on table? see whats goin on.
-           also remove classes on table, because of datatables own styles, to remove conflicts.
-           see about simple-datatables too, https://github.com/fiduswriter/Simple-DataTables/wiki/Getting-Started#install
-        */
-        /*$('#treesTable').DataTable({
+        //Configura a dataTable
+        var table = $('#treesTable').DataTable({
             rowReorder: true,
-            responsive: true
-        });*/
+            responsive: true,
+            columnDefs: [ {
+                targets: [7],
+                orderable: false,
+            }]
+        });
+        //filtra table se ativo, inativo ou mostra todos
+        $('#GetActive').on('change', function() {
+            let selectedItem = $(this).children("option:selected").val();
+            table.columns(7).search(selectedItem).draw();
+        })
 
 
         // TreesMap
