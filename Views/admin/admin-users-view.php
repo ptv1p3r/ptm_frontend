@@ -33,7 +33,14 @@
                                         <th>email</th>
                                         <th>groupId</th>
                                         <th>countryId</th>
-                                        <th>active</th>
+                                        <th>active
+                                            <select id='GetActive'>
+                                                <option value=''>All</option>
+                                                <option value='1'>Active</option>
+                                                <option value='0'>Inactive</option>
+                                            </select>
+                                        </th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -44,7 +51,7 @@
                                                 <td><?php echo $user["name"] ?></td>
                                                 <td><?php echo $user["entity"] ?></td>
                                                 <td><?php echo $user["email"] ?></td>
-                                                <td><?php echo /*getGroupById(*/$user["groupId"] ?></td>
+                                                <td><?php echo $user["groupId"] ?></td>
                                                 <td><?php
                                                     if (!empty($this->userdata['countryList'])) {
                                                         foreach ($this->userdata['countryList'] as $key => $country) {
@@ -52,8 +59,8 @@
                                                                 echo $country["name"];
                                                             }
                                                         }
-                                                    }
-                                                    ?></td>
+                                                    } ?>
+                                                </td>
                                                 <td><?php echo $user["active"] ?></td>
                                                 <td>
                                                     <a href="#editUserModal" id="<?php echo $user['email'] ?>" class="edit"
@@ -326,11 +333,20 @@
 <script>
     $(document).ready(function() {
         //DATATABLES
-        /*$('#usersTable').DataTable({
+        //Configura a dataTable
+        var table = $('#usersTable').DataTable({
             rowReorder: true,
-            responsive: true
-            //dom: 'Qfrtip'
-        });*/
+            responsive: true,
+            columnDefs: [{
+                targets: [6],
+                orderable: false,
+            }]
+        });
+        //filtra table se ativo, inativo ou mostra todos
+        $('#GetActive').on('change', function() {
+            let selectedItem = $(this).children("option:selected").val();
+            table.columns(6).search(selectedItem).draw();
+        })
 
         // ajax to Add User
         $('#addUser').submit(function (event) {
