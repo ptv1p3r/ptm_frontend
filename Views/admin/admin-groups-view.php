@@ -30,7 +30,12 @@
                                         <th>Name</th>
                                         <th>Description</th>
                                         <th>SecurityId</th>
-                                        <th>active</th>
+                                        <th>active
+                                            <select id='GetActive'>
+                                                <option value=''>All</option>
+                                                <option value='1'>Active</option>
+                                                <option value='0'>Inactive</option>
+                                            </select></th>
                                         <th>dateCreated</th>
                                         <th>dateModified</th>
                                         <th></th>
@@ -189,10 +194,20 @@
 <script>
     $(document).ready(function() {
         //DATATABLES
-        $('#groupsTable').DataTable({
+        var table = $('#groupsTable').DataTable({
             rowReorder: true,
-            responsive: true
+            responsive: true,
+            columnDefs: [ {
+                targets: [6,3],
+                orderable: false,
+            }]
         });
+
+        $('#GetActive').on('change', function() {
+            let selectedItem = $(this).children("option:selected").val();
+            table.columns(3).search(selectedItem).draw();
+        })
+
 
         // ajax to Add Group
         $('#addGroup').submit(function (event) {
