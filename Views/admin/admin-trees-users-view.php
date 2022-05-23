@@ -235,7 +235,7 @@
         function mapLoadTrees(){
             <?php if (!empty($this->userdata['treesList'])) {
             foreach ($this->userdata['treesList'] as $key => $tree) {?>
-            marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {icon: greenIcon, user: 'none'}).addTo(map).on("click", markerOnClick);
+                marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {icon: greenIcon, user: 'none'}).addTo(map).on("click", markerOnClick);
             <?php }
             }?>
         }
@@ -259,18 +259,18 @@
                 .setLatLng(e.latlng)
                 .setContent(
                     `
-            <div class="card" style="width: 10rem; border: unset">
-              <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'?>" class="card-img-top" alt="">
-              <div class="card-body">
-                <h5 class="card-title">Arvore exemplo</h5>
-                <p class="card-text">Algo sobre a arvore.</p>
-                <p class="card-text">Padrinho: ` + this.options.user + `</p>
-                <p class="card-text">Latitude: ` + e.latlng.lat + `</p>
-                <p class="card-text">Longitude: ` + e.latlng.lng + `</p>
-                <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
-              </div>
-            </div>
-            `
+                    <div class="card" style="width: 10rem; border: unset">
+                      <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'?>" class="card-img-top" alt="">
+                      <div class="card-body">
+                        <h5 class="card-title">Arvore exemplo</h5>
+                        <p class="card-text">Algo sobre a arvore.</p>
+                        <p class="card-text">Padrinho: ` + this.options.user + `</p>
+                        <p class="card-text">Latitude: ` + e.latlng.lat + `</p>
+                        <p class="card-text">Longitude: ` + e.latlng.lng + `</p>
+                        <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+                      </div>
+                    </div>
+                    `
                 )
                 .openOn(map);
             //map.flyTo([e.latlng.lat, e.latlng.lng], 15);
