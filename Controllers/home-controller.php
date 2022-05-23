@@ -26,10 +26,10 @@ class HomeController extends MainController
 
 
         // obriga o login para aceder à pagina
+        // obriga o login para aceder à pagina
         if (!$this->logged_in) {
 
-
-            //Load all trees into home view
+            //Load all trees into public home view
             $model = $this->load_model('user-trees-model');
             $allTrees = $model->getAllTrees();
             $this->userdata['allTreesList'] = $allTrees['body']['trees'];
@@ -47,7 +47,7 @@ class HomeController extends MainController
 
             require ABSPATH . '/views/_includes/user-header.php';
 
-            require ABSPATH . '/views/home/home-view.php';
+            require ABSPATH . '/views/user/profile/user-dashboard-view.php';
 
             require ABSPATH . '/views/_includes/footer.php';
         }
@@ -255,6 +255,11 @@ class HomeController extends MainController
 
         }
 
+        //Load all trees into home view
+        $model = $this->load_model('user-trees-model');
+        $allTrees = $model->getAllTrees();
+        $this->userdata['allTreesList'] = $allTrees['body']['trees'];
+
         //Load all specif trees
         $model = $this->load_model('user-trees-model');
 
@@ -282,16 +287,16 @@ class HomeController extends MainController
                     break;
             }
         }else{
-            $treesList = $model->getTreesList();
-            if ($treesList["statusCode"] === 200){
-                $this->userdata['treesList'] = $treesList["body"];
+            $userTreesList = $model->getUserTreesList();
+            if ($userTreesList["statusCode"] === 200){
+                $this->userdata['userTreesList'] = $userTreesList["body"]['trees'];
             }
-            if ($treesList["statusCode"] === 401){
+            if ($userTreesList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
-                $treesList = $model->getTreeList();
-                $this->userdata['treesList'] = $treesList["body"];
+                $userTreesList = $model->getUserTreesList();
+                $this->userdata['userTreesList'] = $userTreesList["body"]['trees'];
             }
         }
 
@@ -300,8 +305,8 @@ class HomeController extends MainController
 
         require ABSPATH . '/views/_includes/user-header.php';
 
-        require ABSPATH . '/views/home/home-view.php';
-
+//        require ABSPATH . '/views/home/home-view.php';
+        require ABSPATH . '/views/user/profile/user-dashboard-view.php';
         require ABSPATH . '/views/_includes/footer.php';
 
     }
