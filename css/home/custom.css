@@ -8349,14 +8349,17 @@ Leaflet CSS Height property
 Map Tab GoTo Point leaflet CSS
 *********************************/
 
-.mapGo .row{
+.mapGo .row {
     justify-content: center;
+    background: white;
 }
 
 .mapDirect .btn{
     /*background: white;*/
     font-size: 2rem;
 }
+
+
 
 .mapDirect .btn-outline-success{
     color:  #66bb6a;
@@ -8376,3 +8379,72 @@ Map Tab GoTo Point leaflet CSS
 /*********************************
 END Map Leaflet CSS
 *********************************/
+
+/*********************************
+Toogle Map Leaflet CSS
+*********************************/
+
+/*@import url('https://fonts.googleapis.com/css?family=Nunito:800i&display=swap');*/
+
+.tWrapper{
+    width: 100%;
+}
+
+.userToogle{
+    text-align-last: center;
+}
+
+#hide-checkbox {
+    opacity: 0;
+    height: 0;
+    width: 0;
+}
+
+.toggle {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    width: 100px;
+    height: 50px;
+    background: #818182;
+    border-radius: 50px;
+    transition: 500ms;
+    overflow: hidden;
+}
+
+.toggle-button {
+    position: absolute;
+    display: inline-block;
+    top: 3px;
+    left: 6px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    overflow: hidden;
+    box-shadow: 0 0 35px 4px rgba(255, 255, 255);
+    transition: all 500ms ease-out;
+}
+
+#hide-checkbox:checked + .toggle {
+    background:  #66bb6a;
+}
+
+#hide-checkbox:checked + .toggle .toggle-button {
+    background: #FFFFFF;
+    transform: translateX(43px);
+    box-shadow: 0 0 35px 5px rgba(255, 255, 255);
+}
+
+.pMessage {
+    text-align: center;
+    font-size: 2rem;
+    letter-spacing: 15px;
+    background: #66bb6a;
+    color: #FFFFFF;
+
+}
+
+.pMessage.morning {
+    background: #555555;
+}
