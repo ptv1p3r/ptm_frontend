@@ -29,7 +29,7 @@ class UserTreesModel extends MainModel
      * @since 0.1
      * @access private
      */
-    public function getTreesList()
+    public function getUserTreesList()
     {
         $result = null;
 
