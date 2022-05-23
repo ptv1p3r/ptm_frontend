@@ -78,7 +78,7 @@
 
 
         <!-- Add Modal HTML -->
-        <div id="addGroupModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeModalLabel" aria-hidden="true">
+        <div id="addGroupModal" class="modal fade" tabindex="-1" aria-labelledby="addGroupModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="addGroup">
@@ -101,7 +101,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Active</label>
-                                <input type="checkbox" class="form-control form-check-input" name="addTreeActive">
+                                <input type="checkbox" class="form-control form-check-input" name="addGroupActive">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -114,7 +114,7 @@
         </div>
 
         <!-- Edit Modal HTML -->
-        <div id="editGroupModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeModalLabel" aria-hidden="true">
+        <div id="editGroupModal" class="modal fade" tabindex="-1" aria-labelledby="editGroupModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="editGroup">
@@ -139,9 +139,9 @@
                                 <label>SecurityId</label>
                                 <input type="number" class="form-control" name="editGroupSecurityId" required>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>Active</label>
-                                <input type="checkbox" class="form-control form-check-input" name="addTreeActive">
+                                <input type="checkbox" role="switch" class="form-check-input" name="editGroupActive">
                             </div>
 
                         </div>
@@ -155,7 +155,7 @@
         </div>
 
         <!-- Delete Modal HTML -->
-        <div id="deleteGroupModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeModalLabel" aria-hidden="true">
+        <div id="deleteGroupModal" class="modal fade" tabindex="-1" aria-labelledby="deleteGroupModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="deleteGroup">
@@ -284,7 +284,7 @@
             //Ve se a data dos inputs mudou para formar so a data necessaria para o PATCH
             /*let formDataChanged = [];
             $('#editGroup input').each(function() { //para cada input vai ver
-                if($(this).attr('name') === "editGroupId" || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
+                if($(this).attr('name') === "editGroupId" || ($(this).attr('name') === "editGroupActive" && $(this).is(":checked")) || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
                     let emptyArray = { name: "", value: "" };
 
                     emptyArray.name = $(this).attr('name');
