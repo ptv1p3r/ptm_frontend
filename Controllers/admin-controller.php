@@ -102,6 +102,10 @@ class AdminController extends MainController
                                     case "userGroupsRead":
                                     case "userGroupsUpdate":
                                     case "userGroupsDelete":
+                                    case "usersTreesCreate":
+                                    case "usersTreesRead":
+                                    case "usersTreesUpdate":
+                                    case "usersTreesDelete":
                                     case "treesCreate":
                                     case "treesRead":
                                     case "treesUpdate":
@@ -723,10 +727,6 @@ class AdminController extends MainController
 
                     if ($apiResponse['statusCode'] === 201){ // 201 created
                         $apiResponse["body"]['message'] = "Created with success!";
-
-                        $apiResponse = json_encode($apiResponse);// encode package to send
-                        echo $apiResponse;
-                        break;
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -973,6 +973,7 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->addTree($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Created with success!";
                     }
 
                     // quando statusCode = 201, a response nao vem com campo mensagem
@@ -1010,10 +1011,7 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->updateTree($data); //decode to check message from api
-
-                        /*$apiResponse = json_encode($apiResponse);// encode package to send
-                        echo $apiResponse;
-                        break;*/
+                        $apiResponse["body"]['message'] = "Updated with success!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
@@ -1047,10 +1045,7 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->deleteTree($data); //decode to check message from api
-
-                        /*$apiResponse = json_encode($apiResponse);// encode package to send
-                        echo $apiResponse;
-                        break;*/
+                        $apiResponse["body"]['message'] = "Deleted with success!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
@@ -1126,7 +1121,7 @@ class AdminController extends MainController
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
 
         // obriga o login para aceder à pagina
-        if ( ! $this->logged_in) {
+        if (! $this->logged_in) {
 
             // Se não; garante o logout
             $this->logout();
