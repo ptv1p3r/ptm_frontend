@@ -353,8 +353,7 @@ class AdminUsersModel extends MainModel {
                         break;
                 }
 
-                //TODO: ver soluçao para active nao estar a ser apanhado no serialize para o PATCH
-                if ($dataVector['name'] == "editUserActive"){
+                if ($dataVector['name'] == "editUserActive" && $dataVector['value'] == "on"){
                     $normalizedData['active'] = "1";
                 } else {
                     $normalizedData['active'] = "0";
