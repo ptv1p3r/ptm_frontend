@@ -22,6 +22,11 @@
                                 <a href="#addUserModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">
                                     <i class="fas fa-plus-circle"></i><span>Add New User</span>
                                 </a>
+                                <select id='GetActive'>
+                                    <option value=''>All</option>
+                                    <option value='1'>Active</option>
+                                    <option value='0'>Inactive</option>
+                                </select>
                             </div>
                             <div class="card-body">
                                 <table id="usersTable" class="table table-striped table-hover">
@@ -33,13 +38,7 @@
                                         <th>email</th>
                                         <th>groupId</th>
                                         <th>countryId</th>
-                                        <th>active
-                                            <select id='GetActive'>
-                                                <option value=''>All</option>
-                                                <option value='1'>Active</option>
-                                                <option value='0'>Inactive</option>
-                                            </select>
-                                        </th>
+                                        <th>active</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -86,7 +85,7 @@
 
 
         <!-- Add Modal HTML -->
-        <div id="addUserModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeModalLabel" aria-hidden="true">
+        <div id="addUserModal" class="modal fade" tabindex="-1" aria-labelledby="addUserModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="addUser">
@@ -188,7 +187,7 @@
         </div>
 
         <!-- Edit Modal HTML -->
-        <div id="editUserModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeModalLabel" aria-hidden="true">
+        <div id="editUserModal" class="modal fade" tabindex="-1" aria-labelledby="editUserModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="editUser">
@@ -278,9 +277,9 @@
                                     } ?>
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>Active</label>
-                                <input type="checkbox" class="form-control form-check-input" name="editTreeActive">
+                                <input type="checkbox" role="switch" class="form-check-input" name="editUserActive">
                             </div>
 
                         </div>
@@ -294,7 +293,7 @@
         </div>
 
         <!-- Delete Modal HTML -->
-        <div id="deleteUserModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeModalLabel" aria-hidden="true">
+        <div id="deleteUserModal" class="modal fade" tabindex="-1" aria-labelledby="deleteUserModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="deleteUser">
@@ -421,7 +420,7 @@
             //Ve se a data dos inputs mudou para formar so a data necessaria para o PATCH
             let formDataChanged = [];
             $('#editUser input').each(function() { //para cada input vai ver
-                if($(this).attr('name') === "editUserId" || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
+                if($(this).attr('name') === "editUserId" || ($(this).attr('name') === "editUserActive" && $(this).is(":checked")) || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
                     let emptyArray = { name: "", value: "" };
 
                     emptyArray.name = $(this).attr('name');
