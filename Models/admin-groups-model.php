@@ -90,7 +90,7 @@ class AdminGroupsModel extends MainModel {
                         break;*/
                 }
 
-                if ($dataVector['name'] == "addGroupActive"){
+                if ($dataVector['name'] == "addGroupActive" && $dataVector['value'] == "on"){
                     $normalizedData['active'] = "1";
                 } else {
                     $normalizedData['active'] = "0";
@@ -142,7 +142,7 @@ class AdminGroupsModel extends MainModel {
                         break;
                 }
 
-                if ($dataVector['name'] == "editGroupActive"){
+                if ($dataVector['name'] == "editGroupActive" && $dataVector['value'] == "on"){
                     $normalizedData['active'] = "1";
                 } else {
                     $normalizedData['active'] = "0";
@@ -194,7 +194,7 @@ class AdminGroupsModel extends MainModel {
                         break;
                 }
 
-                if ($dataVector['name'] == "editGroupActive"){
+                if ($dataVector['name'] == "editGroupActive" && $dataVector['value'] == "on"){
                     $normalizedData['active'] = "1";
                 } else {
                     $normalizedData['active'] = "0";
