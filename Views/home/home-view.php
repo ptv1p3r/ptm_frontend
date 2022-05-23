@@ -203,14 +203,39 @@
                     </ol>
                 </nav>
 
+                <!-- Leafletmap -->
+
                 <div class="col-md-12">
                     <!--Map area start-->
                     <div id="map"></div>
                     <!--Map area end-->
                 </div>
 
+
+                <!-- END Leafletmap -->
+
+
+<!--                --><?php //if ($this->logged_in) { ?>
+<!--                    <div class="tWrapper">-->
+<!--                        <br>-->
+<!--                        <div class="userToogle">-->
+<!--                            <input type="checkbox" id="hide-checkbox">-->
+<!--                            <label for="hide-checkbox" class="toggle">-->
+<!--                        <span class="toggle-button">-->
+<!--                       <span class="crater crater-1"></span>-->
+<!--                        </span>-->
+<!--                                         <span class="star star-1"></span>-->
+<!--                            </label>-->
+<!--                        </div>-->
+<!--                        <p class="pMessage"> Ver as minhas árvores</p>-->
+<!--                    </div>-->
+<!--                    --><?php
+//                }
+//                ?>
             </div>
         </div>
+
+
         <!--Map Section Start-->
         <!--        <div class="col-md-12">-->
         <!--            <div class="h2-about-txt">-->
@@ -933,41 +958,24 @@
             popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
 
-        var blueIcon = L.icon({
-            iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/blue-mapMarker.png'?>',
-            shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
-
-            iconSize: [38, 95], // size of the icon
-            shadowSize: [50, 64], // size of the shadow
-            iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-            shadowAnchor: [4, 62],  // the same for the shadow
-            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
-        });
-
-        // $("$monchMap").on("click", function(){
-        //     // $(this).hide();
-        //     L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
-        //
-        // });
 
         let map = L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
 
+        // Fly to a specific point in the map (Monchique)
         $("#monTarget").click(function () {
             map.flyTo([37.319518557906285, -8.556156285649438], 13, {
                 animate: true,
                 duration: 2 // in seconds
-
             });
         });
 
+        // Fly to a specific point in the map (Marmelete)
         $("#marTarget").click(function () {
             map.flyTo([37.3119, -8.6671], 13, {
                 animate: true,
                 duration: 2 // in seconds
-
             });
         });
-
 
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             maxZoom: 18,
@@ -988,36 +996,10 @@
             <?php }
             }?>
         }
-
         mapLoadTrees();
 
 
-        //function to load user private trees from API
-        function mapUserLoadTrees() {
-            <?php if (!empty($this->userdata['getTreesList'])) {
-            foreach ($this->userdata['getTreesList'] as $key => $tree) {?>
-            marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
-                icon: greenIcon,
-                user: 'none'
-            }).addTo(map).on("click", markerOnClick);
-            <?php }
-            }?>
-        }
-
-        mapUserLoadTrees();
-
-
-        //popup on map click
-        /*var popupMap = L.popup();
-        function onMapClick(e) {
-            popupMap
-                .setLatLng(e.latlng)
-                .setContent("LAT: " + e.latlng.lat + " LNG: " + e.latlng.lng)
-                .openOn(map);
-        }
-        map.on('click', onMapClick);*/
-
-        //popup on marker click
+        //Tree popup on marker click
         var popupMarker = L.popup();
 
         function markerOnClick(e) {
@@ -1039,10 +1021,25 @@
                     `
                 )
                 .openOn(map);
-            //map.flyTo([e.latlng.lat, e.latlng.lng], 15);
         }
 
     });
 
+    //
+    // //
+    //
+    // const wrapper = document.querySelector('.tWrapper');
+    // const para = document.querySelector('.pMessage')
+    //
+    // wrapper.addEventListener('change', function (e) {
+    //     if (e.target.checked) {
+    //         para.classList.add('morning');
+    //         para.textContent = ' Ver todas as árvores';
+    //     } else {
+    //         para.classList.remove('morning');
+    //         para.textContent = ' Ver as minhas árvores';
+    //     }
+    // })
+    //
 
 </script>
