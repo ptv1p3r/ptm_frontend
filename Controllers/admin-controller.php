@@ -333,6 +333,7 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->addGroup($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Created with success!";
                     }
 
                     // quando statusCode = 201, a response nao vem com campo mensagem
@@ -366,10 +367,7 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->updateGroup($data); //decode to check message from api
-
-                        /*$apiResponse = json_encode($apiResponse);// encode package to send
-                        echo $apiResponse;
-                        break;*/
+                        $apiResponse["body"]['message'] = "Updated with success!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
@@ -399,18 +397,11 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->deleteGroup($data); //decode to check message from api
-
-                        /*$apiResponse = json_encode($apiResponse);// encode package to send
-                        echo $apiResponse;
-                        break;*/
+                        $apiResponse["body"]['message'] = "Deleted with success!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
                         $apiResponse["body"]['message'] = "Deleted with success!";
-
-                        $apiResponse = json_encode($apiResponse);// encode package to send
-                        echo $apiResponse;
-                        break;
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
