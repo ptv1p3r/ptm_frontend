@@ -184,19 +184,23 @@
     $(document).ready(function() {
         //DATATABLES
         //Configura a dataTable
-        var table = $('#treesTable').DataTable({
-            rowReorder: true,
-            responsive: true,
-            columnDefs: [ {
-                targets: [2,3],
-                orderable: false,
-            }]
-        });
-        //filtra table se ativo, inativo ou mostra todos
-        $('#GetActive').on('change', function() {
-            let selectedItem = $(this).children("option:selected").val();
-            table.columns(2).search(selectedItem).draw();
-        })
+        try{
+            var table = $('#treesTable').DataTable({
+                rowReorder: false,
+                responsive: true,
+                columnDefs: [ {
+                    targets: [2,3],
+                    orderable: false,
+                }]
+            });
+            //filtra table se ativo, inativo ou mostra todos
+            $('#GetActive').on('change', function() {
+                let selectedItem = $(this).children("option:selected").val();
+                table.columns(2).search(selectedItem).draw();
+            })
+        } catch (error) {
+            console.log(error);
+        }
 
 
         //CRUD

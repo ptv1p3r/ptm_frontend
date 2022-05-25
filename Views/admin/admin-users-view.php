@@ -333,19 +333,24 @@
     $(document).ready(function() {
         //DATATABLES
         //Configura a dataTable
-        var table = $('#usersTable').DataTable({
-            rowReorder: true,
-            responsive: true,
-            columnDefs: [{
-                targets: [6,7],
-                orderable: false,
-            }]
-        });
-        //filtra table se ativo, inativo ou mostra todos
-        $('#GetActive').on('change', function() {
-            let selectedItem = $(this).children("option:selected").val();
-            table.columns(6).search(selectedItem).draw();
-        })
+        try{
+            var table = $('#usersTable').DataTable({
+                rowReorder: false,
+                responsive: true,
+                columnDefs: [{
+                    targets: [6,7],
+                    orderable: false,
+                }]
+            });
+            //filtra table se ativo, inativo ou mostra todos
+            $('#GetActive').on('change', function() {
+                let selectedItem = $(this).children("option:selected").val();
+                table.columns(6).search(selectedItem).draw();
+            })
+        } catch (error) {
+            console.log(error)
+        }
+
 
         // ajax to Add User
         $('#addUser').submit(function (event) {

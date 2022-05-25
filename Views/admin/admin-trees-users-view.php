@@ -186,7 +186,7 @@
         //Configura a dataTable
         try {
             var table = $('#treesUsersTable').DataTable({
-                rowReorder: true,
+                rowReorder: false,
                 responsive: true,
                 columnDefs: [ {
                     targets: [2,3],
@@ -199,8 +199,10 @@
                 table.columns(2).search(selectedItem).draw();
             })
         } catch (error){
-            console.error(error);
+            console.log(error)
         }
+
+
 
 
 

@@ -235,7 +235,7 @@
         //Configura a dataTable
         try{
             var table = $('#treesTable').DataTable({
-                rowReorder: true,
+                rowReorder: false,
                 responsive: true,
                 columnDefs: [ {
                     targets: [7,8],

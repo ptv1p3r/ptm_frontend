@@ -395,10 +395,14 @@
 <script>
     $(document).ready(function() {
         //DATATABLES
-        $('#securitiesTable').DataTable({
-            rowReorder: true,
-            responsive: true
-        });
+        try {
+            $('#securitiesTable').DataTable({
+                rowReorder: false,
+                responsive: true
+            });
+        } catch (error) {
+            console.log(error);
+        }
 
 
         // ajax to Add Security

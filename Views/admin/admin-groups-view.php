@@ -196,19 +196,24 @@
     $(document).ready(function() {
         //DATATABLES
         //Configura a dataTable
-        var table = $('#groupsTable').DataTable({
-            rowReorder: true,
-            responsive: true,
-            columnDefs: [ {
-                targets: [6,3],
-                orderable: false,
-            }]
-        });
-        //filtra table se ativo, inativo ou mostra todos
-        $('#GetActive').on('change', function() {
-            let selectedItem = $(this).children("option:selected").val();
-            table.columns(3).search(selectedItem).draw();
-        })
+        try{
+            var table = $('#groupsTable').DataTable({
+                rowReorder: false,
+                responsive: true,
+                columnDefs: [ {
+                    targets: [6,3],
+                    orderable: false,
+                }]
+            });
+            //filtra table se ativo, inativo ou mostra todos
+            $('#GetActive').on('change', function() {
+                let selectedItem = $(this).children("option:selected").val();
+                table.columns(3).search(selectedItem).draw();
+            })
+        } catch (error) {
+            console.log(error);
+        }
+
 
 
         // ajax to Add Group
