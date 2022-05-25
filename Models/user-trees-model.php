@@ -24,37 +24,16 @@ class UserTreesModel extends MainModel
     }
 
     /**
-     * Get all trees list
+     * Get user trees list
      *
      * @since 0.1
      * @access private
      */
-    public function getUserTreesList()
+    public function getUserTreesList($userId)
     {
         $result = null;
 
-        $url = API_URL . 'api/v1/user/trees/list';
-
-//        if (!empty($_SESSION['userdata']['accessToken'])) {
-//            $userToken = $_SESSION['userdata']['accessToken'];
-            $result = callAPI("GET", $url, ''/*, $userToken*/);
-//        }
-        //trasforma toda a msg em string json para poder ser enviado
-        return json_decode(json_encode($result), true);
-    }
-
-
-    /**
-     * Get User trees list
-     *
-     * @since 0.1
-     * @access private
-     */
-    public function getUserTrees($userid, $treeid)
-    {
-        $result = null;
-
-        $url = API_URL . 'api/v1/user/trees/list' . $userid . '/' . $treeid ;
+        $url = API_URL . 'api/v1/user/trees/list/' . $userId;
 
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
@@ -63,6 +42,27 @@ class UserTreesModel extends MainModel
         //trasforma toda a msg em string json para poder ser enviado
         return json_decode(json_encode($result), true);
     }
+
+
+//    /**
+//     * Get User trees list
+//     *
+//     * @since 0.1
+//     * @access private
+//     */
+//    public function getUserTrees($userid, $treeid)
+//    {
+//        $result = null;
+//
+//        $url = API_URL . 'api/v1/user/trees/list' . $userid . '/' . $treeid ;
+//
+//        if (!empty($_SESSION['userdata']['accessToken'])) {
+//            $userToken = $_SESSION['userdata']['accessToken'];
+//            $result = callAPI("GET", $url, '', $userToken);
+//        }
+//        //trasforma toda a msg em string json para poder ser enviado
+//        return json_decode(json_encode($result), true);
+//    }
 
     /**
      * Get all trees list
