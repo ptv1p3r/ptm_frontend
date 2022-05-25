@@ -1683,14 +1683,14 @@ class AdminController extends MainController
         } else {
             $treeInterventionList = $modelo->getTreeInterventionList();
             if ($treeInterventionList["statusCode"] === 200){
-                $this->userdata['treeInterventionList'] = $treeInterventionList["body"]["trees"];
+                $this->userdata['treeInterventionList'] = $treeInterventionList["body"]["interventions"];
             }
             if ($treeInterventionList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $treeInterventionList = $modelo->getTreeInterventionList();
-                $this->userdata['treeInterventionList'] = $treeInterventionList["body"]["trees"];
+                $this->userdata['treeInterventionList'] = $treeInterventionList["body"]["interventions"];
             }
 
             /**Carrega os arquivos do view**/
