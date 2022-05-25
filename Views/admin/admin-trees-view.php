@@ -233,19 +233,24 @@
     $(document).ready(function() {
         //DATATABLES
         //Configura a dataTable
-        var table = $('#treesTable').DataTable({
-            rowReorder: true,
-            responsive: true,
-            columnDefs: [ {
-                targets: [7,8],
-                orderable: false,
-            }]
-        });
-        //filtra table se ativo, inativo ou mostra todos
-        $('#GetActive').on('change', function() {
-            let selectedItem = $(this).children("option:selected").val();
-            table.columns(7).search(selectedItem).draw();
-        })
+        try{
+            var table = $('#treesTable').DataTable({
+                rowReorder: true,
+                responsive: true,
+                columnDefs: [ {
+                    targets: [7,8],
+                    orderable: false,
+                }]
+            });
+            //filtra table se ativo, inativo ou mostra todos
+            $('#GetActive').on('change', function() {
+                let selectedItem = $(this).children("option:selected").val();
+                table.columns(7).search(selectedItem).draw();
+            })
+        } catch (error){
+            console.log(error);
+        }
+
 
 
         // TreesMap
@@ -285,7 +290,7 @@
             <?php if (!empty($this->userdata['treesList'])) {
                 foreach ($this->userdata['treesList'] as $key => $tree) {?>
                     marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {icon: greenIcon, user: 'none'}).addTo(map).on("click", markerOnClick);
-            <?php }
+                <?php }
             }?>
         }
         mapLoadTrees();
