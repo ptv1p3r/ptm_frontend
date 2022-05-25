@@ -33,7 +33,7 @@
                                     <thead>
                                     <tr>
                                         <th>treeId</th>
-                                        <th>interventionDate</th>
+                                        <th>date</th>
                                         <th>subject</th>
                                         <th>description</th>
                                         <th>observations</th>
@@ -87,7 +87,7 @@
                 <div class="modal-content">
                     <form id="addTreeInterventions">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Tree</h4>
+                            <h4 class="modal-title">Add Tree Intervention</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -96,8 +96,12 @@
                                 <input type="text" class="form-control" name="addTreeInterventionTreeId" required>
                             </div>
                             <div class="form-group">
-                                <label>interventionDate</label>
+                                <label>Date</label>
                                 <input type="text" class="form-control" name="addTreeInterventionDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label>subject</label>
+                                <input type="text" class="form-control" name="addTreeInterventionSubject" required>
                             </div>
                             <div class="form-group">
                                 <label>Description</label>
@@ -106,10 +110,6 @@
                             <div class="form-group">
                                 <label>Observations</label>
                                 <input type="text" class="form-control" name="addTreeInterventionObservations" required>
-                            </div>
-                            <div class="form-group">
-                                <label>subject</label>
-                                <input type="text" class="form-control" name="addTreeInterventionSubject" required>
                             </div>
                             <div class="form-group form-check form-switch">
                                 <label>public</label>
@@ -135,7 +135,7 @@
                 <div class="modal-content">
                     <form id="editTreeInterventions">
                         <div class="modal-header">
-                            <h4 class="modal-title">Edit Tree</h4>
+                            <h4 class="modal-title">Edit Tree Intervention</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -148,8 +148,17 @@
                                 <input type="text" class="form-control" name="editTreeInterventionTreeId" required>
                             </div>
                             <div class="form-group">
-                                <label>interventionDate</label>
-                                <input type="text" class="form-control" name="editTreeInterventionDate" required>
+                                <label>Date</label>
+                                <div class='input-group' id='datetimepicker1' data-td-target-input='nearest' data-td-target-toggle='nearest'>
+                                    <input id='datetimepicker1Input' name="editTreeInterventionDate" type='text' class='form-control' data-td-target='#datetimepicker1' required/>
+                                    <span class='input-group-text' data-td-target='#datetimepicker1' data-td-toggle='datetimepicker'>
+                                        <span class='fa-solid fa-calendar'></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>subject</label>
+                                <input type="text" class="form-control" name="editTreeInterventionSubject" required>
                             </div>
                             <div class="form-group">
                                 <label>Description</label>
@@ -158,10 +167,6 @@
                             <div class="form-group">
                                 <label>Observations</label>
                                 <input type="text" class="form-control" name="editTreeInterventionObservations" required>
-                            </div>
-                            <div class="form-group">
-                                <label>subject</label>
-                                <input type="text" class="form-control" name="editTreeInterventionSubject" required>
                             </div>
                             <div class="form-group form-check form-switch">
                                 <label>public</label>
@@ -188,7 +193,7 @@
                 <div class="modal-content">
                     <form id="deleteTreeInterventions">
                         <div class="modal-header">
-                            <h4 class="modal-title">Delete Tree</h4>
+                            <h4 class="modal-title">Delete Tree Intervention</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -225,7 +230,7 @@
                 //Configura a dataTable
                 try {
                     var table = $('#treeInterventionsTable').DataTable({
-                        rowReorder: true,
+                        rowReorder: false,
                         responsive: true,
                         columnDefs: [{
                             targets: [6, 7],
@@ -238,8 +243,14 @@
                         table.columns(6).search(selectedItem).draw();
                     })
                 } catch (error){
-                    console.error(error);
+                    console.log(error);
                 }
+
+
+                //datetimepicker with momentjs plugin
+                tempusDominus.extend(tempusDominus.plugins.moment_parse, 'YYYY/MM/DD HH:mm:ss');
+                new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'));
+
 
 
                 // TreesMap
@@ -326,7 +337,7 @@
                     event.preventDefault(); //prevent default action
 
                     let formData = {
-                        'action': "AddTreeInterventions",
+                        'action': "AddTreeIntervention",
                         'data': $(this).serializeArray()
                     };
 
@@ -410,7 +421,7 @@
                     };*/
 
                     let formData = {
-                        'action': "UpdateTreeInterventions",
+                        'action': "UpdateTreeIntervention",
                         'data': $(this).serializeArray()
                     };
 
@@ -475,7 +486,7 @@
                 $('.edit').on('click', function(){
 
                     let formData = {
-                        'action' : "GetTreeInterventions",
+                        'action' : "GetTreeIntervention",
                         'data'   : $(this).attr('id') //gets tree id from id="" attribute on edit button from table
                     };
 
@@ -489,19 +500,23 @@
                         },
                         success: function (data) {
 
-                            $('[name="editTreeId"]').val(data[0]['id']);
-                            $('[name="editTreeName"]').val(data[0]['name']);
-                            $('[name="editTreeNameCommon"]').val(data[0]['nameCommon']);
-                            $('[name="editTreeDescription"]').val(data[0]['description']);
-                            $('[name="editTreeObservations"]').val(data[0]['observations']);
-                            $('[name="editTreeTypeId"]').val(data[0]['typeId']);
-                            $('[name="editTreeLat"]').val(data[0]['lat']);
-                            $('[name="editTreeLng"]').val(data[0]['lng']);
+                            $('[name="editTreeInterventionId"]').val(data[0]['id']);
+                            $('[name="editTreeInterventionTreeId"]').val(data[0]['treeId']);
+                            $('[name="editTreeInterventionDate"]').val(data[0]['interventionDate']);
+                            $('[name="editTreeInterventionSubject"]').val(data[0]['subject']);
+                            $('[name="editTreeInterventionDescription"]').val(data[0]['description']);
+                            $('[name="editTreeInterventionObservations"]').val(data[0]['observations']);
+
+                            if (data[0]['public'] === 1) {
+                                $('[name="editTreeInterventionPublic"]').attr('checked', true);
+                            } else {
+                                $('[name="editTreeInterventionPublic"]').attr('checked', false);
+                            }
 
                             if (data[0]['active'] === 1) {
-                                $('[name="editTreeActive"]').attr('checked', true);
+                                $('[name="editTreeInterventionActive"]').attr('checked', true);
                             } else {
-                                $('[name="editTreeActive"]').attr('checked', false);
+                                $('[name="editTreeInterventionActive"]').attr('checked', false);
                             }
 
                             //atribui atributo .data("lastValue") a cada input do form editTree
@@ -536,7 +551,7 @@
                     event.preventDefault(); //prevent default action
 
                     let formData = {
-                        'action' : "DeleteTreeInterventions",
+                        'action' : "DeleteTreeIntervention",
                         'data'   : $(this).serializeArray()
                     };
 
