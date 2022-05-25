@@ -60,6 +60,9 @@ class AdminTreeInterventionsModel extends MainModel {
         $result = null;
         $normalizedData = array();
 
+        $normalizedData['public'] = "0";
+        $normalizedData['active'] = "0";
+
         // get data from form array and package it to send to api
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
@@ -69,7 +72,7 @@ class AdminTreeInterventionsModel extends MainModel {
                         break;
 
                     case "addTreeInterventionDate":
-                        $normalizedData['interventionDate'] = $dataVector['value'];
+                        $normalizedData['date'] = $dataVector['value'];
                         break;
 
                     case "addTreeInterventionSubject":
@@ -83,19 +86,16 @@ class AdminTreeInterventionsModel extends MainModel {
                     case "addTreeInterventionObservations":
                         $normalizedData['observations'] = $dataVector['value'];
                         break;
+
+                    case "addTreeInterventionPublic":
+                        $normalizedData['public'] = "1";
+                        break;
+
+                    case "addTreeInterventionActive":
+                        $normalizedData['active'] = "1";
+                        break;
                 }
 
-                if ($dataVector['name'] == "addTreeInterventionPublic"){
-                    $normalizedData['public'] = "1";
-                } else {
-                    $normalizedData['public'] = "0";
-                }
-
-                if ($dataVector['name'] == "addTreeInterventionActive"){
-                    $normalizedData['active'] = "1";
-                } else {
-                    $normalizedData['active'] = "0";
-                }
             }
         }
 
@@ -120,7 +120,8 @@ class AdminTreeInterventionsModel extends MainModel {
         $normalizedData = array();
 
         // Not active by default
-        $normalizedData['active'] = "";
+        $normalizedData['public'] = "0";
+        $normalizedData['active'] = "0";
 
         // get data from form array and package it to send to api
         foreach ($data as $dataVector) {
@@ -135,7 +136,7 @@ class AdminTreeInterventionsModel extends MainModel {
                         break;
 
                     case "editTreeInterventionDate":
-                        $normalizedData['interventionDate'] = $dataVector['value'];
+                        $normalizedData['date'] = $dataVector['value'];
                         break;
 
                     case "editTreeInterventionSubject":
@@ -149,18 +150,14 @@ class AdminTreeInterventionsModel extends MainModel {
                     case "editTreeInterventionObservations":
                         $normalizedData['observations'] = $dataVector['value'];
                         break;
-                }
 
-                if ($dataVector['name'] == "editTreeInterventionPublic"){
-                    $normalizedData['public'] = "1";
-                } else {
-                    $normalizedData['public'] = "0";
-                }
+                    case "editTreeInterventionPublic":
+                        $normalizedData['public'] = "1";
+                        break;
 
-                if ($dataVector['name'] == "editTreeInterventionActive"){
-                    $normalizedData['active'] = "1";
-                } else {
-                    $normalizedData['active'] = "0";
+                    case "editTreeInterventionActive":
+                        $normalizedData['active'] = "1";
+                        break;
                 }
             }
         }
@@ -209,11 +206,6 @@ class AdminTreeInterventionsModel extends MainModel {
                         break;
                 }
 
-                if ($dataVector['name'] == "editGroupActive"){
-                    $normalizedData['active'] = "1";
-                } else {
-                    $normalizedData['active'] = "0";
-                }
             }
         }
 
