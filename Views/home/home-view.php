@@ -204,34 +204,26 @@
                 </nav>
 
                 <!-- Leafletmap -->
-
                 <div class="col-md-12">
                     <!--Map area start-->
                     <div id="map"></div>
                     <!--Map area end-->
                 </div>
-
-
                 <!-- END Leafletmap -->
 
+                <!-- Toogle controler tress view-->
+                <?php if ($this->logged_in) { ?>
 
-<!--                --><?php //if ($this->logged_in) { ?>
-<!--                    <div class="tWrapper">-->
-<!--                        <br>-->
-<!--                        <div class="userToogle">-->
-<!--                            <input type="checkbox" id="hide-checkbox">-->
-<!--                            <label for="hide-checkbox" class="toggle">-->
-<!--                        <span class="toggle-button">-->
-<!--                       <span class="crater crater-1"></span>-->
-<!--                        </span>-->
-<!--                                         <span class="star star-1"></span>-->
-<!--                            </label>-->
-<!--                        </div>-->
-<!--                        <p class="pMessage"> Ver as minhas árvores</p>-->
-<!--                    </div>-->
-<!--                    --><?php
-//                }
-//                ?>
+                    <div class="toggleBtn">
+                        <br>
+                        <input type="checkbox" checked data-toggle="toggle" data-on="Ver minhas árvores"
+                               data-off="Ver todas árvores" data-onstyle="success" data-offstyle="secondary">
+
+                    </div>
+                    <?php
+                }
+                ?>
+                <!-- End Toogle controler tress view-->
             </div>
         </div>
 
@@ -947,7 +939,7 @@
     $(document).ready(function () {
 
         // TreesMap
-        var greenIcon = L.icon({
+        let greenIcon = L.icon({
             iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/mapMarker.png'?>',
             shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
 
@@ -958,6 +950,16 @@
             popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
 
+        let blueIcon = L.icon({
+            iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/blue-mapMarker.png'?>',
+            shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
+
+            iconSize: [38, 95], // size of the icon
+            shadowSize: [50, 64], // size of the shadow
+            iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
 
         let map = L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
 
@@ -977,7 +979,7 @@
             });
         });
 
-        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        let satellite = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             maxZoom: 18,
             id: 'mapbox/streets-v11',
             tileSize: 512,
@@ -985,18 +987,39 @@
             accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
         }).addTo(map);
 
-        //function to load all trees from API
+
+        ////function to load all trees from API
         function mapLoadTrees() {
             <?php if (!empty($this->userdata['allTreesList'])) {
             foreach ($this->userdata['allTreesList'] as $key => $tree) {?>
-            marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
+            allMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
                 icon: greenIcon,
                 user: 'none'
             }).addTo(map).on("click", markerOnClick);
             <?php }
             }?>
         }
+
         mapLoadTrees();
+
+
+        <?php if (!$this->logged_in) {?>
+        //Ajax call to user trees
+        //function to load user private trees from API
+        function mapUserLoadTrees() {
+            <?php if (!empty($this->userdata['userTreesList'])) {
+            foreach ($this->userdata['userTreesList'] as $key => $tree) {?>
+            userMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
+                icon: blueIcon,
+                user: 'none'
+            }).addTo(map).on("click", markerOnClick);
+            <?php }
+            }?>
+        }
+
+        mapUserLoadTrees();
+        <?php
+        }?>
 
 
         //Tree popup on marker click
@@ -1023,11 +1046,149 @@
                 .openOn(map);
         }
 
+
+//Ajax get user trees
+
+        let flag = false;
+        $('.toggleBtn').click(function (event) {
+            event.preventDefault(); //prevent default action
+            if (flag == false) {
+
+                let formData = {
+                    'action': "getUserTrees",
+                };
+
+                console.log(formData);
+
+                $.ajax({
+                    url: "<?php echo HOME_URL . '/home/dashboard';?>",
+                    dataType: "json",
+                    type: 'Get',
+                    data: formData,
+                    // beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    //     $('#loader').removeClass('hidden')
+                    // },
+                    success: function (data) {
+                        if (data.statusCode === 200) {
+
+
+                        //Carrega os dados no mapa
+
+                        //     //mensagem de Success
+                        //     Swal.fire({
+                        //         title: 'Success!',
+                        //         text: data.body.message,
+                        //         icon: 'success',
+                        //         showConfirmButton: false,
+                        //         timer: 2000,
+                        //         didClose: () => {
+                        //             location.reload();
+                        //         }
+                        //     });
+                        // } else {
+                        //     //mensagem de Error
+                        //     Swal.fire({
+                        //         title: 'Error!',
+                        //         text: data.body.message,
+                        //         icon: 'error',
+                        //         showConfirmButton: false,
+                        //         timer: 2000,
+                        //         didClose: () => {
+                        //             //location.reload();
+                        //         }
+                        //     });
+                         }
+
+                    },
+                    error: function (data) {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: "Connection error, please try again.",
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    },
+                    // complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    //     $('#loader').addClass('hidden')
+                    // }
+                });
+                flag = true;
+            } else {
+
+                //Ajax get all trees
+                let formData = {
+                    'action': "getAllTrees",
+                };
+                    console.log(formData);
+
+                    $.ajax({
+                    url: "<?php echo HOME_URL . '/home/dashboard';?>",
+                    dataType: "json",
+                    type: 'Get',
+                    data: formData,
+                    // beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    //     $('#loader').removeClass('hidden')
+                    // },
+                    success: function (data) {
+                        if (data.statusCode === 200) {
+
+                            //Carrega os dados no mapa
+
+                            //mensagem de Success
+                            Swal.fire({
+                                title: 'Success!',
+                                text: data.body.message,
+                                icon: 'success',
+                                showConfirmButton: false,
+                                timer: 2000,
+                                didClose: () => {
+                                    location.reload();
+                                }
+                            });
+                        } else {
+                            //mensagem de Error
+                            Swal.fire({
+                                title: 'Error!',
+                                text: data.body.message,
+                                icon: 'error',
+                                showConfirmButton: false,
+                                timer: 2000,
+                                didClose: () => {
+                                    //location.reload();
+                                }
+                            });
+                         }
+
+                    },
+                    error: function (data) {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: "Connection error, please try again.",
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    },
+                    // complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    //     $('#loader').addClass('hidden')
+                    // }
+                });
+                flag = false;
+            }
+        });
     });
 
-    //
-    // //
-    //
+    //Switch message toogle
+
     // const wrapper = document.querySelector('.tWrapper');
     // const para = document.querySelector('.pMessage')
     //
@@ -1040,6 +1201,6 @@
     //         para.textContent = ' Ver as minhas árvores';
     //     }
     // })
-    //
+
 
 </script>
