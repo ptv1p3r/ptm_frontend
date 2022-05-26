@@ -97,7 +97,12 @@
                             </div>
                             <div class="form-group">
                                 <label>Date</label>
-                                <input type="text" class="form-control" name="addTreeInterventionDate" required>
+                                <div class='input-group' id='datetimepicker1' data-td-target-input='nearest' data-td-target-toggle='nearest'>
+                                    <input id='datetimepicker1Input' name="addTreeInterventionDate" type='text' class='form-control' data-td-target='#datetimepicker1' required/>
+                                    <span class='input-group-text' data-td-target='#datetimepicker1' data-td-toggle='datetimepicker'>
+                                        <span class='fa-solid fa-calendar'></span>
+                                    </span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>subject</label>
@@ -149,9 +154,9 @@
                             </div>
                             <div class="form-group">
                                 <label>Date</label>
-                                <div class='input-group' id='datetimepicker1' data-td-target-input='nearest' data-td-target-toggle='nearest'>
-                                    <input id='datetimepicker1Input' name="editTreeInterventionDate" type='text' class='form-control' data-td-target='#datetimepicker1' required/>
-                                    <span class='input-group-text' data-td-target='#datetimepicker1' data-td-toggle='datetimepicker'>
+                                <div class='input-group' id='datetimepicker2' data-td-target-input='nearest' data-td-target-toggle='nearest'>
+                                    <input id='datetimepicker2Input' name="editTreeInterventionDate" type='text' class='form-control' data-td-target='#datetimepicker2' required/>
+                                    <span class='input-group-text' data-td-target='#datetimepicker2' data-td-toggle='datetimepicker'>
                                         <span class='fa-solid fa-calendar'></span>
                                     </span>
                                 </div>
@@ -249,7 +254,11 @@
 
                 //datetimepicker with momentjs plugin
                 tempusDominus.extend(tempusDominus.plugins.moment_parse, 'YYYY/MM/DD HH:mm:ss');
+                //datepicker form add
                 new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'));
+
+                //datepicker form edit
+                new tempusDominus.TempusDominus(document.getElementById('datetimepicker2'));
 
 
 
@@ -330,6 +339,11 @@
                     //map.flyTo([e.latlng.lat, e.latlng.lng], 15);
                 }
 
+
+                //clean all addmodal inputs on modal hide
+                $('#addTreeInterventionsModal').on('hidden.bs.modal', function () {
+                    $('#addTreeInterventions').trigger("reset");
+                });
 
                 //CRUD
                 // ajax to Add Group
