@@ -82,7 +82,7 @@
         <div id="addTreeImageModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeImageModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="addTreeImage">
+                    <form id="addTreeImage" enctype="multipart/form-data">
                         <div class="modal-header">
                             <h4 class="modal-title">Add Tree Image</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
