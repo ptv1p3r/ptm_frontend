@@ -289,7 +289,7 @@ class AdminUsersModel extends MainModel {
         $normalizedData = array();
 
         // Not active by default
-        $normalizedData['active'] = "";
+        $normalizedData['active'] = "0";
 
         // get data from form array and package it to send to api
         foreach ($data as $dataVector) {
@@ -351,13 +351,12 @@ class AdminUsersModel extends MainModel {
                     case "editUserCountryId":
                         $normalizedData['countryId'] = (int)$dataVector['value'];
                         break;
+
+                    case "editUserActive":
+                        $normalizedData['active'] = "1";
+                        break;
                 }
 
-                if ($dataVector['name'] == "editUserActive" && $dataVector['value'] == "on"){
-                    $normalizedData['active'] = "1";
-                } else {
-                    $normalizedData['active'] = "0";
-                }
             }
         }
 
