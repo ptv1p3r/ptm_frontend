@@ -57,8 +57,8 @@
                                                 <td><?php echo $treeImage["position"] ?></td>
                                                 <td><?php echo $treeImage["active"] ?></td>
                                                 <td>
-                                                    <a href="#editTreeImageModal" id="<?php echo $treeImage['id'] ?>" class="edit" data-bs-toggle="modal" data-bs-target="#editTreeModal"><i class="far fa-edit"></i></a>
-                                                    <a href="#deleteTreeImageModal" id="<?php echo $treeImage['id'] ?>" class="delete" data-bs-toggle="modal" data-bs-target="#deleteTreeModal"><i class="fas fa-trash-alt"></i></a>
+                                                    <a href="#editTreeImageModal" id="<?php echo $treeImage['id'] ?>" data-ImagePath="<?php echo $treeImage['path'] ?>" class="edit" data-bs-toggle="modal" data-bs-target="#editTreeModal"><i class="far fa-edit"></i></a>
+                                                    <a href="#deleteTreeImageModal" id="<?php echo $treeImage['id'] ?>" data-ImagePath="<?php echo $treeImage['path'] ?>" class="delete" data-bs-toggle="modal" data-bs-target="#deleteTreeModal"><i class="fas fa-trash-alt"></i></a>
                                                 </td>
                                             </tr>
                                         <?php }
@@ -392,7 +392,7 @@
 
                     let formData = {
                         'action' : "GetTreeImage",
-                        'data'   : $(this).attr('id') //gets tree id from id="" attribute on edit button from table
+                        'data'   : $(this).attr('data-ImagePath') //gets tree id from id="" attribute on edit button from table
                     };
 
                     $.ajax({
