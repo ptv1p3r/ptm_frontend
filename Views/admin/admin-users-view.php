@@ -422,6 +422,7 @@
         $('#editUser').submit(function (event) {
             event.preventDefault(); //prevent default action
 
+            <!--TODO: inst getting option value when country it changed-->
             //Ve se a data dos inputs mudou para formar so a data necessaria para o PATCH
             let formDataChanged = [];
             $('#editUser input').each(function() { //para cada input vai ver
