@@ -88,12 +88,25 @@
                 <?php if (isset($_SESSION["sidebar"]["active_tab"]["trees_users"]) && $_SESSION["sidebar"]["active_tab"]["trees_users"] === true) { ?>
                     <a class="nav-link active" href="<?php echo HOME_URL . '/admin/trees_users';?>">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-tree"></i></div>
-                        Árvores-Utilizadores
+                        Adoções
                     </a>
                 <?php } else { ?>
                     <a class="nav-link" href="<?php echo HOME_URL . '/admin/trees_users';?>">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-tree"></i></div>
-                        Árvores-Utilizadores
+                        Adoções
+                    </a>
+                <?php } ?>
+
+                <!-- tree images -->
+                <?php if (isset($_SESSION["sidebar"]["active_tab"]["tree_images"]) && $_SESSION["sidebar"]["active_tab"]["tree_images"] === true) { ?>
+                    <a class="nav-link active" href="<?php echo HOME_URL . '/admin/tree_images';?>">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-image"></i></div>
+                        Imagens
+                    </a>
+                <?php } else { ?>
+                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/tree_images';?>">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-image"></i></div>
+                        Imagens
                     </a>
                 <?php } ?>
 
@@ -101,12 +114,12 @@
                 <?php if (isset($_SESSION["sidebar"]["active_tab"]["tree_types"]) && $_SESSION["sidebar"]["active_tab"]["tree_types"] === true) { ?>
                     <a class="nav-link active" href="<?php echo HOME_URL . '/admin/tree_types';?>">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-tree"></i></div>
-                        Tipos de árvores
+                        Tipos
                     </a>
                 <?php } else { ?>
                     <a class="nav-link" href="<?php echo HOME_URL . '/admin/tree_types';?>">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-tree"></i></div>
-                        Tipos de árvores
+                        Tipos
                     </a>
                 <?php } ?>
 
