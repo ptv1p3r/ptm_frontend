@@ -757,10 +757,6 @@ class AdminController extends MainController
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
                         $apiResponse["body"]['message'] = "Updated with success!";
-
-                        $apiResponse = json_encode($apiResponse);// encode package to send
-                        echo $apiResponse;
-                        break;
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -791,10 +787,6 @@ class AdminController extends MainController
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
                         $apiResponse["body"]['message'] = "Deleted with success!";
-
-                        $apiResponse = json_encode($apiResponse);// encode package to send
-                        echo $apiResponse;
-                        break;
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -806,14 +798,14 @@ class AdminController extends MainController
             //get securitys list
             $securityList = $modelo->getSecurityList();
             if ($securityList["statusCode"] === 200){
-                $this->userdata['securityList'] = $securityList["body"]["securities"];
+                $this->userdata['securityList'] = $securityList["body"]["security"];
             }
             if ($securityList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $securityList = $modelo->getSecurityList();
-                $this->userdata['securityList'] = $securityList["body"]["securities"];
+                $this->userdata['securityList'] = $securityList["body"]["security"];
             }
 
             /**Carrega os arquivos do view**/
