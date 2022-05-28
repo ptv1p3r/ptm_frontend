@@ -25,7 +25,7 @@ class UserTreesModel extends MainModel
 
     /**
      * Get user trees list
-     *
+     * Private view
      * @since 0.1
      * @access private
      */
@@ -44,29 +44,29 @@ class UserTreesModel extends MainModel
     }
 
 
-//    /**
-//     * Get User trees list
-//     *
-//     * @since 0.1
-//     * @access private
-//     */
-//    public function getUserTrees($userid, $treeid)
-//    {
-//        $result = null;
-//
-//        $url = API_URL . 'api/v1/user/trees/list' . $userid . '/' . $treeid ;
-//
-//        if (!empty($_SESSION['userdata']['accessToken'])) {
-//            $userToken = $_SESSION['userdata']['accessToken'];
-//            $result = callAPI("GET", $url, '', $userToken);
-//        }
-//        //trasforma toda a msg em string json para poder ser enviado
-//        return json_decode(json_encode($result), true);
-//    }
+    /**
+     * Get trees list
+     * Private view
+     * @since 0.1
+     * @access private
+     */
+    public function getTreesList()
+    {
+        $result = null;
+
+        $url = API_URL . 'api/v1/user/trees/list';
+
+        if (!empty($_SESSION['userdata']['accessToken'])) {
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
 
     /**
      * Get all trees list
-     *
+     * Public view
      * @since 0.1
      * @access public
      */

@@ -938,98 +938,98 @@
 
     $(document).ready(function () {
 
-        // TreesMap
-        let greenIcon = L.icon({
-            iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/mapMarker.png'?>',
-            shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
+    // TreesMap
+    let greenIcon = L.icon({
+        iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/mapMarker.png'?>',
+        shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
 
-            iconSize: [38, 95], // size of the icon
-            shadowSize: [50, 64], // size of the shadow
-            iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-            shadowAnchor: [4, 62],  // the same for the shadow
-            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+        iconSize: [38, 95], // size of the icon
+        shadowSize: [50, 64], // size of the shadow
+        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+        shadowAnchor: [4, 62],  // the same for the shadow
+        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+
+    let blueIcon = L.icon({
+        iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/blue-mapMarker.png'?>',
+        shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
+
+        iconSize: [38, 95], // size of the icon
+        shadowSize: [50, 64], // size of the shadow
+        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+        shadowAnchor: [4, 62],  // the same for the shadow
+        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+
+    let map = L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
+
+    // Fly to a specific point in the map (Monchique)
+    $("#monTarget").click(function () {
+        map.flyTo([37.319518557906285, -8.556156285649438], 13, {
+            animate: true,
+            duration: 2 // in seconds
         });
+    });
 
-        let blueIcon = L.icon({
-            iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/blue-mapMarker.png'?>',
-            shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
-
-            iconSize: [38, 95], // size of the icon
-            shadowSize: [50, 64], // size of the shadow
-            iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-            shadowAnchor: [4, 62],  // the same for the shadow
-            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+    // Fly to a specific point in the map (Marmelete)
+    $("#marTarget").click(function () {
+        map.flyTo([37.3119, -8.6671], 13, {
+            animate: true,
+            duration: 2 // in seconds
         });
+    });
 
-        let map = L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
-
-        // Fly to a specific point in the map (Monchique)
-        $("#monTarget").click(function () {
-            map.flyTo([37.319518557906285, -8.556156285649438], 13, {
-                animate: true,
-                duration: 2 // in seconds
-            });
-        });
-
-        // Fly to a specific point in the map (Marmelete)
-        $("#marTarget").click(function () {
-            map.flyTo([37.3119, -8.6671], 13, {
-                animate: true,
-                duration: 2 // in seconds
-            });
-        });
-
-        let satellite = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-            maxZoom: 18,
-            id: 'mapbox/streets-v11',
-            tileSize: 512,
-            zoomOffset: -1,
-            accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
-        }).addTo(map);
+    let satellite = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
+    }).addTo(map);
 
 
-        ////function to load all trees from API
-        function mapLoadTrees() {
-            <?php if (!empty($this->userdata['allTreesList'])) {
-            foreach ($this->userdata['allTreesList'] as $key => $tree) {?>
-            allMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
-                icon: greenIcon,
-                user: 'none'
-            }).addTo(map).on("click", markerOnClick);
-            <?php }
-            }?>
-        }
-
-        mapLoadTrees();
-
-
-        <?php if (!$this->logged_in) {?>
-        //Ajax call to user trees
-        //function to load user private trees from API
-        function mapUserLoadTrees() {
-            <?php if (!empty($this->userdata['userTreesList'])) {
-            foreach ($this->userdata['userTreesList'] as $key => $tree) {?>
-            userMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
-                icon: blueIcon,
-                user: 'none'
-            }).addTo(map).on("click", markerOnClick);
-            <?php }
-            }?>
-        }
-
-        mapUserLoadTrees();
-        <?php
+    ////function to load all trees from API
+    function mapLoadTrees() {
+        <?php if (!empty($this->userdata['allTreesList'])) {
+        foreach ($this->userdata['allTreesList'] as $key => $tree) {?>
+        allMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
+            icon: greenIcon,
+            user: 'none'
+        }).addTo(map).on("click", markerOnClick);
+        <?php }
         }?>
+    }
+
+    mapLoadTrees();
 
 
-        //Tree popup on marker click
-        var popupMarker = L.popup();
+    <?php if (!$this->logged_in) {?>
+    //Ajax call to user trees
+    //function to load user private trees from API
+    function mapUserLoadTrees() {
+        <?php if (!empty($this->userdata['userTreesList'])) {
+        foreach ($this->userdata['userTreesList'] as $key => $tree) {?>
+        userMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
+            icon: blueIcon,
+            user: 'none'
+        }).addTo(map).on("click", markerOnClick);
+        <?php }
+        }?>
+    }
 
-        function markerOnClick(e) {
-            popupMarker
-                .setLatLng(e.latlng)
-                .setContent(
-                    `
+    mapUserLoadTrees();
+    <?php
+    }?>
+
+
+    //Tree popup on marker click
+    var popupMarker = L.popup();
+
+    function markerOnClick(e) {
+        popupMarker
+            .setLatLng(e.latlng)
+            .setContent(
+                `
                     <div class="card" style="width: 10rem; border: unset">
                       <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'?>" class="card-img-top" alt="">
                       <div class="card-body">
@@ -1042,23 +1042,22 @@
                       </div>
                     </div>
                     `
-                )
-                .openOn(map);
-        }
+            )
+            .openOn(map);
+    }
 
-
-//Ajax get user trees
-
+        //Ajax get user trees
         let flag = false;
         $('.toggleBtn').click(function (event) {
             event.preventDefault(); //prevent default action
             if (flag == false) {
 
+
                 let formData = {
                     'action': "getUserTrees",
                 };
 
-                console.log(formData);
+                // console.log(formData);
 
                 $.ajax({
                     url: "<?php echo HOME_URL . '/home/dashboard';?>",
@@ -1069,35 +1068,14 @@
                     //     $('#loader').removeClass('hidden')
                     // },
                     success: function (data) {
+                        console.log(data[0]['description']);
                         if (data.statusCode === 200) {
 
+                            geojsonLayer = L.geoJson(response, {
+                                style: yourLeafletStyle
+                            }).addTo(map);
 
-                        //Carrega os dados no mapa
-
-                        //     //mensagem de Success
-                        //     Swal.fire({
-                        //         title: 'Success!',
-                        //         text: data.body.message,
-                        //         icon: 'success',
-                        //         showConfirmButton: false,
-                        //         timer: 2000,
-                        //         didClose: () => {
-                        //             location.reload();
-                        //         }
-                        //     });
-                        // } else {
-                        //     //mensagem de Error
-                        //     Swal.fire({
-                        //         title: 'Error!',
-                        //         text: data.body.message,
-                        //         icon: 'error',
-                        //         showConfirmButton: false,
-                        //         timer: 2000,
-                        //         didClose: () => {
-                        //             //location.reload();
-                        //         }
-                        //     });
-                         }
+                        }
 
                     },
                     error: function (data) {
@@ -1122,11 +1100,11 @@
 
                 //Ajax get all trees
                 let formData = {
-                    'action': "getAllTrees",
+                    'action': "getTrees",
                 };
-                    console.log(formData);
+                // console.log(formData);
 
-                    $.ajax({
+                $.ajax({
                     url: "<?php echo HOME_URL . '/home/dashboard';?>",
                     dataType: "json",
                     type: 'Get',
@@ -1137,32 +1115,37 @@
                     success: function (data) {
                         if (data.statusCode === 200) {
 
+                            console.log(data[0]['']);
+
+
+
                             //Carrega os dados no mapa
 
                             //mensagem de Success
-                            Swal.fire({
-                                title: 'Success!',
-                                text: data.body.message,
-                                icon: 'success',
-                                showConfirmButton: false,
-                                timer: 2000,
-                                didClose: () => {
-                                    location.reload();
-                                }
-                            });
-                        } else {
-                            //mensagem de Error
-                            Swal.fire({
-                                title: 'Error!',
-                                text: data.body.message,
-                                icon: 'error',
-                                showConfirmButton: false,
-                                timer: 2000,
-                                didClose: () => {
-                                    //location.reload();
-                                }
-                            });
-                         }
+                            //     Swal.fire({
+                            //         title: 'Success!',
+                            //         text: data.body.message,
+                            //         icon: 'success',
+                            //         showConfirmButton: false,
+                            //         timer: 2000,
+                            //         didClose: () => {
+                            //             location.reload();
+                            //         }
+                            //     });
+                            // } else {
+                            //     //mensagem de Error
+                            //     Swal.fire({
+                            //         title: 'Error!',
+                            //         text: data.body.message,
+                            //         icon: 'error',
+                            //         showConfirmButton: false,
+                            //         timer: 2000,
+                            //         didClose: () => {
+                            //             //location.reload();
+                            //         }
+                            //     });
+                        }
+
 
                     },
                     error: function (data) {
@@ -1186,6 +1169,7 @@
             }
         });
     });
+
 
     //Switch message toogle
 
