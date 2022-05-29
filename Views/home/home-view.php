@@ -265,54 +265,39 @@
                     <li class="text-right"><strong>$1750.00</strong> Required</li>
                 </ul>
             </div>
-
-
             <div class="col-md-6">
                 <div class="donation-amount">
                     <h5>Doação</h5>
-                    <form>
+
+                    <!--Donation form-->
+                    <form id="newDonation">
                         <ul class="radio-boxes">
                             <li>
                                 <div class="radio custom">
                                     <input name="donation" id="d1" type="radio" class="css-radio">
-                                    <label for="d1" class="css-label">€ 2.5</label>
-
+                                    <label for="d1" class="css-label">€ 200.5</label>
                                 </div>
                             </li>
 
-<!--                            <li>-->
-<!--                                <div class="radio custom">-->
-<!--                                    <input name="donation" id="d2" type="radio" class="css-radio">-->
-<!--                                    <label for="d2" class="css-label">€20</label>-->
-<!--                                </div>-->
-<!--                            </li>-->
 
-                            <?php
-                            //                            $_SESSION["donationVal"] = $("input[type='radio'][name='rate']:checked").val();;
-                            $_SESSION["donationVal"] = '2.5';
-                            ?>
-
+                            <!-- Make donation if login-->
                             <?php if ($this->logged_in) { ?>
+                                <li class="form-submit">
+                                    <button type="submit" id="subBtn" disabled="disabled">
+                                        Faça a sua adoção
+                                    </button>
 
-                            <li class="form-submit">
-                                <button  type="submit" disabled="disabled">
-                                    Faça a sua adoção
-                                </button>
-                            <li><a href="<?php echo HOME_URL . '/home/adoption'; ?>">Home</a></li>
-                            </li>
-
-                    <?php }
-                    else { ?>
-
-                        <!--                                Forçar a fazer o registo e login dispara um modal a pedir para registar-->
-                        <li class="form-submit">
-                            <button class="login-reg"><a href="" data-toggle="modal" data-target="#loginModal"
-                                                         type="submit">Faça a sua adoção</button>
-                        </li>
-
-                    <?php } ?>
+                                </li>
+                            <?php } else { ?>
+                                <!-- Make donation send to login / register-->
+                                <li class="form-submit">
+                                    <button class="login-reg"><a href="" data-toggle="modal" data-target="#loginModal"
+                                                                 type="submit">Faça a sua adoção</button>
+                                </li>
+                            <?php } ?>
                         </ul>
                     </form>
+                    <!--Donation form END-->
                 </div>
             </div>
         </div>
@@ -932,25 +917,85 @@
     }).addTo(map);
 
 
+    //Donation script////////////////////////////////////////////
+    $(document).ready(function () {
+
+        $('#newDonation').submit(function (event) {
+            event.preventDefault(); //prevent default action
+            let formData = {
+                'action': "getDonation",
+                'data': $(this).serializeArray()
+            };
+            $.ajax({
+                url: "<?php echo HOME_URL . '/home/dashboard';?>",
+                dataType: "json",
+                type: 'POST',
+                data: formData,
+                // beforeSend: function () { // Load the spinner.
+                //     $('#loader').removeClass('hidden')
+                // },
+                success: function (data) {
+                    window.location.href = "<?php echo HOME_URL . '/home/adoption';?>";
 
 
-    //Donation script
+                    // if (data.statusCode === 201) {
 
-    //Function to lock the button
-    $(function() {
-        $('#checkBtn').click(function() {
-            if ($(this).is(':checked')) {
-                $('#subBtn').removeAttr('disabled');
-            } else {
-
-                $('#subBtn').attr('disabled', 'disabled');
-
-            }
+                        //mensagem de Success
+                        //Swal.fire({
+                        //    title: 'Success!',
+                        //    text: data.body.message,
+                        //    icon: 'success',
+                        //    showConfirmButton: false,
+                        //    timer: 2000,
+                        //    didClose: () => {
+                        //        window.location.href = "<?php //echo HOME_URL . '/home/adoption';?>//";
+                        //    }
+                        //});
+                    // } else {
+                    //     //mensagem de Error
+                    //     Swal.fire({
+                    //         title: 'Error!',
+                    //         text: data.body.message,
+                    //         icon: 'error',
+                    //         showConfirmButton: false,
+                    //         timer: 2000,
+                    //         didClose: () => {
+                    //             //location.reload();
+                    //         }
+                    //     });
+                    }
+                    // }, complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    //     $('#loader').addClass('hidden')
+                // },
+                // error: function (data) {
+                //     //mensagem de Error
+                //     Swal.fire({
+                //         title: 'Error!',
+                //         text: "Connection error, please try again.",
+                //         icon: 'error',
+                //         showConfirmButton: false,
+                //         timer: 2000,
+                //         didClose: () => {
+                //             //location.reload();
+                //         }
+                //     });
+                // },
+            });
         });
+
+
+        // //Function to lock the button
+        $(function () {
+            $('#d1').click(function () {
+                if ($(this).is(':checked')) {
+                    $('#subBtn').removeAttr('disabled');
+                } else {
+                    $('#subBtn').attr('disabled', 'disabled');
+                }
+            });
+        });
+
     });
 
-    if($("input:radio[name='donation']").is(":checked")) {
-        alert('check')
-    }
 
 </script>
