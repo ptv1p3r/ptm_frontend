@@ -259,82 +259,83 @@ class HomeController extends MainController
         $model = $this->load_model('user-trees-model');
 
         $allTreesList = $model->getAllTrees();
+//        $allTreesList = $model->getTreesList();
         $this->userdata['allTreesList'] = $allTreesList['body']['trees'];
 
 
-        $data2 = $_SESSION['userdata']['id'];
-
-        if (isset($_GET['action']) && !empty($_GET['action'])) {
-            $action = $_GET['action'];
-            switch ($action) {
-                case 'getUserTrees' :
-                    $data = $data2;
-                    $apiResponse = $model->getAllTrees();
+//        $data2 = $_SESSION['userdata']['id'];
+//
+//        if (isset($_GET['action']) && !empty($_GET['action'])) {
+//            $action = $_GET['action'];
+//            switch ($action) {
+//                case 'getUserTrees' :
+//                    $data = $data2;
+////                    $apiResponse = $model->getAllTrees();
 //                    $apiResponse = $model->getUserTreesList($data);
-                    $apiResponseBody = array();
-
-
-                    if ($apiResponse['statusCode'] === 200) { // 200 success
-                        $apiResponseBody = json_encode($apiResponse["body"]['trees']);
-
-                    }
-
-                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
-                        //faz o refresh do accessToken
-                        $this->userTokenRefresh();
-
+//                    $apiResponseBody = array();
+//
+//
+//                    if ($apiResponse['statusCode'] === 200) { // 200 success
+//                        $apiResponseBody = json_encode($apiResponse["body"]['trees']);
+//
+//                    }
+//
+//                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+//                        //faz o refresh do accessToken
+//                        $this->userTokenRefresh();
+//
 //                        $apiResponse = $model->getUserTreesList($data);
-                        $allTreesList = $model->getAllTrees();
-                        $apiResponseBody = json_encode($apiResponse["body"]['trees']);
-                    }
-
-                    echo $apiResponseBody;
-                    break;
-
-                case 'getTrees' :
-//                    $data = $_SESSION['userdata']['id'];
+////                        $allTreesList = $model->getAllTrees();
+//                        $apiResponseBody = json_encode($apiResponse["body"]['trees']);
+//                    }
+//
+//                    echo $apiResponseBody;
+//                    break;
+//
+//                case 'getTrees' :
+////                    $data = $_SESSION['userdata']['id'];
 //                    $apiResponse = $model->getTreesList();
-                    $apiResponse = $model->getAllTrees();
-                    $apiResponseBody = array();
-
-
-                    if ($apiResponse['statusCode'] === 200) { // 200 success
-                        $apiResponseBody = json_encode($apiResponse["body"]['trees']);
-
-                    }
-
-                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
-                        //faz o refresh do accessToken
-                        $this->userTokenRefresh();
-
-                        $allTreesList = $model->getAllTrees();
+////                    $apiResponse = $model->getAllTrees();
+//                    $apiResponseBody = array();
+//
+//
+//                    if ($apiResponse['statusCode'] === 200) { // 200 success
+//                        $apiResponseBody = json_encode($apiResponse["body"]['trees']);
+//
+//                    }
+//
+//                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+//                        //faz o refresh do accessToken
+//                        $this->userTokenRefresh();
+//
+////                        $allTreesList = $model->getAllTrees();
 //                        $apiResponse = $model->getTreesList();
-                        $apiResponseBody = json_encode($apiResponse["body"]['trees']);
-                    }
-
-                    echo $apiResponseBody;
-                    break;
-            }
-        }
-
-
-
-//        if ($this->logged_in) {
-//            //Load user trees
-//            $model = $this->load_model('user-trees-model');
-//            $userTreesList = $model->getUserTreesList($_SESSION['userdata']['id']);
+//                        $apiResponseBody = json_encode($apiResponse["body"]['trees']);
+//                    }
 //
-//            if ($userTreesList["statusCode"] === 200) {
-//                $this->userdata['userTreesList'] = $userTreesList["body"]['trees'];
-//            }
-//            if ($userTreesList["statusCode"] === 401) {
-//                //faz o refresh do accessToken
-//                $this->userTokenRefresh();
-//
-//                $userTreesList = $model->getUserTreesList();
-//                $this->userdata['userTreesList'] = $userTreesList["body"]['trees'];
+//                    echo $apiResponseBody;
+//                    break;
 //            }
 //        }
+
+
+
+        if ($this->logged_in) {
+            //Load user trees
+            $model = $this->load_model('user-trees-model');
+            $userTreesList = $model->getUserTreesList($_SESSION['userdata']['id']);
+
+            if ($userTreesList["statusCode"] === 200) {
+                $this->userdata['userTreesList'] = $userTreesList["body"]['trees'];
+            }
+            if ($userTreesList["statusCode"] === 401) {
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $userTreesList = $model->getUserTreesList($_SESSION['userdata']['id']);
+                $this->userdata['userTreesList'] = $userTreesList["body"]['trees'];
+            }
+        }
 
         /** Carrega os arquivos do view **/
 

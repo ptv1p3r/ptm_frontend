@@ -216,8 +216,8 @@
 
                     <div class="toggleBtn">
                         <br>
-                        <input type="checkbox" checked data-toggle="toggle" data-on="Ver minhas árvores"
-                               data-off="Ver todas árvores" data-onstyle="success" data-offstyle="secondary">
+                        <input type="checkbox" data-toggle="toggle"  data-off="Ver minhas árvores"
+                               data-on="Ver todas árvores" data-onstyle="success" data-offstyle="secondary">
 
                     </div>
                     <?php
@@ -987,6 +987,7 @@
         accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
     }).addTo(map);
 
+    let allTrees = L.layerGroup();
 
     ////function to load all trees from API
     function mapLoadTrees() {
@@ -995,15 +996,16 @@
         allMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
             icon: greenIcon,
             user: 'none'
-        }).addTo(map).on("click", markerOnClick);
+        }).addTo(allTrees).on("click", markerOnClick);
         <?php }
         }?>
     }
 
     mapLoadTrees();
 
-
-    <?php if (!$this->logged_in) {?>
+        let userTrees = L.layerGroup();
+        ////function to load user trees from API
+    <?php if ($this->logged_in) {?>
     //Ajax call to user trees
     //function to load user private trees from API
     function mapUserLoadTrees() {
@@ -1012,7 +1014,7 @@
         userMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
             icon: blueIcon,
             user: 'none'
-        }).addTo(map).on("click", markerOnClick);
+        }).addTo(userTrees).on("click", markerOnClick);
         <?php }
         }?>
     }
@@ -1020,6 +1022,42 @@
     mapUserLoadTrees();
     <?php
     }?>
+
+        // const overLays = {
+        //     'allTrees': allTrees,
+        //     'userTrees': userTrees
+        // }
+        //
+        // let layerControl = L.control.layers(null, overLays).addTo(map);
+        map.addLayer(allTrees);
+
+        // let flag = false;
+        // $('.toggleBtn').click(function (event) {
+        //     event.preventDefault(); //prevent default action
+        //     if (flag == false) {
+        //         map.removeLayer(allTrees);
+        //         map.addLayer(userTrees);
+        //         flag = true;
+        //     } else {
+        //         map.removeLayer(userTrees);
+        //         map.addLayer(allTrees);
+        //         flag = false;
+        //     }
+        // });
+
+
+        $('.toggleBtn :checkbox').change(function() {
+            // this will contain a reference to the checkbox
+            if (this.checked) {
+                // the checkbox is now checked
+                map.removeLayer(allTrees);
+                map.addLayer(userTrees);
+            } else {
+                // the checkbox is now no longer checked
+                map.removeLayer(userTrees);
+                map.addLayer(allTrees);
+            }
+        });
 
 
     //Tree popup on marker click
@@ -1046,96 +1084,7 @@
             .openOn(map);
     }
 
-        //TODO a ver os layers
-        //Ajax get user trees
-        let flag = false;
-        $('.toggleBtn').click(function (event) {
-            event.preventDefault(); //prevent default action
-            if (flag == false) {
 
-
-                let formData = {
-                    'action': "getUserTrees",
-                };
-
-                // console.log(formData);
-
-                $.ajax({
-                    url: "<?php echo HOME_URL . '/home/dashboard';?>",
-                    dataType: "json",
-                    type: 'Get',
-                    data: formData,
-                    // beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
-                    //     $('#loader').removeClass('hidden')
-                    // },
-                    success: function (data) {
-                        console.log(data[0]['description']);
-
-
-                    },
-                    error: function (data) {
-                        //mensagem de Error
-                        Swal.fire({
-                            title: 'Error!',
-                            text: "Connection error, please try again.",
-                            icon: 'error',
-                            showConfirmButton: false,
-                            timer: 2000,
-                            didClose: () => {
-                                //location.reload();
-                            }
-                        });
-                    },
-                    // complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
-                    //     $('#loader').addClass('hidden')
-                    // }
-                });
-                flag = true;
-            } else {
-
-                //Ajax get all trees
-                let formData = {
-                    'action': "getTrees",
-                };
-                // console.log(formData);
-
-                $.ajax({
-                    url: "<?php echo HOME_URL . '/home/dashboard';?>",
-                    dataType: "json",
-                    type: 'Get',
-                    data: formData,
-                    // beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
-                    //     $('#loader').removeClass('hidden')
-                    // },
-                    success: function (data) {
-                        if (data.statusCode === 200) {
-
-                            console.log(data[0]['']);
-
-                            //Carrega os dados no mapa
-
-                        }
-                    },
-                    error: function (data) {
-                        //mensagem de Error
-                        Swal.fire({
-                            title: 'Error!',
-                            text: "Connection error, please try again.",
-                            icon: 'error',
-                            showConfirmButton: false,
-                            timer: 2000,
-                            didClose: () => {
-                                //location.reload();
-                            }
-                        });
-                    },
-                    // complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
-                    //     $('#loader').addClass('hidden')
-                    // }
-                });
-                flag = false;
-            }
-        });
     });
 
 </script>
