@@ -248,16 +248,64 @@ class HomeController extends MainController
 
         }
 
-        //$modelo = $this->load_model('home-model');
+        // processa chamadas ajax
+        if (isset($_POST['action']) && !empty($_POST['action'])) {
+            $action = $_POST['action'];
+            switch ($action) {
+                case 'getDonation' :
 
-        /** Carrega os arquivos do view **/
 
-        require ABSPATH . '/views/_includes/user-header.php';
+                    $data = $_POST['data'];
 
-        require ABSPATH . '/views/home/home-view.php';
 
-        require ABSPATH . '/views/_includes/footer.php';
 
+
+
+//                    if ($apiResponse['statusCode'] === 200) { // 200 success
+//                        $apiResponseBody = json_encode($apiResponse["body"]);
+//
+//                    }
+//
+//                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+//                        //faz o refresh do accessToken
+//                        $this->userTokenRefresh();
+//
+//                        $apiResponseBody = array();
+//                        $apiResponseBody = json_encode($apiResponse["body"]);
+//                    }
+//
+//                    echo $apiResponseBody;
+//                    break;
+
+
+            }
+
+        } else {
+
+
+//        $getAdoptTreesModel = $model->getAdoptTreesList();
+//
+//        if ($getAdoptTreesModel['statusCode'] === 200) { // 200 OK, successful
+//            $this->userdata['adoptionList'] = $getAdoptTreesModel['body']['trees'];
+//        }
+//
+//        if ($getAdoptTreesModel['statusCode'] === 401) {  // 200 OK, successful
+//            $this->userTokenRefresh();
+//            $getUserModel = $model->getUserByEmail($_SESSION['userdata']['email']);
+//            $this->userdata['adoptionList'] = $getAdoptTreesModel['body']['trees'];
+//        }
+
+
+            //$modelo = $this->load_model('home-model');
+
+            /** Carrega os arquivos do view **/
+
+            require ABSPATH . '/views/_includes/user-header.php';
+
+            require ABSPATH . '/views/home/home-view.php';
+
+            require ABSPATH . '/views/_includes/footer.php';
+        }
     }
 
 
@@ -551,9 +599,6 @@ class HomeController extends MainController
         //$parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
         $model = $this->load_model('adoption-model');
-        $getAdoptTreesModel = $model->getAdoptTreesList();
-
-        $this->userdata['adotpionList'] = $getAdoptTreesModel['body']['trees'];
 
 
         // obriga o login para aceder à pagina
@@ -579,16 +624,61 @@ class HomeController extends MainController
 
         }
 
-        //$modelo = $this->load_model('home-model');
+//        // processa chamadas ajax
+//        if (isset($_POST['action']) && !empty($_POST['action'])) {
+//            $action = $_POST['action'];
+//            switch ($action) {
+//                case 'getDonation' :
+//                    $data = $_POST['data'];
+//                    $apiResponse = $model->getUserByEmail($data);
+//                    $apiResponseBody = array();
+//
+//
+//                    if ($apiResponse['statusCode'] === 200) { // 200 success
+//                        $apiResponseBody = json_encode($apiResponse["body"]);
+//                    }
+//
+//                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+//                        //faz o refresh do accessToken
+//                        $this->userTokenRefresh();
+//
+//                        $apiResponse = $model->getUserByEmail($data);
+//                        $apiResponseBody = json_encode($apiResponse["body"]);
+//                    }
+//
+//                    echo $apiResponseBody;
+//                    break;
+//
+//
+//            }
+//
+//        } else {
 
-        /** Carrega os arquivos do view **/
 
-        require ABSPATH . '/views/_includes/user-header.php';
+            $getAdoptTreesModel = $model->getAdoptTreesList();
 
-        require ABSPATH . '/views/user/profile/user-adoption-view.php';
+            if ($getAdoptTreesModel['statusCode'] === 200) { // 200 OK, successful
+                $this->userdata['adoptionList'] = $getAdoptTreesModel['body']['trees'];
+            }
 
-        require ABSPATH . '/views/_includes/footer.php';
+            if ($getAdoptTreesModel['statusCode'] === 401) {  // 200 OK, successful
+                $this->userTokenRefresh();
+                $getUserModel = $model->getUserByEmail($_SESSION['userdata']['email']);
+                $this->userdata['adoptionList'] = $getAdoptTreesModel['body']['trees'];
+            }
 
-    }
+
+
+
+            /** Carrega os arquivos do view **/
+
+            require ABSPATH . '/views/_includes/user-header.php';
+
+            require ABSPATH . '/views/user/profile/user-adoption-view.php';
+
+            require ABSPATH . '/views/_includes/footer.php';
+
+        }
+//    }
 }
 
