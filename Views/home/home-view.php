@@ -265,6 +265,8 @@
                     <li class="text-right"><strong>$1750.00</strong> Required</li>
                 </ul>
             </div>
+
+
             <div class="col-md-6">
                 <div class="donation-amount">
                     <h5>Doação</h5>
@@ -274,52 +276,41 @@
                                 <div class="radio custom">
                                     <input name="donation" id="d1" type="radio" class="css-radio">
                                     <label for="d1" class="css-label">€ 2.5</label>
+
                                 </div>
                             </li>
-                            <!--                            <li>-->
-                            <!--                                <div class="radio custom">-->
-                            <!--                                    <input name="donation" id="d2" type="radio" class="css-radio">-->
-                            <!--                                    <label for="d2" class="css-label">€20</label>-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
-                            <!--                            <li>-->
-                            <!--                                <div class="radio custom">-->
-                            <!--                                    <input name="donation" id="d3" type="radio" class="css-radio">-->
-                            <!--                                    <label for="d3" class="css-label">$50</label>-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
-                            <!--                            <li>-->
-                            <!--                                <div class="radio custom">-->
-                            <!--                                    <input name="donation" id="d4" type="radio" class="css-radio">-->
-                            <!--                                    <label for="d4" class="css-label">$100</label>-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
-                            <!--                            <li>-->
-                            <!--                                <div class="radio custom">-->
-                            <!--                                    <input name="donation" id="d5" type="radio" class="css-radio">-->
-                            <!--                                    <label for="d5" class="css-label">$250</label>-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
-                            <!--                            <li>-->
-                            <!--                                <div class="radio custom">-->
-                            <!--                                    <input name="donation" id="d6" type="radio" class="css-radio">-->
-                            <!--                                    <label for="d6" class="css-label">$500</label>-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
-                            <!--                            <li>-->
-                            <!--                                <div class="radio custom">-->
-                            <!--                                    <input name="donation" id="d7" type="radio" class="css-radio">-->
-                            <!--                                    <label for="d7" class="css-label">$1000</label>-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
-                            <!--                            <li>-->
-                            <!--                                <div class="inputs">-->
-                            <!--                                    <input class="enter" type="text" placeholder="$ Other">-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
+
+<!--                            <li>-->
+<!--                                <div class="radio custom">-->
+<!--                                    <input name="donation" id="d2" type="radio" class="css-radio">-->
+<!--                                    <label for="d2" class="css-label">€20</label>-->
+<!--                                </div>-->
+<!--                            </li>-->
+
+                            <?php
+                            //                            $_SESSION["donationVal"] = $("input[type='radio'][name='rate']:checked").val();;
+                            $_SESSION["donationVal"] = '2.5';
+                            ?>
+
+                            <?php if ($this->logged_in) { ?>
+
                             <li class="form-submit">
-                                <button type="submit">Continue to Donate</button>
+                                <button  type="submit" disabled="disabled">
+                                    Faça a sua adoção
+                                </button>
+                            <li><a href="<?php echo HOME_URL . '/home/adoption'; ?>">Home</a></li>
                             </li>
+
+                    <?php }
+                    else { ?>
+
+                        <!--                                Forçar a fazer o registo e login dispara um modal a pedir para registar-->
+                        <li class="form-submit">
+                            <button class="login-reg"><a href="" data-toggle="modal" data-target="#loginModal"
+                                                         type="submit">Faça a sua adoção</button>
+                        </li>
+
+                    <?php } ?>
                         </ul>
                     </form>
                 </div>
@@ -940,5 +931,26 @@
         accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
     }).addTo(map);
 
+
+
+
+    //Donation script
+
+    //Function to lock the button
+    $(function() {
+        $('#checkBtn').click(function() {
+            if ($(this).is(':checked')) {
+                $('#subBtn').removeAttr('disabled');
+            } else {
+
+                $('#subBtn').attr('disabled', 'disabled');
+
+            }
+        });
+    });
+
+    if($("input:radio[name='donation']").is(":checked")) {
+        alert('check')
+    }
 
 </script>
