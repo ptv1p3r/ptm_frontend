@@ -33,7 +33,11 @@ class AdoptionModel extends MainModel
         $result = null;
 
         $url = API_URL . 'api/v1/trees/transaction/list';
-        $result = callAPI("GET", $url, ''/*, $userToken*/);
+
+        if (!empty($_SESSION['userdata']['accessToken'])) {
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
         return json_decode(json_encode($result), true);
     }
 
