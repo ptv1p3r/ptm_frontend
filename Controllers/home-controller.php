@@ -262,7 +262,7 @@ class HomeController extends MainController
 
 
     /**
-     * Logout
+     * Logout user function
      * @return void
      */
 
@@ -273,14 +273,12 @@ class HomeController extends MainController
         $this->logout(true);
     }
 
-
+    /**
+     * Rights page handler
+     * "/views/home/rights-view.php"
+     */
     public function rights()
     {
-        /**
-         * Page load
-         * "/views/home/rights-view.php"
-         */
-
         // Title page
         $this->title = 'User';
 
@@ -296,10 +294,9 @@ class HomeController extends MainController
     }
 
     /**
-     * Carrega a página
+     * User settings page handler
      * "/views/home/user-settings-view.php"
      */
-
     public function userSettings()
     {
 
@@ -537,6 +534,61 @@ class HomeController extends MainController
 
             require ABSPATH . '/views/_includes/footer.php';
         }
+    }
+
+    /**
+     * Adoption tree page handler
+     * "/views/home/user-settings-view.php"
+     */
+    public function adoption()
+    {
+
+        // Título da página
+        $this->title = 'User - Dashboard';
+        $this->permission_required = array('homeLogin');
+
+        // Parametros da função
+        //$parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
+        $model = $this->load_model('adoption-model');
+        $getAdoptTreesModel = $model->getAdoptTreesList();
+
+        $this->userdata['adotpionList'] = $getAdoptTreesModel['body']['trees'];
+
+
+        // obriga o login para aceder à pagina
+        if (!$this->logged_in) {
+
+            // Se não; garante o logout
+            $this->logout();
+
+            // Redireciona para a página de login
+            $this->goto_login();
+
+            // Garante que o script não vai passar daqui
+            return;
+        }
+
+        if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+
+            // Exibe uma mensagem
+            echo 'Você não tem permissões para aceder a esta página.';
+
+            // Finaliza aqui
+            return;
+
+        }
+
+        //$modelo = $this->load_model('home-model');
+
+        /** Carrega os arquivos do view **/
+
+        require ABSPATH . '/views/_includes/user-header.php';
+
+        require ABSPATH . '/views/user/profile/user-adoption-view.php';
+
+        require ABSPATH . '/views/_includes/footer.php';
+
     }
 }
 
