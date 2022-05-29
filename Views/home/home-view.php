@@ -1046,6 +1046,7 @@
             .openOn(map);
     }
 
+        //TODO a ver os layers
         //Ajax get user trees
         let flag = false;
         $('.toggleBtn').click(function (event) {
@@ -1069,13 +1070,7 @@
                     // },
                     success: function (data) {
                         console.log(data[0]['description']);
-                        if (data.statusCode === 200) {
 
-                            geojsonLayer = L.geoJson(response, {
-                                style: yourLeafletStyle
-                            }).addTo(map);
-
-                        }
 
                     },
                     error: function (data) {
@@ -1117,36 +1112,9 @@
 
                             console.log(data[0]['']);
 
-
-
                             //Carrega os dados no mapa
 
-                            //mensagem de Success
-                            //     Swal.fire({
-                            //         title: 'Success!',
-                            //         text: data.body.message,
-                            //         icon: 'success',
-                            //         showConfirmButton: false,
-                            //         timer: 2000,
-                            //         didClose: () => {
-                            //             location.reload();
-                            //         }
-                            //     });
-                            // } else {
-                            //     //mensagem de Error
-                            //     Swal.fire({
-                            //         title: 'Error!',
-                            //         text: data.body.message,
-                            //         icon: 'error',
-                            //         showConfirmButton: false,
-                            //         timer: 2000,
-                            //         didClose: () => {
-                            //             //location.reload();
-                            //         }
-                            //     });
                         }
-
-
                     },
                     error: function (data) {
                         //mensagem de Error
@@ -1169,22 +1137,5 @@
             }
         });
     });
-
-
-    //Switch message toogle
-
-    // const wrapper = document.querySelector('.tWrapper');
-    // const para = document.querySelector('.pMessage')
-    //
-    // wrapper.addEventListener('change', function (e) {
-    //     if (e.target.checked) {
-    //         para.classList.add('morning');
-    //         para.textContent = ' Ver todas as árvores';
-    //     } else {
-    //         para.classList.remove('morning');
-    //         para.textContent = ' Ver as minhas árvores';
-    //     }
-    // })
-
 
 </script>
