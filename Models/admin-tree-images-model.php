@@ -117,6 +117,7 @@ class AdminTreeImagesModel extends MainModel {
         $url = API_URL . 'api/v1/trees/image/upload/' . $TreeId;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
+            //TODO: API nao esta a receber bem o file ou esta alguma coisa mas deste lado
             $result = callAPI("POST", $url, $normalizedData, $userToken);
         }
 
