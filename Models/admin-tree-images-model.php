@@ -82,24 +82,24 @@ class AdminTreeImagesModel extends MainModel {
         $normalizedData['active'] = "0";
 
         // get data from form array and package it to send to api
-        foreach ($data as $dataVector) {
-            foreach ($dataVector as $key => $value) {
-                switch ($dataVector['name']) { //gets <input name="">
+        //foreach ($data as $dataVector) {
+            foreach ($data as $key => $value) {
+                switch ($key) { //gets <input name="">
                     case "addTreeImageTreeId":
-                        $TreeId = $dataVector['value'];
+                        $TreeId = $value;
                         break;
 
                     case "addTreeImageOrder":
-                        $normalizedData['order'] = $dataVector['value'];
+                        $normalizedData['order'] = $value;
                         break;
 
                     case "addTreeImageDescription":
-                        $normalizedData['description'] = $dataVector['value'];
+                        $normalizedData['description'] = $value;
                         break;
 
-                    case "addTreeImageFile":
-                        $normalizedData['file'] = $dataVector['value'];
-                        break;
+                    /*case "addTreeImageFile":
+                        $normalizedData['file'] = $value;
+                        break;*/
 
                     case "addTreeImageActive":
                         $normalizedData['active'] = "1";
@@ -107,7 +107,12 @@ class AdminTreeImagesModel extends MainModel {
                 }
 
             }
+        //}
+
+        foreach ($_FILES as $file){
+            $normalizedData['file'] = $file;
         }
+
 
         $url = API_URL . 'api/v1/trees/image/upload/' . $TreeId;
         if (!empty($_SESSION['userdata']['accessToken'])){
