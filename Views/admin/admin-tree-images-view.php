@@ -82,7 +82,7 @@
         <div id="addTreeImageModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeImageModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="addTreeImage" enctype="multipart/form-data">
+                    <form id="addTreeImage">
                         <div class="modal-header">
                             <h4 class="modal-title">Add Tree Image</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -237,20 +237,35 @@
 
 
                 //CRUD
-                // ajax to Add Group
+                // ajax to Add
                 $('#addTreeImage').submit(function (event) {
                     event.preventDefault(); //prevent default action
 
-                    let formData = {
-                        'action': "AddTreeImage",
-                        'data': $(this).serializeArray()
-                    };
+                    let formData = new FormData();
+                    let file_data = $("[name='addTreeImageFile']").prop('files'); //get all files
+
+                    // append multiple files
+                    for(let i = 0; i < file_data.length; i++) {
+                        formData.append("File" + i, file_data[i]);
+                    }
+
+                    // append form inputs
+                    let other_data = $(this).serializeArray();
+                    $.each(other_data,function(key,input) {
+                        formData.append('data[' + input.name + ']', input.value);
+                    });
+
+                    // append form action
+                    formData.append("action", "AddTreeImage");
+
 
                     $.ajax({
                         url: "<?php echo HOME_URL . '/admin/tree_images';?>",
                         dataType: "json",
                         type: 'POST',
                         data: formData,
+                        contentType: false,
+                        processData: false,
                         beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
                             $('#loader').removeClass('hidden')
                         },
