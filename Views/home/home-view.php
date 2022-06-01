@@ -216,7 +216,7 @@
 
                     <div class="toggleBtn">
                         <br>
-                        <input type="checkbox" data-toggle="toggle"  data-off="Ver minhas árvores"
+                        <input type="checkbox" data-toggle="toggle" data-off="Ver minhas árvores"
                                data-on="Ver todas árvores" data-onstyle="success" data-offstyle="secondary">
 
                     </div>
@@ -938,90 +938,91 @@
 
     $(document).ready(function () {
 
-    // TreesMap
-    let greenIcon = L.icon({
-        iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/mapMarker.png'?>',
-        shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
+        // TreesMap
+        let greenIcon = L.icon({
+            iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/mapMarker.png'?>',
+            shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
 
-        iconSize: [38, 95], // size of the icon
-        shadowSize: [50, 64], // size of the shadow
-        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-        shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
-    });
-
-    let blueIcon = L.icon({
-        iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/blue-mapMarker.png'?>',
-        shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
-
-        iconSize: [38, 95], // size of the icon
-        shadowSize: [50, 64], // size of the shadow
-        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-        shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
-    });
-
-    let map = L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
-
-    // Fly to a specific point in the map (Monchique)
-    $("#monTarget").click(function () {
-        map.flyTo([37.319518557906285, -8.556156285649438], 13, {
-            animate: true,
-            duration: 2 // in seconds
+            iconSize: [38, 95], // size of the icon
+            shadowSize: [50, 64], // size of the shadow
+            iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
-    });
 
-    // Fly to a specific point in the map (Marmelete)
-    $("#marTarget").click(function () {
-        map.flyTo([37.3119, -8.6671], 13, {
-            animate: true,
-            duration: 2 // in seconds
+        let blueIcon = L.icon({
+            iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/blue-mapMarker.png'?>',
+            shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
+
+            iconSize: [38, 95], // size of the icon
+            shadowSize: [50, 64], // size of the shadow
+            iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
-    });
 
-    let satellite = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-        maxZoom: 18,
-        id: 'mapbox/streets-v11',
-        tileSize: 512,
-        zoomOffset: -1,
-        accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
-    }).addTo(map);
+        let map = L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
 
-    let allTrees = L.layerGroup();
+        // Fly to a specific point in the map (Monchique)
+        $("#monTarget").click(function () {
+            map.flyTo([37.319518557906285, -8.556156285649438], 13, {
+                animate: true,
+                duration: 2 // in seconds
+            });
+        });
 
-    ////function to load all trees from API
-    function mapLoadTrees() {
-        <?php if (!empty($this->userdata['allTreesList'])) {
-        foreach ($this->userdata['allTreesList'] as $key => $tree) {?>
-        allMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
-            icon: greenIcon,
-            user: 'none'
-        }).addTo(allTrees).on("click", markerOnClick);
-        <?php }
-        }?>
-    }
+        // Fly to a specific point in the map (Marmelete)
+        $("#marTarget").click(function () {
+            map.flyTo([37.3119, -8.6671], 13, {
+                animate: true,
+                duration: 2 // in seconds
+            });
+        });
 
-    mapLoadTrees();
+        let satellite = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
+        }).addTo(map);
+
+        let allTrees = L.layerGroup();
+
+        ////function to load all trees from API
+        function mapLoadTrees() {
+            <?php if (!empty($this->userdata['allTreesList'])) {
+            foreach ($this->userdata['allTreesList'] as $key => $tree) {?>
+            allMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
+                icon: greenIcon,
+                user: 'none'
+            }).addTo(allTrees).on("click", markerOnClick);
+            <?php }
+            }?>
+        }
+
+        mapLoadTrees();
 
         let userTrees = L.layerGroup();
         ////function to load user trees from API
-    <?php if ($this->logged_in) {?>
-    //Ajax call to user trees
-    //function to load user private trees from API
-    function mapUserLoadTrees() {
-        <?php if (!empty($this->userdata['userTreesList'])) {
-        foreach ($this->userdata['userTreesList'] as $key => $tree) {?>
-        userMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
-            icon: blueIcon,
-            user: 'none'
-        }).addTo(userTrees).on("click", markerOnClick);
-        <?php }
-        }?>
-    }
+        <?php if ($this->logged_in) {?>
+        //Ajax call to user trees
+        //function to load user private trees from API
+        function mapUserLoadTrees() {
+            <?php if (!empty($this->userdata['userTreesList'])) {
+            foreach ($this->userdata['userTreesList'] as $key => $tree) {?>
+            userMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
+                icon: blueIcon,
+                user: '<?php echo $tree["lat"] ?>',
+                id: '<?php echo $tree["lat"] ?>',
+            }).addTo(userTrees).on("click", markerOnClick);
+            <?php }
+            }?>
+        }
 
-    mapUserLoadTrees();
-    <?php
-    }?>
+        mapUserLoadTrees();
+        <?php
+        }?>
 
         // const overLays = {
         //     'allTrees': allTrees,
@@ -1046,7 +1047,7 @@
         // });
 
 
-        $('.toggleBtn :checkbox').change(function() {
+        $('.toggleBtn :checkbox').change(function () {
             // this will contain a reference to the checkbox
             if (this.checked) {
                 // the checkbox is now checked
@@ -1060,31 +1061,129 @@
         });
 
 
-    //Tree popup on marker click
-    var popupMarker = L.popup();
+        //Tree popup on marker click
+        var popupMarker = L.popup({
+            className:'cardPopUp'
+        });
 
-    function markerOnClick(e) {
-        popupMarker
-            .setLatLng(e.latlng)
-            .setContent(
-                `
-                    <div class="card" style="width: 10rem; border: unset">
+
+
+
+        function markerOnClick(e, layer) {
+            popupMarker
+                .setLatLng(e.latlng)
+                .setContent(
+                    `
+                   <div class="card" style="width: 10rem; border: unset">
                       <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'?>" class="card-img-top" alt="">
                       <div class="card-body">
+
                         <h5 class="card-title">Arvore exemplo</h5>
                         <p class="card-text">Algo sobre a arvore.</p>
                         <p class="card-text">Padrinho: ` + this.options.user + `</p>
                         <p class="card-text">Latitude: ` + e.latlng.lat + `</p>
                         <p class="card-text">Longitude: ` + e.latlng.lng + `</p>
-                        <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+
+                        <button class="popBtn btn-success"  value='` + this.options.id + `' id="buttpop">Ver mais</button>
                       </div>
                     </div>
                     `
-            )
-            .openOn(map);
-    }
+                )
+                // .className('cardPopUp');
+                .openOn(map);
 
+        }
+
+        let eventHandlerAssigned = false;
+
+        map.on('popupopen', function(){
+
+            if (!eventHandlerAssigned && document.querySelector('.popBtn')){
+                const link = document.querySelector('.popBtn')
+                link.addEventListener('click', function (e){
+                    popBtn(e.target.value);
+                })
+                eventHandlerAssigned = true
+            }
+
+        })
+
+        map.on('popupclose', function(){
+            document.querySelector('.popBtn').removeEventListener('click', popBtn)
+            eventHandlerAssigned = false
+        })
+
+
+
+        //    // ajax to Delete User
+        function popBtn(value){
+            // event.preventDefault(); //prevent default action
+
+            console.log('battasss');
+
+            let formData = {
+                'action': "userTreeView",
+                'data': value,
+            };
+
+            $.ajax({
+                url: "<?php echo HOME_URL . '/home/dashboard';?>",
+                dataType: "json",
+                type: 'GET',
+                data: formData,
+                success: function (data) {
+                    // $("#deleteUserModal").modal('hide');
+
+                    if (data.statusCode === 200) {
+
+                        window.location.href = "<?php echo HOME_URL . '/home/usertrees';?>";
+
+                        // //mensagem de Success
+                        // Swal.fire({
+                        //     title: 'Success!',
+                        //     text: data.body.message,
+                        //     icon: 'success',
+                        //     showConfirmButton: false,
+                        //     timer: 2000,
+                        //     didClose: () => {
+                        //         location.reload();
+                        //     }
+                        // });
+                    } else {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    }
+
+                },
+                error: function (data) {
+                    //mensagem de Error
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Connection error, please try again.",
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        didClose: () => {
+                            //location.reload();
+                        }
+                    });
+                }
+            });
+        }
 
     });
+
+
+
+
 
 </script>
