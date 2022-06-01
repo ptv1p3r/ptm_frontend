@@ -625,5 +625,130 @@ class HomeController extends MainController
             require ABSPATH . '/views/_includes/footer.php';
         }
     }
+
+    /**
+     * Carrega a página
+     * "/views/user/profile/user-trees-view.php"
+     */
+    public function userTrees()
+    {
+
+        // Título da página
+        $this->title = 'A minha árvore';
+        $this->permission_required = array('homeLogin');
+
+        // Parametros da função
+        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
+        // obriga o login para aceder à pagina
+        if (!$this->logged_in) {
+
+            // Se não; garante o logout
+            $this->logout();
+
+            // Redireciona para a página de login
+            $this->goto_login();
+
+            // Garante que o script não vai passar daqui
+            return;
+        }
+
+        if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+
+            // Exibe uma mensagem
+            echo 'Você não tem permissões para aceder a esta página.';
+
+            // Finaliza aqui
+            return;
+
+        }
+
+//        //Load all trees
+        $model = $this->load_model('user-trees-model');
+
+        $allTreesList = $model->getAllTrees();
+//        $allTreesList = $model->getTreesList();
+        $this->userdata['allTreesList'] = $allTreesList['body']['trees'];
+
+
+//        $data2 = $_SESSION['userdata']['id'];
+//
+        if (isset($_GET['action']) && !empty($_GET['action'])) {
+            $action = $_GET['action'];
+            switch ($action) {
+                case 'userTreeView' :
+                    $data = $_POST['data'];
+                    $apiResponse = $model->getUserTreeId($data);
+                    $apiResponseBody = array();
+
+                    if ($apiResponse['statusCode'] === 200) { // 200 success
+                        $apiResponseBody = json_encode($apiResponse["body"]['trees']);
+
+                    }
+
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $model->getUserTreesList($data);
+//                        $allTreesList = $model->getAllTrees();
+                        $apiResponseBody = json_encode($apiResponse["body"]['trees']);
+                    }
+
+                    echo $apiResponseBody;
+                    break;
+//
+//                case 'getTrees' :
+////                    $data = $_SESSION['userdata']['id'];
+//                    $apiResponse = $model->getTreesList();
+////                    $apiResponse = $model->getAllTrees();
+//                    $apiResponseBody = array();
+//
+//
+//                    if ($apiResponse['statusCode'] === 200) { // 200 success
+//                        $apiResponseBody = json_encode($apiResponse["body"]['trees']);
+//
+//                    }
+//
+//                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+//                        //faz o refresh do accessToken
+//                        $this->userTokenRefresh();
+//
+////                        $allTreesList = $model->getAllTrees();
+//                        $apiResponse = $model->getTreesList();
+//                        $apiResponseBody = json_encode($apiResponse["body"]['trees']);
+//                    }
+//
+//                    echo $apiResponseBody;
+//                    break;
+           }
+//
+        }
+
+            if ($this->logged_in) {
+                //Load user trees
+                $model = $this->load_model('user-trees-model');
+                $userTreesList = $model->getUserTreesList($_SESSION['userdata']['id']);
+
+                if ($userTreesList["statusCode"] === 200) {
+                    $this->userdata['userTreesList'] = $userTreesList["body"]['trees'];
+                }
+                if ($userTreesList["statusCode"] === 401) {
+                    //faz o refresh do accessToken
+                    $this->userTokenRefresh();
+
+                    $userTreesList = $model->getUserTreesList($_SESSION['userdata']['id']);
+                    $this->userdata['userTreesList'] = $userTreesList["body"]['trees'];
+                }
+            }
+
+            /** Carrega os arquivos do view **/
+
+            require ABSPATH . '/views/_includes/user-header.php';
+            require ABSPATH . '/views/user/profile/user-trees-view.php';
+            require ABSPATH . '/views/_includes/footer.php';
+
+
+    }
 }
 
