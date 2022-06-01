@@ -83,4 +83,24 @@ class UserTreesModel extends MainModel
         //trasforma toda a msg em string json para poder ser enviado
         return json_decode(json_encode($result), true);
     }
+
+    /**
+     * Get trees list
+     * Private view
+     * @since 0.1
+     * @access private
+     */
+    public function getUserTreeId($treeId)
+    {
+        $result = null;
+
+        $url = API_URL . '/api/v1/trees/view/' . $treeId;
+
+        if (!empty($_SESSION['userdata']['accessToken'])) {
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
 }
