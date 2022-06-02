@@ -249,63 +249,7 @@ class HomeController extends MainController
         }
 
         // processa chamadas ajax
-        if (isset($_POST['action']) && !empty($_POST['action'])) {
-            $action = $_POST['action'];
-            switch ($action) {
-                case 'getDonation' :
 
-
-                    $data = $_POST['data'];
-
-
-
-
-
-//                    if ($apiResponse['statusCode'] === 200) { // 200 success
-//                        $apiResponseBody = json_encode($apiResponse["body"]);
-//
-//                    }
-//
-//                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
-//                        //faz o refresh do accessToken
-//                        $this->userTokenRefresh();
-//
-//                        $apiResponseBody = array();
-//                        $apiResponseBody = json_encode($apiResponse["body"]);
-//                    }
-//
-//                    echo $apiResponseBody;
-//                    break;
-
-
-            }
-
-        } else {
-
-
-//        $getAdoptTreesModel = $model->getAdoptTreesList();
-//
-//        if ($getAdoptTreesModel['statusCode'] === 200) { // 200 OK, successful
-//            $this->userdata['adoptionList'] = $getAdoptTreesModel['body']['trees'];
-//        }
-//
-//        if ($getAdoptTreesModel['statusCode'] === 401) {  // 200 OK, successful
-//            $this->userTokenRefresh();
-//            $getUserModel = $model->getUserByEmail($_SESSION['userdata']['email']);
-//            $this->userdata['adoptionList'] = $getAdoptTreesModel['body']['trees'];
-//        }
-
-
-            //$modelo = $this->load_model('home-model');
-
-            /** Carrega os arquivos do view **/
-
-            require ABSPATH . '/views/_includes/user-header.php';
-
-            require ABSPATH . '/views/home/home-view.php';
-
-            require ABSPATH . '/views/_includes/footer.php';
-        }
     }
 
 
@@ -624,35 +568,24 @@ class HomeController extends MainController
 
         }
 
-//        // processa chamadas ajax
-//        if (isset($_POST['action']) && !empty($_POST['action'])) {
-//            $action = $_POST['action'];
-//            switch ($action) {
-//                case 'getDonation' :
-//                    $data = $_POST['data'];
-//                    $apiResponse = $model->getUserByEmail($data);
-//                    $apiResponseBody = array();
-//
-//
-//                    if ($apiResponse['statusCode'] === 200) { // 200 success
-//                        $apiResponseBody = json_encode($apiResponse["body"]);
-//                    }
-//
-//                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
-//                        //faz o refresh do accessToken
-//                        $this->userTokenRefresh();
-//
-//                        $apiResponse = $model->getUserByEmail($data);
-//                        $apiResponseBody = json_encode($apiResponse["body"]);
-//                    }
-//
-//                    echo $apiResponseBody;
-//                    break;
-//
-//
-//            }
-//
-//        } else {
+
+
+        $data2 = [];
+
+        // processa chamadas ajax
+        if (isset($_POST['action']) && !empty($_POST['action'])) {
+            $action = $_POST['action'];
+            switch ($action) {
+
+                case 'getDonation' :
+                    $data = $_POST['data'];
+                    arraypush($data2,$data);
+                    break;
+
+
+            }
+
+        } else {
 
 
             $getAdoptTreesModel = $model->getAdoptTreesList();
@@ -667,9 +600,10 @@ class HomeController extends MainController
                 $this->userdata['adoptionList'] = $getAdoptTreesModel['body']['trees'];
             }
 
-
-
-
+/*
+            $apiResponseBody = json_encode($data2['data']);
+            echo $apiResponseBody;
+*/
             /** Carrega os arquivos do view **/
 
             require ABSPATH . '/views/_includes/user-header.php';
@@ -679,6 +613,6 @@ class HomeController extends MainController
             require ABSPATH . '/views/_includes/footer.php';
 
         }
-//    }
+    }
 }
 

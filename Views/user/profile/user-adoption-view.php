@@ -39,8 +39,10 @@
 
                             </select>
                         </li>
+                        <h4 <?php echo $data2['donation']['value'] ?>">
                         <li class="full">
                             <h4>Características</h4>
+
                             <textarea class="textarea-control"
                                       placeholder="Terá um echo em forma de lista com as caracteristicas da árvore"></textarea>
                         </li>

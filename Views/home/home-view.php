@@ -274,8 +274,8 @@
                         <ul class="radio-boxes">
                             <li>
                                 <div class="radio custom">
-                                    <input name="donation" id="d1" type="radio" class="css-radio">
-                                    <label for="d1" class="css-label">€ 200.5</label>
+                                    <input name="donation" id="d1" type="radio" value="2.5" class="css-radio">
+                                    <label for="d1" class="css-label">€ 2.5</label>
                                 </div>
                             </li>
 
@@ -927,7 +927,7 @@
                 'data': $(this).serializeArray()
             };
             $.ajax({
-                url: "<?php echo HOME_URL . '/home/dashboard';?>",
+                url: "<?php echo HOME_URL . '/home/adoption';?>",
                 dataType: "json",
                 type: 'POST',
                 data: formData,
