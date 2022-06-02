@@ -3,6 +3,7 @@
     <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
             <div class="nav">
+                <!-- Core -->
                 <div class="sb-sidenav-menu-heading">Core</div>
                 <!-- dashboard -->
                 <?php if (isset($_SESSION["sidebar"]["active_tab"]["dashboard"]) && $_SESSION["sidebar"]["active_tab"]["dashboard"] === true) { ?>
@@ -136,9 +137,50 @@
                     </a>
                 <?php } ?>
 
+                <!-- transactions -->
+                <div class="sb-sidenav-menu-heading">Transações</div>
+                <!-- transaction -->
+                <?php if (isset($_SESSION["sidebar"]["active_tab"]["transaction"]) && $_SESSION["sidebar"]["active_tab"]["transaction"] === true) { ?>
+                    <a class="nav-link active" href="<?php echo HOME_URL . '/admin/transaction';?>">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-money-bill-transfer"></i></div>
+                        Transações
+                    </a>
+                <?php } else { ?>
+                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/transaction';?>">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-money-bill-transfer"></i></div>
+                        Transações
+                    </a>
+                <?php } ?>
+
+                <!-- transaction_type -->
+                <?php if (isset($_SESSION["sidebar"]["active_tab"]["transaction_type"]) && $_SESSION["sidebar"]["active_tab"]["transaction_type"] === true) { ?>
+                    <a class="nav-link active" href="<?php echo HOME_URL . '/admin/transaction_type';?>">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-file-pen"></i></div>
+                        Tipos de transação
+                    </a>
+                <?php } else { ?>
+                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/transaction_type';?>">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-file-pen"></i></div>
+                        Tipos de transação
+                    </a>
+                <?php } ?>
+
+                <!-- transaction_method -->
+                <?php if (isset($_SESSION["sidebar"]["active_tab"]["transaction_method"]) && $_SESSION["sidebar"]["active_tab"]["transaction_method"] === true) { ?>
+                    <a class="nav-link active" href="<?php echo HOME_URL . '/admin/transaction_method';?>">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-credit-card"></i></div>
+                        Métodos de pagamento
+                    </a>
+                <?php } else { ?>
+                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/transaction_method';?>">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-credit-card"></i></div>
+                        Métodos de pagamento
+                    </a>
+                <?php } ?>
 
                 <!-- Settings -->
                 <div class="sb-sidenav-menu-heading">Definições</div>
+                <!-- Settings -->
                 <?php if (isset($_SESSION["sidebar"]["active_tab"]["settings"]) && $_SESSION["sidebar"]["active_tab"]["settings"] === true) { ?>
                     <a class="nav-link active" href="<?php echo HOME_URL . '/admin/settings';?>">
                         <div class="sb-nav-link-icon"><i class="fas fa-gear"></i></div>
