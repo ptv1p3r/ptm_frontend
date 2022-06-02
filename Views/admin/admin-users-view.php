@@ -3,148 +3,89 @@
 
 <?php if ( $this->login_required && ! $this->logged_in ) return; ?>
 
-<div id="layoutSidenav">
-    <div id="layoutSidenav_nav">
-        <!-- Sidebar -->
-        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-            <div class="sb-sidenav-menu">
-                <div class="nav">
-                    <div class="sb-sidenav-menu-heading">Core</div>
-                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/dashboard';?>">
-                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                        Dashboard
-                    </a>
-                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/groups';?>">
-                        <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                        Grupos
-                    </a>
-                    <a class="nav-link active" href="<?php echo HOME_URL . '/admin/users';?>">
-                        <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-                        Utilizadores
-                    </a>
-                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/security';?>">
-                        <div class="sb-nav-link-icon"><i class="fas fa-lock"></i></div>
-                        Tabela de segurança
-                    </a>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                        <div class="sb-nav-link-icon"><i class="fas fa-tree"></i></div>
-                        Árvores/Utilizadores
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                        <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="<?php echo HOME_URL . '/admin/trees';?>">Dashboard</a>
-                            <a class="nav-link" href="<?php echo HOME_URL . '/admin/trees';?>">Árvores</a>
-                        </nav>
-                    </div>
+<!-- AJAX loader -->
+<div id="loader" class="lds-dual-ring hidden overlay"></div>
 
-                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/settings';?>">
-                        <div class="sb-nav-link-icon"><i class="fas fa-gear"></i></div>
-                        Definições
-                    </a>
-                </div>
-            </div>
-            <div class="sb-sidenav-footer">
-                <div class="small">Logged in as:</div>
-                <?php echo $_SESSION["userdata"]["name"] ?>
-            </div>
-        </nav>
-    </div>
+<div id="layoutSidenav">
+    <!-- import sidebar -->
+    <?php require ABSPATH . '/views/_includes/admin-sidebar.php'?>
 
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-
+                <h1 class="mt-4">Gestão de <b>utilizadores</b></h1>
                 <div class="row">
-                    <div class="col-sm-6">
-                        <h2>Manage <b>User</b></h2>
-                    </div>
-                    <div class="col-sm-6">
-                        <a href="#addUserModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">
-                            <i class="fas fa-plus-circle"></i><span>Add New User</span>
-                        </a>
-                    </div>
-                </div>
 
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-table me-1"></i>
-                        DataTable Example
-                    </div>
-                    <div class="card-body">
-                        <table id="usersTable" class="table table-striped table-hover">
-                            <thead>
-                            <tr>
-                                <th>name</th>
-                                <th>entity</th>
-                                <th>email</th>
-                                <th>groupId</th>
-                                <th>dateBirth</th>
-                                <th>address</th>
-                                <th>codPost</th>
-                                <th>genderId</th>
-                                <th>locality</th>
-                                <th>mobile</th>
-                                <th>nif</th>
-                                <th>countryId</th>
-                                <th>active</th>
-                                <th>activationDate</th>
-                                <th>dateCreated</th>
-                                <th>dateModified</th>
-                                <th>lastLogin</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php if (!empty($this->userdata['usersList'])) {
-                                foreach ($this->userdata['usersList'] as $key => $user) { ?>
+                    <div class="col-xl-12 col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <a href="#addUserModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                                    <i class="fas fa-plus-circle"></i><span>Add New User</span>
+                                </a>
+                                <select id='GetActive'>
+                                    <option value=''>All</option>
+                                    <option value='1'>Active</option>
+                                    <option value='0'>Inactive</option>
+                                </select>
+                            </div>
+                            <div class="card-body">
+                                <table id="usersTable" class="table table-striped table-hover">
+                                    <thead>
                                     <tr>
-                                        <td><?php echo $user["name"] ?></td>
-                                        <td><?php echo $user["entity"] ?></td>
-                                        <td><?php echo $user["email"] ?></td>
-                                        <td><?php echo /*getGroupById(*/$user["groupId"] ?></td>
-                                        <td><?php echo $user["dateBirth"] ?></td>
-                                        <td><?php echo $user["address"] ?></td>
-                                        <td><?php echo $user["codPost"] ?></td>
-                                        <td><?php echo $user["genderId"] ?></td>
-                                        <td><?php echo $user["locality"] ?></td>
-                                        <td><?php echo $user["mobile"] ?></td>
-                                        <td><?php echo $user["nif"] ?></td>
-                                        <td><?php
-                                            if (!empty($this->userdata['countryList'])) {
-                                                foreach ($this->userdata['countryList'] as $key => $country) {
-                                                    if ( $country["id"] == $user["countryId"]){
-                                                        echo $country["name"];
-                                                    }
-                                                }
-                                            }
-                                            ?></td>
-                                        <td><?php echo $user["active"] ?></td>
-                                        <td><?php echo $user["activationDate"] ?></td>
-                                        <td><?php echo $user["dateCreated"] ?></td>
-                                        <td><?php echo $user["dateModified"] ?></td>
-                                        <td><?php echo $user["lastLogin"] ?></td>
-                                        <td>
-                                            <a href="#editUserModal" id="<?php echo $user['email'] ?>" class="edit"
-                                               data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="far fa-edit"></i></a>
-                                            <a href="#deleteUserModal" id="<?php echo $user['id'] ?>" class="delete"
-                                               data-bs-toggle="modal" data-bs-target="#deleteUserModal"><i class="fas fa-trash-alt"></i></a>
-                                        </td>
+                                        <th>id</th>
+                                        <th>name</th>
+                                        <th>entity</th>
+                                        <th>email</th>
+                                        <th>groupId</th>
+                                        <th>countryId</th>
+                                        <th>active</th>
+                                        <th></th>
                                     </tr>
-                                <?php }
-                            } else { ?>
-                                <tr>
-                                </tr>
-                            <?php } ?>
-                            </tbody>
-                        </table>
+                                    </thead>
+                                    <tbody>
+                                    <?php if (!empty($this->userdata['usersList'])) {
+                                        foreach ($this->userdata['usersList'] as $key => $user) { ?>
+                                            <tr>
+                                                <td><?php echo $user["id"] ?></td>
+                                                <td><?php echo $user["name"] ?></td>
+                                                <td><?php echo $user["entity"] ?></td>
+                                                <td><?php echo $user["email"] ?></td>
+                                                <td><?php echo $user["groupId"] ?></td>
+                                                <td><?php
+                                                    if (!empty($this->userdata['countryList'])) {
+                                                        foreach ($this->userdata['countryList'] as $key => $country) {
+                                                            if ( $country["id"] == $user["countryId"]){
+                                                                echo $country["name"];
+                                                            }
+                                                        }
+                                                    } ?>
+                                                </td>
+                                                <td><?php echo $user["active"] ?></td>
+                                                <td>
+                                                    <a href="#editUserModal" id="<?php echo $user['email'] ?>" class="edit"
+                                                       data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="far fa-edit"></i></a>
+                                                    <a href="#deleteUserModal" id="<?php echo $user['id'] ?>" class="delete"
+                                                       data-bs-toggle="modal" data-bs-target="#deleteUserModal"><i class="fas fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>
+                                        <?php }
+                                    } else { ?>
+                                        <tr>
+                                        </tr>
+                                    <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </main>
 
 
         <!-- Add Modal HTML -->
-        <div id="addUserModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeModalLabel" aria-hidden="true">
+        <div id="addUserModal" class="modal fade" tabindex="-1" aria-labelledby="addUserModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="addUser">
@@ -246,7 +187,7 @@
         </div>
 
         <!-- Edit Modal HTML -->
-        <div id="editUserModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeModalLabel" aria-hidden="true">
+        <div id="editUserModal" class="modal fade" tabindex="-1" aria-labelledby="editUserModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="editUser">
@@ -336,9 +277,9 @@
                                     } ?>
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>Active</label>
-                                <input type="checkbox" class="form-control form-check-input" name="editTreeActive">
+                                <input type="checkbox" role="switch" class="form-check-input" name="editUserActive">
                             </div>
 
                         </div>
@@ -352,7 +293,7 @@
         </div>
 
         <!-- Delete Modal HTML -->
-        <div id="deleteUserModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeModalLabel" aria-hidden="true">
+        <div id="deleteUserModal" class="modal fade" tabindex="-1" aria-labelledby="deleteUserModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="deleteUser">
@@ -391,11 +332,25 @@
 <script>
     $(document).ready(function() {
         //DATATABLES
-        /*$('#usersTable').DataTable({
-            rowReorder: true,
-            responsive: true
-            //dom: 'Qfrtip'
-        });*/
+        //Configura a dataTable
+        try{
+            var table = $('#usersTable').DataTable({
+                rowReorder: false,
+                responsive: true,
+                columnDefs: [{
+                    targets: [6,7],
+                    orderable: false,
+                }]
+            });
+            //filtra table se ativo, inativo ou mostra todos
+            $('#GetActive').on('change', function() {
+                let selectedItem = $(this).children("option:selected").val();
+                table.columns(6).search(selectedItem).draw();
+            })
+        } catch (error) {
+            console.log(error)
+        }
+
 
         // ajax to Add User
         $('#addUser').submit(function (event) {
@@ -411,6 +366,9 @@
                 dataType: "json",
                 type: 'POST',
                 data: formData,
+                beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    $('#loader').removeClass('hidden')
+                },
                 success: function (data) {
                     $("#addUserModal").modal('hide');
 
@@ -453,6 +411,9 @@
                             //location.reload();
                         }
                     });
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
                 }
             });
         });
@@ -461,10 +422,11 @@
         $('#editUser').submit(function (event) {
             event.preventDefault(); //prevent default action
 
+            <!--TODO: inst getting option value when country it changed-->
             //Ve se a data dos inputs mudou para formar so a data necessaria para o PATCH
             let formDataChanged = [];
             $('#editUser input').each(function() { //para cada input vai ver
-                if($(this).attr('name') === "editUserId" || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
+                if($(this).attr('name') === "editUserId" || ($(this).attr('name') === "editUserActive" && $(this).is(":checked")) || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
                     let emptyArray = { name: "", value: "" };
 
                     emptyArray.name = $(this).attr('name');
@@ -489,6 +451,9 @@
                 dataType: "json",
                 type: 'POST',
                 data : formData,
+                beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    $('#loader').removeClass('hidden')
+                },
                 success: function (data) {
                     $("#editUserModal").modal('hide');
 
@@ -531,6 +496,9 @@
                             //location.reload();
                         }
                     });
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
                 }
             });
         });
@@ -548,6 +516,9 @@
                 dataType: "json",
                 type: 'POST',
                 data : formData,
+                beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    $('#loader').removeClass('hidden')
+                },
                 success: function (data) {
 
                     $('[name="editUserId"]').val(data[0]['id']);
@@ -591,6 +562,9 @@
                             //location.reload();
                         }
                     });
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
                 }
             });
 
@@ -610,6 +584,9 @@
                 dataType: "json",
                 type: 'POST',
                 data : formData,
+                beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    $('#loader').removeClass('hidden')
+                },
                 success: function (data) {
                     $("#deleteUserModal").modal('hide');
 
@@ -652,6 +629,9 @@
                             //location.reload();
                         }
                     });
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
                 }
             });
         });

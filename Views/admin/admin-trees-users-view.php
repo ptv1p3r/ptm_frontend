@@ -13,7 +13,7 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Gestão de <b>Árvores</b></h1>
+                <h1 class="mt-4">Gestão de <b>Árvores-Utilizadores</b></h1>
                 <div class="row">
 
                     <div class="col-xl-12 col-md-12 mb-4">
@@ -24,21 +24,16 @@
                     <div class="col-xl-12 col-md-12">
                         <div class="card mb-4">
                             <div class="card-header">
-                                <a href="#addTreeModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTreeModal">
-                                    <i class="fas fa-plus-circle"></i><span>Add New Tree</span>
+                                <a href="#addTreeUserModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTreeUserModal">
+                                    <i class="fas fa-plus-circle"></i><span>Add New Tree User</span>
                                 </a>
                             </div>
                             <div class="card-body">
-                                <table id="treesTable" class="table table-striped table-hover">
+                                <table id="treesUsersTable" class="table table-striped table-hover">
                                     <thead>
                                     <tr>
-                                        <th>name</th>
-                                        <th>nameCommon</th>
-                                        <th>description</th>
-                                        <th>observations</th>
-                                        <th>typeId</th>
-                                        <th>lat</th>
-                                        <th>lng</th>
+                                        <th>userId</th>
+                                        <th>treeId</th>
                                         <th>active
                                             <select id='GetActive'>
                                                 <option value=''>All</option>
@@ -50,20 +45,15 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <?php if (!empty($this->userdata['treesList'])) {
-                                        foreach ($this->userdata['treesList'] as $key => $tree) { ?>
+                                    <?php if (!empty($this->userdata['treesUserList'])) {
+                                        foreach ($this->userdata['treesUserList'] as $key => $treeUser) { ?>
                                             <tr>
-                                                <td><?php echo $tree["name"] ?></td>
-                                                <td><?php echo $tree["nameCommon"] ?></td>
-                                                <td><?php echo $tree["description"] ?></td>
-                                                <td><?php echo $tree["observations"] ?></td>
-                                                <td><?php echo $tree["typeId"] ?></td>
-                                                <td><?php echo $tree["lat"] ?></td>
-                                                <td><?php echo $tree["lng"] ?></td>
-                                                <td><?php echo $tree["active"] ?></td>
+                                                <td><?php echo $treeUser["userId"] ?></td>
+                                                <td><?php echo $treeUser["treeId"] ?></td>
+                                                <td><?php echo $treeUser["active"] ?></td>
                                                 <td>
-                                                    <a href="#editTreeModal" id="<?php echo $tree['id'] ?>" class="edit" data-bs-toggle="modal" data-bs-target="#editTreeModal"><i class="far fa-edit"></i></a>
-                                                    <a href="#deleteTreeModal" id="<?php echo $tree['id'] ?>" class="delete" data-bs-toggle="modal" data-bs-target="#deleteTreeModal"><i class="fas fa-trash-alt"></i></a>
+                                                    <a href="#editTreeUserModal" id="" class="edit" data-treeUser-treeId="<?php echo $treeUser['treeId'] ?>" data-treeUser-userId="<?php echo $treeUser['userId'] ?>" data-bs-toggle="modal" data-bs-target="#editTreeUserModal"><i class="far fa-edit"></i></a>
+                                                    <a href="#deleteTreeUserModal" id="" class="delete" data-treeUser-treeId="<?php echo $treeUser['treeId'] ?>" data-treeUser-userId="<?php echo $treeUser['userId'] ?>" data-bs-toggle="modal" data-bs-target="#deleteTreeUserModal"><i class="fas fa-trash-alt"></i></a>
                                                 </td>
                                             </tr>
                                         <?php }
@@ -82,140 +72,101 @@
         </main>
 
 
-    <!-- MODALS -->
-    <!-- Add Modal HTML -->
-    <div id="addTreeModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeModal-Label" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id="addTree">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Add Tree</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" class="form-control" name="addTreeName" required>
+        <!-- MODALS -->
+        <!-- Add Modal HTML -->
+        <div id="addTreeUserModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeUserModal-Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="addTreeUser">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add Tree</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="form-group">
-                            <label>NameCommon</label>
-                            <input type="text" class="form-control" name="addTreeNameCommon" required>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>userId</label>
+                                <input type="text" class="form-control" name="addTreeUserUserId" required>
+                            </div>
+                            <div class="form-group">
+                                <label>treeId</label>
+                                <input type="text" class="form-control" name="addTreeUserTreeId" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Active</label>
+                                <input type="checkbox" class="form-control form-check-input" name="addTreeUserActive">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <input type="text" class="form-control" name="addTreeDescription" required>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-success" value="Add">
                         </div>
-                        <div class="form-group">
-                            <label>Observations</label>
-                            <input type="text" class="form-control" name="addTreeObservations" required>
-                        </div>
-                        <div class="form-group">
-                            <label>TypeId</label>
-                            <input type="text" class="form-control" name="addTreeTypeId" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Latitude</label>
-                            <input type="number" step="any" class="form-control" name="addTreeLat" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Longitude</label>
-                            <input type="number" step="any" class="form-control" name="addTreeLng" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Active</label>
-                            <input type="checkbox" class="form-control form-check-input" name="addTreeActive">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <input type="submit" class="btn btn-success" value="Add">
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Edit Modal HTML -->
-    <div id="editTreeModal" class="modal fade" tabindex="-1" aria-labelledby="editTreeModal-Label" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id="editTree">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Edit Tree</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <input id="editTreeId" name="editTreeId" type="hidden" class="form-control" value="">
+        <!-- Edit Modal HTML -->
+        <div id="editTreeUserModal" class="modal fade" tabindex="-1" aria-labelledby="editTreeUserModal-Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="editTreeUser">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit Tree</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
+                        <div class="modal-body">
+                            <!--<div class="form-group">
+                                <input id="editTreeId" name="editTreeId" type="hidden" class="form-control" value="">
+                            </div>-->
 
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" class="form-control" name="editTreeName" required>
-                        </div>
-                        <div class="form-group">
-                            <label>NameCommon</label>
-                            <input type="text" class="form-control" name="editTreeNameCommon" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <input type="text" class="form-control" name="editTreeDescription" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Observations</label>
-                            <input type="text" class="form-control" name="editTreeObservations" required>
-                        </div>
-                        <div class="form-group">
-                            <label>TypeId</label>
-                            <input type="text" class="form-control" name="editTreeTypeId" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Latitude</label>
-                            <input type="number" step="any" class="form-control" name="editTreeLat" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Longitude</label>
-                            <input type="number" step="any" class="form-control" name="editTreeLng" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Active</label>
-                            <input type="checkbox" class="form-control form-check-input" name="editTreeActive">
-                        </div>
+                            <div class="form-group">
+                                <label>userId</label>
+                                <input type="text" class="form-control" name="editTreeUserUserId" required>
+                            </div>
+                            <div class="form-group">
+                                <label>treeId</label>
+                                <input type="text" class="form-control" name="editTreeUserTreeId" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Active</label>
+                                <input type="checkbox" class="form-control form-check-input" name="editTreeUserActive">
+                            </div>
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <input type="submit" class="btn btn-success" value="Save">
-                    </div>
-                </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-success" value="Save">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Delete Modal HTML -->
-    <div id="deleteTreeModal" class="modal fade" tabindex="-1" aria-labelledby="deleteTreeModal-Label" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id="deleteTree">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Delete Tree</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Are you sure you want to delete this Tree?</p>
-                        <p class="text-warning"><small>This action cannot be undone.</small></p>
-                        <input id="deleteTreeId" name="deleteTreeId" type="hidden" class="form-control" value="">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <input type="submit" class="btn btn-danger" value="Delete">
-                    </div>
-                </form>
+        <!-- Delete Modal HTML -->
+        <div id="deleteTreeUserModal" class="modal fade" tabindex="-1" aria-labelledby="deleteTreeUserModal-Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="deleteTreeUser">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Delete Tree</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete this Tree?</p>
+                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                            <input id="deleteUserId" name="deleteUserId" type="hidden" class="form-control" value="">
+                            <input id="deleteTreeId" name="deleteTreeId" type="hidden" class="form-control" value="">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-danger" value="Delete">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Logout Modal HTML
+        <!-- Logout Modal HTML
     <div id="logoutModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -233,23 +184,25 @@
     $(document).ready(function() {
         //DATATABLES
         //Configura a dataTable
-        try{
-            var table = $('#treesTable').DataTable({
+        try {
+            var table = $('#treesUsersTable').DataTable({
                 rowReorder: false,
                 responsive: true,
                 columnDefs: [ {
-                    targets: [7,8],
+                    targets: [2,3],
                     orderable: false,
                 }]
             });
             //filtra table se ativo, inativo ou mostra todos
             $('#GetActive').on('change', function() {
                 let selectedItem = $(this).children("option:selected").val();
-                table.columns(7).search(selectedItem).draw();
+                table.columns(2).search(selectedItem).draw();
             })
         } catch (error){
-            console.log(error);
+            console.log(error)
         }
+
+
 
 
 
@@ -288,9 +241,9 @@
         //function to load all trees from API
         function mapLoadTrees(){
             <?php if (!empty($this->userdata['treesList'])) {
-                foreach ($this->userdata['treesList'] as $key => $tree) {?>
-                    marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {icon: greenIcon, user: 'none'}).addTo(map).on("click", markerOnClick);
-                <?php }
+            foreach ($this->userdata['treesList'] as $key => $tree) {?>
+                marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {icon: greenIcon, user: 'none'}).addTo(map).on("click", markerOnClick);
+            <?php }
             }?>
         }
         mapLoadTrees();
@@ -333,16 +286,16 @@
 
         //CRUD
         // ajax to Add Group
-        $('#addTree').submit(function (event) {
+        $('#addTreeUser').submit(function (event) {
             event.preventDefault(); //prevent default action
 
             let formData = {
-                'action': "AddTree",
+                'action': "AddTreeUser",
                 'data': $(this).serializeArray()
             };
 
             $.ajax({
-                url: "<?php echo HOME_URL . '/admin/trees';?>",
+                url: "<?php echo HOME_URL . '/admin/trees_users';?>",
                 dataType: "json",
                 type: 'POST',
                 data: formData,
@@ -350,7 +303,7 @@
                     $('#loader').removeClass('hidden')
                 },
                 success: function (data) {
-                    $("#addTreeModal").modal('hide');
+                    $("#addTreeUserModal").modal('hide');
 
                     if (data.statusCode === 201){
                         //mensagem de Success
@@ -399,7 +352,7 @@
         });
 
         // ajax to Edit Group
-        $('#editTree').submit(function (event) {
+        $('#editTreeUser').submit(function (event) {
             event.preventDefault(); //prevent default action
 
             //Ve se a data dos inputs mudou para formar so a data necessaria para o PATCH
@@ -416,17 +369,17 @@
             });
 
             let formData = {
-                'action' : "UpdateTree",
+                'action' : "UpdateTreeUser",
                 'data'   : formDataChanged
             };*/
 
             let formData = {
-                'action': "UpdateTree",
+                'action': "UpdateTreeUser",
                 'data': $(this).serializeArray()
             };
 
             $.ajax({
-                url : "<?php echo HOME_URL . '/admin/trees';?>",
+                url : "<?php echo HOME_URL . '/admin/trees_users';?>",
                 dataType: "json",
                 type: 'POST',
                 data : formData,
@@ -434,7 +387,7 @@
                     $('#loader').removeClass('hidden')
                 },
                 success: function (data) {
-                    $("#editTreeModal").modal('hide');
+                    $("#editTreeUserModal").modal('hide');
 
                     if (data.statusCode === 200){
                         //mensagem de Success
@@ -486,12 +439,12 @@
         $('.edit').on('click', function(){
 
             let formData = {
-                'action' : "GetTree",
+                'action' : "GetTreeUser",
                 'data'   : $(this).attr('id') //gets tree id from id="" attribute on edit button from table
             };
 
             $.ajax({
-                url : "<?php echo HOME_URL . '/admin/trees';?>",
+                url : "<?php echo HOME_URL . '/admin/trees_users';?>",
                 dataType: "json",
                 type: 'POST',
                 data : formData,
@@ -521,7 +474,7 @@
                         $(this).data('lastValue', $(this).val());
                     });*/
 
-                    $("#editTreeModal").modal('show');
+                    $("#editTreeUserModal").modal('show');
                 },
                 error: function (data) {
                     Swal.fire({
@@ -543,16 +496,16 @@
         });
 
         // ajax to Delete Tree
-        $('#deleteTree').submit(function(event){
+        $('#deleteTreeUser').submit(function(event){
             event.preventDefault(); //prevent default action
 
             let formData = {
-                'action' : "DeleteTree",
+                'action' : "DeleteTreeUser",
                 'data'   : $(this).serializeArray()
             };
 
             $.ajax({
-                url : "<?php echo HOME_URL . '/admin/trees';?>",
+                url : "<?php echo HOME_URL . '/admin/trees_users';?>",
                 dataType: "json",
                 type: 'POST',
                 data : formData,
@@ -560,7 +513,7 @@
                     $('#loader').removeClass('hidden')
                 },
                 success: function (data) {
-                    $("#deleteTreeModal").modal('hide');
+                    $("#deleteTreeUserModal").modal('hide');
 
                     if (data.statusCode === 200){
                         //mensagem de Success
@@ -610,9 +563,13 @@
 
         // ajax to get data to Modal Delete Tree
         $('.delete').on('click', function(){
-            let $deleteID = $(this).attr('id');
-            $('[name="deleteTreeId"]').val($deleteID); //gets tree id from id="" attribute on delete button from table
-            $("#deleteTreeModal").modal('show');
+            let deleteUserId = $(this).attr('data-treeUser-userId');
+            let deleteTreeId = $(this).attr('data-treeUser-treeId');
+
+            $('[name="deleteUserId"]').val(deleteUserId);
+            $('[name="deleteTreeId"]').val(deleteTreeId);
+
+            $("#deleteTreeUserModal").modal('show');
 
         });
 
