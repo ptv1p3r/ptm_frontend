@@ -19,17 +19,16 @@
                     <div class="col-xl-12 col-md-12">
                         <div class="card mb-4">
                             <div class="card-header">
-                                <a href="#addGroupModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addGroupModal">
-                                    <i class="fas fa-plus-circle"></i><span>Add New Group</span>
+                                <a href="#addTransactionTypeModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTransactionTypeModal">
+                                    <i class="fas fa-plus-circle"></i><span>Add New TransactionType</span>
                                 </a>
                             </div>
                             <div class="card-body">
-                                <table id="groupsTable" class="table table-striped table-hover">
+                                <table id="transactionTypeTable" class="table table-striped table-hover">
                                     <thead>
                                     <tr>
                                         <th>Name</th>
                                         <th>Description</th>
-                                        <th>SecurityId</th>
                                         <th>active
                                             <select id='GetActive'>
                                                 <option value=''>All</option>
@@ -37,26 +36,21 @@
                                                 <option value='0'>Inactive</option>
                                             </select>
                                         </th>
-                                        <th>dateCreated</th>
-                                        <th>dateModified</th>
                                         <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <?php if (!empty($this->userdata['groupsList'])) {
-                                        foreach ($this->userdata['groupsList'] as $key => $group) { ?>
+                                    <?php if (!empty($this->userdata['transactionTypeList'])) {
+                                        foreach ($this->userdata['transactionTypeList'] as $key => $transactionType) { ?>
                                             <tr>
-                                                <td><?php echo $group["name"] ?></td>
-                                                <td><?php echo $group["description"] ?></td>
-                                                <td><?php echo $group["securityId"] ?></td>
-                                                <td><?php echo $group["active"] ?></td>
-                                                <td><?php echo $group["dateCreated"] ?></td>
-                                                <td><?php echo $group["dateModified"] ?></td>
+                                                <td><?php echo $transactionType["name"] ?></td>
+                                                <td><?php echo $transactionType["description"] ?></td>
+                                                <td><?php echo $transactionType["active"] ?></td>
                                                 <td>
-                                                    <a href="#editGroupModal" id="<?php echo $group['id'] ?>" class="edit"
-                                                       data-bs-toggle="modal" data-bs-target="#editGroupModal"><i class="far fa-edit"></i></a>
-                                                    <a href="#deleteGroupModal" id="<?php echo $group['id'] ?>" class="delete"
-                                                       data-bs-toggle="modal" data-bs-target="#deleteGroupModal"><i class="fas fa-trash-alt"></i></a>
+                                                    <a href="#editTransactionTypeModal" id="<?php echo $transactionType['id'] ?>" class="edit"
+                                                       data-bs-toggle="modal" data-bs-target="#editTransactionTypeModal"><i class="far fa-edit"></i></a>
+                                                    <a href="#deleteTransactionTypeModal" id="<?php echo $transactionType['id'] ?>" class="delete"
+                                                       data-bs-toggle="modal" data-bs-target="#deleteTransactionTypeModal"><i class="fas fa-trash-alt"></i></a>
                                                 </td>
                                             </tr>
                                         <?php }
@@ -78,30 +72,26 @@
 
 
         <!-- Add Modal HTML -->
-        <div id="addGroupModal" class="modal fade" tabindex="-1" aria-labelledby="addGroupModal-Label" aria-hidden="true">
+        <div id="addTransactionTypeModal" class="modal fade" tabindex="-1" aria-labelledby="addTransactionTypeModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="addGroup">
+                    <form id="addTransactionType">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Group</h4>
+                            <h4 class="modal-title">Add TransactionType</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" name="addGroupName" required>
+                                <input type="text" class="form-control" name="addTransactionTypeName" required>
                             </div>
                             <div class="form-group">
                                 <label>Description</label>
-                                <input type="text" class="form-control" name="addGroupDescription" required>
+                                <input type="text" class="form-control" name="addTransactionTypeDescription" required>
                             </div>
-                            <div class="form-group">
-                                <label>SecurityId</label>
-                                <input type="number" class="form-control" name="addGroupSecurityId" required>
-                            </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>Active</label>
-                                <input type="checkbox" class="form-control form-check-input" name="addGroupActive">
+                                <input type="checkbox" role="switch" class="form-check-input" name="addTransactionTypeActive">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -114,34 +104,30 @@
         </div>
 
         <!-- Edit Modal HTML -->
-        <div id="editGroupModal" class="modal fade" tabindex="-1" aria-labelledby="editGroupModal-Label" aria-hidden="true">
+        <div id="editTransactionTypeModal" class="modal fade" tabindex="-1" aria-labelledby="editTransactionTypeModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="editGroup">
+                    <form id="editTransactionType">
                         <div class="modal-header">
-                            <h4 class="modal-title">Edit Group</h4>
+                            <h4 class="modal-title">Edit TransactionType</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <input id="editGroupId" name="editGroupId" type="hidden" class="form-control" value="">
+                                <input id="editTransactionTypeId" name="editTransactionTypeId" type="hidden" class="form-control" value="">
                             </div>
 
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" name="editGroupName" required>
+                                <input type="text" class="form-control" name="editTransactionTypeName" required>
                             </div>
                             <div class="form-group">
                                 <label>Description</label>
-                                <input type="text" class="form-control" name="editGroupDescription" required>
-                            </div>
-                            <div class="form-group">
-                                <label>SecurityId</label>
-                                <input type="number" class="form-control" name="editGroupSecurityId" required>
+                                <input type="text" class="form-control" name="editTransactionTypeDescription" required>
                             </div>
                             <div class="form-group form-check form-switch">
                                 <label>Active</label>
-                                <input type="checkbox" role="switch" class="form-check-input" name="editGroupActive">
+                                <input type="checkbox" role="switch" class="form-check-input" name="editTransactionTypeActive">
                             </div>
 
                         </div>
@@ -155,18 +141,18 @@
         </div>
 
         <!-- Delete Modal HTML -->
-        <div id="deleteGroupModal" class="modal fade" tabindex="-1" aria-labelledby="deleteGroupModal-Label" aria-hidden="true">
+        <div id="deleteTransactionTypeModal" class="modal fade" tabindex="-1" aria-labelledby="deleteTransactionTypeModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="deleteGroup">
+                    <form id="deleteTransactionType">
                         <div class="modal-header">
-                            <h4 class="modal-title">Delete Group</h4>
+                            <h4 class="modal-title">Delete TransactionType</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Are you sure you want to delete this Group?</p>
+                            <p>Are you sure you want to delete this TransactionType?</p>
                             <p class="text-warning"><small>This action cannot be undone.</small></p>
-                            <input id="deleteGroupId" name="deleteGroupId" type="hidden" class="form-control" value="">
+                            <input id="deleteTransactionTypeId" name="deleteTransactionTypeId" type="hidden" class="form-control" value="">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -197,11 +183,11 @@
                 //DATATABLES
                 //Configura a dataTable
                 try{
-                    var table = $('#groupsTable').DataTable({
+                    var table = $('#transactionTypeTable').DataTable({
                         rowReorder: false,
                         responsive: true,
                         columnDefs: [ {
-                            targets: [6,3],
+                            targets: [2,3],
                             orderable: false,
                         }]
                     });
@@ -216,17 +202,17 @@
 
 
 
-                // ajax to Add Group
-                $('#addGroup').submit(function (event) {
+                // ajax to Add TransactionType
+                $('#addTransactionType').submit(function (event) {
                     event.preventDefault(); //prevent default action
 
                     let formData = {
-                        'action': "AddGroup",
+                        'action': "AddTransactionType",
                         'data': $(this).serializeArray()
                     };
 
                     $.ajax({
-                        url: "<?php echo HOME_URL . '/admin/groups';?>",
+                        url: "<?php echo HOME_URL . '/admin/transaction_type';?>",
                         dataType: "json",
                         type: 'POST',
                         data: formData,
@@ -234,7 +220,7 @@
                             $('#loader').removeClass('hidden')
                         },
                         success: function (data) {
-                            $("#addGroupModal").modal('hide');
+                            $("#addTransactionTypeModal").modal('hide');
 
                             if (data.statusCode === 201){
                                 //mensagem de Success
@@ -282,14 +268,14 @@
                     });
                 });
 
-                // ajax to Edit Group
-                $('#editGroup').submit(function (event) {
+                // ajax to Edit TransactionType
+                $('#editTransactionType').submit(function (event) {
                     event.preventDefault(); //prevent default action
 
                     //Ve se a data dos inputs mudou para formar so a data necessaria para o PATCH
                     /*let formDataChanged = [];
-                    $('#editGroup input').each(function() { //para cada input vai ver
-                        if($(this).attr('name') === "editGroupId" || ($(this).attr('name') === "editGroupActive" && $(this).is(":checked")) || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
+                    $('#editTransactionType input').each(function() { //para cada input vai ver
+                        if($(this).attr('name') === "editTransactionTypeId" || ($(this).attr('name') === "editTransactionTypeActive" && $(this).is(":checked")) || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
                             let emptyArray = { name: "", value: "" };
 
                             emptyArray.name = $(this).attr('name');
@@ -300,17 +286,17 @@
                     });
 
                     let formData = {
-                        'action' : "UpdateGroup",
+                        'action' : "UpdateTransactionType",
                         'data'   : formDataChanged
                     };*/
 
                     let formData = {
-                        'action': "UpdateGroup",
+                        'action': "UpdateTransactionType",
                         'data': $(this).serializeArray()
                     };
 
                     $.ajax({
-                        url : "<?php echo HOME_URL . '/admin/groups';?>",
+                        url : "<?php echo HOME_URL . '/admin/transaction_type';?>",
                         dataType: "json",
                         type: 'POST',
                         data : formData,
@@ -318,7 +304,7 @@
                             $('#loader').removeClass('hidden')
                         },
                         success: function (data) {
-                            $("#editGroupModal").modal('hide');
+                            $("#editTransactionTypeModal").modal('hide');
 
                             if (data.statusCode === 200){
                                 //mensagem de Success
@@ -366,16 +352,16 @@
                     });
                 });
 
-                // ajax to get data to Modal Edit Group
+                // ajax to get data to Modal Edit TransactionType
                 $('.edit').on('click', function(){
 
                     let formData = {
-                        'action' : "GetGroup",
-                        'data'   : $(this).attr('id') //gets group id from id="" attribute on edit button from table
+                        'action' : "GetTransactionType",
+                        'data'   : $(this).attr('id') //gets transactiontype id from id="" attribute on edit button from table
                     };
 
                     $.ajax({
-                        url : "<?php echo HOME_URL . '/admin/groups';?>",
+                        url : "<?php echo HOME_URL . '/admin/transaction_type';?>",
                         dataType: "json",
                         type: 'POST',
                         data : formData,
@@ -384,24 +370,23 @@
                         },
                         success: function (data) {
 
-                            $('[name="editGroupId"]').val(data[0]['id']);
-                            $('[name="editGroupName"]').val(data[0]['name']);
-                            $('[name="editGroupDescription"]').val(data[0]['description']);
-                            $('[name="editGroupSecurityId"]').val(data[0]['securityId']);
+                            $('[name="editTransactionTypeId"]').val(data[0]['id']);
+                            $('[name="editTransactionTypeName"]').val(data[0]['name']);
+                            $('[name="editTransactionTypeDescription"]').val(data[0]['description']);
 
                             if (data[0]['active'] === 1) {
-                                $('[name="editGroupActive"]').attr('checked', true);
+                                $('[name="editTransactionTypeActive"]').attr('checked', true);
                             } else {
-                                $('[name="editGroupActive"]').attr('checked', false);
+                                $('[name="editTransactionTypeActive"]').attr('checked', false);
                             }
 
-                            //atribui atributo .data("lastValue") a cada input do form editGroup
+                            //atribui atributo .data("lastValue") a cada input do form editTransactionType
                             // para se poder comparar entre os dados anteriores e os current
-                            /*$('#editGroup input').each(function() {
+                            /*$('#editTransactionType input').each(function() {
                                 $(this).data('lastValue', $(this).val());
                             });*/
 
-                            $("#editGroupModal").modal('show');
+                            $("#editTransactionTypeModal").modal('show');
                         },
                         error: function (data) {
                             Swal.fire({
@@ -422,17 +407,17 @@
 
                 });
 
-                // ajax to Delete Group
-                $('#deleteGroup').submit(function(event){
+                // ajax to Delete TransactionType
+                $('#deleteTransactionType').submit(function(event){
                     event.preventDefault(); //prevent default action
 
                     let formData = {
-                        'action' : "DeleteGroup",
+                        'action' : "DeleteTransactionType",
                         'data'   : $(this).serializeArray()
                     };
 
                     $.ajax({
-                        url : "<?php echo HOME_URL . '/admin/groups';?>",
+                        url : "<?php echo HOME_URL . '/admin/transaction_type';?>",
                         dataType: "json",
                         type: 'POST',
                         data : formData,
@@ -440,7 +425,7 @@
                             $('#loader').removeClass('hidden')
                         },
                         success: function (data) {
-                            $("#deleteGroupModal").modal('hide');
+                            $("#deleteTransactionTypeModal").modal('hide');
 
                             if (data.statusCode === 200){
                                 //mensagem de Success
@@ -488,11 +473,11 @@
                     });
                 });
 
-                // ajax to get data to Modal Delete Group
+                // ajax to get data to Modal Delete TransactionType
                 $('.delete').on('click', function(){
                     let $deleteID = $(this).attr('id');
-                    $('[name="deleteGroupId"]').val($deleteID); //gets group id from id="" attribute on delete button from table
-                    $("#deleteGroupModal").modal('show');
+                    $('[name="deleteTransactionTypeId"]').val($deleteID); //gets transactiontype id from id="" attribute on delete button from table
+                    $("#deleteTransactionTypeModal").modal('show');
 
                 });
 
