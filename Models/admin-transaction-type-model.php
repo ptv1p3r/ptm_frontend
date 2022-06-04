@@ -26,7 +26,7 @@ class AdminTransactionTypeModel extends MainModel {
     public function getTransactionTypeById($id) {
         $result = null;
 
-        $url = API_URL . 'api/v1/transaction/type/view/' . $id;
+        $url = API_URL . 'api/v1/transaction/types/view/' . $id;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
@@ -43,7 +43,7 @@ class AdminTransactionTypeModel extends MainModel {
     {
         $result = null;
 
-        $url = API_URL . 'api/v1/transaction/type/list';
+        $url = API_URL . 'api/v1/transaction/types/list';
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
@@ -89,7 +89,7 @@ class AdminTransactionTypeModel extends MainModel {
             }
         }
 
-        $url = API_URL . 'api/v1/transaction/type/create';
+        $url = API_URL . 'api/v1/transaction/types/create';
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("POST", $url, $normalizedData, $userToken);
@@ -133,15 +133,15 @@ class AdminTransactionTypeModel extends MainModel {
                         break;*/
                 }
 
-                if ($dataVector['name'] == "editTransactionTypeActive" && $dataVector['value'] == "on"){
-                    $normalizedData['active'] = "1";
+                if ($dataVector['name'] == "editTransactionTypeActive"/* && $dataVector['value'] == "on"*/){
+                    $normalizedData['active'] = true;
                 } else {
-                    $normalizedData['active'] = "0";
+                    $normalizedData['active'] = false;
                 }
             }
         }
 
-        $url = API_URL . 'api/v1/transaction/type/edit/' . $TransactionTypeId;
+        $url = API_URL . 'api/v1/transaction/types/edit/' . $TransactionTypeId;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("PUT", $url, $normalizedData, $userToken);
@@ -193,7 +193,7 @@ class AdminTransactionTypeModel extends MainModel {
             }
         }
 
-        $url = API_URL . 'api/v1/transaction/type/edit/' . $TransactionTypeId;
+        $url = API_URL . 'api/v1/transaction/types/edit/' . $TransactionTypeId;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("PATCH", $url, $normalizedData, $userToken);
@@ -222,7 +222,7 @@ class AdminTransactionTypeModel extends MainModel {
             }
         }
 
-        $url = API_URL . 'api/v1/transaction/type/delete/' . $TransactionTypeId;
+        $url = API_URL . 'api/v1/transaction/types/delete/' . $TransactionTypeId;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("DELETE", $url, '', $userToken);
