@@ -17,7 +17,7 @@ class AdminTransactionTypeModel extends MainModel {
     }
 
 
-    /** CRUD TransactionTypeS **/
+    /** CRUD TransactionType **/
     /**
      * Metodo que retorna TransactionType pelo id
      * @param $id
@@ -82,9 +82,9 @@ class AdminTransactionTypeModel extends MainModel {
                 }
 
                 if ($dataVector['name'] == "addTransactionTypeActive" && $dataVector['value'] == "on"){
-                    $normalizedData['active'] = "1";
+                    $normalizedData['active'] = true;
                 } else {
-                    $normalizedData['active'] = "0";
+                    $normalizedData['active'] = false;
                 }
             }
         }
