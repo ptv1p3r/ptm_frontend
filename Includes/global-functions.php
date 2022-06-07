@@ -83,6 +83,14 @@ function callAPI($method, $url, $data, $token = "")
 {
     $curl = curl_init();
 
+    if(isset($data["file"]) && !empty($data["file"])){
+        $header = "multipart/form-data";
+        //$header = "application/json";
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data["file"]);
+    } else {
+        $header = "application/json";
+    }
+
     switch ($method) {
         case "POST":
             curl_setopt($curl, CURLOPT_POST, 1);
@@ -117,8 +125,7 @@ function callAPI($method, $url, $data, $token = "")
     curl_setopt($curl, CURLOPT_URL, $url);
     curl_setopt($curl, CURLOPT_HTTPHEADER, array(
         'Authorization: ' . $token,
-        'Content-Type: application/json'
-        //"Content-Type: application/form-data"
+        'Content-Type: ' . $header
     ));
     curl_setopt($curl, CURLOPT_HEADER, true);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);

@@ -79,7 +79,7 @@ class AdminTreeImagesModel extends MainModel {
         $normalizedData = array();
 
         // Not active by default
-        $normalizedData['active'] = "0";
+        $normalizedData['active'] = "false";
 
         // get data from form array and package it to send to api
         //foreach ($data as $dataVector) {
@@ -102,7 +102,7 @@ class AdminTreeImagesModel extends MainModel {
                         break;*/
 
                     case "addTreeImageActive":
-                        $normalizedData['active'] = "1";
+                        $normalizedData['active'] = "true";
                         break;
                 }
 
@@ -110,9 +110,8 @@ class AdminTreeImagesModel extends MainModel {
         //}
 
         foreach ($_FILES as $file){
-            $normalizedData['file'] = $file;
+            $normalizedData['file'] = $file;//new CURLFile($file["tmp_name"], $file["type"], $file["name"]);
         }
-
 
         $url = API_URL . 'api/v1/trees/image/upload/' . $TreeId;
         if (!empty($_SESSION['userdata']['accessToken'])){

@@ -82,26 +82,12 @@
         <div id="addTreeImageModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeImageModal-Label" aria-hidden="true">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
-                    <form id="addTreeImage">
+                    <form id="addTreeImage" enctype="multipart/form-data" method="post">
                         <div class="modal-header">
                             <h4 class="modal-title">Add Tree Image</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <section class="container">
-
-
-                                <button id="btnAdd" type="button" class="btn btn-primary" data-toggle="tooltip" data-original-title="Add more controls"><i class="fa fa-plus"></i>&nbsp; Add&nbsp;</button>
-                                <div id="TextBoxContainer">
-
-                                </div>
-                            </section>
-
-
-
-
-
-
 
                             <div class="form-group">
                                 <label>treeId</label>
@@ -117,80 +103,19 @@
                             </div>
                             <div class="form-group">
                                 <label>Image</label>
-                                <input id="addTreeImageFile" type="file" class="form-control" name="addTreeImageFile">
+                                <input id="file" type="file" class="form-control" name="file">
                                 <img id='img-upload' class="img-thumbnail"/>
                             </div>
                             <div class="form-group">
                                 <label>Active</label>
                                 <input type="checkbox" class="form-control form-check-input" name="addTreeImageActive">
                             </div>
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             <input type="submit" class="btn btn-success" value="Add">
                         </div>
-
-                        <script>
-                            $(document).ready( function() {
-                                $(function () {
-                                    $("#btnAdd").bind("click", function () {
-                                        var div = $("<div />");
-                                        div.html(GetDynamicTextBox(""));
-                                        $("#TextBoxContainer").append(div);
-                                    });
-                                    $("body").on("click", ".remove", function () {
-                                        $(this).closest("div").remove();
-                                    });
-                                });
-                                function GetDynamicTextBox(value) {
-                                    var number = Math.random();
-                                    var template = `
-                                                    <td id="`+ number + ` ">
-                                                        <input name="DynamicTextBox" type="text" value="`+ value+` " class="form-control"/>
-                                                    </td>
-                                                    <td>
-                                                        <input name="order" type="text" value="`+ value+` " class="form-control"/>
-                                                    </td>
-                                                    <td>
-                                                        <input name="DynamicTextBox" type="text" value="`+ value+` " class="form-control"/>
-                                                    </td>
-                                                    <td>
-                                                        <input id="addTreeImageFile" type="file" class="form-control" name="addTreeImageFile">
-                                                    </td>
-                                                    <td>
-                                                        <input name="DynamicTextBox" type="checkbox" value="` + value  + `"/>
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-danger remove"><i class="fa fa-trash"></i></button>
-                                                    </td>`
-
-                                    return template;
-                                }
-
-
-                                //image preview
-                                $(document).on('change', '#addTreeImageFile :file', function() {
-                                    var input = $(this),
-                                        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                                    input.trigger('fileselect', [label]);
-                                });
-                                function readURL(input) {
-                                    if (input.files && input.files[0]) {
-                                        var reader = new FileReader();
-
-                                        reader.onload = function (e) {
-                                            $('#img-upload').attr('src', e.target.result);
-                                        }
-
-                                        reader.readAsDataURL(input.files[0]);
-                                    }
-                                }
-
-                                $("#addTreeImageFile").change(function(){
-                                    readURL(this);
-                                });
-                            });
-                        </script>
                     </form>
                 </div>
             </div>
@@ -320,11 +245,11 @@
                     event.preventDefault(); //prevent default action
 
                     let formData = new FormData();
-                    let file_data = $("[name='addTreeImageFile']").prop('files'); //get all files
+                    let file_data = $("#file").prop('files'); //get all files
 
                     // append multiple files
                     for(let i = 0; i < file_data.length; i++) {
-                        formData.append("File" + i, file_data[i]);
+                        formData.append(/*"File" + */i, file_data[i]);
                     }
 
                     // append form inputs
@@ -339,7 +264,7 @@
 
                     $.ajax({
                         url: "<?php echo HOME_URL . '/admin/tree_images';?>",
-                        dataType: "json",
+                        //dataType: "json",
                         type: 'POST',
                         data: formData,
                         contentType: false,
