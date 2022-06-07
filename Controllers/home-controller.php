@@ -663,26 +663,18 @@ class HomeController extends MainController
 
         }
 
-//        //Load all trees
         $model = $this->load_model('user-trees-model');
 
-        $allTreesList = $model->getAllTrees();
-//        $allTreesList = $model->getTreesList();
-        $this->userdata['allTreesList'] = $allTreesList['body']['trees'];
-
-
-//        $data2 = $_SESSION['userdata']['id'];
-//
-        if (isset($_GET['action']) && !empty($_GET['action'])) {
-            $action = $_GET['action'];
+        if (isset($_POST['action']) && !empty($_POST['action'])) {
+            $action = $_POST['action'];
             switch ($action) {
                 case 'userTreeView' :
                     $data = $_POST['data'];
                     $apiResponse = $model->getUserTreeId($data);
-                    $apiResponseBody = array();
+//                    $apiResponseBody = array();
 
                     if ($apiResponse['statusCode'] === 200) { // 200 success
-                        $apiResponseBody = json_encode($apiResponse["body"]['trees']);
+                        $apiResponse['body']['message'] = 'success';
 
                     }
 
@@ -690,12 +682,16 @@ class HomeController extends MainController
                         //faz o refresh do accessToken
                         $this->userTokenRefresh();
 
-                        $apiResponse = $model->getUserTreesList($data);
-//                        $allTreesList = $model->getAllTrees();
-                        $apiResponseBody = json_encode($apiResponse["body"]['trees']);
+                        $apiResponse = $model->getUserTreeId($data);
+                        $apiResponse['body']['message'] = 'success';
                     }
 
-                    echo $apiResponseBody;
+                    // Atualiza userdata
+                    $_SESSION['userdata']['userTreeToShow'] = $apiResponse["body"][0];
+                    unset($apiResponse['body']);
+                    $apiResponse = json_encode($apiResponse);
+                    echo $apiResponse;
+//                    var_dump($apiResponse);
                     break;
 //
 //                case 'getTrees' :
@@ -723,10 +719,15 @@ class HomeController extends MainController
 //                    break;
            }
 //
-        }
+        }else{
 
             if ($this->logged_in) {
+
                 //Load user trees
+                $allTreesList = $model->getTreesList();
+                $this->userdata['allTreesList'] = $allTreesList['body']['trees'];
+
+
                 $model = $this->load_model('user-trees-model');
                 $userTreesList = $model->getUserTreesList($_SESSION['userdata']['id']);
 
@@ -737,18 +738,19 @@ class HomeController extends MainController
                     //faz o refresh do accessToken
                     $this->userTokenRefresh();
 
+                    $allTreesList = $model->getTreesList();
+                    $this->userdata['allTreesList'] = $allTreesList['body']['trees'];
+
                     $userTreesList = $model->getUserTreesList($_SESSION['userdata']['id']);
                     $this->userdata['userTreesList'] = $userTreesList["body"]['trees'];
                 }
             }
-
             /** Carrega os arquivos do view **/
 
             require ABSPATH . '/views/_includes/user-header.php';
             require ABSPATH . '/views/user/profile/user-trees-view.php';
             require ABSPATH . '/views/_includes/footer.php';
-
-
+        }
     }
 }
 
