@@ -996,7 +996,7 @@
             allMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
                 icon: greenIcon,
                 user: 'none'
-            }).addTo(allTrees).on("click", markerOnClick);
+            }).addTo(allTrees);
             <?php }
             }?>
         }
@@ -1013,8 +1013,8 @@
             foreach ($this->userdata['userTreesList'] as $key => $tree) {?>
             userMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
                 icon: blueIcon,
-                user: '<?php echo $tree["lat"] ?>',
-                id: '<?php echo $tree["lat"] ?>',
+                user: '<?php echo $tree["treeName"] ?>',
+                id: '<?php echo $tree["treeId"] ?>',
             }).addTo(userTrees).on("click", markerOnClick);
             <?php }
             }?>
@@ -1024,28 +1024,7 @@
         <?php
         }?>
 
-        // const overLays = {
-        //     'allTrees': allTrees,
-        //     'userTrees': userTrees
-        // }
-        //
-        // let layerControl = L.control.layers(null, overLays).addTo(map);
         map.addLayer(allTrees);
-
-        // let flag = false;
-        // $('.toggleBtn').click(function (event) {
-        //     event.preventDefault(); //prevent default action
-        //     if (flag == false) {
-        //         map.removeLayer(allTrees);
-        //         map.addLayer(userTrees);
-        //         flag = true;
-        //     } else {
-        //         map.removeLayer(userTrees);
-        //         map.addLayer(allTrees);
-        //         flag = false;
-        //     }
-        // });
-
 
         $('.toggleBtn :checkbox').change(function () {
             // this will contain a reference to the checkbox
@@ -1063,11 +1042,8 @@
 
         //Tree popup on marker click
         var popupMarker = L.popup({
-            className:'cardPopUp'
+            className: 'cardPopUp'
         });
-
-
-
 
         function markerOnClick(e, layer) {
             popupMarker
@@ -1077,78 +1053,61 @@
                    <div class="card" style="width: 10rem; border: unset">
                       <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'?>" class="card-img-top" alt="">
                       <div class="card-body">
-
-                        <h5 class="card-title">Arvore exemplo</h5>
-                        <p class="card-text">Algo sobre a arvore.</p>
-                        <p class="card-text">Padrinho: ` + this.options.user + `</p>
-                        <p class="card-text">Latitude: ` + e.latlng.lat + `</p>
-                        <p class="card-text">Longitude: ` + e.latlng.lng + `</p>
-
-                        <button class="popBtn btn-success"  value='` + this.options.id + `' id="buttpop">Ver mais</button>
+                        <p class="card-text">Nome: ` + this.options.user + `</p>
+                        <p class="card-text">Lat: ` + e.latlng.lat + `</p>
+                        <p class="card-text">Long: ` + e.latlng.lng + `</p>
+                        <button class="popBtn btn-success"  name="treeId" value='` + this.options.id + `' id="buttpop">Ver mais</button>
                       </div>
                     </div>
                     `
                 )
                 // .className('cardPopUp');
                 .openOn(map);
-
         }
 
+        //function to handler the button popup view
         let eventHandlerAssigned = false;
-
-        map.on('popupopen', function(){
-
-            if (!eventHandlerAssigned && document.querySelector('.popBtn')){
+        map.on('popupopen', function () {
+            if (!eventHandlerAssigned && document.querySelector('.popBtn')) {
                 const link = document.querySelector('.popBtn')
-                link.addEventListener('click', function (e){
+                link.addEventListener('click', function (e) {
                     popBtn(e.target.value);
                 })
                 eventHandlerAssigned = true
             }
-
         })
-
-        map.on('popupclose', function(){
+        map.on('popupclose', function () {
             document.querySelector('.popBtn').removeEventListener('click', popBtn)
             eventHandlerAssigned = false
         })
 
 
-
-        //    // ajax to Delete User
-        function popBtn(value){
+        // ajax to call user tree id
+        function popBtn(value) {
             // event.preventDefault(); //prevent default action
-
-            console.log('battasss');
 
             let formData = {
                 'action': "userTreeView",
                 'data': value,
             };
+            console.log(formData);
 
             $.ajax({
-                url: "<?php echo HOME_URL . '/home/dashboard';?>",
+                url: "<?php echo HOME_URL . '/home/userTrees';?>",
                 dataType: "json",
-                type: 'GET',
+                type: 'POST',
                 data: formData,
                 success: function (data) {
                     // $("#deleteUserModal").modal('hide');
 
                     if (data.statusCode === 200) {
 
-                        window.location.href = "<?php echo HOME_URL . '/home/usertrees';?>";
 
-                        // //mensagem de Success
-                        // Swal.fire({
-                        //     title: 'Success!',
-                        //     text: data.body.message,
-                        //     icon: 'success',
-                        //     showConfirmButton: false,
-                        //     timer: 2000,
-                        //     didClose: () => {
-                        //         location.reload();
-                        //     }
-                        // });
+                        //Falta ver esta parte para mostrar os dados
+                        window.location.href = "<?php echo HOME_URL . '/home/userTrees';?>";
+
+
+
                     } else {
                         //mensagem de Error
                         Swal.fire({
@@ -1181,9 +1140,5 @@
         }
 
     });
-
-
-
-
 
 </script>
