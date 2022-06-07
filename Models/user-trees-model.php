@@ -94,7 +94,7 @@ class UserTreesModel extends MainModel
     {
         $result = null;
 
-        $url = API_URL . '/api/v1/trees/view/' . $treeId;
+        $url = API_URL . 'api/v1/trees/view/' . $treeId;
 
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
