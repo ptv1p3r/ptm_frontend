@@ -255,71 +255,14 @@ class HomeController extends MainController
 
         }
 
-//        //Load all trees
+        //Load model trees
         $model = $this->load_model('user-trees-model');
 
+        //Load all tree in main home view
         $allTreesList = $model->getAllTrees();
-//        $allTreesList = $model->getTreesList();
         $this->userdata['allTreesList'] = $allTreesList['body']['trees'];
 
-
-//        $data2 = $_SESSION['userdata']['id'];
-//
-//        if (isset($_GET['action']) && !empty($_GET['action'])) {
-//            $action = $_GET['action'];
-//            switch ($action) {
-//                case 'getUserTrees' :
-//                    $data = $data2;
-////                    $apiResponse = $model->getAllTrees();
-//                    $apiResponse = $model->getUserTreesList($data);
-//                    $apiResponseBody = array();
-//
-//
-//                    if ($apiResponse['statusCode'] === 200) { // 200 success
-//                        $apiResponseBody = json_encode($apiResponse["body"]['trees']);
-//
-//                    }
-//
-//                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
-//                        //faz o refresh do accessToken
-//                        $this->userTokenRefresh();
-//
-//                        $apiResponse = $model->getUserTreesList($data);
-////                        $allTreesList = $model->getAllTrees();
-//                        $apiResponseBody = json_encode($apiResponse["body"]['trees']);
-//                    }
-//
-//                    echo $apiResponseBody;
-//                    break;
-//
-//                case 'getTrees' :
-////                    $data = $_SESSION['userdata']['id'];
-//                    $apiResponse = $model->getTreesList();
-////                    $apiResponse = $model->getAllTrees();
-//                    $apiResponseBody = array();
-//
-//
-//                    if ($apiResponse['statusCode'] === 200) { // 200 success
-//                        $apiResponseBody = json_encode($apiResponse["body"]['trees']);
-//
-//                    }
-//
-//                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
-//                        //faz o refresh do accessToken
-//                        $this->userTokenRefresh();
-//
-////                        $allTreesList = $model->getAllTrees();
-//                        $apiResponse = $model->getTreesList();
-//                        $apiResponseBody = json_encode($apiResponse["body"]['trees']);
-//                    }
-//
-//                    echo $apiResponseBody;
-//                    break;
-//            }
-//        }
-
-
-
+        //Load all tree in  home login view
         if ($this->logged_in) {
             //Load user trees
             $model = $this->load_model('user-trees-model');
@@ -342,8 +285,6 @@ class HomeController extends MainController
         require ABSPATH . '/views/_includes/user-header.php';
         require ABSPATH . '/views/home/home-view.php';
         require ABSPATH . '/views/_includes/footer.php';
-
-
     }
 
 
@@ -686,12 +627,11 @@ class HomeController extends MainController
                         $apiResponse['body']['message'] = 'success';
                     }
 
-                    // Atualiza userdata
+                    // Update userdata to get trees info
                     $_SESSION['userdata']['userTreeToShow'] = $apiResponse["body"][0];
                     unset($apiResponse['body']);
                     $apiResponse = json_encode($apiResponse);
                     echo $apiResponse;
-//                    var_dump($apiResponse);
                     break;
 //
 //                case 'getTrees' :
@@ -717,30 +657,38 @@ class HomeController extends MainController
 //
 //                    echo $apiResponseBody;
 //                    break;
-           }
+            }
 //
-        }else{
+        } else {
 
             if ($this->logged_in) {
 
-                //Load user trees
-                $allTreesList = $model->getTreesList();
-                $this->userdata['allTreesList'] = $allTreesList['body']['trees'];
 
+/*
+                //Load model intervation tree
+                $interventionList = $model->getInterventionsTreeList($_SESSION['userTreeToShow']['treeId']);
+                $this->userdata['interventionList'] = $interventionList['body']['interventions'];
 
-                $model = $this->load_model('user-trees-model');
+                //Load model all images tree list
+                $interventionList = $model->getTreeImagesList($_SESSION['userTreeToShow']['treeId']);
+                $this->userdata['interventionList'] = $interventionList['body']['interventions'];
+
+*/
+
+//                $model = $this->load_model('user-trees-model');
+                //Load model user trees
                 $userTreesList = $model->getUserTreesList($_SESSION['userdata']['id']);
 
                 if ($userTreesList["statusCode"] === 200) {
                     $this->userdata['userTreesList'] = $userTreesList["body"]['trees'];
                 }
                 if ($userTreesList["statusCode"] === 401) {
-                    //faz o refresh do accessToken
+                    //Refresh do accessToken
                     $this->userTokenRefresh();
-
+                    //Load model all trees
                     $allTreesList = $model->getTreesList();
                     $this->userdata['allTreesList'] = $allTreesList['body']['trees'];
-
+                    //Load model user trees
                     $userTreesList = $model->getUserTreesList($_SESSION['userdata']['id']);
                     $this->userdata['userTreesList'] = $userTreesList["body"]['trees'];
                 }
