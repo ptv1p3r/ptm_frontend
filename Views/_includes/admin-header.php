@@ -69,6 +69,29 @@
         <!-- Navbar-->
         <ul class="navbar-nav ms-auto me-3 me-lg-4">
             <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-envelope fa-fw"></i>
+                    <!-- Counter - Messages -->
+                    <span class="badge badge-danger badge-counter">1</span>
+                </a>
+                <!-- Dropdown - Messages -->
+                <div class="dropdown-menu dropdown-menu-end" style="width: 20rem !important;">
+                    <h6 class="dropdown-header">Message Center</h6>
+                    <a class="dropdown-item d-flex align-items-center" href="#">
+                        <div class="dropdown-list-image mr-3">
+                            <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="...">
+                            <div class="status-indicator bg-success"></div>
+                        </div>
+                        <div>
+                            <div class="text-truncate">Am I a good boy? The reason I ask is because someone
+                                told me that people say this to all dogs, even if they aren't good...</div>
+                            <div class="small text-gray-500">Chicken the Dog · 2w</div>
+                        </div>
+                    </a>
+                    <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="<?php echo HOME_URL . '/admin/settings';?>">Settings</a></li>
