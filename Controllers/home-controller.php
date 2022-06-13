@@ -248,7 +248,18 @@ class HomeController extends MainController
 
         }
 
-        // processa chamadas ajax
+
+
+        /** Carrega os arquivos do view **/
+
+        require ABSPATH . '/views/_includes/user-header.php';
+
+        require ABSPATH . '/views/home/home-view.php';
+
+        require ABSPATH . '/views/_includes/footer.php';
+
+
+
 
     }
 
@@ -570,8 +581,6 @@ class HomeController extends MainController
 
 
 
-        $data2 = [];
-
         // processa chamadas ajax
         if (isset($_POST['action']) && !empty($_POST['action'])) {
             $action = $_POST['action'];
@@ -579,8 +588,19 @@ class HomeController extends MainController
 
                 case 'getDonation' :
                     $data = $_POST['data'];
-                    arraypush($data2,$data);
+//                    echo $data;
+
+
+      /*              // Update userdata to donation trees;*/
+                    $_SESSION['userdata']['treeDonation'] = $data;
+                    $donation =  $_SESSION['userdata']['treeDonation'];
+                   // unset($apiResponse['body'])
+                    $apiResponse = json_encode($donation);
+                    echo $apiResponse;
                     break;
+
+
+
 
 
             }
@@ -596,7 +616,7 @@ class HomeController extends MainController
 
             if ($getAdoptTreesModel['statusCode'] === 401) {  // 200 OK, successful
                 $this->userTokenRefresh();
-                $getUserModel = $model->getUserByEmail($_SESSION['userdata']['email']);
+                $getAdoptTreesModel = $model->getAdoptTreesList();
                 $this->userdata['adoptionList'] = $getAdoptTreesModel['body']['trees'];
             }
 
