@@ -931,55 +931,22 @@
                 dataType: "json",
                 type: 'POST',
                 data: formData,
-                // beforeSend: function () { // Load the spinner.
-                //     $('#loader').removeClass('hidden')
-                // },
                 success: function (data) {
                     window.location.href = "<?php echo HOME_URL . '/home/adoption';?>";
-
-
-                    // if (data.statusCode === 201) {
-
-                        //mensagem de Success
-                        //Swal.fire({
-                        //    title: 'Success!',
-                        //    text: data.body.message,
-                        //    icon: 'success',
-                        //    showConfirmButton: false,
-                        //    timer: 2000,
-                        //    didClose: () => {
-                        //        window.location.href = "<?php //echo HOME_URL . '/home/adoption';?>//";
-                        //    }
-                        //});
-                    // } else {
-                    //     //mensagem de Error
-                    //     Swal.fire({
-                    //         title: 'Error!',
-                    //         text: data.body.message,
-                    //         icon: 'error',
-                    //         showConfirmButton: false,
-                    //         timer: 2000,
-                    //         didClose: () => {
-                    //             //location.reload();
-                    //         }
-                    //     });
-                    }
-                    // }, complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
-                    //     $('#loader').addClass('hidden')
-                // },
-                // error: function (data) {
-                //     //mensagem de Error
-                //     Swal.fire({
-                //         title: 'Error!',
-                //         text: "Connection error, please try again.",
-                //         icon: 'error',
-                //         showConfirmButton: false,
-                //         timer: 2000,
-                //         didClose: () => {
-                //             //location.reload();
-                //         }
-                //     });
-                // },
+                 },
+                error: function (data) {
+                    //mensagem de Error
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Connection error, please try again.",
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        didClose: () => {
+                            //location.reload();
+                        }
+                    });
+                },
             });
         });
 
