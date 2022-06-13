@@ -2508,17 +2508,17 @@ class AdminController extends MainController
         // processa chamadas ajax
         if(isset($_POST['action']) && !empty($_POST['action'])) {
             $action = $_POST['action'];
-            /*switch($action) {
-                case 'GetGroup' :
+            switch($action) {
+                case 'GetMessage' :
                     $data = $_POST['data'];
-                    $apiResponse = $modelo->getGroupById($data);
+                    $apiResponse = $modelo->getMessageById($data);
                     $apiResponseBody = array();
 
                     if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
                         //faz o refresh do accessToken
                         $this->userTokenRefresh();
 
-                        $apiResponse = $modelo->getGroupById($data);
+                        $apiResponse = $modelo->getMessageById($data);
                     }
 
                     if ($apiResponse['statusCode'] === 200) { // 200 success
@@ -2528,8 +2528,8 @@ class AdminController extends MainController
                     echo $apiResponseBody;
                     break;
 
-                case 'AddGroup' :
-                    $this->permission_required = array('userGroupsCreate');
+                case 'AddMessage' :
+                    /*$this->permission_required = array('userMessagesCreate');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
@@ -2537,16 +2537,16 @@ class AdminController extends MainController
 
                         echo json_encode($apiResponse);
                         break;
-                    }
+                    }*/
 
                     $data = $_POST['data'];
-                    $apiResponse = $modelo->addGroup($data); //decode to check message from api
+                    $apiResponse = $modelo->addMessage($data); //decode to check message from api
 
                     if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
                         //faz o refresh do accessToken
                         $this->userTokenRefresh();
 
-                        $apiResponse = $modelo->addGroup($data); //decode to check message from api
+                        $apiResponse = $modelo->addMessage($data); //decode to check message from api
                         $apiResponse["body"]['message'] = "Created with success!";
                     }
 
@@ -2562,8 +2562,8 @@ class AdminController extends MainController
                     echo $apiResponse;
                     break;
 
-                case 'UpdateGroup' :
-                    $this->permission_required = array('userGroupsUpdate');
+                case 'DeleteMessage' :
+                    /*$this->permission_required = array('userMessagesDelete');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
@@ -2571,46 +2571,16 @@ class AdminController extends MainController
 
                         echo json_encode($apiResponse);
                         break;
-                    }
+                    }*/
 
                     $data = $_POST['data'];
-                    $apiResponse = $modelo->updateGroup($data); //decode to check message from api
+                    $apiResponse = $modelo->deleteMessage($data); //decode to check message from api
 
                     if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
                         //faz o refresh do accessToken
                         $this->userTokenRefresh();
 
-                        $apiResponse = $modelo->updateGroup($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Updated with success!";
-                    }
-
-                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Updated with success!";
-                    }
-
-                    $apiResponse = json_encode($apiResponse);// encode package to send
-                    echo $apiResponse;
-                    break;
-
-                case 'DeleteGroup' :
-                    $this->permission_required = array('userGroupsDelete');
-
-                    //Verifica se o user tem a permissão para realizar operaçao
-                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
-
-                        echo json_encode($apiResponse);
-                        break;
-                    }
-
-                    $data = $_POST['data'];
-                    $apiResponse = $modelo->deleteGroup($data); //decode to check message from api
-
-                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
-                        //faz o refresh do accessToken
-                        $this->userTokenRefresh();
-
-                        $apiResponse = $modelo->deleteGroup($data); //decode to check message from api
+                        $apiResponse = $modelo->deleteMessage($data); //decode to check message from api
                         $apiResponse["body"]['message'] = "Deleted with success!";
                     }
 
@@ -2621,21 +2591,21 @@ class AdminController extends MainController
                     $apiResponse = json_encode($apiResponse);// encode package to send
                     echo $apiResponse;
                     break;
-            }*/
+            }
 
         } else {
-            //get group list
-            /*$groupsList = $modelo->getGroupList();
-            if ($groupsList["statusCode"] === 200){
-                $this->userdata['groupsList'] = $groupsList["body"]["groups"];
+            //get user Message list
+            $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            if ($userMessageList["statusCode"] === 200){
+                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
             }
-            if ($groupsList["statusCode"] === 401){
+            if ($userMessageList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
-                $groupsList = $modelo->getGroupList();
-                $this->userdata['groupsList'] = $groupsList["body"]["groups"];
-            }*/
+                $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+            }
 
             /**Carrega os arquivos do view**/
             require ABSPATH . '/views/_includes/admin-header.php';
