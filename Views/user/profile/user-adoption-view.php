@@ -9,6 +9,9 @@
 <?php if (!defined('ABSPATH')) exit; ?>
 
 
+<h2 hidden>  <?php echo $_SESSION['userdata']['treeDonation'][0]['value'] ?> </h2>
+
+
 <!--Adoption Start-->
 <section class="contact-page wf100 p80">
     <div class="container contact-info">
@@ -24,48 +27,72 @@
                 <div class="contact-form">
                     <!--                    <h3>Feel Free to Contact us</h3>-->
                     <ul class="cform">
-                        <li class="half pr15">
-                            <h4>Escolha a árvore</h4>
-                            <!--                                <p>Please Select the Cause or Project for Contribution</p>-->
-                            <select class="form-control" name="adoptList" id="adoptList"
-                                    class="form-control customDropdown">
-                                <option value="" disabled selected>Árvore</option>
-                                <?php if (!empty($this->userdata['adoptionList'])) {
-                                    foreach ($this->userdata['adoptionList'] as $key => $tree) { ?>
-                                        <option value="<?php echo $tree['id'] ?>">
-                                            <?php echo $tree["id"] ?></option>
-                                    <?php }
-                                } ?>
 
-                            </select>
-                        </li>
-                        <h4 <?php echo $data2['donation']['value'] ?>">
-                        <li class="full">
-                            <h4>Características</h4>
+                        <h4>Escolha a árvore</h4>
+                        <!--                                <p>Please Select the Cause or Project for Contribution</p>-->
+                        <form id="updatePass">
+                            <div class="form-group">
+                                <input id="adoptionVal" name="adoptionVal" type="hidden" class="form-control"
+                                       value="<?php echo $_SESSION['userdata']['treeDonation'][0]['value'] ?>">
+                            </div>
+                            <div>
+                                <li class="half pr15">
+                                    <select class="form-control" name="adoptList" id="adoptList"
+                                            class="form-control customDropdown">
+                                        <option value="" disabled selected>Árvore</option>
+                                        <?php if (!empty($this->userdata['adoptionList'])) {
+                                            foreach ($this->userdata['adoptionList'] as $key => $tree) { ?>
+                                                <option value="<?php echo $tree['id'] ?>">
+                                                    <?php echo $tree["id"] ?></option>
+                                            <?php }
+                                        } ?>
 
-                            <textarea class="textarea-control"
-                                      placeholder="Terá um echo em forma de lista com as caracteristicas da árvore"></textarea>
-                        </li>
-                        <li class="full">
-                            <input type="submit" data-toggle="modal" data-target=".bd-example-modal-lg"
-                                   value="Efetue o pedido" class="fsubmit">
-                        </li>
+                                    </select>
+                                </li>
+                            </div>
+                            <div>
+                                <li class="full">
+                                    <h4>Características</h4>
+
+                                    <div class="treeContainer">
+                                        Nome:
+                                        <div class="test12" id="treeName"></div>
+                                    </div>
+                                </li>
+                            </div>
+                            <div class="row">
+
+
+                            </div>
+
+
+                            <div>
+                                <li class="full">
+                                    <input type="submit" data-toggle="modal" data-target=".bd-example-modal-lg"
+                                           value="Efetue o pedido" class="fsubmit">
+                                </li>
+                            </div>
+
+                        </form>
                     </ul>
                 </div>
             </div>
+
+
+            <!--            FOTO             -->
+
+
             <div class="col-md-6">
-                <div>
+                <div id="treePhoto">
                     <!--Foto-->
                     <img src="/Images/home/current-pro1.jpg" height="100%" width="100%" alt="">
-                    <!--                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11418.310112375979!2d-74.00986187433132!3d40.710981182716246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew+York%2C+NY!5e0!3m2!1sen!2s!4v1540972202179"></iframe>-->
-                    <?php if (!empty($this->userdata['adoptionList'])) {
-                        foreach ($this->userdata['adoptionList'] as $key => $tree) { ?>
-                            <option value="<?php echo $tree['id'] ?>">
-                                <?php echo $tree["id"] ?></option>
-                        <?php }
-                    } ?>
+
                 </div>
             </div>
+
+            <!--          END  FOTO             -->
+
+
         </div>
     </div>
 </section>
@@ -273,8 +300,28 @@
 <!--Script-->
 <script>
     $(document).ready(function () {
-        //AJAX call
 
+
+        //function to handler the tree view
+        //Assign php generated json to JavaScript variable
+        var tempArray = <?php echo json_encode($this->userdata['adoptionList']); ?>;
+        $("#adoptList").on("change", function () {
+            //Getting Value
+
+            tempArray.forEach(element => {
+                console.log(element);
+                if ($(this).val() != null) {
+                    if ($(this).val() == element.id) {
+                        console.log($(this).val());
+                        console.log(element.id);
+                        $(".treeContainer #treeName").text(element.nameScientific);
+                    }
+                }
+            });
+        }).change();
+
+
+        //AJAX call
 
 
         //Menu Toggle Script
