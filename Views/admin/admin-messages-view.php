@@ -13,8 +13,8 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Blank <b>page</b></h1>
-                <div class="row">
+                <!--<h1 class="mt-4">Blank <b>page</b></h1>-->
+                <div class="row mt-4">
 
                     <div class="col-xl-12 col-md-12">
 
@@ -28,7 +28,7 @@
                                                 <!-- BEGIN INBOX MENU -->
                                                 <div class="col-md-3">
                                                     <h2 class="grid-title"><i class="fa fa-inbox"></i> Inbox</h2>
-                                                    <a class="btn btn-block btn-primary" data-bs-toggle="modal" data-bs-target="#composeModal"><i class="fa fa-pencil"></i>&nbsp;&nbsp;NEW MESSAGE</a>
+                                                    <a class="btn btn-block btn-primary" data-bs-toggle="modal" data-bs-target="#addMessageModal"><i class="fa fa-pencil"></i>&nbsp;&nbsp;NEW MESSAGE</a>
 
                                                     <hr>
 
@@ -36,11 +36,7 @@
                                                         <ul class="nav flex-column nav-pills nav-stacked">
                                                             <li class="nav-item header">Folders</li>
                                                             <li class="nav-item active"><a class="nav-link" href="#"><i class="fa fa-inbox"></i> Inbox (14)</a></li>
-                                                            <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-star"></i> Starred</a></li>
-                                                            <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-bookmark"></i> Important</a></li>
                                                             <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-mail-forward"></i> Sent</a></li>
-                                                            <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-edit"></i> Drafts</a></li>
-                                                            <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-folder"></i> Spam</a></li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -60,9 +56,7 @@
                                                                 <ul class="dropdown-menu" role="menu">
                                                                     <li><a class="dropdown-item" href="#">Mark as read</a></li>
                                                                     <li><a class="dropdown-item" href="#">Mark as unread</a></li>
-                                                                    <li><a class="dropdown-item" href="#">Mark as important</a></li>
                                                                     <li><hr class="dropdown-divider"></li>
-                                                                    <li><a class="dropdown-item" href="#">Report spam</a></li>
                                                                     <li><a class="dropdown-item" href="#">Delete</a></li>
                                                                 </ul>
                                                             </div>
@@ -83,50 +77,36 @@
                                                     <div class="padding"></div>
 
                                                     <div class="table-responsive">
-                                                        <table class="table">
-                                                            <tbody>
-                                                                <tr class="read">
-                                                                    <td class="action"><input type="checkbox" /></td>
-                                                                    <td class="action"><i class="fa fa-star-o"></i></td>
-                                                                    <td class="action"><i class="fa fa-bookmark-o"></i></td>
-                                                                    <td class="name"><a href="#">Larry Gardner</a></td>
-                                                                    <td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
-                                                                    <td class="time">08:30 PM</td>
-                                                                </tr>
-                                                                <tr class="read">
-                                                                    <td class="action"><div class="icheckbox_square-blue" st<td class="action"><input type="checkbox" /></td>
-                                                                    <td class="action"><i class="fa fa-star"></i></td>
-                                                                    <td class="action"><i class="fa fa-bookmark"></i></td>
-                                                                    <td class="name"><a href="#">Larry Gardner</a></td>
-                                                                    <td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
-                                                                    <td class="time">08:30 PM</td>
-                                                                </tr>
+                                                        <table class="table" id="messagesTable">
+                                                            <tbody >
+                                                            <?php if (!empty($this->userdata['userMessageList'])) {
+                                                                foreach ($this->userdata['userMessageList'] as $key => $message) { ?>
+                                                                    <tr class="read">
+                                                                        <td class="action"><div class="icheckbox_square-blue" st<td class="action"><input type="checkbox" /></td>
+                                                                        <td class="name"><a href="#"><?php echo $message["fromName"] ?></a></td>
+                                                                        <td class="subject"><a href="#"><?php echo $message["subject"] ?></a></td>
+                                                                        <td class="time"><?php echo $message["notificationDate"] ?></td>
+                                                                        <td>
+                                                                            <a href="#editGroupModal" id="<?php echo $message['id'] ?>" class="edit"
+                                                                               data-bs-toggle="modal" data-bs-target="#editGroupModal"><i class="fa-solid fa-envelope"></i></a>
+                                                                            <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="delete"
+                                                                               data-bs-toggle="modal" data-bs-target="#deleteMessageModal"><i class="fas fa-trash-alt"></i></a>
+                                                                        </td>
+                                                                    </tr>
+                                                                <?php }
+                                                            } else { ?>
                                                                 <tr>
-                                                                    <td class="action"><input type="checkbox" /></td>
-                                                                    <td class="action"><i class="fa fa-star-o"></i></td>
-                                                                    <td class="action"><i class="fa fa-bookmark-o"></i></td>
-                                                                    <td class="name"><a href="#">Larry Gardner</a></td>
-                                                                    <td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
-                                                                    <td class="time">08:30 PM</td>
                                                                 </tr>
+                                                            <?php } ?>
                                                             </tbody>
                                                         </table>
                                                     </div>
 
-                                                    <!--<ul class="pagination">
-                                                        <li class="disabled"><a href="#">«</a></li>
-                                                        <li class="active"><a href="#">1</a></li>
-                                                        <li><a href="#">2</a></li>
-                                                        <li><a href="#">3</a></li>
-                                                        <li><a href="#">4</a></li>
-                                                        <li><a href="#">5</a></li>
-                                                        <li><a href="#">»</a></li>
-                                                    </ul>-->
                                                 </div>
                                                 <!-- END INBOX CONTENT -->
 
                                                 <!-- BEGIN COMPOSE MESSAGE -->
-                                                <div id="composeModal" class="modal fade" tabindex="-1" aria-labelledby="composeModal-Label" aria-hidden="true">
+                                                <div id="addMessageModal" class="modal fade" tabindex="-1" aria-labelledby="addMessageModal-Label" aria-hidden="true">
                                                     <div class="modal-wrapper">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
@@ -134,31 +114,20 @@
                                                                     <h4 class="modal-title"><i class="fa fa-envelope"></i> Compose New Message</h4>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
-                                                                <form method="post">
+                                                                <form id="addMessage">
                                                                     <div class="modal-body">
+                                                                        <input id="addMessageFromUser" name="addMessageFromUser" type="hidden" class="form-control" value="<?php echo $_SESSION["userdata"]["id"];?>">
                                                                         <div class="form-group">
-                                                                            <label>Mail to</label>
-                                                                            <input name="to" type="email" class="form-control">
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <label>CC</label>
-                                                                            <input name="cc" type="email" class="form-control">
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <label>BCC</label>
-                                                                            <input name="bcc" type="email" class="form-control">
+                                                                            <label>Message to</label>
+                                                                            <input name="addMessageToUser" type="text" class="form-control">
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label>Subject</label>
-                                                                            <input name="subject" type="email" class="form-control">
+                                                                            <input name="addMessageSubject" type="text" class="form-control">
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label>Message</label>
-                                                                            <textarea name="message" id="email_message" class="form-control" style="height: 120px;"></textarea>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <label>Attachment</label>
-                                                                            <input type="file" name="attachment">
+                                                                            <textarea name="addMessageMessage" class="form-control" style="height: 120px;"></textarea>
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
@@ -187,97 +156,19 @@
 
 
 
-
-        <!-- Add Modal HTML -->
-        <div id="addGroupModal" class="modal fade" tabindex="-1" aria-labelledby="addGroupModal-Label" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form id="addGroup">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Add Group</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control" name="addGroupName" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Description</label>
-                                <input type="text" class="form-control" name="addGroupDescription" required>
-                            </div>
-                            <div class="form-group">
-                                <label>SecurityId</label>
-                                <input type="number" class="form-control" name="addGroupSecurityId" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Active</label>
-                                <input type="checkbox" class="form-control form-check-input" name="addGroupActive">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-success" value="Add">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Edit Modal HTML -->
-        <div id="editGroupModal" class="modal fade" tabindex="-1" aria-labelledby="editGroupModal-Label" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form id="editGroup">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Edit Group</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <input id="editGroupId" name="editGroupId" type="hidden" class="form-control" value="">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control" name="editGroupName" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Description</label>
-                                <input type="text" class="form-control" name="editGroupDescription" required>
-                            </div>
-                            <div class="form-group">
-                                <label>SecurityId</label>
-                                <input type="number" class="form-control" name="editGroupSecurityId" required>
-                            </div>
-                            <div class="form-group form-check form-switch">
-                                <label>Active</label>
-                                <input type="checkbox" role="switch" class="form-check-input" name="editGroupActive">
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-success" value="Save">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
         <!-- Delete Modal HTML -->
-        <div id="deleteGroupModal" class="modal fade" tabindex="-1" aria-labelledby="deleteGroupModal-Label" aria-hidden="true">
+        <div id="deleteMessageModal" class="modal fade" tabindex="-1" aria-labelledby="deleteMessageModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="deleteGroup">
+                    <form id="deleteMessage">
                         <div class="modal-header">
-                            <h4 class="modal-title">Delete Group</h4>
+                            <h4 class="modal-title">Delete Message</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Are you sure you want to delete this Group?</p>
+                            <p>Are you sure you want to delete this Message?</p>
                             <p class="text-warning"><small>This action cannot be undone.</small></p>
-                            <input id="deleteGroupId" name="deleteGroupId" type="hidden" class="form-control" value="">
+                            <input id="deleteMessageId" name="deleteMessageId" type="hidden" class="form-control" value="">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -308,7 +199,7 @@
                 //DATATABLES
                 //Configura a dataTable
                 /*try{
-                    var table = $('#groupsTable').DataTable({
+                    var table = $('#messagesTable').DataTable({
                         rowReorder: false,
                         responsive: true,
                         columnDefs: [ {
@@ -327,17 +218,17 @@
 
 
 
-                // ajax to Add Group
-                $('#addGroup').submit(function (event) {
+                // ajax to Add Message
+                $('#addMessage').submit(function (event) {
                     event.preventDefault(); //prevent default action
 
                     let formData = {
-                        'action': "AddGroup",
+                        'action': "AddMessage",
                         'data': $(this).serializeArray()
                     };
 
                     $.ajax({
-                        url: "<?php echo HOME_URL . '/admin/groups';?>",
+                        url: "<?php echo HOME_URL . '/admin/messages';?>",
                         dataType: "json",
                         type: 'POST',
                         data: formData,
@@ -345,7 +236,7 @@
                             $('#loader').removeClass('hidden')
                         },
                         success: function (data) {
-                            $("#addGroupModal").modal('hide');
+                            $("#addMessageModal").modal('hide');
 
                             if (data.statusCode === 201){
                                 //mensagem de Success
@@ -393,157 +284,17 @@
                     });
                 });
 
-                // ajax to Edit Group
-                $('#editGroup').submit(function (event) {
-                    event.preventDefault(); //prevent default action
-
-                    //Ve se a data dos inputs mudou para formar so a data necessaria para o PATCH
-                    /*let formDataChanged = [];
-                    $('#editGroup input').each(function() { //para cada input vai ver
-                        if($(this).attr('name') === "editGroupId" || ($(this).attr('name') === "editGroupActive" && $(this).is(":checked")) || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
-                            let emptyArray = { name: "", value: "" };
-
-                            emptyArray.name = $(this).attr('name');
-                            emptyArray.value = $(this).val();
-
-                            formDataChanged.push(emptyArray);
-                        }
-                    });
-
-                    let formData = {
-                        'action' : "UpdateGroup",
-                        'data'   : formDataChanged
-                    };*/
-
-                    let formData = {
-                        'action': "UpdateGroup",
-                        'data': $(this).serializeArray()
-                    };
-
-                    $.ajax({
-                        url : "<?php echo HOME_URL . '/admin/groups';?>",
-                        dataType: "json",
-                        type: 'POST',
-                        data : formData,
-                        beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
-                            $('#loader').removeClass('hidden')
-                        },
-                        success: function (data) {
-                            $("#editGroupModal").modal('hide');
-
-                            if (data.statusCode === 200){
-                                //mensagem de Success
-                                Swal.fire({
-                                    title: 'Success!',
-                                    text: data.body.message,
-                                    icon: 'success',
-                                    showConfirmButton: false,
-                                    timer: 2000,
-                                    didClose: () => {
-                                        location.reload();
-                                    }
-                                });
-                            } else {
-                                //mensagem de Error
-                                Swal.fire({
-                                    title: 'Error!',
-                                    text: data.body.message,
-                                    icon: 'error',
-                                    showConfirmButton: false,
-                                    timer: 2000,
-                                    didClose: () => {
-                                        //location.reload();
-                                    }
-                                });
-                            }
-
-                        },
-                        error: function (data) {
-                            //mensagem de Error
-                            Swal.fire({
-                                title: 'Error!',
-                                text: "Connection error, please try again.",
-                                icon: 'error',
-                                showConfirmButton: false,
-                                timer: 2000,
-                                didClose: () => {
-                                    //location.reload();
-                                }
-                            });
-                        },
-                        complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
-                            $('#loader').addClass('hidden')
-                        }
-                    });
-                });
-
-                // ajax to get data to Modal Edit Group
-                $('.edit').on('click', function(){
-
-                    let formData = {
-                        'action' : "GetGroup",
-                        'data'   : $(this).attr('id') //gets group id from id="" attribute on edit button from table
-                    };
-
-                    $.ajax({
-                        url : "<?php echo HOME_URL . '/admin/groups';?>",
-                        dataType: "json",
-                        type: 'POST',
-                        data : formData,
-                        beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
-                            $('#loader').removeClass('hidden')
-                        },
-                        success: function (data) {
-
-                            $('[name="editGroupId"]').val(data[0]['id']);
-                            $('[name="editGroupName"]').val(data[0]['name']);
-                            $('[name="editGroupDescription"]').val(data[0]['description']);
-                            $('[name="editGroupSecurityId"]').val(data[0]['securityId']);
-
-                            if (data[0]['active'] === 1) {
-                                $('[name="editGroupActive"]').attr('checked', true);
-                            } else {
-                                $('[name="editGroupActive"]').attr('checked', false);
-                            }
-
-                            //atribui atributo .data("lastValue") a cada input do form editGroup
-                            // para se poder comparar entre os dados anteriores e os current
-                            /*$('#editGroup input').each(function() {
-                                $(this).data('lastValue', $(this).val());
-                            });*/
-
-                            $("#editGroupModal").modal('show');
-                        },
-                        error: function (data) {
-                            Swal.fire({
-                                title: 'Error!',
-                                text: data.body.message,
-                                icon: 'error',
-                                showConfirmButton: false,
-                                timer: 2000,
-                                didClose: () => {
-                                    location.reload();
-                                }
-                            });
-                        },
-                        complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
-                            $('#loader').addClass('hidden')
-                        }
-                    });
-
-                });
-
-                // ajax to Delete Group
-                $('#deleteGroup').submit(function(event){
+                // ajax to Delete Message
+                $('#deleteMessage').submit(function(event){
                     event.preventDefault(); //prevent default action
 
                     let formData = {
-                        'action' : "DeleteGroup",
+                        'action' : "DeleteMessage",
                         'data'   : $(this).serializeArray()
                     };
 
                     $.ajax({
-                        url : "<?php echo HOME_URL . '/admin/groups';?>",
+                        url : "<?php echo HOME_URL . '/admin/messages';?>",
                         dataType: "json",
                         type: 'POST',
                         data : formData,
@@ -551,7 +302,7 @@
                             $('#loader').removeClass('hidden')
                         },
                         success: function (data) {
-                            $("#deleteGroupModal").modal('hide');
+                            $("#deleteMessageModal").modal('hide');
 
                             if (data.statusCode === 200){
                                 //mensagem de Success
@@ -602,8 +353,8 @@
                 // ajax to get data to Modal Delete Group
                 $('.delete').on('click', function(){
                     let $deleteID = $(this).attr('id');
-                    $('[name="deleteGroupId"]').val($deleteID); //gets group id from id="" attribute on delete button from table
-                    $("#deleteGroupModal").modal('show');
+                    $('[name="deleteMessageId"]').val($deleteID); //gets group id from id="" attribute on delete button from table
+                    $("#deleteMessageModal").modal('show');
 
                 });
 
