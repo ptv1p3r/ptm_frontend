@@ -62,28 +62,28 @@
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="<?php echo HOME_URL . '/admin/dashboard';?>">
+            <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png';?>" alt="Project Tree Management" width="42">
+            <span class="fs-7">Project Tree Mng.</span>
+        </a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-        <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="<?php echo HOME_URL . '/admin/dashboard';?>"> <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png';?>" alt="Dashboard" width="48"> Project Tree Management</a>
+
         <!-- Navbar-->
         <ul class="navbar-nav ms-auto me-3 me-lg-4">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <li class="nav-item dropdown mx-1">
+                <a class="nav-link dropdown-toggle no-arrow" href="#" id="messagesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-envelope fa-fw"></i>
                     <!-- Counter - Messages -->
-                    <span class="badge badge-danger badge-counter">1</span>
+                    <span class="position-absolute translate-middle badge rounded-pill bg-danger">1</span>
                 </a>
                 <!-- Dropdown - Messages -->
                 <div class="dropdown-menu dropdown-menu-end" style="width: 20rem !important;">
                     <h6 class="dropdown-header">Message Center</h6>
                     <a class="dropdown-item d-flex align-items-center" href="#">
-                        <div class="dropdown-list-image mr-3">
-                            <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="...">
-                            <div class="status-indicator bg-success"></div>
-                        </div>
-                        <div>
-                            <div class="text-truncate">Am I a good boy? The reason I ask is because someone
+                        <div class="dropdown-item">
+                            <div class="text-truncate" style="width: 100%">Am I a good boy? The reason I ask is because someone
                                 told me that people say this to all dogs, even if they aren't good...</div>
                             <div class="small text-gray-500">Chicken the Dog · 2w</div>
                         </div>
@@ -91,8 +91,12 @@
                     <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
                 </div>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+
+            <li class="nav-item dropdown mx-1">
+                <a class="nav-link dropdown-toggle no-arrow" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span><?php echo $_SESSION["userdata"]["name"] ?></span>
+                    <i class="fas fa-user fa-fw"></i>
+                </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="<?php echo HOME_URL . '/admin/settings';?>">Settings</a></li>
                     <li><a class="dropdown-item" href="#!">Activity Log</a></li>
@@ -100,6 +104,7 @@
                     <li><a class="dropdown-item" href="<?php echo HOME_URL . '/admin/applogout';?>">Logout</a></li>
                 </ul>
             </li>
+
         </ul>
     </nav>
 

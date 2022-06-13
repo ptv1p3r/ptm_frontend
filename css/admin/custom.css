@@ -61,14 +61,13 @@ AJAX LOADER
 /*********************************
 MESSAGE MAIL CSS
 *********************************/
-/*MESSAGE MAIL CSS custom*/
-.text-truncate {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+/* custom message css */
+/* remove dropdown arrow */
+.no-arrow::after {
+    content: none;
 }
 
-/* EMAIL */
+/* Main message css */
 .email {
     padding: 20px 10px 15px 10px;
     font-size: 1em;
