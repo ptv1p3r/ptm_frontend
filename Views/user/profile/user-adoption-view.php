@@ -13,30 +13,23 @@
 
 
 <!--Adoption Start-->
-<section class="contact-page wf100 p80">
-    <div class="container contact-info">
-        <div class="row">
-            <div class="col-md-12">
-                <h3> Adote uma árvore</h3>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="contact-form">
-                    <!--                    <h3>Feel Free to Contact us</h3>-->
-                    <ul class="cform">
-
-                        <h4>Escolha a árvore</h4>
-                        <!--                                <p>Please Select the Cause or Project for Contribution</p>-->
+<section>
+    <div class="choose-ecova wf100 p80">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="section-title-2">
+                        <h5>Adote uma árvore</h5>
+                        <h2>Escolha a árvore</h2>
+                    </div>
+                    <div class="cform">
                         <form id="updatePass">
                             <div class="form-group">
                                 <input id="adoptionVal" name="adoptionVal" type="hidden" class="form-control"
                                        value="<?php echo $_SESSION['userdata']['treeDonation'][0]['value'] ?>">
                             </div>
                             <div>
-                                <li class="half pr15">
+                                <div class="half pr15">
                                     <select class="form-control" name="adoptList" id="adoptList"
                                             class="form-control customDropdown">
                                         <option value="" disabled selected>Árvore</option>
@@ -48,56 +41,66 @@
                                         } ?>
 
                                     </select>
-                                </li>
+                                </div>
                             </div>
-                            <div>
-                                <li class="full">
-                                    <h4>Características</h4>
-
-                                    <div class="treeContainer">
-                                        Nome:
-                                        <div class="test12" id="treeName"></div>
-                                    </div>
-                                </li>
-                            </div>
-                            <div class="row">
-
-
-                            </div>
-
-
-                            <div>
-                                <li class="full">
-                                    <input type="submit" data-toggle="modal" data-target=".bd-example-modal-lg"
-                                           value="Efetue o pedido" class="fsubmit">
-                                </li>
-                            </div>
-
                         </form>
-                    </ul>
+                    </div>
+                    <br>
+                    <div class="descriptionTree">
+                        <div class="col-6">
+                            <div class="eco-box">
+                                <span class="econ-icon"><i class="fa fa-address-card"></i></span>
+                                <h5> Nome:</h5>
+                                <div class="treeName"> O nome da árvore.</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="eco-box">
+                                <span class="econ-icon"><i class="fa fa-tree"></i> </span>
+                                <h5> Nome comum:</h5>
+                                <div class="treeComName"> O nome comum da árvore.</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="eco-box">
+                                <span class="econ-icon"><i class="fa fa-book"></i></i></span>
+                                <h5> Descrição:</h5>
+                                <div class="treeDescr"> Descrição geral da árvore.</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="eco-box">
+                                <span class="econ-icon"><i class="fa fa-newspaper"></i></span>
+                                <h5> Observações: </h5>
+                                <div class="treeObs"> Dados de interesse.</div>
+                            </div>
+                        </div>
+                        <div class="col-6 subBtna">
+                            <div class="full">
+                                <button type="submit" data-toggle="modal" id="subBtn" data-target=".bd-example-modal-lg"
+                                        value="Efetue o pedido" disabled="disabled" class="btn btn-success">Efetue o seu
+                                    pedido
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="volunteer-form">
+                        <div id="treePhoto">
+                            <!--Foto-->
+                            <img src="<?php echo HOME_URL . '/Images/logo/adoteUmaBig.png'; ?>" height="100%" width="100%" alt="">
+
+                        </div>
+                    </div>
+                    <br>
+                        <!--Map area div-->
+                        <div id="map"></div>
                 </div>
             </div>
-
-
-            <!--            FOTO             -->
-
-
-            <div class="col-md-6">
-                <div id="treePhoto">
-                    <!--Foto-->
-                    <img src="/Images/home/current-pro1.jpg" height="100%" width="100%" alt="">
-
-                </div>
-            </div>
-
-            <!--          END  FOTO             -->
-
-
         </div>
     </div>
 </section>
-<!--Contact End-->
-
+<!--Adoption END-->
 
 <!--Modal payment -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
@@ -300,31 +303,62 @@
 <!--Script-->
 <script>
     $(document).ready(function () {
+        // TreesMap
+        let greenIcon = L.icon({
+            iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/mapMarker.png'?>',
+            shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
 
+            iconSize: [38, 95], // size of the icon
+            shadowSize: [50, 64], // size of the shadow
+            iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+
+        // Map first view
+        let map = L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
+
+        //Tile Layer Leaflet map
+        let satellite = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
+        }).addTo(map);
 
         //function to handler the tree view
-        //Assign php generated json to JavaScript variable
         var tempArray = <?php echo json_encode($this->userdata['adoptionList']); ?>;
         $("#adoptList").on("change", function () {
             //Getting Value
-
             tempArray.forEach(element => {
-                console.log(element);
                 if ($(this).val() != null) {
                     if ($(this).val() == element.id) {
-                        console.log($(this).val());
-                        console.log(element.id);
-                        $(".treeContainer #treeName").text(element.nameScientific);
+                        $(".treeName").text(element.nameScientific);
+                        $(".treeComName").text(element.nameCommon);
+                        $(".treeDescr").text(element.description);
+                        $(".treeObs").text(element.observations);
+                        // $(".treePhoto").text(element.picture);
+                        $("#subBtn").removeAttr('disabled');
+
+                        //TODO so falta colocar element.lat/element.lng
+                        //marker tree
+                       /* allMarker = new L.marker([element.lat, element.lng], {
+                            icon: greenIcon,
+                            user: 'none'
+                        }).addTo(map);*/
+                        //fly to tree specific point on map
+                        const lat = 37.3119;
+                        const lng = -8.6671;
+                        console.log(lat);
+                        map.flyTo([lat,lng]);
                     }
                 }
             });
         }).change();
 
 
-        //AJAX call
-
-
-        //Menu Toggle Script
+        //Modal menu Toggle Script
         $("#menu-toggle").click(function (e) {
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
@@ -349,12 +383,69 @@
             $("#tab3").addClass("active1");
             $("#tab3").removeClass("bg-light");
         });
+
+        //AJAX call
+        // ajax to make transiction
+       /* $('#makeDonation').submit(function (event) {
+            event.preventDefault(); //prevent default action
+            let formData = {
+                'action': "AddNewUser",
+                'data': $(this).serializeArray()
+            };
+            $.ajax({
+                url: "<?php echo HOME_URL . '/home/donation';?>",
+                dataType: "json",
+                type: 'POST',
+                data: formData,
+                beforeSend: function () { // Load the spinner.
+                    $('#loader').removeClass('hidden')
+                },
+                success: function (data) {
+                    if (data.statusCode === 201) {
+                        //mensagem de Success
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.body.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                window.location.href = "<?php echo HOME_URL . '/home';?>";
+                            }
+                        });
+                    } else {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    }
+                }, complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
+                },
+                error: function (data) {
+                    //mensagem de Error
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Connection error, please try again.",
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        didClose: () => {
+                            //location.reload();
+                        }
+                    });
+                },
+            });
+        });*/
     })
-
-
 </script>
-
-
 <!--Script End-->
 
 
