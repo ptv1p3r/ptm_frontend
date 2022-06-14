@@ -8402,6 +8402,19 @@ Map Leaflet CSS
     height: 500px;
 }
 
+/*********************************
+Transatiction tree CSS
+*********************************/
+
+
+.subBtna{
+    text-align: -webkit-center;
+}
+
+/*********************************
+END Transatiction tree CSS
+*********************************/
+
 
 /*********************************
 Payment modal CSS
@@ -8416,6 +8429,8 @@ Payment modal CSS
 /*    overflow-x: hidden;*/
 /*    background: #000000*/
 /*}*/
+
+
 
 .modal-ku {
     width: 750px;
