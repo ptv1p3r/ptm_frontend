@@ -42,19 +42,25 @@ class AdoptionModel extends MainModel
     }
 
     /**
-     * Get gender list
+     * Get free to adoption trees list
      *
      * @since 0.1
      * @access public
      */
-    public function getGenderList()
+    public function makeTransaction()
     {
         $result = null;
 
-        $url = API_URL . 'api/v1/genders/list';
-        $result = callAPI("GET", $url, '');
+        $url = API_URL . 'api/v1/transaction/create';
+
+        if (!empty($_SESSION['userdata']['accessToken'])) {
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("POST", $url, '', $userToken);
+        }
         return json_decode(json_encode($result), true);
     }
+
+
 
 
 }
