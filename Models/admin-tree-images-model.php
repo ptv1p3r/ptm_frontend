@@ -110,7 +110,8 @@ class AdminTreeImagesModel extends MainModel {
         //}
 
         foreach ($_FILES as $file){
-            $normalizedData['file'] = $file;//new CURLFile($file["tmp_name"], $file["type"], $file["name"]);
+            $cfile = new CURLFile($file["tmp_name"], $file["type"], $file["name"]);
+            $normalizedData['file'] = $cfile;
         }
 
         $url = API_URL . 'api/v1/trees/image/upload/' . $TreeId;
