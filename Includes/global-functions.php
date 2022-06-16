@@ -85,8 +85,6 @@ function callAPI($method, $url, $data, $token = "")
 
     if(isset($data["file"]) && !empty($data["file"])){
         $header = "multipart/form-data";
-        //$header = "application/json";
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $data["file"]);
     } else {
         $header = "application/json";
     }
@@ -94,9 +92,17 @@ function callAPI($method, $url, $data, $token = "")
     switch ($method) {
         case "POST":
             curl_setopt($curl, CURLOPT_POST, 1);
-            if ($data)
-                curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+            if ($data){
+                //se existir ficheiro
+                if(isset($data['file']) && !empty($data['file'])){
+                    //constroi o post de maineira diferente
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+                } else {
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+                }
+            }
             break;
+
         case "PUT":
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
             if ($data)
