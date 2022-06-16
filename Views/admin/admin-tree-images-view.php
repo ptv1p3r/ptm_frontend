@@ -249,7 +249,7 @@
 
                     // append multiple files
                     for(let i = 0; i < file_data.length; i++) {
-                        formData.append(/*"File" + */i, file_data[i]);
+                        formData.append(i, file_data[i]);
                     }
 
                     // append form inputs
@@ -264,7 +264,7 @@
 
                     $.ajax({
                         url: "<?php echo HOME_URL . '/admin/tree_images';?>",
-                        //dataType: "json",
+                        dataType: "json",
                         type: 'POST',
                         data: formData,
                         contentType: false,
