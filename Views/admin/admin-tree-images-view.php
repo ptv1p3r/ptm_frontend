@@ -132,40 +132,29 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <input id="editTreeId" name="editTreeId" type="hidden" class="form-control" value="">
+                                <input id="editTreeImageId" name="editTreeImageId" type="hidden" class="form-control" value="">
                             </div>
 
                             <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control" name="editTreeName" required>
+                                <label>treeId</label>
+                                <input type="text" class="form-control" name="editTreeImageTreeId" required>
                             </div>
                             <div class="form-group">
-                                <label>NameCommon</label>
-                                <input type="text" class="form-control" name="editTreeNameCommon" required>
+                                <label>order</label>
+                                <input type="text" class="form-control" name="editTreeImageOrder" required>
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
-                                <input type="text" class="form-control" name="editTreeDescription" required>
+                                <label>description</label>
+                                <input type="text" class="form-control" name="editTreeImageDescription" required>
                             </div>
                             <div class="form-group">
-                                <label>Observations</label>
-                                <input type="text" class="form-control" name="editTreeObservations" required>
-                            </div>
-                            <div class="form-group">
-                                <label>TypeId</label>
-                                <input type="text" class="form-control" name="editTreeTypeId" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Latitude</label>
-                                <input type="number" step="any" class="form-control" name="editTreeLat" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Longitude</label>
-                                <input type="number" step="any" class="form-control" name="editTreeLng" required>
+                                <label>Image</label>
+                                <input id="file" type="file" class="form-control" name="file">
+                                <img id='img-upload' class="img-thumbnail"/>
                             </div>
                             <div class="form-group">
                                 <label>Active</label>
-                                <input type="checkbox" class="form-control form-check-input" name="editTreeActive">
+                                <input type="checkbox" class="form-control form-check-input" name="editTreeImageActive">
                             </div>
 
                         </div>
@@ -190,7 +179,7 @@
                         <div class="modal-body">
                             <p>Are you sure you want to delete this Tree?</p>
                             <p class="text-warning"><small>This action cannot be undone.</small></p>
-                            <input id="deleteTreeId" name="deleteTreeId" type="hidden" class="form-control" value="">
+                            <input id="deleteTreeImageId" name="deleteTreeImageId" type="hidden" class="form-control" value="">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -321,14 +310,15 @@
                     });
                 });
 
-                // ajax to Edit Group
-                $('#editTreeImage').submit(function (event) {
+
+                // ajax to Edit
+                /*$('#editTreeImage').submit(function (event) {
                     event.preventDefault(); //prevent default action
 
                     //Ve se a data dos inputs mudou para formar so a data necessaria para o PATCH
-                    /*let formDataChanged = [];
-                    $('#editTree input').each(function() { //para cada input vai ver
-                        if($(this).attr('name') === "editTreeId" || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
+                    let formDataChanged = [];
+                    $('#editGroup input').each(function() { //para cada input vai ver
+                        if($(this).attr('name') === "editGroupId" || ($(this).attr('name') === "editGroupActive" && $(this).is(":checked")) || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
                             let emptyArray = { name: "", value: "" };
 
                             emptyArray.name = $(this).attr('name');
@@ -339,9 +329,9 @@
                     });
 
                     let formData = {
-                        'action' : "UpdateTreeImage",
+                        'action' : "UpdateGroup",
                         'data'   : formDataChanged
-                    };*/
+                    };
 
                     let formData = {
                         'action': "UpdateTreeImage",
@@ -403,14 +393,14 @@
                             $('#loader').addClass('hidden')
                         }
                     });
-                });
+                });*/
 
-                // ajax to get data to Modal Edit Tree
-                $('.edit').on('click', function(){
+                // ajax to get data to Modal Edit Group
+                /*$('.edit').on('click', function(){
 
                     let formData = {
                         'action' : "GetTreeImage",
-                        'data'   : $(this).attr('data-ImagePath') //gets tree id from id="" attribute on edit button from table
+                        'data'   : $(this).attr('id') //gets group id from id="" attribute on edit button from table
                     };
 
                     $.ajax({
@@ -423,28 +413,23 @@
                         },
                         success: function (data) {
 
-                            $('[name="editTreeId"]').val(data[0]['id']);
-                            $('[name="editTreeName"]').val(data[0]['name']);
-                            $('[name="editTreeNameCommon"]').val(data[0]['nameCommon']);
-                            $('[name="editTreeDescription"]').val(data[0]['description']);
-                            $('[name="editTreeObservations"]').val(data[0]['observations']);
-                            $('[name="editTreeTypeId"]').val(data[0]['typeId']);
-                            $('[name="editTreeLat"]').val(data[0]['lat']);
-                            $('[name="editTreeLng"]').val(data[0]['lng']);
+                            $('[name="editTreeImageId"]').val(data[0]['id']);
+                            $('[name="editTreeImageDescription"]').val(data[0]['description']);
+                            $('[name="editTreeImagePosition"]').val(data[0]['position']);
 
                             if (data[0]['active'] === 1) {
-                                $('[name="editTreeActive"]').attr('checked', true);
+                                $('[name="editTreeImageActive"]').attr('checked', true);
                             } else {
-                                $('[name="editTreeActive"]').attr('checked', false);
+                                $('[name="editGroupActive"]').attr('checked', false);
                             }
 
-                            //atribui atributo .data("lastValue") a cada input do form editTree
+                            //atribui atributo .data("lastValue") a cada input do form editGroup
                             // para se poder comparar entre os dados anteriores e os current
-                            /*$('#editTree input').each(function() {
+                            $('#editGroup input').each(function() {
                                 $(this).data('lastValue', $(this).val());
-                            });*/
+                            });
 
-                            $("#editTreeModal").modal('show');
+                            $("#editTreeImageModal").modal('show');
                         },
                         error: function (data) {
                             Swal.fire({
@@ -463,10 +448,11 @@
                         }
                     });
 
-                });
+                });*/
+
 
                 // ajax to Delete Tree
-                $('#deleteImageTree').submit(function(event){
+                $('#deleteTreeImage').submit(function(event){
                     event.preventDefault(); //prevent default action
 
                     let formData = {
@@ -534,7 +520,7 @@
                 // ajax to get data to Modal Delete Tree
                 $('.delete').on('click', function(){
                     let $deleteID = $(this).attr('id');
-                    $('[name="deleteTreeId"]').val($deleteID); //gets tree id from id="" attribute on delete button from table
+                    $('[name="deleteTreeImageId"]').val($deleteID); //gets tree id from id="" attribute on delete button from table
                     $("#deleteTreeImageModal").modal('show');
 
                 });
