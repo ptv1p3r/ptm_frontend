@@ -8,7 +8,7 @@
 
 <div id="layoutSidenav">
     <!-- import sidebar -->
-    <?php require ABSPATH . '/views/_includes/admin-sidebar.php'?>
+    <?php require ABSPATH . '/views/_includes/admin-sidebar.php' ?>
 
     <div id="layoutSidenav_content">
         <main>
@@ -35,8 +35,18 @@
                                                     <div>
                                                         <ul class="nav flex-column nav-pills nav-stacked">
                                                             <li class="nav-item header">Folders</li>
-                                                            <li class="nav-item active"><a class="nav-link" href="#"><i class="fa fa-inbox"></i> Inbox (14)</a></li>
-                                                            <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-mail-forward"></i> Sent</a></li>
+                                                            <li class="nav-item" role="presentation">
+                                                                <a class="nav-link active" id="pills-inbox-tab" data-bs-toggle="pill" data-bs-target="#pills-inbox"
+                                                                   type="button" role="tab" aria-controls="pills-inbox" aria-selected="true">
+                                                                    <i class="fa fa-inbox"></i> Inbox
+                                                                </a>
+                                                            </li>
+                                                            <li class="nav-item" role="presentation">
+                                                                <a class="nav-link" id="pills-sent-tab" data-bs-toggle="pill" data-bs-target="#pills-sent"
+                                                                   type="button" role="tab" aria-controls="pills-sent" aria-selected="true">
+                                                                    <i class="fa fa-mail-forward"></i> Sent
+                                                                </a>
+                                                            </li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -44,6 +54,8 @@
 
                                                 <!-- BEGIN INBOX CONTENT -->
                                                 <div class="col-md-9">
+
+                                                    <!-- MAIL TABLE -->
                                                     <div class="row">
                                                         <div class="col-sm-6">
                                                             <label style="margin-right: 8px;" class="">
@@ -62,7 +74,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-6 search-form">
+                                                        <!--<div class="col-md-6 search-form">
                                                             <form action="#" class="text-right">
                                                                 <div class="input-group">
                                                                     <input type="text" class="form-control input-sm" placeholder="Search">
@@ -71,35 +83,51 @@
                                                                     </span>
                                                                 </div>
                                                             </form>
-                                                        </div>
+                                                        </div>-->
                                                     </div>
 
                                                     <div class="padding"></div>
 
-                                                    <div class="table-responsive">
-                                                        <table class="table" id="messagesTable">
-                                                            <tbody >
-                                                            <?php if (!empty($this->userdata['userMessageList'])) {
-                                                                foreach ($this->userdata['userMessageList'] as $key => $message) { ?>
-                                                                    <tr class="read">
-                                                                        <td class="action"><div class="icheckbox_square-blue" st<td class="action"><input type="checkbox" /></td>
-                                                                        <td class="name"><a href="#"><?php echo $message["fromName"] ?></a></td>
-                                                                        <td class="subject"><a href="#"><?php echo $message["subject"] ?></a></td>
-                                                                        <td class="time"><?php echo $message["notificationDate"] ?></td>
-                                                                        <td>
-                                                                            <a href="#editGroupModal" id="<?php echo $message['id'] ?>" class="edit"
-                                                                               data-bs-toggle="modal" data-bs-target="#editGroupModal"><i class="fa-solid fa-envelope"></i></a>
-                                                                            <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="delete"
-                                                                               data-bs-toggle="modal" data-bs-target="#deleteMessageModal"><i class="fas fa-trash-alt"></i></a>
-                                                                        </td>
-                                                                    </tr>
-                                                                <?php }
-                                                            } else { ?>
-                                                                <tr>
-                                                                </tr>
-                                                            <?php } ?>
-                                                            </tbody>
-                                                        </table>
+                                                    <!-- INBOX -->
+                                                    <div class="tab-content" id="pills-tabContent">
+                                                        <div class="tab-pane fade show active" id="pills-inbox" role="tabpanel" aria-labelledby="pills-inbox-tab">
+                                                            <div class="table-responsive">
+                                                                <table class="table" id="messagesTable">
+                                                                    <tbody>
+                                                                    <?php if (!empty($this->userdata['userMessageList'])) {
+                                                                        foreach ($this->userdata['userMessageList'] as $key => $message) { ?>
+                                                                            <tr class="nav-item read" role="presentation">
+                                                                                <td class="action"><div class="icheckbox_square-blue" st<td class="action"><input type="checkbox" /></td>
+                                                                                <td class="name">
+                                                                                    <a href="#">
+                                                                                        <?php echo $message["fromName"] ?>
+                                                                                    </a>
+                                                                                </td>
+                                                                                <td class="subject">
+                                                                                    <a href="<?php echo HOME_URL . '/admin/messages_view';?>">
+                                                                                        <?php echo $message["subject"] ?>
+                                                                                    </a>
+                                                                                </td>
+                                                                                <td class="time"><?php echo $message["notificationDate"] ?></td>
+                                                                                <td>
+                                                                                    <a href="#editGroupModal" id="<?php echo $message['id'] ?>" class="edit"
+                                                                                       data-bs-toggle="modal" data-bs-target="#editGroupModal"><i class="fa-solid fa-envelope"></i></a>
+                                                                                    <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="delete"
+                                                                                       data-bs-toggle="modal" data-bs-target="#deleteMessageModal"><i class="fas fa-trash-alt"></i></a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        <?php }
+                                                                    } else { ?>
+                                                                        <tr>
+                                                                        </tr>
+                                                                    <?php } ?>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="pills-sent" role="tabpanel" aria-labelledby="pills-sent-tab">
+                                                            sent
+                                                        </div>
                                                     </div>
 
                                                 </div>
@@ -138,8 +166,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <!-- END COMPOSE MESSAGE -->
+                                                </div><!-- END COMPOSE MESSAGE -->
+
                                             </div>
                                         </div>
                                     </div>
@@ -155,42 +183,6 @@
         </main>
 
 
-
-        <!-- Delete Modal HTML -->
-        <div id="deleteMessageModal" class="modal fade" tabindex="-1" aria-labelledby="deleteMessageModal-Label" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form id="deleteMessage">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Delete Message</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Are you sure you want to delete this Message?</p>
-                            <p class="text-warning"><small>This action cannot be undone.</small></p>
-                            <input id="deleteMessageId" name="deleteMessageId" type="hidden" class="form-control" value="">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-danger" value="Delete">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Logout Modal HTML
-        <div id="logoutModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4>Logout <i class="fa fa-lock"></i></h4>
-                    </div>
-                    <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
-                    <div class="modal-footer"><a href="<?php //echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
-                </div>
-            </div>
-        </div>-->
 
 
 
