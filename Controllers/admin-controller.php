@@ -2646,12 +2646,12 @@ class AdminController extends MainController
 
         // Estado da sidebar
         // se ja existir uma active tab
-        /*if (isset($_SESSION["sidebar"]["active_tab"])) {
+        if (isset($_SESSION["sidebar"]["active_tab"])) {
             //remove a currently active
             unset($_SESSION["sidebar"]["active_tab"]);
             //e dá set a uma nova active tab
             $_SESSION["sidebar"]["active_tab"]["messages"] = true;
-        }*/
+        }
 
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
