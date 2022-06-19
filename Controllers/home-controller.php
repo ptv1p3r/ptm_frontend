@@ -554,6 +554,7 @@ class HomeController extends MainController
         //$parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
         $model = $this->load_model('adoption-model');
+        $modelTransaction = $this->load_model('user-transaction-model');
 
 
         // obriga o login para aceder à pagina
@@ -580,7 +581,6 @@ class HomeController extends MainController
         }
 
 
-
         // processa chamadas ajax
         if (isset($_POST['action']) && !empty($_POST['action'])) {
             $action = $_POST['action'];
@@ -599,7 +599,57 @@ class HomeController extends MainController
                     echo $apiResponse;
                     break;
 
+                case 'makeDonation' :
+                    $data = $_POST['data'];
+//                    echo $data;
 
+
+                    /*              // Update userdata to donation trees;*/
+                    $_SESSION['userdata']['treeDonation'] = $data;
+                    $treeDonation =  $_SESSION['userdata']['treeDonation'];
+                    // unset($apiResponse['body'])
+                    $apiResponse = json_encode($treeDonation);
+                    echo $apiResponse;
+                    break;
+
+                case 'makeTransaction' :
+                   /*
+                    $this->permission_required = array('usersUpdate');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }
+*/
+                    $data = $_POST['data'];
+
+                    $apiResponse = $model->makeTransaction($data); //decode to check message from api
+
+
+                    if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Updated with success!";
+
+
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $model->updateUser($data); //decode to check message from api
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo($apiResponse);
+                    break;
 
 
 
@@ -609,15 +659,22 @@ class HomeController extends MainController
 
 
             $getAdoptTreesModel = $model->getAdoptTreesList();
+            $getTransactionModel =  $modelTransaction->getTransactionList();
 
             if ($getAdoptTreesModel['statusCode'] === 200) { // 200 OK, successful
                 $this->userdata['adoptionList'] = $getAdoptTreesModel['body']['trees'];
+                $this->userdata['transactionList'] = $getTransactionModel['body']['methods'];
             }
 
             if ($getAdoptTreesModel['statusCode'] === 401) {  // 200 OK, successful
+                //Refresh user token
                 $this->userTokenRefresh();
+                //Models
                 $getAdoptTreesModel = $model->getAdoptTreesList();
+                $getTransactionModel =  $modelTransaction->getTransactionList();
+                //Userdata from model's
                 $this->userdata['adoptionList'] = $getAdoptTreesModel['body']['trees'];
+                $this->userdata['transactionList'] = $getTransactionModel['body']['methods'];
             }
 
 /*
