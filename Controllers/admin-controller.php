@@ -2793,7 +2793,8 @@ class AdminController extends MainController
     }
 
     /* TODO: messages view
-        usar parametros? ou carregar nova pagina
+        usar parametros? ou carregar nova pagina?
+        ou usar ajax para carregar nas nav-tabs ?
     */
 
     /**
