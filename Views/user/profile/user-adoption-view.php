@@ -23,7 +23,7 @@
                         <h2>Escolha a árvore</h2>
                     </div>
                     <div class="cform">
-                        <form id="updatePass">
+                        <form id="getTree">
                             <div class="form-group">
                                 <input id="adoptionVal" name="adoptionVal" type="hidden" class="form-control"
                                        value="<?php echo $_SESSION['userdata']['treeDonation'][0]['value'] ?>">
@@ -43,58 +43,67 @@
                                     </select>
                                 </div>
                             </div>
+
+                            <br>
+                            <div class="descriptionTree">
+                                <div class="col-6">
+                                    <div class="eco-box">
+                                        <span class="econ-icon"><i class="fa fa-address-card"></i></span>
+                                        <h5> Nome:</h5>
+                                        <div class="treeName"> O nome da árvore.</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="eco-box">
+                                        <span class="econ-icon"><i class="fa fa-tree"></i> </span>
+                                        <h5> Nome comum:</h5>
+                                        <div class="treeComName"> O nome comum da árvore.</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="eco-box">
+                                        <span class="econ-icon"><i class="fa fa-book"></i></i></span>
+                                        <h5> Descrição:</h5>
+                                        <div class="treeDescr"> Descrição geral da árvore.</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="eco-box">
+                                        <span class="econ-icon"><i class="fa fa-newspaper"></i></span>
+                                        <h5> Observações: </h5>
+                                        <div class="treeObs"> Dados de interesse.</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 subBtna">
+                                    <div class="full">
+                                        <button type="submit" id="subBtn"
+
+
+                                                value="Efetue o pedido" disabled="disabled" class="btn btn-success">
+                                            Efetue o seu
+                                            pedido
+                                    </div>
+                                </div>
+                            </div>
                         </form>
-                    </div>
-                    <br>
-                    <div class="descriptionTree">
-                        <div class="col-6">
-                            <div class="eco-box">
-                                <span class="econ-icon"><i class="fa fa-address-card"></i></span>
-                                <h5> Nome:</h5>
-                                <div class="treeName"> O nome da árvore.</div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="eco-box">
-                                <span class="econ-icon"><i class="fa fa-tree"></i> </span>
-                                <h5> Nome comum:</h5>
-                                <div class="treeComName"> O nome comum da árvore.</div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="eco-box">
-                                <span class="econ-icon"><i class="fa fa-book"></i></i></span>
-                                <h5> Descrição:</h5>
-                                <div class="treeDescr"> Descrição geral da árvore.</div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="eco-box">
-                                <span class="econ-icon"><i class="fa fa-newspaper"></i></span>
-                                <h5> Observações: </h5>
-                                <div class="treeObs"> Dados de interesse.</div>
-                            </div>
-                        </div>
-                        <div class="col-6 subBtna">
-                            <div class="full">
-                                <button type="submit" data-toggle="modal" id="subBtn" data-target=".bd-example-modal-lg"
-                                        value="Efetue o pedido" disabled="disabled" class="btn btn-success">Efetue o seu
-                                    pedido
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="volunteer-form">
                         <div id="treePhoto">
-                            <!--Foto-->
-                            <img src="<?php echo HOME_URL . '/Images/logo/adoteUmaBig.png'; ?>" height="100%" width="100%" alt="">
+
+                            <!--                            TODO falta ver fotos !!! -->
+                            <!--Foto falta ver fotos !!!!-->
+
+                            <img src="<?php echo HOME_URL . '/Images/logo/adoteUmaBig.png'; ?>" height="100%"
+                                 width="100%"
+                                 alt="">
 
                         </div>
                     </div>
                     <br>
-                        <!--Map area div-->
-                        <div id="map"></div>
+                    <!--Map area div-->
+                    <div id="map"></div>
                 </div>
             </div>
         </div>
@@ -116,7 +125,22 @@
                         <div class="d-flex" id="wrapper">
                             <!-- Sidebar -->
                             <div class="bg-light border-right" id="sidebar-wrapper">
-                                <div class="sidebar-heading pt-5 pb-4"><strong>PAY WITH</strong></div>
+                                <div class="sidebar-heading pt-5 pb-4"><strong>Metodo de pagamento</strong></div>
+
+                                <div class="half pr15">
+                                    <select class="form-control" name="adoptList" id="adoptList"
+                                            class="form-control customDropdown">
+                                        <option value="" disabled selected>Metodo</option>
+                                        <?php if (!empty($this->userdata['transactionList'])) {
+                                            foreach ($this->userdata['transactionList'] as $key => $trans) { ?>
+                                                <option value="<?php echo $trans['name'] ?>">
+                                                    <?php echo $trans["name"] ?></option>
+                                            <?php }
+                                        } ?>
+
+                                    </select>
+                                </div>
+
                                 <div class="list-group list-group-flush"><a data-toggle="tab" href="#menu1" id="tab1"
                                                                             class="tabs list-group-item bg-light">
                                         <div class="list-div my-2">
@@ -149,31 +173,31 @@
                                             <div class="col-12">
                                                 <p>Id da árvore:</p>
 
-                                                <!--                                                Precisar ser revisto para dar o número correto que for selecionado anteriormente-->
+                                                <!--                                                TODO ver o reload da página com o Id correto -->
 
-                                                <p <?php if (!empty($this->userdata['adoptionList'])) {
-                                                foreach ($this->userdata['adoptionList'] as $key => $tree) { ?>
-                                                <option value="<?php echo $tree['id'] ?>">
-                                                    <?php echo $tree["id"] ?></option>
-                                                <?php }
-                                                } ?></p>
+                                                <p>  <?php echo $_SESSION['userdata']['treeDonation'][1]['value']; ?> </p>
+
                                             </div>
-
-                                            <!--                                            da árvore-->
-
-
                                         </div>
                                         <div class="row justify-content-right">
                                             <div class="col-12">
-                                                <p class="mb-0 mr-4 text-right">Pay <span
-                                                            class="top-highlight">$ 100</span></p>
+                                                <p class="mb-0 mr-4 text-right">Valor a pagar <span
+                                                            class="top-highlight">€<?php echo $_SESSION['userdata']['treeDonation'][0]['value'] ?></span>
+                                                </p>
                                             </div>
                                         </div>
+
+
+
+
+
                                     </div>
                                 </div>
                                 <div class="row justify-content-center">
                                     <div class="text-center" id="test">Pay</div>
                                 </div>
+
+
                                 <div class="tab-content">
                                     <div id="menu1" class="tab-pane">
                                         <div class="row justify-content-center">
@@ -182,6 +206,19 @@
                                                     <h3 class="mt-0 mb-4 text-center">Enter bank details to pay</h3>
                                                     <form onsubmit="event.preventDefault()">
                                                         <div class="row">
+
+                                                            <div class="form-group">
+                                                                <input id="adoptionVal" name="adoptionVal" type="hidden"
+                                                                       class="form-control"
+                                                                       value="<?php echo $_SESSION['userdata']['treeDonation'][0]['value'] ?>">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input id="adoptionVal" name="adoptionVal" type="hidden"
+                                                                       class="form-control"
+                                                                       value="<?php echo $_SESSION['userdata']['treeDonation'][1]['value'] ?>">
+                                                            </div>
+
                                                             <div class="col-12">
                                                                 <div class="input-group"><input type="text" id="bk_nm"
                                                                                                 placeholder="BBB Bank">
@@ -222,6 +259,8 @@
                                             </div>
                                         </div>
                                     </div>
+
+
                                     <div id="menu2" class="tab-pane in active">
                                         <div class="row justify-content-center">
                                             <div class="col-11">
@@ -338,25 +377,26 @@
                         $(".treeComName").text(element.nameCommon);
                         $(".treeDescr").text(element.description);
                         $(".treeObs").text(element.observations);
-                        // $(".treePhoto").text(element.picture);
                         $("#subBtn").removeAttr('disabled');
 
-                        //TODO so falta colocar element.lat/element.lng
+                        //TODO ver a foto
+                        $(".treePhoto").text(element.mainImageName);
+
+
                         //marker tree
-                       /* allMarker = new L.marker([element.lat, element.lng], {
+                        allMarker = new L.marker([element.lat, element.lng], {
                             icon: greenIcon,
                             user: 'none'
-                        }).addTo(map);*/
+                        }).addTo(map);
                         //fly to tree specific point on map
-                        const lat = 37.3119;
-                        const lng = -8.6671;
+                        const lat = element.lat;
+                        const lng = element.lng;
                         console.log(lat);
-                        map.flyTo([lat,lng]);
+                        map.flyTo([lat, lng]);
                     }
                 }
             });
         }).change();
-
 
         //Modal menu Toggle Script
         $("#menu-toggle").click(function (e) {
@@ -384,12 +424,50 @@
             $("#tab3").removeClass("bg-light");
         });
 
-        //AJAX call
-        // ajax to make transiction
-       /* $('#makeDonation').submit(function (event) {
+        //AJAX call to get select tree
+        $('#getTree').submit(function (event) {
             event.preventDefault(); //prevent default action
             let formData = {
-                'action': "AddNewUser",
+                'action': "makeDonation",
+                'data': $(this).serializeArray()
+            };
+            $.ajax({
+                url: "<?php echo HOME_URL . '/home/adoption';?>",
+                dataType: "json",
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+                    // location.reload();
+
+
+                    //TODO ver o reload do modal para carregar o ID correto da árvore escolhida
+
+                    console.log(data);
+                    $(".bd-example-modal-lg").modal('show');
+
+                },
+                error: function (data) {
+                    //mensagem de Error
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Connection error, please try again.",
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        didClose: () => {
+                            //location.reload();
+                        }
+                    });
+                },
+            });
+        });
+
+
+        // Ajax call to make transiction
+        $('#makeTransaction').submit(function (event) {
+            event.preventDefault(); //prevent default action
+            let formData = {
+                'action': "makeTransaction",
                 'data': $(this).serializeArray()
             };
             $.ajax({
@@ -443,8 +521,10 @@
                     });
                 },
             });
-        });*/
-    })
+        });
+
+    });
+
 </script>
 <!--Script End-->
 
