@@ -237,6 +237,19 @@ class AdminController extends MainController
 
         $modelo = $this->load_model('admin-dashboard-model');
 
+        //get user Message list
+        $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+        //caso accessToken espire
+        if ($userMessageList["statusCode"] === 401){
+            //faz o refresh do accessToken
+            $this->userTokenRefresh();
+            $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+        }
+        if ($userMessageList["statusCode"] === 200){
+            $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+            $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+        }
+
         /** Carrega os arquivos do view **/
         require ABSPATH . '/views/_includes/admin-header.php';
 
@@ -414,6 +427,19 @@ class AdminController extends MainController
             }
 
         } else {
+            //get user Message list
+            $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            //caso accessToken espire
+            if ($userMessageList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+                $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            }
+            if ($userMessageList["statusCode"] === 200){
+                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+
             //get group list
             $groupsList = $modelo->getGroupList();
             if ($groupsList["statusCode"] === 200){
@@ -603,6 +629,19 @@ class AdminController extends MainController
             }
 
         } else {
+            //get user Message list
+            $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            //caso accessToken espire
+            if ($userMessageList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+                $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            }
+            if ($userMessageList["statusCode"] === 200){
+                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+
             //get users list
             $userList = $modelo->getUserList();
             if ($userList["statusCode"] === 200){
@@ -795,6 +834,19 @@ class AdminController extends MainController
             }
 
         } else {
+            //get user Message list
+            $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            //caso accessToken espire
+            if ($userMessageList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+                $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            }
+            if ($userMessageList["statusCode"] === 200){
+                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+
             //get securitys list
             $securityList = $modelo->getSecurityList();
             if ($securityList["statusCode"] === 200){
@@ -864,6 +916,19 @@ class AdminController extends MainController
         }
 
         $modelo = $this->load_model('admin-dashboard-model');
+
+        //get user Message list
+        $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+        //caso accessToken espire
+        if ($userMessageList["statusCode"] === 401){
+            //faz o refresh do accessToken
+            $this->userTokenRefresh();
+            $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+        }
+        if ($userMessageList["statusCode"] === 200){
+            $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+            $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+        }
 
         /** Carrega os arquivos do view **/
         require ABSPATH . '/views/_includes/admin-header.php';
@@ -1054,6 +1119,20 @@ class AdminController extends MainController
             }
 
         } else {
+            //get user Message list
+            $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            //caso accessToken espire
+            if ($userMessageList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+                $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            }
+            if ($userMessageList["statusCode"] === 200){
+                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+
+            //get trees List
             $treesList = $modelo->getTreeList();
             if ($treesList["statusCode"] === 200){
                 $this->userdata['treesList'] = $treesList["body"]["trees"];
@@ -1066,6 +1145,7 @@ class AdminController extends MainController
                 $this->userdata['treesList'] = $treesList["body"]["trees"];
             }
 
+            //get user List
             $userList = $modelo->getUserList();
             if ($userList["statusCode"] === 200){
                 $this->userdata['userList'] = $userList["body"]["users"];
@@ -1256,6 +1336,20 @@ class AdminController extends MainController
             }
 
         } else {
+            //get user Message list
+            $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            //caso accessToken espire
+            if ($userMessageList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+                $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            }
+            if ($userMessageList["statusCode"] === 200){
+                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+
+            //get trees List
             $treesList = $modelo->getTreeList();
             if ($treesList["statusCode"] === 200){
                 $this->userdata['treesList'] = $treesList["body"]["trees"];
@@ -1268,6 +1362,7 @@ class AdminController extends MainController
                 $this->userdata['treesList'] = $treesList["body"]["trees"];
             }
 
+            //get user List
             $userList = $modelo->getUserList();
             if ($userList["statusCode"] === 200){
                 $this->userdata['userList'] = $userList["body"]["users"];
@@ -1280,6 +1375,7 @@ class AdminController extends MainController
                 $this->userdata['userList'] = $userList["body"]["users"];
             }
 
+            //get trees User List
             $treesUserList = $modelo->getTreeUserList();
             if ($treesUserList["statusCode"] === 200){
                 $this->userdata['treesUserList'] = $treesUserList["body"]["trees"];
@@ -1291,7 +1387,6 @@ class AdminController extends MainController
                 $treesUserList = $modelo->getTreeUserList();
                 $this->userdata['treesUserList'] = $treesUserList["body"]["trees"];
             }
-
 
 
             /**Carrega os arquivos do view**/
@@ -1471,18 +1566,31 @@ class AdminController extends MainController
             }
 
         } else {
+            //get user Message list
+            $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            //caso accessToken espire
+            if ($userMessageList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+                $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            }
+            if ($userMessageList["statusCode"] === 200){
+                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+
+            //get tree Image List
             $treeImageList = $modelo->getTreeImageList();
             if ($treeImageList["statusCode"] === 200){
-                $this->userdata['treeImageList'] = $treeImageList["body"]["trees"];
+                $this->userdata['treeImageList'] = $treeImageList["body"]["images"];
             }
             if ($treeImageList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $treeImageList = $modelo->getTreeImageList();
-                $this->userdata['treeImageList'] = $treeImageList["body"]["trees"];
+                $this->userdata['treeImageList'] = $treeImageList["body"]["images"];
             }
-
 
 
             /**Carrega os arquivos do view**/
@@ -1662,6 +1770,20 @@ class AdminController extends MainController
             }
 
         } else {
+            //get user Message list
+            $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            //caso accessToken espire
+            if ($userMessageList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+                $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            }
+            if ($userMessageList["statusCode"] === 200){
+                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+
+            //get tree Types List
             $treeTypesList = $modelo->getTreeTypeList();
             if ($treeTypesList["statusCode"] === 200){
                 $this->userdata['treeTypesList'] = $treeTypesList["body"]["types"];
@@ -1864,6 +1986,20 @@ class AdminController extends MainController
             }
 
         } else {
+            //get user Message list
+            $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            //caso accessToken espire
+            if ($userMessageList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+                $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            }
+            if ($userMessageList["statusCode"] === 200){
+                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+
+            //get tree Intervention List
             $treeInterventionList = $modelo->getTreeInterventionList();
             if ($treeInterventionList["statusCode"] === 200){
                 $this->userdata['treeInterventionList'] = $treeInterventionList["body"]["interventions"];
@@ -2054,6 +2190,20 @@ class AdminController extends MainController
             }
 
         } else {
+            //get user Message list
+            $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            //caso accessToken espire
+            if ($userMessageList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+                $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            }
+            if ($userMessageList["statusCode"] === 200){
+                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+
+            //get tree Types List
             /*$treeTypesList = $modelo->getTreeTypeList();
             if ($treeTypesList["statusCode"] === 200){
                 $this->userdata['treeTypesList'] = $treeTypesList["body"]["types"];
@@ -2244,6 +2394,19 @@ class AdminController extends MainController
             }
 
         } else {
+            //get user Message list
+            $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            //caso accessToken espire
+            if ($userMessageList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+                $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            }
+            if ($userMessageList["statusCode"] === 200){
+                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+
             /*$treeTypesList = $modelo->getTreeTypeList();
             if ($treeTypesList["statusCode"] === 200){
                 $this->userdata['treeTypesList'] = $treeTypesList["body"]["types"];
@@ -2434,6 +2597,19 @@ class AdminController extends MainController
             }
 
         } else {
+            //get user Message list
+            $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            //caso accessToken espire
+            if ($userMessageList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+                $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            }
+            if ($userMessageList["statusCode"] === 200){
+                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+
             /*$treeTypesList = $modelo->getTreeTypeList();
             if ($treeTypesList["statusCode"] === 200){
                 $this->userdata['treeTypesList'] = $treeTypesList["body"]["types"];
@@ -2596,15 +2772,15 @@ class AdminController extends MainController
         } else {
             //get user Message list
             $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
-            if ($userMessageList["statusCode"] === 200){
-                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
-            }
+            //caso accessToken espire
             if ($userMessageList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
-
                 $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            }
+            if ($userMessageList["statusCode"] === 200){
                 $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
 
             /**Carrega os arquivos do view**/
@@ -2667,7 +2843,20 @@ class AdminController extends MainController
             return;
         }
 
-        $modelo = $this->load_model('admin-login-model');
+        $modelo = $this->load_model('admin-messages-model');
+
+        //get user Message list
+        $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+        //caso accessToken espire
+        if ($userMessageList["statusCode"] === 401){
+            //faz o refresh do accessToken
+            $this->userTokenRefresh();
+            $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+        }
+        if ($userMessageList["statusCode"] === 200){
+            $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+            $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+        }
 
         /**Carrega os arquivos do view**/
         require ABSPATH . '/views/_includes/admin-header.php';
@@ -2725,6 +2914,19 @@ class AdminController extends MainController
         }
 
         //$modelo = $this->load_model('admin-login-model');
+
+        /*//get user Message list
+        $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+        //caso accessToken espire
+        if ($userMessageList["statusCode"] === 401){
+            //faz o refresh do accessToken
+            $this->userTokenRefresh();
+            $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+        }
+        if ($userMessageList["statusCode"] === 200){
+            $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+            $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+        }*/
 
         /** Carrega os arquivos do view **/
         require ABSPATH . '/views/_includes/admin-header.php';
