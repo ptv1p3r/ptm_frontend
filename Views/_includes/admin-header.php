@@ -84,9 +84,10 @@
                 <div class="dropdown-menu dropdown-menu-end" style="width: 20rem !important;">
                     <h6 class="dropdown-header">Message Center</h6>
 
+                    <!-- TODO: counter to only display last 5 messages received -->
                     <?php if (!empty($this->userdata['userMessageList'])) {
                     foreach ($this->userdata['userMessageList'] as $key => $message) { ?>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
+                        <a class="dropdown-item d-flex align-items-center" href="<?php echo HOME_URL . '/admin/messages/' . $message["id"];?>">
                             <div class="dropdown-item">
                                 <div class="text-truncate" style="width: 100%"><?php echo $message["message"] ?></div>
                                 <div class="small text-gray-500"><?php echo $message["fromName"] ?> · <?php echo $message["notificationDate"] ?></div>
@@ -95,7 +96,7 @@
                        <?php }
                     }?>
 
-                    <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                    <a class="dropdown-item text-center small text-gray-500" href="<?php echo HOME_URL . '/admin/messages';?>">Read More Messages</a>
                 </div>
             </li>
 
