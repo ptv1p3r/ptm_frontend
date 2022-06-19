@@ -290,7 +290,7 @@ MESSAGE MAIL CSS
 /*********************************
 MESSAGE READ MAIL CSS
 *********************************/
-body{
+/*body{
     background-color: #f9fafb;
     margin-top:20px;
 }
@@ -995,4 +995,4 @@ body{
 .badge-danger-muted {
     color: #212529;
     background-color: #f77eb9;
-}
+}*/
