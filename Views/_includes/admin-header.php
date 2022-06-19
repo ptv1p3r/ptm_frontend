@@ -76,18 +76,25 @@
                 <a class="nav-link dropdown-toggle no-arrow" href="#" id="messagesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-envelope fa-fw"></i>
                     <!-- Counter - Messages -->
-                    <span class="position-absolute translate-middle badge rounded-pill bg-danger">1</span>
+                    <?php if (!empty($this->userdata['totalMessagesNotViewed']) && $this->userdata['totalMessagesNotViewed'] !== 0) { ?>
+                        <span class="position-absolute translate-middle badge rounded-pill bg-danger"><?php echo $this->userdata['totalMessagesNotViewed'] ?></span>
+                    <?php }?>
                 </a>
                 <!-- Dropdown - Messages -->
                 <div class="dropdown-menu dropdown-menu-end" style="width: 20rem !important;">
                     <h6 class="dropdown-header">Message Center</h6>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                        <div class="dropdown-item">
-                            <div class="text-truncate" style="width: 100%">Am I a good boy? The reason I ask is because someone
-                                told me that people say this to all dogs, even if they aren't good...</div>
-                            <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                        </div>
-                    </a>
+
+                    <?php if (!empty($this->userdata['userMessageList'])) {
+                    foreach ($this->userdata['userMessageList'] as $key => $message) { ?>
+                        <a class="dropdown-item d-flex align-items-center" href="#">
+                            <div class="dropdown-item">
+                                <div class="text-truncate" style="width: 100%"><?php echo $message["message"] ?></div>
+                                <div class="small text-gray-500"><?php echo $message["fromName"] ?> · <?php echo $message["notificationDate"] ?></div>
+                            </div>
+                        </a>
+                       <?php }
+                    }?>
+
                     <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
                 </div>
             </li>
