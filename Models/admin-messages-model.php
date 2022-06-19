@@ -35,7 +35,7 @@ class AdminMessagesModel extends MainModel {
     }
 
     /**
-     * Metodo que retorna Message list pelo user id
+     * Metodo que retorna Message list do user pelo seu id
      * @param $id
      * @return mixed
      */

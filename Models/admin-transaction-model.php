@@ -16,4 +16,20 @@ class AdminTransactionModel extends MainModel {
         $this->userdata = $this->controller->userdata;
     }
 
+    /**
+     * Metodo que retorna Message list do user pelo seu id
+     * @param $id
+     * @return mixed
+     */
+    public function getMessageListByUserId($id) {
+        $result = null;
+
+        $url = API_URL . 'api/v1/messages/list/' . $id;
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
 }
