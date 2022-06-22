@@ -106,15 +106,19 @@
                 <th>Data intrevenção</th>
             </tr>
             </thead>
-            <?php if (!empty($this->securitydata['securitysList']['data'])) {
-            foreach ($this->securitydata['securitysList']['data'] as $key => $security) { ?>
+            <?php if (!empty( $this->userdata['interventionList'])) {
+            foreach ( $this->userdata['interventionList'] as $key => $intervention) { ?>
             <tbody>
             <tr>
-                <td><?php echo $security["homeLogin"] ?></td>
-                <td><?php echo $security["admLogin"] ?></td>
-                <td><?php echo $security["usersCreate"] ?></td>
-                <td><?php echo $security["usersRead"] ?></td>
-                <td><?php echo $security["usersUpdate"] ?></td>
+                <td><?php echo $intervention["id"] ?></td>
+<!--                <td>--><?php //echo $security["admLogin"] ?><!--</td>-->
+                <td><?php echo $intervention["subject"] ?></td>
+<!--                <td>--><?php //echo $security["usersCreate"] ?><!--</td>-->
+                <td><?php echo $intervention["description"] ?></td>
+<!--                <td>--><?php //echo $security["usersRead"] ?><!--</td>-->
+                <td><?php echo $intervention["observations"] ?></td>
+<!--                <td>--><?php //echo $security["usersUpdate"] ?><!--</td>-->
+                <td><?php echo $intervention["interventionDate"] ?></td>
             </tr>
             </tbody>
             <?php }
