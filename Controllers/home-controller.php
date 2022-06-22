@@ -664,16 +664,17 @@ class HomeController extends MainController
             if ($this->logged_in) {
 
 
-/*
+
                 //Load model intervation tree
-                $interventionList = $model->getInterventionsTreeList($_SESSION['userTreeToShow']['treeId']);
+//                $interventionList = $model->getInterventionsTreeList($_SESSION['userdata']['userTreeToShow']['id']);
+                $interventionList = $model->getInterventionsTreeList();
                 $this->userdata['interventionList'] = $interventionList['body']['interventions'];
 
-                //Load model all images tree list
+  /*              //Load model all images tree list
                 $interventionList = $model->getTreeImagesList($_SESSION['userTreeToShow']['treeId']);
                 $this->userdata['interventionList'] = $interventionList['body']['interventions'];
-
 */
+
 
 //                $model = $this->load_model('user-trees-model');
                 //Load model user trees
