@@ -109,12 +109,33 @@ class UserTreesModel extends MainModel
      * Private view
      * @since 0.1
      * @access private
-     */
+
     public function getInterventionsTreeList($treeId)
     {
         $result = null;
 
-        $url = API_URL . 'api/v1/trees/view/' . $treeId;
+        $url = API_URL . 'api/v1/interventions/view/' . $treeId;
+
+        if (!empty($_SESSION['userdata']['accessToken'])) {
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }*/
+
+
+    /**
+     * Get trees image list
+     * Private view
+     * @since 0.1
+     * @access private
+     */
+    public function getInterventionsTreeList()
+    {
+        $result = null;
+
+        $url = API_URL . 'api/v1/interventions/list/';
 
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
@@ -123,6 +144,8 @@ class UserTreesModel extends MainModel
         //trasforma toda a msg em string json para poder ser enviado
         return json_decode(json_encode($result), true);
     }
+
+
 
     /**
      * Get trees image list
