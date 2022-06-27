@@ -15,13 +15,23 @@
             <div class="col-md-6">
                 <div id="fpro-slider" class="owl-carousel owl-theme">
                     <!--Tree Images Start-->
+                    <?php if (!empty($this->userdata['imageTreeList'])) {
+                    foreach ($this->userdata['imageTreeList'] as $key => $image) { ?>
                     <div class="item">
-                        <div class="f-product">
-                            <img src="/Images/home/fpro1.jpg" alt="">
-                            <!--                            <div class="fp-text">-->
-                            <!--                                <h6><a href="#">Amendoeira</a></h6>-->
+                        <div class="f-product" >
+
+
+<!--                                    <img src="/Images/home/fpro1.jpg" alt="logo">-->
+                                    <!--                            <div class="fp-text">-->
+                                    <!--                                <h6><a href="#">Amendoeira</a></h6>-->
+                                    <img width="100%" height="100%" src="<?php echo API_URL . "api/v1/trees/image/" . $image["path"] ?>"
+                                         alt="<?php echo  $image['name']?>">
+
+
                         </div>
                     </div>
+                    <?php }
+                    } ?>
                 </div>
             </div>
         </div>
@@ -106,22 +116,22 @@
                 <th>Data intrevenção</th>
             </tr>
             </thead>
-            <?php if (!empty( $this->userdata['interventionList'])) {
-            foreach ( $this->userdata['interventionList'] as $key => $intervention) { ?>
-            <tbody>
-            <tr>
-                <td><?php echo $intervention["id"] ?></td>
-<!--                <td>--><?php //echo $security["admLogin"] ?><!--</td>-->
-                <td><?php echo $intervention["subject"] ?></td>
-<!--                <td>--><?php //echo $security["usersCreate"] ?><!--</td>-->
-                <td><?php echo $intervention["description"] ?></td>
-<!--                <td>--><?php //echo $security["usersRead"] ?><!--</td>-->
-                <td><?php echo $intervention["observations"] ?></td>
-<!--                <td>--><?php //echo $security["usersUpdate"] ?><!--</td>-->
-                <td><?php echo $intervention["interventionDate"] ?></td>
-            </tr>
-            </tbody>
-            <?php }
+            <?php if (!empty($this->userdata['interventionList'])) {
+                foreach ($this->userdata['interventionList'] as $key => $intervention) { ?>
+                    <tbody>
+                    <tr>
+                        <td><?php echo $intervention["id"] ?></td>
+                        <!--                <td>--><?php //echo $security["admLogin"] ?><!--</td>-->
+                        <td><?php echo $intervention["subject"] ?></td>
+                        <!--                <td>--><?php //echo $security["usersCreate"] ?><!--</td>-->
+                        <td><?php echo $intervention["description"] ?></td>
+                        <!--                <td>--><?php //echo $security["usersRead"] ?><!--</td>-->
+                        <td><?php echo $intervention["observations"] ?></td>
+                        <!--                <td>--><?php //echo $security["usersUpdate"] ?><!--</td>-->
+                        <td><?php echo $intervention["interventionDate"] ?></td>
+                    </tr>
+                    </tbody>
+                <?php }
             } else { ?>
                 <tbody>
                 <tr>
