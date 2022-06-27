@@ -8399,11 +8399,19 @@ User tree details CSS
     flex-wrap: wrap;
     margin-right: -15px;
     margin-left: -15px;
+
 }
+
+
+.img{
+    background-size: 150px;
+}
+
 
 /*********************************
 END User tree details CSS
 *********************************/
+
 
 /*********************************
 Toogle Map Leaflet CSS

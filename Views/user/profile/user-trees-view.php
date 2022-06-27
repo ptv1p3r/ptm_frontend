@@ -12,26 +12,29 @@
 <section class="home-about wf100 p80">
     <div class="container">
         <div class="imageUserTree">
-            <div class="col-md-6">
+            <div class="col-md-6 ">
                 <div id="fpro-slider" class="owl-carousel owl-theme">
+
+<!--                    TODO ver o resize da imagem     -->
+
                     <!--Tree Images Start-->
                     <?php if (!empty($this->userdata['imageTreeList'])) {
-                    foreach ($this->userdata['imageTreeList'] as $key => $image) { ?>
-                    <div class="item">
-                        <div class="f-product" >
-
-
-<!--                                    <img src="/Images/home/fpro1.jpg" alt="logo">-->
-                                    <!--                            <div class="fp-text">-->
-                                    <!--                                <h6><a href="#">Amendoeira</a></h6>-->
-                                    <img width="100%" height="100%" src="<?php echo API_URL . "api/v1/trees/image/" . $image["path"] ?>"
-                                         alt="<?php echo  $image['name']?>">
-
-
+                        foreach ($this->userdata['imageTreeList'] as $key => $image) { ?>
+                            <div class="item">
+                                <div class="f-product">
+                                    <img
+                                         src="<?php echo API_URL . "api/v1/trees/image/" . $image["path"] ?>"
+                                         alt="<?php echo $image['name'] ?>">
+                                </div>
+                            </div>
+                        <?php }
+                    } else { ?>
+                        <div class="item">
+                            <div class="f-product">
+                                <img src="/Images/home/gallery/nophoto.png" alt="nophoto">
+                            </div>
                         </div>
-                    </div>
-                    <?php }
-                    } ?>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -41,7 +44,7 @@
 
 <!--Section tree details Start-->
 <section>
-    <div class="wf100 p80">
+    <div class="wf100 p10">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -103,6 +106,7 @@
 
 <!--Section tree Intrevation Sart-->
 
+<!--TODO ver o trim da tabela-->
 <section class="home-about wf100 p80">
     <div class="container">
         <h5>Intervenções:</h5>
@@ -121,13 +125,9 @@
                     <tbody>
                     <tr>
                         <td><?php echo $intervention["id"] ?></td>
-                        <!--                <td>--><?php //echo $security["admLogin"] ?><!--</td>-->
                         <td><?php echo $intervention["subject"] ?></td>
-                        <!--                <td>--><?php //echo $security["usersCreate"] ?><!--</td>-->
                         <td><?php echo $intervention["description"] ?></td>
-                        <!--                <td>--><?php //echo $security["usersRead"] ?><!--</td>-->
                         <td><?php echo $intervention["observations"] ?></td>
-                        <!--                <td>--><?php //echo $security["usersUpdate"] ?><!--</td>-->
                         <td><?php echo $intervention["interventionDate"] ?></td>
                     </tr>
                     </tbody>
@@ -139,7 +139,6 @@
                 </tbody>
             <?php } ?>
         </table>
-
     </div>
 </section>
 
