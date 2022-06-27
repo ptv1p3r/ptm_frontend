@@ -633,66 +633,46 @@ class HomeController extends MainController
                     $apiResponse = json_encode($apiResponse);
                     echo $apiResponse;
                     break;
-//
-//                case 'getTrees' :
-////                    $data = $_SESSION['userdata']['id'];
-//                    $apiResponse = $model->getTreesList();
-////                    $apiResponse = $model->getAllTrees();
-//                    $apiResponseBody = array();
-//
-//
-//                    if ($apiResponse['statusCode'] === 200) { // 200 success
-//                        $apiResponseBody = json_encode($apiResponse["body"]['trees']);
-//
-//                    }
-//
-//                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
-//                        //faz o refresh do accessToken
-//                        $this->userTokenRefresh();
-//
-////                        $allTreesList = $model->getAllTrees();
-//                        $apiResponse = $model->getTreesList();
-//                        $apiResponseBody = json_encode($apiResponse["body"]['trees']);
-//                    }
-//
-//                    echo $apiResponseBody;
-//                    break;
             }
-//
         } else {
 
             if ($this->logged_in) {
 
 
-
                 //Load model intervation tree
-//                $interventionList = $model->getInterventionsTreeList($_SESSION['userdata']['userTreeToShow']['id']);
-                $interventionList = $model->getInterventionsTreeList();
-                $this->userdata['interventionList'] = $interventionList['body']['interventions'];
-
-  /*              //Load model all images tree list
-                $interventionList = $model->getTreeImagesList($_SESSION['userTreeToShow']['treeId']);
-                $this->userdata['interventionList'] = $interventionList['body']['interventions'];
-*/
+                $interventionList = $model->getInterventionsTreeList($_SESSION['userdata']['userTreeToShow']['id']);
+//                $this->userdata['interventionList'] = $interventionList['body']['interventions'];
 
 
-//                $model = $this->load_model('user-trees-model');
-                //Load model user trees
-                $userTreesList = $model->getUserTreesList($_SESSION['userdata']['id']);
-
-                if ($userTreesList["statusCode"] === 200) {
-                    $this->userdata['userTreesList'] = $userTreesList["body"]['trees'];
+                if ($interventionList["statusCode"] === 200) {
+                    $this->userdata['interventionList'] = $interventionList['body']['interventions'];
                 }
-                if ($userTreesList["statusCode"] === 401) {
+                if ($interventionList["statusCode"] === 401) {
                     //Refresh do accessToken
                     $this->userTokenRefresh();
-                    //Load model all trees
-                    $allTreesList = $model->getTreesList();
-                    $this->userdata['allTreesList'] = $allTreesList['body']['trees'];
-                    //Load model user trees
-                    $userTreesList = $model->getUserTreesList($_SESSION['userdata']['id']);
-                    $this->userdata['userTreesList'] = $userTreesList["body"]['trees'];
+
+                    //Load model intervation tree
+                    $interventionList = $model->getInterventionsTreeList($_SESSION['userdata']['userTreeToShow']['id']);
+                    $this->userdata['interventionList'] = $interventionList['body']['interventions'];
                 }
+
+                //Load model all images tree list
+                $imageTreeList = $model->getTreeImagesList($_SESSION['userdata']['userTreeToShow']['id']);
+//                $this->userdata['imageTreeList'] = $imageTreeList['body']['images'];
+
+                if ( $imageTreeList["statusCode"] === 200) {
+                    $this->userdata['imageTreeList'] = $imageTreeList['body']['images'];
+                }
+                if ($imageTreeList["statusCode"] === 401) {
+                    //Refresh do accessToken
+                    $this->userTokenRefresh();
+
+                    //Load model intervation tree
+                    $imageTreeList = $model->getTreeImagesList($_SESSION['userdata']['userTreeToShow']['id']);
+                    $this->userdata['imageTreeList'] = $imageTreeList['body']['images'];
+                }
+
+
             }
             /** Carrega os arquivos do view **/
 
