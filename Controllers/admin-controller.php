@@ -2767,9 +2767,71 @@ class AdminController extends MainController
                     $apiResponse = json_encode($apiResponse);// encode package to send
                     echo $apiResponse;
                     break;
+
+                case "MarkUnread":
+                    /*$this->permission_required = array('userMessagesDelete');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }*/
+
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->messageUnread($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->messageUnread($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Marked as unread";
+                    }
+
+                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Marked as unread";
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo $apiResponse;
+                    break;
+
+                case "MarkRead":
+                    /*$this->permission_required = array('userMessagesDelete');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }*/
+
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->messageRead($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->messageRead($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Marked as read";
+                    }
+
+                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Marked as read";
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo $apiResponse;
+                    break;
             }
 
         } else {
+            //$message_id = chk_array($parametros, 0);
+
             //get user Message list
             $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             //caso accessToken espire
@@ -2792,17 +2854,12 @@ class AdminController extends MainController
         }
     }
 
-    /* TODO: messages view
-        usar parametros? ou carregar nova pagina?
-        ou usar ajax para carregar nas nav-tabs ?
-    */
-
     /**
      * Carrega a página
-     * "/views/admin/admin-messages-view.php"
+     * "/views/admin/admin-all-messages-view.php"
      * @return void
      */
-    public function messages_view(){
+    public function all_messages(){
         // Título da página
         $this->title = 'Admin - Mensagens';
 
@@ -2811,12 +2868,12 @@ class AdminController extends MainController
 
         // Estado da sidebar
         // se ja existir uma active tab
-        /*if (isset($_SESSION["sidebar"]["active_tab"])) {
+        if (isset($_SESSION["sidebar"]["active_tab"])) {
             //remove a currently active
             unset($_SESSION["sidebar"]["active_tab"]);
             //e dá set a uma nova active tab
-            $_SESSION["sidebar"]["active_tab"]["messages"] = true;
-        }*/
+            $_SESSION["sidebar"]["active_tab"]["all_messages"] = true;
+        }
 
         // Parametros da função
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
@@ -2862,7 +2919,7 @@ class AdminController extends MainController
         /**Carrega os arquivos do view**/
         require ABSPATH . '/views/_includes/admin-header.php';
 
-        require ABSPATH . '/views/admin/messages/admin-view-messages-view.php';
+        require ABSPATH . '/views/admin/messages/admin-all-messages-view.php';
 
         require ABSPATH . '/views/_includes/admin-footer.php';
 
