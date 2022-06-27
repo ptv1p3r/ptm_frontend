@@ -113,6 +113,42 @@ class AdminMessagesModel extends MainModel {
     }
 
     /**
+     * Metodo Message Read
+     * @param $data
+     * @return array|null
+     */
+    public function messageRead($data) {
+        $result = null;
+
+        $url = API_URL . 'api/v1/messages/state/read/' . $data;
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("POST", $url, "", $userToken);
+        }
+
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+    /**
+     * Metodo Message Unread
+     * @param $data
+     * @return array|null
+     */
+    public function messageUnread($data) {
+        $result = null;
+
+        $url = API_URL . 'api/v1/messages/state/unread/' . $data;
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("POST", $url, "", $userToken);
+        }
+
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+    /**
      * Metodo delete Message
      * @param $data
      * @return mixed
