@@ -40,7 +40,7 @@
 
                                                     <div>
                                                         <ul class="nav flex-column nav-pills nav-stacked">
-                                                            <li class="nav-item header">Folders</li>
+                                                            <li class="header">Folders</li>
                                                             <li class="nav-item" role="presentation">
                                                                 <a class="nav-link active" id="pills-inbox-tab" data-bs-toggle="pill" data-bs-target="#pills-inbox"
                                                                    type="button" role="tab" aria-controls="pills-inbox" aria-selected="true">
@@ -67,6 +67,9 @@
                                                             <label style="margin-right: 8px;" class="">
                                                                 <div class="icheckbox_square-blue" style="position: relative;"><input type="checkbox" id="check-all" class="icheck" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
                                                             </label>
+                                                            <a class="btn" href="<?php echo HOME_URL . '/admin/messages/'?>">
+                                                                <i class="fa-solid fa-rotate"></i>
+                                                            </a>
                                                             <div class="btn-group">
                                                                 <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                                                     Action <span class="caret"></span>
@@ -145,7 +148,9 @@
                                                             sent
                                                         </div>
 
-                                                        <!--TODO: do message read, parametros tabs?-->
+                                                        <!--TODO: message read, parametros tabs?
+                                                              provavelmente nao pode ser em nav-pills
+                                                              ajax com js para carregar messages?-->
                                                         <div class="tab-pane fade" id="pills-messageRead" role="tabpanel" aria-labelledby="pills-messageRead-tab">
                                                             message read
                                                         </div>
