@@ -126,38 +126,31 @@
                             <!-- Sidebar -->
                             <div class="bg-light border-right" id="sidebar-wrapper">
                                 <div class="sidebar-heading pt-5 pb-4"><strong>Metodo de pagamento</strong></div>
+                                <?php if (!empty($this->userdata['transactionList'])) {
+                                    foreach ($this->userdata['transactionList'] as $key => $trans) { ?>
 
-                                <div class="half pr15">
-                                    <select class="form-control" name="adoptList" id="adoptList"
-                                            class="form-control customDropdown">
-                                        <option value="" disabled selected>Metodo</option>
-                                        <?php if (!empty($this->userdata['transactionList'])) {
-                                            foreach ($this->userdata['transactionList'] as $key => $trans) { ?>
-                                                <option value="<?php echo $trans['name'] ?>">
-                                                    <?php echo $trans["name"] ?></option>
-                                            <?php }
-                                        } ?>
 
-                                    </select>
-                                </div>
-
-                                <div class="list-group list-group-flush"><a data-toggle="tab" href="#menu1" id="tab1"
+                                <div class="list-group list-group-flush">
+                                    <a data-toggle="tab" href="#<?php echo $trans["name"] ?>" id="<?php echo $trans["name"] ?>"
                                                                             class="tabs list-group-item bg-light">
                                         <div class="list-div my-2">
-                                            <div class="fa fa-home"></div> &nbsp;&nbsp; Bank
+                                            <div class="fa fa-home"></div>  <?php echo $trans["name"] ?>
                                         </div>
-                                    </a> <a data-toggle="tab" href="#menu2" id="tab2"
+                                    </a>
+
+
+                                    <a data-toggle="tab" href="#menu2" id="tab2"
                                             class="tabs list-group-item active1">
                                         <div class="list-div my-2">
                                             <div class="fa fa-credit-card"></div> &nbsp;&nbsp; Card
                                         </div>
-                                    </a> <a data-toggle="tab" href="#menu3" id="tab3"
-                                            class="tabs list-group-item bg-light">
-                                        <div class="list-div my-2">
-                                            <div class="fa fa-qrcode"></div> &nbsp;&nbsp;&nbsp; Visa QR <span
-                                                    id="new-label">NEW</span>
-                                        </div>
-                                    </a></div>
+                                    </a>
+
+                                </div>
+
+
+                                <?php }
+                                } ?>
                             </div> <!-- Page Content -->
                             <div id="page-content-wrapper">
                                 <div class="row pt-3" id="border-btm">
@@ -199,61 +192,16 @@
 
 
                                 <div class="tab-content">
-                                    <div id="menu1" class="tab-pane">
+
+
+
+                                    <div id="MBWay" class="tab-pane">
                                         <div class="row justify-content-center">
                                             <div class="col-11">
                                                 <div class="form-card">
                                                     <h3 class="mt-0 mb-4 text-center">Enter bank details to pay</h3>
-                                                    <form onsubmit="event.preventDefault()">
-                                                        <div class="row">
+                                                    <form >
 
-                                                            <div class="form-group">
-                                                                <input id="adoptionVal" name="adoptionVal" type="hidden"
-                                                                       class="form-control"
-                                                                       value="<?php echo $_SESSION['userdata']['treeDonation'][0]['value'] ?>">
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <input id="adoptionVal" name="adoptionVal" type="hidden"
-                                                                       class="form-control"
-                                                                       value="<?php echo $_SESSION['userdata']['treeDonation'][1]['value'] ?>">
-                                                            </div>
-
-                                                            <div class="col-12">
-                                                                <div class="input-group"><input type="text" id="bk_nm"
-                                                                                                placeholder="BBB Bank">
-                                                                    <label>BANK NAME</label></div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                <div class="input-group"><input type="text"
-                                                                                                name="ben_nm"
-                                                                                                id="ben-nm"
-                                                                                                placeholder="John Smith">
-                                                                    <label>BENEFICIARY NAME</label></div>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <div class="input-group"><input type="text" name="scode"
-                                                                                                placeholder="ABCDAB1S"
-                                                                                                class="placeicon"
-                                                                                                minlength="8"
-                                                                                                maxlength="11"> <label>SWIFT
-                                                                        CODE</label></div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-12"><input type="submit"
-                                                                                          value="Pay $ 100"
-                                                                                          class="btn btn-success placeicon">
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <p class="text-center mb-5" id="below-btn"><a href="#">Use
-                                                                        a test card</a></p>
-                                                            </div>
-                                                        </div>
                                                     </form>
                                                 </div>
                                             </div>
@@ -527,7 +475,6 @@
 
 </script>
 <!--Script End-->
-
 
 
 

@@ -677,6 +677,9 @@ class HomeController extends MainController
                 $this->userdata['transactionList'] = $getTransactionModel['body']['methods'];
             }
 
+
+
+
 /*
             $apiResponseBody = json_encode($data2['data']);
             echo $apiResponseBody;
