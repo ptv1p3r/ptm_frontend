@@ -22,6 +22,12 @@
                             <div class="row">
                                 <!-- BEGIN INBOX -->
                                 <div class="col-md-12">
+
+                                    <!-- ALERT ?
+                                    <div id="liveAlert">
+
+                                    </div>-->
+
                                     <div class="grid email">
                                         <div class="grid-body">
                                             <div class="row">
@@ -90,13 +96,15 @@
 
                                                     <!-- INBOX -->
                                                     <div class="tab-content" id="pills-tabContent">
+
                                                         <div class="tab-pane fade show active" id="pills-inbox" role="tabpanel" aria-labelledby="pills-inbox-tab">
                                                             <div class="table-responsive">
                                                                 <table class="table" id="messagesTable">
                                                                     <tbody>
                                                                     <?php if (!empty($this->userdata['userMessageList'])) {
                                                                         foreach ($this->userdata['userMessageList'] as $key => $message) { ?>
-                                                                            <tr class="nav-item read" role="presentation">
+
+                                                                            <tr class="nav-item <?php echo ($message["receptionDate"] != null ) ? "read" : ""; ?>" role="presentation">
                                                                                 <td class="action"><div class="icheckbox_square-blue" st<td class="action"><input type="checkbox" /></td>
                                                                                 <td class="name">
                                                                                     <a href="#">
@@ -104,18 +112,25 @@
                                                                                     </a>
                                                                                 </td>
                                                                                 <td class="subject">
-                                                                                    <a href="<?php echo HOME_URL . '/admin/messages_view';?>">
-                                                                                        <?php echo $message["subject"] ?>
+                                                                                    <a href="<?php echo HOME_URL . '/admin/messages/' . $message["id"];?>">
+                                                                                        <?php echo $message["subject"]?>
                                                                                     </a>
                                                                                 </td>
                                                                                 <td class="time"><?php echo $message["notificationDate"] ?></td>
                                                                                 <td>
-                                                                                    <a href="#editGroupModal" id="<?php echo $message['id'] ?>" class="edit"
-                                                                                       data-bs-toggle="modal" data-bs-target="#editGroupModal"><i class="fa-solid fa-envelope"></i></a>
+                                                                                    <?php if ($message["receptionDate"] === null ) {?>
+                                                                                        <a href="javascript:void(0);" id="<?php echo $message['id'] ?>"
+                                                                                           class="message-read" title="Mark as read"><i class="fa-solid fa-envelope-open"></i></a>
+                                                                                    <?php } else {?>
+                                                                                        <a href="javascript:void(0);" id="<?php echo $message['id'] ?>"
+                                                                                           class="message-unread" title="Mark as unread"><i class="fa-solid fa-envelope"></i></a>
+                                                                                    <?php }?>
+
                                                                                     <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="delete"
                                                                                        data-bs-toggle="modal" data-bs-target="#deleteMessageModal"><i class="fas fa-trash-alt"></i></a>
                                                                                 </td>
                                                                             </tr>
+
                                                                         <?php }
                                                                     } else { ?>
                                                                         <tr>
@@ -125,8 +140,14 @@
                                                                 </table>
                                                             </div>
                                                         </div>
+
                                                         <div class="tab-pane fade" id="pills-sent" role="tabpanel" aria-labelledby="pills-sent-tab">
                                                             sent
+                                                        </div>
+
+                                                        <!--TODO: do message read, parametros tabs?-->
+                                                        <div class="tab-pane fade" id="pills-messageRead" role="tabpanel" aria-labelledby="pills-messageRead-tab">
+                                                            message read
                                                         </div>
                                                     </div>
 
@@ -168,6 +189,29 @@
                                                     </div>
                                                 </div><!-- END COMPOSE MESSAGE -->
 
+                                                <!-- Delete Modal HTML -->
+                                                <div id="deleteMessageModal" class="modal fade" tabindex="-1" aria-labelledby="deleteMessageModal-Label" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <form id="deleteMessage">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">Delete Message</h4>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p>Are you sure you want to delete this Message?</p>
+                                                                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                                                                    <input id="deleteMessageId" name="deleteMessageId" type="hidden" class="form-control" value="">
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                    <input type="submit" class="btn btn-danger" value="Delete">
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -208,7 +252,10 @@
                     console.log(error);
                 }*/
 
+                var someTabTriggerEl = document.querySelector('#pills-messageRead')
+                var tab = new bootstrap.Tab(someTabTriggerEl)
 
+                $('#pills-messageRead').html("MESSAGE READ")
 
                 // ajax to Add Message
                 $('#addMessage').submit(function (event) {
@@ -348,6 +395,142 @@
                     $('[name="deleteMessageId"]').val($deleteID); //gets group id from id="" attribute on delete button from table
                     $("#deleteMessageModal").modal('show');
 
+                });
+
+                //ajax to set message as unread
+                $(function() {
+                    $(".message-unread").click(function(e) {
+                        e.preventDefault();
+
+                        let formData = {
+                            'action': "MarkUnread",
+                            'data': $(this).attr("id")
+                        };
+
+                        $.ajax({
+                            url: "<?php echo HOME_URL . '/admin/messages';?>",
+                            dataType: "json",
+                            type: 'POST',
+                            data: formData,
+                            beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                                $('#loader').removeClass('hidden')
+                            },
+                            success: function (data) {
+                                //$("#deleteMessageModal").modal('hide');
+
+                                if (data.statusCode === 200) {
+                                    //mensagem de Success
+                                    Swal.fire({
+                                        title: 'Success!',
+                                        text: data.body.message,
+                                        icon: 'success',
+                                        showConfirmButton: false,
+                                        timer: 2000,
+                                        didClose: () => {
+                                            location.reload();
+                                        }
+                                    });
+                                } else {
+                                    //mensagem de Error
+                                    Swal.fire({
+                                        title: 'Error!',
+                                        text: data.body.message,
+                                        icon: 'error',
+                                        showConfirmButton: false,
+                                        timer: 2000,
+                                        didClose: () => {
+                                            //location.reload();
+                                        }
+                                    });
+                                }
+
+                            },
+                            error: function (data) {
+                                //mensagem de Error
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: "Connection error, please try again.",
+                                    icon: 'error',
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                    didClose: () => {
+                                        //location.reload();
+                                    }
+                                });
+                            },
+                            complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                                $('#loader').addClass('hidden')
+                            }
+                        });
+                    });
+                });
+
+                //ajax to set message as read
+                $(function() {
+                    $(".message-read").click(function(e) {
+                        e.preventDefault();
+
+                        let formData = {
+                            'action': "MarkRead",
+                            'data': $(this).attr("id")
+                        };
+
+                        $.ajax({
+                            url: "<?php echo HOME_URL . '/admin/messages';?>",
+                            dataType: "json",
+                            type: 'POST',
+                            data: formData,
+                            beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                                $('#loader').removeClass('hidden')
+                            },
+                            success: function (data) {
+                                //$("#deleteMessageModal").modal('hide');
+
+                                if (data.statusCode === 200) {
+                                    //mensagem de Success
+                                    Swal.fire({
+                                        title: 'Success!',
+                                        text: data.body.message,
+                                        icon: 'success',
+                                        showConfirmButton: false,
+                                        timer: 2000,
+                                        didClose: () => {
+                                            location.reload();
+                                        }
+                                    });
+                                } else {
+                                    //mensagem de Error
+                                    Swal.fire({
+                                        title: 'Error!',
+                                        text: data.body.message,
+                                        icon: 'error',
+                                        showConfirmButton: false,
+                                        timer: 2000,
+                                        didClose: () => {
+                                            //location.reload();
+                                        }
+                                    });
+                                }
+
+                            },
+                            error: function (data) {
+                                //mensagem de Error
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: "Connection error, please try again.",
+                                    icon: 'error',
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                    didClose: () => {
+                                        //location.reload();
+                                    }
+                                });
+                            },
+                            complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                                $('#loader').addClass('hidden')
+                            }
+                        });
+                    });
                 });
 
             });
