@@ -64,12 +64,10 @@
                                                     <!-- MAIL TABLE -->
                                                     <div class="row">
                                                         <div class="col-sm-6">
+                                                            <!-- action -->
                                                             <label style="margin-right: 8px;" class="">
                                                                 <div class="icheckbox_square-blue" style="position: relative;"><input type="checkbox" id="check-all" class="icheck" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
                                                             </label>
-                                                            <a class="btn" href="<?php echo HOME_URL . '/admin/messages/'?>">
-                                                                <i class="fa-solid fa-rotate"></i>
-                                                            </a>
                                                             <div class="btn-group">
                                                                 <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                                                     Action <span class="caret"></span>
@@ -81,6 +79,10 @@
                                                                     <li><a class="dropdown-item" href="#">Delete</a></li>
                                                                 </ul>
                                                             </div>
+                                                            <!-- refresh -->
+                                                            <a class="btn" href="<?php echo HOME_URL . '/admin/messages/'?>">
+                                                                <i class="fa-solid fa-rotate"></i>
+                                                            </a>
                                                         </div>
 
                                                         <!--<div class="col-md-6 search-form">
@@ -149,8 +151,9 @@
                                                         </div>
 
                                                         <!--TODO: message read, parametros tabs?
-                                                              provavelmente nao pode ser em nav-pills
-                                                              ajax com js para carregar messages?-->
+                                                              provavelmente nao pode ser em nav-pills?
+                                                              ajax com js para carregar messages,
+                                                               cada vez que a tab é clicked, faz getAllMessages e mostra?-->
                                                         <div class="tab-pane fade" id="pills-messageRead" role="tabpanel" aria-labelledby="pills-messageRead-tab">
                                                             message read
                                                         </div>
