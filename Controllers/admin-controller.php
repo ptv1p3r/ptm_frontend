@@ -2830,7 +2830,22 @@ class AdminController extends MainController
             }
 
         } else {
-            //$message_id = chk_array($parametros, 0);
+            //se existir parametro
+            if (isset($parametros) && !empty($parametros)) {
+                $message_id = chk_array($parametros, 0);
+
+                //faz get da message pelo id que vem nesse parametro
+                $userMessageView = $modelo->getMessageById($message_id);
+                //caso accessToken espire
+                if ($userMessageView["statusCode"] === 401){
+                    //faz o refresh do accessToken
+                    $this->userTokenRefresh();
+                    $userMessageView = $modelo->getMessageById($message_id);
+                }
+                if ($userMessageView["statusCode"] === 200){
+                    $this->userdata['userMessageView'] = $userMessageView["body"];
+                }
+            }
 
             //get user Message list
             $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
