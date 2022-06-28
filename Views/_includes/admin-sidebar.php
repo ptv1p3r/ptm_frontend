@@ -17,6 +17,18 @@
                         Minhas mensagens
                     </a>
                 <?php } ?>
+                <!-- all messages -->
+                <?php if (isset($_SESSION["sidebar"]["active_tab"]["all_messages"]) && $_SESSION["sidebar"]["active_tab"]["all_messages"] === true) { ?>
+                    <a class="nav-link active" href="<?php echo HOME_URL . '/admin/all_messages'; ?>">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-envelope"></i></div>
+                        Todas mensagens
+                    </a>
+                <?php } else { ?>
+                    <a class="nav-link" href="<?php echo HOME_URL . '/admin/all_messages'; ?>">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-envelope"></i></div>
+                        Todas mensagens
+                    </a>
+                <?php } ?>
 
                 <!-- Core -->
                 <div class="sb-sidenav-menu-heading">Core</div>
