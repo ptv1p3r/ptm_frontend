@@ -12,19 +12,16 @@
 <section class="home-about wf100 p80">
     <div class="container">
         <div class="imageUserTree">
-            <div class="col-md-6 ">
-                <div id="fpro-slider" class="owl-carousel owl-theme">
-
-<!--                    TODO ver o resize da imagem     -->
-
+            <div class="col-md-6 cardImage ">
+                <div id="fpro-slider" class="owl-carousel owl-theme ">
                     <!--Tree Images Start-->
                     <?php if (!empty($this->userdata['imageTreeList'])) {
                         foreach ($this->userdata['imageTreeList'] as $key => $image) { ?>
                             <div class="item">
                                 <div class="f-product">
                                     <img
-                                         src="<?php echo API_URL . "api/v1/trees/image/" . $image["path"] ?>"
-                                         alt="<?php echo $image['name'] ?>">
+                                            src="<?php echo API_URL . "api/v1/trees/image/" . $image["path"] ?>"
+                                            alt="<?php echo $image['name'] ?>">
                                 </div>
                             </div>
                         <?php }
@@ -105,40 +102,48 @@
 <!--Section tree details END-->
 
 <!--Section tree Intrevation Sart-->
-
-<!--TODO ver o trim da tabela-->
 <section class="home-about wf100 p80">
     <div class="container">
-        <h5>Intervenções:</h5>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Assunto</th>
-                <th>Descrição</th>
-                <th>Observações</th>
-                <th>Data intrevenção</th>
-            </tr>
-            </thead>
-            <?php if (!empty($this->userdata['interventionList'])) {
-                foreach ($this->userdata['interventionList'] as $key => $intervention) { ?>
+        <h5>Intrevenções:</h5>
+        <div class="table-responsive intrevations">
+            <table class="table table-bordered">
+                <!--Define space between columns-->
+                <colgroup>
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 20%;">
+                    <col span="1" style="width: 20%;">
+                    <col span="1" style="width: 15%;">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Assunto</th>
+                    <th>Descrição</th>
+                    <th>Observações</th>
+                    <th>Data intrevenção</th>
+                </tr>
+                </thead>
+                <?php if (!empty($this->userdata['interventionList'])) {
+                    foreach ($this->userdata['interventionList'] as $key => $intervention) { ?>
+                        <tbody>
+                        <tr>
+                            <td><?php echo $intervention["id"] ?></td>
+                            <td><?php echo $intervention["subject"] ?></td>
+                            <td><?php echo $intervention["description"] ?></td>
+                            <td><?php echo $intervention["observations"] ?></td>
+                            <td><?php echo $intervention["interventionDate"] ?></td>
+                        </tr>
+                        </tbody>
+                    <?php }
+                } else { ?>
                     <tbody>
                     <tr>
-                        <td><?php echo $intervention["id"] ?></td>
-                        <td><?php echo $intervention["subject"] ?></td>
-                        <td><?php echo $intervention["description"] ?></td>
-                        <td><?php echo $intervention["observations"] ?></td>
-                        <td><?php echo $intervention["interventionDate"] ?></td>
                     </tr>
                     </tbody>
-                <?php }
-            } else { ?>
-                <tbody>
-                <tr>
-                </tr>
-                </tbody>
-            <?php } ?>
-        </table>
+                <?php } ?>
+            </table>
+        </div>
     </div>
 </section>
 
