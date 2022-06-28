@@ -55,8 +55,7 @@ class AdminMessagesModel extends MainModel {
      * Metodo que retorna lista de Messages
      * @return mixed
      */
-    public function getMessageList()
-    {
+    public function getMessageList() {
         $result = null;
 
         $url = API_URL . 'api/v1/messages/list';
