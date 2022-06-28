@@ -41,15 +41,13 @@
                                                     <div>
                                                         <ul class="nav flex-column nav-pills nav-stacked">
                                                             <li class="header">Folders</li>
-                                                            <li class="nav-item" role="presentation">
-                                                                <a class="nav-link active" id="pills-inbox-tab" data-bs-toggle="pill" data-bs-target="#pills-inbox"
-                                                                   type="button" role="tab" aria-controls="pills-inbox" aria-selected="true">
+                                                            <li class="nav-item active">
+                                                                <a class="nav-link" href="<?php echo HOME_URL . '/admin/messages'?>">
                                                                     <i class="fa fa-inbox"></i> Inbox
                                                                 </a>
                                                             </li>
-                                                            <li class="nav-item" role="presentation">
-                                                                <a class="nav-link" id="pills-sent-tab" data-bs-toggle="pill" data-bs-target="#pills-sent"
-                                                                   type="button" role="tab" aria-controls="pills-sent" aria-selected="true">
+                                                            <li class="nav-item"">
+                                                                <a class="nav-link" role="button" onClick="">
                                                                     <i class="fa fa-mail-forward"></i> Sent
                                                                 </a>
                                                             </li>
@@ -80,7 +78,7 @@
                                                                 </ul>
                                                             </div>
                                                             <!-- refresh -->
-                                                            <a class="btn" href="<?php echo HOME_URL . '/admin/messages/'?>">
+                                                            <a class="btn" href="<?php echo HOME_URL . '/admin/messages'?>">
                                                                 <i class="fa-solid fa-rotate"></i>
                                                             </a>
                                                         </div>
@@ -100,64 +98,98 @@
                                                     <div class="padding"></div>
 
                                                     <!-- INBOX -->
-                                                    <div class="tab-content" id="pills-tabContent">
+                                                    <div id="inbox-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table" id="messagesTable">
+                                                                <tbody>
+                                                                <?php if (!empty($this->userdata['userMessageList'])) {
+                                                                    foreach ($this->userdata['userMessageList'] as $key => $message) { ?>
 
-                                                        <div class="tab-pane fade show active" id="pills-inbox" role="tabpanel" aria-labelledby="pills-inbox-tab">
-                                                            <div class="table-responsive">
-                                                                <table class="table" id="messagesTable">
-                                                                    <tbody>
-                                                                    <?php if (!empty($this->userdata['userMessageList'])) {
-                                                                        foreach ($this->userdata['userMessageList'] as $key => $message) { ?>
+                                                                        <tr class="nav-item <?php echo ($message["receptionDate"] != null ) ? "read" : ""; ?>" role="presentation">
+                                                                            <td class="action"><div class="icheckbox_square-blue" st<td class="action"><input type="checkbox" /></td>
+                                                                            <td class="name">
+                                                                                <a href="#">
+                                                                                    <?php echo $message["fromName"] ?>
+                                                                                </a>
+                                                                            </td>
+                                                                            <td class="subject">
+                                                                                <a href="<?php echo HOME_URL . '/admin/messages/' . $message["id"];?>">
+                                                                                    <?php echo $message["subject"]?>
+                                                                                </a>
+                                                                            </td>
+                                                                            <td class="time"><?php echo $message["notificationDate"] ?></td>
+                                                                            <td>
+                                                                                <?php if ($message["receptionDate"] === null ) {?>
+                                                                                    <a href="javascript:void(0);" id="<?php echo $message['id'] ?>"
+                                                                                       class="message-read" title="Mark as read"><i class="fa-solid fa-envelope-open"></i></a>
+                                                                                <?php } else {?>
+                                                                                    <a href="javascript:void(0);" id="<?php echo $message['id'] ?>"
+                                                                                       class="message-unread" title="Mark as unread"><i class="fa-solid fa-envelope"></i></a>
+                                                                                <?php }?>
 
-                                                                            <tr class="nav-item <?php echo ($message["receptionDate"] != null ) ? "read" : ""; ?>" role="presentation">
-                                                                                <td class="action"><div class="icheckbox_square-blue" st<td class="action"><input type="checkbox" /></td>
-                                                                                <td class="name">
-                                                                                    <a href="#">
-                                                                                        <?php echo $message["fromName"] ?>
-                                                                                    </a>
-                                                                                </td>
-                                                                                <td class="subject">
-                                                                                    <a href="<?php echo HOME_URL . '/admin/messages/' . $message["id"];?>">
-                                                                                        <?php echo $message["subject"]?>
-                                                                                    </a>
-                                                                                </td>
-                                                                                <td class="time"><?php echo $message["notificationDate"] ?></td>
-                                                                                <td>
-                                                                                    <?php if ($message["receptionDate"] === null ) {?>
-                                                                                        <a href="javascript:void(0);" id="<?php echo $message['id'] ?>"
-                                                                                           class="message-read" title="Mark as read"><i class="fa-solid fa-envelope-open"></i></a>
-                                                                                    <?php } else {?>
-                                                                                        <a href="javascript:void(0);" id="<?php echo $message['id'] ?>"
-                                                                                           class="message-unread" title="Mark as unread"><i class="fa-solid fa-envelope"></i></a>
-                                                                                    <?php }?>
-
-                                                                                    <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="delete"
-                                                                                       data-bs-toggle="modal" data-bs-target="#deleteMessageModal"><i class="fas fa-trash-alt"></i></a>
-                                                                                </td>
-                                                                            </tr>
-
-                                                                        <?php }
-                                                                    } else { ?>
-                                                                        <tr>
+                                                                                <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="delete"
+                                                                                   data-bs-toggle="modal" data-bs-target="#deleteMessageModal"><i class="fas fa-trash-alt"></i></a>
+                                                                            </td>
                                                                         </tr>
-                                                                    <?php } ?>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
 
-                                                        <div class="tab-pane fade" id="pills-sent" role="tabpanel" aria-labelledby="pills-sent-tab">
-                                                            sent
-                                                        </div>
-
-                                                        <!--TODO: message read, parametros tabs?
-                                                              provavelmente nao pode ser em nav-pills?
-                                                              ajax com js para carregar messages,
-                                                               cada vez que a tab é clicked, faz getAllMessages e mostra?-->
-                                                        <div class="tab-pane fade" id="pills-messageRead" role="tabpanel" aria-labelledby="pills-messageRead-tab">
-                                                            message read
+                                                                    <?php }
+                                                                } else { ?>
+                                                                    <tr>
+                                                                    </tr>
+                                                                <?php } ?>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
                                                     </div>
+                                                    <script type="text/javascript">
+
+                                                        <?php if( isset($this->userdata["userMessageView"]) && !empty($this->userdata["userMessageView"])) {
+                                                            foreach ($this->userdata['userMessageView'] as $key => $message) {?>
+                                                                function LoadMessage(){
+                                                                    $('#inbox-body').html(`
+                                                                        <div class="col-lg-9 email-content">
+                                                                            <div class="email-head">
+                                                                                <div class="email-head-subject">
+                                                                                    <div class="title d-flex align-items-center justify-content-between">
+                                                                                        <div class="d-flex align-items-center">
+                                                                                            <span><?php echo $message["subject"] ?></span>
+                                                                                        </div>
+                                                                                        <div class="icons">
+                                                                                            <a href="#" class="icon">reply</a>
+                                                                                            <a href="#" class="icon">delete</a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="email-head-sender d-flex align-items-center justify-content-between flex-wrap">
+                                                                                    <div class="d-flex align-items-center">
+                                                                                        <div class="sender d-flex align-items-center">
+                                                                                            <a href="#"><?php echo $message["fromEmail"] ?></a> <span>to</span><a href="#"><?php echo $message["toEmail"] ?></a>
+                                                                                            <div class="actions dropdown">
+
+                                                                                                <div class="dropdown-menu" role="menu">
+                                                                                                    <a class="dropdown-item" href="#">Mark as read</a>
+                                                                                                    <a class="dropdown-item" href="#">Mark as unread</a>
+                                                                                                    <a class="dropdown-item" href="#">Spam</a>
+                                                                                                    <div class="dropdown-divider"></div>
+                                                                                                    <a class="dropdown-item text-danger" href="#">Delete</a>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="date"><?php echo $message["notificationDate"] ?></div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="email-body">
+                                                                                <?php echo $message["message"] ?>
+                                                                            </div>
+                                                                        </div>`
+                                                                    );
+                                                                }
+                                                                LoadMessage()
+                                                            <?php }
+                                                        }?>
+
+                                                    </script>
 
                                                 </div>
                                                 <!-- END INBOX CONTENT -->
@@ -259,11 +291,6 @@
                 } catch (error) {
                     console.log(error);
                 }*/
-
-                var someTabTriggerEl = document.querySelector('#pills-messageRead')
-                var tab = new bootstrap.Tab(someTabTriggerEl)
-
-                $('#pills-messageRead').html("MESSAGE READ")
 
                 // ajax to Add Message
                 $('#addMessage').submit(function (event) {
