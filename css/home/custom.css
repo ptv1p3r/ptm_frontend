@@ -8402,15 +8402,37 @@ User tree details CSS
 
 }
 
-
-.img{
-    background-size: 150px;
+.cardImage img {
+    height: 40rem;
+    background: #66bb6a;
+    width: 10rem;
+    padding: 0.5rem;
+    object-fit: cover;
 }
 
+/*Table*/
+.intrevations td {
+    width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 /*********************************
 END User tree details CSS
 *********************************/
+
+
+
+
+
+/*.intrevations table {border:1px solid #000; width:100px;table-layout: fixed;}*/
+
+
+
+/*.intrevations div {*/
+/*    display: inline;*/
+/*}*/
 
 
 /*********************************
