@@ -88,13 +88,13 @@
                     <?php if (!empty($this->userdata['userMessageList'])) {
                         foreach ($this->userdata['userMessageList'] as $key => $message) {
                             if ($message["receptionDate"] === null ) {?>
-                            <a class="dropdown-item d-flex align-items-center" href="<?php echo HOME_URL . '/admin/messages/' . $message["id"];?>">
-                                <div class="dropdown-item">
-                                    <div class="text-truncate" style="width: 100%"><?php echo $message["message"] ?></div>
-                                    <div class="small text-gray-500"><?php echo $message["fromName"] ?> · <?php echo $message["notificationDate"] ?></div>
-                                </div>
-                            </a>
-                           <?php }
+                                <a class="dropdown-item d-flex align-items-center" href="<?php echo HOME_URL . '/admin/messages/' . $message["id"];?>">
+                                    <div class="dropdown-item">
+                                        <div class="text-truncate" style="width: 100%"><?php echo $message["message"] ?></div>
+                                        <div class="small text-gray-500"><?php echo $message["fromName"] ?> · <?php echo $message["notificationDate"] ?></div>
+                                    </div>
+                                </a>
+                            <?php }
                         }
                     }?>
 
