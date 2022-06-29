@@ -34,7 +34,10 @@
                                                 <!-- BEGIN INBOX MENU -->
                                                 <div class="col-md-3">
                                                     <h2 class="grid-title"><i class="fa fa-inbox"></i> Inbox</h2>
-                                                    <a class="btn btn-block btn-primary" data-bs-toggle="modal" data-bs-target="#addMessageModal"><i class="fa fa-pencil"></i>&nbsp;&nbsp;NEW MESSAGE</a>
+                                                    <a class="btn btn-block btn-primary"
+                                                       data-bs-toggle="modal" data-bs-target="#addMessageModal">
+                                                        <i class="fa fa-pencil"></i>&nbsp;&nbsp;NEW MESSAGE
+                                                    </a>
 
                                                     <hr>
 
@@ -121,13 +124,13 @@
                                                                             <td>
                                                                                 <?php if ($message["receptionDate"] === null ) {?>
                                                                                     <a href="javascript:void(0);" id="<?php echo $message['id'] ?>"
-                                                                                       class="message-read" title="Mark as read"><i class="fa-solid fa-envelope-open"></i></a>
+                                                                                       class="message-read m-2" title="Mark as read"><i class="fa-solid fa-envelope-open"></i></a>
                                                                                 <?php } else {?>
                                                                                     <a href="javascript:void(0);" id="<?php echo $message['id'] ?>"
-                                                                                       class="message-unread" title="Mark as unread"><i class="fa-solid fa-envelope"></i></a>
+                                                                                       class="message-unread m-2" title="Mark as unread"><i class="fa-solid fa-envelope"></i></a>
                                                                                 <?php }?>
 
-                                                                                <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="delete"
+                                                                                <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="delete m-2"
                                                                                    data-bs-toggle="modal" data-bs-target="#deleteMessageModal"><i class="fas fa-trash-alt"></i></a>
                                                                             </td>
                                                                         </tr>
@@ -141,55 +144,6 @@
                                                             </table>
                                                         </div>
                                                     </div>
-                                                    <script type="text/javascript">
-
-                                                        <?php if( isset($this->userdata["userMessageView"]) && !empty($this->userdata["userMessageView"])) {
-                                                            foreach ($this->userdata['userMessageView'] as $key => $message) {?>
-                                                                function LoadMessage(){
-                                                                    $('#inbox-body').html(`
-                                                                        <div class="col-lg-9 email-content">
-                                                                            <div class="email-head">
-                                                                                <div class="email-head-subject">
-                                                                                    <div class="title d-flex align-items-center justify-content-between">
-                                                                                        <div class="d-flex align-items-center">
-                                                                                            <span><?php echo $message["subject"] ?></span>
-                                                                                        </div>
-                                                                                        <div class="icons">
-                                                                                            <a href="#" class="icon">reply</a>
-                                                                                            <a href="#" class="icon">delete</a>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="email-head-sender d-flex align-items-center justify-content-between flex-wrap">
-                                                                                    <div class="d-flex align-items-center">
-                                                                                        <div class="sender d-flex align-items-center">
-                                                                                            <a href="#"><?php echo $message["fromEmail"] ?></a> <span>to</span><a href="#"><?php echo $message["toEmail"] ?></a>
-                                                                                            <div class="actions dropdown">
-
-                                                                                                <div class="dropdown-menu" role="menu">
-                                                                                                    <a class="dropdown-item" href="#">Mark as read</a>
-                                                                                                    <a class="dropdown-item" href="#">Mark as unread</a>
-                                                                                                    <a class="dropdown-item" href="#">Spam</a>
-                                                                                                    <div class="dropdown-divider"></div>
-                                                                                                    <a class="dropdown-item text-danger" href="#">Delete</a>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="date"><?php echo $message["notificationDate"] ?></div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="email-body">
-                                                                                <?php echo $message["message"] ?>
-                                                                            </div>
-                                                                        </div>`
-                                                                    );
-                                                                }
-                                                                LoadMessage()
-                                                            <?php }
-                                                        }?>
-
-                                                    </script>
 
                                                 </div>
                                                 <!-- END INBOX CONTENT -->
@@ -292,6 +246,54 @@
                     console.log(error);
                 }*/
 
+                //view message
+                <?php if( isset($this->userdata["userMessageView"]) && !empty($this->userdata["userMessageView"])) {
+                    foreach ($this->userdata['userMessageView'] as $key => $message) {?>
+                        function LoadMessage() {
+                            $('#inbox-body').html(`
+                                <div class="col-lg-9 email-content">
+                                    <div class="email-head">
+                                        <div class="email-head-subject">
+                                            <div class="title d-flex align-items-center justify-content-between">
+                                                <div class="d-flex align-items-center">
+                                                    <span><?php echo $message["subject"] ?></span>
+                                                </div>
+                                                <div class="icons">
+                                                    <a href="#" class="icon">reply</a>
+                                                    <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="delete"
+                                                       data-bs-toggle="modal" data-bs-target="#deleteMessageModal"><i class="fas fa-trash-alt"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="email-head-sender d-flex align-items-center justify-content-between flex-wrap">
+                                            <div class="d-flex align-items-center">
+                                                <div class="sender d-flex align-items-center">
+                                                    <a href="#"><?php echo $message["fromEmail"] ?></a> <span>to</span><a href="#"><?php echo ($message["toEmail"] === $_SESSION["userdata"]["email"]) ? "me" : $message["toEmail"]?></a>
+                                                    <div class="actions dropdown">
+
+                                                        <div class="dropdown-menu" role="menu">
+                                                            <a class="dropdown-item" href="#">Mark as read</a>
+                                                            <a class="dropdown-item" href="#">Mark as unread</a>
+                                                            <a class="dropdown-item" href="#">Spam</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a class="dropdown-item text-danger" href="#">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="date"><?php echo $message["notificationDate"] ?></div>
+                                        </div>
+                                    </div>
+                                    <div class="email-body">
+                                        <?php echo $message["message"] ?>
+                                    </div>
+                                </div>`
+                            );
+                        }
+                        LoadMessage()
+                    <?php }
+                }?>
+
                 // ajax to Add Message
                 $('#addMessage').submit(function (event) {
                     event.preventDefault(); //prevent default action
@@ -321,7 +323,7 @@
                                     showConfirmButton: false,
                                     timer: 2000,
                                     didClose: () => {
-                                        location.reload();
+                                        location.href = "<?php echo HOME_URL . '/admin/messages';?>";
                                     }
                                 });
                             } else {
@@ -387,7 +389,7 @@
                                     showConfirmButton: false,
                                     timer: 2000,
                                     didClose: () => {
-                                        location.reload();
+                                        location.href = "<?php echo HOME_URL . '/admin/messages';?>";
                                     }
                                 });
                             } else {
