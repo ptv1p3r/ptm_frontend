@@ -90,14 +90,9 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="volunteer-form">
+
                         <div id="treePhoto">
 
-                            <!--                            TODO falta ver fotos !!! -->
-                            <!--Foto falta ver fotos !!!!-->
-
-                            <img src="<?php echo HOME_URL . '/Images/logo/adoteUmaBig.png'; ?>" height="100%"
-                                 width="100%"
-                                 alt="">
 
                         </div>
                     </div>
@@ -116,51 +111,24 @@
      aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <!--            <div class="modal-body">-->
-
             <div class="container-fluid" id="bg-div">
                 <div class="justify-content-center">
-                    <!--                        <div class="col-lg-9 col-12">-->
                     <div class="card card0">
                         <div class="d-flex" id="wrapper">
                             <!-- Sidebar -->
                             <div class="bg-light border-right" id="sidebar-wrapper">
-                                <div class="sidebar-heading pt-5 pb-4"><strong>Metodo de pagamento</strong></div>
-
+                                <div class="sidebar-heading pt-5 pb-4"><strong>Método de pagamento</strong></div>
                                 <div class="list-group list-group-flush">
-                                        <?php if (!empty($this->userdata['transactionList'])) {
-                                            foreach ($this->userdata['transactionList'] as $key => $trans) { ?>
-
-
-
-
-
-
-
-
-                                    <a data-toggle="tab" href="#<?php echo $trans['name'] ?>" id="tab1"
-                                                                            class="tabs list-group-item bg-light">
-                                        <div class="list-div my-2">
-                                            <div class="fa fa-home"></div> &nbsp;&nbsp; <?php echo $trans['name'] ?>
-                                        </div>
-                                    </a>
-<!--<a data-toggle="tab" href="#menu2" id="tab2"-->-->
-<!--                                            class="tabs list-group-item active1">-->
-<!--                                        <div class="list-div my-2">-->
-<!--                                            <div class="fa fa-credit-card"></div> &nbsp;&nbsp; Card-->
-<!--                                        </div>-->
-<!--                                    </a> <a data-toggle="tab" href="#menu3" id="tab3"-->
-<!--                                            class="tabs list-group-item bg-light">-->
-<!--                                        <div class="list-div my-2">-->
-<!--                                            <div class="fa fa-qrcode"></div> &nbsp;&nbsp;&nbsp; Visa QR <span-->
-<!--                                                    id="new-label">NEW</span>-->
-<!--                                        </div>-->
-<!--                                    </a> -->
-
-
-
-                                    <?php }
-                                        } ?>
+                                    <?php if (!empty($this->userdata['transactionList'])) {
+                                        foreach ($this->userdata['transactionList'] as $key => $trans) { ?>
+                                            <a data-toggle="tab" href="#<?php echo $trans['name'] ?>"
+                                               class="tabs list-group-item ">
+                                                <div class="list-div my-2">
+                                                    &nbsp;&nbsp; <?php echo $trans['name'] ?>
+                                                </div>
+                                            </a>
+                                        <?php }
+                                    } ?>
                                 </div>
                             </div>
                             <!-- Page Content -->
@@ -177,10 +145,7 @@
                                         <div class="row justify-content-right">
                                             <div class="col-12">
                                                 <p>Id da árvore:</p>
-
-                                                <!--                                                TODO ver o reload da página com o Id correto -->
-                                            <div id="treeId" > </div>
-
+                                                <div id="treeId"></div>
                                             </div>
                                         </div>
                                         <div class="row justify-content-right">
@@ -190,33 +155,50 @@
                                                 </p>
                                             </div>
                                         </div>
-
-
-
-
-
                                     </div>
                                 </div>
-                                <div class="row justify-content-center">
-                                    <div class="text-center" id="test">Pay</div>
-                                </div>
-
-
+                                <!--MBWay Payment-->
                                 <div class="tab-content">
                                     <div id="MBWay" class="tab-pane">
                                         <div class="row justify-content-center">
                                             <div class="col-11">
                                                 <div class="form-card">
-                                                    <h3 class="mt-0 mb-4 text-center">Enter bank details to pay</h3>
-                                                    <form onsubmit="event.preventDefault()">
-                                                        Btastasaaaaa
+                                                    <br>
+                                                    <h3 class="mt-0 mb-4 text-center">Pagamento MB Way</h3>
+                                                    <div class="row justify-content-center">
+                                                        <div id="mbImg">
+                                                            <img src="/Images/home/payment/Logo_MBWay.png"
+                                                                 width="150px" height="90px">
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <form id="mbWayTransaction">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="input-group">
+                                                                    <input type="text" id="cr_no"
+                                                                           placeholder="000 000 000"
+                                                                           minlength="9"
+                                                                           maxlength="9"
+                                                                           required
+                                                                    > <label>Insira o deu número de telemóvel</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <input type="submit"
+                                                                       value="Pagamento"
+                                                                       class="btn btn-success placeicon">
+                                                            </div>
+                                                        </div>
                                                     </form>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-
+                                    <!--MB Payment-->
                                     <div id="MB" class="tab-pane">
                                         <div class="row justify-content-center">
                                             <div class="col-11">
@@ -230,87 +212,105 @@
                                         </div>
                                     </div>
 
-
-
-
-
-
+                                    <!--Payshop Payment-->
                                     <div id="Payshop" class="tab-pane">
                                         <div class="row justify-content-center">
                                             <div class="col-11">
                                                 <div class="form-card">
                                                     <h3 class="mt-0 mb-4 text-center">Enter bank details to pay</h3>
                                                     <form onsubmit="event.preventDefault()">
-                                                       PayShop
+                                                        PayShop
                                                     </form>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-
-
-
-
-                                    <div id="menu2" class="tab-pane in active">
+                                    <!--Bank Transfer Payment-->
+                                    <div id="BankTransfer" class="tab-pane">
                                         <div class="row justify-content-center">
                                             <div class="col-11">
                                                 <div class="form-card">
-                                                    <h3 class="mt-0 mb-4 text-center">Enter your card details to
-                                                        pay</h3>
+                                                    <h3 class="mt-0 mb-4 text-center">Enter bank details to pay</h3>
                                                     <form onsubmit="event.preventDefault()">
+                                                        Banco
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--Bank Transfer Payment-->
+                                    <div id="VISAMastercard" class="tab-pane in active">
+                                        <div class="row justify-content-center">
+                                            <div class="col-11">
+                                                <div class="form-card">
+                                                    <br>
+                                                    <h4 class="mt-0 mb-4 text-center">Pagamento Cartão Crédito / Débito</h4>
+                                                    <div class="row justify-content-center">
+                                                        <div id="mbImg">
+                                                            <img src="Images/home/payment/mastervisacard.png"
+                                                                 width="150px" height="90px">
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <form id="makeTransaction">
                                                         <div class="row">
                                                             <div class="col-12">
-                                                                <div class="input-group"><input type="text" id="cr_no"
-                                                                                                placeholder="0000 0000 0000 0000"
-                                                                                                minlength="19"
-                                                                                                maxlength="19"> <label>CARD
-                                                                        NUMBER</label></div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-6">
-                                                                <div class="input-group"><input type="text" name="exp"
-                                                                                                id="exp"
-                                                                                                placeholder="MM/YY"
-                                                                                                minlength="5"
-                                                                                                maxlength="5"> <label>CARD
-                                                                        EXPIRY</label></div>
-                                                            </div>
-                                                            <div class="col-6">
-                                                                <div class="input-group"><input type="password"
-                                                                                                name="cvcpwd"
-                                                                                                placeholder="&#9679;&#9679;&#9679;"
-                                                                                                class="placeicon"
-                                                                                                minlength="3"
-                                                                                                maxlength="3"> <label>CVV</label>
+                                                                <div class="input-group">
+                                                                    <input type="text"
+                                                                           name="cardNumb"
+                                                                           id="cr_no"
+                                                                           placeholder="0000 0000 0000 0000"
+                                                                           minlength="19"
+                                                                           maxlength="19">
+                                                                    <label>Número cartão</label>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            <div class="col-md-12"><input type="submit"
-                                                                                          value="Pay $ 100"
-                                                                                          class="btn btn-success placeicon">
+                                                            <div class="col-6">
+                                                                <div class="input-group">
+                                                                    <input type="text"
+                                                                           name="cardExp"
+                                                                           id="exp"
+                                                                           placeholder="MM/YY"
+                                                                           minlength="5"
+                                                                           maxlength="5">
+                                                                    <label>Validade</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="input-group">
+                                                                    <input type="password"
+                                                                           name="cvcpwd"
+                                                                           placeholder="&#9679;&#9679;&#9679;"
+                                                                           class="placeicon"
+                                                                           minlength="3"
+                                                                           maxlength="3">
+                                                                    <label>CVV</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input id="adoptionVal"
+                                                                   name="adoptionVal"
+                                                                   class="form-control"
+                                                                   value="<?php echo $_SESSION['userdata']['treeDonation'][0]['value'] ?>">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div id="treeId1"
+                                                                 name="treeSelected">
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-12">
-                                                                <p class="text-center mb-5" id="below-btn"><a href="#">Use
-                                                                        a test card</a></p>
+                                                                <input type="submit"
+                                                                       value="Pagamento"
+                                                                       class="btn btn-success placeicon">
                                                             </div>
                                                         </div>
                                                     </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="menu3" class="tab-pane">
-                                        <div class="row justify-content-center">
-                                            <div class="col-11">
-                                                <h3 class="mt-0 mb-4 text-center">Scan the QR code to pay</h3>
-                                                <div class="row justify-content-center">
-                                                    <div id="qr"><img src="https://i.imgur.com/DD4Npfw.jpg"
-                                                                      width="200px" height="200px"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -318,11 +318,8 @@
                                 </div>
                             </div>
                         </div>
-                        <!--                            </div>-->
-                        <!--                        </div>-->
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -370,9 +367,17 @@
                         $(".treeObs").text(element.observations);
                         $("#subBtn").removeAttr('disabled');
 
-                        //TODO ver a foto
-                        $(".treePhoto").text(element.mainImageName);
 
+                        //TODO ver fotografia da árvore correta
+
+                        //Div with Id tree from data success
+                        $("#treePhoto").html(
+                            `
+                           <img src=" /Images/logo/adoteUmaBig.png" height="100%"
+                                 width="100%"
+                                 alt="">
+                           `
+                        );
 
                         //marker tree
                         allMarker = new L.marker([element.lat, element.lng], {
@@ -395,25 +400,14 @@
             $("#wrapper").toggleClass("toggled");
         });
 
-        // For highlighting activated tabs
-        $("#tab1").click(function () {
-            $(".tabs").removeClass("active1");
-            $(".tabs").addClass("bg-light");
-            $("#tab1").addClass("active1");
-            $("#tab1").removeClass("bg-light");
-        });
-        $("#tab2").click(function () {
-            $(".tabs").removeClass("active1");
-            $(".tabs").addClass("bg-light");
-            $("#tab2").addClass("active1");
-            $("#tab2").removeClass("bg-light");
-        });
-        $("#tab3").click(function () {
-            $(".tabs").removeClass("active1");
-            $(".tabs").addClass("bg-light");
-            $("#tab3").addClass("active1");
-            $("#tab3").removeClass("bg-light");
-        });
+        // // For highlighting activated tabs
+        // $("#tab1").click(function () {
+        //     $(".tabs").removeClass("active1");
+        //     $(".tabs").addClass("bg-light");
+        //     $("#tab1").addClass("active1");
+        //     $("#tab1").removeClass("bg-light");
+        // });
+
 
         //AJAX call to get select tree
         $('#getTree').submit(function (event) {
@@ -428,18 +422,13 @@
                 type: 'POST',
                 data: formData,
                 success: function (data) {
-                    // location.reload();
-
-
-                    //TODO ver o reload do modal para carregar o ID correto da árvore escolhida
-
                     $('#treeId').html(
                         data[1]['value']
                     );
-
-                    console.log(data);
+                    $('#treeId1').html(
+                        data[1]['value']
+                    );
                     $(".bd-example-modal-lg").modal('show');
-
                 },
                 error: function (data) {
                     //mensagem de Error
