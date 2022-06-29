@@ -7,7 +7,7 @@
                 <div class="sb-sidenav-menu-heading">Mensagens</div>
                 <!-- my messages -->
                 <?php if (isset($_SESSION["sidebar"]["active_tab"]["messages"]) && $_SESSION["sidebar"]["active_tab"]["messages"] === true) { ?>
-                    <a class="nav-link active" href="<?php echo HOME_URL . '/admin/messages'; ?>">
+                    <a class="nav-link active" href="<?php echo HOME_URL . '/admin/messages/inbox'; ?>">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-envelope"></i></div>
                         Minhas mensagens
                     </a>
