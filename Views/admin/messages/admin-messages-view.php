@@ -131,7 +131,7 @@
                                                                                 <?php }?>
 
                                                                                 <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="delete m-2"
-                                                                                   data-bs-toggle="modal" data-bs-target="#deleteMessageModal"><i class="fas fa-trash-alt"></i></a>
+                                                                                   data-bs-toggle="modal" data-bs-target="#deleteMessageModal" title="Delete"><i class="fas fa-trash-alt"></i></a>
                                                                             </td>
                                                                         </tr>
 
@@ -261,7 +261,7 @@
                                                 <div class="icons">
                                                     <a href="#" class="icon">reply</a>
                                                     <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="delete"
-                                                       data-bs-toggle="modal" data-bs-target="#deleteMessageModal"><i class="fas fa-trash-alt"></i></a>
+                                                       data-bs-toggle="modal" data-bs-target="#deleteMessageModal" title="Delete"><i class="fas fa-trash-alt"></i></a>
                                                 </div>
                                             </div>
                                         </div>

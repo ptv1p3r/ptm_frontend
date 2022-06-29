@@ -2986,7 +2986,7 @@ class AdminController extends MainController
             return;
         }
 
-        //$modelo = $this->load_model('admin-login-model');
+        //$modelo = $this->load_model('admin-settings-model');
 
         /*//get user Message list
         $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
