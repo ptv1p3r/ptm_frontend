@@ -2831,33 +2831,58 @@ class AdminController extends MainController
 
         } else {
             //se existir parametro
+            //TODO: valdidar parametro, tembem, se param vazio entao redirect para inbox
             if (isset($parametros) && !empty($parametros)) {
-                $message_id = chk_array($parametros, 0);
+                $paramVal = chk_array($parametros, 0);
 
-                //faz get da message pelo id que vem nesse parametro
-                $userMessageView = $modelo->getMessageById($message_id);
-                //caso accessToken espire
-                if ($userMessageView["statusCode"] === 401){
-                    //faz o refresh do accessToken
-                    $this->userTokenRefresh();
-                    $userMessageView = $modelo->getMessageById($message_id);
-                }
-                if ($userMessageView["statusCode"] === 200){
-                    $this->userdata['userMessageView'] = $userMessageView["body"];
-                }
-            }
+                if($paramVal === "inbox") {
 
-            //get user Message list
-            $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
-            //caso accessToken espire
-            if ($userMessageList["statusCode"] === 401){
-                //faz o refresh do accessToken
-                $this->userTokenRefresh();
-                $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
-            }
-            if ($userMessageList["statusCode"] === 200){
-                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
-                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+                    $tabActive = "inbox";
+
+                    //get user Message list / user messages inbox
+                    $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+                    //caso accessToken espire
+                    if ($userMessageList["statusCode"] === 401){
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+                        $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+                    }
+                    if ($userMessageList["statusCode"] === 200){
+                        $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                        $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+                    }
+                } else if($paramVal === "sent") {
+
+                        $tabActive = "sent";
+
+                        //get user Message list / user messages sent
+                        $userMessageList = $modelo->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
+                        //caso accessToken espire
+                        if ($userMessageList["statusCode"] === 401){
+                            //faz o refresh do accessToken
+                            $this->userTokenRefresh();
+                            $userMessageList = $modelo->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
+                        }
+                        if ($userMessageList["statusCode"] === 200){
+                            $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                        }
+                    } else {
+                        //faz get da message pelo id que vem nesse parametro
+                        $userMessageView = $modelo->getMessageById($paramVal);
+                        //caso accessToken espire
+                        if ($userMessageView["statusCode"] === 404){
+                            //faz o refresh do accessToken
+                            $this->userdata['userMessageView'] = 404;
+                        }
+                        if ($userMessageView["statusCode"] === 401){
+                            //faz o refresh do accessToken
+                            $this->userTokenRefresh();
+                            $userMessageView = $modelo->getMessageById($paramVal);
+                        }
+                        if ($userMessageView["statusCode"] === 200){
+                            $this->userdata['userMessageView'] = $userMessageView["body"];
+                        }
+                }
             }
 
             /**Carrega os arquivos do view**/
