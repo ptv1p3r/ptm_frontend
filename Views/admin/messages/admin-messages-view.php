@@ -44,13 +44,13 @@
                                                     <div>
                                                         <ul class="nav flex-column nav-pills nav-stacked">
                                                             <li class="header">Folders</li>
-                                                            <li class="nav-item active">
-                                                                <a class="nav-link" href="<?php echo HOME_URL . '/admin/messages'?>">
+                                                            <li class="nav-item <?php echo ($tabActive === "inbox") ? "active" : ""?>">
+                                                                <a class="nav-link" href="<?php echo HOME_URL . '/admin/messages/inbox'?>">
                                                                     <i class="fa fa-inbox"></i> Inbox
                                                                 </a>
                                                             </li>
-                                                            <li class="nav-item"">
-                                                                <a class="nav-link" role="button" onClick="">
+                                                            <li class="nav-item <?php echo ($tabActive === "sent") ? "active" : ""?>">
+                                                                <a class="nav-link" href="<?php echo HOME_URL . '/admin/messages/sent'?>">
                                                                     <i class="fa fa-mail-forward"></i> Sent
                                                                 </a>
                                                             </li>
@@ -100,7 +100,7 @@
 
                                                     <div class="padding"></div>
 
-                                                    <!-- INBOX -->
+                                                    <!-- INBOX/SENT -->
                                                     <div id="inbox-body">
                                                         <div class="table-responsive">
                                                             <table class="table" id="messagesTable">
@@ -260,7 +260,7 @@
                                                 </div>
                                                 <div class="icons">
                                                     <a href="#" class="icon">reply</a>
-                                                    <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="delete"
+                                                    <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="icon delete"
                                                        data-bs-toggle="modal" data-bs-target="#deleteMessageModal" title="Delete"><i class="fas fa-trash-alt"></i></a>
                                                 </div>
                                             </div>
