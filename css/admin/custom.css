@@ -293,7 +293,7 @@ MESSAGE READ MAIL CSS
 /*body{
     background-color: #f9fafb;
     margin-top:20px;
-}
+}*/
 @media (min-width: 992px) {
     .inbox-wrapper .email-aside .aside-content {
         padding-right: 10px;
@@ -660,7 +660,7 @@ MESSAGE READ MAIL CSS
     margin-left: 10px;
 }
 
-.rtl .inbox-wrapper .email-aside .aside-content .aside-nav .nav li a .badge {
+.rtl .inbox-wrapper .email-aside .aside-content .aside-nav .nav li a {
     margin-left: 0;
     margin-right: auto;
 }
@@ -979,7 +979,7 @@ MESSAGE READ MAIL CSS
     background-clip: border-box;
     border: 1px solid #f2f4f9;
     border-radius: 0.25rem;
-}
+}/*
 .badge {
     padding: 6px 5px 3px;
 }
