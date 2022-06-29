@@ -539,72 +539,50 @@ class HomeController extends MainController
         }
     }
 
+
+
     /**
      * Adoption tree page handler
      * "/views/home/user-settings-view.php"
      */
     public function adoption()
     {
-
-        // Título da página
-        $this->title = 'User - Dashboard';
+        // Page tilte
+        $this->title = 'Adote árvore';
         $this->permission_required = array('homeLogin');
-
-        // Parametros da função
-        //$parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
         $model = $this->load_model('adoption-model');
         $modelTransaction = $this->load_model('user-transaction-model');
 
-
-        // obriga o login para aceder à pagina
+        // force the login
         if (!$this->logged_in) {
-
-            // Se não; garante o logout
             $this->logout();
-
-            // Redireciona para a página de login
             $this->goto_login();
-
-            // Garante que o script não vai passar daqui
             return;
         }
 
+        // check permissions
         if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
-
-            // Exibe uma mensagem
+            // show message
             echo 'Você não tem permissões para aceder a esta página.';
-
-            // Finaliza aqui
             return;
-
         }
 
-
-        // processa chamadas ajax
+        // process ajax action call
         if (isset($_POST['action']) && !empty($_POST['action'])) {
             $action = $_POST['action'];
             switch ($action) {
 
                 case 'getDonation' :
                     $data = $_POST['data'];
-//                    echo $data;
-
-
-      /*              // Update userdata to donation trees;*/
                     $_SESSION['userdata']['treeDonation'] = $data;
                     $donation =  $_SESSION['userdata']['treeDonation'];
-                   // unset($apiResponse['body'])
                     $apiResponse = json_encode($donation);
                     echo $apiResponse;
                     break;
 
                 case 'makeDonation' :
                     $data = $_POST['data'];
-//                    echo $data;
-
-
-                    /*              // Update userdata to donation trees;*/
                     $_SESSION['userdata']['treeDonation'] = $data;
                     $treeDonation =  $_SESSION['userdata']['treeDonation'];
                     // unset($apiResponse['body'])
@@ -625,14 +603,12 @@ class HomeController extends MainController
                     }
 */
                     $data = $_POST['data'];
-
                     $apiResponse = $model->makeTransaction($data); //decode to check message from api
+
 
 
                     if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
                         $apiResponse["body"]['message'] = "Updated with success!";
-
-
                         $apiResponse = json_encode($apiResponse);// encode package to send
                         echo $apiResponse;
                         break;
@@ -640,50 +616,48 @@ class HomeController extends MainController
 
                     if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
                         $this->userTokenRefresh();
-
                         $apiResponse = $model->updateUser($data); //decode to check message from api
                         $apiResponse = json_encode($apiResponse);// encode package to send
                         echo $apiResponse;
                         break;
                     }
-
                     $apiResponse = json_encode($apiResponse);// encode package to send
                     echo($apiResponse);
                     break;
-
-
 
             }
 
         } else {
 
-
+            //Get adopt list from model
             $getAdoptTreesModel = $model->getAdoptTreesList();
-            $getTransactionModel =  $modelTransaction->getTransactionList();
-
             if ($getAdoptTreesModel['statusCode'] === 200) { // 200 OK, successful
                 $this->userdata['adoptionList'] = $getAdoptTreesModel['body']['trees'];
-                $this->userdata['transactionList'] = $getTransactionModel['body']['methods'];
             }
-
             if ($getAdoptTreesModel['statusCode'] === 401) {  // 200 OK, successful
                 //Refresh user token
                 $this->userTokenRefresh();
                 //Models
                 $getAdoptTreesModel = $model->getAdoptTreesList();
-                $getTransactionModel =  $modelTransaction->getTransactionList();
                 //Userdata from model's
                 $this->userdata['adoptionList'] = $getAdoptTreesModel['body']['trees'];
+            }
+
+            //Get transaction methods list from model
+            $getTransactionModel =  $modelTransaction->getTransactionList();
+            if ($getAdoptTreesModel['statusCode'] === 200) { // 200 OK, successful
+                $this->userdata['transactionList'] = $getTransactionModel['body']['methods'];
+            }
+            if ($getAdoptTreesModel['statusCode'] === 401) {  // 200 OK, successful
+                //Refresh user token
+                $this->userTokenRefresh();
+                //Models
+                $getTransactionModel =  $modelTransaction->getTransactionList();
+                //Userdata from model's
                 $this->userdata['transactionList'] = $getTransactionModel['body']['methods'];
             }
 
 
-
-
-/*
-            $apiResponseBody = json_encode($data2['data']);
-            echo $apiResponseBody;
-*/
             /** Carrega os arquivos do view **/
 
             require ABSPATH . '/views/_includes/user-header.php';
@@ -694,5 +668,6 @@ class HomeController extends MainController
 
         }
     }
+
 }
 
