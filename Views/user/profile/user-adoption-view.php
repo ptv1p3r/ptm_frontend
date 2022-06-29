@@ -126,32 +126,44 @@
                             <!-- Sidebar -->
                             <div class="bg-light border-right" id="sidebar-wrapper">
                                 <div class="sidebar-heading pt-5 pb-4"><strong>Metodo de pagamento</strong></div>
-                                <?php if (!empty($this->userdata['transactionList'])) {
-                                    foreach ($this->userdata['transactionList'] as $key => $trans) { ?>
-
 
                                 <div class="list-group list-group-flush">
-                                    <a data-toggle="tab" href="#<?php echo $trans["name"] ?>" id="<?php echo $trans["name"] ?>"
+                                        <?php if (!empty($this->userdata['transactionList'])) {
+                                            foreach ($this->userdata['transactionList'] as $key => $trans) { ?>
+
+
+
+
+
+
+
+
+                                    <a data-toggle="tab" href="#<?php echo $trans['name'] ?>" id="tab1"
                                                                             class="tabs list-group-item bg-light">
                                         <div class="list-div my-2">
-                                            <div class="fa fa-home"></div>  <?php echo $trans["name"] ?>
+                                            <div class="fa fa-home"></div> &nbsp;&nbsp; <?php echo $trans['name'] ?>
                                         </div>
                                     </a>
+<!--<a data-toggle="tab" href="#menu2" id="tab2"-->-->
+<!--                                            class="tabs list-group-item active1">-->
+<!--                                        <div class="list-div my-2">-->
+<!--                                            <div class="fa fa-credit-card"></div> &nbsp;&nbsp; Card-->
+<!--                                        </div>-->
+<!--                                    </a> <a data-toggle="tab" href="#menu3" id="tab3"-->
+<!--                                            class="tabs list-group-item bg-light">-->
+<!--                                        <div class="list-div my-2">-->
+<!--                                            <div class="fa fa-qrcode"></div> &nbsp;&nbsp;&nbsp; Visa QR <span-->
+<!--                                                    id="new-label">NEW</span>-->
+<!--                                        </div>-->
+<!--                                    </a> -->
 
 
-                                    <a data-toggle="tab" href="#menu2" id="tab2"
-                                            class="tabs list-group-item active1">
-                                        <div class="list-div my-2">
-                                            <div class="fa fa-credit-card"></div> &nbsp;&nbsp; Card
-                                        </div>
-                                    </a>
 
+                                    <?php }
+                                        } ?>
                                 </div>
-
-
-                                <?php }
-                                } ?>
-                            </div> <!-- Page Content -->
+                            </div>
+                            <!-- Page Content -->
                             <div id="page-content-wrapper">
                                 <div class="row pt-3" id="border-btm">
                                     <div class="col-4">
@@ -167,8 +179,7 @@
                                                 <p>Id da árvore:</p>
 
                                                 <!--                                                TODO ver o reload da página com o Id correto -->
-
-                                                <p>  <?php echo $_SESSION['userdata']['treeDonation'][1]['value']; ?> </p>
+                                            <div id="treeId" > </div>
 
                                             </div>
                                         </div>
@@ -192,21 +203,53 @@
 
 
                                 <div class="tab-content">
-
-
-
                                     <div id="MBWay" class="tab-pane">
                                         <div class="row justify-content-center">
                                             <div class="col-11">
                                                 <div class="form-card">
                                                     <h3 class="mt-0 mb-4 text-center">Enter bank details to pay</h3>
-                                                    <form >
-
+                                                    <form onsubmit="event.preventDefault()">
+                                                        Btastasaaaaa
                                                     </form>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+
+                                    <div id="MB" class="tab-pane">
+                                        <div class="row justify-content-center">
+                                            <div class="col-11">
+                                                <div class="form-card">
+                                                    <h3 class="mt-0 mb-4 text-center">Enter bank details to pay</h3>
+                                                    <form onsubmit="event.preventDefault()">
+                                                        Multibanco
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+                                    <div id="Payshop" class="tab-pane">
+                                        <div class="row justify-content-center">
+                                            <div class="col-11">
+                                                <div class="form-card">
+                                                    <h3 class="mt-0 mb-4 text-center">Enter bank details to pay</h3>
+                                                    <form onsubmit="event.preventDefault()">
+                                                       PayShop
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
 
 
                                     <div id="menu2" class="tab-pane in active">
@@ -389,6 +432,10 @@
 
 
                     //TODO ver o reload do modal para carregar o ID correto da árvore escolhida
+
+                    $('#treeId').html(
+                        data[1]['value']
+                    );
 
                     console.log(data);
                     $(".bd-example-modal-lg").modal('show');
