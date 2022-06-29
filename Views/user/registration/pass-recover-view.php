@@ -10,7 +10,7 @@
 
 
 <div id="wrapper">
-    <!--Recover password Start-->
+    <!--Recover password start-->
     <section class="wf100 p80">
         <div class="container">
             <div class="recover">
@@ -18,19 +18,31 @@
                     <div class="col-lg-18">
                         <div class="myrecover-form">
                             <div>
-                                <h3>Recupere a sua conta</h3>
-                                <h5>Insira o seu email para recuperar a sua conta.</h5>
+                                <h3>Reponha a sua palavra passe</h3>
                                 <br>
                             </div>
-                            <!--Email form request-->
-                            <form id="recover">
+                            <!--  Change password form-->
+                            <form id="recPass">
+                                <div class="form-group">
+                                </div>
                                 <div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-<!--                                            <label>Email</label>-->
-                                            <input type="email" name="userEmail" placeholder="Email"
-                                                   class="form-control"
+                                            <label>Nova password</label>
+                                            <input type="password" id="pass" name="newPass" class="form-control"
                                                    required>
+                                            <input type="checkbox" id="show-password">
+                                            <label for="show-password">Ver palavra-passe
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Confirma a nova password</label>
+                                            <input type="password" id="verify" name="confPass" class="form-control"
+                                                   required>
+                                            <input type="checkbox" id="show-password1">
+                                            <label for="show-password">Ver palavra-passe
+                                                <span id="verifyMatchPass" class="badge-warning hidden"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -40,38 +52,40 @@
                                         <circle cx="50" cy="50" r="46"/>
                                     </svg>
                                 </div>
-                                <!-- End Image loader -->
+                                <!-- Image loader -->
                                 <div>
                                     <div class=" form-submit">
-                                        <!--                                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">-->
-                                        <!--                                        <input type="submit" class="recover" value="Recuperar">-->
-                                        <button type="submit" class="btn btn-success recover">Recuperar</button>
+                                        <button type="submit" class="btn btn-success recover">Alterar</button>
                                     </div>
                                 </div>
                             </form>
-                            <!--End email form request-->
+                            <!--  End change password form-->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!--New User Register End-->
+    <!--End recover password-->
 </div>
+
 
 <!--Script's section-->
 <script>
 
     //Main functions from this view
     $(document).ready(function () {
-        $('#recover').submit(function (event) {
+        $('#recPass').submit(function (event) {
             event.preventDefault(); //prevent default action
             let formData = {
-                'action': "recover",
+                'action': "PassRecover",
                 'data': $(this).serializeArray()
             };
+
+            console.log(formData);
+
             $.ajax({
-                url: "<?php echo HOME_URL . '/register/recover';?>",
+                url: "<?php echo HOME_URL . '/register/passRecover/' . chk_array($parametros, 0) . '/' . chk_array($parametros, 1);?>",
                 dataType: "json",
                 type: 'POST',
                 data: formData,
@@ -85,25 +99,29 @@
                             title: 'Success!',
                             text: data.body.message,
                             icon: 'success',
-                            showConfirmButton: true,
-                            confirmButtonColor: '#66bb6a',
-                            // timer: 3000,
+                            showConfirmButton: false,
+                            timer: 2000,
                             didClose: () => {
                                 window.location.href = "<?php echo HOME_URL . '/home';?>";
                             }
                         });
-                    } else {
-                        //mensagem de Error
+                    } else if (data.statusCode === 400) {
+                        //Error message
                         Swal.fire({
-                            title: 'Error!',
-                            text: data.body.message,
+                            title: 'Erro!',
+                            text: 'A palavra-passe não pode ser idêntica à anterior!',
                             icon: 'error',
                             showConfirmButton: false,
-                            timer: 2000,
+                            // timer: 2000,
                             didClose: () => {
                                 //location.reload();
                             }
                         });
+                    } else {
+                        if (data.statusCode == 0) {
+                            $('#verifyMatchPass').text(data.body.message);
+                            $('#verifyMatchPass').show();
+                        }
                     }
                 }, complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
                     $('#loader').addClass('hidden')
@@ -124,5 +142,18 @@
             });
         });
     });
+    //function handler spn messages
+    $('#updatePass').click(function () {
+        $(this).parent().find('#verifyMatchPass').hide();
+    });
+
+    <!-- Toggle password visibility -->
+    $("#show-password").change(function () {
+        $(this).prop("checked") ? $("#pass").prop("type", "text") : $("#pass").prop("type", "password");
+    });
+    $("#show-password1").change(function () {
+        $(this).prop("checked") ? $("#verify").prop("type", "text") : $("#verify").prop("type", "password");
+    });
+
 </script>
 <!--Script's end section-->

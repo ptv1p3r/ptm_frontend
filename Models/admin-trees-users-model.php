@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: V1p3r
- * Date: 17/10/2018
- * Time: 20:13
- */
 
-class AdminGroupsModel extends MainModel {
+class AdminTreesUsersModel extends MainModel {
 
     public $db; // PDO
 
@@ -22,16 +16,33 @@ class AdminGroupsModel extends MainModel {
         $this->userdata = $this->controller->userdata;
     }
 
-    /** CRUD GROUPS **/
     /**
-     * Metodo que retorna Grupo pelo id
+     * Metodo que retorna lista de Users
+     * @return mixed
+     */
+    public function getUserList() {
+        $result = null;
+
+        $url = API_URL . 'api/v1/users/list';
+
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+    /** CRUD TREES **/
+    /**
+     * Metodo que retorna Tree pelo id
      * @param $id
      * @return mixed
      */
-    public function getGroupById($id) {
+    public function getTreeById($id) {
         $result = null;
 
-        $url = API_URL . 'api/v1/groups/view/' . $id;
+        $url = API_URL . 'api/v1/trees/view/' . $id;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
@@ -41,14 +52,49 @@ class AdminGroupsModel extends MainModel {
     }
 
     /**
-     * Metodo que retorna lista de Grupos
+     * Metodo que retorna userTree pelo user id + tree id
+     * @param $userId
+     * @param $treeId
      * @return mixed
      */
-    public function getGroupList()
+    public function getTreeUserById($data) {
+        $result = null;
+
+        $userId = null;
+        $treeId = null;
+
+        foreach ($data as $dataVector) {
+            foreach ($dataVector as $key => $value) {
+                switch ($dataVector['name']) { //gets <input name="">
+                    case "userId":
+                        $userId = $dataVector['value'];
+                        break;
+
+                    case "treeId":
+                        $treeId = $dataVector['value'];
+                        break;
+                }
+            }
+        }
+
+        $url = API_URL . 'api/v1/user/trees/view/' . $userId . '/' . $treeId;
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+    /**
+     * Metodo que retorna lista de Trees
+     * @return mixed
+     */
+    public function getTreeList()
     {
         $result = null;
 
-        $url = API_URL . 'api/v1/groups/list';
+        $url = API_URL . 'api/v1/trees/list';
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
@@ -58,11 +104,28 @@ class AdminGroupsModel extends MainModel {
     }
 
     /**
-     * Metodo adiciona Grupo
+     * Metodo que retorna lista de TreesUser
+     * @return mixed
+     */
+    public function getTreeUserList()
+    {
+        $result = null;
+
+        $url = API_URL . 'api/v1/user/trees/list';
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+    /**
+     * Metodo adiciona Tree
      * @param $data
      * @return array|null
      */
-    public function addGroup($data) {
+    public function addTreeUser($data) {
         $result = null;
         $normalizedData = array();
 
@@ -73,24 +136,16 @@ class AdminGroupsModel extends MainModel {
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']) { //gets <input name="">
-                    case "addGroupName":
-                        $normalizedData['name'] = $dataVector['value'];
+                    case "addTreeUserUserId":
+                        $normalizedData['userId'] = $dataVector['value'];
                         break;
 
-                    case "addGroupDescription":
-                        $normalizedData['description'] = $dataVector['value'];
+                    case "addTreeUserTreeId":
+                        $normalizedData['treeId'] = $dataVector['value'];
                         break;
-
-                    case "addGroupSecurityId":
-                        $normalizedData['securityId'] = $dataVector['value'];
-                        break;
-
-                    /*case "addGroupActive":
-                        $normalizedData['active'] = 1;
-                        break;*/
                 }
 
-                if ($dataVector['name'] == "addGroupActive" && $dataVector['value'] == "on"){
+                if ($dataVector['name'] == "addTreeUserActive"){
                     $normalizedData['active'] = "1";
                 } else {
                     $normalizedData['active'] = "0";
@@ -98,7 +153,7 @@ class AdminGroupsModel extends MainModel {
             }
         }
 
-        $url = API_URL . 'api/v1/groups/create';
+        $url = API_URL . 'api/v1/user/trees/create';
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("POST", $url, $normalizedData, $userToken);
@@ -108,14 +163,15 @@ class AdminGroupsModel extends MainModel {
         return json_decode(json_encode($result), true);
     }
 
+
     /**
-     * Metodo edita/update Grupo
+     * Metodo edita/update Tree
      * @param $data
      * @return mixed
      */
-    public function updateGroup($data) {
+    public function updateTree($data) {
         $result = null;
-        $GroupId = null;
+        $TreeId = null;
         $normalizedData = array();
 
         // Not active by default
@@ -125,24 +181,40 @@ class AdminGroupsModel extends MainModel {
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']){ //gets <input name="">
-                    case "editGroupId":
-                        $GroupId = $dataVector['value'];
+                    case "editTreeId":
+                        $TreeId = $dataVector['value'];
                         break;
 
-                    case "editGroupName":
+                    case "editTreeName":
                         $normalizedData['name'] = $dataVector['value'];
                         break;
 
-                    case "editGroupDescription":
+                    case "editTreeNameCommon":
+                        $normalizedData['nameCommon'] = $dataVector['value'];
+                        break;
+
+                    case "editTreeDescription":
                         $normalizedData['description'] = $dataVector['value'];
                         break;
 
-                    case "editGroupSecurityId":
-                        $normalizedData['securityId'] = $dataVector['value'];
+                    case "editTreeObservations":
+                        $normalizedData['observations'] = $dataVector['value'];
+                        break;
+
+                    case "editTreeTypeId":
+                        $normalizedData['typeId'] = (int) $dataVector['value'];
+                        break;
+
+                    case "editTreeLat":
+                        $normalizedData['lat'] = (float) $dataVector['value'];
+                        break;
+
+                    case "editTreeLng":
+                        $normalizedData['lng'] = (float) $dataVector['value'];
                         break;
                 }
 
-                if ($dataVector['name'] == "editGroupActive" && $dataVector['value'] == "on"){
+                if ($dataVector['name'] == "editTreeActive"){
                     $normalizedData['active'] = "1";
                 } else {
                     $normalizedData['active'] = "0";
@@ -150,7 +222,7 @@ class AdminGroupsModel extends MainModel {
             }
         }
 
-        $url = API_URL . 'api/v1/groups/edit/' . $GroupId;
+        $url = API_URL . 'api/v1/user/trees/edit/' . $TreeId;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("PUT", $url, $normalizedData, $userToken);
@@ -161,11 +233,11 @@ class AdminGroupsModel extends MainModel {
     }
 
     /**
-     * Metodo edita/update Grupo com patch
+     * Metodo edita/update Trees com patch
      * @param $data
      * @return mixed
      */
-    /*public function updateGroup($data) {
+    /*public function updateTree($data) {
         $result = null;
         $GroupId = null;
         $normalizedData = array();
@@ -194,7 +266,7 @@ class AdminGroupsModel extends MainModel {
                         break;
                 }
 
-                if ($dataVector['name'] == "editGroupActive" && $dataVector['value'] == "on"){
+                if ($dataVector['name'] == "editGroupActive"){
                     $normalizedData['active'] = "1";
                 } else {
                     $normalizedData['active'] = "0";
@@ -202,7 +274,7 @@ class AdminGroupsModel extends MainModel {
             }
         }
 
-        $url = API_URL . 'api/v1/groups/edit/' . $GroupId;
+        $url = API_URL . 'api/v1/user/trees/edit/' . $GroupId;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("PATCH", $url, $normalizedData, $userToken);
@@ -213,25 +285,31 @@ class AdminGroupsModel extends MainModel {
     }*/
 
     /**
-     * Metodo delete Grupo
+     * Metodo delete Tree
      * @param $data
      * @return mixed
      */
-    public function deleteGroup($data) {
+    public function deleteTreeUser($data) {
         $result = null;
-        $GroupId = null;
+
+        $userId = null;
+        $treeId = null;
 
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
-                switch ($dataVector['name']){ //gets input name=""
-                    case "deleteGroupId":
-                        $GroupId = $dataVector['value'];
+                switch ($dataVector['name']) { //gets <input name="">
+                    case "deleteUserId":
+                        $userId = $dataVector['value'];
+                        break;
+
+                    case "deleteTreeId":
+                        $treeId = $dataVector['value'];
                         break;
                 }
             }
         }
 
-        $url = API_URL . 'api/v1/groups/delete/' . $GroupId;
+        $url = API_URL . 'api/v1/user/trees/delete/'  . $userId . '/' . $treeId;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("DELETE", $url, '', $userToken);
@@ -241,112 +319,5 @@ class AdminGroupsModel extends MainModel {
         return json_decode(json_encode($result), true);
     }
 
-    /**
-     * Metodo que retorna 10 categorias da BD
-     * @return array
-     */
-    /*public function getTableCategories($startNumber = null){
-        $query = null;
-
-        $query = $this->db->query('SELECT * FROM `categories` limit ' . $startNumber .',10');
-        //}
-
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
-        }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
-
-    /**
-     * Metodo que retorna o filme pelo id
-     * @return array
-     */
-    /*public function getgroupById($intgroupId = null){
-        $query = null;
-
-        if ($intgroupId != null){
-            $query = $this->db->query('SELECT * FROM `groups` WHERE movid = '.$intgroupId);
-        }
-
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
-        }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
-
-    /**
-     * Metodo que retorna todos os filmes existentes na BD
-     * @return array
-     */
-    /*public function getgroups(){
-        $query = null;
-
-        $query = $this->db->query('SELECT * FROM `groups`');
-
-
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
-        }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
-
-    /**
-     * Metodo que retorna 10 filmes existentes na BD
-     * @return array
-     */
-    /*public function getgroupsTable($startNumber = null){
-        $query = null;
-
-        $query = $this->db->query('SELECT * FROM `groups` limit ' . $startNumber.',10');
-
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
-        }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
-
-    /**
-     * Metodo que retorna todos os comentarios existentes na BD
-     * @return array
-     */
-    /*public function getComments(){
-        $query = null;
-
-        $query = $this->db->query('SELECT * FROM `comments`');
-
-
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
-        }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
-
-    /**
-     * Metodo que retorna 10 comentarios existentes na BD
-     * @return array
-     */
-    /*public function getCommentsTable($startNumber = null){
-        $query = null;
-
-        $query = $this->db->query('SELECT * FROM `comments` limit ' . $startNumber.',10');
-
-
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
-        }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
 
 }

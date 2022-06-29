@@ -1,6 +1,6 @@
 <?php
 
-class AdminDashboardModel extends MainModel {
+class AdminTransactionMethodModel extends MainModel {
 
     public $db; // PDO
 
@@ -15,18 +15,5 @@ class AdminDashboardModel extends MainModel {
 
         $this->userdata = $this->controller->userdata;
     }
-
-    /*public function validateUser($username, $password){
-        $result = null;
-
-        $data = null;
-        $data["email"] = $username;
-        $data["password"] = $password;
-
-        $url = API_URL . 'api/v1/login';
-        $result = callAPI("POST", $url, $data);
-
-        return json_decode($result, true);
-    }*/
 
 }

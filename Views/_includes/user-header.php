@@ -15,7 +15,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-
     <!-- JQuery 3.6.0 -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -53,11 +52,10 @@
             crossorigin=""></script>
 
 
-
     <!-- Template original CSS links -->
     <!--  CSS custom que não pode ser apagado-->
-    <link href="../../css/home/custom.css" rel="stylesheet">
-    <link href="../../css/home/prettyPhoto.css" rel="stylesheet">
+    <link href="<?php echo HOME_URL . '/'; ?>css/home/custom.css" rel="stylesheet">
+    <!--    <link href="../../css/home/prettyPhoto.css" rel="stylesheet">-->
 
     <!--     <link href="css/home/color.css" rel="stylesheet">-->
     <!--     <link href="css/home/responsive.css" rel="stylesheet">-->
@@ -67,15 +65,14 @@
     <!--     <link href="css/home/all.min.css" rel="stylesheet">-->
 
     <!--  END CSS links -->
-
     <!--     <script src="js/home/jquery-3.3.1.min.js"></script>-->
 
 
     <!--  Icon do template-->
-    <link rel="icon" href="/Images/home/favicon.png">
+    <link rel="icon" href="<?php echo HOME_URL . '/'; ?>Images/home/favicon.png">
 
     <!--  Script auto-version-->
-    <script src="<?php echo auto_version('../../js/global-functions.js'); ?>"></script>
+<!--    <script src="--><?php //echo auto_version('../../js/global-functions.js'); ?><!--"></script>-->
 
     <title><?php echo $this->title ?></title>
 
@@ -111,8 +108,9 @@
 <!--Header Start-->
 <header class="header-style-2">
     <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="<?php echo HOME_URL . '/home/dashboard'; ?>"><img src="../../Images/logo/adoteUma.png"
-                                                                                        alt=""></a>
+        <a class="navbar-brand" href="<?php echo HOME_URL . '/home/dashboard'; ?>"><img
+                    src="../../Images/logo/adoteUma.png"
+                    alt=""></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
                     class="fas fa-bars"></i></button>

@@ -1,265 +1,199 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: lmore
- * Date: 26/01/2019
- * Time: 15:28
- */
-?>
+
 <?php if ( ! defined('ABSPATH')) exit; ?>
 
-<div id="wrapper">
+<?php if ( $this->login_required && ! $this->logged_in ) return; ?>
 
-    <!-- Sidebar -->
-    <ul class="sidebar navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/dashboard';?>"><span>Dashboard</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/groups';?>"><span>Gestão de grupos</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/users';?>"><span>Gestão de utilizadores</span></a></li>
-        <li class="nav-item active"><a class="nav-link" href="<?php echo HOME_URL . '/admin/security';?>"><span>Gestão de securitys</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/settings';?>"><span>Settings</span></a></li>
-    </ul>
+<!-- AJAX loader -->
+<div id="loader" class="lds-dual-ring hidden overlay"></div>
 
-    <div id="content-wrapper">
-        <!-- DataTables -->
-        <div class="container">
-            <div class="table-wrapper" style="overflow: auto">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2>Manage <b>Security</b></h2>
-                        </div>
-                        <div class="col-sm-6">
-                            <a href="#addSecurityModal" class="btn btn-success" data-toggle="modal"><i class="fas fa-plus-circle"></i><span>Add New Security</span></a>
+<div id="layoutSidenav">
+    <!-- import sidebar -->
+    <?php require ABSPATH . '/views/_includes/admin-sidebar.php'?>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Gestão de tabelas de <b>segurança</b></h1>
+                <div class="row">
+
+                    <div class="col-xl-12 col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <a href="#addSecurityModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addSecurityModal">
+                                    <i class="fas fa-plus-circle"></i><span>Add New Security</span>
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <table id="securitiesTable" class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>id</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php if (!empty($this->userdata['securityList'])) {
+                                        foreach ($this->userdata['securityList'] as $key => $security) { ?>
+                                            <tr>
+                                                <td><?php echo $security["id"] ?></td>
+                                                <td>
+                                                    <a href="#editSecurityModal" id="<?php echo $security['id'] ?>" class="edit"
+                                                       data-bs-toggle="modal" data-bs-target="#editSecurityModal"><i class="far fa-edit"></i></a>
+                                                    <a href="#deleteSecurityModal" id="<?php echo $security['id'] ?>" class="delete"
+                                                       data-bs-toggle="modal" data-bs-target="#deleteSecurityModal"><i class="fas fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>
+                                        <?php }
+                                    } else { ?>
+                                        <tr>
+                                        </tr>
+                                    <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>homeLogin</th>
-                        <th>admLogin</th>
-                        <th>usersCreate</th>
-                        <th>usersRead</th>
-                        <th>usersUpdate</th>
-                        <th>usersDelete</th>
-                        <th>usersGroupsCreate</th>
-                        <th>usersGroupsRead</th>
-                        <th>usersGroupsUpdate</th>
-                        <th>usersGroupsDelete</th>
-                        <th>treesCreate</th>
-                        <th>treesRead</th>
-                        <th>treesUpdate</th>
-                        <th>treesDelete</th>
-                        <th>treesTypeCreate</th>
-                        <th>treesTypeRead</th>
-                        <th>treesTypeUpdate</th>
-                        <th>treesTypeDelete</th>
-                        <th>treesImagesCreate</th>
-                        <th>treesImagesRead</th>
-                        <th>treesImagesUpdate</th>
-                        <th>treesImagesDelete</th>
-                    </tr>
-                    </thead>
-
-                    <?php if (!empty($this->securitydata['securitysList']['data'])) {
-                        foreach ($this->securitydata['securitysList']['data'] as $key => $security) { ?>
-                            <tbody>
-                            <tr>
-                                <td><?php echo $security["homeLogin"] ?></td>
-                                <td><?php echo $security["admLogin"] ?></td>
-                                <td><?php echo $security["usersCreate"] ?></td>
-                                <td><?php echo $security["usersRead"] ?></td>
-                                <td><?php echo $security["usersUpdate"] ?></td>
-                                <td><?php echo $security["usersDelete"] ?></td>
-                                <td><?php echo $security["usersGroupsCreate"] ?></td>
-                                <td><?php echo $security["usersGroupsRead"] ?></td>
-                                <td><?php echo $security["usersGroupsUpdate"] ?></td>
-                                <td><?php echo $security["usersGroupsDelete"] ?></td>
-                                <td><?php echo $security["treesCreate"] ?></td>
-                                <td><?php echo $security["treesRead"] ?></td>
-                                <td><?php echo $security["treesUpdate"] ?></td>
-                                <td><?php echo $security["treesDelete"] ?></td>
-                                <td><?php echo $security["treesTypeCreate"] ?></td>
-                                <td><?php echo $security["treesTypeRead"] ?></td>
-                                <td><?php echo $security["treesTypeUpdate"] ?></td>
-                                <td><?php echo $security["treesTypeDelete"] ?></td>
-                                <td><?php echo $security["treesImagesCreate"] ?></td>
-                                <td><?php echo $security["treesImagesRead"] ?></td>
-                                <td><?php echo $security["treesImagesUpdate"] ?></td>
-                                <td><?php echo $security["treesImagesDelete"] ?></td>
-
-                                <td>
-                                    <a href="#editSecurityModal" id="<?php echo $security['id'] ?>" class="edit"
-                                       data-toggle="modal"><i class="far fa-edit"></i></a>
-                                    <a href="#deleteSecurityModal" id="<?php echo $security['id'] ?>" class="delete"
-                                       data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        <?php }
-                    } else { ?>
-                        <tbody>
-                        <tr>
-                        </tr>
-                        </tbody>
-                    <?php } ?>
-
-                </table>
-
-                <!-- Pagination -->
-                <div class="clearfix">
-                    <div class="hint-text">Showing <b>
-                            <?php
-                            /*if (10*$parametros[0] >= count($movies)) {
-                                echo count($movies);
-                            } else {
-                                if ($parametros[0] == null || $parametros[0] == "1") {
-                                    if (10 >= count($movies)) {
-                                        echo count($movies);
-                                    } else {
-                                        echo 10;
-                                    }
-                                } else {
-                                    echo 10*$parametros[0];
-                                }
-                            }*/
-                            ?>
-                        </b> out of <b><?php //echo count($movies)?></b> entries</div>
-                    <ul class="pagination">
-                        <?php /*if ($parametros[0] == null) { ?>
-                                <li class="page-item active"><a href="<?php echo HOME_URL . '/admin/movie/' . 1;?>" class="page-link">1</a></li>
-                            <?php } else {
-                                for ($i = 1 ; $i <= ceil(count($movies)/10) ; $i++) { ?>
-                                <li class="page-item <?php if ($parametros[0] == $i) {
-                                    echo "active";
-                                }?>"><a href="<?php echo HOME_URL . '/admin/movie/' . $i;?>" class="page-link"><?php echo $i?></a></li>
-                                <?php }
-                            }*/
-                        ?>
-                    </ul>
                 </div>
             </div>
-        </div>
+        </main>
+
 
         <!-- Add Modal HTML -->
-        <div id="addSecurityModal" class="modal fade">
+        <div id="addSecurityModal" class="modal fade" tabindex="-1" aria-labelledby="addSecurityModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="addSecurity">
                         <div class="modal-header">
                             <h4 class="modal-title">Add Security</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>homeLogin</label>
-                                <input type="checkbox" class="form-control" name="addSecurityHomeLogin">
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityHomeLogin">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>admLogin</label>
-                                <input type="checkbox" class="form-control" name="addSecurityAdmLogin">
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityAdmLogin">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>usersCreate</label>
-                                <input type="checkbox" class="form-control" name="addSecurityUsersCreate">
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityUsersCreate">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>usersRead</label>
-                                <input type="checkbox" class="form-control" name="addSecurityUsersRead">
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityUsersRead">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>usersUpdate</label>
-                                <input type="checkbox" class="form-control" name="addSecurityUsersUpdate">
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityUsersUpdate">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>usersDelete</label>
-                                <input type="checkbox" class="form-control" name="addSecurityUsersDelete">
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityUsersDelete">
                             </div>
-                            <div class="form-group">
-                                <label>usersGroupsCreate</label>
-                                <input type="checkbox" class="form-control" name="addSecurityUsersGroupsCreate">
+                            <div class="form-group form-check form-switch">
+                                <label>userGroupsCreate</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityUserGroupsCreate">
                             </div>
-                            <div class="form-group">
-                                <label>usersGroupsRead</label>
-                                <input type="checkbox" class="form-control" name="addSecurityUsersGroupsRead">
+                            <div class="form-group form-check form-switch">
+                                <label>userGroupsRead</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityUserGroupsRead">
                             </div>
-                            <div class="form-group">
-                                <label>usersGroupsUpdate</label>
-                                <input type="checkbox" class="form-control" name="addSecurityUsersGroupsUpdate">
+                            <div class="form-group form-check form-switch">
+                                <label>userGroupsUpdate</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityUserGroupsUpdate">
                             </div>
-                            <div class="form-group">
-                                <label>usersGroupsDelete</label>
-                                <input type="checkbox" class="form-control" name="addSecurityUsersGroupsDelete">
+                            <div class="form-group form-check form-switch">
+                                <label>userGroupsDelete</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityUserGroupsDelete">
                             </div>
-                            <div class="form-group">
-                                <label>treesCreate</label>
-                                <input type="checkbox" class="form-control" name="addSecurityTreesCreate">
+                            <div class="form-group form-check form-switch">
+                                <label>UsersTreesCreate</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityUsersTreesCreate">
                             </div>
-                            <div class="form-group">
-                                <label>treesRead</label>
-                                <input type="checkbox" class="form-control" name="addSecurityTreesRead">
+                            <div class="form-group form-check form-switch">
+                                <label>UsersTreesRead</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityUsersTreesRead">
                             </div>
-                            <div class="form-group">
-                                <label>treesUpdate</label>
-                                <input type="checkbox" class="form-control" name="addSecurityTreesUpdate">
+                            <div class="form-group form-check form-switch">
+                                <label>UsersTreesUpdate</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityUsersTreesUpdate">
                             </div>
-                            <div class="form-group">
-                                <label>treesDelete</label>
-                                <input type="checkbox" class="form-control" name="addSecurityTreesDelete">
+                            <div class="form-group form-check form-switch">
+                                <label>UsersTreesDelete</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityUsersTreesDelete">
                             </div>
-                            <div class="form-group">
-                                <label>treesTypeCreate</label>
-                                <input type="checkbox" class="form-control" name="addSecurityTreesTypeCreate">
+                            <div class="form-group form-check form-switch">
+                                <label>treeCreate</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityTreeCreate">
                             </div>
-                            <div class="form-group">
-                                <label>treesTypeRead</label>
-                                <input type="checkbox" class="form-control" name="addSecurityTreesTypeRead">
+                            <div class="form-group form-check form-switch">
+                                <label>treeRead</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityTreeRead">
                             </div>
-                            <div class="form-group">
-                                <label>treesTypeUpdate</label>
-                                <input type="checkbox" class="form-control" name="addSecurityTreesTypeUpdate">
+                            <div class="form-group form-check form-switch">
+                                <label>treeUpdate</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityTreeUpdate">
                             </div>
-                            <div class="form-group">
-                                <label>treesTypeDelete</label>
-                                <input type="checkbox" class="form-control" name="addSecurityTreesTypeDelete">
+                            <div class="form-group form-check form-switch">
+                                <label>treeDelete</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityTreeDelete">
                             </div>
-                            <div class="form-group">
-                                <label>treesImagesCreate</label>
-                                <input type="checkbox" class="form-control" name="addSecurityTreesImagesCreate">
+                            <div class="form-group form-check form-switch">
+                                <label>treeTypeCreate</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityTreeTypeCreate">
                             </div>
-                            <div class="form-group">
-                                <label>treesImagesRead</label>
-                                <input type="checkbox" class="form-control" name="addSecurityTreesImagesRead">
+                            <div class="form-group form-check form-switch">
+                                <label>treeTypeRead</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityTreeTypeRead">
                             </div>
-                            <div class="form-group">
-                                <label>treesImagesUpdate</label>
-                                <input type="checkbox" class="form-control" name="addSecurityTreesImagesUpdate">
+                            <div class="form-group form-check form-switch">
+                                <label>treeTypeUpdate</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityTreeTypeUpdate">
                             </div>
-                            <div class="form-group">
-                                <label>treesImagesDelete</label>
-                                <input type="checkbox" class="form-control" name="addSecurityTreesImagesDelete">
+                            <div class="form-group form-check form-switch">
+                                <label>treeTypeDelete</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityTreeTypeDelete">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
+                                <label>treeImagesCreate</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityTreeImagesCreate">
+                            </div>
+                            <div class="form-group form-check form-switch">
+                                <label>treeImagesRead</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityTreeImagesRead">
+                            </div>
+                            <div class="form-group form-check form-switch">
+                                <label>treeImagesUpdate</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityTreeImagesUpdate">
+                            </div>
+                            <div class="form-group form-check form-switch">
+                                <label>treeImagesDelete</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityTreeImagesDelete">
+                            </div>
+                            <!--
+                            <div class="form-group form-check form-switch">
                                 <label>SecurityCreate</label>
-                                <input type="checkbox" class="form-control" name="addSecurityCreate">
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityCreate">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>SecurityRead</label>
-                                <input type="checkbox" class="form-control" name="addSecurityRead">
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityRead">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>SecurityUpdate</label>
-                                <input type="checkbox" class="form-control" name="addSecurityUpdate">
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityUpdate">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>SecurityDelete</label>
-                                <input type="checkbox" class="form-control" name="addSecurityDelete">
-                            </div>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityDelete">
+                            </div>-->
 
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             <input type="submit" class="btn btn-success" value="Add">
                         </div>
                     </form>
@@ -268,127 +202,146 @@
         </div>
 
         <!-- Edit Modal HTML -->
-        <div id="editSecurityModal" class="modal fade">
+        <div id="editSecurityModal" class="modal fade" tabindex="-1" aria-labelledby="editSecurityModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="editSecurity">
                         <div class="modal-header">
                             <h4 class="modal-title">Edit Security</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
                                 <input id="editSecurityId" name="editSecurityId" type="hidden" class="form-control">
                             </div>
-                            <div class="form-group">
+
+                            <div class="form-group form-check form-switch">
                                 <label>homeLogin</label>
-                                <input type="checkbox" class="form-control" name="editSecurityHomeLogin">
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityHomeLogin">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>admLogin</label>
-                                <input type="checkbox" class="form-control" name="editSecurityAdmLogin">
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityAdmLogin">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>usersCreate</label>
-                                <input type="checkbox" class="form-control" name="editSecurityUsersCreate">
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityUsersCreate">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>usersRead</label>
-                                <input type="checkbox" class="form-control" name="editSecurityUsersRead">
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityUsersRead">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>usersUpdate</label>
-                                <input type="checkbox" class="form-control" name="editSecurityUsersUpdate">
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityUsersUpdate">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>usersDelete</label>
-                                <input type="checkbox" class="form-control" name="editSecurityUsersDelete">
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityUsersDelete">
                             </div>
-                            <div class="form-group">
-                                <label>usersGroupsCreate</label>
-                                <input type="checkbox" class="form-control" name="editSecurityUsersGroupsCreate">
+                            <div class="form-group form-check form-switch">
+                                <label>userGroupsCreate</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityUserGroupsCreate">
                             </div>
-                            <div class="form-group">
-                                <label>usersGroupsRead</label>
-                                <input type="checkbox" class="form-control" name="editSecurityUsersGroupsRead">
+                            <div class="form-group form-check form-switch">
+                                <label>userGroupsRead</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityUserGroupsRead">
                             </div>
-                            <div class="form-group">
-                                <label>usersGroupsUpdate</label>
-                                <input type="checkbox" class="form-control" name="editSecurityUsersGroupsUpdate">
+                            <div class="form-group form-check form-switch">
+                                <label>userGroupsUpdate</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityUserGroupsUpdate">
                             </div>
-                            <div class="form-group">
-                                <label>usersGroupsDelete</label>
-                                <input type="checkbox" class="form-control" name="editSecurityUsersGroupsDelete">
+                            <div class="form-group form-check form-switch">
+                                <label>userGroupsDelete</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityUserGroupsDelete">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
+                                <label>UsersTreesCreate</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityUsersTreesCreate">
+                            </div>
+                            <div class="form-group form-check form-switch">
+                                <label>UsersTreesRead</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityUsersTreesRead">
+                            </div>
+                            <div class="form-group form-check form-switch">
+                                <label>UsersTreesUpdate</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityUsersTreesUpdate">
+                            </div>
+                            <div class="form-group form-check form-switch">
+                                <label>UsersTreesDelete</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityUsersTreesDelete">
+                            </div>
+                            <div class="form-group form-check form-switch">
                                 <label>treesCreate</label>
-                                <input type="checkbox" class="form-control" name="editSecurityTreesCreate">
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityTreesCreate">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>treesRead</label>
-                                <input type="checkbox" class="form-control" name="editSecurityTreesRead">
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityTreesRead">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>treesUpdate</label>
-                                <input type="checkbox" class="form-control" name="editSecurityTreesUpdate">
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityTreesUpdate">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>treesDelete</label>
-                                <input type="checkbox" class="form-control" name="editSecurityTreesDelete">
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityTreesDelete">
                             </div>
-                            <div class="form-group">
-                                <label>treesTypeCreate</label>
-                                <input type="checkbox" class="form-control" name="editSecurityTreesTypeCreate">
+                            <div class="form-group form-check form-switch">
+                                <label>treeTypeCreate</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityTreeTypeCreate">
                             </div>
-                            <div class="form-group">
-                                <label>treesTypeRead</label>
-                                <input type="checkbox" class="form-control" name="editSecurityTreesTypeRead">
+                            <div class="form-group form-check form-switch">
+                                <label>treeTypeRead</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityTreeTypeRead">
                             </div>
-                            <div class="form-group">
-                                <label>treesTypeUpdate</label>
-                                <input type="checkbox" class="form-control" name="editSecurityTreesTypeUpdate">
+                            <div class="form-group form-check form-switch">
+                                <label>treeTypeUpdate</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityTreeTypeUpdate">
                             </div>
-                            <div class="form-group">
-                                <label>treesTypeDelete</label>
-                                <input type="checkbox" class="form-control" name="editSecurityTreesTypeDelete">
+                            <div class="form-group form-check form-switch">
+                                <label>treeTypeDelete</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityTreeTypeDelete">
                             </div>
-                            <div class="form-group">
-                                <label>treesImagesCreate</label>
-                                <input type="checkbox" class="form-control" name="editSecurityTreesImagesCreate">
+                            <div class="form-group form-check form-switch">
+                                <label>treeImagesCreate</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityTreeImagesCreate">
                             </div>
-                            <div class="form-group">
-                                <label>treesImagesRead</label>
-                                <input type="checkbox" class="form-control" name="editSecurityTreesImagesRead">
+                            <div class="form-group form-check form-switch">
+                                <label>treeImagesRead</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityTreeImagesRead">
                             </div>
-                            <div class="form-group">
-                                <label>treesImagesUpdate</label>
-                                <input type="checkbox" class="form-control" name="editSecurityTreesImagesUpdate">
+                            <div class="form-group form-check form-switch">
+                                <label>treeImagesUpdate</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityTreeImagesUpdate">
                             </div>
-                            <div class="form-group">
-                                <label>treesImagesDelete</label>
-                                <input type="checkbox" class="form-control" name="editSecurityTreesImagesDelete">
+                            <div class="form-group form-check form-switch">
+                                <label>treeImagesDelete</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="editSecurityTreeImagesDelete">
                             </div>
-                            <div class="form-group">
+
+                            <!--
+                            <div class="form-group form-check form-switch">
                                 <label>SecurityCreate</label>
-                                <input type="checkbox" class="form-control" name="addSecurityCreate">
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityCreate">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>SecurityRead</label>
-                                <input type="checkbox" class="form-control" name="addSecurityRead">
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityRead">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>SecurityUpdate</label>
-                                <input type="checkbox" class="form-control" name="addSecurityUpdate">
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityUpdate">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group form-check form-switch">
                                 <label>SecurityDelete</label>
-                                <input type="checkbox" class="form-control" name="addSecurityDelete">
-                            </div>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addSecurityDelete">
+                            </div>-->
 
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-info" value="Save">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-success" value="Save">
                         </div>
                     </form>
                 </div>
@@ -396,13 +349,13 @@
         </div>
 
         <!-- Delete Modal HTML -->
-        <div id="deleteSecurityModal" class="modal fade">
+        <div id="deleteSecurityModal" class="modal fade" tabindex="-1" aria-labelledby="deleteSecurityModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="deleteSecurity">
                         <div class="modal-header">
                             <h4 class="modal-title">Delete Security</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <p>Are you sure you want to delete this Security?</p>
@@ -410,7 +363,7 @@
                             <input id="deleteSecurityId" name="deleteSecurityId" type="hidden" class="form-control">
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             <input type="submit" class="btn btn-danger" value="Delete">
                         </div>
                     </form>
@@ -418,7 +371,7 @@
             </div>
         </div>
 
-        <!-- Logout Modal HTML -->
+        <!-- Logout Modal HTML
         <div id="logoutModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -426,16 +379,29 @@
                         <h4>Logout <i class="fa fa-lock"></i></h4>
                     </div>
                     <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
-                    <div class="modal-footer"><a href="<?php echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
+                    <div class="modal-footer"><a href="<?php //echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
+        </div>-->
+
 
 
 <script>
     $(document).ready(function() {
+        //DATATABLES
+        try{
+            var table = $('#securitiesTable').DataTable({
+                rowReorder: false,
+                responsive: true,
+                columnDefs: [ {
+                    targets: [1],
+                    orderable: false,
+                }]
+            });
+        } catch (error){
+            console.log(error);
+        }
+
 
         // ajax to Add Security
         $('#addSecurity').submit(function (event) {
@@ -451,6 +417,9 @@
                 dataType: "json",
                 type: 'POST',
                 data: formData,
+                beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    $('#loader').removeClass('hidden')
+                },
                 success: function (data) {
                     $("#addSecurityModal").modal('hide');
 
@@ -493,6 +462,9 @@
                             //location.reload();
                         }
                     });
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
                 }
             });
         });
@@ -501,16 +473,60 @@
         $('#editSecurity').submit(function (event) {
             event.preventDefault(); //prevent default action
 
+            //Ve se a data dos inputs mudou para formar so a data necessaria para o PATCH
+            let formDataChanged = [];
+            $('#editSecurity input').each(function() { //para cada input vai ver
+
+                if($(this).is(":checked")){
+                    let emptyArray = { name: "", value: "" };
+
+                    emptyArray.name = $(this).attr('name');
+                    emptyArray.value = $(this).val();
+
+                    //console.log("checked " + emptyArray.name + " -> " + emptyArray.value)
+                    formDataChanged.push(emptyArray);
+                }
+
+                if(!$(this).is(":checked") && $(this).attr('name') !== "editSecurityId" && $(this).val() !== "Save" ){
+                    let emptyArray = { name: "", value: "" };
+
+                    emptyArray.name = $(this).attr('name');
+                    emptyArray.value = "off";
+
+                    //console.log("unchecked " + emptyArray.name + " -> " + emptyArray.value)
+                    formDataChanged.push(emptyArray);
+                }
+
+                if($(this).attr('name') === "editSecurityId" ) {
+                    let emptyArray = { name: "", value: "" };
+
+                    emptyArray.name = $(this).attr('name');
+                    emptyArray.value = $(this).val();
+
+                    //console.log(emptyArray.name + " -> " + emptyArray.value)
+                    formDataChanged.push(emptyArray);
+                }
+
+            });
+
             let formData = {
                 'action' : "UpdateSecurity",
-                'data'   : $(this).serializeArray()
+                'data'   : formDataChanged
             };
+
+            /*let formData = {
+                'action' : "UpdateSecurity",
+                'data'   : $(this).serializeArray()
+            };*/
 
             $.ajax({
                 url : "<?php echo HOME_URL . '/admin/security';?>",
                 dataType: "json",
                 type: 'POST',
                 data : formData,
+                beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    $('#loader').removeClass('hidden')
+                },
                 success: function (data) {
                     $("#editSecurityModal").modal('hide');
 
@@ -553,6 +569,9 @@
                             //location.reload();
                         }
                     });
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
                 }
             });
         });
@@ -570,12 +589,18 @@
                 dataType: "json",
                 type: 'POST',
                 data : formData,
+                beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    $('#loader').removeClass('hidden')
+                },
                 success: function (data) {
+
+                    $('[name="editSecurityId"]').val(data[0]['id']);
 
                     if (data[0]['homeLogin'] === 1) {
                         $('[name="editSecurityHomeLogin"]').attr('checked', true); } else { $('[name="editSecurityHomeLogin"]').attr('checked', false); }
                     if (data[0]['admLogin'] === 1) {
                         $('[name="editSecurityAdmLogin"]').attr('checked', true); } else { $('[name="editSecurityAdmLogin"]').attr('checked', false);}
+
                     if (data[0]['usersCreate'] === 1) {
                         $('[name="editSecurityUsersCreate"]').attr('checked', true); } else { $('[name="editSecurityUsersCreate"]').attr('checked', false);}
                     if (data[0]['usersRead'] === 1) {
@@ -584,14 +609,25 @@
                         $('[name="editSecurityUsersUpdate"]').attr('checked', true); } else { $('[name="editSecurityUsersUpdate"]').attr('checked', false);}
                     if (data[0]['usersDelete'] === 1) {
                         $('[name="editSecurityUsersDelete"]').attr('checked', true); } else { $('[name="editSecurityUsersDelete"]').attr('checked', false);}
-                    if (data[0]['usersGroupsCreate'] === 1) {
-                        $('[name="editSecurityUsersGroupsCreate"]').attr('checked', true); } else { $('[name="editSecurityUsersGroupsCreate"]').attr('checked', false); }
-                    if (data[0]['usersGroupsRead'] === 1) {
-                        $('[name="editSecurityUsersGroupsRead"]').attr('checked', true); } else { $('[name="editSecurityUsersGroupsRead"]').attr('checked', false); }
-                    if (data[0]['usersGroupsUpdate'] === 1) {
-                        $('[name="editSecurityUsersGroupsUpdate"]').attr('checked', true); } else { $('[name="editSecurityUsersGroupsUpdate"]').attr('checked', false);}
-                    if (data[0]['usersGroupsDelete'] === 1) {
-                        $('[name="editSecurityUsersGroupsDelete"]').attr('checked', true); } else { $('[name="editSecurityUsersGroupsDelete"]').attr('checked', false);}
+
+                    if (data[0]['userGroupsCreate'] === 1) {
+                        $('[name="editSecurityUserGroupsCreate"]').attr('checked', true); } else { $('[name="editSecurityUserGroupsCreate"]').attr('checked', false); }
+                    if (data[0]['userGroupsRead'] === 1) {
+                        $('[name="editSecurityUserGroupsRead"]').attr('checked', true); } else { $('[name="editSecurityUserGroupsRead"]').attr('checked', false); }
+                    if (data[0]['userGroupsUpdate'] === 1) {
+                        $('[name="editSecurityUserGroupsUpdate"]').attr('checked', true); } else { $('[name="editSecurityUserGroupsUpdate"]').attr('checked', false);}
+                    if (data[0]['userGroupsDelete'] === 1) {
+                        $('[name="editSecurityUserGroupsDelete"]').attr('checked', true); } else { $('[name="editSecurityUserGroupsDelete"]').attr('checked', false);}
+
+                    if (data[0]['usersTreesCreate'] === 1) {
+                        $('[name="editSecurityUsersTreesCreate"]').attr('checked', true); } else { $('[name="editSecurityUsersTreesCreate"]').attr('checked', false); }
+                    if (data[0]['usersTreesRead'] === 1) {
+                        $('[name="editSecurityUsersTreesRead"]').attr('checked', true); } else { $('[name="editSecurityUsersTreesRead"]').attr('checked', false); }
+                    if (data[0]['usersTreesUpdate'] === 1) {
+                        $('[name="editSecurityUsersTreesUpdate"]').attr('checked', true); } else { $('[name="editSecurityUsersTreesUpdate"]').attr('checked', false);}
+                    if (data[0]['usersTreesDelete'] === 1) {
+                        $('[name="editSecurityUsersTreesDelete"]').attr('checked', true); } else { $('[name="editSecurityUsersTreesDelete"]').attr('checked', false);}
+
                     if (data[0]['treesCreate'] === 1) {
                         $('[name="editSecurityTreesCreate"]').attr('checked', true); } else { $('[name="editSecurityTreesCreate"]').attr('checked', false);}
                     if (data[0]['treesRead'] === 1) {
@@ -600,23 +636,32 @@
                         $('[name="editSecurityTreesUpdate"]').attr('checked', true); } else { $('[name="editSecurityTreesUpdate"]').attr('checked', false);}
                     if (data[0]['treesDelete'] === 1) {
                         $('[name="editSecurityTreesDelete"]').attr('checked', true); } else { $('[name="editSecurityTreesDelete"]').attr('checked', false); }
-                    if (data[0]['treesTypeCreate'] === 1) {
-                        $('[name="editSecurityTreesTypeCreate"]').attr('checked', true); } else { $('[name="editSecurityTreesTypeCreate"]').attr('checked', false); }
-                    if (data[0]['treesTypeRead'] === 1) {
-                        $('[name="editSecurityTreesTypeRead"]').attr('checked', true); } else { $('[name="editSecurityTreesTypeRead"]').attr('checked', false); }
-                    if (data[0]['treesTypeUpdate'] === 1) {
-                        $('[name="editSecurityTreesTypeUpdate"]').attr('checked', true); } else { $('[name="editSecurityTreesTypeUpdate"]').attr('checked', false); }
-                    if (data[0]['treesTypeDelete'] === 1) {
-                        $('[name="editSecurityTreesTypeDelete"]').attr('checked', true); } else { $('[name="editSecurityTreesTypeDelete"]').attr('checked', false);}
-                    if (data[0]['treesImagesCreate'] === 1) {
-                        $('[name="editSecurityTreesImagesCreate"]').attr('checked', true); } else { $('[name="editSecurityTreesImagesCreate"]').attr('checked', false); }
-                    if (data[0]['treesImagesRead'] === 1) {
-                        $('[name="editSecurityTreesImagesRead"]').attr('checked', true); } else { $('[name="editSecurityTreesImagesRead"]').attr('checked', false);}
-                    if (data[0]['treesImagesUpdate'] === 1) {
-                        $('[name="editSecurityTreesImagesUpdate"]').attr('checked', true); } else { $('[name="editSecurityTreesImagesUpdate"]').attr('checked', false);}
-                    if (data[0]['treesImagesDelete'] === 1) {
-                        $('[name="editSecurityTreesImagesDelete"]').attr('checked', true); } else { $('[name="editSecurityTreesImagesDelete"]').attr('checked', false);}
 
+                    if (data[0]['treeTypeCreate'] === 1) {
+                        $('[name="editSecurityTreeTypeCreate"]').attr('checked', true); } else { $('[name="editSecurityTreeTypeCreate"]').attr('checked', false); }
+                    if (data[0]['treeTypeRead'] === 1) {
+                        $('[name="editSecurityTreeTypeRead"]').attr('checked', true); } else { $('[name="editSecurityTreeTypeRead"]').attr('checked', false); }
+                    if (data[0]['treeTypeUpdate'] === 1) {
+                        $('[name="editSecurityTreeTypeUpdate"]').attr('checked', true); } else { $('[name="editSecurityTreeTypeUpdate"]').attr('checked', false); }
+                    if (data[0]['treeTypeDelete'] === 1) {
+                        $('[name="editSecurityTreeTypeDelete"]').attr('checked', true); } else { $('[name="editSecurityTreeTypeDelete"]').attr('checked', false);}
+
+                    if (data[0]['treeImagesCreate'] === 1) {
+                        $('[name="editSecurityTreeImagesCreate"]').attr('checked', true); } else { $('[name="editSecurityTreeImagesCreate"]').attr('checked', false); }
+                    if (data[0]['treeImagesRead'] === 1) {
+                        $('[name="editSecurityTreeImagesRead"]').attr('checked', true); } else { $('[name="editSecurityTreeImagesRead"]').attr('checked', false);}
+                    if (data[0]['treeImagesUpdate'] === 1) {
+                        $('[name="editSecurityTreeImagesUpdate"]').attr('checked', true); } else { $('[name="editSecurityTreeImagesUpdate"]').attr('checked', false);}
+                    if (data[0]['treeImagesDelete'] === 1) {
+                        $('[name="editSecurityTreeImagesDelete"]').attr('checked', true); } else { $('[name="editSecurityTreeImagesDelete"]').attr('checked', false);}
+
+
+                    //atribui atributo .data("lastValue") a cada input do form editTree
+                    // para se poder comparar entre os dados anteriores e os current
+                    /*$('#editSecurity input').each(function() {
+                        $(this).data('lastValue', $(this).val());
+                        //console.log($(this).attr("name") + " -> " + $(this).val())
+                    });*/
 
                     $("#editSecurityModal").modal('show');
 
@@ -632,6 +677,9 @@
                             //location.reload();
                         }
                     });
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
                 }
             });
 
@@ -651,6 +699,9 @@
                 dataType: "json",
                 type: 'POST',
                 data : formData,
+                beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    $('#loader').removeClass('hidden')
+                },
                 success: function (data) {
                     $("#deleteSecurityModal").modal('hide');
 
@@ -693,6 +744,9 @@
                             //location.reload();
                         }
                     });
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
                 }
             });
         });
