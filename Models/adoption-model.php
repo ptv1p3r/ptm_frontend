@@ -41,26 +41,4 @@ class AdoptionModel extends MainModel
         return json_decode(json_encode($result), true);
     }
 
-    /**
-     * Get free to adoption trees list
-     *
-     * @since 0.1
-     * @access public
-     */
-    public function makeTransaction()
-    {
-        $result = null;
-
-        $url = API_URL . 'api/v1/transaction/create';
-
-        if (!empty($_SESSION['userdata']['accessToken'])) {
-            $userToken = $_SESSION['userdata']['accessToken'];
-            $result = callAPI("POST", $url, '', $userToken);
-        }
-        return json_decode(json_encode($result), true);
-    }
-
-
-
-
 }
