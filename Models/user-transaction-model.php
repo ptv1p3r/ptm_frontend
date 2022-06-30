@@ -53,40 +53,25 @@ class UserTransactionModel extends MainModel
         $normalizedData = array();
 
         //Manually injected user group data
-//        $normalizedData['groupId'] = 1;
+        $normalizedData['typeId'] = 1;
+        $normalizedData['methodId'] = 1;
 
         // get data from form array and package it to send to api
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']) {
-                    case "cardNumb":
-                        $normalizedData['name'] = $dataVector['value'];
-                        break;
-
-                    case "cardExp":
-                        $normalizedData['entity'] = strlen($dataVector['value']) > 0 ? $dataVector['value'] : NULL;
-                        break;
-
-                    case "cvcpwd":
-                        $normalizedData['email'] = $dataVector['value'];
-                        break;
-
-                    case "adoptionVal":
-                        $normalizedData['password'] = $dataVector['value'];
+                    case "userId":
+                        $normalizedData['userId'] = $dataVector['value'];
                         break;
 
                     case "treeSelected":
-                        $normalizedData['dateBirth'] = $dataVector['value'];
+                        $normalizedData['treeId'] = $dataVector['value'];
                         break;
 
-                    case "addUserAddress":
-                        $normalizedData['address'] = $dataVector['value'];
+                    case "adoptionVal":
+                        $normalizedData['value'] = number_format($dataVector['value'],2);
                         break;
 
-
-                    case "addUserGender":
-                        $normalizedData['genderId'] = (int)$dataVector['value'];
-                        break;
 
                 }
             }
@@ -96,17 +81,9 @@ class UserTransactionModel extends MainModel
 
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
-            $result = callAPI("GET", $url, '', $userToken);
+            $result = callAPI("POST", $url, '', $userToken);
         }
         return json_decode(json_encode($result), true);
     }
-
-
-
-
-
-
-
-
 
 }
