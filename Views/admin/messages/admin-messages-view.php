@@ -81,7 +81,7 @@
                                                                 </ul>
                                                             </div>
                                                             <!-- refresh -->
-                                                            <a class="btn" href="<?php echo HOME_URL . '/admin/messages'?>">
+                                                            <a class="btn" href="<?php echo HOME_URL . '/admin/messages/inbox'?>">
                                                                 <i class="fa-solid fa-rotate"></i>
                                                             </a>
                                                         </div>
@@ -111,9 +111,7 @@
                                                                         <tr class="nav-item <?php echo ($message["receptionDate"] != null ) ? "read" : ""; ?>" role="presentation">
                                                                             <td class="action"><div class="icheckbox_square-blue" st<td class="action"><input type="checkbox" /></td>
                                                                             <td class="name">
-                                                                                <a href="#">
-                                                                                    <?php echo $message["fromName"] ?>
-                                                                                </a>
+                                                                                From: <?php echo $message["fromName"] ?>
                                                                             </td>
                                                                             <td class="subject">
                                                                                 <a href="<?php echo HOME_URL . '/admin/messages/' . $message["id"];?>">
@@ -162,7 +160,14 @@
                                                                         <input id="addMessageFromUser" name="addMessageFromUser" type="hidden" class="form-control" value="<?php echo $_SESSION["userdata"]["id"];?>">
                                                                         <div class="form-group">
                                                                             <label>Message to</label>
-                                                                            <input name="addMessageToUser" type="text" class="form-control">
+                                                                            <select name="addMessageToUser" id="addMessageToUser">
+                                                                                <option value="" disabled selected>Selecione o recetor:</option>
+                                                                                <?php if (!empty($this->userdata['usersList'])) {
+                                                                                    foreach ($this->userdata['usersList'] as $key => $user) { ?>
+                                                                                        <option value="<?php echo $user['id'] ?>"><?php echo $user["email"] ?></option>
+                                                                                    <?php }
+                                                                                } ?>
+                                                                            </select>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label>Subject</label>
@@ -246,6 +251,11 @@
                     console.log(error);
                 }*/
 
+                // make select have input to seach for option
+                $(document).ready(function () {
+                    $('select').selectize({ sortField: 'text' });
+                });
+
                 //view message
                 <?php if( isset($this->userdata["userMessageView"]) && !empty($this->userdata["userMessageView"])) {
                     foreach ($this->userdata['userMessageView'] as $key => $message) {?>
@@ -259,7 +269,7 @@
                                                     <span><?php echo $message["subject"] ?></span>
                                                 </div>
                                                 <div class="icons">
-                                                    <a href="#" class="icon">reply</a>
+                                                    <a href="javascript:void();" id="<?php echo $message['fromUser'] ?>" class="icon reply"><i class="fa-solid fa-reply"></i></a>
                                                     <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="icon delete"
                                                        data-bs-toggle="modal" data-bs-target="#deleteMessageModal" title="Delete"><i class="fas fa-trash-alt"></i></a>
                                                 </div>
@@ -568,6 +578,14 @@
                             }
                         });
                     });
+                });
+
+                //set modal "message to" user
+                $('.reply').on('click', function(){
+                    let userToReply = $(this).attr("id");
+                    $("#addMessageModal").modal('show');
+                    let $select = $("#addMessageModal select").selectize();
+                    $select[0].selectize.setValue(userToReply);
                 });
 
             });
