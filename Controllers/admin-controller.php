@@ -2885,6 +2885,19 @@ class AdminController extends MainController
                 }
             }
 
+            //get users list
+            $userList = $modelo->getUserList();
+            if ($userList["statusCode"] === 200){
+                $this->userdata['usersList'] = $userList["body"]["users"];
+            }
+            if ($userList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $userList = $modelo->getUserList();
+                $this->userdata['usersList'] = $userList["body"]["users"];
+            }
+
             /**Carrega os arquivos do view**/
             require ABSPATH . '/views/_includes/admin-header.php';
 
@@ -3142,6 +3155,19 @@ class AdminController extends MainController
             if ($userMessageList["statusCode"] === 200){
                 $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
                 $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+
+            //get users list
+            $userList = $modelo->getUserList();
+            if ($userList["statusCode"] === 200){
+                $this->userdata['usersList'] = $userList["body"]["users"];
+            }
+            if ($userList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $userList = $modelo->getUserList();
+                $this->userdata['usersList'] = $userList["body"]["users"];
             }
 
             /**Carrega os arquivos do view**/
