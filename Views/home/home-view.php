@@ -215,30 +215,55 @@
     <div class="home-facts counter pt80">
         <div class="container">
             <div class="row">
+
+<!--                TODO Ver a situação do valores da info-->
+
+                <?php if (!empty($this->userdata['treesInfo'])) {
+                foreach ($this->userdata['treesInfo'] as $key => $trees) { ?>
+
+                    <?php echo $trees['treesTotal'] ?>
+                    <?php echo $trees['co2Kg'] ?>
+                    <?php echo $trees['H2oLt'] ?>
+                    <?php echo $trees['H2oLt'] ?>
+
+                <?php }
+                } ?>
+
                 <div class="col-lg-3 col-sm-6 col-md-3">
+
+                                    &nbsp;&nbsp;
+
+
+
                     <div class="counter-box">
-                        <p class="counter-count">89000</p>
+                        <p class="counter-count"> 1</p>
                         <p class="ctxt">Árvores plantadas</p>
                     </div>
                 </div>
+
+
+
+
                 <div class="col-lg-3 col-sm-6 col-md-3">
                     <div class="counter-box">
                         <p class="counter-count">79000</p>
-                        <p class="ctxt">Solar Panels in 2017</p>
+                        <p class="ctxt">Oxigênio(Kg)</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6 col-md-3">
                     <div class="counter-box">
                         <p class="counter-count">69000</p>
-                        <p class="ctxt">Wildlife Saved</p>
+                        <p class="ctxt">Água(Ltr)</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6 col-md-3">
                     <div class="counter-box">
                         <p class="counter-count">59000</p>
-                        <p class="ctxt">Served Water Gallons</p>
+                        <p class="ctxt">Dióxido Carbono(Kg)</p>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </div>
@@ -256,7 +281,7 @@
                 <!--                <p> We need your support and help to Stop Globar Warning. Few generations ago it to seemed like the-->
                 <!--                    world’s resources were infinite, and the people needed only. </p>-->
                 <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0"
+                    <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="70" aria-valuemin="0"
                          aria-valuemax="100"></div>
                 </div>
                 <ul class="funds">
@@ -274,8 +299,8 @@
                         <ul class="radio-boxes">
                             <li>
                                 <div class="radio custom">
-                                    <input name="donation" id="d1" type="radio" value="2.5" class="css-radio">
-                                    <label for="d1" class="css-label">€ 2.5</label>
+                                    <input name="donation" id="d1" type="radio" value="2.50" class="css-radio">
+                                    <label for="d1" class="css-label">€ 2.50</label>
                                 </div>
                             </li>
 
