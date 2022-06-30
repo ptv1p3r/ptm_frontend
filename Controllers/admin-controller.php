@@ -2639,7 +2639,7 @@ class AdminController extends MainController
      */
     public function messages(){
         // Título da página
-        $this->title = 'Admin - Mensagens';
+        $this->title = 'Admin - Minhas mensagens';
 
         // Permissoes da pagina
         $this->permission_required = array('admLogin'/*,'userGroupsRead'*/);
@@ -2899,9 +2899,9 @@ class AdminController extends MainController
      * "/views/admin/admin-all-messages-view.php"
      * @return void
      */
-    public function all_messages(){
+    public function all_messages(){ //TODO: colocar messages em table, em vez de inbox como esta?
         // Título da página
-        $this->title = 'Admin - Mensagens';
+        $this->title = 'Admin - Todas as mensagens';
 
         // Permissoes da pagina
         $this->permission_required = array('admLogin'/*,'userGroupsRead'*/);
@@ -2943,25 +2943,214 @@ class AdminController extends MainController
 
         $modelo = $this->load_model('admin-messages-model');
 
-        //get user Message list
-        $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
-        //caso accessToken espire
-        if ($userMessageList["statusCode"] === 401){
-            //faz o refresh do accessToken
-            $this->userTokenRefresh();
+        // processa chamadas ajax
+        if(isset($_POST['action']) && !empty($_POST['action'])) {
+            $action = $_POST['action'];
+            switch($action) {
+                case 'GetMessage' :
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->getMessageById($data);
+                    $apiResponseBody = array();
+
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->getMessageById($data);
+                    }
+
+                    if ($apiResponse['statusCode'] === 200) { // 200 success
+                        $apiResponseBody = json_encode($apiResponse["body"]);
+                    }
+
+                    echo $apiResponseBody;
+                    break;
+
+                case 'AddMessage' :
+                    /*$this->permission_required = array('userMessagesCreate');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }*/
+
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->addMessage($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->addMessage($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Created with success!";
+                    }
+
+                    // quando statusCode = 201, a response nao vem com campo mensagem
+                    // entao é criado e encoded para ser enviado
+                    if ($apiResponse['statusCode'] === 201){ // 201 created
+                        $apiResponse["body"]['message'] = "Created with success!";
+                    }
+
+                    // se statsCode nao for 201, entao api response ja vem com um campo mensagem
+                    // assim so precisamos de fazer encode para ser enviado
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo $apiResponse;
+                    break;
+
+                case 'DeleteMessage' :
+                    /*$this->permission_required = array('userMessagesDelete');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }*/
+
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->deleteMessage($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->deleteMessage($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Deleted with success!";
+                    }
+
+                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Deleted with success!";
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo $apiResponse;
+                    break;
+
+                case "MarkUnread":
+                    /*$this->permission_required = array('userMessagesDelete');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }*/
+
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->messageUnread($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->messageUnread($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Marked as unread";
+                    }
+
+                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Marked as unread";
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo $apiResponse;
+                    break;
+
+                case "MarkRead":
+                    /*$this->permission_required = array('userMessagesDelete');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }*/
+
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->messageRead($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->messageRead($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Marked as read";
+                    }
+
+                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Marked as read";
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo $apiResponse;
+                    break;
+            }
+
+        } else {
+            //se existir parametro
+            //TODO: valdidar parametro, tembem, se param vazio entao redirect para inbox
+            if (isset($parametros) && !empty($parametros)) {
+                $paramVal = chk_array($parametros, 0);
+
+                if($paramVal === "inbox") {
+
+                    $tabActive = "inbox";
+
+                    //get all Message list / all messages inbox
+                    $userMessageList = $modelo->getMessageList($_SESSION["userdata"]["id"]);
+                    //caso accessToken espire
+                    if ($userMessageList["statusCode"] === 401){
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+                        $userMessageList = $modelo->getMessageList($_SESSION["userdata"]["id"]);
+                    }
+                    if ($userMessageList["statusCode"] === 200){
+                        $this->userdata['allMessageList'] = $userMessageList["body"]["messages"];
+                    }
+                } else {
+                    //faz get da message pelo id que vem nesse parametro
+                    $userMessageView = $modelo->getMessageById($paramVal);
+                    //caso accessToken espire
+                    if ($userMessageView["statusCode"] === 404){
+                        //faz o refresh do accessToken
+                        $this->userdata['allMessageView'] = 404;
+                    }
+                    if ($userMessageView["statusCode"] === 401){
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+                        $userMessageView = $modelo->getMessageById($paramVal);
+                    }
+                    if ($userMessageView["statusCode"] === 200){
+                        $this->userdata['allMessageView'] = $userMessageView["body"];
+                    }
+                }
+            }
+
+            //get user Message list / user messages inbox
             $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            //caso accessToken espire
+            if ($userMessageList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+                $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            }
+            if ($userMessageList["statusCode"] === 200){
+                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+
+            /**Carrega os arquivos do view**/
+            require ABSPATH . '/views/_includes/admin-header.php';
+
+            require ABSPATH . '/views/admin/messages/admin-all-messages-view.php';
+
+            require ABSPATH . '/views/_includes/admin-footer.php';
         }
-        if ($userMessageList["statusCode"] === 200){
-            $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
-            $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
-        }
-
-        /**Carrega os arquivos do view**/
-        require ABSPATH . '/views/_includes/admin-header.php';
-
-        require ABSPATH . '/views/admin/messages/admin-all-messages-view.php';
-
-        require ABSPATH . '/views/_includes/admin-footer.php';
 
     }
 
