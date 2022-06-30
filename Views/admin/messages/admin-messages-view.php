@@ -323,7 +323,7 @@
                                     showConfirmButton: false,
                                     timer: 2000,
                                     didClose: () => {
-                                        location.href = "<?php echo HOME_URL . '/admin/messages';?>";
+                                        location.href = "<?php echo HOME_URL . '/admin/messages/inbox';?>";
                                     }
                                 });
                             } else {
@@ -389,7 +389,7 @@
                                     showConfirmButton: false,
                                     timer: 2000,
                                     didClose: () => {
-                                        location.href = "<?php echo HOME_URL . '/admin/messages';?>";
+                                        location.href = "<?php echo HOME_URL . '/admin/messages/inbox';?>";
                                     }
                                 });
                             } else {
@@ -464,7 +464,7 @@
                                         showConfirmButton: false,
                                         timer: 2000,
                                         didClose: () => {
-                                            location.reload();
+                                            location.href = "<?php echo HOME_URL . '/admin/messages/inbox';?>";
                                         }
                                     });
                                 } else {
@@ -532,7 +532,7 @@
                                         showConfirmButton: false,
                                         timer: 2000,
                                         didClose: () => {
-                                            location.reload();
+                                            location.href = "<?php echo HOME_URL . '/admin/messages/inbox';?>";
                                         }
                                     });
                                 } else {
