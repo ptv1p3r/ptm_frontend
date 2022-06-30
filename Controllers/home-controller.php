@@ -25,6 +25,28 @@ class HomeController extends MainController
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
 
+        //TODO Ver a situação do valores da info
+
+        $model = $this->load_model('home-model');
+        $getTreeInfo = $model->getTreeInfo();
+        $this->userdata['treesInfo'] = $getTreeInfo['body'];
+
+//        //Get adopt list from model
+//        $getTreeInfo = $model->getTreeInfo();
+//        if ($getTreeInfo['statusCode'] === 200) { // 200 OK, successful
+//            $this->userdata['treeInfo'] = $getTreeInfo['body'];
+//        }
+//        if ($getTreeInfo['statusCode'] === 401) {  // 200 OK, successful
+//            //Refresh user token
+//            $this->userTokenRefresh();
+//            //Models
+//            $getTreeInfo = $model->getAdoptTreesList();
+//            //Userdata from model's
+//            $this->userdata['adoptionList'] = $getTreeInfo['body'];
+//        }
+
+
+
         // obriga o login para aceder à pagina
         if (!$this->logged_in) {
 
@@ -225,6 +247,8 @@ class HomeController extends MainController
         // Parametros da função
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
+
+
         // obriga o login para aceder à pagina
         if (!$this->logged_in) {
 
@@ -248,6 +272,22 @@ class HomeController extends MainController
 
         }
 
+
+        $model = $this->load_model('home-model');
+
+        //Get trees info from model
+        $getTreeInfo = $model->getTreeInfo();
+        if ($getTreeInfo['statusCode'] === 200) { // 200 OK, successful
+            $this->userdata['treesInfo'] = $getTreeInfo['body'];
+        }
+        if ($getTreeInfo['statusCode'] === 401) {  // 200 OK, successful
+            //Refresh user token
+            $this->userTokenRefresh();
+            //Models
+            $getTreeInfo = $model->getTreeInfo();
+            //Userdata from model's
+            $this->userdata['treesInfo'] = $getTreeInfo['body'];
+        }
 
 
         /** Carrega os arquivos do view **/
@@ -603,7 +643,7 @@ class HomeController extends MainController
                     }
 */
                     $data = $_POST['data'];
-                    $apiResponse = $model->makeTransaction($data); //decode to check message from api
+                    $apiResponse = $modelTransaction->makeTransaction($data); //decode to check message from api
 
 
 
