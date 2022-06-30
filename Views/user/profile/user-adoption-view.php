@@ -92,8 +92,9 @@
                     <div class="volunteer-form">
 
                         <div id="treePhoto">
-
-
+                            <img src=" /Images/logo/adoteUmaBig.png" height="100%"
+                                 width="100%"
+                                 alt="">
                         </div>
                     </div>
                     <br>
@@ -159,7 +160,7 @@
                                 </div>
                                 <!--MBWay Payment-->
                                 <div class="tab-content">
-                                    <div id="MBWay" class="tab-pane">
+                                    <div id="MBWay" class="tab-pane in active">
                                         <div class="row justify-content-center">
                                             <div class="col-11">
                                                 <div class="form-card">
@@ -175,16 +176,48 @@
                                                     <form id="mbWayTransaction">
                                                         <div class="row">
                                                             <div class="col-12">
+                                                                <div class="form-group">
+                                                                    <input id="adoptionVal"
+                                                                           name="userId"
+                                                                           class="form-control"
+
+                                                                           value="<?php echo $_SESSION['userdata']['id']?>">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input id="adoptionVal"
+                                                                           name="adoptionVal"
+                                                                           class="form-control"
+
+                                                                           value="<?php echo $_SESSION['userdata']['treeDonation'][0]['value'] ?>">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div id="treeId1" >
+                                                                        <input id="treeSelected"
+                                                                               name="treeSelected"
+                                                                               class="form-control"
+                                                                               value=""
+                                                                               >
+                                                                    </div>
+                                                                </div>
                                                                 <div class="input-group">
                                                                     <input type="text" id="cr_no"
                                                                            placeholder="000 000 000"
                                                                            minlength="9"
                                                                            maxlength="9"
                                                                            required
-                                                                    > <label>Insira o deu número de telemóvel</label>
+                                                                    > <label>Insira o seu número de telemóvel</label>
                                                                 </div>
                                                             </div>
                                                         </div>
+
+                                                        <!-- Image loader -->
+                                                        <div class="loaderOverlay lds-dual-ring hidden" id="loader" >
+                                                            <svg class="loader" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                                                <circle cx="50" cy="50" r="46"/>
+                                                            </svg>
+                                                        </div>
+                                                        <!-- Image loader -->
+
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <input type="submit"
@@ -240,8 +273,9 @@
                                         </div>
                                     </div>
 
+
                                     <!--Bank Transfer Payment-->
-                                    <div id="VISAMastercard" class="tab-pane in active">
+                                    <div id="VISAMastercard" class="tab-pane ">
                                         <div class="row justify-content-center">
                                             <div class="col-11">
                                                 <div class="form-card">
@@ -367,15 +401,14 @@
                         $(".treeObs").text(element.observations);
                         $("#subBtn").removeAttr('disabled');
 
-
-                        //TODO ver fotografia da árvore correta
-
-                        //Div with Id tree from data success
+                        //Create div to show images from select tree
+                        let imagePath = element.mainImagePath === null ? '/Images/logo/adoteUmaBig.png' : "<?php echo API_URL ?>" + "api/v1/trees/image/"+element.mainImagePath ;
+                        let imageName = element.mainImageName === null ? '' : "<?php echo API_URL ?>" + "api/v1/trees/image/"+element.mainImageName ;
                         $("#treePhoto").html(
                             `
-                           <img src=" /Images/logo/adoteUmaBig.png" height="100%"
+                           <img src='${imagePath}'  height="100%"
                                  width="100%"
-                                 alt="">
+                                 alt='${imageName}'>
                            `
                         );
 
@@ -400,15 +433,6 @@
             $("#wrapper").toggleClass("toggled");
         });
 
-        // // For highlighting activated tabs
-        // $("#tab1").click(function () {
-        //     $(".tabs").removeClass("active1");
-        //     $(".tabs").addClass("bg-light");
-        //     $("#tab1").addClass("active1");
-        //     $("#tab1").removeClass("bg-light");
-        // });
-
-
         //AJAX call to get select tree
         $('#getTree').submit(function (event) {
             event.preventDefault(); //prevent default action
@@ -425,9 +449,11 @@
                     $('#treeId').html(
                         data[1]['value']
                     );
-                    $('#treeId1').html(
+                    $('#treeSelected').val(
                         data[1]['value']
                     );
+
+
                     $(".bd-example-modal-lg").modal('show');
                 },
                 error: function (data) {
@@ -448,14 +474,14 @@
 
 
         // Ajax call to make transiction
-        $('#makeTransaction').submit(function (event) {
+        $('#mbWayTransaction').submit(function (event) {
             event.preventDefault(); //prevent default action
             let formData = {
                 'action': "makeTransaction",
                 'data': $(this).serializeArray()
             };
             $.ajax({
-                url: "<?php echo HOME_URL . '/home/donation';?>",
+                url: "<?php echo HOME_URL . '/home/adoption';?>",
                 dataType: "json",
                 type: 'POST',
                 data: formData,
