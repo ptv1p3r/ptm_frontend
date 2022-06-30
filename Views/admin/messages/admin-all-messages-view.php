@@ -33,7 +33,7 @@
                                             <div class="row">
                                                 <!-- BEGIN INBOX MENU -->
                                                 <div class="col-md-3">
-                                                    <h2 class="grid-title"><i class="fa fa-inbox"></i>Inbox (All)</h2>
+                                                    <h2 class="grid-title"><i class="fa fa-inbox"></i> Inbox (All)</h2>
                                                     <a class="btn btn-block btn-primary"
                                                        data-bs-toggle="modal" data-bs-target="#addMessageModal">
                                                         <i class="fa fa-pencil"></i>&nbsp;&nbsp;NEW MESSAGE
@@ -76,7 +76,7 @@
                                                                 </ul>
                                                             </div>
                                                             <!-- refresh -->
-                                                            <a class="btn" href="<?php echo HOME_URL . '/admin/all_messages'?>">
+                                                            <a class="btn" href="<?php echo HOME_URL . '/admin/all_messages/inbox'?>">
                                                                 <i class="fa-solid fa-rotate"></i>
                                                             </a>
                                                         </div>
@@ -106,9 +106,10 @@
                                                                         <tr class="nav-item <?php echo ($message["receptionDate"] != null ) ? "read" : ""; ?>" role="presentation">
                                                                             <td class="action"><div class="icheckbox_square-blue" st<td class="action"><input type="checkbox" /></td>
                                                                             <td class="name">
-                                                                                <a href="#">
-                                                                                    <?php echo $message["fromName"] ?>
-                                                                                </a>
+                                                                                From: <?php echo $message["fromName"] ?>
+                                                                            </td>
+                                                                            <td class="name">
+                                                                                To: <?php echo $message["toName"] ?>
                                                                             </td>
                                                                             <td class="subject">
                                                                                 <a href="<?php echo HOME_URL . '/admin/all_messages/' . $message["id"];?>">
@@ -117,13 +118,13 @@
                                                                             </td>
                                                                             <td class="time"><?php echo $message["notificationDate"] ?></td>
                                                                             <td>
-                                                                                <?php if ($message["receptionDate"] === null ) {?>
-                                                                                    <a href="javascript:void(0);" id="<?php echo $message['id'] ?>"
+                                                                                <?php /*if ($message["receptionDate"] === null ) {*/?><!--
+                                                                                    <a href="javascript:void(0);" id="<?php /*echo $message['id'] */?>"
                                                                                        class="message-read m-2" title="Mark as read"><i class="fa-solid fa-envelope-open"></i></a>
-                                                                                <?php } else {?>
-                                                                                    <a href="javascript:void(0);" id="<?php echo $message['id'] ?>"
+                                                                                <?php /*} else {*/?>
+                                                                                    <a href="javascript:void(0);" id="<?php /*echo $message['id'] */?>"
                                                                                        class="message-unread m-2" title="Mark as unread"><i class="fa-solid fa-envelope"></i></a>
-                                                                                <?php }?>
+                                                                                --><?php /*}*/?>
 
                                                                                 <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="delete m-2"
                                                                                    data-bs-toggle="modal" data-bs-target="#deleteMessageModal" title="Delete"><i class="fas fa-trash-alt"></i></a>
@@ -157,7 +158,14 @@
                                                                         <input id="addMessageFromUser" name="addMessageFromUser" type="hidden" class="form-control" value="<?php echo $_SESSION["userdata"]["id"];?>">
                                                                         <div class="form-group">
                                                                             <label>Message to</label>
-                                                                            <input name="addMessageToUser" type="text" class="form-control">
+                                                                            <select name="addMessageToUser" id="addMessageToUser">
+                                                                                <option value="" disabled selected>Selecione o recetor:</option>
+                                                                                <?php if (!empty($this->userdata['usersList'])) {
+                                                                                    foreach ($this->userdata['usersList'] as $key => $user) { ?>
+                                                                                        <option value="<?php echo $user['id'] ?>"><?php echo $user["email"] ?></option>
+                                                                                    <?php }
+                                                                                } ?>
+                                                                            </select>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label>Subject</label>
@@ -241,6 +249,11 @@
                     console.log(error);
                 }*/
 
+                // make select have input to seach for option
+                $(document).ready(function () {
+                    $('select').selectize({ sortField: 'text' });
+                });
+
                 //view message
                 <?php if( isset($this->userdata["allMessageView"]) && !empty($this->userdata["allMessageView"])) {
                 foreach ($this->userdata['allMessageView'] as $key => $message) {?>
@@ -254,7 +267,7 @@
                                                     <span><?php echo $message["subject"] ?></span>
                                                 </div>
                                                 <div class="icons">
-                                                    <a href="#" class="icon">reply</a>
+                                                    <!--<a href="javascript:void();" id="<?php echo $message['fromUser'] ?>" class="icon reply"><i class="fa-solid fa-reply"></i></a>-->
                                                     <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="icon delete"
                                                        data-bs-toggle="modal" data-bs-target="#deleteMessageModal" title="Delete"><i class="fas fa-trash-alt"></i></a>
                                                 </div>
@@ -283,9 +296,9 @@
                                         <?php echo $message["message"] ?>
                                     </div>
                                 </div>`
-                    );
-                }
-                LoadMessage()
+                        );
+                    }
+                    LoadMessage()
                 <?php }
                 }?>
 
@@ -428,6 +441,14 @@
                     $("#deleteMessageModal").modal('show');
 
                 });
+
+                //set modal "message to" user
+                /*$('.reply').on('click', function(){
+                    let userToReply = $(this).attr("id");
+                    $("#addMessageModal").modal('show');
+                    let $select = $("#addMessageModal select").selectize();
+                    $select[0].selectize.setValue(userToReply);
+                });*/
 
                 //ajax to set message as unread
                 /*$(function() {
