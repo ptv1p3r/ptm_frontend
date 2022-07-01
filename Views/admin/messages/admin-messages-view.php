@@ -580,7 +580,7 @@
                     });
                 });
 
-                //set modal "message to" user
+                //set modal "message to" as the "message from" that is on message view, when "reply" button click
                 $('.reply').on('click', function(){
                     let userToReply = $(this).attr("id");
                     $("#addMessageModal").modal('show');

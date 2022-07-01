@@ -2830,8 +2830,14 @@ class AdminController extends MainController
             }
 
         } else {
+            //TODO: valdidar parametros
+            //se param vazio entao redirect para inbox
+            if(empty($parametros)){
+                echo '<meta http-equiv="Refresh" content="0; url=' . HOME_URL . "/admin/messages/inbox" .'">';
+                echo '<script type="text/javascript">window.location.href = "' . HOME_URL . "/admin/messages/inbox" . '";</script>';
+            }
+
             //se existir parametro
-            //TODO: valdidar parametro, tembem, se param vazio entao redirect para inbox
             if (isset($parametros) && !empty($parametros)) {
                 $paramVal = chk_array($parametros, 0);
 
@@ -2912,7 +2918,7 @@ class AdminController extends MainController
      * "/views/admin/admin-all-messages-view.php"
      * @return void
      */
-    public function all_messages(){ //TODO: colocar messages em table, em vez de inbox como esta?
+    public function all_messages(){
         // Título da página
         $this->title = 'Admin - Todas as mensagens';
 
@@ -3105,8 +3111,14 @@ class AdminController extends MainController
             }
 
         } else {
+            //TODO: valdidar parametros
+            //se param vazio entao redirect para inbox
+            if(empty($parametros)){
+                echo '<meta http-equiv="Refresh" content="0; url=' . HOME_URL . "/admin/all_messages/inbox" .'">';
+                echo '<script type="text/javascript">window.location.href = "' . HOME_URL . "/admin/all_messages/inbox" . '";</script>';
+            }
+
             //se existir parametro
-            //TODO: valdidar parametro, tembem, se param vazio entao redirect para inbox
             if (isset($parametros) && !empty($parametros)) {
                 $paramVal = chk_array($parametros, 0);
 
