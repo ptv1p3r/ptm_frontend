@@ -215,55 +215,33 @@
     <div class="home-facts counter pt80">
         <div class="container">
             <div class="row">
-
-<!--                TODO Ver a situação do valores da info-->
-
-                <?php if (!empty($this->userdata['treesInfo'])) {
-                foreach ($this->userdata['treesInfo'] as $key => $trees) { ?>
-
-                    <?php echo $trees['treesTotal'] ?>
-                    <?php echo $trees['co2Kg'] ?>
-                    <?php echo $trees['H2oLt'] ?>
-                    <?php echo $trees['H2oLt'] ?>
-
-                <?php }
-                } ?>
-
+                <?php if (!empty($this->userdata['treesInfo'])) {?>
                 <div class="col-lg-3 col-sm-6 col-md-3">
-
-                                    &nbsp;&nbsp;
-
-
-
                     <div class="counter-box">
-                        <p class="counter-count"> 1</p>
+                        <p class="counter-count"><?php echo $this->userdata['treesInfo']['treesTotal'] ?></p>
                         <p class="ctxt">Árvores plantadas</p>
                     </div>
                 </div>
-
-
-
-
                 <div class="col-lg-3 col-sm-6 col-md-3">
                     <div class="counter-box">
-                        <p class="counter-count">79000</p>
-                        <p class="ctxt">Oxigênio(Kg)</p>
+                        <p class="counter-count"><?php echo $this->userdata['treesInfo']['O2Kg'] ?></p>
+                        <p class="ctxt">Oxigénio(Kg)</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6 col-md-3">
                     <div class="counter-box">
-                        <p class="counter-count">69000</p>
-                        <p class="ctxt">Água(Ltr)</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-md-3">
-                    <div class="counter-box">
-                        <p class="counter-count">59000</p>
+                        <p class="counter-count"><?php echo $this->userdata['treesInfo']['co2Kg'] ?></p>
                         <p class="ctxt">Dióxido Carbono(Kg)</p>
                     </div>
                 </div>
+                <div class="col-lg-3 col-sm-6 col-md-3">
+                    <div class="counter-box"><p class="counter-count"><?php echo $this->userdata['treesInfo']['H2oLt'] ?></p>
+                        <p class="ctxt">Água(Ltr)</p>
+                    </div>
+                </div>
 
-
+                    <?php
+                } ?>
             </div>
         </div>
     </div>
@@ -304,7 +282,6 @@
                                 </div>
                             </li>
 
-
                             <!-- Make donation if login-->
                             <?php if ($this->logged_in) { ?>
                                 <li class="form-submit">
@@ -316,7 +293,8 @@
                             <?php } else { ?>
                                 <!-- Make donation send to login / register-->
                                 <li class="form-submit">
-                                    <button class="login-reg"><a href="" data-toggle="modal" data-target="#loginModal"
+                                    <button class="login-reg">
+                                        <a href="" data-toggle="modal" data-target="#loginModal"
                                                                  type="submit">Faça a sua adoção</button>
                                 </li>
                             <?php } ?>
