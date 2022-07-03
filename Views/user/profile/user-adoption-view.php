@@ -177,7 +177,7 @@
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <div class="form-group">
-                                                                    <input id="adoptionVal"
+                                                                    <input id="userId"
                                                                            name="userId"
                                                                            class="form-control"
 
