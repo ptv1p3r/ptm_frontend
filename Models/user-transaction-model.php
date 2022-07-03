@@ -69,9 +69,8 @@ class UserTransactionModel extends MainModel
                         break;
 
                     case "adoptionVal":
-                        $normalizedData['value'] = number_format($dataVector['value'],2);
+                        $normalizedData['value'] = (float)($dataVector['value']);
                         break;
-
 
                 }
             }
@@ -81,7 +80,7 @@ class UserTransactionModel extends MainModel
 
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
-            $result = callAPI("POST", $url, '', $userToken);
+            $result = callAPI("POST", $url, $normalizedData, $userToken);
         }
         return json_decode(json_encode($result), true);
     }
