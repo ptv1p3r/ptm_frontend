@@ -31,22 +31,6 @@ class HomeController extends MainController
         $getTreeInfo = $model->getTreeInfo();
         $this->userdata['treesInfo'] = $getTreeInfo['body'];
 
-//        //Get adopt list from model
-//        $getTreeInfo = $model->getTreeInfo();
-//        if ($getTreeInfo['statusCode'] === 200) { // 200 OK, successful
-//            $this->userdata['treeInfo'] = $getTreeInfo['body'];
-//        }
-//        if ($getTreeInfo['statusCode'] === 401) {  // 200 OK, successful
-//            //Refresh user token
-//            $this->userTokenRefresh();
-//            //Models
-//            $getTreeInfo = $model->getAdoptTreesList();
-//            //Userdata from model's
-//            $this->userdata['adoptionList'] = $getTreeInfo['body'];
-//        }
-
-
-
         // obriga o login para aceder à pagina
         if (!$this->logged_in) {
 
@@ -280,7 +264,7 @@ class HomeController extends MainController
         if ($getTreeInfo['statusCode'] === 200) { // 200 OK, successful
             $this->userdata['treesInfo'] = $getTreeInfo['body'];
         }
-        if ($getTreeInfo['statusCode'] === 401) {  // 200 OK, successful
+        if ($getTreeInfo['statusCode'] === 400) {  // 200 OK, successful
             //Refresh user token
             $this->userTokenRefresh();
             //Models
@@ -631,20 +615,8 @@ class HomeController extends MainController
                     break;
 
                 case 'makeTransaction' :
-                   /*
-                    $this->permission_required = array('usersUpdate');
-
-                    //Verifica se o user tem a permissão para realizar operaçao
-                    if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
-                        $apiResponse["body"]['message'] = "You have no permission!";
-
-                        echo json_encode($apiResponse);
-                        break;
-                    }
-*/
                     $data = $_POST['data'];
                     $apiResponse = $modelTransaction->makeTransaction($data); //decode to check message from api
-
 
 
                     if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
@@ -654,7 +626,7 @@ class HomeController extends MainController
                         break;
                     }
 
-                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                    if ($apiResponse['statusCode'] === 40) { // 401, unauthorized
                         $this->userTokenRefresh();
                         $apiResponse = $model->updateUser($data); //decode to check message from api
                         $apiResponse = json_encode($apiResponse);// encode package to send
