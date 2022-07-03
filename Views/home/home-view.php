@@ -189,13 +189,11 @@
                 </ol>
             </nav>
 
+            <!-- Map area div-->
             <div class="col-md-12">
-
-                <!--Map area div-->
                 <div id="map"></div>
-
             </div>
-
+            <!-- End Map area div-->
 
         </div>
         <div class="col-md-12">
@@ -209,37 +207,35 @@
                 <!--                    <a class="aboutus" href="#">More About us</a>-->
             </div>
         </div>
-
-
     </div>
     <div class="home-facts counter pt80">
         <div class="container">
             <div class="row">
-                <?php if (!empty($this->userdata['treesInfo'])) {?>
-                <div class="col-lg-3 col-sm-6 col-md-3">
-                    <div class="counter-box">
-                        <p class="counter-count"><?php echo $this->userdata['treesInfo']['treesTotal'] ?></p>
-                        <p class="ctxt">Árvores plantadas</p>
+                <?php if (!empty($this->userdata['treesInfo'])) { ?>
+                    <div class="col-lg-3 col-sm-6 col-md-3">
+                        <div class="counter-box">
+                            <p class="counter-count"><?php echo $this->userdata['treesInfo']['treesTotal'] ?></p>
+                            <p class="ctxt">Árvores plantadas</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-md-3">
-                    <div class="counter-box">
-                        <p class="counter-count"><?php echo $this->userdata['treesInfo']['O2Kg'] ?></p>
-                        <p class="ctxt">Oxigénio(Kg)</p>
+                    <div class="col-lg-3 col-sm-6 col-md-3">
+                        <div class="counter-box">
+                            <p class="counter-count"><?php echo $this->userdata['treesInfo']['O2Kg'] ?></p>
+                            <p class="ctxt">Oxigénio(Kg)</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-md-3">
-                    <div class="counter-box">
-                        <p class="counter-count"><?php echo $this->userdata['treesInfo']['co2Kg'] ?></p>
-                        <p class="ctxt">Dióxido Carbono(Kg)</p>
+                    <div class="col-lg-3 col-sm-6 col-md-3">
+                        <div class="counter-box">
+                            <p class="counter-count"><?php echo $this->userdata['treesInfo']['co2Kg'] ?></p>
+                            <p class="ctxt">Dióxido Carbono(Kg)</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-md-3">
-                    <div class="counter-box"><p class="counter-count"><?php echo $this->userdata['treesInfo']['H2oLt'] ?></p>
-                        <p class="ctxt">Água(Ltr)</p>
+                    <div class="col-lg-3 col-sm-6 col-md-3">
+                        <div class="counter-box"><p
+                                    class="counter-count"><?php echo $this->userdata['treesInfo']['H2oLt'] ?></p>
+                            <p class="ctxt">Água(Ltr)</p>
+                        </div>
                     </div>
-                </div>
-
                     <?php
                 } ?>
             </div>
@@ -258,15 +254,15 @@
                 </div>
                 <!--                <p> We need your support and help to Stop Globar Warning. Few generations ago it to seemed like the-->
                 <!--                    world’s resources were infinite, and the people needed only. </p>-->
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="70" aria-valuemin="0"
-                         aria-valuemax="100"></div>
-                </div>
-                <ul class="funds">
-                    <li class="text-left"><strong>73%</strong> Funded</li>
-                    <li class="text-center"><strong>$948.00</strong> Raised</li>
-                    <li class="text-right"><strong>$1750.00</strong> Required</li>
-                </ul>
+<!--                <div class="progress">-->
+<!--                    <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="70" aria-valuemin="0"-->
+<!--                         aria-valuemax="100"></div>-->
+<!--                </div>-->
+<!--                <ul class="funds">-->
+<!--                    <li class="text-left"><strong>73%</strong> Funded</li>-->
+<!--                    <li class="text-center"><strong>$948.00</strong> Raised</li>-->
+<!--                    <li class="text-right"><strong>$1750.00</strong> Required</li>-->
+<!--                </ul>-->
             </div>
             <div class="col-md-6">
                 <div class="donation-amount">
@@ -282,24 +278,32 @@
                                 </div>
                             </li>
 
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert" hidden>
+                                <strong>Selecione o valor e faça adoção!</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+<!--                            TODO ver porque aqui o sistema não sabe se estamos ou não login-->
                             <!-- Make donation if login-->
                             <?php if ($this->logged_in) { ?>
                                 <li class="form-submit">
                                     <button type="submit" id="subBtn" disabled="disabled">
                                         Faça a sua adoção
                                     </button>
-
                                 </li>
                             <?php } else { ?>
                                 <!-- Make donation send to login / register-->
                                 <li class="form-submit">
                                     <button class="login-reg">
-                                        <a href="" data-toggle="modal" data-target="#loginModal"
-                                                                 type="submit">Faça a sua adoção</button>
+                                        <a href="" data-toggle="modal" data-target="#loginModal" disabled="disable"
+                                           >Faça a sua adoção</button>
                                 </li>
                             <?php } ?>
                         </ul>
                     </form>
+
                     <!--Donation form END-->
                 </div>
             </div>
@@ -308,10 +312,11 @@
 </section>
 <!--Urgent Causes End-->
 <!--Current Projects Start-->
-<section class="wf100 p80 current-projects">
-    <div class="container">
+
+<section class="wf100 p80">
+    <div class="container why-ecova-center">
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="section-title-2">
                     <h5>Faça uma escolha sensata</h5>
                     <h2>Adote uma árvore</h2>
@@ -936,7 +941,7 @@
                 data: formData,
                 success: function (data) {
                     window.location.href = "<?php echo HOME_URL . '/home/adoption';?>";
-                 },
+                },
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
@@ -954,12 +959,19 @@
         });
 
 
+
+        // $('#valCheck').on('closed.bs.alert', function () {
+        //     // do something…
+        // })
+
         // //Function to lock the button
         $(function () {
             $('#d1').click(function () {
                 if ($(this).is(':checked')) {
                     $('#subBtn').removeAttr('disabled');
+
                 } else {
+                    $('#alert').show();
                     $('#subBtn').attr('disabled', 'disabled');
                 }
             });
