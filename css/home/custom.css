@@ -2364,6 +2364,14 @@ li.form-submit button:hover {
     color: #555555;
 }
 
+.why-ecova-center{
+    padding: 65px 0 65px;
+    background-size: cover;
+    text-align: center;
+    text-align: -webkit-center;
+}
+
+
 .current-projects .nav-link.active, .current-projects .nav-link:hover {
     background: #66bb6a;
     border: 1px solid #66bb6a;
