@@ -267,7 +267,8 @@
 
             <ul class="float-right topside-menu">
                 <!--                <li> <a class="con" href="#">Contribute</a> </li>-->
-                <li><a href="#search"> <i class="fas fa-search"></i> </a></li>
+                <li><a href="#search"> <i class="fa fa-envelope"></i> </a></li>
+
                 <li class="burger"><a href="#"><i class="fas fa-bars"></i> Menu</a></li>
             </ul>
 
@@ -279,6 +280,7 @@
 <nav class="sidenav">
     <ul class="main">
         <li><a href="<?php echo HOME_URL . '/home/dashboard'; ?>">Home</a></li>
+        <li><a href="<?php echo HOME_URL . '/home/usermessages'; ?>">Mensagens</a></li>
         <li><a href="<?php echo HOME_URL . '/home/usersettings'; ?>">Definições</a></li>
         <li><a href="" data-toggle="modal" data-target="#logoutModal">Logout</a></li>
         <!--        <li><a href="causes.html">Causes</a></li>-->
