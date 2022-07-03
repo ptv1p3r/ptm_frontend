@@ -310,7 +310,7 @@ class HomeController extends MainController
          */
 
         // Title page
-        $this->title = 'User';
+        $this->title = 'Regulamento';
 
         // Function parameters
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
@@ -681,5 +681,121 @@ class HomeController extends MainController
             require ABSPATH . '/views/_includes/footer.php';
         }
     }
+
+    /**
+     * Carrega a página
+     * "/views/user/profile/user-messages-view.php"
+     */
+    public function userMessages()
+    {
+
+        // Título da página
+        $this->title = 'Mensagens';
+        $this->permission_required = array('homeLogin');
+
+        // Parametros da função
+        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
+        // obriga o login para aceder à pagina
+        if (!$this->logged_in) {
+
+            // Se não; garante o logout
+            $this->logout();
+
+            // Redireciona para a página de login
+            $this->goto_login();
+
+            // Garante que o script não vai passar daqui
+            return;
+        }
+
+        if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+
+            // Exibe uma mensagem
+            echo 'Você não tem permissões para aceder a esta página.';
+
+            // Finaliza aqui
+            return;
+
+        }
+
+        $model = $this->load_model('user-messages-model');
+
+        if (isset($_POST['action']) && !empty($_POST['action'])) {
+            $action = $_POST['action'];
+            switch ($action) {
+                case 'userTreeView' :
+                    $data = $_POST['data'];
+                    $apiResponse = $model->getUserTreeId($data);
+//                    $apiResponseBody = array();
+
+                    if ($apiResponse['statusCode'] === 200) { // 200 success
+                        $apiResponse['body']['message'] = 'success';
+
+                    }
+
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $model->getUserTreeId($data);
+                        $apiResponse['body']['message'] = 'success';
+                    }
+
+                    // Update userdata to get trees info
+                    $_SESSION['userdata']['userTreeToShow'] = $apiResponse["body"][0];
+                    unset($apiResponse['body']);
+                    $apiResponse = json_encode($apiResponse);
+                    echo $apiResponse;
+                    break;
+            }
+        } else {
+
+            if ($this->logged_in) {
+
+                //Load model messages from user
+                $userMessagesList = $model->getUserMessagesList($_SESSION['userdata']['id']);
+
+                if ($userMessagesList["statusCode"] === 200) {
+                    $this->userdata['userMessageList'] = $userMessagesList['body']['messages'];
+                }
+                if ($userMessagesList["statusCode"] === 401) {
+                    //Refresh do accessToken
+                    $this->userTokenRefresh();
+
+                    //Load model intervation tree
+                    $userMessagesList = $model->getUserMessagesList($_SESSION['userdata']['id']);
+                    $this->userdata['userMessageList'] = $userMessagesList['body']['messages'];
+                }
+
+//                //Load model all images tree list
+//                $imageTreeList = $model->getTreeImagesList($_SESSION['userdata']['userTreeToShow']['id']);
+////                $this->userdata['imageTreeList'] = $imageTreeList['body']['images'];
+//
+//                if ( $imageTreeList["statusCode"] === 200) {
+//                    $this->userdata['imageTreeList'] = $imageTreeList['body']['images'];
+//                }
+//                if ($imageTreeList["statusCode"] === 401) {
+//                    //Refresh do accessToken
+//                    $this->userTokenRefresh();
+//
+//                    //Load model intervation tree
+//                    $imageTreeList = $model->getTreeImagesList($_SESSION['userdata']['userTreeToShow']['id']);
+//                    $this->userdata['imageTreeList'] = $imageTreeList['body']['images'];
+//                }
+
+
+            }
+            /** Carrega os arquivos do view **/
+
+            require ABSPATH . '/views/_includes/user-header.php';
+            require ABSPATH . '/views/user/profile/user-messages-view.php';
+            require ABSPATH . '/views/_includes/footer.php';
+        }
+    }
+
+
+
+
 }
 
