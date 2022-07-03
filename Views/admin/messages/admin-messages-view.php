@@ -65,19 +65,20 @@
                                                     <!-- MAIL TABLE -->
                                                     <div class="row">
                                                         <div class="col-sm-6">
-                                                            <!-- action -->
+                                                            <!-- action
                                                             <label style="margin-right: 8px;" class="">
                                                                 <div class="icheckbox_square-blue" style="position: relative;"><input type="checkbox" id="check-all" class="icheck" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
-                                                            </label>
+                                                            </label>-->
                                                             <div class="btn-group">
-                                                                <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                <input id="all-none" type="checkbox">
+                                                                <button hidden id="action-button" type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                                                     Action <span class="caret"></span>
                                                                 </button>
                                                                 <ul class="dropdown-menu" role="menu">
-                                                                    <li><a class="dropdown-item" href="#">Mark as read</a></li>
-                                                                    <li><a class="dropdown-item" href="#">Mark as unread</a></li>
+                                                                    <li><a class="dropdown-item message-read" href="javascript:void(0);">Mark as read</a></li>
+                                                                    <li><a class="dropdown-item message-unread" href="javascript:void(0);">Mark as unread</a></li>
                                                                     <li><hr class="dropdown-divider"></li>
-                                                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                                                    <li><a class="dropdown-item" href="#deleteMessageModal">Delete</a></li>
                                                                 </ul>
                                                             </div>
                                                             <!-- refresh -->
@@ -85,6 +86,42 @@
                                                                 <i class="fa-solid fa-rotate"></i>
                                                             </a>
                                                         </div>
+
+                                                        <script>
+                                                            $(document).ready(function() {
+
+                                                                // show/hide actions on each message selected
+                                                                $(".message-check").change(function() {
+                                                                    let anyChecked, count=0
+
+                                                                    //if any is checked, "anyChecked" equals to true
+                                                                    $(".message-check").each(function() {
+                                                                        if ($(this).is(":checked")) { anyChecked = true; count++; }
+                                                                        if ($(this).checked === false) { anyChecked = false; count--; }
+                                                                    });
+
+                                                                    //and shows the actions
+                                                                    if (anyChecked === true) {
+                                                                        $("#action-button").attr("hidden", false);
+                                                                    } else { // else hides actions
+                                                                        if(count === 0){ $('#all-none').prop("checked", false); }
+                                                                        $("#action-button").attr("hidden", true);
+                                                                    }
+                                                                });
+
+                                                                // check/uncheck messages & show/hide actions
+                                                                $("#all-none").change(function() {
+                                                                    if ($(this).is(":checked")) {
+                                                                        $('.message-check').prop("checked", true);
+                                                                        $("#action-button").attr("hidden", false);
+                                                                    } else {
+                                                                        $('.message-check').prop("checked", false);
+                                                                        $("#action-button").attr("hidden", true);
+                                                                    }
+                                                                });
+
+                                                            });
+                                                        </script>
 
                                                         <!--<div class="col-md-6 search-form">
                                                             <form action="#" class="text-right">
@@ -109,7 +146,10 @@
                                                                     foreach ($this->userdata['userMessageList'] as $key => $message) { ?>
 
                                                                         <tr class="nav-item <?php echo ($message["receptionDate"] != null ) ? "read" : ""; ?>" role="presentation">
-                                                                            <td class="action"><div class="icheckbox_square-blue" st<td class="action"><input type="checkbox" /></td>
+                                                                            <td class="message-id" id="<?php echo $message['id'] ?>" hidden></td>
+                                                                            <td class="action">
+                                                                                <input class="message-check" type="checkbox">
+                                                                            </td>
                                                                             <td class="name">
                                                                                 From: <?php echo $message["fromName"] ?>
                                                                             </td>
@@ -463,7 +503,6 @@
                                 $('#loader').removeClass('hidden')
                             },
                             success: function (data) {
-                                //$("#deleteMessageModal").modal('hide');
 
                                 if (data.statusCode === 200) {
                                     //mensagem de Success
@@ -531,7 +570,6 @@
                                 $('#loader').removeClass('hidden')
                             },
                             success: function (data) {
-                                //$("#deleteMessageModal").modal('hide');
 
                                 if (data.statusCode === 200) {
                                     //mensagem de Success
