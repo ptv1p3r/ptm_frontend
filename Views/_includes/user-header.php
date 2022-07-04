@@ -264,18 +264,39 @@
                     </ul>
                 </li>
             </ul>
-
-
             <ul class="float-right topside-menu">
-                <!--                <li> <a class="con" href="#">Contribute</a> </li>-->
-                <li><a> <i class="fa fa-envelope"></i>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle square1"
+                       role="button"
+                       data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-envelope" style="color: white;"></i>
                         <!-- Counter - Messages -->
                         <?php if (!empty($this->userdata['totalMessagesNotViewed']) && $this->userdata['totalMessagesNotViewed'] !== 0) { ?>
                             <span class="position-absolute translate-middle badge rounded-pill bg-danger"><?php echo $this->userdata['totalMessagesNotViewed'] ?></span>
                         <?php } ?>
                     </a>
+                    <ul class="dropdown-menu">
+                        <h6 class="dropdown-header">Mensagens</h6>
 
-
+                        <!-- TODO: counter to only display last 5 messages received -->
+                        <?php if (!empty($this->userdata['userMessageList'])) {
+                            foreach ($this->userdata['userMessageList'] as $key => $message) {
+                                if ($message["receptionDate"] === null) { ?>
+                                    <a class="dropdown-item d-flex align-items-center"
+                                       href="<?php echo HOME_URL . '/home/userMessage/' . $message["id"]; ?>">
+                                        <div class="dropdown-item">
+                                            <div class="d-inline-block text-truncate"
+                                                 style="max-width: 150px;"><?php echo $message["message"] ?></div>
+                                            <div class="text-truncate small text-gray-500"><?php echo $message["fromName"] ?>
+                                                · <?php echo $message["notificationDate"] ?></div>
+                                        </div>
+                                    </a>
+                                <?php }
+                            }
+                        } ?>
+                        <a class="dropdown-item text-center small text-gray-500"
+                           href="<?php echo HOME_URL . '/home/messages'; ?>">Mais mensagens...</a>
+                    </ul>
                 </li>
                 <li class="burger"><a href="#"><i class="fas fa-bars"></i> Menu</a></li>
             </ul>
