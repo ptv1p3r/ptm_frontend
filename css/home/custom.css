@@ -8715,6 +8715,15 @@ User messages CSS
 
 }
 
+.square1{
+    /*width: 50% !important;*/
+    /*height: 50% !important;*/
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+
+
 /*********************************
 End User messages CSS
 *********************************/
