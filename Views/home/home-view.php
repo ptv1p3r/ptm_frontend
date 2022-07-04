@@ -213,12 +213,10 @@
 
                 <!-- Toogle controler tress view-->
                 <?php if ($this->logged_in) { ?>
-
                     <div class="toggleBtn">
                         <br>
                         <input type="checkbox" data-toggle="toggle" data-off="Ver minhas árvores"
                                data-on="Ver todas árvores" data-onstyle="success" data-offstyle="secondary">
-
                     </div>
                     <?php
                 }
@@ -226,20 +224,6 @@
                 <!-- End Toogle controler tress view-->
             </div>
         </div>
-
-
-        <!--Map Section Start-->
-        <!--        <div class="col-md-12">-->
-        <!--            <div class="h2-about-txt">-->
-        <!--                <h3>Sobre o iniciativa</h3>-->
-        <!--                <p></p>-->
-        <!--                              <h2>Eco-friendly products can be made from scratch.</h2>-->
-        <!--                <p> Para a melhoria da qualidade de vida dos habitantes da nossa serra, ao mesmo tempo que se contribui-->
-        <!--                    para o aumento da floresta e com isso, aumentar a resiliência dos ecossistemas, espécies e habitats-->
-        <!--                    aos efeitos das alterações climáticas. </p>-->
-        <!--                           <a class="aboutus" href="#">More About us</a>-->
-        <!--            </div>-->
-        <!--        </div>-->
     </div>
 
 
