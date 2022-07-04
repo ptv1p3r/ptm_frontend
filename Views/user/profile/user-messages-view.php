@@ -27,14 +27,14 @@
                     <div class="row">
                         <!-- BEGIN INBOX MENU -->
                         <div class="col-md-3">
-                            <h2 class="grid-title"><i class="fa fa-inbox"></i> Inbox</h2>
+                            <h2 class="grid-title"><i class="fa fa-inbox"></i> Caixa de mensagens</h2>
                             <!--                                    <button class="edit btn-success"-->
                             <!--                                       data-bs-toggle="modal" data-bs-target="#addMessageModal">-->
                             <!--                                        <i class="fa fa-pen"></i>&nbsp;&nbsp;NEW MESSAGE-->
                             <!--                                    </button>-->
 
-                            <button class="btn edit btn-success" id="lireu.pt@sapo.pt" data-toggle="modal"
-                                    data-target="#editUserModal"  data-bs-toggle="modal"
+                            <button class="btn edit btn-success" id="" data-toggle="modal"
+                                    data-target="#compose-modal"  data-bs-toggle="modal"
                                     data-bs-target="#addMessageModal"
                             ><i class="fa fa-pen"></i>&nbsp;&nbsp;Nova Mensagem
                             </button>
@@ -43,15 +43,15 @@
 
                             <div>
                                 <ul class="nav flex-column nav-pills nav-stacked">
-                                    <li class="header">Folders</li>
-                                    <li class="nav-item <?php echo ($tabActive === "inbox") ? "active" : "" ?>">
-                                        <a class="nav-link" href="<?php echo HOME_URL . '/admin/messages/inbox' ?>">
+                                    <li class="header">Pastas</li>
+<!--                                    <li class="nav-item --><?php //echo ($tabActive === "inbox") ? "active" : "" ?><!--">-->
+                                        <a class="nav-link" href="<?php echo HOME_URL . '/home/userMessages/inbox' ?>">
                                             <i class="fa fa-inbox"></i> Caixa Entrada
                                         </a>
                                     </li>
-                                    <li class="nav-item <?php echo ($tabActive === "sent") ? "active" : "" ?>">
-                                        <a class="nav-link" href="<?php echo HOME_URL . '/admin/messages/sent' ?>">
-                                            <i class="fa fa-mail-forward"></i> Enviado
+<!--                                    <li class="nav-item --><?php //echo ($tabActive === "sent") ? "active" : "" ?><!--">-->
+                                        <a class="nav-link" href="<?php echo HOME_URL . '/home/userMessages/sent' ?>">
+                                            <i class="fa fa-share"></i> Enviado
                                         </a>
                                     </li>
                                 </ul>
@@ -73,22 +73,22 @@
                                                  style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
                                         </div>
                                     </label>
-<!--                                    <div class="btn-group">-->
-<!--                                        <button type="button" class="btn btn-default dropdown-toggle"-->
-<!--                                                data-toggle="dropdown">-->
-<!--                                            Action <span class="caret"></span>-->
-<!--                                        </button>-->
-<!--                                        <ul class="dropdown-menu" role="menu">-->
-<!--                                            <li><a href="#">Mark as read</a></li>-->
-<!--                                            <li><a href="#">Mark as unread</a></li>-->
-<!--                                            <li><a href="#">Mark as important</a></li>-->
-<!--                                            <li class="divider"></li>-->
-<!--                                            <li><a href="#">Report spam</a></li>-->
-<!--                                            <li><a href="#">Delete</a></li>-->
-<!--                                        </ul>-->
-<!--                                    </div>-->
+<!--                                    TODO erro do popper não abre o dropdown menu-->
+                                    <div class="btn-group">
+                                        <button type="button" class="btn edit btn-success dropdown-toggle"
+                                                data-toggle="dropdown">
+                                            Action <span class="caret"></span>
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        </div>
+                                    </div>
+                                    <a class="btn edit btn-success" href="<?php echo HOME_URL . '/home/usermessages/inbox'?>">
+                                        <i class="fa fa-rotate-right"></i>
+                                    </a>
                                 </div>
-
                                 <div class="col-md-6 search-form">
                                     <form action="#" class="text-right">
                                         <div class="input-group">
@@ -100,13 +100,35 @@
                                     </form>
                                 </div>
                             </div>
+                            <br>
 
                             <div class="padding"></div>
 
+
+
                             <div class="table-responsive">
-                                <table class="table">
-                                    <tbody>
-                                    <?php if (!empty($this->userdata['userMessageList'])) {
+                            <table class="table table-bordered clamp">
+                                <!--Define space between columns-->
+                                <colgroup>
+                                    <col span="1" style="width: 5%;">
+                                    <col span="1" style="width: 20%;">
+                                    <col span="1" style="width: 20%;">
+                                    <col span="1" style="width: 20%;">
+                                    <col span="1" style="width: 5%;">
+
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>De</th>
+                                    <th>Assunto</th>
+                                    <th>Data</th>
+                                    <th></th>
+
+                                </tr>
+                                </thead>
+
+                                <?php if (!empty($this->userdata['userMessageList'])) {
                                     foreach ($this->userdata['userMessageList'] as $key => $message) { ?>
 
                                         <tr class="nav-item <?php echo ($message["receptionDate"] != null ) ? "read" : ""; ?>" role="presentation">
@@ -115,7 +137,7 @@
                                                 <input class="message-check" type="checkbox">
                                             </td>
                                             <td class="name">
-                                                From: <?php echo $message["fromName"] ?>
+                                                <?php echo $message["fromName"] ?>
                                             </td>
                                             <td class="subject">
                                                 <a href="<?php echo HOME_URL . '/home/messages/' . $message["id"];?>">
@@ -138,13 +160,60 @@
                                         </tr>
 
                                     <?php }
-                                        } else { ?>
-                                        <tr>
-                                        </tr>
-                                    <?php } ?>
+                                } else { ?>
+                                    <tr>
+                                    </tr>
+                                <?php } ?>
 
-                                    </tbody>
-                                </table>
+                                </tbody>
+                            </table>
+
+
+
+
+
+<!--                            <div class="table-responsive">-->
+<!--                                <table class="table">-->
+<!--                                    <tbody>-->
+<!--                                    --><?php //if (!empty($this->userdata['userMessageList'])) {
+//                                    foreach ($this->userdata['userMessageList'] as $key => $message) { ?>
+<!---->
+<!--                                        <tr class="nav-item --><?php //echo ($message["receptionDate"] != null ) ? "read" : ""; ?><!--" role="presentation">-->
+<!--                                            <td class="message-id" id="--><?php //echo $message['id'] ?><!--" hidden></td>-->
+<!--                                            <td class="action">-->
+<!--                                                <input class="message-check" type="checkbox">-->
+<!--                                            </td>-->
+<!--                                            <td class="name ">-->
+<!--                                                De: --><?php //echo $message["fromName"] ?>
+<!--                                            </td>-->
+<!--                                            <td class="subject">-->
+<!--                                                <a href="--><?php //echo HOME_URL . '/home/messages/' . $message["id"];?><!--">-->
+<!--                                                    --><?php //echo $message["subject"]?>
+<!--                                                </a>-->
+<!--                                            </td>-->
+<!--                                            <td class="time">--><?php //echo $message["notificationDate"] ?><!--</td>-->
+<!--                                            <td>-->
+<!--                                                --><?php //if ($message["receptionDate"] === null ) {?>
+<!--                                                    <a href="javascript:void(0);" id="--><?php //echo $message['id'] ?><!--"-->
+<!--                                                       class="message-read m-2" title="Mark as read"><i class="fa-solid fa-envelope-open"></i></a>-->
+<!--                                                --><?php //} else {?>
+<!--                                                    <a href="javascript:void(0);" id="--><?php //echo $message['id'] ?><!--"-->
+<!--                                                       class="message-unread m-2" title="Mark as unread"><i class="fa-solid fa-envelope"></i></a>-->
+<!--                                                --><?php //}?>
+<!---->
+<!--                                                <a href="#deleteMessageModal" id="--><?php //echo $message['id'] ?><!--" class="delete m-2"-->
+<!--                                                   data-bs-toggle="modal" data-bs-target="#deleteMessageModal" title="Delete"><i class="fas fa-trash-alt"></i></a>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!---->
+<!--                                    --><?php //}
+//                                        } else { ?>
+<!--                                        <tr>-->
+<!--                                        </tr>-->
+<!--                                    --><?php //} ?>
+<!---->
+<!--                                    </tbody>-->
+<!--                                </table>-->
                             </div>
 
 <!--                            <ul class="pagination">-->
@@ -174,7 +243,7 @@
                                         <form action="#" method="post">
                                             <div class="modal-body">
                                                 <div class="form-group">
-                                                    <input name="to" type="email" class="form-control" placeholder="To">
+                                                    <input name="to" type="email" class="form-control" placeholder="Para">
                                                 </div>
                                                 <div class="form-group">
                                                     <input name="cc" type="email" class="form-control" placeholder="Cc">
