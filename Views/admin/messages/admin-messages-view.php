@@ -78,7 +78,7 @@
                                                                     <li><a class="dropdown-item message-read" href="javascript:void(0);">Mark as read</a></li>
                                                                     <li><a class="dropdown-item message-unread" href="javascript:void(0);">Mark as unread</a></li>
                                                                     <li><hr class="dropdown-divider"></li>
-                                                                    <li><a class="dropdown-item" href="#deleteMessageModal">Delete</a></li>
+                                                                    <li><a class="dropdown-item" href="#deleteMessageModal">Delete</a></li> <!-- TODO: bulk delete messages -->
                                                                 </ul>
                                                             </div>
                                                             <!-- refresh -->
@@ -121,6 +121,19 @@
                                                                 });
 
                                                             });
+
+                                                            function getMessagesSelected() {
+                                                                let idArray = []
+                                                                $('table > tbody > tr ').each(function () {
+                                                                    let messageId = $(this).find("td.message-id").attr("id")
+
+                                                                    if ($(this).find("input.message-check").is(":checked")){
+                                                                        idArray.push(messageId)
+                                                                    }
+                                                                });
+                                                                //console.log(idArray)
+                                                                return idArray;
+                                                            }
                                                         </script>
 
                                                         <!--<div class="col-md-6 search-form">
@@ -485,57 +498,45 @@
                 });
 
                 //ajax to set message as unread
-                $(function() {
-                    $(".message-unread").click(function(e) {
-                        e.preventDefault();
+                $(".message-unread").click(function(e) {
+                    e.preventDefault();
 
-                        let formData = {
-                            'action': "MarkUnread",
-                            'data': $(this).attr("id")
-                        };
+                    let idArray = []
+                    idArray = getMessagesSelected()
+                    if(idArray.length === 0) { idArray.push($(this).attr("id")) }
 
-                        $.ajax({
-                            url: "<?php echo HOME_URL . '/admin/messages';?>",
-                            dataType: "json",
-                            type: 'POST',
-                            data: formData,
-                            beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
-                                $('#loader').removeClass('hidden')
-                            },
-                            success: function (data) {
+                    let formData = {
+                        'action': "MarkUnread",
+                        'data': idArray
+                    };
 
-                                if (data.statusCode === 200) {
-                                    //mensagem de Success
-                                    Swal.fire({
-                                        title: 'Success!',
-                                        text: data.body.message,
-                                        icon: 'success',
-                                        showConfirmButton: false,
-                                        timer: 2000,
-                                        didClose: () => {
-                                            location.href = "<?php echo HOME_URL . '/admin/messages/inbox';?>";
-                                        }
-                                    });
-                                } else {
-                                    //mensagem de Error
-                                    Swal.fire({
-                                        title: 'Error!',
-                                        text: data.body.message,
-                                        icon: 'error',
-                                        showConfirmButton: false,
-                                        timer: 2000,
-                                        didClose: () => {
-                                            //location.reload();
-                                        }
-                                    });
-                                }
+                    $.ajax({
+                        url: "<?php echo HOME_URL . '/admin/messages';?>",
+                        dataType: "json",
+                        type: 'POST',
+                        data: formData,
+                        beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                            $('#loader').removeClass('hidden')
+                        },
+                        success: function (data) {
 
-                            },
-                            error: function (data) {
+                            if (data.statusCode === 200) {
+                                //mensagem de Success
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: data.body.message,
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                    didClose: () => {
+                                        location.href = "<?php echo HOME_URL . '/admin/messages/inbox';?>";
+                                    }
+                                });
+                            } else {
                                 //mensagem de Error
                                 Swal.fire({
                                     title: 'Error!',
-                                    text: "Connection error, please try again.",
+                                    text: data.body.message,
                                     icon: 'error',
                                     showConfirmButton: false,
                                     timer: 2000,
@@ -543,66 +544,68 @@
                                         //location.reload();
                                     }
                                 });
-                            },
-                            complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
-                                $('#loader').addClass('hidden')
                             }
-                        });
+
+                        },
+                        error: function (data) {
+                            //mensagem de Error
+                            Swal.fire({
+                                title: 'Error!',
+                                text: "Connection error, please try again.",
+                                icon: 'error',
+                                showConfirmButton: false,
+                                timer: 2000,
+                                didClose: () => {
+                                    //location.reload();
+                                }
+                            });
+                        },
+                        complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                            $('#loader').addClass('hidden')
+                        }
                     });
                 });
 
                 //ajax to set message as read
-                $(function() {
-                    $(".message-read").click(function(e) {
-                        e.preventDefault();
+                $(".message-read").click(function(e) {
+                    e.preventDefault();
 
-                        let formData = {
-                            'action': "MarkRead",
-                            'data': $(this).attr("id")
-                        };
+                    let idArray = []
+                    idArray = getMessagesSelected()
+                    if(idArray.length === 0) { idArray.push($(this).attr("id")) }
 
-                        $.ajax({
-                            url: "<?php echo HOME_URL . '/admin/messages';?>",
-                            dataType: "json",
-                            type: 'POST',
-                            data: formData,
-                            beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
-                                $('#loader').removeClass('hidden')
-                            },
-                            success: function (data) {
+                    let formData = {
+                        'action': "MarkRead",
+                        'data': idArray
+                    };
 
-                                if (data.statusCode === 200) {
-                                    //mensagem de Success
-                                    Swal.fire({
-                                        title: 'Success!',
-                                        text: data.body.message,
-                                        icon: 'success',
-                                        showConfirmButton: false,
-                                        timer: 2000,
-                                        didClose: () => {
-                                            location.href = "<?php echo HOME_URL . '/admin/messages/inbox';?>";
-                                        }
-                                    });
-                                } else {
-                                    //mensagem de Error
-                                    Swal.fire({
-                                        title: 'Error!',
-                                        text: data.body.message,
-                                        icon: 'error',
-                                        showConfirmButton: false,
-                                        timer: 2000,
-                                        didClose: () => {
-                                            //location.reload();
-                                        }
-                                    });
-                                }
+                    $.ajax({
+                        url: "<?php echo HOME_URL . '/admin/messages';?>",
+                        dataType: "json",
+                        type: 'POST',
+                        data: formData,
+                        beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                            $('#loader').removeClass('hidden')
+                        },
+                        success: function (data) {
 
-                            },
-                            error: function (data) {
+                            if (data.statusCode === 200) {
+                                //mensagem de Success
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: data.body.message,
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                    didClose: () => {
+                                        location.href = "<?php echo HOME_URL . '/admin/messages/inbox';?>";
+                                    }
+                                });
+                            } else {
                                 //mensagem de Error
                                 Swal.fire({
                                     title: 'Error!',
-                                    text: "Connection error, please try again.",
+                                    text: data.body.message,
                                     icon: 'error',
                                     showConfirmButton: false,
                                     timer: 2000,
@@ -610,11 +613,25 @@
                                         //location.reload();
                                     }
                                 });
-                            },
-                            complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
-                                $('#loader').addClass('hidden')
                             }
-                        });
+
+                        },
+                        error: function (data) {
+                            //mensagem de Error
+                            Swal.fire({
+                                title: 'Error!',
+                                text: "Connection error, please try again.",
+                                icon: 'error',
+                                showConfirmButton: false,
+                                timer: 2000,
+                                didClose: () => {
+                                    //location.reload();
+                                }
+                            });
+                        },
+                        complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                            $('#loader').addClass('hidden')
+                        }
                     });
                 });
 
