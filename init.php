@@ -43,4 +43,3 @@ require_once ABSPATH . '/Classes/classPtmDB.php';
 require_once ABSPATH . '/Classes/classPtmMVC.php';
 
 $_AppPtm = new PtmMVC();
-

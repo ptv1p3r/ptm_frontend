@@ -180,34 +180,70 @@
 <!--About Section Start-->
 <section class="home2-about wf100 p100 gallery">
     <div class="container">
-        <div class="row">
+        <!--Map Section Start-->
+        <div class="mapGo">
+            <div class="row">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mapDirect">
+                        <li class="breadcrumb">
+                            <button class="btn btn-outline-success" id="monTarget">Monchique</button>
+                        </li>
+                        <li class="breadcrumb">
+                            <button class="btn btn-outline-success" id="marTarget">Marmelete</button>
+                        </li>
+                        <li class="breadcrumb">
+                            <button class="btn btn-outline-success" id="marTarget">Casais</button>
+                        </li>
+                        <li class="breadcrumb">
+                            <button class="btn btn-outline-success" id="marTarget">Alferce</button>
+                        </li>
+                        <li class="breadcrumb">
+                            <button class="btn btn-outline-success" id="marTarget">Fóia</button>
+                        </li>
+                    </ol>
+                </nav>
 
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Monchique</li>
-                </ol>
-            </nav>
 
-            <!-- Map area div-->
-            <div class="col-md-12">
-                <div id="map"></div>
+                <!-- Leafletmap -->
+                <div class="col-md-12">
+                    <!--Map area start-->
+                    <div id="map"></div>
+                    <!--Map area end-->
+                </div>
+                <!-- END Leafletmap -->
+
+                <!-- Toogle controler tress view-->
+                <?php if ($this->logged_in) { ?>
+
+                    <div class="toggleBtn">
+                        <br>
+                        <input type="checkbox" data-toggle="toggle" data-off="Ver minhas árvores"
+                               data-on="Ver todas árvores" data-onstyle="success" data-offstyle="secondary">
+
+                    </div>
+                    <?php
+                }
+                ?>
+                <!-- End Toogle controler tress view-->
             </div>
-            <!-- End Map area div-->
+        </div>
 
-        </div>
-        <div class="col-md-12">
-            <div class="h2-about-txt">
-                <h3>Sobre o iniciativa</h3>
-                <p></p>
-                <!--                    <h2>Eco-friendly products can be made from scratch.</h2>-->
-                <p> Para a melhoria da qualidade de vida dos habitantes da nossa serra, ao mesmo tempo que se contribui
-                    para o aumento da floresta e com isso, aumentar a resiliência dos ecossistemas, espécies e habitats
-                    aos efeitos das alterações climáticas. </p>
-                <!--                    <a class="aboutus" href="#">More About us</a>-->
-            </div>
-        </div>
+
+        <!--Map Section Start-->
+        <!--        <div class="col-md-12">-->
+        <!--            <div class="h2-about-txt">-->
+        <!--                <h3>Sobre o iniciativa</h3>-->
+        <!--                <p></p>-->
+        <!--                              <h2>Eco-friendly products can be made from scratch.</h2>-->
+        <!--                <p> Para a melhoria da qualidade de vida dos habitantes da nossa serra, ao mesmo tempo que se contribui-->
+        <!--                    para o aumento da floresta e com isso, aumentar a resiliência dos ecossistemas, espécies e habitats-->
+        <!--                    aos efeitos das alterações climáticas. </p>-->
+        <!--                           <a class="aboutus" href="#">More About us</a>-->
+        <!--            </div>-->
+        <!--        </div>-->
     </div>
+
+
     <div class="home-facts counter pt80">
         <div class="container">
             <div class="row">
@@ -880,43 +916,212 @@
 <!--InstaGram End-->
 
 <script>
-    var greenIcon = L.icon({
-        iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-green.png',
-        shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
 
-        iconSize: [38, 95], // size of the icon
-        shadowSize: [50, 64], // size of the shadow
-        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-        shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+
+    $(document).ready(function () {
+
+        // TreesMap
+        let greenIcon = L.icon({
+            iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/mapMarker.png'?>',
+            shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
+
+            iconSize: [38, 95], // size of the icon
+            shadowSize: [50, 64], // size of the shadow
+            iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+
+        let blueIcon = L.icon({
+            iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/blue-mapMarker.png'?>',
+            shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
+
+            iconSize: [38, 95], // size of the icon
+            shadowSize: [50, 64], // size of the shadow
+            iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+
+        let map = L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
+
+        // Fly to a specific point in the map (Monchique)
+        $("#monTarget").click(function () {
+            map.flyTo([37.319518557906285, -8.556156285649438], 13, {
+                animate: true,
+                duration: 2 // in seconds
+            });
+        });
+
+        // Fly to a specific point in the map (Marmelete)
+        $("#marTarget").click(function () {
+            map.flyTo([37.3119, -8.6671], 13, {
+                animate: true,
+                duration: 2 // in seconds
+            });
+        });
+
+        let satellite = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
+        }).addTo(map);
+
+        let allTrees = L.layerGroup();
+
+        ////function to load all trees from API
+        function mapLoadTrees() {
+            <?php if (!empty($this->userdata['allTreesList'])) {
+            foreach ($this->userdata['allTreesList'] as $key => $tree) {?>
+            allMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
+                icon: greenIcon,
+                user: 'none'
+            }).addTo(allTrees);
+            <?php }
+            }?>
+        }
+
+        mapLoadTrees();
+
+        let userTrees = L.layerGroup();
+        ////function to load user trees from API
+        <?php if ($this->logged_in) {?>
+        //Ajax call to user trees
+        //function to load user private trees from API
+        function mapUserLoadTrees() {
+            <?php if (!empty($this->userdata['userTreesList'])) {
+            foreach ($this->userdata['userTreesList'] as $key => $tree) {?>
+            userMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
+                icon: blueIcon,
+                user: '<?php echo $tree["treeName"] ?>',
+                id: '<?php echo $tree["treeId"] ?>',
+            }).addTo(userTrees).on("click", markerOnClick);
+            <?php }
+            }?>
+        }
+
+        mapUserLoadTrees();
+        <?php
+        }?>
+
+        map.addLayer(allTrees);
+
+        $('.toggleBtn :checkbox').change(function () {
+            // this will contain a reference to the checkbox
+            if (this.checked) {
+                // the checkbox is now checked
+                map.removeLayer(allTrees);
+                map.addLayer(userTrees);
+            } else {
+                // the checkbox is now no longer checked
+                map.removeLayer(userTrees);
+                map.addLayer(allTrees);
+            }
+        });
+
+
+        //Tree popup on marker click
+        var popupMarker = L.popup({
+            className: 'cardPopUp'
+        });
+
+        function markerOnClick(e, layer) {
+            popupMarker
+                .setLatLng(e.latlng)
+                .setContent(
+                    `
+                   <div class="card" style="width: 10rem; border: unset">
+                      <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'?>" class="card-img-top" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Nome: ` + this.options.user + `</p>
+                        <p class="card-text">Lat: ` + e.latlng.lat + `</p>
+                        <p class="card-text">Long: ` + e.latlng.lng + `</p>
+                        <button class="popBtn btn-success"  name="treeId" value='` + this.options.id + `' id="buttpop">Ver mais</button>
+                      </div>
+                    </div>
+                    `
+                )
+                // .className('cardPopUp');
+                .openOn(map);
+        }
+
+        //function to handler the button popup view
+        let eventHandlerAssigned = false;
+        map.on('popupopen', function () {
+            if (!eventHandlerAssigned && document.querySelector('.popBtn')) {
+                const link = document.querySelector('.popBtn')
+                link.addEventListener('click', function (e) {
+                    popBtn(e.target.value);
+                })
+                eventHandlerAssigned = true
+            }
+        })
+        map.on('popupclose', function () {
+            document.querySelector('.popBtn').removeEventListener('click', popBtn)
+            eventHandlerAssigned = false
+        })
+
+
+        // ajax to call user tree id
+        function popBtn(value) {
+            // event.preventDefault(); //prevent default action
+
+            let formData = {
+                'action': "userTreeView",
+                'data': value,
+            };
+            console.log(formData);
+
+            $.ajax({
+                url: "<?php echo HOME_URL . '/home/userTrees';?>",
+                dataType: "json",
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+                    // $("#deleteUserModal").modal('hide');
+
+                    if (data.statusCode === 200) {
+
+
+                        //Falta ver esta parte para mostrar os dados
+                        window.location.href = "<?php echo HOME_URL . '/home/userTrees';?>";
+
+
+
+                    } else {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    }
+
+                },
+                error: function (data) {
+                    //mensagem de Error
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Connection error, please try again.",
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        didClose: () => {
+                            //location.reload();
+                        }
+                    });
+                }
+            });
+        }
+
     });
-
-    var blueIcon = L.icon({
-        iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-red.png',
-        shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
-
-        iconSize: [38, 95], // size of the icon
-        shadowSize: [50, 64], // size of the shadow
-        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-        shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
-    });
-
-    let map = L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
-
-    var marker = L.marker([37.3174025204363, -8.566799289969723], {icon: greenIcon}).addTo(map);
-    var marker = L.marker([37.280008400415554, -8.554293570462498], {icon: blueIcon}).addTo(map);
-
-
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-        // attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox/streets-v11',
-        tileSize: 512,
-        zoomOffset: -1,
-        accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
-    }).addTo(map);
-
 
     //Donation script////////////////////////////////////////////
     $(document).ready(function () {

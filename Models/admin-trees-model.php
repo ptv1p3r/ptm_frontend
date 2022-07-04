@@ -483,19 +483,19 @@ class AdminTreesModel extends MainModel {
      */
     public function deleteTree($data) {
         $result = null;
-        $GroupId = null;
+        $TreeId = null;
 
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']){ //gets input name=""
                     case "deleteTreeId":
-                        $GroupId = $dataVector['value'];
+                        $TreeId = $dataVector['value'];
                         break;
                 }
             }
         }
 
-        $url = API_URL . 'api/v1/trees/delete/' . $GroupId;
+        $url = API_URL . 'api/v1/trees/delete/' . $TreeId;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("DELETE", $url, '', $userToken);
@@ -518,7 +518,7 @@ class AdminTreesModel extends MainModel {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']){ //gets input name=""
                     case "deleteTreeTypeId":
-                        $GroupId = $dataVector['value'];
+                        $TreeTypeId = $dataVector['value'];
                         break;
                 }
             }
@@ -547,7 +547,7 @@ class AdminTreesModel extends MainModel {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']){ //gets input name=""
                     case "deleteTreeImageId":
-                        $GroupId = $dataVector['value'];
+                        $TreeImageId = $dataVector['value'];
                         break;
                 }
             }

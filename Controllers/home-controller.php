@@ -22,7 +22,7 @@ class HomeController extends MainController
         $this->title = 'Home';
 
         // Parametros da função
-        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+//        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
 
         //TODO Ver a situação do valores da info
@@ -32,18 +32,24 @@ class HomeController extends MainController
         $this->userdata['treesInfo'] = $getTreeInfo['body'];
 
         // obriga o login para aceder à pagina
+        // obriga o login para aceder à pagina
         if (!$this->logged_in) {
 
-            /** Carrega os arquivos do view **/
+            //Load all trees into public home view
+            $model = $this->load_model('user-trees-model');
+            $allTrees = $model->getAllTrees();
+            $this->userdata['allTreesList'] = $allTrees['body']['trees'];
+
+
+            /** Load public files view **/
 
             require ABSPATH . '/views/_includes/header.php';
 
             require ABSPATH . '/views/home/home-view.php';
 
             require ABSPATH . '/views/_includes/footer.php';
-        } else {
 
-            /** Carrega os arquivos do view **/
+        } else {
 
             require ABSPATH . '/views/_includes/user-header.php';
 
@@ -52,6 +58,7 @@ class HomeController extends MainController
             require ABSPATH . '/views/_includes/footer.php';
         }
     }
+
 
     /**
      * Login
@@ -257,6 +264,7 @@ class HomeController extends MainController
         }
 
 
+
         $model = $this->load_model('home-model');
 
         //Get trees info from model
@@ -274,17 +282,37 @@ class HomeController extends MainController
         }
 
 
+        //Load model trees
+        $model = $this->load_model('user-trees-model');
+
+        //Load all tree in main home view
+        $allTreesList = $model->getAllTrees();
+        $this->userdata['allTreesList'] = $allTreesList['body']['trees'];
+
+        //Load all tree in  home login view
+        if ($this->logged_in) {
+            //Load user trees
+            $model = $this->load_model('user-trees-model');
+            $userTreesList = $model->getUserTreesList($_SESSION['userdata']['id']);
+
+            if ($userTreesList["statusCode"] === 200) {
+                $this->userdata['userTreesList'] = $userTreesList["body"]['trees'];
+            }
+            if ($userTreesList["statusCode"] === 401) {
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $userTreesList = $model->getUserTreesList($_SESSION['userdata']['id']);
+                $this->userdata['userTreesList'] = $userTreesList["body"]['trees'];
+            }
+        }
+
+
         /** Carrega os arquivos do view **/
 
         require ABSPATH . '/views/_includes/user-header.php';
-
         require ABSPATH . '/views/home/home-view.php';
-
         require ABSPATH . '/views/_includes/footer.php';
-
-
-
-
     }
 
 
@@ -306,6 +334,7 @@ class HomeController extends MainController
      */
     public function rights()
     {
+
         // Title page
         $this->title = 'User';
 
@@ -438,7 +467,7 @@ class HomeController extends MainController
 
 
                     //Check password with DB
-                    if($oldPassVal != $_SESSION['userdata']['password']){
+                    if ($oldPassVal != $_SESSION['userdata']['password']) {
                         //Array with status code message
                         $response = array();
                         $response["body"]['message'] = 'Palavra passe incorreta!';
@@ -447,7 +476,7 @@ class HomeController extends MainController
                         break;
                     }
                     //Validate if the new pass is the sames as old one
-                    if($newPassVal == $oldPassVal ){
+                    if ($newPassVal == $oldPassVal) {
                         //Array with status code message
                         $response = array();
                         $response["body"]['message'] = 'A nova palavra passe não pode ser igual à antiga!';
@@ -456,7 +485,7 @@ class HomeController extends MainController
                         break;
                     }
                     //Validate if the new pass is equal to conf
-                    if($newPassVal != $confPassVal ){
+                    if ($newPassVal != $confPassVal) {
                         //Array with status code message
                         $response = array();
                         $response["body"]['message'] = 'Palavra passe não coincide!';
@@ -562,6 +591,7 @@ class HomeController extends MainController
             require ABSPATH . '/views/_includes/footer.php';
         }
     }
+
 
 
 
@@ -678,6 +708,117 @@ class HomeController extends MainController
 
             require ABSPATH . '/views/_includes/footer.php';
 
+        }
+    }
+
+
+    /**
+     * Carrega a página
+     * "/views/user/profile/user-trees-view.php"
+     */
+    public function userTrees()
+    {
+
+        // Título da página
+        $this->title = 'A minha árvore';
+        $this->permission_required = array('homeLogin');
+
+        // Parametros da função
+        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
+        // obriga o login para aceder à pagina
+        if (!$this->logged_in) {
+
+            // Se não; garante o logout
+            $this->logout();
+
+            // Redireciona para a página de login
+            $this->goto_login();
+
+            // Garante que o script não vai passar daqui
+            return;
+        }
+
+        if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+
+            // Exibe uma mensagem
+            echo 'Você não tem permissões para aceder a esta página.';
+
+            // Finaliza aqui
+            return;
+
+        }
+
+        $model = $this->load_model('user-trees-model');
+
+        if (isset($_POST['action']) && !empty($_POST['action'])) {
+            $action = $_POST['action'];
+            switch ($action) {
+                case 'userTreeView' :
+                    $data = $_POST['data'];
+                    $apiResponse = $model->getUserTreeId($data);
+
+                    if ($apiResponse['statusCode'] === 200) { // 200 success
+                        $apiResponse['body']['message'] = 'success';
+
+                    }
+
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $model->getUserTreeId($data);
+                        $apiResponse['body']['message'] = 'success';
+                    }
+
+                    // Update userdata to get trees info
+                    $_SESSION['userdata']['userTreeToShow'] = $apiResponse["body"][0];
+                    unset($apiResponse['body']);
+                    $apiResponse = json_encode($apiResponse);
+                    echo $apiResponse;
+                    break;
+            }
+        } else {
+
+            if ($this->logged_in) {
+
+                //Load model intervation tree
+                $interventionList = $model->getInterventionsTreeList($_SESSION['userdata']['userTreeToShow']['id']);
+
+                if ($interventionList["statusCode"] === 200) {
+                    $this->userdata['interventionList'] = $interventionList['body']['interventions'];
+                }
+                if ($interventionList["statusCode"] === 401) {
+                    //Refresh do accessToken
+                    $this->userTokenRefresh();
+
+                    //Load model intervation tree
+                    $interventionList = $model->getInterventionsTreeList($_SESSION['userdata']['userTreeToShow']['id']);
+                    $this->userdata['interventionList'] = $interventionList['body']['interventions'];
+                }
+
+                //Load model all images tree list
+                $imageTreeList = $model->getTreeImagesList($_SESSION['userdata']['userTreeToShow']['id']);
+
+                if ( $imageTreeList["statusCode"] === 200) {
+                    $this->userdata['imageTreeList'] = $imageTreeList['body']['images'];
+                }
+                if ($imageTreeList["statusCode"] === 401) {
+                    //Refresh do accessToken
+                    $this->userTokenRefresh();
+
+                    //Load model intervation tree
+                    $imageTreeList = $model->getTreeImagesList($_SESSION['userdata']['userTreeToShow']['id']);
+                    $this->userdata['imageTreeList'] = $imageTreeList['body']['images'];
+                }
+
+
+            }
+            /** Carrega os arquivos do view **/
+
+            require ABSPATH . '/views/_includes/user-header.php';
+            require ABSPATH . '/views/user/profile/user-trees-view.php';
+            require ABSPATH . '/views/_includes/footer.php';
         }
     }
 
