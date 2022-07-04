@@ -239,7 +239,12 @@
                     <?php
                 } ?>
             </div>
+            <div>
+                <br>
+                <p class="font-weight-light">*Dados médios calculados durante o periodo inicial de 20 anos de vida de uma árvore.</p>
+            </div>
         </div>
+
     </div>
 </section>
 <!--About Section End-->
@@ -252,17 +257,6 @@
                     <h5>Uma causa nobre</h5>
                     <h2>Ajude a reflorestar a nossa serra</h2>
                 </div>
-                <!--                <p> We need your support and help to Stop Globar Warning. Few generations ago it to seemed like the-->
-                <!--                    world’s resources were infinite, and the people needed only. </p>-->
-<!--                <div class="progress">-->
-<!--                    <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="70" aria-valuemin="0"-->
-<!--                         aria-valuemax="100"></div>-->
-<!--                </div>-->
-<!--                <ul class="funds">-->
-<!--                    <li class="text-left"><strong>73%</strong> Funded</li>-->
-<!--                    <li class="text-center"><strong>$948.00</strong> Raised</li>-->
-<!--                    <li class="text-right"><strong>$1750.00</strong> Required</li>-->
-<!--                </ul>-->
             </div>
             <div class="col-md-6">
                 <div class="donation-amount">
@@ -292,18 +286,17 @@
                                     <button type="submit" id="subBtn" disabled="disabled">
                                         Faça a sua adoção
                                     </button>
+
                                 </li>
                             <?php } else { ?>
                                 <!-- Make donation send to login / register-->
                                 <li class="form-submit">
-                                    <button class="login-reg">
-                                        <a href="" data-toggle="modal" data-target="#loginModal" disabled="disable"
-                                           >Faça a sua adoção</button>
+                                    <a type="button" class="btn donationbutton login-reg" data-toggle="modal" data-target="#loginModal" >
+                                           Faça a sua adoção</a>
                                 </li>
                             <?php } ?>
                         </ul>
                     </form>
-
                     <!--Donation form END-->
                 </div>
             </div>
@@ -959,17 +952,12 @@
         });
 
 
-
-        // $('#valCheck').on('closed.bs.alert', function () {
-        //     // do something…
-        // })
-
+        //TODO rever o disable do botão de adoção
         // //Function to lock the button
         $(function () {
             $('#d1').click(function () {
                 if ($(this).is(':checked')) {
                     $('#subBtn').removeAttr('disabled');
-
                 } else {
                     $('#alert').show();
                     $('#subBtn').attr('disabled', 'disabled');

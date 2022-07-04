@@ -180,14 +180,14 @@
                                                                     <input id="userId"
                                                                            name="userId"
                                                                            class="form-control"
-
+                                                                           hidden
                                                                            value="<?php echo $_SESSION['userdata']['id']?>">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <input id="adoptionVal"
                                                                            name="adoptionVal"
                                                                            class="form-control"
-
+                                                                           hidden
                                                                            value="<?php echo $_SESSION['userdata']['treeDonation'][0]['value'] ?>">
                                                                 </div>
                                                                 <div class="form-group">
@@ -195,6 +195,7 @@
                                                                         <input id="treeSelected"
                                                                                name="treeSelected"
                                                                                class="form-control"
+                                                                               hidden
                                                                                value=""
                                                                                >
                                                                     </div>

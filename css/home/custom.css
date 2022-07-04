@@ -2227,6 +2227,26 @@ li.form-submit button:hover {
     color: #fff;
 }
 
+
+.donationbutton {
+    width: 100%;
+    border: 0px;
+    background: #66bb6a;
+    color: #fff !important;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 3px;
+    line-height: 50px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.donationbutton:hover {
+    background: #1b5e20;
+    color: #fff;
+}
+
 /***************  Current Projects  *****************/
 
 .current-projects {
