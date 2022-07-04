@@ -23,7 +23,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <!-- BootStrap 3.6.1 toogle handler -->
-    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
+          rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
     <!-- Twitter Bootstrap 4.1.1 -->
     <script type="text/javascript"
@@ -72,7 +73,7 @@
     <link rel="icon" href="<?php echo HOME_URL . '/'; ?>Images/home/favicon.png">
 
     <!--  Script auto-version-->
-<!--    <script src="--><?php //echo auto_version('../../js/global-functions.js'); ?><!--"></script>-->
+    <!--    <script src="--><?php //echo auto_version('../../js/global-functions.js'); ?><!--"></script>-->
 
     <title><?php echo $this->title ?></title>
 
@@ -267,8 +268,15 @@
 
             <ul class="float-right topside-menu">
                 <!--                <li> <a class="con" href="#">Contribute</a> </li>-->
-                <li><a href="#search"> <i class="fa fa-envelope"></i> </a></li>
+                <li><a> <i class="fa fa-envelope"></i>
+                        <!-- Counter - Messages -->
+                        <?php if (!empty($this->userdata['totalMessagesNotViewed']) && $this->userdata['totalMessagesNotViewed'] !== 0) { ?>
+                            <span class="position-absolute translate-middle badge rounded-pill bg-danger"><?php echo $this->userdata['totalMessagesNotViewed'] ?></span>
+                        <?php } ?>
+                    </a>
 
+
+                </li>
                 <li class="burger"><a href="#"><i class="fas fa-bars"></i> Menu</a></li>
             </ul>
 

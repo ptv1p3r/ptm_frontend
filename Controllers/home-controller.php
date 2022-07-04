@@ -262,6 +262,7 @@ class HomeController extends MainController
         $allTreesList = $model->getAllTrees();
         $this->userdata['allTreesList'] = $allTreesList['body']['trees'];
 
+
         //Load all tree in  home login view
         if ($this->logged_in) {
             //Load user trees
@@ -270,6 +271,8 @@ class HomeController extends MainController
 
             if ($userTreesList["statusCode"] === 200) {
                 $this->userdata['userTreesList'] = $userTreesList["body"]['trees'];
+
+
             }
             if ($userTreesList["statusCode"] === 401) {
                 //faz o refresh do accessToken
@@ -277,6 +280,7 @@ class HomeController extends MainController
 
                 $userTreesList = $model->getUserTreesList($_SESSION['userdata']['id']);
                 $this->userdata['userTreesList'] = $userTreesList["body"]['trees'];
+
             }
         }
 
@@ -754,18 +758,20 @@ class HomeController extends MainController
             if ($this->logged_in) {
 
                 //Load model messages from user
-                $userMessagesList = $model->getUserMessagesList($_SESSION['userdata']['id']);
+                $userMessageList = $model->getUserMessagesList($_SESSION['userdata']['id']);
 
-                if ($userMessagesList["statusCode"] === 200) {
-                    $this->userdata['userMessageList'] = $userMessagesList['body']['messages'];
+                if ($userMessageList["statusCode"] === 200) {
+                    $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
+                    $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
                 }
-                if ($userMessagesList["statusCode"] === 401) {
+                if ($userMessageList["statusCode"] === 401) {
                     //Refresh do accessToken
                     $this->userTokenRefresh();
 
                     //Load model intervation tree
-                    $userMessagesList = $model->getUserMessagesList($_SESSION['userdata']['id']);
-                    $this->userdata['userMessageList'] = $userMessagesList['body']['messages'];
+                    $userMessageList = $model->getUserMessagesList($_SESSION['userdata']['id']);
+                    $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
+                    $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
                 }
 
 //                //Load model all images tree list
