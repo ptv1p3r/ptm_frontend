@@ -282,6 +282,26 @@ class HomeController extends MainController
                 $this->userdata['userTreesList'] = $userTreesList["body"]['trees'];
 
             }
+
+            //Load model messages from user
+            $modelMessage = $this->load_model('user-messages-model');
+            //Load model messages from user
+            $userMessageList = $modelMessage->getUserMessagesList($_SESSION['userdata']['id']);
+
+            if ($userMessageList["statusCode"] === 200) {
+                $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+            if ($userMessageList["statusCode"] === 401) {
+                //Refresh do accessToken
+                $this->userTokenRefresh();
+
+                //Load model intervation tree
+                $userMessageList = $modelMessage->getUserMessagesList($_SESSION['userdata']['id']);
+                $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+
         }
 
         /** Carrega os arquivos do view **/
@@ -561,6 +581,25 @@ class HomeController extends MainController
             }
             $this->userdata['userList'] = $getUserModel['body'];
 
+            //Load model messages from user
+            $modelMessage = $this->load_model('user-messages-model');
+            //Load model messages from user
+            $userMessageList = $modelMessage->getUserMessagesList($_SESSION['userdata']['id']);
+
+            if ($userMessageList["statusCode"] === 200) {
+                $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+            if ($userMessageList["statusCode"] === 401) {
+                //Refresh do accessToken
+                $this->userTokenRefresh();
+
+                //Load model intervation tree
+                $userMessageList = $modelMessage->getUserMessagesList($_SESSION['userdata']['id']);
+                $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+
             /** Carrega os arquivos do view **/
 
             require ABSPATH . '/views/_includes/user-header.php';
@@ -642,7 +681,6 @@ class HomeController extends MainController
 
             if ($this->logged_in) {
 
-
                 //Load model intervation tree
                 $interventionList = $model->getInterventionsTreeList($_SESSION['userdata']['userTreeToShow']['id']);
 //                $this->userdata['interventionList'] = $interventionList['body']['interventions'];
@@ -674,6 +712,25 @@ class HomeController extends MainController
                     //Load model intervation tree
                     $imageTreeList = $model->getTreeImagesList($_SESSION['userdata']['userTreeToShow']['id']);
                     $this->userdata['imageTreeList'] = $imageTreeList['body']['images'];
+                }
+
+                //Load model messages from user
+                $modelMessage = $this->load_model('user-messages-model');
+                //Load model messages from user
+                $userMessageList = $modelMessage->getUserMessagesList($_SESSION['userdata']['id']);
+
+                if ($userMessageList["statusCode"] === 200) {
+                    $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
+                    $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+                }
+                if ($userMessageList["statusCode"] === 401) {
+                    //Refresh do accessToken
+                    $this->userTokenRefresh();
+
+                    //Load model intervation tree
+                    $userMessageList = $modelMessage->getUserMessagesList($_SESSION['userdata']['id']);
+                    $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
+                    $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
                 }
 
 
@@ -723,42 +780,44 @@ class HomeController extends MainController
 
         }
 
-        $model = $this->load_model('user-messages-model');
+        //Load model messages from user
+        $modelMessage = $this->load_model('user-messages-model');
 
         if (isset($_POST['action']) && !empty($_POST['action'])) {
             $action = $_POST['action'];
             switch ($action) {
-                case 'userTreeView' :
-                    $data = $_POST['data'];
-                    $apiResponse = $model->getUserTreeId($data);
-//                    $apiResponseBody = array();
-
-                    if ($apiResponse['statusCode'] === 200) { // 200 success
-                        $apiResponse['body']['message'] = 'success';
-
-                    }
-
-                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
-                        //faz o refresh do accessToken
-                        $this->userTokenRefresh();
-
-                        $apiResponse = $model->getUserTreeId($data);
-                        $apiResponse['body']['message'] = 'success';
-                    }
-
-                    // Update userdata to get trees info
-                    $_SESSION['userdata']['userTreeToShow'] = $apiResponse["body"][0];
-                    unset($apiResponse['body']);
-                    $apiResponse = json_encode($apiResponse);
-                    echo $apiResponse;
-                    break;
+//                case 'userTreeView' :
+//                    $data = $_POST['data'];
+//                    $apiResponse = $model->getUserTreeId($data);
+////                    $apiResponseBody = array();
+//
+//                    if ($apiResponse['statusCode'] === 200) { // 200 success
+//                        $apiResponse['body']['message'] = 'success';
+//
+//                    }
+//
+//                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+//                        //faz o refresh do accessToken
+//                        $this->userTokenRefresh();
+//
+//                        $apiResponse = $model->getUserTreeId($data);
+//                        $apiResponse['body']['message'] = 'success';
+//                    }
+//
+//                    // Update userdata to get trees info
+//                    $_SESSION['userdata']['userTreeToShow'] = $apiResponse["body"][0];
+//                    unset($apiResponse['body']);
+//                    $apiResponse = json_encode($apiResponse);
+//                    echo $apiResponse;
+//                    break;
             }
         } else {
 
             if ($this->logged_in) {
 
+
                 //Load model messages from user
-                $userMessageList = $model->getUserMessagesList($_SESSION['userdata']['id']);
+                $userMessageList = $modelMessage->getUserMessagesList($_SESSION['userdata']['id']);
 
                 if ($userMessageList["statusCode"] === 200) {
                     $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
@@ -769,7 +828,7 @@ class HomeController extends MainController
                     $this->userTokenRefresh();
 
                     //Load model intervation tree
-                    $userMessageList = $model->getUserMessagesList($_SESSION['userdata']['id']);
+                    $userMessageList = $modelMessage->getUserMessagesList($_SESSION['userdata']['id']);
                     $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
                     $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
                 }
