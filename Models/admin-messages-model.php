@@ -188,9 +188,9 @@ class AdminMessagesModel extends MainModel {
      */
     public function deleteMessage($data) {
         $result = null;
-        $MessageId = null;
+        $MessageId = $data;
 
-        foreach ($data as $dataVector) {
+        /*foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']){ //gets input name=""
                     case "deleteMessageId":
@@ -198,7 +198,7 @@ class AdminMessagesModel extends MainModel {
                         break;
                 }
             }
-        }
+        }*/
 
         $url = API_URL . 'api/v1/messages/delete/' . $MessageId;
         if (!empty($_SESSION['userdata']['accessToken'])){
