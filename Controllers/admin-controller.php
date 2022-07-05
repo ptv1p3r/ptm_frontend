@@ -2685,25 +2685,6 @@ class AdminController extends MainController
         if(isset($_POST['action']) && !empty($_POST['action'])) {
             $action = $_POST['action'];
             switch($action) {
-                case 'GetMessage' :
-                    $data = $_POST['data'];
-                    $apiResponse = $modelo->getMessageById($data);
-                    $apiResponseBody = array();
-
-                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
-                        //faz o refresh do accessToken
-                        $this->userTokenRefresh();
-
-                        $apiResponse = $modelo->getMessageById($data);
-                    }
-
-                    if ($apiResponse['statusCode'] === 200) { // 200 success
-                        $apiResponseBody = json_encode($apiResponse["body"]);
-                    }
-
-                    echo $apiResponseBody;
-                    break;
-
                 case 'AddMessage' :
                     /*$this->permission_required = array('userMessagesCreate');
 
