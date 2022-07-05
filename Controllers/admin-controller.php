@@ -2750,18 +2750,25 @@ class AdminController extends MainController
                     }*/
 
                     $data = $_POST['data'];
-                    $apiResponse = $modelo->deleteMessage($data); //decode to check message from api
 
-                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
-                        //faz o refresh do accessToken
-                        $this->userTokenRefresh();
+                    foreach ($data as $id){
+                        $apiResponse = $modelo->deleteMessage($id); //decode to check message from api
 
-                        $apiResponse = $modelo->deleteMessage($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Deleted with success!";
-                    }
+                        if ($apiResponse['statusCode'] === 404){ // 404
+                            break;
+                        }
 
-                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                            //faz o refresh do accessToken
+                            $this->userTokenRefresh();
+
+                            $apiResponse = $modelo->deleteMessage($id); //decode to check message from api
+                            $apiResponse["body"]['message'] = "Deleted with success!";
+                        }
+
+                        if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
+                            $apiResponse["body"]['message'] = "Deleted with success!";
+                        }
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
