@@ -165,12 +165,16 @@
                                                                                 <input class="message-check" type="checkbox">
                                                                             </td>
                                                                             <td class="name">
-                                                                                From: <?php echo $message["fromName"] ?>
+                                                                                <div class="text-truncate" style="max-width: 150px">
+                                                                                    From: <?php echo $message["fromName"] ?>
+                                                                                </div>
                                                                             </td>
                                                                             <td class="subject">
-                                                                                <a href="<?php echo HOME_URL . '/admin/messages/' . $message["id"];?>">
-                                                                                    <?php echo $message["subject"]?>
-                                                                                </a>
+                                                                                <div class="text-truncate" style="max-width: 150px">
+                                                                                    <a href="<?php echo HOME_URL . '/admin/messages/' . $message["id"];?>">
+                                                                                        <?php echo $message["subject"]?>
+                                                                                    </a>
+                                                                                </div>
                                                                             </td>
                                                                             <td class="time"><?php echo $message["notificationDate"] ?></td>
                                                                             <td>
@@ -225,11 +229,11 @@
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label>Subject</label>
-                                                                            <input name="addMessageSubject" type="text" class="form-control">
+                                                                            <input name="addMessageSubject" type="text" class="form-control" maxlength="30" required>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label>Message</label>
-                                                                            <textarea name="addMessageMessage" class="form-control" style="height: 120px;"></textarea>
+                                                                            <textarea name="addMessageMessage" class="form-control" style="height: 120px;" maxlength="200"></textarea>
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
@@ -336,7 +340,7 @@
                 //view message
                 <?php if( isset($this->userdata["userMessageView"]) && !empty($this->userdata["userMessageView"])) {
                     foreach ($this->userdata['userMessageView'] as $key => $message) {?>
-                        function LoadMessage() {
+                        function LoadMessage() { //TODO: fix message subject & body content to fit page correctly
                             $("#all-none").attr("hidden", true);//hide actions
                             $('#inbox-body').html(`
                                 <div class="col-lg-9 email-content">
