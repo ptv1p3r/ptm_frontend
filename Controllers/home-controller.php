@@ -286,7 +286,7 @@ class HomeController extends MainController
             //Load model messages from user
             $modelMessage = $this->load_model('user-messages-model');
             //Load model messages from user
-            $userMessageList = $modelMessage->getUserMessagesList($_SESSION['userdata']['id']);
+            $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
 
             if ($userMessageList["statusCode"] === 200) {
                 $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
@@ -297,7 +297,7 @@ class HomeController extends MainController
                 $this->userTokenRefresh();
 
                 //Load model intervation tree
-                $userMessageList = $modelMessage->getUserMessagesList($_SESSION['userdata']['id']);
+                $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
                 $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
                 $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
@@ -584,7 +584,7 @@ class HomeController extends MainController
             //Load model messages from user
             $modelMessage = $this->load_model('user-messages-model');
             //Load model messages from user
-            $userMessageList = $modelMessage->getUserMessagesList($_SESSION['userdata']['id']);
+            $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
 
             if ($userMessageList["statusCode"] === 200) {
                 $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
@@ -595,7 +595,7 @@ class HomeController extends MainController
                 $this->userTokenRefresh();
 
                 //Load model intervation tree
-                $userMessageList = $modelMessage->getUserMessagesList($_SESSION['userdata']['id']);
+                $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
                 $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
                 $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
@@ -702,7 +702,7 @@ class HomeController extends MainController
                 $imageTreeList = $model->getTreeImagesList($_SESSION['userdata']['userTreeToShow']['id']);
 //                $this->userdata['imageTreeList'] = $imageTreeList['body']['images'];
 
-                if ( $imageTreeList["statusCode"] === 200) {
+                if ($imageTreeList["statusCode"] === 200) {
                     $this->userdata['imageTreeList'] = $imageTreeList['body']['images'];
                 }
                 if ($imageTreeList["statusCode"] === 401) {
@@ -717,7 +717,7 @@ class HomeController extends MainController
                 //Load model messages from user
                 $modelMessage = $this->load_model('user-messages-model');
                 //Load model messages from user
-                $userMessageList = $modelMessage->getUserMessagesList($_SESSION['userdata']['id']);
+                $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
 
                 if ($userMessageList["statusCode"] === 200) {
                     $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
@@ -728,7 +728,7 @@ class HomeController extends MainController
                     $this->userTokenRefresh();
 
                     //Load model intervation tree
-                    $userMessageList = $modelMessage->getUserMessagesList($_SESSION['userdata']['id']);
+                    $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
                     $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
                     $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
                 }
@@ -755,7 +755,7 @@ class HomeController extends MainController
         $this->permission_required = array('homeLogin');
 
         // Parametros da função
-        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+        $parameters = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
         // obriga o login para aceder à pagina
         if (!$this->logged_in) {
@@ -786,52 +786,158 @@ class HomeController extends MainController
         if (isset($_POST['action']) && !empty($_POST['action'])) {
             $action = $_POST['action'];
             switch ($action) {
-//                case 'userTreeView' :
+
+
+//                //TODO ver este get message
+//                case 'GetMessage' :
 //                    $data = $_POST['data'];
-//                    $apiResponse = $model->getUserTreeId($data);
-////                    $apiResponseBody = array();
-//
-//                    if ($apiResponse['statusCode'] === 200) { // 200 success
-//                        $apiResponse['body']['message'] = 'success';
-//
-//                    }
+//                    $apiResponse = $modelMessage->getMessageById($data);
+//                    $apiResponseBody = array();
 //
 //                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
 //                        //faz o refresh do accessToken
 //                        $this->userTokenRefresh();
 //
-//                        $apiResponse = $model->getUserTreeId($data);
-//                        $apiResponse['body']['message'] = 'success';
+//                        $apiResponse = $modelMessage->getMessageById($data);
 //                    }
 //
-//                    // Update userdata to get trees info
-//                    $_SESSION['userdata']['userTreeToShow'] = $apiResponse["body"][0];
-//                    unset($apiResponse['body']);
-//                    $apiResponse = json_encode($apiResponse);
-//                    echo $apiResponse;
+//                    if ($apiResponse['statusCode'] === 200) { // 200 success
+//                        $apiResponseBody = json_encode($apiResponse["body"]);
+//                    }
+//
+//                    echo $apiResponseBody;
 //                    break;
+
+                case 'AddMessage' :
+                    /*$this->permission_required = array('userMessagesCreate');
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+                        echo json_encode($apiResponse);
+                        break;
+                    }*/
+
+                    $data = $_POST['data'];
+                    $apiResponse = $modelMessage->addMessage($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelMessage->addMessage($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Mensagem enviada com sucesso!";
+                    }
+
+                    // quando statusCode = 201, a response nao vem com campo mensagem
+                    // entao é criado e encoded para ser enviado
+                    if ($apiResponse['statusCode'] === 201) { // 201 created
+                        $apiResponse["body"]['message'] = "Mensagem enviada com sucesso!";
+                    }
+
+                    // se statsCode nao for 201, entao api response ja vem com um campo mensagem
+                    // assim so precisamos de fazer encode para ser enviado
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo $apiResponse;
+                    break;
+
+
             }
         } else {
 
-            if ($this->logged_in) {
+//            //TODO: valdidar parametros
+//            //se param vazio entao redirect para inbox
+//            if(empty($parametros)){
+//                echo '<meta http-equiv="Refresh" content="0; url=' . HOME_URL . "/home/usermessages/inbox" .'">';
+//                echo '<script type="text/javascript">window.location.href = "' . HOME_URL . "/home/usermessages/inbox" . '";</script>';
+//            }
 
 
-                //Load model messages from user
-                $userMessageList = $modelMessage->getUserMessagesList($_SESSION['userdata']['id']);
+            //se existir parametro
+            if (isset( $parameters) && !empty( $parameters)) {
+                $paramVal = chk_array( $parameters, 0);
 
-                if ($userMessageList["statusCode"] === 200) {
-                    $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
-                    $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+                if($paramVal === "inbox") {
+
+                    $tabActive = "inbox";
+
+                    //get user Message list / user messages inbox
+                    $userMessageList = $modelMessage->getMessageListByUserId($_SESSION["userdata"]["id"]);
+                    //caso accessToken espire
+                    if ($userMessageList["statusCode"] === 401){
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+                        $userMessageList = $modelMessage->getMessageListByUserId($_SESSION["userdata"]["id"]);
+                    }
+                    if ($userMessageList["statusCode"] === 200){
+                        $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                        $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+                    }
+                } else if($paramVal === "sent") {
+
+                    $tabActive = "sent";
+
+                    //get user Message list / user messages sent
+                    $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
+                    //caso accessToken espire
+                    if ($userMessageList["statusCode"] === 401){
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+                        $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
+                    }
+                    if ($userMessageList["statusCode"] === 200){
+                        $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                    }
+                } else {
+                    //faz get da message pelo id que vem nesse parametro
+                    $userMessageView = $modelMessage->getMessageById($paramVal);
+                    //caso accessToken espire
+                    if ($userMessageView["statusCode"] === 404){
+                        //faz o refresh do accessToken
+                        $this->userdata['userMessageView'] = 404;
+                    }
+                    if ($userMessageView["statusCode"] === 401){
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+                        $userMessageView = $modelMessage->getMessageById($paramVal);
+                    }
+                    if ($userMessageView["statusCode"] === 200){
+                        $this->userdata['userMessageView'] = $userMessageView["body"];
+                    }
                 }
-                if ($userMessageList["statusCode"] === 401) {
-                    //Refresh do accessToken
-                    $this->userTokenRefresh();
+            }
 
-                    //Load model intervation tree
-                    $userMessageList = $modelMessage->getUserMessagesList($_SESSION['userdata']['id']);
-                    $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
-                    $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
-                }
+            //get users list
+            $userList = $modelMessage->getUserList();
+            if ($userList["statusCode"] === 200) {
+                $this->userdata['usersList'] = $userList["body"]["users"];
+            }
+            if ($userList["statusCode"] === 401) {
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $userList = $modelMessage->getUserList();
+                $this->userdata['usersList'] = $userList["body"]["users"];
+            }
+
+
+//            if ($this->logged_in) {
+//
+//
+
+
+//                if ($userMessageList["statusCode"] === 200) {
+//                    $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
+//                    $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+//                }
+//                if ($userMessageList["statusCode"] === 401) {
+//                    //Refresh do accessToken
+//                    $this->userTokenRefresh();
+//
+//                    //Load model intervation tree
+//                    $userMessageList = $modelMessage->getUserMessagesList($_SESSION['userdata']['id']);
+//                    $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
+//                    $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+//                }
 
 //                //Load model all images tree list
 //                $imageTreeList = $model->getTreeImagesList($_SESSION['userdata']['userTreeToShow']['id']);
@@ -850,7 +956,6 @@ class HomeController extends MainController
 //                }
 
 
-            }
             /** Carrega os arquivos do view **/
 
             require ABSPATH . '/views/_includes/user-header.php';
@@ -858,8 +963,6 @@ class HomeController extends MainController
             require ABSPATH . '/views/_includes/footer.php';
         }
     }
-
-
 
 
 }
