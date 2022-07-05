@@ -75,10 +75,11 @@
                                                                     Action <span class="caret"></span>
                                                                 </button>
                                                                 <ul class="dropdown-menu" role="menu">
-                                                                    <li><a class="dropdown-item message-read" href="javascript:void(0);">Mark as read</a></li>
-                                                                    <li><a class="dropdown-item message-unread" href="javascript:void(0);">Mark as unread</a></li>
+                                                                    <li><a class="dropdown-item message-read bulk" href="javascript:void(0);">Mark as read</a></li>
+                                                                    <li><a class="dropdown-item message-unread bulk" href="javascript:void(0);">Mark as unread</a></li>
                                                                     <li><hr class="dropdown-divider"></li>
-                                                                    <li><a class="dropdown-item" href="#deleteMessageModal">Delete</a></li> <!-- TODO: bulk delete messages -->
+                                                                    <li><a href="#bulkDeleteMessagesModal" class="dropdown-item"
+                                                                           data-bs-toggle="modal" data-bs-target="#bulkDeleteMessagesModal" title="Delete">Delete</a></li>
                                                                 </ul>
                                                             </div>
                                                             <!-- refresh -->
@@ -241,7 +242,7 @@
                                                     </div>
                                                 </div><!-- END COMPOSE MESSAGE -->
 
-                                                <!-- Delete Modal HTML -->
+                                                <!-- Delete Message Modal HTML -->
                                                 <div id="deleteMessageModal" class="modal fade" tabindex="-1" aria-labelledby="deleteMessageModal-Label" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
@@ -254,6 +255,29 @@
                                                                     <p>Are you sure you want to delete this Message?</p>
                                                                     <p class="text-warning"><small>This action cannot be undone.</small></p>
                                                                     <input id="deleteMessageId" name="deleteMessageId" type="hidden" class="form-control" value="">
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                    <input type="submit" class="btn btn-danger" value="Delete">
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Bulk Delete messages Modal HTML -->
+                                                <div id="bulkDeleteMessagesModal" class="modal fade" tabindex="-1" aria-labelledby="bulkDeleteMessagesModal-Label" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <form id="bulkDeleteMessages">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">Delete Messages</h4>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p>Are you sure you want to delete ALL this Messages?</p>
+                                                                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                                                                    <!--<input id="deleteMessageId" name="deleteMessageId" type="hidden" class="form-control" value="">-->
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -313,6 +337,7 @@
                 <?php if( isset($this->userdata["userMessageView"]) && !empty($this->userdata["userMessageView"])) {
                     foreach ($this->userdata['userMessageView'] as $key => $message) {?>
                         function LoadMessage() {
+                            $("#all-none").attr("hidden", true);//hide actions
                             $('#inbox-body').html(`
                                 <div class="col-lg-9 email-content">
                                     <div class="email-head">
@@ -322,6 +347,14 @@
                                                     <span><?php echo $message["subject"] ?></span>
                                                 </div>
                                                 <div class="icons">
+                                                    <?php if ($message["receptionDate"] === null ) {?>
+                                                        <a href="javascript:void(0);" id="<?php echo $message['id'] ?>"
+                                                           class="icon message-read" title="Mark as read"><i class="fa-solid fa-envelope-open"></i></a>
+                                                    <?php } else {?>
+                                                        <a href="javascript:void(0);" id="<?php echo $message['id'] ?>"
+                                                           class="icon message-unread" title="Mark as unread"><i class="fa-solid fa-envelope"></i></a>
+                                                    <?php }?>
+
                                                     <a href="javascript:void();" id="<?php echo $message['fromUser'] ?>" class="icon reply"><i class="fa-solid fa-reply"></i></a>
                                                     <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="icon delete"
                                                        data-bs-toggle="modal" data-bs-target="#deleteMessageModal" title="Delete"><i class="fas fa-trash-alt"></i></a>
@@ -331,17 +364,7 @@
                                         <div class="email-head-sender d-flex align-items-center justify-content-between flex-wrap">
                                             <div class="d-flex align-items-center">
                                                 <div class="sender d-flex align-items-center">
-                                                    <a href="#"><?php echo $message["fromEmail"] ?></a> <span>to</span><a href="#"><?php echo ($message["toEmail"] === $_SESSION["userdata"]["email"]) ? "me" : $message["toEmail"]?></a>
-                                                    <div class="actions dropdown">
-
-                                                        <div class="dropdown-menu" role="menu">
-                                                            <a class="dropdown-item" href="#">Mark as read</a>
-                                                            <a class="dropdown-item" href="#">Mark as unread</a>
-                                                            <a class="dropdown-item" href="#">Spam</a>
-                                                            <div class="dropdown-divider"></div>
-                                                            <a class="dropdown-item text-danger" href="#">Delete</a>
-                                                        </div>
-                                                    </div>
+                                                    <span><strong><?php echo $message["fromEmail"] ?></strong> to <strong><?php echo ($message["toEmail"] === $_SESSION["userdata"]["email"]) ? "me" : $message["toEmail"]?></strong></span>
                                                 </div>
                                             </div>
                                             <div class="date"><?php echo $message["notificationDate"] ?></div>
@@ -427,9 +450,12 @@
                 $('#deleteMessage').submit(function(event){
                     event.preventDefault(); //prevent default action
 
+                    let idArray = []
+                    idArray.push($(this).find("[name='deleteMessageId']").val())
+
                     let formData = {
                         'action' : "DeleteMessage",
-                        'data'   : $(this).serializeArray()
+                        'data'   : idArray
                     };
 
                     $.ajax({
@@ -489,12 +515,81 @@
                     });
                 });
 
+                // ajax to BULK Delete Messages
+                $('#bulkDeleteMessages').submit(function(event){
+                    event.preventDefault(); //prevent default action
+
+                    let idArray = []
+                    idArray = getMessagesSelected() //get messages selected, if any
+                    //if(idArray.length === 0) { idArray.push($(this).find("[name='deleteMessageId']").val()) }
+
+                    let formData = {
+                        'action' : "DeleteMessage",
+                        'data'   : idArray
+                    };
+
+                    $.ajax({
+                        url : "<?php echo HOME_URL . '/admin/messages';?>",
+                        dataType: "json",
+                        type: 'POST',
+                        data : formData,
+                        beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                            $('#loader').removeClass('hidden')
+                        },
+                        success: function (data) {
+                            $("#bulkDeleteMessagesModal").modal('hide');
+
+                            if (data.statusCode === 200){
+                                //mensagem de Success
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: data.body.message,
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                    didClose: () => {
+                                        location.href = "<?php echo HOME_URL . '/admin/messages/inbox';?>";
+                                    }
+                                });
+                            } else {
+                                //mensagem de Error
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: data.body.message,
+                                    icon: 'error',
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                    didClose: () => {
+                                        //location.reload();
+                                    }
+                                });
+                            }
+
+                        },
+                        error: function (data) {
+                            //mensagem de Error
+                            Swal.fire({
+                                title: 'Error!',
+                                text: "Connection error, please try again.",
+                                icon: 'error',
+                                showConfirmButton: false,
+                                timer: 2000,
+                                didClose: () => {
+                                    //location.reload();
+                                }
+                            });
+                        },
+                        complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                            $('#loader').addClass('hidden')
+                        }
+                    });
+                });
+
                 // ajax to get data to Modal Delete Group
                 $('.delete').on('click', function(){
                     let $deleteID = $(this).attr('id');
                     $('[name="deleteMessageId"]').val($deleteID); //gets group id from id="" attribute on delete button from table
                     $("#deleteMessageModal").modal('show');
-
                 });
 
                 //ajax to set message as unread
@@ -502,8 +597,12 @@
                     e.preventDefault();
 
                     let idArray = []
-                    idArray = getMessagesSelected()
-                    if(idArray.length === 0) { idArray.push($(this).attr("id")) }
+                    if($(this).hasClass("bulk")){ // if its a bulk action
+                        idArray = getMessagesSelected()//get messages selected, if any
+                    } else {
+                        if(idArray.length === 0) { idArray.push($(this).attr("id")) } //if not a bulk action, gets the id from the button/anchor's "id" attr of the specific message
+                    }
+
 
                     let formData = {
                         'action': "MarkUnread",
@@ -571,8 +670,11 @@
                     e.preventDefault();
 
                     let idArray = []
-                    idArray = getMessagesSelected()
-                    if(idArray.length === 0) { idArray.push($(this).attr("id")) }
+                    if($(this).hasClass("bulk")){ // if its a bulk action
+                        idArray = getMessagesSelected()//get messages selected, if any
+                    } else {
+                        if(idArray.length === 0) { idArray.push($(this).attr("id")) } //if not a bulk action, gets the id from the button/anchor's "id" attr of the specific message
+                    }
 
                     let formData = {
                         'action': "MarkRead",
