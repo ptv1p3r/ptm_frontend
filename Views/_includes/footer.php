@@ -124,7 +124,7 @@
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.4.1/jquery-migrate.min.map"></script>-->
 <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
 <!--<script src="js/home/popper.min.js"></script>-->
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>-->
 <!--<script src="js/home/bootstrap.min.js"></script>-->
 <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>

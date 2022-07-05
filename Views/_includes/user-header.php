@@ -19,9 +19,17 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <!--  CSS links -->
+    <!-- Popper 1.14.3 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
     <!-- BootStrap 4.1.3 -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- Fontawesome 5.15.4 -->
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+            integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc"
+            crossorigin="anonymous"></script>
     <!-- BootStrap 3.6.1 toogle handler -->
     <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
           rel="stylesheet">
@@ -29,14 +37,7 @@
     <!-- Twitter Bootstrap 4.1.1 -->
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.js"></script>
-    <!-- Popper 1.14.3 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-            crossorigin="anonymous"></script>
-    <!-- Fontawesome 5.15.4 -->
-    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
-            integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc"
-            crossorigin="anonymous"></script>
+
     <!-- Carrossell 2.3.4 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <!-- SweetAlerts 2 -->
@@ -51,6 +52,9 @@
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
             integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
             crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.5/js/standalone/selectize.min.js" integrity="sha512-JFjt3Gb92wFay5Pu6b0UCH9JIOkOGEfjIi7yykNWUwj55DBBp79VIJ9EPUzNimZ6FvX41jlTHpWFUQjog8P/sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.5/css/selectize.bootstrap5.min.css" integrity="sha512-w4sRMMxzHUVAyYk5ozDG+OAyOJqWAA+9sySOBWxiltj63A8co6YMESLeucKwQ5Sv7G4wycDPOmlHxkOhPW7LRg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
 
     <!-- Template original CSS links -->
@@ -283,7 +287,7 @@
                             foreach ($this->userdata['userMessageList'] as $key => $message) {
                                 if ($message["receptionDate"] === null) { ?>
                                     <a class="dropdown-item d-flex align-items-center"
-                                       href="<?php echo HOME_URL . '/home/userMessage/' . $message["id"]; ?>">
+                                       href="<?php echo HOME_URL . '/home/usermessages/' . $message["id"]; ?>">
                                         <div class="dropdown-item">
                                             <div class="d-inline-block text-truncate"
                                                  style="max-width: 150px;"><?php echo $message["message"] ?></div>
@@ -295,12 +299,11 @@
                             }
                         } ?>
                         <a class="dropdown-item text-center small text-gray-500"
-                           href="<?php echo HOME_URL . '/home/messages'; ?>">Mais mensagens...</a>
+                           href="<?php echo HOME_URL . '/home/usermessages/inbox'; ?>">Mais mensagens...</a>
                     </ul>
                 </li>
                 <li class="burger"><a href="#"><i class="fas fa-bars"></i> Menu</a></li>
             </ul>
-
         </div>
     </nav>
 </header>
