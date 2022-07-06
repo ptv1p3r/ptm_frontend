@@ -629,7 +629,7 @@ section#home-slider img {
 }
 
 .home-about {
-    background: url(../../Images/home/aboutbg.jpg) ;
+    background: url(../../Images/home/aboutbg.jpg);
 }
 
 .about-pic {
@@ -5540,7 +5540,7 @@ Recover Page Start
 *********************************/
 
 
-.recover .row{
+.recover .row {
     justify-content: center;
 }
 
@@ -5576,7 +5576,6 @@ Recover Page Start
     /*cursor: pointer;*/
     /*justify-content: center;*/
 }
-
 
 
 /*********************************
@@ -8576,7 +8575,6 @@ User messages CSS
 }
 
 
-
 .grid .grid-header:after {
     clear: both;
 }
@@ -8715,11 +8713,50 @@ User messages CSS
 
 }
 
-.square1{
+.square1 {
     /*width: 50% !important;*/
     /*height: 50% !important;*/
     font-size: 1.5em;
     cursor: pointer;
+}
+
+.mytable {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+    border: none;
+}
+
+.long-td {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.table-bordered th{
+    border: 1px solid #66bb6a;
+    background-color:#66bb6a;
+    color: white;
+}
+
+.table-bordered td  {
+    border: none;
+}
+
+.replyIcon{
+    color: #66bb6a;
+}
+
+.replyIcon:hover{
+    color: #1b5e20;
+}
+
+.deleteIcon{
+    color: #66bb6a;
+}
+
+.deleteIcon:hover{
+    color: #1b5e20;
 }
 
 
