@@ -167,7 +167,7 @@ MESSAGE MAIL CSS
     color: #666666;
     border-radius: 2px;
     margin-bottom: 25px;
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+    /*box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);*/
 }
 
 
@@ -963,7 +963,7 @@ MESSAGE READ MAIL CSS
     margin-right: 0;
     margin-left: 5px;
 }
-.card {
+/*.card {
     box-shadow: 0 0 10px 0 rgba(183, 192, 206, 0.2);
     -webkit-box-shadow: 0 0 10px 0 rgba(183, 192, 206, 0.2);
     -moz-box-shadow: 0 0 10px 0 rgba(183, 192, 206, 0.2);
@@ -979,7 +979,7 @@ MESSAGE READ MAIL CSS
     background-clip: border-box;
     border: 1px solid #f2f4f9;
     border-radius: 0.25rem;
-}/*
+}
 .badge {
     padding: 6px 5px 3px;
 }
