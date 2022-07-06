@@ -786,28 +786,6 @@ class HomeController extends MainController
         if (isset($_POST['action']) && !empty($_POST['action'])) {
             $action = $_POST['action'];
             switch ($action) {
-
-
-//                //TODO ver este get message
-//                case 'GetMessage' :
-//                    $data = $_POST['data'];
-//                    $apiResponse = $modelMessage->getMessageById($data);
-//                    $apiResponseBody = array();
-//
-//                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
-//                        //faz o refresh do accessToken
-//                        $this->userTokenRefresh();
-//
-//                        $apiResponse = $modelMessage->getMessageById($data);
-//                    }
-//
-//                    if ($apiResponse['statusCode'] === 200) { // 200 success
-//                        $apiResponseBody = json_encode($apiResponse["body"]);
-//                    }
-//
-//                    echo $apiResponseBody;
-//                    break;
-
                 case 'AddMessage' :
                     /*$this->permission_required = array('userMessagesCreate');
                     //Verifica se o user tem a permissão para realizar operaçao
@@ -840,67 +818,155 @@ class HomeController extends MainController
                     echo $apiResponse;
                     break;
 
+                case "MarkUnread":
+                    /*$this->permission_required = array('userMessagesDelete');
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+                        echo json_encode($apiResponse);
+                        break;
+                    }*/
+
+                    $data = $_POST['data'];
+                    foreach ($data as $id) {
+                        $apiResponse = $modelMessage->messageUnread($id); //decode to check message from api
+
+                        if ($apiResponse['statusCode'] === 404) { // 404
+                            break;
+                        }
+
+                        if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                            //faz o refresh do accessToken
+                            $this->userTokenRefresh();
+
+                            $apiResponse = $modelMessage->messageUnread($id); //decode to check message from api
+                            $apiResponse["body"]['message'] = "Marcado como não lido";
+                        }
+
+                        if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
+                            $apiResponse["body"]['message'] = "Marcado como não lido";
+                        }
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo $apiResponse;
+                    break;
+
+                case "MarkRead":
+                    /*$this->permission_required = array('userMessagesDelete');
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+                        echo json_encode($apiResponse);
+                        break;
+                    }*/
+
+                    $data = $_POST['data'];
+                    $apiResponse = $modelMessage->messageRead($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelMessage->messageRead($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Marcado como lido";
+                    }
+
+                    if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Marcado como lido";
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo $apiResponse;
+                    break;
+
+
+                case 'DeleteMessage' :
+                    /*$this->permission_required = array('userMessagesDelete');
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                        $apiResponse["body"]['message'] = "You have no permission!";
+                        echo json_encode($apiResponse);
+                        break;
+                    }*/
+
+                    $data = $_POST['data'];
+                    $apiResponse = $modelMessage->deleteMessage($data); //decode to check message from api
+
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelMessage->deleteMessage($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Deleted with success!";
+                    }
+
+                    if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Deleted with success!";
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo $apiResponse;
+                    break;
+
 
             }
         } else {
+            //If parameters empty redirect to the inbox
+            if(empty($parameters)){
+                echo '<meta http-equiv="Refresh" content="0; url=' . HOME_URL . "/home/usermessages/inbox" .'">';
+                echo '<script type="text/javascript">window.location.href = "' . HOME_URL . "/home/usermessages/inbox" . '";</script>';
+            }
 
-//            //TODO: valdidar parametros
-//            //se param vazio entao redirect para inbox
-//            if(empty($parametros)){
-//                echo '<meta http-equiv="Refresh" content="0; url=' . HOME_URL . "/home/usermessages/inbox" .'">';
-//                echo '<script type="text/javascript">window.location.href = "' . HOME_URL . "/home/usermessages/inbox" . '";</script>';
-//            }
+            //If exists parameters
+            if (isset($parameters) && !empty($parameters)) {
+                $paramVal = chk_array($parameters, 0);
 
-
-            //se existir parametro
-            if (isset( $parameters) && !empty( $parameters)) {
-                $paramVal = chk_array( $parameters, 0);
-
-                if($paramVal === "inbox") {
+                if ($paramVal === "inbox") {
 
                     $tabActive = "inbox";
 
                     //get user Message list / user messages inbox
                     $userMessageList = $modelMessage->getMessageListByUserId($_SESSION["userdata"]["id"]);
-                    //caso accessToken espire
-                    if ($userMessageList["statusCode"] === 401){
+                    //Refresh accessToken
+                    if ($userMessageList["statusCode"] === 401) {
                         //faz o refresh do accessToken
                         $this->userTokenRefresh();
                         $userMessageList = $modelMessage->getMessageListByUserId($_SESSION["userdata"]["id"]);
                     }
-                    if ($userMessageList["statusCode"] === 200){
+                    if ($userMessageList["statusCode"] === 200) {
                         $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
                         $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
                     }
-                } else if($paramVal === "sent") {
+                } else if ($paramVal === "sent") {
 
                     $tabActive = "sent";
 
                     //get user Message list / user messages sent
                     $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
                     //caso accessToken espire
-                    if ($userMessageList["statusCode"] === 401){
-                        //faz o refresh do accessToken
+                    if ($userMessageList["statusCode"] === 401) {
+                        //Refresh accessToken
                         $this->userTokenRefresh();
                         $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
                     }
-                    if ($userMessageList["statusCode"] === 200){
+                    if ($userMessageList["statusCode"] === 200) {
                         $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
                     }
                 } else {
-                    //faz get da message pelo id que vem nesse parametro
+                    //Get messagem by paramenter id
                     $userMessageView = $modelMessage->getMessageById($paramVal);
-                    //caso accessToken espire
-                    if ($userMessageView["statusCode"] === 404){
-                        //faz o refresh do accessToken
+                    //Refresh accessToken
+                    if ($userMessageView["statusCode"] === 404) {
+                        //Refresh accessToken
                         $this->userdata['userMessageView'] = 404;
                     }
-                    if ($userMessageView["statusCode"] === 401){
+                    if ($userMessageView["statusCode"] === 401) {
                         //faz o refresh do accessToken
                         $this->userTokenRefresh();
                         $userMessageView = $modelMessage->getMessageById($paramVal);
                     }
-                    if ($userMessageView["statusCode"] === 200){
+                    if ($userMessageView["statusCode"] === 200) {
                         $this->userdata['userMessageView'] = $userMessageView["body"];
                     }
                 }
@@ -912,49 +978,12 @@ class HomeController extends MainController
                 $this->userdata['usersList'] = $userList["body"]["users"];
             }
             if ($userList["statusCode"] === 401) {
-                //faz o refresh do accessToken
+                //Refresh accessToken
                 $this->userTokenRefresh();
 
                 $userList = $modelMessage->getUserList();
                 $this->userdata['usersList'] = $userList["body"]["users"];
             }
-
-
-//            if ($this->logged_in) {
-//
-//
-
-
-//                if ($userMessageList["statusCode"] === 200) {
-//                    $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
-//                    $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
-//                }
-//                if ($userMessageList["statusCode"] === 401) {
-//                    //Refresh do accessToken
-//                    $this->userTokenRefresh();
-//
-//                    //Load model intervation tree
-//                    $userMessageList = $modelMessage->getUserMessagesList($_SESSION['userdata']['id']);
-//                    $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
-//                    $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
-//                }
-
-//                //Load model all images tree list
-//                $imageTreeList = $model->getTreeImagesList($_SESSION['userdata']['userTreeToShow']['id']);
-////                $this->userdata['imageTreeList'] = $imageTreeList['body']['images'];
-//
-//                if ( $imageTreeList["statusCode"] === 200) {
-//                    $this->userdata['imageTreeList'] = $imageTreeList['body']['images'];
-//                }
-//                if ($imageTreeList["statusCode"] === 401) {
-//                    //Refresh do accessToken
-//                    $this->userTokenRefresh();
-//
-//                    //Load model intervation tree
-//                    $imageTreeList = $model->getTreeImagesList($_SESSION['userdata']['userTreeToShow']['id']);
-//                    $this->userdata['imageTreeList'] = $imageTreeList['body']['images'];
-//                }
-
 
             /** Carrega os arquivos do view **/
 
