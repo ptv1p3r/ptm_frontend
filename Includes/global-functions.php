@@ -65,6 +65,27 @@ function timeCalculation($time)
 }
 
 /**
+ * Metodo para ordenar arrays multidimencionais por um campo escolhido
+ * usage: array_orderby($array, 'campo', SORT_DESC); | https://www.php.net/manual/en/function.array-multisort.php#100534
+ * @return mixed|null
+ */
+function array_orderby() {
+    $args = func_get_args();
+    $data = array_shift($args);
+    foreach ($args as $n => $field) {
+        if (is_string($field)) {
+            $tmp = array();
+            foreach ($data as $key => $row)
+                $tmp[$key] = $row[$field];
+            $args[$n] = $tmp;
+        }
+    }
+    $args[] = &$data;
+    call_user_func_array('array_multisort', $args);
+    return array_pop($args);
+}
+
+/**
  * Metodo que efetua os pedidos a api e retorna os valores
  * @param $method
  * @param $url
