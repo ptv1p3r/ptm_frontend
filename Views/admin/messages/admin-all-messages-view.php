@@ -18,15 +18,10 @@
 
                     <div class="col-xl-12 col-md-12">
 
-                        <div class="container">
+                        <!--<div class="container">
                             <div class="row">
-                                <!-- BEGIN INBOX -->
+                                 BEGIN INBOX -->
                                 <div class="col-md-12">
-
-                                    <!-- ALERT ?
-                                    <div id="liveAlert">
-
-                                    </div>-->
 
                                     <div class="grid email">
                                         <div class="grid-body">
@@ -61,18 +56,14 @@
                                                     <div class="row">
                                                         <div class="col-sm-6">
                                                             <!-- action -->
-                                                            <label style="margin-right: 8px;" class="">
-                                                                <div class="icheckbox_square-blue" style="position: relative;"><input type="checkbox" id="check-all" class="icheck" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
-                                                            </label>
                                                             <div class="btn-group">
-                                                                <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                <input id="all-none" type="checkbox">
+                                                                <button hidden id="action-button" type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                                                     Action <span class="caret"></span>
                                                                 </button>
                                                                 <ul class="dropdown-menu" role="menu">
-                                                                    <li><a class="dropdown-item" href="#">Mark as read</a></li>
-                                                                    <li><a class="dropdown-item" href="#">Mark as unread</a></li>
-                                                                    <li><hr class="dropdown-divider"></li>
-                                                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                                                    <li><a href="#bulkDeleteMessagesModal" class="dropdown-item"
+                                                                           data-bs-toggle="modal" data-bs-target="#bulkDeleteMessagesModal" title="Delete">Delete</a></li>
                                                                 </ul>
                                                             </div>
                                                             <!-- refresh -->
@@ -80,17 +71,6 @@
                                                                 <i class="fa-solid fa-rotate"></i>
                                                             </a>
                                                         </div>
-
-                                                        <!--<div class="col-md-6 search-form">
-                                                            <form action="#" class="text-right">
-                                                                <div class="input-group">
-                                                                    <input type="text" class="form-control input-sm" placeholder="Search">
-                                                                    <span class="input-group-btn">
-                                                                        <button type="submit" name="search" class="btn_ btn-primary btn-sm search"><i class="fa fa-search"></i></button>
-                                                                    </span>
-                                                                </div>
-                                                            </form>
-                                                        </div>-->
                                                     </div>
 
                                                     <div class="padding"></div>
@@ -99,12 +79,26 @@
                                                     <div id="inbox-body">
                                                         <div class="table-responsive">
                                                             <table class="table" id="messagesTable">
+                                                                <thead hidden>
+                                                                <tr>
+                                                                    <th>col1</th>
+                                                                    <th>col2</th>
+                                                                    <th>col3</th>
+                                                                    <th>col4</th>
+                                                                    <th>col5</th>
+                                                                    <th>col6</th>
+                                                                    <th>col7</th>
+                                                                </tr>
+                                                                </thead>
                                                                 <tbody>
                                                                 <?php if (!empty($this->userdata['allMessageList'])) {
                                                                     foreach ($this->userdata['allMessageList'] as $key => $message) { ?>
 
                                                                         <tr class="nav-item <?php echo ($message["receptionDate"] != null ) ? "read" : ""; ?>" role="presentation">
-                                                                            <td class="action"><div class="icheckbox_square-blue" st<td class="action"><input type="checkbox" /></td>
+                                                                            <td class="message-id" id="<?php echo $message['id'] ?>" hidden></td>
+                                                                            <td class="action">
+                                                                                <input class="message-check" type="checkbox">
+                                                                            </td>
                                                                             <td class="name">
                                                                                 From: <?php echo $message["fromName"] ?>
                                                                             </td>
@@ -112,20 +106,14 @@
                                                                                 To: <?php echo $message["toName"] ?>
                                                                             </td>
                                                                             <td class="subject">
-                                                                                <a href="<?php echo HOME_URL . '/admin/all_messages/' . $message["id"];?>">
-                                                                                    <?php echo $message["subject"]?>
-                                                                                </a>
+                                                                                <div class="text-truncate" style="max-width: 200px">
+                                                                                    <a href="<?php echo HOME_URL . '/admin/all_messages/' . $message["id"];?>">
+                                                                                        <?php echo $message["subject"]?>
+                                                                                    </a>
+                                                                                </div>
                                                                             </td>
                                                                             <td class="time"><?php echo $message["notificationDate"] ?></td>
                                                                             <td>
-                                                                                <?php /*if ($message["receptionDate"] === null ) {*/?><!--
-                                                                                    <a href="javascript:void(0);" id="<?php /*echo $message['id'] */?>"
-                                                                                       class="message-read m-2" title="Mark as read"><i class="fa-solid fa-envelope-open"></i></a>
-                                                                                <?php /*} else {*/?>
-                                                                                    <a href="javascript:void(0);" id="<?php /*echo $message['id'] */?>"
-                                                                                       class="message-unread m-2" title="Mark as unread"><i class="fa-solid fa-envelope"></i></a>
-                                                                                --><?php /*}*/?>
-
                                                                                 <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="delete m-2"
                                                                                    data-bs-toggle="modal" data-bs-target="#deleteMessageModal" title="Delete"><i class="fas fa-trash-alt"></i></a>
                                                                             </td>
@@ -158,7 +146,7 @@
                                                                         <input id="addMessageFromUser" name="addMessageFromUser" type="hidden" class="form-control" value="<?php echo $_SESSION["userdata"]["id"];?>">
                                                                         <div class="form-group">
                                                                             <label>Message to</label>
-                                                                            <select name="addMessageToUser" id="addMessageToUser">
+                                                                            <select name="addMessageToUser" id="addMessageToUser" required>
                                                                                 <option value="" disabled selected>Selecione o recetor:</option>
                                                                                 <?php if (!empty($this->userdata['usersList'])) {
                                                                                     foreach ($this->userdata['usersList'] as $key => $user) { ?>
@@ -169,11 +157,11 @@
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label>Subject</label>
-                                                                            <input name="addMessageSubject" type="text" class="form-control">
+                                                                            <input name="addMessageSubject" type="text" class="form-control" maxlength="30" required>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label>Message</label>
-                                                                            <textarea name="addMessageMessage" class="form-control" style="height: 120px;"></textarea>
+                                                                            <textarea name="addMessageMessage" class="form-control" style="height: 120px;" maxlength="350" required></textarea>
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
@@ -186,41 +174,66 @@
                                                     </div>
                                                 </div><!-- END COMPOSE MESSAGE -->
 
-                                                <!-- Delete Modal HTML -->
-                                                <div id="deleteMessageModal" class="modal fade" tabindex="-1" aria-labelledby="deleteMessageModal-Label" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <form id="deleteMessage">
-                                                                <div class="modal-header">
-                                                                    <h4 class="modal-title">Delete Message</h4>
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <p>Are you sure you want to delete this Message?</p>
-                                                                    <p class="text-warning"><small>This action cannot be undone.</small></p>
-                                                                    <input id="deleteMessageId" name="deleteMessageId" type="hidden" class="form-control" value="">
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                                    <input type="submit" class="btn btn-danger" value="Delete">
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
-                                <!-- END INBOX -->
+                                <!-- END INBOX
                             </div>
-                        </div>
+                        </div>-->
 
                     </div>
 
                 </div>
             </div>
+
+
+            <!-- Delete Modal HTML -->
+            <div id="deleteMessageModal" class="modal fade" tabindex="-1" aria-labelledby="deleteMessageModal-Label" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form id="deleteMessage">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Delete Message</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete this Message?</p>
+                                <p class="text-warning"><small>This action cannot be undone.</small></p>
+                                <input id="deleteMessageId" name="deleteMessageId" type="hidden" class="form-control" value="">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <input type="submit" class="btn btn-danger" value="Delete">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bulk Delete messages Modal HTML -->
+            <div id="bulkDeleteMessagesModal" class="modal fade" tabindex="-1" aria-labelledby="bulkDeleteMessagesModal-Label" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form id="bulkDeleteMessages">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Delete Messages</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete <strong>ALL</strong> selected messages?</p>
+                                <p class="text-warning"><small>This action cannot be undone.</small></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <input type="submit" class="btn btn-danger" value="Delete all">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         </main>
 
 
@@ -228,78 +241,72 @@
 
 
         <script>
+            //get and returns selected messages
+            function getMessagesSelected() {
+                let idArray = []
+                $('table > tbody > tr ').each(function () {
+                    let messageId = $(this).find("td.message-id").attr("id")
+
+                    if ($(this).find("input.message-check").is(":checked")){
+                        idArray.push(messageId)
+                    }
+                });
+                //console.log(idArray)
+                return idArray;
+            }
+
             $(document).ready(function() {
                 //DATATABLES
                 //Configura a dataTable
-                /*try{
+                try{
                     var table = $('#messagesTable').DataTable({
                         rowReorder: false,
                         responsive: true,
-                        columnDefs: [ {
-                            targets: [6,3],
-                            orderable: false,
-                        }]
+                        lengthChange: false,
+                        pageLength: 15,
+                        //order: [[4, 'desc']]
                     });
-                    //filtra table se ativo, inativo ou mostra todos
-                    $('#GetActive').on('change', function() {
-                        let selectedItem = $(this).children("option:selected").val();
-                        table.columns(3).search(selectedItem).draw();
-                    })
+
                 } catch (error) {
                     console.log(error);
-                }*/
-
-                // make select have input to seach for option
-                $(document).ready(function () {
-                    $('select').selectize({ sortField: 'text' });
-                });
+                }
 
                 //view message
                 <?php if( isset($this->userdata["allMessageView"]) && !empty($this->userdata["allMessageView"])) {
-                foreach ($this->userdata['allMessageView'] as $key => $message) {?>
-                function LoadMessage() {
-                    $('#inbox-body').html(`
-                                <div class="col-lg-9 email-content">
-                                    <div class="email-head">
-                                        <div class="email-head-subject">
-                                            <div class="title d-flex align-items-center justify-content-between">
-                                                <div class="d-flex align-items-center">
-                                                    <span><?php echo $message["subject"] ?></span>
-                                                </div>
-                                                <div class="icons">
-                                                    <!--<a href="javascript:void();" id="<?php echo $message['fromUser'] ?>" class="icon reply"><i class="fa-solid fa-reply"></i></a>-->
-                                                    <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="icon delete"
-                                                       data-bs-toggle="modal" data-bs-target="#deleteMessageModal" title="Delete"><i class="fas fa-trash-alt"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="email-head-sender d-flex align-items-center justify-content-between flex-wrap">
-                                            <div class="d-flex align-items-center">
-                                                <div class="sender d-flex align-items-center">
-                                                    <a href="#"><?php echo $message["fromEmail"] ?></a> <span>to</span><a href="#"><?php echo ($message["toEmail"] === $_SESSION["userdata"]["email"]) ? "me" : $message["toEmail"]?></a>
-                                                    <div class="actions dropdown">
-
-                                                        <div class="dropdown-menu" role="menu">
-                                                            <a class="dropdown-item" href="#">Mark as read</a>
-                                                            <a class="dropdown-item" href="#">Mark as unread</a>
-                                                            <a class="dropdown-item" href="#">Spam</a>
-                                                            <div class="dropdown-divider"></div>
-                                                            <a class="dropdown-item text-danger" href="#">Delete</a>
+                    foreach ($this->userdata['allMessageView'] as $key => $message) {?>
+                        function LoadMessage() {
+                            $("#all-none").attr("hidden", true);//hide actions
+                            $('#inbox-body').html(`
+                                        <div class=" email-content"> <!--col-lg-9-->
+                                            <div class="email-head">
+                                                <div class="email-head-subject">
+                                                    <div class="title d-flex align-items-center justify-content-between">
+                                                        <div class="d-flex align-items-center">
+                                                            <h5><strong><?php echo $message["subject"] ?></strong></h5>
+                                                        </div>
+                                                        <div class="icons">
+                                                            <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="icon delete"
+                                                               data-bs-toggle="modal" data-bs-target="#deleteMessageModal" title="Delete"><i class="fas fa-trash-alt"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="email-head-sender d-flex align-items-center justify-content-between flex-wrap">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="sender d-flex align-items-center">
+                                                            <span><strong><?php echo $message["fromEmail"] ?></strong> to <strong><?php echo ($message["toEmail"] === $_SESSION["userdata"]["email"]) ? "me" : $message["toEmail"]?></strong></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="date"><?php echo $message["notificationDate"] ?></div>
+                                                </div>
                                             </div>
-                                            <div class="date"><?php echo $message["notificationDate"] ?></div>
-                                        </div>
-                                    </div>
-                                    <div class="email-body">
-                                        <?php echo $message["message"] ?>
-                                    </div>
-                                </div>`
-                        );
-                    }
-                    LoadMessage()
-                <?php }
+                                            <div class="email-body">
+                                                <p><?php $array = preg_split("/\r\n|\n|\r/", $message["message"]);  foreach ($array as $line){ echo $line; echo "<br>";} ?></p>
+                                            </div>
+                                        </div>`
+                            );
+                        }
+                        LoadMessage()
+                    <?php }
                 }?>
 
                 // ajax to Add Message
@@ -372,9 +379,12 @@
                 $('#deleteMessage').submit(function(event){
                     event.preventDefault(); //prevent default action
 
+                    let idArray = []
+                    idArray.push($(this).find("[name='deleteMessageId']").val())
+
                     let formData = {
                         'action' : "DeleteMessage",
-                        'data'   : $(this).serializeArray()
+                        'data'   : idArray
                     };
 
                     $.ajax({
@@ -434,6 +444,76 @@
                     });
                 });
 
+                // ajax to BULK Delete Messages
+                $('#bulkDeleteMessages').submit(function(event){
+                    event.preventDefault(); //prevent default action
+
+                    let idArray = []
+                    idArray = getMessagesSelected() //get messages selected, if any
+                    //if(idArray.length === 0) { idArray.push($(this).find("[name='deleteMessageId']").val()) }
+
+                    let formData = {
+                        'action' : "DeleteMessage",
+                        'data'   : idArray
+                    };
+
+                    $.ajax({
+                        url : "<?php echo HOME_URL . '/admin/messages';?>",
+                        dataType: "json",
+                        type: 'POST',
+                        data : formData,
+                        beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                            $('#loader').removeClass('hidden')
+                        },
+                        success: function (data) {
+                            $("#bulkDeleteMessagesModal").modal('hide');
+
+                            if (data.statusCode === 200){
+                                //mensagem de Success
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: data.body.message,
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                    didClose: () => {
+                                        location.href = "<?php echo HOME_URL . '/admin/messages/inbox';?>";
+                                    }
+                                });
+                            } else {
+                                //mensagem de Error
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: data.body.message,
+                                    icon: 'error',
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                    didClose: () => {
+                                        //location.reload();
+                                    }
+                                });
+                            }
+
+                        },
+                        error: function (data) {
+                            //mensagem de Error
+                            Swal.fire({
+                                title: 'Error!',
+                                text: "Connection error, please try again.",
+                                icon: 'error',
+                                showConfirmButton: false,
+                                timer: 2000,
+                                didClose: () => {
+                                    //location.reload();
+                                }
+                            });
+                        },
+                        complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                            $('#loader').addClass('hidden')
+                        }
+                    });
+                });
+
                 // ajax to get data to Modal Delete Group
                 $('.delete').on('click', function(){
                     let $deleteID = $(this).attr('id');
@@ -442,149 +522,42 @@
 
                 });
 
-                //set modal "message to" user
-                /*$('.reply').on('click', function(){
-                    let userToReply = $(this).attr("id");
-                    $("#addMessageModal").modal('show');
-                    let $select = $("#addMessageModal select").selectize();
-                    $select[0].selectize.setValue(userToReply);
-                });*/
+            });
 
-                //ajax to set message as unread
-                /*$(function() {
-                    $(".message-unread").click(function(e) {
-                        e.preventDefault();
+            //select actions
+            $(document).ready(function() {
+                // make select have input to seach for option
+                $('select').selectize({ sortField: 'text' });
 
-                        let formData = {
-                            'action': "MarkUnread",
-                            'data': $(this).attr("id")
-                        };
+                // show/hide actions on each message selected
+                $(".message-check").change(function() {
+                    let anyChecked, count=0
 
-                        $.ajax({
-                            url: "<?php //echo HOME_URL . '/admin/all_messages';?>",
-                            dataType: "json",
-                            type: 'POST',
-                            data: formData,
-                            beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
-                                $('#loader').removeClass('hidden')
-                            },
-                            success: function (data) {
-                                //$("#deleteMessageModal").modal('hide');
-
-                                if (data.statusCode === 200) {
-                                    //mensagem de Success
-                                    Swal.fire({
-                                        title: 'Success!',
-                                        text: data.body.message,
-                                        icon: 'success',
-                                        showConfirmButton: false,
-                                        timer: 2000,
-                                        didClose: () => {
-                                            location.href = "<?php //echo HOME_URL . '/admin/all_messages/inbox';?>";
-                                        }
-                                    });
-                                } else {
-                                    //mensagem de Error
-                                    Swal.fire({
-                                        title: 'Error!',
-                                        text: data.body.message,
-                                        icon: 'error',
-                                        showConfirmButton: false,
-                                        timer: 2000,
-                                        didClose: () => {
-                                            //location.reload();
-                                        }
-                                    });
-                                }
-
-                            },
-                            error: function (data) {
-                                //mensagem de Error
-                                Swal.fire({
-                                    title: 'Error!',
-                                    text: "Connection error, please try again.",
-                                    icon: 'error',
-                                    showConfirmButton: false,
-                                    timer: 2000,
-                                    didClose: () => {
-                                        //location.reload();
-                                    }
-                                });
-                            },
-                            complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
-                                $('#loader').addClass('hidden')
-                            }
-                        });
+                    //if any is checked, "anyChecked" equals to true
+                    $(".message-check").each(function() {
+                        if ($(this).is(":checked")) { anyChecked = true; count++; }
+                        if ($(this).checked === false) { anyChecked = false; count--; }
                     });
-                });*/
 
-                //ajax to set message as read
-                /*$(function() {
-                    $(".message-read").click(function(e) {
-                        e.preventDefault();
+                    //and shows the actions
+                    if (anyChecked === true) {
+                        $("#action-button").attr("hidden", false);
+                    } else { // else hides actions
+                        if(count === 0){ $('#all-none').prop("checked", false); }
+                        $("#action-button").attr("hidden", true);
+                    }
+                });
 
-                        let formData = {
-                            'action': "MarkRead",
-                            'data': $(this).attr("id")
-                        };
-
-                        $.ajax({
-                            url: "<?php //echo HOME_URL . '/admin/all_messages';?>",
-                            dataType: "json",
-                            type: 'POST',
-                            data: formData,
-                            beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
-                                $('#loader').removeClass('hidden')
-                            },
-                            success: function (data) {
-                                //$("#deleteMessageModal").modal('hide');
-
-                                if (data.statusCode === 200) {
-                                    //mensagem de Success
-                                    Swal.fire({
-                                        title: 'Success!',
-                                        text: data.body.message,
-                                        icon: 'success',
-                                        showConfirmButton: false,
-                                        timer: 2000,
-                                        didClose: () => {
-                                            location.href = "<?php //echo HOME_URL . '/admin/all_messages/inbox';?>";
-                                        }
-                                    });
-                                } else {
-                                    //mensagem de Error
-                                    Swal.fire({
-                                        title: 'Error!',
-                                        text: data.body.message,
-                                        icon: 'error',
-                                        showConfirmButton: false,
-                                        timer: 2000,
-                                        didClose: () => {
-                                            //location.reload();
-                                        }
-                                    });
-                                }
-
-                            },
-                            error: function (data) {
-                                //mensagem de Error
-                                Swal.fire({
-                                    title: 'Error!',
-                                    text: "Connection error, please try again.",
-                                    icon: 'error',
-                                    showConfirmButton: false,
-                                    timer: 2000,
-                                    didClose: () => {
-                                        //location.reload();
-                                    }
-                                });
-                            },
-                            complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
-                                $('#loader').addClass('hidden')
-                            }
-                        });
-                    });
-                });*/
+                // check/uncheck messages & show/hide actions
+                $("#all-none").change(function() {
+                    if ($(this).is(":checked")) {
+                        $('.message-check').prop("checked", true);
+                        $("#action-button").attr("hidden", false);
+                    } else {
+                        $('.message-check').prop("checked", false);
+                        $("#action-button").attr("hidden", true);
+                    }
+                });
 
             });
         </script>
