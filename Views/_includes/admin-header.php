@@ -87,21 +87,23 @@
                 <div class="dropdown-menu dropdown-menu-end" style="width: 20rem !important;">
                     <h6 class="dropdown-header">Message Center</h6>
 
-                    <!-- TODO: counter to only display last 5 messages received -->
+                    <!-- show only the last 5 messages -->
                     <?php if (!empty($this->userdata['userMessageList'])) {
+                        $count = 0;
                         foreach ($this->userdata['userMessageList'] as $key => $message) {
-                            if ($message["receptionDate"] === null ) {?>
+                            if ($message["receptionDate"] === null && $count < 5) {?>
                                 <a class="dropdown-item d-flex align-items-center" href="<?php echo HOME_URL . '/admin/messages/' . $message["id"];?>">
                                     <div class="dropdown-item">
                                         <div class="text-truncate" style="width: 100%"><?php echo $message["message"] ?></div>
                                         <div class="small text-gray-500"><?php echo $message["fromName"] ?> · <?php echo $message["notificationDate"] ?></div>
                                     </div>
                                 </a>
-                            <?php }
+                            <?php $count++;
+                            }
                         }
                     }?>
 
-                    <a class="dropdown-item text-center small text-gray-500" href="<?php echo HOME_URL . '/admin/messages';?>">Read More Messages</a>
+                    <a class="dropdown-item text-center small text-gray-500" href="<?php echo HOME_URL . '/admin/messages/inbox';?>">Read More Messages</a>
                 </div>
             </li>
 
@@ -112,7 +114,6 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="<?php echo HOME_URL . '/admin/settings';?>">Settings</a></li>
-                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                     <li><hr class="dropdown-divider" /></li>
                     <li><a class="dropdown-item" href="<?php echo HOME_URL . '/admin/applogout';?>">Logout</a></li>
                 </ul>
