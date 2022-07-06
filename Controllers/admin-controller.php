@@ -237,7 +237,7 @@ class AdminController extends MainController
 
         $modelo = $this->load_model('admin-dashboard-model');
 
-        //get user Message list
+        //get user Message list / user messages inbox
         $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
         //caso accessToken espire
         if ($userMessageList["statusCode"] === 401){
@@ -246,7 +246,7 @@ class AdminController extends MainController
             $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
         }
         if ($userMessageList["statusCode"] === 200){
-            $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+            $this->userdata['userMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
             $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
         }
 
@@ -427,7 +427,7 @@ class AdminController extends MainController
             }
 
         } else {
-            //get user Message list
+            //get user Message list / user messages inbox
             $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             //caso accessToken espire
             if ($userMessageList["statusCode"] === 401){
@@ -436,7 +436,7 @@ class AdminController extends MainController
                 $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             }
             if ($userMessageList["statusCode"] === 200){
-                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['userMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
                 $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
 
@@ -629,7 +629,7 @@ class AdminController extends MainController
             }
 
         } else {
-            //get user Message list
+            //get user Message list / user messages inbox
             $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             //caso accessToken espire
             if ($userMessageList["statusCode"] === 401){
@@ -638,7 +638,7 @@ class AdminController extends MainController
                 $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             }
             if ($userMessageList["statusCode"] === 200){
-                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['userMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
                 $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
 
@@ -834,7 +834,7 @@ class AdminController extends MainController
             }
 
         } else {
-            //get user Message list
+            //get user Message list / user messages inbox
             $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             //caso accessToken espire
             if ($userMessageList["statusCode"] === 401){
@@ -843,7 +843,7 @@ class AdminController extends MainController
                 $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             }
             if ($userMessageList["statusCode"] === 200){
-                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['userMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
                 $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
 
@@ -917,7 +917,7 @@ class AdminController extends MainController
 
         $modelo = $this->load_model('admin-dashboard-model');
 
-        //get user Message list
+        //get user Message list / user messages inbox
         $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
         //caso accessToken espire
         if ($userMessageList["statusCode"] === 401){
@@ -926,7 +926,7 @@ class AdminController extends MainController
             $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
         }
         if ($userMessageList["statusCode"] === 200){
-            $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+            $this->userdata['userMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
             $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
         }
 
@@ -1119,7 +1119,7 @@ class AdminController extends MainController
             }
 
         } else {
-            //get user Message list
+            //get user Message list / user messages inbox
             $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             //caso accessToken espire
             if ($userMessageList["statusCode"] === 401){
@@ -1128,7 +1128,7 @@ class AdminController extends MainController
                 $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             }
             if ($userMessageList["statusCode"] === 200){
-                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['userMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
                 $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
 
@@ -1336,7 +1336,7 @@ class AdminController extends MainController
             }
 
         } else {
-            //get user Message list
+            //get user Message list / user messages inbox
             $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             //caso accessToken espire
             if ($userMessageList["statusCode"] === 401){
@@ -1345,7 +1345,7 @@ class AdminController extends MainController
                 $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             }
             if ($userMessageList["statusCode"] === 200){
-                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['userMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
                 $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
 
@@ -1566,7 +1566,7 @@ class AdminController extends MainController
             }
 
         } else {
-            //get user Message list
+            //get user Message list / user messages inbox
             $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             //caso accessToken espire
             if ($userMessageList["statusCode"] === 401){
@@ -1575,7 +1575,7 @@ class AdminController extends MainController
                 $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             }
             if ($userMessageList["statusCode"] === 200){
-                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['userMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
                 $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
 
@@ -1770,7 +1770,7 @@ class AdminController extends MainController
             }
 
         } else {
-            //get user Message list
+            //get user Message list / user messages inbox
             $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             //caso accessToken espire
             if ($userMessageList["statusCode"] === 401){
@@ -1779,7 +1779,7 @@ class AdminController extends MainController
                 $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             }
             if ($userMessageList["statusCode"] === 200){
-                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['userMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
                 $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
 
@@ -1986,7 +1986,7 @@ class AdminController extends MainController
             }
 
         } else {
-            //get user Message list
+            //get user Message list / user messages inbox
             $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             //caso accessToken espire
             if ($userMessageList["statusCode"] === 401){
@@ -1995,7 +1995,7 @@ class AdminController extends MainController
                 $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             }
             if ($userMessageList["statusCode"] === 200){
-                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['userMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
                 $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
 
@@ -2190,7 +2190,7 @@ class AdminController extends MainController
             }
 
         } else {
-            //get user Message list
+            //get user Message list / user messages inbox
             $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             //caso accessToken espire
             if ($userMessageList["statusCode"] === 401){
@@ -2199,7 +2199,7 @@ class AdminController extends MainController
                 $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             }
             if ($userMessageList["statusCode"] === 200){
-                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['userMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
                 $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
 
@@ -2394,7 +2394,7 @@ class AdminController extends MainController
             }
 
         } else {
-            //get user Message list
+            //get user Message list / user messages inbox
             $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             //caso accessToken espire
             if ($userMessageList["statusCode"] === 401){
@@ -2403,7 +2403,7 @@ class AdminController extends MainController
                 $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             }
             if ($userMessageList["statusCode"] === 200){
-                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['userMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
                 $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
 
@@ -2597,7 +2597,7 @@ class AdminController extends MainController
             }
 
         } else {
-            //get user Message list
+            //get user Message list / user messages inbox
             $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             //caso accessToken espire
             if ($userMessageList["statusCode"] === 401){
@@ -2606,7 +2606,7 @@ class AdminController extends MainController
                 $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             }
             if ($userMessageList["statusCode"] === 200){
-                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['userMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
                 $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
 
@@ -2780,11 +2780,11 @@ class AdminController extends MainController
                             $this->userTokenRefresh();
 
                             $apiResponse = $modelo->messageUnread($id); //decode to check message from api
-                            $apiResponse["body"]['message'] = "Marked as read";
+                            $apiResponse["body"]['message'] = "Marked as unread";
                         }
 
                         if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                            $apiResponse["body"]['message'] = "Marked as read";
+                            $apiResponse["body"]['message'] = "Marked as unread";
                         }
                     }
 
@@ -2831,7 +2831,6 @@ class AdminController extends MainController
             }
 
         } else {
-            //TODO: valdidar parametros
             //se param vazio entao redirect para inbox
             if(empty($parametros)){
                 echo '<meta http-equiv="Refresh" content="0; url=' . HOME_URL . "/admin/messages/inbox" .'">';
@@ -2846,7 +2845,7 @@ class AdminController extends MainController
 
                     $tabActive = "inbox";
 
-                    //get user Message list / user messages inbox
+                    //get user Message list
                     $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
                     //caso accessToken espire
                     if ($userMessageList["statusCode"] === 401){
@@ -2855,7 +2854,7 @@ class AdminController extends MainController
                         $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
                     }
                     if ($userMessageList["statusCode"] === 200){
-                        $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                        $this->userdata['inboxSentUserMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);//ordena por data de notificaçao
                         $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
                     }
                 } else if($paramVal === "sent") {
@@ -2871,7 +2870,7 @@ class AdminController extends MainController
                             $userMessageList = $modelo->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
                         }
                         if ($userMessageList["statusCode"] === 200){
-                            $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                            $this->userdata['inboxSentUserMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
                         }
                     } else {
                         //faz get da message pelo id que vem nesse parametro
@@ -2903,6 +2902,19 @@ class AdminController extends MainController
 
                 $userList = $modelo->getUserList();
                 $this->userdata['usersList'] = $userList["body"]["users"];
+            }
+
+            //get user Message list / user messages inbox
+            $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            //caso accessToken espire
+            if ($userMessageList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+                $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            }
+            if ($userMessageList["statusCode"] === 200){
+                $this->userdata['userMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
 
             /**Carrega os arquivos do view**/
@@ -2967,25 +2979,6 @@ class AdminController extends MainController
         if(isset($_POST['action']) && !empty($_POST['action'])) {
             $action = $_POST['action'];
             switch($action) {
-                case 'GetMessage' :
-                    $data = $_POST['data'];
-                    $apiResponse = $modelo->getMessageById($data);
-                    $apiResponseBody = array();
-
-                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
-                        //faz o refresh do accessToken
-                        $this->userTokenRefresh();
-
-                        $apiResponse = $modelo->getMessageById($data);
-                    }
-
-                    if ($apiResponse['statusCode'] === 200) { // 200 success
-                        $apiResponseBody = json_encode($apiResponse["body"]);
-                    }
-
-                    echo $apiResponseBody;
-                    break;
-
                 case 'AddMessage' :
                     /*$this->permission_required = array('userMessagesCreate');
 
@@ -3032,78 +3025,25 @@ class AdminController extends MainController
                     }*/
 
                     $data = $_POST['data'];
-                    $apiResponse = $modelo->deleteMessage($data); //decode to check message from api
 
-                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
-                        //faz o refresh do accessToken
-                        $this->userTokenRefresh();
+                    foreach ($data as $id){
+                        $apiResponse = $modelo->deleteMessage($id); //decode to check message from api
 
-                        $apiResponse = $modelo->deleteMessage($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Deleted with success!";
-                    }
+                        if ($apiResponse['statusCode'] === 404){ // 404
+                            break;
+                        }
 
-                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Deleted with success!";
-                    }
+                        if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
+                            //faz o refresh do accessToken
+                            $this->userTokenRefresh();
 
-                    $apiResponse = json_encode($apiResponse);// encode package to send
-                    echo $apiResponse;
-                    break;
+                            $apiResponse = $modelo->deleteMessage($id); //decode to check message from api
+                            $apiResponse["body"]['message'] = "Deleted with success!";
+                        }
 
-                case "MarkUnread":
-                    /*$this->permission_required = array('userMessagesDelete');
-
-                    //Verifica se o user tem a permissão para realizar operaçao
-                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
-
-                        echo json_encode($apiResponse);
-                        break;
-                    }*/
-
-                    $data = $_POST['data'];
-                    $apiResponse = $modelo->messageUnread($data); //decode to check message from api
-
-                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
-                        //faz o refresh do accessToken
-                        $this->userTokenRefresh();
-
-                        $apiResponse = $modelo->messageUnread($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Marked as unread";
-                    }
-
-                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Marked as unread";
-                    }
-
-                    $apiResponse = json_encode($apiResponse);// encode package to send
-                    echo $apiResponse;
-                    break;
-
-                case "MarkRead":
-                    /*$this->permission_required = array('userMessagesDelete');
-
-                    //Verifica se o user tem a permissão para realizar operaçao
-                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
-
-                        echo json_encode($apiResponse);
-                        break;
-                    }*/
-
-                    $data = $_POST['data'];
-                    $apiResponse = $modelo->messageRead($data); //decode to check message from api
-
-                    if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
-                        //faz o refresh do accessToken
-                        $this->userTokenRefresh();
-
-                        $apiResponse = $modelo->messageRead($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Marked as read";
-                    }
-
-                    if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Marked as read";
+                        if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
+                            $apiResponse["body"]['message'] = "Deleted with success!";
+                        }
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -3112,7 +3052,6 @@ class AdminController extends MainController
             }
 
         } else {
-            //TODO: valdidar parametros
             //se param vazio entao redirect para inbox
             if(empty($parametros)){
                 echo '<meta http-equiv="Refresh" content="0; url=' . HOME_URL . "/admin/all_messages/inbox" .'">';
@@ -3136,7 +3075,7 @@ class AdminController extends MainController
                         $userMessageList = $modelo->getMessageList($_SESSION["userdata"]["id"]);
                     }
                     if ($userMessageList["statusCode"] === 200){
-                        $this->userdata['allMessageList'] = $userMessageList["body"]["messages"];
+                        $this->userdata['allMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
                     }
                 } else {
                     //faz get da message pelo id que vem nesse parametro
@@ -3166,7 +3105,7 @@ class AdminController extends MainController
                 $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
             }
             if ($userMessageList["statusCode"] === 200){
-                $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+                $this->userdata['userMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
                 $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
 
@@ -3250,7 +3189,7 @@ class AdminController extends MainController
             $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
         }
         if ($userMessageList["statusCode"] === 200){
-            $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
+            $this->userdata['userMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
             $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
         }*/
 
