@@ -744,45 +744,34 @@ class HomeController extends MainController
     }
 
     /**
-     * Carrega a página
+     * Page load
      * "/views/user/profile/user-messages-view.php"
      */
     public function userMessages()
     {
-
-        // Título da página
+        // Page title
         $this->title = 'Mensagens';
         $this->permission_required = array('homeLogin');
-
-        // Parametros da função
+        // Function paramenters
         $parameters = (func_num_args() >= 1) ? func_get_arg(0) : array();
-
-        // obriga o login para aceder à pagina
+        // Login access control
         if (!$this->logged_in) {
-
-            // Se não; garante o logout
+            // If not login -> logout
             $this->logout();
-
-            // Redireciona para a página de login
+            // Redirect to login page
             $this->goto_login();
-
-            // Garante que o script não vai passar daqui
+            // Secure the pass
             return;
         }
-
         if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
-
-            // Exibe uma mensagem
+            // Show message
             echo 'Você não tem permissões para aceder a esta página.';
-
-            // Finaliza aqui
+            // End where
             return;
-
         }
 
         //Load model messages from user
         $modelMessage = $this->load_model('user-messages-model');
-
         if (isset($_POST['action']) && !empty($_POST['action'])) {
             $action = $_POST['action'];
             switch ($action) {
@@ -794,26 +783,21 @@ class HomeController extends MainController
                         echo json_encode($apiResponse);
                         break;
                     }*/
-
                     $data = $_POST['data'];
                     $apiResponse = $modelMessage->addMessage($data); //decode to check message from api
-
                     if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
-                        //faz o refresh do accessToken
+                        //Refresh accessToken
                         $this->userTokenRefresh();
-
                         $apiResponse = $modelMessage->addMessage($data); //decode to check message from api
                         $apiResponse["body"]['message'] = "Mensagem enviada com sucesso!";
                     }
-
-                    // quando statusCode = 201, a response nao vem com campo mensagem
-                    // entao é criado e encoded para ser enviado
+                    // If statusCode = 201, response dont get messages
+                    // just need the encode is created to be send
                     if ($apiResponse['statusCode'] === 201) { // 201 created
                         $apiResponse["body"]['message'] = "Mensagem enviada com sucesso!";
                     }
-
-                    // se statsCode nao for 201, entao api response ja vem com um campo mensagem
-                    // assim so precisamos de fazer encode para ser enviado
+                    // If statusCode 201, api response comes wthi message body
+                    // just need the encode is created to be send
                     $apiResponse = json_encode($apiResponse);// encode package to send
                     echo $apiResponse;
                     break;
@@ -826,28 +810,22 @@ class HomeController extends MainController
                         echo json_encode($apiResponse);
                         break;
                     }*/
-
                     $data = $_POST['data'];
                     foreach ($data as $id) {
                         $apiResponse = $modelMessage->messageUnread($id); //decode to check message from api
-
                         if ($apiResponse['statusCode'] === 404) { // 404
                             break;
                         }
-
                         if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
-                            //faz o refresh do accessToken
+                            //Refresh accessToken
                             $this->userTokenRefresh();
-
                             $apiResponse = $modelMessage->messageUnread($id); //decode to check message from api
                             $apiResponse["body"]['message'] = "Marcado como não lido";
                         }
-
                         if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
                             $apiResponse["body"]['message'] = "Marcado como não lido";
                         }
                     }
-
                     $apiResponse = json_encode($apiResponse);// encode package to send
                     echo $apiResponse;
                     break;
@@ -862,24 +840,27 @@ class HomeController extends MainController
                     }*/
 
                     $data = $_POST['data'];
-                    $apiResponse = $modelMessage->messageRead($data); //decode to check message from api
+                    foreach ($data as $id) {
+                        $apiResponse = $modelMessage->messageRead($id); //decode to check message from api
+                        if ($apiResponse['statusCode'] === 404) { // 404
+                            break;
+                        }
 
-                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
-                        //faz o refresh do accessToken
-                        $this->userTokenRefresh();
+                        if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                            //Refresh accessToken
+                            $this->userTokenRefresh();
 
-                        $apiResponse = $modelMessage->messageRead($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Marcado como lido";
+                            $apiResponse = $modelMessage->messageRead($id); //decode to check message from api
+                            $apiResponse["body"]['message'] = "Marcado como lido";
+                        }
+
+                        if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
+                            $apiResponse["body"]['message'] = "Marcado como lido";
+                        }
                     }
-
-                    if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Marcado como lido";
-                    }
-
                     $apiResponse = json_encode($apiResponse);// encode package to send
                     echo $apiResponse;
                     break;
-
 
                 case 'DeleteMessage' :
                     /*$this->permission_required = array('userMessagesDelete');
@@ -889,35 +870,38 @@ class HomeController extends MainController
                         echo json_encode($apiResponse);
                         break;
                     }*/
-
                     $data = $_POST['data'];
-                    $apiResponse = $modelMessage->deleteMessage($data); //decode to check message from api
 
-                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
-                        //faz o refresh do accessToken
-                        $this->userTokenRefresh();
+                    foreach ($data as $id) {
+                        $apiResponse = $modelMessage->deleteMessage($id); //decode to check message from api
 
-                        $apiResponse = $modelMessage->deleteMessage($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Deleted with success!";
-                    }
+                        if ($apiResponse['statusCode'] === 404) { // 404
+                            break;
+                        }
 
-                    if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                            //Refresh accessToken
+                            $this->userTokenRefresh();
+
+                            $apiResponse = $modelMessage->deleteMessage($id); //decode to check message from api
+                            $apiResponse["body"]['message'] = "Deleted with success!";
+                        }
+
+                        if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
+                            $apiResponse["body"]['message'] = "Deleted with success!";
+                        }
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
                     echo $apiResponse;
                     break;
-
-
             }
         } else {
             //If parameters empty redirect to the inbox
-            if(empty($parameters)){
-                echo '<meta http-equiv="Refresh" content="0; url=' . HOME_URL . "/home/usermessages/inbox" .'">';
+            if (empty($parameters)) {
+                echo '<meta http-equiv="Refresh" content="0; url=' . HOME_URL . "/home/usermessages/inbox" . '">';
                 echo '<script type="text/javascript">window.location.href = "' . HOME_URL . "/home/usermessages/inbox" . '";</script>';
             }
-
             //If exists parameters
             if (isset($parameters) && !empty($parameters)) {
                 $paramVal = chk_array($parameters, 0);
@@ -930,7 +914,7 @@ class HomeController extends MainController
                     $userMessageList = $modelMessage->getMessageListByUserId($_SESSION["userdata"]["id"]);
                     //Refresh accessToken
                     if ($userMessageList["statusCode"] === 401) {
-                        //faz o refresh do accessToken
+                        //Refresh accessToken
                         $this->userTokenRefresh();
                         $userMessageList = $modelMessage->getMessageListByUserId($_SESSION["userdata"]["id"]);
                     }
@@ -944,7 +928,7 @@ class HomeController extends MainController
 
                     //get user Message list / user messages sent
                     $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
-                    //caso accessToken espire
+                    //Refresh accessToken
                     if ($userMessageList["statusCode"] === 401) {
                         //Refresh accessToken
                         $this->userTokenRefresh();
@@ -980,19 +964,14 @@ class HomeController extends MainController
             if ($userList["statusCode"] === 401) {
                 //Refresh accessToken
                 $this->userTokenRefresh();
-
                 $userList = $modelMessage->getUserList();
                 $this->userdata['usersList'] = $userList["body"]["users"];
             }
-
-            /** Carrega os arquivos do view **/
-
+            /**Load files from the view **/
             require ABSPATH . '/views/_includes/user-header.php';
             require ABSPATH . '/views/user/profile/user-messages-view.php';
             require ABSPATH . '/views/_includes/footer.php';
         }
     }
-
-
 }
 
