@@ -6560,7 +6560,7 @@ p.stars a:before {
 
 .required {
     border-bottom: 0 !important;
-    color: red;
+    color: #1b5e20;
 }
 
 p.stars a:hover, p.stars a:hover:before {
@@ -8617,7 +8617,7 @@ User messages CSS
 }
 
 .grid .full {
-    padding: 0 !important;
+    padding: 10 !important;
 }
 
 .grid .transparent {
@@ -8722,7 +8722,7 @@ User messages CSS
 
 .mytable {
     border-collapse: collapse;
-    width: 100%;
+    /*width: 100%;*/
     table-layout: fixed;
     border: none;
 }
@@ -8759,7 +8759,20 @@ User messages CSS
     color: #1b5e20;
 }
 
+.addMessageItem{
+    color: #0b2e13;
+}
 
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #66bb6a;
+    border-color: #66bb6a;
+}
+
+.dataTables_info {
+    font-size: small;
+}
 
 /*********************************
 End User messages CSS
