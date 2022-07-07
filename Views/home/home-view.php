@@ -203,6 +203,7 @@
                     </ol>
                 </nav>
 
+
                 <!-- Leafletmap -->
                 <div class="col-md-12">
                     <!--Map area start-->
@@ -230,32 +231,40 @@
     <div class="home-facts counter pt80">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-sm-6 col-md-3">
-                    <div class="counter-box">
-                        <p class="counter-count">89000</p>
-                        <p class="ctxt">Árvores plantadas</p>
+                <?php if (!empty($this->userdata['treesInfo'])) { ?>
+                    <div class="col-lg-3 col-sm-6 col-md-3">
+                        <div class="counter-box">
+                            <p class="counter-count"><?php echo $this->userdata['treesInfo']['treesTotal'] ?></p>
+                            <p class="ctxt">Árvores plantadas</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-md-3">
-                    <div class="counter-box">
-                        <p class="counter-count">79000</p>
-                        <p class="ctxt">Solar Panels in 2017</p>
+                    <div class="col-lg-3 col-sm-6 col-md-3">
+                        <div class="counter-box">
+                            <p class="counter-count"><?php echo $this->userdata['treesInfo']['O2Kg'] ?></p>
+                            <p class="ctxt">Oxigénio(Kg)</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-md-3">
-                    <div class="counter-box">
-                        <p class="counter-count">69000</p>
-                        <p class="ctxt">Wildlife Saved</p>
+                    <div class="col-lg-3 col-sm-6 col-md-3">
+                        <div class="counter-box">
+                            <p class="counter-count"><?php echo $this->userdata['treesInfo']['co2Kg'] ?></p>
+                            <p class="ctxt">Dióxido Carbono(Kg)</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-md-3">
-                    <div class="counter-box">
-                        <p class="counter-count">59000</p>
-                        <p class="ctxt">Served Water Gallons</p>
+                    <div class="col-lg-3 col-sm-6 col-md-3">
+                        <div class="counter-box"><p
+                                    class="counter-count"><?php echo $this->userdata['treesInfo']['H2oLt'] ?></p>
+                            <p class="ctxt">Água(Ltr)</p>
+                        </div>
                     </div>
-                </div>
+                    <?php
+                } ?>
+            </div>
+            <div>
+                <br>
+                <p class="font-weight-light">*Dados médios calculados durante o periodo inicial de 20 anos de vida de uma árvore.</p>
             </div>
         </div>
+
     </div>
 </section>
 <!--About Section End-->
@@ -268,75 +277,47 @@
                     <h5>Uma causa nobre</h5>
                     <h2>Ajude a reflorestar a nossa serra</h2>
                 </div>
-                <!--                <p> We need your support and help to Stop Globar Warning. Few generations ago it to seemed like the-->
-                <!--                    world’s resources were infinite, and the people needed only. </p>-->
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0"
-                         aria-valuemax="100"></div>
-                </div>
-                <ul class="funds">
-                    <li class="text-left"><strong>73%</strong> Funded</li>
-                    <li class="text-center"><strong>$948.00</strong> Raised</li>
-                    <li class="text-right"><strong>$1750.00</strong> Required</li>
-                </ul>
             </div>
             <div class="col-md-6">
                 <div class="donation-amount">
                     <h5>Doação</h5>
-                    <form>
+
+                    <!--Donation form-->
+                    <form id="newDonation">
                         <ul class="radio-boxes">
                             <li>
                                 <div class="radio custom">
-                                    <input name="donation" id="d1" type="radio" class="css-radio">
-                                    <label for="d1" class="css-label">€ 2.5</label>
+                                    <input name="donation" id="d1" type="radio" value="2.50" class="css-radio">
+                                    <label for="d1" class="css-label">€ 2.50</label>
                                 </div>
                             </li>
-                            <!--                            <li>-->
-                            <!--                                <div class="radio custom">-->
-                            <!--                                    <input name="donation" id="d2" type="radio" class="css-radio">-->
-                            <!--                                    <label for="d2" class="css-label">€20</label>-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
-                            <!--                            <li>-->
-                            <!--                                <div class="radio custom">-->
-                            <!--                                    <input name="donation" id="d3" type="radio" class="css-radio">-->
-                            <!--                                    <label for="d3" class="css-label">$50</label>-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
-                            <!--                            <li>-->
-                            <!--                                <div class="radio custom">-->
-                            <!--                                    <input name="donation" id="d4" type="radio" class="css-radio">-->
-                            <!--                                    <label for="d4" class="css-label">$100</label>-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
-                            <!--                            <li>-->
-                            <!--                                <div class="radio custom">-->
-                            <!--                                    <input name="donation" id="d5" type="radio" class="css-radio">-->
-                            <!--                                    <label for="d5" class="css-label">$250</label>-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
-                            <!--                            <li>-->
-                            <!--                                <div class="radio custom">-->
-                            <!--                                    <input name="donation" id="d6" type="radio" class="css-radio">-->
-                            <!--                                    <label for="d6" class="css-label">$500</label>-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
-                            <!--                            <li>-->
-                            <!--                                <div class="radio custom">-->
-                            <!--                                    <input name="donation" id="d7" type="radio" class="css-radio">-->
-                            <!--                                    <label for="d7" class="css-label">$1000</label>-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
-                            <!--                            <li>-->
-                            <!--                                <div class="inputs">-->
-                            <!--                                    <input class="enter" type="text" placeholder="$ Other">-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
-                            <li class="form-submit">
-                                <button type="submit">Continue to Donate</button>
-                            </li>
+
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert" hidden>
+                                <strong>Selecione o valor e faça adoção!</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+<!--                            TODO ver porque aqui o sistema não sabe se estamos ou não login-->
+                            <!-- Make donation if login-->
+                            <?php if ($this->logged_in) { ?>
+                                <li class="form-submit">
+                                    <button type="submit" id="subBtn" disabled="disabled">
+                                        Faça a sua adoção
+                                    </button>
+
+                                </li>
+                            <?php } else { ?>
+                                <!-- Make donation send to login / register-->
+                                <li class="form-submit">
+                                    <a type="button" class="btn donationbutton login-reg" data-toggle="modal" data-target="#loginModal" >
+                                           Faça a sua adoção</a>
+                                </li>
+                            <?php } ?>
                         </ul>
                     </form>
+                    <!--Donation form END-->
                 </div>
             </div>
         </div>
@@ -344,10 +325,11 @@
 </section>
 <!--Urgent Causes End-->
 <!--Current Projects Start-->
-<section class="wf100 p80 current-projects">
-    <div class="container">
+
+<section class="wf100 p80">
+    <div class="container why-ecova-center">
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="section-title-2">
                     <h5>Faça uma escolha sensata</h5>
                     <h2>Adote uma árvore</h2>
@@ -1124,5 +1106,55 @@
         }
 
     });
+
+    //Donation script////////////////////////////////////////////
+    $(document).ready(function () {
+
+        $('#newDonation').submit(function (event) {
+            event.preventDefault(); //prevent default action
+            let formData = {
+                'action': "getDonation",
+                'data': $(this).serializeArray()
+            };
+            $.ajax({
+                url: "<?php echo HOME_URL . '/home/adoption';?>",
+                dataType: "json",
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+                    window.location.href = "<?php echo HOME_URL . '/home/adoption';?>";
+                },
+                error: function (data) {
+                    //mensagem de Error
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Connection error, please try again.",
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        didClose: () => {
+                            //location.reload();
+                        }
+                    });
+                },
+            });
+        });
+
+
+        //TODO rever o disable do botão de adoção
+        // //Function to lock the button
+        $(function () {
+            $('#d1').click(function () {
+                if ($(this).is(':checked')) {
+                    $('#subBtn').removeAttr('disabled');
+                } else {
+                    $('#alert').show();
+                    $('#subBtn').attr('disabled', 'disabled');
+                }
+            });
+        });
+
+    });
+
 
 </script>

@@ -25,6 +25,12 @@ class HomeController extends MainController
 //        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
 
+        //TODO Ver a situação do valores da info
+
+        $model = $this->load_model('home-model');
+        $getTreeInfo = $model->getTreeInfo();
+        $this->userdata['treesInfo'] = $getTreeInfo['body'];
+
         // obriga o login para aceder à pagina
         // obriga o login para aceder à pagina
         if (!$this->logged_in) {
@@ -232,6 +238,8 @@ class HomeController extends MainController
         // Parametros da função
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
+
+
         // obriga o login para aceder à pagina
         if (!$this->logged_in) {
 
@@ -254,6 +262,25 @@ class HomeController extends MainController
             return;
 
         }
+
+
+
+        $model = $this->load_model('home-model');
+
+        //Get trees info from model
+        $getTreeInfo = $model->getTreeInfo();
+        if ($getTreeInfo['statusCode'] === 200) { // 200 OK, successful
+            $this->userdata['treesInfo'] = $getTreeInfo['body'];
+        }
+        if ($getTreeInfo['statusCode'] === 400) {  // 200 OK, successful
+            //Refresh user token
+            $this->userTokenRefresh();
+            //Models
+            $getTreeInfo = $model->getTreeInfo();
+            //Userdata from model's
+            $this->userdata['treesInfo'] = $getTreeInfo['body'];
+        }
+
 
         //Load model trees
         $model = $this->load_model('user-trees-model');
@@ -304,6 +331,7 @@ class HomeController extends MainController
 
         }
 
+
         /** Carrega os arquivos do view **/
 
         require ABSPATH . '/views/_includes/user-header.php';
@@ -313,7 +341,7 @@ class HomeController extends MainController
 
 
     /**
-     * Logout
+     * Logout user function
      * @return void
      */
 
@@ -324,14 +352,12 @@ class HomeController extends MainController
         $this->logout(true);
     }
 
-
+    /**
+     * Rights page handler
+     * "/views/home/rights-view.php"
+     */
     public function rights()
     {
-        /**
-         * Page load
-         * Public view
-         * "/views/home/rights-view.php"
-         */
 
         // Title page
         $this->title = 'Regulamento';
@@ -348,10 +374,9 @@ class HomeController extends MainController
     }
 
     /**
-     * Carrega a página
+     * User settings page handler
      * "/views/home/user-settings-view.php"
      */
-
     public function userSettings()
     {
 
@@ -610,6 +635,126 @@ class HomeController extends MainController
         }
     }
 
+
+
+
+    /**
+     * Adoption tree page handler
+     * "/views/home/user-settings-view.php"
+     */
+    public function adoption()
+    {
+        // Page tilte
+        $this->title = 'Adote árvore';
+        $this->permission_required = array('homeLogin');
+
+        $model = $this->load_model('adoption-model');
+        $modelTransaction = $this->load_model('user-transaction-model');
+
+        // force the login
+        if (!$this->logged_in) {
+            $this->logout();
+            $this->goto_login();
+            return;
+        }
+
+        // check permissions
+        if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+            // show message
+            echo 'Você não tem permissões para aceder a esta página.';
+            return;
+        }
+
+        // process ajax action call
+        if (isset($_POST['action']) && !empty($_POST['action'])) {
+            $action = $_POST['action'];
+            switch ($action) {
+
+                case 'getDonation' :
+                    $data = $_POST['data'];
+                    $_SESSION['userdata']['treeDonation'] = $data;
+                    $donation =  $_SESSION['userdata']['treeDonation'];
+                    $apiResponse = json_encode($donation);
+                    echo $apiResponse;
+                    break;
+
+                case 'makeDonation' :
+                    $data = $_POST['data'];
+                    $_SESSION['userdata']['treeDonation'] = $data;
+                    $treeDonation =  $_SESSION['userdata']['treeDonation'];
+                    // unset($apiResponse['body'])
+                    $apiResponse = json_encode($treeDonation);
+                    echo $apiResponse;
+                    break;
+
+                case 'makeTransaction' :
+                    $data = $_POST['data'];
+                    $apiResponse = $modelTransaction->makeTransaction($data); //decode to check message from api
+
+
+                    if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    if ($apiResponse['statusCode'] === 40) { // 401, unauthorized
+                        $this->userTokenRefresh();
+                        $apiResponse = $model->updateUser($data); //decode to check message from api
+                        $apiResponse = json_encode($apiResponse);// encode package to send
+                        echo $apiResponse;
+                        break;
+                    }
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo($apiResponse);
+                    break;
+
+            }
+
+        } else {
+
+            //Get adopt list from model
+            $getAdoptTreesModel = $model->getAdoptTreesList();
+            if ($getAdoptTreesModel['statusCode'] === 200) { // 200 OK, successful
+                $this->userdata['adoptionList'] = $getAdoptTreesModel['body']['trees'];
+            }
+            if ($getAdoptTreesModel['statusCode'] === 401) {  // 200 OK, successful
+                //Refresh user token
+                $this->userTokenRefresh();
+                //Models
+                $getAdoptTreesModel = $model->getAdoptTreesList();
+                //Userdata from model's
+                $this->userdata['adoptionList'] = $getAdoptTreesModel['body']['trees'];
+            }
+
+            //Get transaction methods list from model
+            $getTransactionModel =  $modelTransaction->getTransactionList();
+            if ($getAdoptTreesModel['statusCode'] === 200) { // 200 OK, successful
+                $this->userdata['transactionList'] = $getTransactionModel['body']['methods'];
+            }
+            if ($getAdoptTreesModel['statusCode'] === 401) {  // 200 OK, successful
+                //Refresh user token
+                $this->userTokenRefresh();
+                //Models
+                $getTransactionModel =  $modelTransaction->getTransactionList();
+                //Userdata from model's
+                $this->userdata['transactionList'] = $getTransactionModel['body']['methods'];
+            }
+
+
+            /** Carrega os arquivos do view **/
+
+            require ABSPATH . '/views/_includes/user-header.php';
+
+            require ABSPATH . '/views/user/profile/user-adoption-view.php';
+
+            require ABSPATH . '/views/_includes/footer.php';
+
+        }
+    }
+
+
     /**
      * Carrega a página
      * "/views/user/profile/user-trees-view.php"
@@ -655,7 +800,6 @@ class HomeController extends MainController
                 case 'userTreeView' :
                     $data = $_POST['data'];
                     $apiResponse = $model->getUserTreeId($data);
-//                    $apiResponseBody = array();
 
                     if ($apiResponse['statusCode'] === 200) { // 200 success
                         $apiResponse['body']['message'] = 'success';
@@ -683,8 +827,6 @@ class HomeController extends MainController
 
                 //Load model intervation tree
                 $interventionList = $model->getInterventionsTreeList($_SESSION['userdata']['userTreeToShow']['id']);
-//                $this->userdata['interventionList'] = $interventionList['body']['interventions'];
-
 
                 if ($interventionList["statusCode"] === 200) {
                     $this->userdata['interventionList'] = $interventionList['body']['interventions'];
@@ -700,7 +842,6 @@ class HomeController extends MainController
 
                 //Load model all images tree list
                 $imageTreeList = $model->getTreeImagesList($_SESSION['userdata']['userTreeToShow']['id']);
-//                $this->userdata['imageTreeList'] = $imageTreeList['body']['images'];
 
                 if ($imageTreeList["statusCode"] === 200) {
                     $this->userdata['imageTreeList'] = $imageTreeList['body']['images'];
