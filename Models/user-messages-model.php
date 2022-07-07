@@ -14,11 +14,9 @@ class UserMessagesModel extends MainModel
     public function __construct($db = false, $controller = null)
     {
 
-        //$this->db = $db; // Configura o DB (PDO)
+        $this->controller = $controller; // Config controller
 
-        $this->controller = $controller; // Configura o controlador
-
-        $this->parametros = $this->controller->parametros; // Configura os parâmetros
+        $this->parametros = $this->controller->parametros; // Config parameters
 
         $this->userdata = $this->controller->userdata;
     }
@@ -44,7 +42,7 @@ class UserMessagesModel extends MainModel
 
     /** CRUD MESSAGES **/
     /**
-     * Metodo que retorna Message pelo id
+     * Get message by id
      * @param $id
      * @return mixed
      */
@@ -56,12 +54,12 @@ class UserMessagesModel extends MainModel
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
-        //trasforma toda a msg em string json para poder ser enviado
+        //Transform message into string to be send to the controller
         return json_decode(json_encode($result), true);
     }
 
     /**
-     * Metodo que retorna Message list do user pelo seu id
+     * Get message list by User Id
      * @param $id
      * @return mixed
      */
@@ -73,12 +71,12 @@ class UserMessagesModel extends MainModel
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
-        //trasforma toda a msg em string json para poder ser enviado
+        //Transform message into string to be send to the controller
         return json_decode(json_encode($result), true);
     }
 
     /**
-     * Metodo que retorna Message Sent list do user pelo seu id
+     * Get Message Sent list from  User Id
      * @param $id
      * @return mixed
      */
@@ -95,7 +93,7 @@ class UserMessagesModel extends MainModel
     }
 
     /**
-     * Metodo que retorna lista de Messages
+     * Get all messages list
      * @return mixed
      */
     public function getMessageList() {
@@ -111,7 +109,7 @@ class UserMessagesModel extends MainModel
     }
 
     /**
-     * Metodo adiciona Message
+     * POST new message
      * @param $data
      * @return array|null
      */
@@ -138,9 +136,7 @@ class UserMessagesModel extends MainModel
                     case "addMessageToUser":
                         $normalizedData['toUser'] = $dataVector['value'];
                         break;
-
                 }
-
             }
         }
 
@@ -155,7 +151,7 @@ class UserMessagesModel extends MainModel
     }
 
     /**
-     * Metodo Message Read
+     * POST message read
      * @param $data
      * @return array|null
      */
@@ -173,7 +169,7 @@ class UserMessagesModel extends MainModel
     }
 
     /**
-     * Metodo Message Unread
+     * POST message unread
      * @param $data
      * @return array|null
      */
@@ -191,25 +187,15 @@ class UserMessagesModel extends MainModel
     }
 
     /**
-     * Metodo delete Message
+     * DELETE message
      * @param $data
      * @return mixed
      */
     public function deleteMessage($data) {
         $result = null;
-        $MessageId = $data;
 
-        /*foreach ($data as $dataVector) {
-            foreach ($dataVector as $key => $value) {
-                switch ($dataVector['name']){ //gets input name=""
-                    case "deleteMessageId":
-                        $MessageId = $dataVector['value'];
-                        break;
-                }
-            }
-        }*/
-
-        $url = API_URL . 'api/v1/messages/delete/' . $MessageId;
+        $url = API_URL . 'api/v1/messages/delete/' . $data;
+//        $url = API_URL . 'api/v1/messages/delete/' . $data[0];
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("DELETE", $url, '', $userToken);
