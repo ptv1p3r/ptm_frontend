@@ -1,24 +1,28 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: V1p3r
- * Date: 17/10/2018
- * Time: 20:14
+ * User: TFC_ Group
+ * Date: 07/07/2022
+ * Time: 23.10
  */
 ?>
 <?php if (!defined('ABSPATH')) exit; ?>
 
 <?php if ($this->login_required && !$this->logged_in) return; ?>
 
-<!-- AJAX loader -->
-<div id="loader" class="lds-dual-ring hidden overlay"></div>
+<!--TODO ver loader na frente da caixa de envio da mensagem-->
+<!-- Image loader -->
+<div class="loaderOverlay lds-dual-ring hidden" id="loader">
+    <svg class="loader" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="46"/>
+    </svg>
+</div>
+<!-- Image loader -->
 
 <!--Messages Start-->
 <section class="home-about wf100 p80">
     <div class="container">
         <div class="row">
-
-
             <div class="grid email">
                 <div class="grid-body">
                     <div class="row">
@@ -44,11 +48,6 @@
                                             <i class="fa fa-share"></i> Enviado
                                         </a>
                                     </li>
-                                    <!-- Button trigger modal -->
-<!--                                    <button type="button" class="btn btn-primary" data-toggle="modal"-->
-<!--                                            data-target="#bulkDeleteMessagesModal">-->
-<!--                                        BULK modal test-->
-<!--                                    </button>-->
                                 </ul>
                             </div>
                         </div>
@@ -81,11 +80,11 @@
                                                 <hr class="dropdown-divider">
                                             </li>
                                             <li><a href="#bulkDeleteMessagesModal" class="dropdown-item"
-                                                   data-bs-toggle="modal" data-bs-target="#bulkDeleteMessagesModal"
-                                                   title="Delete">Apagar</a></li>
+                                                   data-toggle="modal" data-target="#bulkDeleteMessagesModal"
+                                                   title="Delete">Delete</a></li>
+                                            <li>
                                         </ul>
                                     </div>
-
                                     <!--Refresh-->
                                     <a class="btn edit btn-success"
                                        href="<?php echo HOME_URL . '/home/usermessages/inbox' ?>" data-toggle="tooltip"
@@ -93,45 +92,28 @@
                                         <i class="fa fa-retweet"></i>
                                     </a>
                                 </div>
-                                <div class="col-md-6 search-form">
-                                    <form action="#" class="text-right">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control input-sm" placeholder="Search"
-                                                   required>
-                                            <span class="input-group-btn">
-                                            <button type="submit" name="search"
-                                                    class="btn_ search-btn btn-sm search"><i
-                                                        class="fa fa-search"></i></button></span>
-                                        </div>
-                                    </form>
-                                </div>
                             </div>
                             <br>
                             <div class="padding"></div>
                             <!-- INBOX/SENT -->
                             <div id="inbox-body">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered mytable">
+                                    <table class="table table-bordered mytable display" id="messagesTable" style="width:97%">
                                         <thead>
-                                        <col style="width:5%">
-                                        <col style="width:25%">
-                                        <col style="width:30%">
-                                        <col style="width:30%">
-                                        <col style="width:10%">
                                         <tr>
-                                            <th><input id="all-none" type="checkbox"></th>
+                                            <th> <input id="all-none" type="checkbox"></th>
                                             <th>De</th>
                                             <th>Assunto</th>
                                             <th>Data</th>
                                             <th></th>
+                                            <th hidden></th>
                                         </tr>
                                         </thead>
+                                        <tbody>
                                         <?php if (!empty($this->userdata['userMessageList'])) {
                                             foreach ($this->userdata['userMessageList'] as $key => $message) { ?>
                                                 <tr class="nav-item <?php echo ($message["receptionDate"] != null) ? "read" : ""; ?>"
                                                     role="presentation">
-                                                    <td class="message-id" id="<?php echo $message['id'] ?>"
-                                                        hidden></td>
                                                     <td class="action short-td">
                                                         <input class="message-check" type="checkbox"
                                                                style="text-align: center; vertical-align: middle; width: 36px; ">
@@ -162,6 +144,9 @@
                                                            data-bs-toggle="modal" data-bs-target="#deleteMessageModal"
                                                            title="Delete"><i class="fas fa-trash-alt"></i></a>
                                                     </td>
+
+                                                    <td class="message-id" id="<?php echo $message['id'] ?>"
+                                                        hidden></td>
                                                 </tr>
                                             <?php }
                                         } else { ?>
@@ -178,7 +163,7 @@
                         <!-- BEGIN COMPOSE MESSAGE -->
                         <!-- Modal -->
                         <div class="modal hide fade in" id="addMessageModal" data-keyboard="false"
-                             data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                             data-backdrop="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                              aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -196,22 +181,22 @@
                                                        value="<?php echo $_SESSION["userdata"]["id"]; ?>">
                                                 <div class="form-group">
                                                     <label>Para:</label>
-                                                    <select name="addMessageToUser" id="addMessageToUser">
+                                                    <select  name="addMessageToUser" id="addMessageToUser" required>
                                                         <option value="" disabled selected>Selecione o recetor</option>
                                                         <?php if (!empty($this->userdata['usersList'])) {
                                                             foreach ($this->userdata['usersList'] as $key => $user) { ?>
-                                                                <option value="<?php echo $user['id'] ?>"><?php echo $user["email"] ?></option>
+                                                                <option value="<?php echo $user['id'] ?>" ><?php echo $user["email"] ?> </option>
                                                             <?php }
                                                         } ?>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Assunto</label>
-                                                    <input name="addMessageSubject" type="text" class="form-control">
+                                                    <input name="addMessageSubject" type="text" class="form-control" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Mensagem</label>
-                                                    <textarea name="addMessageMessage" class="form-control"
+                                                    <textarea name="addMessageMessage" class="form-control" required
                                                               style="height: 120px;"></textarea>
                                                 </div>
                                             </div>
@@ -232,35 +217,10 @@
                 </div>
             </div>
         </div>
-        <!-- Bulk Delete messages Modal HTML -->
-        <div id="bulkDeleteMessagesModal" class="modal fade" data-keyboard="false"
-             data-backdrop="static" tabindex="-1"
-             aria-labelledby="bulkDeleteMessagesModal-Label" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form id="bulkDeleteMessages">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Apagar mensagens!!</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            De certeza que pretende apagar todas as mensagens selecionadas?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
-                                        class="fa fa-times"></i> Voltar
-                            </button>
-                            <button type="button" class="btn btn-primary">Apagar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+
         <!-- Delete messages Modal HTML -->
         <div id="deleteMessageModal" class="modal fade center" data-keyboard="false"
-             data-backdrop="static" tabindex="-1"
+             data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5);" tabindex="-1"
              aria-labelledby="bulkDeleteMessagesModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -288,23 +248,101 @@
             </div>
         </div>
 
-
+        <!-- Delete bulk messages Modal HTML -->
+        <div id="bulkDeleteMessagesModal" class="modal fade center" data-keyboard="false"
+             data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5);" tabindex="-1"
+             aria-labelledby="bulkDeleteMessagesModal-Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="bulkDeleteMessages">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Apagar mensagem</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            De certeza que pretende apagar a mensagem?
+                            <p class="text-warning"><small>Esta ação não pode ser desfeita!</small></p>
+                            <input id="deleteMessageId" name="deleteMessageId" type="hidden" class="form-control"
+                                   value="">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
+                                        class="fa fa-times"></i> Cancelar
+                            </button>
+                            <input type="submit" class="btn btn-danger" value="Apagar">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <!-- END INBOX -->
     </div>
-    <!--    </div>-->
-    <!--    </div>-->
-    <!--    </div>-->
-    <!--    </div>-->
 </section>
 <!--Messages End-->
 
 <script>
+
+    //get and returns selected messages
+    function getMessagesSelected() {
+        let idArray = []
+        $('table > tbody > tr ').each(function () {
+            let messageId = $(this).find("td.message-id").attr("id")
+
+            if ($(this).find("input.message-check").is(":checked")) {
+                idArray.push(messageId)
+            }
+        });
+        //console.log(idArray)
+        return idArray;
+    }
+
     $(document).ready(function () {
+
+        //DATATABLES
+        try {
+            var table = $('#messagesTable').DataTable({
+                rowReorder: false,
+                responsive: true,
+                lengthChange: false,
+                pageLength: 15,
+                colReorder: false,
+                columns: [
+                    { "width": "5%", orderable: false },
+                    { "width": "20%" },
+                    { "width": "20%" },
+                    { "width": "20%" },
+                    { "width": "10%" },
+                    { "width": "0%" }
+                ],
+                "language": {
+                    "sProcessing": "A processar...",
+                    "sLengthMenu": "Mostrar _MENU_ registos",
+                    "sZeroRecords": "Sem resultados",
+                    "sInfo": "Mostrando _START_ a _END_ em um total de _TOTAL_ mensagens.",
+                    "sInfoEmpty": "Mostrando mensagens de 0 a 0 de um total de 0 mensagens.",
+                    "sInfoPostFix": "",
+                    "sSearch": "Pesquisar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Carregando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Seguinte",
+                        "sPrevious": "Anterior"
+                    }
+
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
 
         // show/hide actions on each message selected
         $(".message-check").change(function () {
             let anyChecked, count = 0
-
             //if any is checked, "anyChecked" equals to true
             $(".message-check").each(function () {
                 if ($(this).is(":checked")) {
@@ -316,7 +354,6 @@
                     count--;
                 }
             });
-
             //and shows the actions
             if (anyChecked === true) {
                 $("#action-button").attr("hidden", false);
@@ -339,23 +376,8 @@
             }
         });
 
-
-        function getMessagesSelected() {
-            let idArray = []
-            $('table > tbody > tr ').each(function () {
-                let messageId = $(this).find("td.message-id").attr("id")
-
-                if ($(this).find("input.message-check").is(":checked")) {
-                    idArray.push(messageId)
-                }
-            });
-            //console.log(idArray)
-            return idArray;
-        }
-
         //Function to dynamic search on dropbox
         $('select').selectize({sortField: 'text'});
-
 
         //view message
         <?php if( isset($this->userdata["userMessageView"]) && !empty($this->userdata["userMessageView"])) {
@@ -401,7 +423,6 @@
                                 </div>`
             );
         }
-
         LoadMessage()
         <?php }
         }?>
@@ -409,7 +430,6 @@
         // Ajax to Add Message
         $('#addMessage').submit(function (event) {
             event.preventDefault(); //prevent default action
-
             let formData = {
                 'action': "AddMessage",
                 'data': $(this).serializeArray()
@@ -425,7 +445,6 @@
                 },
                 success: function (data) {
                     $("#addMessageModal").modal('hide');
-
                     if (data.statusCode === 201) {
                         //mensagem de Success
                         Swal.fire({
@@ -451,7 +470,6 @@
                             }
                         });
                     }
-
                 },
                 error: function (data) {
                     //mensagem de Error
@@ -544,7 +562,6 @@
         //Ajax to set message as read
         $(".message-read").click(function (e) {
             e.preventDefault();
-
             let idArray = []
             if ($(this).hasClass("bulk")) { // if its a bulk action
                 idArray = getMessagesSelected()//get messages selected, if any
@@ -553,12 +570,10 @@
                     idArray.push($(this).attr("id"))
                 } //if not a bulk action, gets the id from the button/anchor's "id" attr of the specific message
             }
-
             let formData = {
                 'action': "MarkRead",
                 'data': idArray
             };
-            console.log(formData)
 
             $.ajax({
                 url: "<?php echo HOME_URL . '/home/userMessages';?>",
@@ -692,11 +707,8 @@
         // ajax to BULK Delete Messages
         $('#bulkDeleteMessages').submit(function (event) {
             event.preventDefault(); //prevent default action
-
             let idArray = []
             idArray = getMessagesSelected() //get messages selected, if any
-            //if(idArray.length === 0) { idArray.push($(this).find("[name='deleteMessageId']").val()) }
-
             let formData = {
                 'action': "DeleteMessage",
                 'data': idArray
@@ -766,7 +778,5 @@
             let $select = $("#addMessageModal select").selectize();
             $select[0].selectize.setValue(userToReply);
         });
-
-
     });
 </script>
