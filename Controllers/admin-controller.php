@@ -2502,6 +2502,12 @@ class AdminController extends MainController
             return;
         }
 
+
+
+
+
+
+
         //$modelo = $this->load_model('admin-login-model');
 
         /** Carrega os arquivos do view **/
@@ -2512,6 +2518,9 @@ class AdminController extends MainController
         require ABSPATH . '/views/_includes/admin-footer.php';
 
     }
+
+
+
 
 
     /**
