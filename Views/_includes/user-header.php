@@ -52,10 +52,27 @@
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
             integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
             crossorigin=""></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.5/js/standalone/selectize.min.js" integrity="sha512-JFjt3Gb92wFay5Pu6b0UCH9JIOkOGEfjIi7yykNWUwj55DBBp79VIJ9EPUzNimZ6FvX41jlTHpWFUQjog8P/sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.5/css/selectize.bootstrap5.min.css" integrity="sha512-w4sRMMxzHUVAyYk5ozDG+OAyOJqWAA+9sySOBWxiltj63A8co6YMESLeucKwQ5Sv7G4wycDPOmlHxkOhPW7LRg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.5/js/standalone/selectize.min.js"
+            integrity="sha512-JFjt3Gb92wFay5Pu6b0UCH9JIOkOGEfjIi7yykNWUwj55DBBp79VIJ9EPUzNimZ6FvX41jlTHpWFUQjog8P/sw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.5/css/selectize.bootstrap5.min.css"
+          integrity="sha512-w4sRMMxzHUVAyYk5ozDG+OAyOJqWAA+9sySOBWxiltj63A8co6YMESLeucKwQ5Sv7G4wycDPOmlHxkOhPW7LRg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <!-- Bootstrap tables lib 1.20.2 -->
     <link href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css" rel="stylesheet">
+    <!-- dataTables -->
+
+
+<!--    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>-->
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
+    <!--<script src="https://cdn.datatables.net/rowreorder/1.2.8/js/dataTables.rowReorder.min.js"></script>-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.5.6/js/dataTables.colReorder.min.js">
+    <script src="https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-PT.json"></script>
+<!--    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">-->-->
+
 
     <!-- Template original CSS links -->
     <!--  CSS custom que não pode ser apagado-->
@@ -281,11 +298,10 @@
                     </a>
                     <ul class="dropdown-menu">
                         <h6 class="dropdown-header">Mensagens</h6>
-
-                        <!-- TODO: counter to only display last 5 messages received -->
                         <?php if (!empty($this->userdata['userMessageList'])) {
+                            $count = 0;
                             foreach ($this->userdata['userMessageList'] as $key => $message) {
-                                if ($message["receptionDate"] === null) { ?>
+                                if ($message["receptionDate"] === null && $count < 5) { ?>
                                     <a class="dropdown-item d-flex align-items-center"
                                        href="<?php echo HOME_URL . '/home/usermessages/' . $message["id"]; ?>">
                                         <div class="dropdown-item">
@@ -295,7 +311,8 @@
                                                 · <?php echo $message["notificationDate"] ?></div>
                                         </div>
                                     </a>
-                                <?php }
+                                    <?php $count++;
+                                }
                             }
                         } ?>
                         <a class="dropdown-item text-center small text-gray-500"
