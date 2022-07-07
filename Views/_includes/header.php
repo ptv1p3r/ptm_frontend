@@ -12,7 +12,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -76,36 +75,9 @@
 </head>
 <body>
 
-
-<!-- left side of navbar
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <!- left side of navbar
-    <div class="navbar-collapse ">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="navbar-brand" href="<?php //echo HOME_URI; ?>">
-                <img src="../../Images/home.png" alt="Home" width="24" height="24"> </a>
-            </li>
-            <li class="nav-item">
-                <a class="navbar-brand" href="<?php //echo HOME_URI; ?>">
-                    <img src="../../Images/name.png" alt="Name" height="24"></a>
-            </li>
-        </ul>
-        <!- right side of navbar
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <form class="form-inline" action="">
-                    <a class="navbar-brand" href="<?php //echo HOME_URI . '/search/index/1_1'; ?>"><img src="../../Images/search.png" alt="Search" width="24" height="24"></a>
-                </form>
-            </li>
-        </ul>
-    </div>
-</nav>
--->
 <!--Header Start-->
 <header class="header-style-2">
     <nav class="navbar navbar-expand-lg">
-
         <a class="navbar-brand" href="<?php echo HOME_URL . '/'; ?>"><img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'; ?>" alt=""></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
@@ -332,7 +304,6 @@
 </div>
 <!-- End Login Modal HTML -->
 
-
 <script>
     //Main functions from this view
     $(document).ready(function () {
@@ -358,7 +329,6 @@
                     } else {
                         alert("Invalid Email/Password!", "danger");
                     }
-
                 },
                 error: function (data) {
                     alert("Connection error, please try again.", "danger");
