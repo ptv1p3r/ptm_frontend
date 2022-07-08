@@ -1473,14 +1473,14 @@ class AdminController extends MainController
         } else {
             $treeImageList = $modelo->getTreeImageList();
             if ($treeImageList["statusCode"] === 200){
-                $this->userdata['treeImageList'] = $treeImageList["body"]["trees"];
+                $this->userdata['treeImageList'] = $treeImageList["body"]["images"];
             }
             if ($treeImageList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $treeImageList = $modelo->getTreeImageList();
-                $this->userdata['treeImageList'] = $treeImageList["body"]["trees"];
+                $this->userdata['treeImageList'] = $treeImageList["body"]["images"];
             }
 
 
