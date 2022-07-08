@@ -27,20 +27,20 @@
                                 <table id="treeImagesTable" class="table table-striped table-hover">
                                     <thead>
                                     <tr>
-                                        <th>id</th>
+                                        <!--<th>id</th>-->
                                         <th>treeId</th>
-                                        <th>name</th>
-                                        <th>path</th>
+                                        <!--<th>name</th>-->
+                                        <th>image</th>
                                         <th>description</th>
                                         <th>size</th>
                                         <th>position</th>
-                                        <th>active
+                                        <!--<th>active
                                             <select id='GetActive'>
                                                 <option value=''>All</option>
                                                 <option value='1'>Active</option>
                                                 <option value='0'>Inactive</option>
                                             </select>
-                                        </th>
+                                        </th>-->
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -48,16 +48,16 @@
                                     <?php if (!empty($this->userdata['treeImageList'])) {
                                         foreach ($this->userdata['treeImageList'] as $key => $treeImage) { ?>
                                             <tr>
-                                                <td><?php echo $treeImage["id"] ?></td>
+                                                <!--<td><?php //echo $treeImage["id"] ?></td>-->
                                                 <td><?php echo $treeImage["treeId"] ?></td>
-                                                <td><?php echo $treeImage["name"] ?></td>
-                                                <td><?php echo $treeImage["path"] ?></td>
+                                                <!--<td><?php //echo $treeImage["name"] ?></td>-->
+                                                <td> <img src="<?php echo API_URL . 'api/v1/trees/image/' . $treeImage["path"] ?>" width="72" height="72" style="cursor: pointer" onclick="window.open(this.src, '_blank');"></td>
                                                 <td><?php echo $treeImage["description"] ?></td>
                                                 <td><?php echo $treeImage["size"] ?></td>
                                                 <td><?php echo $treeImage["position"] ?></td>
-                                                <td><?php echo $treeImage["active"] ?></td>
+                                                <!--<td><?php //echo $treeImage["active"] ?></td>-->
                                                 <td>
-                                                    <a href="#editTreeImageModal" id="<?php echo $treeImage['id'] ?>" data-ImagePath="<?php echo $treeImage['path'] ?>" class="edit" data-bs-toggle="modal" data-bs-target="#editTreeModal"><i class="far fa-edit"></i></a>
+                                                    <!--<a href="#editTreeImageModal" id="<?php //echo $treeImage['id'] ?>" data-ImagePath="<?php //echo $treeImage['path'] ?>" class="edit" data-bs-toggle="modal" data-bs-target="#editTreeModal"><i class="far fa-edit"></i></a>-->
                                                     <a href="#deleteTreeImageModal" id="<?php echo $treeImage['id'] ?>" data-ImagePath="<?php echo $treeImage['path'] ?>" class="delete" data-bs-toggle="modal" data-bs-target="#deleteTreeModal"><i class="fas fa-trash-alt"></i></a>
                                                 </td>
                                             </tr>
@@ -106,10 +106,10 @@
                                 <input id="file" type="file" class="form-control" name="file">
                                 <img id='img-upload' class="img-thumbnail"/>
                             </div>
-                            <div class="form-group">
-                                <label>Active</label>
-                                <input type="checkbox" class="form-control form-check-input" name="addTreeImageActive">
-                            </div>
+                            <!-- <div class="form-group">
+                                 <label>Active</label>
+                                 <input type="checkbox" class="form-control form-check-input" name="addTreeImageActive">
+                             </div>-->
 
                         </div>
                         <div class="modal-footer">
@@ -122,7 +122,7 @@
         </div>
 
         <!-- Edit Modal HTML -->
-        <div id="editTreeImageModal" class="modal fade" tabindex="-1" aria-labelledby="editTreeImageModal-Label" aria-hidden="true">
+        <!--<div id="editTreeImageModal" class="modal fade" tabindex="-1" aria-labelledby="editTreeImageModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="editTreeImage">
@@ -165,7 +165,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div>-->
 
         <!-- Delete Modal HTML -->
         <div id="deleteTreeImageModal" class="modal fade" tabindex="-1" aria-labelledby="deleteTreeImageModal-Label" aria-hidden="true">
@@ -190,19 +190,6 @@
             </div>
         </div>
 
-        <!-- Logout Modal HTML
-    <div id="logoutModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4>Logout <i class="fa fa-lock"></i></h4>
-                </div>
-                <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
-                <div class="modal-footer"><a href="<?php //echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
-            </div>
-        </div>
-    </div>-->
-
 
         <script>
             $(document).ready(function() {
@@ -213,15 +200,15 @@
                         rowReorder: false,
                         responsive: true,
                         columnDefs: [ {
-                            targets: [7,8],
+                            targets: [5],
                             orderable: false,
                         }]
                     });
                     //filtra table se ativo, inativo ou mostra todos
-                    $('#GetActive').on('change', function() {
+                    /*$('#GetActive').on('change', function() {
                         let selectedItem = $(this).children("option:selected").val();
                         table.columns(7).search(selectedItem).draw();
-                    })
+                    })*/
                 } catch (error){
                     console.log(error);
                 }
@@ -236,7 +223,7 @@
                     let formData = new FormData();
                     let file_data = $("#file").prop('files'); //get all files
 
-                    // append multiple files
+                    // append file
                     for(let i = 0; i < file_data.length; i++) {
                         formData.append(i, file_data[i]);
                     }
@@ -339,7 +326,7 @@
                     };
 
                     $.ajax({
-                        url : "<?php echo HOME_URL . '/admin/tree_images';?>",
+                        url : "<?php //echo HOME_URL . '/admin/tree_images';?>",
                         dataType: "json",
                         type: 'POST',
                         data : formData,
@@ -404,7 +391,7 @@
                     };
 
                     $.ajax({
-                        url : "<?php echo HOME_URL . '/admin/tree_images';?>",
+                        url : "<?php //echo HOME_URL . '/admin/tree_images';?>",
                         dataType: "json",
                         type: 'POST',
                         data : formData,
@@ -430,25 +417,25 @@
                             });
 
                             $("#editTreeImageModal").modal('show');
-                        },
-                        error: function (data) {
-                            Swal.fire({
-                                title: 'Error!',
-                                text: data.body.message,
-                                icon: 'error',
-                                showConfirmButton: false,
-                                timer: 2000,
-                                didClose: () => {
-                                    location.reload();
-                                }
-                            });
-                        },
-                        complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
-                            $('#loader').addClass('hidden')
-                        }
-                    });
+            },
+            error: function (data) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: data.body.message,
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    didClose: () => {
+                        location.reload();
+                    }
+                });
+            },
+            complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                $('#loader').addClass('hidden')
+            }
+        });
 
-                });*/
+    });*/
 
 
                 // ajax to Delete Tree
