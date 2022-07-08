@@ -16,10 +16,10 @@
                 <h1 class="mt-4">Gestão de <b>Árvores-Utilizadores</b></h1>
                 <div class="row">
 
-                    <div class="col-xl-12 col-md-12 mb-4">
-                        <!--Map area div-->
+                    <!--<div class="col-xl-12 col-md-12 mb-4">
+                        Map area div
                         <div id="map"></div>
-                    </div>
+                    </div>-->
 
                     <div class="col-xl-12 col-md-12">
                         <div class="card mb-4">
@@ -207,46 +207,46 @@
 
 
         // TreesMap
-        var greenIcon = L.icon({
-            iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/mapMarker.png'?>',
-            shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
+        /*var greenIcon = L.icon({
+            iconUrl: '<?php //echo HOME_URL . '/Images/mapMarkers/mapMarker.png'?>',
+            shadowUrl: '<?php //echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
 
             iconSize: [38, 95], // size of the icon
             shadowSize: [50, 64], // size of the shadow
             iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
             shadowAnchor: [4, 62],  // the same for the shadow
             popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
-        });
+        });*/
 
-        var blueIcon = L.icon({
-            iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/blue-mapMarker.png'?>',
-            shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
+        /*var blueIcon = L.icon({
+            iconUrl: '<?php //echo HOME_URL . '/Images/mapMarkers/blue-mapMarker.png'?>',
+            shadowUrl: '<?php //echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
 
             iconSize: [38, 95], // size of the icon
             shadowSize: [50, 64], // size of the shadow
             iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
             shadowAnchor: [4, 62],  // the same for the shadow
             popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
-        });
+        });*/
 
-        let map = L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
+        /*let map = L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             maxZoom: 18,
             id: 'mapbox/streets-v11',
             tileSize: 512,
             zoomOffset: -1,
             accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
-        }).addTo(map);
+        }).addTo(map);*/
 
         //function to load all trees from API
-        function mapLoadTrees(){
-            <?php if (!empty($this->userdata['treesList'])) {
+        /*function mapLoadTrees(){
+            <?php /*if (!empty($this->userdata['treesList'])) {
             foreach ($this->userdata['treesList'] as $key => $tree) {?>
                 marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {icon: greenIcon, user: 'none'}).addTo(map).on("click", markerOnClick);
             <?php }
-            }?>
+            }*/?>
         }
-        mapLoadTrees();
+        mapLoadTrees();*/
 
         //popup on map click
         /*var popupMap = L.popup();
@@ -259,7 +259,7 @@
         map.on('click', onMapClick);*/
 
         //popup on marker click
-        var popupMarker = L.popup();
+        /*var popupMarker = L.popup();
         function markerOnClick(e)
         {
             popupMarker
@@ -267,7 +267,7 @@
                 .setContent(
                     `
                     <div class="card" style="width: 10rem; border: unset">
-                      <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'?>" class="card-img-top" alt="">
+                      <img src="<?php //echo HOME_URL . '/Images/logo/adoteUma.png'?>" class="card-img-top" alt="">
                       <div class="card-body">
                         <h5 class="card-title">Arvore exemplo</h5>
                         <p class="card-text">Algo sobre a arvore.</p>
@@ -281,7 +281,7 @@
                 )
                 .openOn(map);
             //map.flyTo([e.latlng.lat, e.latlng.lng], 15);
-        }
+        }*/
 
 
         //CRUD
