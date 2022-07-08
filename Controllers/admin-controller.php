@@ -1051,6 +1051,25 @@ class AdminController extends MainController
                     $apiResponse = json_encode($apiResponse);// encode package to send
                     echo $apiResponse;
                     break;
+
+                case "GetTreeImage":
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->getTreeImageListById($data);
+                    $apiResponseBody = array();
+
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->getTreeImageListById($data);
+                    }
+
+                    if ($apiResponse['statusCode'] === 200) { // 200 success
+                        $apiResponseBody = json_encode($apiResponse["body"]);
+                    }
+
+                    echo $apiResponseBody;
+                    break;
             }
 
         } else {
