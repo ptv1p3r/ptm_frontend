@@ -78,8 +78,8 @@ class AdminTreeImagesModel extends MainModel {
         $TreeId = null;
         $normalizedData = array();
 
-        // Not active by default
-        $normalizedData['active'] = "false";
+        // active by default
+        $normalizedData['active'] = "true";
 
         // get data from form array and package it to send to api
         //foreach ($data as $dataVector) {
@@ -97,13 +97,9 @@ class AdminTreeImagesModel extends MainModel {
                         $normalizedData['description'] = $value;
                         break;
 
-                    /*case "addTreeImageFile":
-                        $normalizedData['file'] = $value;
-                        break;*/
-
-                    case "addTreeImageActive":
+                    /*case "addTreeImageActive":
                         $normalizedData['active'] = "true";
-                        break;
+                        break;*/
                 }
 
             }
