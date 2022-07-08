@@ -307,8 +307,7 @@
 
         //popup on marker click
         var popupMarker = L.popup();
-        function markerOnClick(e)
-        {
+        function markerOnClick(e) { //TODO: arrange tree card
             popupMarker
                 .setLatLng(e.latlng)
                 .setContent(
