@@ -1939,16 +1939,16 @@ class AdminController extends MainController
         if(isset($_POST['action']) && !empty($_POST['action'])) {
             $action = $_POST['action'];
             switch($action) {
-                case 'GetTreeType' :
+                case 'GetTransaction' :
                     $data = $_POST['data'];
-                    $apiResponse = $modelo->getTreeTypeById($data);
+                    $apiResponse = $modelo->getTransactionById($data);
                     $apiResponseBody = array();
 
                     if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
                         //faz o refresh do accessToken
                         $this->userTokenRefresh();
 
-                        $apiResponse = $modelo->getTreeTypeById($data);
+                        $apiResponse = $modelo->getTransactionById($data);
                     }
 
                     if ($apiResponse['statusCode'] === 200) { // 200 success
@@ -1958,8 +1958,8 @@ class AdminController extends MainController
                     echo $apiResponseBody;
                     break;
 
-                case 'AddTreeType' :
-                    $this->permission_required = array('treeTypeCreate');
+                case 'AddTransaction' :
+                    /*$this->permission_required = array('treeTypeCreate');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
@@ -1967,16 +1967,16 @@ class AdminController extends MainController
 
                         echo json_encode($apiResponse);
                         break;
-                    }
+                    }*/
 
                     $data = $_POST['data'];
-                    $apiResponse = $modelo->addTreeType($data); //decode to check message from api
+                    $apiResponse = $modelo->addTransaction($data); //decode to check message from api
 
                     if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
                         //faz o refresh do accessToken
                         $this->userTokenRefresh();
 
-                        $apiResponse = $modelo->addTreeType($data); //decode to check message from api
+                        $apiResponse = $modelo->addTransaction($data); //decode to check message from api
                         $apiResponse["body"]['message'] = "Created with success!";
                     }
 
@@ -1992,8 +1992,8 @@ class AdminController extends MainController
                     echo $apiResponse;
                     break;
 
-                case 'UpdateTreeType' :
-                    $this->permission_required = array('treeTypeUpdate');
+                case 'UpdateTransaction' :
+                    /*$this->permission_required = array('treeTypeUpdate');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
@@ -2001,16 +2001,16 @@ class AdminController extends MainController
 
                         echo json_encode($apiResponse);
                         break;
-                    }
+                    }*/
 
                     $data = $_POST['data'];
-                    $apiResponse = $modelo->updateTreeType($data); //decode to check message from api
+                    $apiResponse = $modelo->updateTransaction($data); //decode to check message from api
 
                     if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
                         //faz o refresh do accessToken
                         $this->userTokenRefresh();
 
-                        $apiResponse = $modelo->updateTreeType($data); //decode to check message from api
+                        $apiResponse = $modelo->updateTransaction($data); //decode to check message from api
                         $apiResponse["body"]['message'] = "Updated with success!";
                     }
 
@@ -2022,8 +2022,8 @@ class AdminController extends MainController
                     echo $apiResponse;
                     break;
 
-                case 'DeleteTreeType' :
-                    $this->permission_required = array('treeTypeDelete');
+                case 'DeleteTransaction' :
+                    /*$this->permission_required = array('treeTypeDelete');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
@@ -2031,16 +2031,16 @@ class AdminController extends MainController
 
                         echo json_encode($apiResponse);
                         break;
-                    }
+                    }*/
 
                     $data = $_POST['data'];
-                    $apiResponse = $modelo->deleteTreeType($data); //decode to check message from api
+                    $apiResponse = $modelo->deleteTransaction($data); //decode to check message from api
 
                     if ($apiResponse['statusCode'] === 401){ // 401, unauthorized
                         //faz o refresh do accessToken
                         $this->userTokenRefresh();
 
-                        $apiResponse = $modelo->deleteTreeType($data); //decode to check message from api
+                        $apiResponse = $modelo->deleteTransaction($data); //decode to check message from api
                         $apiResponse["body"]['message'] = "Deleted with success!";
                     }
 
@@ -2054,17 +2054,17 @@ class AdminController extends MainController
             }
 
         } else {
-            /*$treeTypesList = $modelo->getTreeTypeList();
-            if ($treeTypesList["statusCode"] === 200){
-                $this->userdata['treeTypesList'] = $treeTypesList["body"]["types"];
+            $transactionList = $modelo->getTransactionList();
+            if ($transactionList["statusCode"] === 200){
+                $this->userdata['transactionList'] = $transactionList["body"]["transactions"];
             }
-            if ($treeTypesList["statusCode"] === 401){
+            if ($transactionList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
-                $treeTypesList = $modelo->getTreeTypeList();
-                $this->userdata['treeTypesList'] = $treeTypesList["body"]["types"];
-            }*/
+                $transactionList = $modelo->getTransactionList();
+                $this->userdata['transactionList'] = $transactionList["body"]["transactions"];
+            }
 
 
             /**Carrega os arquivos do view**/
