@@ -24,6 +24,23 @@ class AdminSettingsModel extends MainModel
     }
 
     /**
+     * Metodo que retorna Message list do user pelo seu id
+     * @param $id
+     * @return mixed
+     */
+    public function getMessageListByUserId($id) {
+        $result = null;
+
+        $url = API_URL . 'api/v1/messages/list/' . $id;
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+    /**
      * Get country list
      *
      * @since 0.1
@@ -142,16 +159,15 @@ class AdminSettingsModel extends MainModel
 
                 }
             }
-
-            $url = API_URL . 'api/v1/users/edit/' . $userId;
-            if (!empty($_SESSION['userdata']['accessToken'])) {
-                $userToken = $_SESSION['userdata']['accessToken'];
-                $result = callAPI("PATCH", $url, $normalizedData, $userToken);
-            }
-
-            //trasforma toda a msg em string json para poder ser enviado
-            return json_decode(json_encode($result), true);
         }
+        $url = API_URL . 'api/v1/users/edit/' . $userId;
+        if (!empty($_SESSION['userdata']['accessToken'])) {
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("PATCH", $url, $normalizedData, $userToken);
+
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
     /**
@@ -170,7 +186,7 @@ class AdminSettingsModel extends MainModel
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']) { //gets <input name="">
 
-                    case "passEditAdminId":
+                    case "passAdminId":
                         $userId = $dataVector['value'];
                         break;
 
@@ -192,8 +208,40 @@ class AdminSettingsModel extends MainModel
         return json_decode(json_encode($result), true);
     }
 
+    /**
+     * Metodo delete Grupo
+     * @param $data
+     * @return mixed
+     */
+    public function deleteAdmin($data)
+    {
+        $result = null;
+        $UserId = null;
 
+        foreach ($data as $dataVector) {
+            foreach ($dataVector as $key => $value) {
+                switch ($dataVector['name']) { //gets input name=""
+                    case "deleteAdminId":
+                        $UserId = $dataVector['value'];
+                        break;
+                }
+            }
+        }
 
+        /**TODO
+         * $url = API_URL . 'api/v1/users/delete/' . $UserId;
+        / Deslidado propositadamente para evitar apagar conta
+        */
 
+        $url = API_URL . '/api/v1/users/delete/' . $UserId;
+
+        if (!empty($_SESSION['userdata']['accessToken'])) {
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("DELETE", $url, '', $userToken);
+        }
+
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
 
 }
