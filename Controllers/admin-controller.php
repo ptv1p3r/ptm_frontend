@@ -817,6 +817,7 @@ class AdminController extends MainController
         }
     }
 
+
     /**
      * Carrega a página
      * "/views/admin/admin-trees-dashboard-view.php"
@@ -1086,7 +1087,6 @@ class AdminController extends MainController
             require ABSPATH . '/views/_includes/admin-footer.php';
         }
     }
-
 
     /**
      * Carrega a página
@@ -2456,6 +2456,7 @@ class AdminController extends MainController
         }
     }
 
+
     /**
      * Carrega a página
      * "/views/admin/admin-settings-view.php"
@@ -2513,7 +2514,6 @@ class AdminController extends MainController
 
     }
 
-
     /**
      * Metodo para logout
      * @return void
@@ -2523,6 +2523,5 @@ class AdminController extends MainController
 
         $this->logout(true);
     }
-
 
 }
