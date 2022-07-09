@@ -78,8 +78,8 @@ class AdminTreeImagesModel extends MainModel {
         $TreeId = null;
         $normalizedData = array();
 
-        // Not active by default
-        $normalizedData['active'] = "0";
+        // active by default
+        $normalizedData['active'] = "true";
 
         // get data from form array and package it to send to api
         //foreach ($data as $dataVector) {
@@ -97,27 +97,22 @@ class AdminTreeImagesModel extends MainModel {
                         $normalizedData['description'] = $value;
                         break;
 
-                    /*case "addTreeImageFile":
-                        $normalizedData['file'] = $value;
+                    /*case "addTreeImageActive":
+                        $normalizedData['active'] = "true";
                         break;*/
-
-                    case "addTreeImageActive":
-                        $normalizedData['active'] = "1";
-                        break;
                 }
 
             }
         //}
 
         foreach ($_FILES as $file){
-            $normalizedData['file'] = $file;
+            $cfile = new CURLFile($file["tmp_name"], $file["type"], $file["name"]);
+            $normalizedData['file'] = $cfile;
         }
-
 
         $url = API_URL . 'api/v1/trees/image/upload/' . $TreeId;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
-            //TODO: API nao esta a receber bem o file ou esta alguma coisa mas deste lado
             $result = callAPI("POST", $url, $normalizedData, $userToken);
         }
 
@@ -130,7 +125,7 @@ class AdminTreeImagesModel extends MainModel {
      * @param $data
      * @return mixed
      */
-    public function updateTreeImage($data) {
+    /*public function updateTreeImage($data) {
         $result = null;
         $TreeId = null;
         $normalizedData = array();
@@ -170,58 +165,6 @@ class AdminTreeImagesModel extends MainModel {
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("PUT", $url, $normalizedData, $userToken);
-        }
-
-        //trasforma toda a msg em string json para poder ser enviado
-        return json_decode(json_encode($result), true);
-    }
-
-    /**
-     * Metodo edita/update Trees com patch
-     * @param $data
-     * @return mixed
-     */
-    /*public function updateTree($data) {
-        $result = null;
-        $GroupId = null;
-        $normalizedData = array();
-
-        // Not active by default
-        $normalizedData['active'] = "";
-
-        // get data from form array and package it to send to api
-        foreach ($data as $dataVector) {
-            foreach ($dataVector as $key => $value) {
-                switch ($dataVector['name']){ //gets <input name="">
-                    case "editGroupId":
-                        $GroupId = $dataVector['value'];
-                        break;
-
-                    case "editGroupName":
-                        $normalizedData['name'] = $dataVector['value'];
-                        break;
-
-                    case "editGroupDescription":
-                        $normalizedData['description'] = $dataVector['value'];
-                        break;
-
-                    case "editGroupSecurityId":
-                        $normalizedData['securityId'] = $dataVector['value'];
-                        break;
-                }
-
-                if ($dataVector['name'] == "editGroupActive"){
-                    $normalizedData['active'] = "1";
-                } else {
-                    $normalizedData['active'] = "0";
-                }
-            }
-        }
-
-        $url = API_URL . 'api/v1/groups/edit/' . $GroupId;
-        if (!empty($_SESSION['userdata']['accessToken'])){
-            $userToken = $_SESSION['userdata']['accessToken'];
-            $result = callAPI("PATCH", $url, $normalizedData, $userToken);
         }
 
         //trasforma toda a msg em string json para poder ser enviado

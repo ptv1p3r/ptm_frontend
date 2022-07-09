@@ -27,20 +27,20 @@
                                 <table id="treeImagesTable" class="table table-striped table-hover">
                                     <thead>
                                     <tr>
-                                        <th>id</th>
+                                        <!--<th>id</th>-->
                                         <th>treeId</th>
-                                        <th>name</th>
-                                        <th>path</th>
+                                        <!--<th>name</th>-->
+                                        <th>image</th>
                                         <th>description</th>
                                         <th>size</th>
                                         <th>position</th>
-                                        <th>active
+                                        <!--<th>active
                                             <select id='GetActive'>
                                                 <option value=''>All</option>
                                                 <option value='1'>Active</option>
                                                 <option value='0'>Inactive</option>
                                             </select>
-                                        </th>
+                                        </th>-->
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -48,16 +48,16 @@
                                     <?php if (!empty($this->userdata['treeImageList'])) {
                                         foreach ($this->userdata['treeImageList'] as $key => $treeImage) { ?>
                                             <tr>
-                                                <td><?php echo $treeImage["id"] ?></td>
+                                                <!--<td><?php //echo $treeImage["id"] ?></td>-->
                                                 <td><?php echo $treeImage["treeId"] ?></td>
-                                                <td><?php echo $treeImage["name"] ?></td>
-                                                <td><?php echo $treeImage["path"] ?></td>
+                                                <!--<td><?php //echo $treeImage["name"] ?></td>-->
+                                                <td> <img src="<?php echo API_URL . 'api/v1/trees/image/' . $treeImage["path"] ?>" width="72" height="72" style="cursor: pointer" onclick="window.open(this.src, '_blank');"></td>
                                                 <td><?php echo $treeImage["description"] ?></td>
                                                 <td><?php echo $treeImage["size"] ?></td>
                                                 <td><?php echo $treeImage["position"] ?></td>
-                                                <td><?php echo $treeImage["active"] ?></td>
+                                                <!--<td><?php //echo $treeImage["active"] ?></td>-->
                                                 <td>
-                                                    <a href="#editTreeImageModal" id="<?php echo $treeImage['id'] ?>" data-ImagePath="<?php echo $treeImage['path'] ?>" class="edit" data-bs-toggle="modal" data-bs-target="#editTreeModal"><i class="far fa-edit"></i></a>
+                                                    <!--<a href="#editTreeImageModal" id="<?php //echo $treeImage['id'] ?>" data-ImagePath="<?php //echo $treeImage['path'] ?>" class="edit" data-bs-toggle="modal" data-bs-target="#editTreeModal"><i class="far fa-edit"></i></a>-->
                                                     <a href="#deleteTreeImageModal" id="<?php echo $treeImage['id'] ?>" data-ImagePath="<?php echo $treeImage['path'] ?>" class="delete" data-bs-toggle="modal" data-bs-target="#deleteTreeModal"><i class="fas fa-trash-alt"></i></a>
                                                 </td>
                                             </tr>
@@ -82,26 +82,12 @@
         <div id="addTreeImageModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeImageModal-Label" aria-hidden="true">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
-                    <form id="addTreeImage">
+                    <form id="addTreeImage" enctype="multipart/form-data" method="post">
                         <div class="modal-header">
                             <h4 class="modal-title">Add Tree Image</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <section class="container">
-
-
-                                <button id="btnAdd" type="button" class="btn btn-primary" data-toggle="tooltip" data-original-title="Add more controls"><i class="fa fa-plus"></i>&nbsp; Add&nbsp;</button>
-                                <div id="TextBoxContainer">
-
-                                </div>
-                            </section>
-
-
-
-
-
-
 
                             <div class="form-group">
                                 <label>treeId</label>
@@ -117,87 +103,26 @@
                             </div>
                             <div class="form-group">
                                 <label>Image</label>
-                                <input id="addTreeImageFile" type="file" class="form-control" name="addTreeImageFile">
+                                <input id="file" type="file" class="form-control" name="file">
                                 <img id='img-upload' class="img-thumbnail"/>
                             </div>
-                            <div class="form-group">
-                                <label>Active</label>
-                                <input type="checkbox" class="form-control form-check-input" name="addTreeImageActive">
-                            </div>
+                            <!-- <div class="form-group">
+                                 <label>Active</label>
+                                 <input type="checkbox" class="form-control form-check-input" name="addTreeImageActive">
+                             </div>-->
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             <input type="submit" class="btn btn-success" value="Add">
                         </div>
-
-                        <script>
-                            $(document).ready( function() {
-                                $(function () {
-                                    $("#btnAdd").bind("click", function () {
-                                        var div = $("<div />");
-                                        div.html(GetDynamicTextBox(""));
-                                        $("#TextBoxContainer").append(div);
-                                    });
-                                    $("body").on("click", ".remove", function () {
-                                        $(this).closest("div").remove();
-                                    });
-                                });
-                                function GetDynamicTextBox(value) {
-                                    var number = Math.random();
-                                    var template = `
-                                                    <td id="`+ number + ` ">
-                                                        <input name="DynamicTextBox" type="text" value="`+ value+` " class="form-control"/>
-                                                    </td>
-                                                    <td>
-                                                        <input name="order" type="text" value="`+ value+` " class="form-control"/>
-                                                    </td>
-                                                    <td>
-                                                        <input name="DynamicTextBox" type="text" value="`+ value+` " class="form-control"/>
-                                                    </td>
-                                                    <td>
-                                                        <input id="addTreeImageFile" type="file" class="form-control" name="addTreeImageFile">
-                                                    </td>
-                                                    <td>
-                                                        <input name="DynamicTextBox" type="checkbox" value="` + value  + `"/>
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-danger remove"><i class="fa fa-trash"></i></button>
-                                                    </td>`
-
-                                    return template;
-                                }
-
-
-                                //image preview
-                                $(document).on('change', '#addTreeImageFile :file', function() {
-                                    var input = $(this),
-                                        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                                    input.trigger('fileselect', [label]);
-                                });
-                                function readURL(input) {
-                                    if (input.files && input.files[0]) {
-                                        var reader = new FileReader();
-
-                                        reader.onload = function (e) {
-                                            $('#img-upload').attr('src', e.target.result);
-                                        }
-
-                                        reader.readAsDataURL(input.files[0]);
-                                    }
-                                }
-
-                                $("#addTreeImageFile").change(function(){
-                                    readURL(this);
-                                });
-                            });
-                        </script>
                     </form>
                 </div>
             </div>
         </div>
 
         <!-- Edit Modal HTML -->
-        <div id="editTreeImageModal" class="modal fade" tabindex="-1" aria-labelledby="editTreeImageModal-Label" aria-hidden="true">
+        <!--<div id="editTreeImageModal" class="modal fade" tabindex="-1" aria-labelledby="editTreeImageModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="editTreeImage">
@@ -207,40 +132,29 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <input id="editTreeId" name="editTreeId" type="hidden" class="form-control" value="">
+                                <input id="editTreeImageId" name="editTreeImageId" type="hidden" class="form-control" value="">
                             </div>
 
                             <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control" name="editTreeName" required>
+                                <label>treeId</label>
+                                <input type="text" class="form-control" name="editTreeImageTreeId" required>
                             </div>
                             <div class="form-group">
-                                <label>NameCommon</label>
-                                <input type="text" class="form-control" name="editTreeNameCommon" required>
+                                <label>order</label>
+                                <input type="text" class="form-control" name="editTreeImageOrder" required>
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
-                                <input type="text" class="form-control" name="editTreeDescription" required>
+                                <label>description</label>
+                                <input type="text" class="form-control" name="editTreeImageDescription" required>
                             </div>
                             <div class="form-group">
-                                <label>Observations</label>
-                                <input type="text" class="form-control" name="editTreeObservations" required>
-                            </div>
-                            <div class="form-group">
-                                <label>TypeId</label>
-                                <input type="text" class="form-control" name="editTreeTypeId" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Latitude</label>
-                                <input type="number" step="any" class="form-control" name="editTreeLat" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Longitude</label>
-                                <input type="number" step="any" class="form-control" name="editTreeLng" required>
+                                <label>Image</label>
+                                <input id="file" type="file" class="form-control" name="file">
+                                <img id='img-upload' class="img-thumbnail"/>
                             </div>
                             <div class="form-group">
                                 <label>Active</label>
-                                <input type="checkbox" class="form-control form-check-input" name="editTreeActive">
+                                <input type="checkbox" class="form-control form-check-input" name="editTreeImageActive">
                             </div>
 
                         </div>
@@ -251,7 +165,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div>-->
 
         <!-- Delete Modal HTML -->
         <div id="deleteTreeImageModal" class="modal fade" tabindex="-1" aria-labelledby="deleteTreeImageModal-Label" aria-hidden="true">
@@ -265,7 +179,7 @@
                         <div class="modal-body">
                             <p>Are you sure you want to delete this Tree?</p>
                             <p class="text-warning"><small>This action cannot be undone.</small></p>
-                            <input id="deleteTreeId" name="deleteTreeId" type="hidden" class="form-control" value="">
+                            <input id="deleteTreeImageId" name="deleteTreeImageId" type="hidden" class="form-control" value="">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -275,19 +189,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Logout Modal HTML
-    <div id="logoutModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4>Logout <i class="fa fa-lock"></i></h4>
-                </div>
-                <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
-                <div class="modal-footer"><a href="<?php //echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
-            </div>
-        </div>
-    </div>-->
 
 
         <script>
@@ -299,15 +200,15 @@
                         rowReorder: false,
                         responsive: true,
                         columnDefs: [ {
-                            targets: [7,8],
+                            targets: [5],
                             orderable: false,
                         }]
                     });
                     //filtra table se ativo, inativo ou mostra todos
-                    $('#GetActive').on('change', function() {
+                    /*$('#GetActive').on('change', function() {
                         let selectedItem = $(this).children("option:selected").val();
                         table.columns(7).search(selectedItem).draw();
-                    })
+                    })*/
                 } catch (error){
                     console.log(error);
                 }
@@ -320,11 +221,11 @@
                     event.preventDefault(); //prevent default action
 
                     let formData = new FormData();
-                    let file_data = $("[name='addTreeImageFile']").prop('files'); //get all files
+                    let file_data = $("#file").prop('files'); //get all files
 
-                    // append multiple files
+                    // append file
                     for(let i = 0; i < file_data.length; i++) {
-                        formData.append("File" + i, file_data[i]);
+                        formData.append(i, file_data[i]);
                     }
 
                     // append form inputs
@@ -396,14 +297,15 @@
                     });
                 });
 
-                // ajax to Edit Group
-                $('#editTreeImage').submit(function (event) {
+
+                // ajax to Edit
+                /*$('#editTreeImage').submit(function (event) {
                     event.preventDefault(); //prevent default action
 
                     //Ve se a data dos inputs mudou para formar so a data necessaria para o PATCH
-                    /*let formDataChanged = [];
-                    $('#editTree input').each(function() { //para cada input vai ver
-                        if($(this).attr('name') === "editTreeId" || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
+                    let formDataChanged = [];
+                    $('#editGroup input').each(function() { //para cada input vai ver
+                        if($(this).attr('name') === "editGroupId" || ($(this).attr('name') === "editGroupActive" && $(this).is(":checked")) || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
                             let emptyArray = { name: "", value: "" };
 
                             emptyArray.name = $(this).attr('name');
@@ -414,9 +316,9 @@
                     });
 
                     let formData = {
-                        'action' : "UpdateTreeImage",
+                        'action' : "UpdateGroup",
                         'data'   : formDataChanged
-                    };*/
+                    };
 
                     let formData = {
                         'action': "UpdateTreeImage",
@@ -424,7 +326,7 @@
                     };
 
                     $.ajax({
-                        url : "<?php echo HOME_URL . '/admin/tree_images';?>",
+                        url : "<?php //echo HOME_URL . '/admin/tree_images';?>",
                         dataType: "json",
                         type: 'POST',
                         data : formData,
@@ -478,18 +380,18 @@
                             $('#loader').addClass('hidden')
                         }
                     });
-                });
+                });*/
 
-                // ajax to get data to Modal Edit Tree
-                $('.edit').on('click', function(){
+                // ajax to get data to Modal Edit Group
+                /*$('.edit').on('click', function(){
 
                     let formData = {
                         'action' : "GetTreeImage",
-                        'data'   : $(this).attr('data-ImagePath') //gets tree id from id="" attribute on edit button from table
+                        'data'   : $(this).attr('id') //gets group id from id="" attribute on edit button from table
                     };
 
                     $.ajax({
-                        url : "<?php echo HOME_URL . '/admin/tree_images';?>",
+                        url : "<?php //echo HOME_URL . '/admin/tree_images';?>",
                         dataType: "json",
                         type: 'POST',
                         data : formData,
@@ -498,50 +400,46 @@
                         },
                         success: function (data) {
 
-                            $('[name="editTreeId"]').val(data[0]['id']);
-                            $('[name="editTreeName"]').val(data[0]['name']);
-                            $('[name="editTreeNameCommon"]').val(data[0]['nameCommon']);
-                            $('[name="editTreeDescription"]').val(data[0]['description']);
-                            $('[name="editTreeObservations"]').val(data[0]['observations']);
-                            $('[name="editTreeTypeId"]').val(data[0]['typeId']);
-                            $('[name="editTreeLat"]').val(data[0]['lat']);
-                            $('[name="editTreeLng"]').val(data[0]['lng']);
+                            $('[name="editTreeImageId"]').val(data[0]['id']);
+                            $('[name="editTreeImageDescription"]').val(data[0]['description']);
+                            $('[name="editTreeImagePosition"]').val(data[0]['position']);
 
                             if (data[0]['active'] === 1) {
-                                $('[name="editTreeActive"]').attr('checked', true);
+                                $('[name="editTreeImageActive"]').attr('checked', true);
                             } else {
-                                $('[name="editTreeActive"]').attr('checked', false);
+                                $('[name="editGroupActive"]').attr('checked', false);
                             }
 
-                            //atribui atributo .data("lastValue") a cada input do form editTree
+                            //atribui atributo .data("lastValue") a cada input do form editGroup
                             // para se poder comparar entre os dados anteriores e os current
-                            /*$('#editTree input').each(function() {
+                            $('#editGroup input').each(function() {
                                 $(this).data('lastValue', $(this).val());
-                            });*/
-
-                            $("#editTreeModal").modal('show');
-                        },
-                        error: function (data) {
-                            Swal.fire({
-                                title: 'Error!',
-                                text: data.body.message,
-                                icon: 'error',
-                                showConfirmButton: false,
-                                timer: 2000,
-                                didClose: () => {
-                                    location.reload();
-                                }
                             });
-                        },
-                        complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
-                            $('#loader').addClass('hidden')
-                        }
-                    });
 
+                            $("#editTreeImageModal").modal('show');
+            },
+            error: function (data) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: data.body.message,
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    didClose: () => {
+                        location.reload();
+                    }
                 });
+            },
+            complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                $('#loader').addClass('hidden')
+            }
+        });
+
+    });*/
+
 
                 // ajax to Delete Tree
-                $('#deleteImageTree').submit(function(event){
+                $('#deleteTreeImage').submit(function(event){
                     event.preventDefault(); //prevent default action
 
                     let formData = {
@@ -609,7 +507,7 @@
                 // ajax to get data to Modal Delete Tree
                 $('.delete').on('click', function(){
                     let $deleteID = $(this).attr('id');
-                    $('[name="deleteTreeId"]').val($deleteID); //gets tree id from id="" attribute on delete button from table
+                    $('[name="deleteTreeImageId"]').val($deleteID); //gets tree id from id="" attribute on delete button from table
                     $("#deleteTreeImageModal").modal('show');
 
                 });
