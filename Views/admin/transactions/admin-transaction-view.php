@@ -95,19 +95,51 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>typeId</label>
-                                <input type="text" class="form-control" name="addTransactionTypeId" required>
+                                <!--<input type="text" class="form-control" name="addTransactionTypeId" required>-->
+                                <select class="form-select" name="addTransactionTypeId" id="addTransactionTypeId" required>
+                                    <option value="" disabled selected >Tipo transação</option>
+                                    <?php if (!empty($this->userdata['transactionTypeList'])) {
+                                        foreach ($this->userdata['transactionTypeList'] as $key => $type) { ?>
+                                            <option value="<?php echo $type['id'] ?>"><?php echo $type["name"] ?></option>
+                                        <?php }
+                                    } ?>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>methodId</label>
-                                <input type="text" class="form-control" name="addTransactionMethodId" required>
+                                <!--<input type="text" class="form-control" name="addTransactionMethodId" required>-->
+                                <select class="form-select" name="addTransactionMethodId" id="addTransactionMethodId" required>
+                                    <option value="" disabled selected>Método transação</option>
+                                    <?php if (!empty($this->userdata['transactionMethodList'])) {
+                                        foreach ($this->userdata['transactionMethodList'] as $key => $method) { ?>
+                                            <option value="<?php echo $method['id'] ?>"><?php echo $method["name"] ?></option>
+                                        <?php }
+                                    } ?>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>userId</label>
-                                <input type="text" class="form-control" name="addTransactionUserId" required>
+                                <!--<input type="text" class="form-control" name="addTransactionUserId" required> -->
+                                <select class="form-select" name="addTransactionUserId" id="addTransactionUserId" required>
+                                    <option value="" disabled selected>Utilizador</option>
+                                    <?php if (!empty($this->userdata['usersList'])) {
+                                        foreach ($this->userdata['usersList'] as $key => $user) { ?>
+                                            <option value="<?php echo $user['id'] ?>"><?php echo $user["name"] ?></option>
+                                        <?php }
+                                    } ?>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>treeId</label>
                                 <input type="text" class="form-control" name="addTransactionTreeId" required>
+                                <!--<select class="form-select" name="addTransactionTreeId" id="addTransactionTreeId" required>
+                                    <option value="" disabled selected>Utilizador</option>
+                                    <?php /*if (!empty($this->userdata['usersList'])) {
+                                        foreach ($this->userdata['usersList'] as $key => $user) { ?>
+                                            <option value="<?php echo $user['id'] ?>"><?php echo $user["name"] ?></option>
+                                        <?php }
+                                    } */?>
+                                </select>-->
                             </div>
                             <div class="form-group">
                                 <label>value</label>
