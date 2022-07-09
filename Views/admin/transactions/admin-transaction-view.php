@@ -8,27 +8,31 @@
 
 <div id="layoutSidenav">
     <!-- import sidebar -->
-    <?php require ABSPATH . '/views/_includes/admin-sidebar.php'?>
+    <?php require ABSPATH . '/views/_includes/admin-sidebar.php' ?>
 
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Gestão de <b>tipos de transações</b></h1>
+                <h1 class="mt-4">Gestão de <b>transações</b></h1>
                 <div class="row">
 
                     <div class="col-xl-12 col-md-12">
                         <div class="card mb-4">
                             <div class="card-header">
-                                <a href="#addTransactionTypeModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTransactionTypeModal">
-                                    <i class="fas fa-plus-circle"></i><span>Add New TransactionType</span>
+                                <a href="#addTransactionModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTransactionModal">
+                                    <i class="fas fa-plus-circle"></i><span>Add New Transaction</span>
                                 </a>
                             </div>
                             <div class="card-body">
-                                <table id="transactionTypeTable" class="table table-striped table-hover">
+                                <table id="transactionsTable" class="table table-striped table-hover">
                                     <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Description</th>
+                                        <th>id</th>
+                                        <th>typeId</th>
+                                        <th>methodId</th>
+                                        <th>userId</th>
+                                        <th>treeId</th>
+                                        <th>value</th>
                                         <th>active
                                             <select id='GetActive'>
                                                 <option value=''>All</option>
@@ -36,21 +40,29 @@
                                                 <option value='0'>Inactive</option>
                                             </select>
                                         </th>
+                                        <th>dateCreated</th>
+                                        <th>dateModified</th>
                                         <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <?php if (!empty($this->userdata['transactionTypeList'])) {
-                                        foreach ($this->userdata['transactionTypeList'] as $key => $transactionType) { ?>
+                                    <?php if (!empty($this->userdata['transactionList'])) {
+                                        foreach ($this->userdata['transactionList'] as $key => $transaction) { ?>
                                             <tr>
-                                                <td><?php echo $transactionType["name"] ?></td>
-                                                <td><?php echo $transactionType["description"] ?></td>
-                                                <td><?php echo $transactionType["active"] ?></td>
+                                                <td><?php echo $transaction["id"] ?></td>
+                                                <td><?php echo $transaction["typeId"] ?></td>
+                                                <td><?php echo $transaction["methodId"] ?></td>
+                                                <td><?php echo $transaction["userId"] ?></td>
+                                                <td><?php echo $transaction["treeId"] ?></td>
+                                                <td><?php echo $transaction["value"] ?></td>
+                                                <td><?php echo $transaction["active"] ?></td>
+                                                <td><?php echo $transaction["dateCreated"] ?></td>
+                                                <td><?php echo $transaction["dateModified"] ?></td>
                                                 <td>
-                                                    <a href="#editTransactionTypeModal" id="<?php echo $transactionType['id'] ?>" class="edit"
-                                                       data-bs-toggle="modal" data-bs-target="#editTransactionTypeModal"><i class="far fa-edit"></i></a>
-                                                    <a href="#deleteTransactionTypeModal" id="<?php echo $transactionType['id'] ?>" class="delete"
-                                                       data-bs-toggle="modal" data-bs-target="#deleteTransactionTypeModal"><i class="fas fa-trash-alt"></i></a>
+                                                    <a href="#editTransactionModal" id="<?php echo $transaction['id'] ?>" class="edit"
+                                                       data-bs-toggle="modal" data-bs-target="#editTransactionModal"><i class="far fa-edit"></i></a>
+                                                    <a href="#deleteTransactionModal" id="<?php echo $transaction['id'] ?>" class="delete"
+                                                       data-bs-toggle="modal" data-bs-target="#deleteTransactionModal"><i class="fas fa-trash-alt"></i></a>
                                                 </td>
                                             </tr>
                                         <?php }
@@ -72,27 +84,39 @@
 
 
         <!-- Add Modal HTML -->
-        <div id="addTransactionTypeModal" class="modal fade" tabindex="-1" aria-labelledby="addTransactionTypeModal-Label" aria-hidden="true">
+        <div id="addTransactionModal" class="modal fade" tabindex="-1" aria-labelledby="addTransactionModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="addTransactionType">
+                    <form id="addTransaction">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add TransactionType</h4>
+                            <h4 class="modal-title">Add Transaction</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control" name="addTransactionTypeName" required>
+                                <label>typeId</label>
+                                <input type="text" class="form-control" name="addTransactionTypeId" required>
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
-                                <input type="text" class="form-control" name="addTransactionTypeDescription" required>
+                                <label>methodId</label>
+                                <input type="text" class="form-control" name="addTransactionMethodId" required>
                             </div>
-                            <div class="form-group form-check form-switch">
+                            <div class="form-group">
+                                <label>userId</label>
+                                <input type="text" class="form-control" name="addTransactionUserId" required>
+                            </div>
+                            <div class="form-group">
+                                <label>treeId</label>
+                                <input type="text" class="form-control" name="addTransactionTreeId" required>
+                            </div>
+                            <div class="form-group">
+                                <label>value</label>
+                                <input type="number" class="form-control" name="addTransactionValue" required>
+                            </div>
+                            <!--<div class="form-group">
                                 <label>Active</label>
-                                <input type="checkbox" role="switch" class="form-check-input" name="addTransactionTypeActive">
-                            </div>
+                                <input type="checkbox" class="form-control form-check-input" name="addTransactionActive">
+                            </div>-->
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -104,31 +128,43 @@
         </div>
 
         <!-- Edit Modal HTML -->
-        <div id="editTransactionTypeModal" class="modal fade" tabindex="-1" aria-labelledby="editTransactionTypeModal-Label" aria-hidden="true">
+        <div id="editTransactionModal" class="modal fade" tabindex="-1" aria-labelledby="editTransactionModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="editTransactionType">
+                    <form id="editTransaction">
                         <div class="modal-header">
-                            <h4 class="modal-title">Edit TransactionType</h4>
+                            <h4 class="modal-title">Edit Transaction</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <input id="editTransactionTypeId" name="editTransactionTypeId" type="hidden" class="form-control" value="">
+                                <input id="editTransactionId" name="editTransactionId" type="hidden" class="form-control" value="">
                             </div>
 
                             <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control" name="editTransactionTypeName" required>
+                                <label>typeId</label>
+                                <input type="text" class="form-control" name="editTransactionTypeId" required>
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
-                                <input type="text" class="form-control" name="editTransactionTypeDescription" required>
+                                <label>methodId</label>
+                                <input type="text" class="form-control" name="editTransactionMethodId" required>
                             </div>
-                            <div class="form-group form-check form-switch">
+                            <div class="form-group">
+                                <label>userId</label>
+                                <input type="text" class="form-control" name="editTransactionUserId" required>
+                            </div>
+                            <div class="form-group">
+                                <label>treeId</label>
+                                <input type="text" class="form-control" name="editTransactionTreeId" required>
+                            </div>
+                            <div class="form-group">
+                                <label>value</label>
+                                <input type="number" class="form-control" name="editTransactionValue" required>
+                            </div>
+                            <!--<div class="form-group">
                                 <label>Active</label>
-                                <input type="checkbox" role="switch" class="form-check-input" name="editTransactionTypeActive">
-                            </div>
+                                <input type="checkbox" class="form-control form-check-input" name="editTransactionActive">
+                            </div>-->
 
                         </div>
                         <div class="modal-footer">
@@ -141,18 +177,18 @@
         </div>
 
         <!-- Delete Modal HTML -->
-        <div id="deleteTransactionTypeModal" class="modal fade" tabindex="-1" aria-labelledby="deleteTransactionTypeModal-Label" aria-hidden="true">
+        <div id="deleteTransactionModal" class="modal fade" tabindex="-1" aria-labelledby="deleteTransactionModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="deleteTransactionType">
+                    <form id="deleteTransaction">
                         <div class="modal-header">
-                            <h4 class="modal-title">Delete TransactionType</h4>
+                            <h4 class="modal-title">Delete Transaction</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Are you sure you want to delete this TransactionType?</p>
+                            <p>Are you sure you want to delete this Transaction?</p>
                             <p class="text-warning"><small>This action cannot be undone.</small></p>
-                            <input id="deleteTransactionTypeId" name="deleteTransactionTypeId" type="hidden" class="form-control" value="">
+                            <input id="deleteTransactionId" name="deleteTransactionId" type="hidden" class="form-control" value="">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -183,11 +219,11 @@
                 //DATATABLES
                 //Configura a dataTable
                 try{
-                    var table = $('#transactionTypeTable').DataTable({
+                    var table = $('#transactionsTable').DataTable({
                         rowReorder: false,
                         responsive: true,
                         columnDefs: [ {
-                            targets: [2,3],
+                            targets: [6],
                             orderable: false,
                         }]
                     });
@@ -202,17 +238,17 @@
 
 
 
-                // ajax to Add TransactionType
-                $('#addTransactionType').submit(function (event) {
+                // ajax to Add Transaction
+                $('#addTransaction').submit(function (event) {
                     event.preventDefault(); //prevent default action
 
                     let formData = {
-                        'action': "AddTransactionType",
+                        'action': "AddTransaction",
                         'data': $(this).serializeArray()
                     };
 
                     $.ajax({
-                        url: "<?php echo HOME_URL . '/admin/transaction_type';?>",
+                        url: "<?php echo HOME_URL . '/admin/transaction';?>",
                         dataType: "json",
                         type: 'POST',
                         data: formData,
@@ -220,7 +256,7 @@
                             $('#loader').removeClass('hidden')
                         },
                         success: function (data) {
-                            $("#addTransactionTypeModal").modal('hide');
+                            $("#addTransactionModal").modal('hide');
 
                             if (data.statusCode === 201){
                                 //mensagem de Success
@@ -268,14 +304,14 @@
                     });
                 });
 
-                // ajax to Edit TransactionType
-                $('#editTransactionType').submit(function (event) {
+                // ajax to Edit Transaction
+                $('#editTransaction').submit(function (event) {
                     event.preventDefault(); //prevent default action
 
                     //Ve se a data dos inputs mudou para formar so a data necessaria para o PATCH
                     /*let formDataChanged = [];
-                    $('#editTransactionType input').each(function() { //para cada input vai ver
-                        if($(this).attr('name') === "editTransactionTypeId" || ($(this).attr('name') === "editTransactionTypeActive" && $(this).is(":checked")) || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
+                    $('#editTransaction input').each(function() { //para cada input vai ver
+                        if($(this).attr('name') === "editTransactionId" || ($(this).attr('name') === "editTransactionActive" && $(this).is(":checked")) || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
                             let emptyArray = { name: "", value: "" };
 
                             emptyArray.name = $(this).attr('name');
@@ -286,17 +322,17 @@
                     });
 
                     let formData = {
-                        'action' : "UpdateTransactionType",
+                        'action' : "UpdateTransaction",
                         'data'   : formDataChanged
                     };*/
 
                     let formData = {
-                        'action': "UpdateTransactionType",
+                        'action': "UpdateTransaction",
                         'data': $(this).serializeArray()
                     };
 
                     $.ajax({
-                        url : "<?php echo HOME_URL . '/admin/transaction_type';?>",
+                        url : "<?php echo HOME_URL . '/admin/transaction';?>",
                         dataType: "json",
                         type: 'POST',
                         data : formData,
@@ -304,7 +340,7 @@
                             $('#loader').removeClass('hidden')
                         },
                         success: function (data) {
-                            $("#editTransactionTypeModal").modal('hide');
+                            $("#editTransactionModal").modal('hide');
 
                             if (data.statusCode === 200){
                                 //mensagem de Success
@@ -352,16 +388,16 @@
                     });
                 });
 
-                // ajax to get data to Modal Edit TransactionType
+                // ajax to get data to Modal Edit Transaction
                 $('.edit').on('click', function(){
 
                     let formData = {
-                        'action' : "GetTransactionType",
-                        'data'   : $(this).attr('id') //gets transactiontype id from id="" attribute on edit button from table
+                        'action' : "GetTransaction",
+                        'data'   : $(this).attr('id') //gets transaction id from id="" attribute on edit button from table
                     };
 
                     $.ajax({
-                        url : "<?php echo HOME_URL . '/admin/transaction_type';?>",
+                        url : "<?php echo HOME_URL . '/admin/transaction';?>",
                         dataType: "json",
                         type: 'POST',
                         data : formData,
@@ -370,23 +406,24 @@
                         },
                         success: function (data) {
 
-                            $('[name="editTransactionTypeId"]').val(data[0]['id']);
-                            $('[name="editTransactionTypeName"]').val(data[0]['name']);
-                            $('[name="editTransactionTypeDescription"]').val(data[0]['description']);
+                            $('[name="editTransactionId"]').val(data[0]['id']);
+                            $('[name="editTransactionName"]').val(data[0]['name']);
+                            $('[name="editTransactionDescription"]').val(data[0]['description']);
+                            $('[name="editTransactionSecurityId"]').val(data[0]['securityId']);
 
                             if (data[0]['active'] === 1) {
-                                $('[name="editTransactionTypeActive"]').attr('checked', true);
+                                $('[name="editTransactionActive"]').attr('checked', true);
                             } else {
-                                $('[name="editTransactionTypeActive"]').attr('checked', false);
+                                $('[name="editTransactionActive"]').attr('checked', false);
                             }
 
-                            //atribui atributo .data("lastValue") a cada input do form editTransactionType
+                            //atribui atributo .data("lastValue") a cada input do form editTransaction
                             // para se poder comparar entre os dados anteriores e os current
-                            /*$('#editTransactionType input').each(function() {
+                            /*$('#editTransaction input').each(function() {
                                 $(this).data('lastValue', $(this).val());
                             });*/
 
-                            $("#editTransactionTypeModal").modal('show');
+                            $("#editTransactionModal").modal('show');
                         },
                         error: function (data) {
                             Swal.fire({
@@ -407,17 +444,17 @@
 
                 });
 
-                // ajax to Delete TransactionType
-                $('#deleteTransactionType').submit(function(event){
+                // ajax to Delete Transaction
+                $('#deleteTransaction').submit(function(event){
                     event.preventDefault(); //prevent default action
 
                     let formData = {
-                        'action' : "DeleteTransactionType",
+                        'action' : "DeleteTransaction",
                         'data'   : $(this).serializeArray()
                     };
 
                     $.ajax({
-                        url : "<?php echo HOME_URL . '/admin/transaction_type';?>",
+                        url : "<?php echo HOME_URL . '/admin/transaction';?>",
                         dataType: "json",
                         type: 'POST',
                         data : formData,
@@ -425,7 +462,7 @@
                             $('#loader').removeClass('hidden')
                         },
                         success: function (data) {
-                            $("#deleteTransactionTypeModal").modal('hide');
+                            $("#deleteTransactionModal").modal('hide');
 
                             if (data.statusCode === 200){
                                 //mensagem de Success
@@ -473,11 +510,11 @@
                     });
                 });
 
-                // ajax to get data to Modal Delete TransactionType
+                // ajax to get data to Modal Delete Transaction
                 $('.delete').on('click', function(){
                     let $deleteID = $(this).attr('id');
-                    $('[name="deleteTransactionTypeId"]').val($deleteID); //gets transactiontype id from id="" attribute on delete button from table
-                    $("#deleteTransactionTypeModal").modal('show');
+                    $('[name="deleteTransactionId"]').val($deleteID); //gets transaction id from id="" attribute on delete button from table
+                    $("#deleteTransactionModal").modal('show');
 
                 });
 

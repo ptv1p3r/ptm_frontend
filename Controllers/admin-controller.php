@@ -2070,7 +2070,7 @@ class AdminController extends MainController
             /**Carrega os arquivos do view**/
             require ABSPATH . '/views/_includes/admin-header.php';
 
-            require ABSPATH . '/views/admin/admin-transaction-view.php';
+            require ABSPATH . '/views/admin/transactions/admin-transaction-view.php';
 
             require ABSPATH . '/views/_includes/admin-footer.php';
         }
@@ -2260,7 +2260,7 @@ class AdminController extends MainController
             /**Carrega os arquivos do view**/
             require ABSPATH . '/views/_includes/admin-header.php';
 
-            require ABSPATH . '/views/admin/admin-transaction-type-view.php';
+            require ABSPATH . '/views/admin/transactions/admin-transaction-type-view.php';
 
             require ABSPATH . '/views/_includes/admin-footer.php';
         }
@@ -2450,7 +2450,7 @@ class AdminController extends MainController
             /**Carrega os arquivos do view**/
             require ABSPATH . '/views/_includes/admin-header.php';
 
-            require ABSPATH . '/views/admin/admin-transaction-method-view.php';
+            require ABSPATH . '/views/admin/transactions/admin-transaction-method-view.php';
 
             require ABSPATH . '/views/_includes/admin-footer.php';
         }
