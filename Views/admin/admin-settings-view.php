@@ -57,7 +57,7 @@
                                                                     </div>
                                                                     <div class="col-md-12">
                                                                         <div class="form-group">
-                                                                            <label>Entidade</label>
+                                                                            <label><b>Entidade</b></label>
                                                                             <p><?php echo $admin["entity"] ?></p>
                                                                         </div>
                                                                     </div>
@@ -67,62 +67,71 @@
                                                                             <p><?php echo $admin["address"] ?></p>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label>Código-postal</label>
-                                                                            <p><?php echo $admin["codPost"] ?></p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label>Localidade</label>
-                                                                            <p><?php echo $admin["locality"] ?></p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label>País</label>
-                                                                            <?php foreach ($this->userdata['countryList'] as $key => $val) { ?>
-                                                                                <?php echo ($val['id'] == $admin["countryId"]) ? "<p>" . $val['name'] . "</p>" : ''; ?>
-                                                                            <?php } ?>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label>Data de
-                                                                                nascimento</label>
-                                                                            <p><?php echo $admin["dateBirth"] ?></p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label>Gênero</label>
-                                                                            <?php foreach ($this->userdata['genderList'] as $key => $val) { ?>
-                                                                                <?php echo ($val['id'] == $admin["genderId"]) ? "<p>" . $val['name'] . "</p>" : ''; ?>
-                                                                            <?php } ?>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label>NIF</label>
-                                                                            <p><?php echo $admin["nif"] ?></p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label>Telefone</label>
-                                                                            <p><?php echo $admin["mobile"] ?></p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--                                                                </div>-->
                                                                     <div>
-                                                                        <button class="btn edit btn-success"
-                                                                                id="<?php echo $admin["email"]; ?>"
-                                                                                data-toggle="modal"
-                                                                                data-target="#editAdminModal">
-                                                                            Editar
-                                                                        </button>
-                                                                        <!--                            <button class="btn btn-light">Cancel</button>-->
+                                                                        <div class="row">
+                                                                            <div class="col-sm-5 col-md-6">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Código-postal</label>
+                                                                                        <p><?php echo $admin["codPost"] ?></p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Localidade</label>
+                                                                                        <p><?php echo $admin["locality"] ?></p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-sm-5 col-md-6">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>País</label>
+                                                                                        <?php foreach ($this->userdata['countryList'] as $key => $val) { ?>
+                                                                                            <?php echo ($val['id'] == $admin["countryId"]) ? "<p>" . $val['name'] . "</p>" : ''; ?>
+                                                                                        <?php } ?>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Telefone</label>
+                                                                                        <p><?php echo $admin["mobile"] ?></p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-sm-5 col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label>Gênero</label>
+                                                                                    <?php foreach ($this->userdata['genderList'] as $key => $val) { ?>
+                                                                                        <?php echo ($val['id'] == $admin["genderId"]) ? "<p>" . $val['name'] . "</p>" : ''; ?>
+                                                                                    <?php } ?>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>NIF</label>
+                                                                                        <p><?php echo $admin["nif"] ?></p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div>
+                                                                            <button class="btn edit btn-success"
+                                                                                    id="<?php echo $admin["email"]; ?>"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#editAdminModal">
+                                                                                Editar
+                                                                            </button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -130,99 +139,101 @@
 
                                                             <!--Change password-->
                                                             <div class="tab-pane fade" id="account-change-password">
-                                                                <div class="card-body pb-2">
-                                                                    <form id="updatePass">
-                                                                        <div class="form-group">
-                                                                            <input id="passEditUserId"
-                                                                                   name="passEditUserId" type="hidden"
-                                                                                   class="form-control"
-                                                                                   value="<?php echo $admin["id"] ?>">
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <label class="form-label">Palavra-passe
-                                                                                atual:</label>
-                                                                            <input type="password" id="oldPass" name="oldPass" class="form-control"
-                                                                                   required>
-                                                                            <span id="verifyOldPass" class="badge-warning hidden"></span>
-                                                                        </div>
+                                                                    <h3 class="mb-4">Alterar a palavra-passe</h3>
+                                                                    <div class="card-body pb-2">
+                                                                        <form id="updatePass">
+                                                                            <div class="form-group">
+                                                                                <div class="form-group">
+                                                                                    <input id="passAdminId"
+                                                                                           name="passAdminId"
+                                                                                           type="hidden"
+                                                                                           class="form-control"
+                                                                                           value="<?php echo $admin["id"] ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="form-label"><b>Palavra-passe
+                                                                                        atual:</b></label>
+                                                                                <div>
+                                                                                    <input type="password" id="oldPass"
+                                                                                           name="oldPass"
+                                                                                           class="form-control"
+                                                                                           style="width: 20%"
+                                                                                           required>
+                                                                                    <span id="verifyOldPass"
+                                                                                          class="badge bg-warning hidden"></span>
 
-                                                                        <div class="form-group">
-                                                                            <label class="form-label">Nova
-                                                                                palavra-passe:</label>
-                                                                            <input type="password" id="pass" name="newPass" class="form-control"
-                                                                                   required>
-                                                                            <span id="verifyEqualPass" class="badge-warning hidden"></span>
-                                                                        </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="form-label col-md-6"><b>Nova
+                                                                                        palavra-passe:</b></label>
+                                                                                <input type="password" id="pass"
+                                                                                       name="newPass"
+                                                                                       class="form-control"
+                                                                                       style="width: 20%"
+                                                                                       required>
+                                                                                <span id="verifyEqualPass"
+                                                                                      class="badge bg-warning hidden"></span>
+                                                                            </div>
 
-                                                                        <div class="form-group">
-                                                                            <label class="form-label">Repita a
-                                                                                palavra-passe:</label>
-                                                                            <input type="password" id="verify" name="confPass" class="form-control"
-                                                                                   required>
-                                                                            <span id="verifyMatchPass" class="badge-warning hidden"></span>
-                                                                        </div>
+                                                                            <div class="form-group">
+                                                                                <label class="form-label col-md-6"><b>Repita
+                                                                                        a
+                                                                                        palavra-passe:</b></label>
+                                                                                <input type="password" id="verify"
+                                                                                       name="confPass"
+                                                                                       class="form-control"
+                                                                                       style="width: 20%"
+                                                                                       required>
+                                                                                <span id="verifyMatchPass"
+                                                                                      class="badge bg-warning hidden"></span>
+                                                                            </div>
+                                                                            <br>
+                                                                            <div>
+                                                                                <div>
+                                                                                    <input type="button"
+                                                                                           class="btn edit btn-danger"
+                                                                                           data-dismiss="modal"
+                                                                                           value="Cancel">
+                                                                                    <input type="submit"
+                                                                                           class="btn edit btn-success"
+                                                                                           value="Save">
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                                <!--End Change password-->
 
-                                                                        <div>
-                                                                            <div class="modal-footer">
-                                                                                <input type="button"
-                                                                                       class="btn edit btn-danger"
-                                                                                       data-dismiss="modal"
-                                                                                       value="Cancel">
-                                                                                <input type="submit"
-                                                                                       class="btn edit btn-success"
-                                                                                       value="Save">
+                                                                <!--End Delete Account-->
+                                                                <div class="tab-pane fade" id="account-info">
+                                                                    <div class="card-body pb-2">
+                                                                        <h3 class="mb-4">Remover conta</h3>
+                                                                        <!--                                                                    <div class="row">-->
+                                                                        <div class="col-md-8">
+                                                                            <div class="form-group">
+                                                                                <label>Nesta opção o administrador
+                                                                                    poderá
+                                                                                    remover a conta e todos os seus
+                                                                                    dados.</label>
+                                                                            </div>
+                                                                            <br>
+                                                                            <div class="alert alert-warning col-md-6"
+                                                                                 role="alert">
+                                                                                Esta ação não pode ser desfeita!!!
                                                                             </div>
                                                                         </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                            <!--End Change password-->
-
-                                                            <!--End Delete Account-->
-                                                            <div class="tab-pane fade" id="account-info">
-                                                                <div class="card-body pb-2">
-
-                                                                    <div class="form-group">
-                                                                        <label class="form-label">Bio</label>
-                                                                        <textarea class="form-control" rows="5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nunc arcu, dignissim sit amet sollicitudin iaculis, vehicula id urna. Sed luctus urna nunc. Donec fermentum, magna sit amet rutrum pretium, turpis dolor molestie diam, ut lacinia diam risus eleifend sapien. Curabitur ac nibh nulla. Maecenas nec augue placerat, viverra tellus non, pulvinar risus.</textarea>
                                                                     </div>
-                                                                    <div class="form-group">
-                                                                        <label class="form-label">Birthday</label>
-                                                                        <input type="text" class="form-control"
-                                                                               value="May 3, 1995">
+                                                                    <br>
+                                                                    <div>
+                                                                        <button class="btn btn-danger"
+                                                                                data-toggle="modal"
+                                                                                data-target="#deleteAdminModal">Remover
+                                                                        </button>
+                                                                        <button class="btn btn-light">Cancelar</button>
                                                                     </div>
-                                                                </div>
-                                                            </div>
-
-
-                                                            <div class="tab-pane fade" id="account-connections">
-                                                                <div class="card-body">
-                                                                    <button type="button" class="btn btn-twitter">
-                                                                        Connect to <strong>Twitter</strong></button>
-                                                                </div>
-                                                                <hr class="border-light m-0">
-                                                                <div class="card-body">
-                                                                    <h5 class="mb-2">
-                                                                        <a href="javascript:void(0)"
-                                                                           class="float-right text-muted text-tiny"><i
-                                                                                    class="ion ion-md-close"></i>
-                                                                            Remove</a>
-                                                                        <i class="ion ion-logo-google text-google"></i>
-                                                                        You are connected to Google:
-                                                                    </h5>
-                                                                    nmaxwell@mail.com
-                                                                </div>
-                                                                <hr class="border-light m-0">
-                                                                <div class="card-body">
-                                                                    <button type="button" class="btn btn-facebook">
-                                                                        Connect to <strong>Facebook</strong>
-                                                                    </button>
-                                                                </div>
-                                                                <hr class="border-light m-0">
-                                                                <div class="card-body">
-                                                                    <button type="button" class="btn btn-instagram">
-                                                                        Connect to <strong>Instagram</strong>
-                                                                    </button>
+                                                                    <br>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -240,14 +251,12 @@
         </main>
     </div>
 
-
     <!-- Edit Profile Modal HTML -->
     <div id="editAdminModal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Edite os seus dados</h4>
-
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -321,18 +330,41 @@
                             <input type="submit" class="btn btn-info" value="Save">
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Delete Modal HTML -->
+<div id="deleteAdminModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="deleteAdmin">
+                <div class="modal-header">
+                    <h4 class="modal-title">Apagar conta</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>De certeza que deseja remover a sua conta?</p>
+                    <p class="text-warning"><small>Esta ação não pode ser desfeita.</small></p>
+                    <div class="form-group">
+                            <input id="deleteAdminId" name="deleteAdminId" type="hidden" class="form-control"
+                                   value="<?php echo $admin["id"] ?>">
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Voltar">
+                    <input type="submit" class="btn btn-danger" value="Apagar">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <?php }
 }
 ?>
-
 
 <script>
     $(document).ready(function () {
@@ -347,12 +379,7 @@
                 dataType: "json",
                 type: 'POST',
                 data: formData,
-
                 success: function (data) {
-
-                    //TODO Os dados chegam aqui, mas não aparecem
-
-
                     $('[name="editAdminId"]').val(data[0]['id']);
                     $('[name="editAdminName"]').val(data[0]['name']);
                     $('[name="editAdminEntity"]').val(data[0]['entity']);
@@ -367,9 +394,6 @@
                     $('#updateAdmin input').each(function () {
                         $(this).data('lastValue', $(this).val());
                     });
-
-
-                    // $("#editAdminModal").modal('show');
                 },
                 error: function (data) {
                     Swal.fire({
@@ -402,7 +426,6 @@
                 'action': "UpdateAdmin",
                 'data': formDataChanged
             };
-
             $.ajax({
                 url: "<?php echo HOME_URL . '/admin/settings';?>",
                 dataType: "json",
@@ -451,7 +474,6 @@
 
             });
         });
-
         // ajax to update modal data  Edit User
         $('#updatePass').submit(function (event) {
             event.preventDefault(); //prevent default action
@@ -526,7 +548,64 @@
             $(this).parent().find('#verifyEqualPass').hide();
             $(this).parent().find('#verifyMatchPass').hide();
         });
+         // ajax to Delete User
+        $('#deleteAdmin').submit(function (event) {
+            event.preventDefault(); //prevent default action
 
+            let formData = {
+                'action': "DeleteAdmin",
+                'data': $(this).serializeArray()
+            };
 
+            $.ajax({
+                url: "<?php echo HOME_URL . '/admin/settings';?>",
+                dataType: "json",
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+                    $("#deleteAdminModal").modal('hide');
+
+                    if (data.statusCode === 200) {
+                        //mensagem de Success
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.body.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    }
+
+                },
+                error: function (data) {
+                    //mensagem de Error
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Connection error, please try again.",
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        didClose: () => {
+                            //location.reload();
+                        }
+                    });
+                }
+            });
+        });
     });
 </script>
