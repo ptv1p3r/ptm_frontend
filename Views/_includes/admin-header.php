@@ -65,6 +65,10 @@
             integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
             crossorigin=""></script>
 
+<!--    Tive de adicionar este CND para manipular as tabs da view settings-->
+    <script src="https://cdn.jsdelivr.net/npm/cdbootstrap/js/bootstrap.min.js"></script>
+<!--End CND-->
+
     <!-- dataTables -->
     <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
@@ -76,9 +80,8 @@
 <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cdbootstrap/css/bootstrap.min.css"/>-->
 <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cdbootstrap/css/cdb.min.css"/>-->
 
-    <script src="https://cdn.jsdelivr.net/npm/cdbootstrap/js/bootstrap.min.js"></script>
-<!--    <script src="https://cdn.jsdelivr.net/npm/cdbootstrap/js/popper.min.js"></script>-->
-<!--    <script src="https://cdn.jsdelivr.net/npm/cdbootstrap/js/cdb.min.js"></script>-->
+
+
 
     <script src=<?php echo auto_version('../../js/global-functions.js'); ?>></script>
 </head>
