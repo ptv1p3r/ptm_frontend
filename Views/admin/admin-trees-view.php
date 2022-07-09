@@ -243,12 +243,13 @@
             url : "<?php echo HOME_URL . '/admin/trees';?>",
             dataType: "json",
             type: 'POST',
+            async: false,
             data : formData,
             beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
                 $('#loader').removeClass('hidden')
             },
             success: function (data) {
-                $('#tree-card-image').attr("src", "<?php echo API_URL . 'api/v1/trees/image/'?>" + data["images"][0]["path"]);
+                treeImagePath = data["images"][0]["path"];
             },
             error: function (data) {
                 Swal.fire({
@@ -266,6 +267,8 @@
                 $('#loader').addClass('hidden')
             }
         });
+
+        return treeImagePath;
     }
 
     $(document).ready(function() {
@@ -324,7 +327,7 @@
         }).addTo(map);
 
         //function to load all trees from API
-        function mapLoadTrees(){ // TODO: fix tree card images
+        function mapLoadTrees(){
             <?php if (!empty($this->userdata['treesList'])) {
                 foreach ($this->userdata['treesList'] as $key => $tree) {?>
                     marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
@@ -351,23 +354,23 @@
         //popup on marker click
         var popupMarker = L.popup();
         function markerOnClick(e) {
-
+            let image_path = getImg(this.options.tree_id);
             popupMarker
                 .setLatLng(e.latlng)
                 .setContent(
                     `<div class="card" style="width: 10rem; border: unset">
-                    <img id="tree-card-image" src="" class="card-img-top" alt="">
+                    <img id="tree-card-image" src="<?php echo API_URL . 'api/v1/trees/image/' ?>` + image_path + `" class="card-img-top" alt="" height="160">
                       <div class="card-body">
                         <h5 class="card-title">` + this.options.name + `</h5>
                         <!--<p class="card-text text-truncate">` + this.options.description + `</p>-->
                         <!--<p class="card-text">Padrinho: ` + this.options.user + `</p>-->
                         <p class="card-text">Latitude: ` + e.latlng.lat + `</p>
                         <p class="card-text">Longitude: ` + e.latlng.lng + `</p>
-                        <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
                       </div>
                     </div>`
                 )
                 .openOn(map);
+
             //map.flyTo([e.latlng.lat, e.latlng.lng], 15);
         }
 
