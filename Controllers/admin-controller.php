@@ -1055,6 +1055,7 @@ class AdminController extends MainController
             }
 
         } else {
+            //get tree list
             $treesList = $modelo->getTreeList();
             if ($treesList["statusCode"] === 200){
                 $this->userdata['treesList'] = $treesList["body"]["trees"];
@@ -1067,6 +1068,7 @@ class AdminController extends MainController
                 $this->userdata['treesList'] = $treesList["body"]["trees"];
             }
 
+            //get user list
             $userList = $modelo->getUserList();
             if ($userList["statusCode"] === 200){
                 $this->userdata['userList'] = $userList["body"]["users"];
@@ -2054,6 +2056,7 @@ class AdminController extends MainController
             }
 
         } else {
+            // get transactions list
             $transactionList = $modelo->getTransactionList();
             if ($transactionList["statusCode"] === 200){
                 $this->userdata['transactionList'] = $transactionList["body"]["transactions"];
@@ -2064,6 +2067,58 @@ class AdminController extends MainController
 
                 $transactionList = $modelo->getTransactionList();
                 $this->userdata['transactionList'] = $transactionList["body"]["transactions"];
+            }
+
+            //get users list
+            $userList = $modelo->getUserList();
+            if ($userList["statusCode"] === 200){
+                $this->userdata['usersList'] = $userList["body"]["users"];
+            }
+            if ($userList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $userList = $modelo->getUserList();
+                $this->userdata['usersList'] = $userList["body"]["users"];
+            }
+
+            //get trees free for adoption list
+            /*$treesList = $modelo->getTransactionTreeList();
+            if ($treesList["statusCode"] === 200){
+                $this->userdata['treesList'] = $treesList["body"]["trees"];
+            }
+            if ($treesList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $treesList = $modelo->getTransactionTreeList();
+                $this->userdata['treesList'] = $treesList["body"]["trees"];
+            }*/
+
+            // get transactions type list
+            $transactionTypeList = $modelo->getTransactionTypeList();
+            if ($transactionTypeList["statusCode"] === 200){
+                $this->userdata['transactionTypeList'] = $transactionTypeList["body"]["methods"];
+            }
+            if ($transactionTypeList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $transactionTypeList = $modelo->getTransactionTypeList();
+                $this->userdata['transactionTypeList'] = $transactionTypeList["body"]["methods"];
+            }
+
+            // get transactions method list
+            $transactionMethodList = $modelo->getTransactionMethodList();
+            if ($transactionMethodList["statusCode"] === 200){
+                $this->userdata['transactionMethodList'] = $transactionMethodList["body"]["methods"];
+            }
+            if ($transactionMethodList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $transactionMethodList = $modelo->getTransactionMethodList();
+                $this->userdata['transactionMethodList'] = $transactionMethodList["body"]["methods"];
             }
 
 
