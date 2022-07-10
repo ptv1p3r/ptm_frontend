@@ -71,7 +71,7 @@
     <!--<script src="https://cdn.datatables.net/rowreorder/1.2.8/js/dataTables.rowReorder.min.js"></script>-->
     <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.5.6/js/dataTables.colReorder.min.js">
     <script src="https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-PT.json"></script>
-<!--    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">-->-->
+<!--    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">-->
 
 
     <!-- Template original CSS links -->

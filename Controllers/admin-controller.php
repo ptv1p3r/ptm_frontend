@@ -2651,6 +2651,7 @@ class AdminController extends MainController
         }
     }
 
+
     /**
      * Carrega a página
      * "/views/admin/admin-messages-view.php"
@@ -3197,27 +3198,297 @@ class AdminController extends MainController
             return;
         }
 
-        //$modelo = $this->load_model('admin-settings-model');
 
-        /*//get user Message list
-        $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
-        //caso accessToken espire
-        if ($userMessageList["statusCode"] === 401){
-            //faz o refresh do accessToken
-            $this->userTokenRefresh();
+        $modelo = $this->load_model('admin-settings-model');
+
+        // processa chamadas ajax
+        if (isset($_POST['action']) && !empty($_POST['action'])) {
+            $action = $_POST['action'];
+            switch ($action) {
+                case 'GetAdmin' :
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->getUserByEmail($data);
+                    $apiResponseBody = array();
+
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        //faz o refresh do accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->getUserByEmail($data);
+                    }
+
+                    if ($apiResponse['statusCode'] === 200) { // 200 success
+                        $apiResponseBody = json_encode($apiResponse["body"]);
+                    }
+
+                    echo $apiResponseBody;
+                    break;
+
+                case 'UpdateAdmin' :
+                    $this->permission_required = array('usersUpdate');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }
+
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->updateUser($data); //decode to check message from api
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->updateUser($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Updated with success!";
+                    }
+                    if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Updated with success!";
+
+                        //atualiza toda a $_SESSION
+                        $valResponse = $modelo->validateUser($_SESSION["userdata"]["email"],$_SESSION["userdata"]["password"]);
+                        if ($valResponse != null) {
+                            // verifica se autenticaçao com sucesso
+                            if ($valResponse['statusCode'] === 200) {
+                                // verifica se existe accessToken na response
+                                if (array_key_exists("accessToken", $valResponse["body"])) {
+                                    $userToken = $valResponse["body"]["accessToken"];
+                                }
+
+                                // verifica se existe refreshToken na response
+                                if (array_key_exists("refreshToken", $valResponse["body"])) {
+                                    $userRefreshToken = $valResponse["body"]['refreshToken'];
+                                }
+
+                                //apanha dados do user
+                                $url = API_URL . 'api/v1/users/view/' . $_SESSION["userdata"]["email"];
+                                $result = callAPI("GET", $url, '', $_SESSION["userdata"]['accessToken'] );
+                                $userData = json_decode(json_encode($result), true);
+
+                                //apanha permissioes do user
+                                $url = API_URL . 'api/v1/groups/view/' . $_SESSION["userdata"]["groupId"];
+                                $result = callAPI("GET", $url, '', $_SESSION["userdata"]['accessToken'] );
+                                $userPermissions = json_decode(json_encode($result), true);
+
+                                //constroi array de permissoes do user
+                                $permissionsArray = array();
+                                foreach ($userPermissions["body"][0] as $key => $value) {
+                                    switch ($key){
+                                        case "homeLogin":
+                                        case "admLogin":
+                                        case "usersCreate":
+                                        case "usersRead":
+                                        case "usersUpdate":
+                                        case "usersDelete":
+                                        case "userGroupsCreate":
+                                        case "userGroupsRead":
+                                        case "userGroupsUpdate":
+                                        case "userGroupsDelete":
+                                        case "usersTreesCreate":
+                                        case "usersTreesRead":
+                                        case "usersTreesUpdate":
+                                        case "usersTreesDelete":
+                                        case "treesCreate":
+                                        case "treesRead":
+                                        case "treesUpdate":
+                                        case "treesDelete":
+                                        case "treeTypeCreate":
+                                        case "treeTypeRead":
+                                        case "treeTypeUpdate":
+                                        case "treeTypeDelete":
+                                        case "treeImagesCreate":
+                                        case "treeImagesRead":
+                                        case "treeImagesUpdate":
+                                        case "treeImagesDelete":
+                                        case "securityCreate":
+                                        case "securityRead":
+                                        case "securityUpdate":
+                                        case "securityDelete":
+                                            if ($value == 1){ $permissionsArray[] = $key; }
+                                            break;
+
+                                    }
+                                }
+
+                                // Atualiza userdata
+                                $_SESSION['userdata'] = $userData["body"][0];
+
+                                // Atualiza user permissions
+                                $_SESSION['userdata']["user_permissions"] = $permissionsArray;
+
+                                // Atualiza o token
+                                $_SESSION['userdata']['accessToken'] = $userToken;
+
+                                // Atualiza o token
+                                $_SESSION['userdata']['refreshToken'] = $userRefreshToken;
+                            }
+                        }
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo($apiResponse);
+                    break;
+
+                case 'UpdateAdminPass' :
+                    $this->permission_required = array('usersUpdate');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }
+
+                    $data = $_POST['data'];
+                    // data/passwords encryption
+                    $data[1]['value'] = hash('sha256', $data[1]['value']);
+                    $data[2]['value'] = hash('sha256', $data[2]['value']);
+                    $data[3]['value'] = hash('sha256', $data[3]['value']);
+
+                    $oldPassVal = $data[1]['value'];
+                    $newPassVal = $data[2]['value'];
+                    $confPassVal = $data[3]['value'];
+
+                    // Password validations
+                    //Validate if the current pass/old pass is the same as current on $_SESSION
+                    if ($oldPassVal != $_SESSION['userdata']['password']) {
+                        //Array with status code message
+                        $response = array();
+                        $response["body"]['message'] = 'Palavra passe incorreta!';
+                        $response['statusCode'] = 0;
+                        echo json_encode($response);
+                        break;
+                    }
+
+                    //Validate if the new pass is the same as old one
+                    if ($newPassVal == $oldPassVal) {
+                        //Array with status code message
+                        $response = array();
+                        $response["body"]['message'] = 'A nova palavra passe não pode ser igual à antiga!';
+                        $response['statusCode'] = 1;
+                        echo json_encode($response);
+                        break;
+                    }
+
+                    //Validate if the new pass is equal to conf
+                    if ($newPassVal != $confPassVal) {
+                        //Array with status code message
+                        $response = array();
+                        $response["body"]['message'] = 'Palavra passe não coincide!';
+                        $response['statusCode'] = 2;
+                        echo json_encode($response);
+                        break;
+                    }
+
+                    //After all validations, send to API
+                    $apiResponse = $modelo->updatePassAdmin($data); //decode to check message from api
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        $this->userTokenRefresh();
+                        //requests API again, with new token
+                        $apiResponse = $modelo->updatePassAdmin($data);
+                    }
+
+                    if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Updated with success!";
+
+                        // Atualiza a pass na $_SESSION
+                        $_SESSION['userdata']['password'] = $newPassVal;
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo($apiResponse);
+                    break;
+
+                /*case 'DeleteAdmin' :
+                    $this->permission_required = array('usersDelete');
+
+                    //Verifica se o user tem a permissão para realizar operaçao
+                    if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+                        $apiResponse["body"]['message'] = "You have no permission!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }
+
+                    $data = $_POST['data'];
+                    $apiResponse = $modelo->deleteAdmin($data); //decode to check message from api
+                    if ($apiResponse['statusCode'] === 401) { // 200 OK, successful
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $modelo->deleteAdmin($data); //decode to check message from api
+                        $apiResponse["body"]['message'] = "Deleted with success!";
+                    }
+                    if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Deleted with success!";
+                    }
+
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo($apiResponse);
+                    break;*/
+            }
+
+        } else {
+            //get user by email - ja está na session
+            /*$userData = $modelo->getUserByEmail($_SESSION['userdata']['email']);
+            if ($userData["statusCode"] === 200) {
+                $this->userdata['adminList'] = $userData["body"];
+            }
+            if ($userData["statusCode"] === 401) {
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $userData = $modelo->getUserByEmail($_SESSION['userdata']['email']);
+                $this->userdata['adminList'] = $userData["body"];
+            }*/
+
+            //get countrys list
+            $countryList = $modelo->getCountryList();
+            if ($countryList["statusCode"] === 200) {
+                $this->userdata['countryList'] = $countryList['body']['countries'];
+            }
+            if ($countryList["statusCode"] === 401) {
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $countryList = $modelo->getCountryList();
+                $this->userdata['countryList'] = $countryList['body']['countries'];
+            }
+
+            //get gender list
+            $genderList = $modelo->getGenderList();
+            if ($genderList["statusCode"] === 200) {
+                $this->userdata['genderList'] = $genderList['body']['genders'];
+            }
+            if ($genderList["statusCode"] === 401) {
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $genderList = $modelo->getGenderList();
+                $this->userdata['genderList'] = $genderList['body']['genders'];
+            }
+
+            //get user Message list / user messages inbox
             $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            //caso accessToken espire
+            if ($userMessageList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+                $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            }
+            if ($userMessageList["statusCode"] === 200){
+                $this->userdata['userMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+
+            /** Carrega os arquivos do view **/
+            require ABSPATH . '/views/_includes/admin-header.php';
+
+            require ABSPATH . '/views/admin/admin-settings-view.php';
+
+            require ABSPATH . '/views/_includes/admin-footer.php';
         }
-        if ($userMessageList["statusCode"] === 200){
-            $this->userdata['userMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
-            $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
-        }*/
-
-        /** Carrega os arquivos do view **/
-        require ABSPATH . '/views/_includes/admin-header.php';
-
-        require ABSPATH . '/views/admin/admin-settings-view.php';
-
-        require ABSPATH . '/views/_includes/admin-footer.php';
 
     }
 
@@ -3225,11 +3496,11 @@ class AdminController extends MainController
      * Metodo para logout
      * @return void
      */
-    public function applogout(){
+    public function applogout()
+    {
         $_SESSION['goto_url'] = '/admin';
 
         $this->logout(true);
     }
-
 
 }
