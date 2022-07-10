@@ -56,34 +56,69 @@
     <!--<script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">-->
 
+    <!-- selectize.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.5/js/standalone/selectize.min.js" integrity="sha512-JFjt3Gb92wFay5Pu6b0UCH9JIOkOGEfjIi7yykNWUwj55DBBp79VIJ9EPUzNimZ6FvX41jlTHpWFUQjog8P/sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.5/css/selectize.bootstrap5.min.css" integrity="sha512-w4sRMMxzHUVAyYk5ozDG+OAyOJqWAA+9sySOBWxiltj63A8co6YMESLeucKwQ5Sv7G4wycDPOmlHxkOhPW7LRg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
     <script src=<?php echo auto_version('../../js/global-functions.js'); ?>></script>
 </head>
 
 <body class="sb-nav-fixed">
-<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-    <!-- Sidebar Toggle-->
-    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-    <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="<?php echo HOME_URL . '/admin/dashboard'; ?>">
-        <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'; ?>" alt="Dashboard" width="48">
-        Project Tree Management
-    </a>
-    <!-- Navbar-->
-    <ul class="navbar-nav ms-auto me-3 me-lg-4">
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-               aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="<?php echo HOME_URL . '/admin/settings'; ?>">Settings</a></li>
-                <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                <li><hr class="dropdown-divider"/></li>
-                <li><a class="dropdown-item" href="<?php echo HOME_URL . '/admin/applogout'; ?>">Logout</a></li>
-            </ul>
-        </li>
-    </ul>
-</nav>
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="<?php echo HOME_URL . '/admin/dashboard';?>">
+            <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png';?>" alt="Project Tree Management" width="42">
+            <span class="fs-7">Project Tree Mng.</span>
+        </a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!" title="Abrir/Fechar barra lateral"><i class="fas fa-bars"></i></button>
 
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto me-3 me-lg-4">
+            <li class="nav-item dropdown mx-1">
+                <a class="nav-link dropdown-toggle no-arrow" href="#" id="messagesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-envelope fa-fw"></i>
+                    <!-- Counter - Messages -->
+                    <?php if (!empty($this->userdata['totalMessagesNotViewed']) && $this->userdata['totalMessagesNotViewed'] !== 0) { ?>
+                        <span class="position-absolute translate-middle badge rounded-pill bg-danger"><?php echo $this->userdata['totalMessagesNotViewed'] ?></span>
+                    <?php }?>
+                </a>
+                <!-- Dropdown - Messages -->
+                <div class="dropdown-menu dropdown-menu-end" style="width: 20rem !important;">
+                    <h6 class="dropdown-header">Message Center</h6>
 
+                    <!-- show only the last 5 messages -->
+                    <?php if (!empty($this->userdata['userMessageList'])) {
+                        $count = 0;
+                        foreach ($this->userdata['userMessageList'] as $key => $message) {
+                            if ($message["receptionDate"] === null && $count < 5) {?>
+                                <a class="dropdown-item d-flex align-items-center" href="<?php echo HOME_URL . '/admin/messages/' . $message["id"];?>">
+                                    <div class="dropdown-item">
+                                        <div class="text-truncate" style="width: 100%"><?php echo $message["message"] ?></div>
+                                        <div class="small text-gray-500"><?php echo $message["fromName"] ?> · <?php echo $message["notificationDate"] ?></div>
+                                    </div>
+                                </a>
+                            <?php $count++;
+                            }
+                        }
+                    }?>
 
+                    <a class="dropdown-item text-center small text-gray-500" href="<?php echo HOME_URL . '/admin/messages/inbox';?>">Read More Messages</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown mx-1">
+                <a class="nav-link dropdown-toggle no-arrow" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span><?php echo $_SESSION["userdata"]["name"] ?></span>
+                    <i class="fas fa-user fa-fw"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="<?php echo HOME_URL . '/admin/settings';?>">Settings</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><a class="dropdown-item" href="<?php echo HOME_URL . '/admin/applogout';?>">Logout</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>

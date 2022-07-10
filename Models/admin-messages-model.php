@@ -1,6 +1,6 @@
 <?php
 
-class AdminTreeImagesModel extends MainModel {
+class AdminMessagesModel extends MainModel {
 
     public $db; // PDO
 
@@ -14,6 +14,41 @@ class AdminTreeImagesModel extends MainModel {
         $this->parametros = $this->controller->parametros; // Configura os parâmetros
 
         $this->userdata = $this->controller->userdata;
+    }
+
+    /**
+     * Metodo que retorna lista de Users
+     * @return mixed
+     */
+    public function getUserList() {
+        $result = null;
+
+        $url = API_URL . 'api/v1/users/list';
+
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+    /** CRUD MESSAGES **/
+    /**
+     * Metodo que retorna Message pelo id
+     * @param $id
+     * @return mixed
+     */
+    public function getMessageById($id) {
+        $result = null;
+
+        $url = API_URL . 'api/v1/messages/view/' . $id;
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
     }
 
     /**
@@ -33,16 +68,15 @@ class AdminTreeImagesModel extends MainModel {
         return json_decode(json_encode($result), true);
     }
 
-    /** CRUD TREE images **/
     /**
-     * Metodo que retorna Tree images pelo id
+     * Metodo que retorna Message Sent list do user pelo seu id
      * @param $id
      * @return mixed
      */
-    public function getTreeImageListById($id) {
+    public function getMessageSentListByUserId($id) {
         $result = null;
 
-        $url = API_URL . 'api/v1/trees/image/list/' . $id;
+        $url = API_URL . 'api/v1/messages/list/send/' . $id;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
@@ -52,14 +86,13 @@ class AdminTreeImagesModel extends MainModel {
     }
 
     /**
-     * Metodo que retorna Tree image pelo path
-     * @param $path
+     * Metodo que retorna lista de Messages
      * @return mixed
      */
-    public function getTreeImageByPath($path) {
+    public function getMessageList() {
         $result = null;
 
-        $url = API_URL . 'api/v1/trees/image/' . $path;
+        $url = API_URL . 'api/v1/messages/list';
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
@@ -69,65 +102,40 @@ class AdminTreeImagesModel extends MainModel {
     }
 
     /**
-     * Metodo que retorna lista de Trees
-     * @return mixed
-     */
-    public function getTreeImageList()
-    {
-        $result = null;
-
-        $url = API_URL . 'api/v1/trees/image/list';
-        if (!empty($_SESSION['userdata']['accessToken'])){
-            $userToken = $_SESSION['userdata']['accessToken'];
-            $result = callAPI("GET", $url, '', $userToken);
-        }
-        //trasforma toda a msg em string json para poder ser enviado
-        return json_decode(json_encode($result), true);
-    }
-
-    /**
-     * Metodo adiciona TreeImages
+     * Metodo adiciona Message
      * @param $data
      * @return array|null
      */
-    public function addTreeImage($data) {
+    public function addMessage($data) {
         $result = null;
-        $TreeId = null;
         $normalizedData = array();
 
-        // active by default
-        $normalizedData['active'] = "true";
-
         // get data from form array and package it to send to api
-        //foreach ($data as $dataVector) {
-            foreach ($data as $key => $value) {
-                switch ($key) { //gets <input name="">
-                    case "addTreeImageTreeId":
-                        $TreeId = $value;
+        foreach ($data as $dataVector) {
+            foreach ($dataVector as $key => $value) {
+                switch ($dataVector['name']) { //gets <input name="">
+                    case "addMessageSubject":
+                        $normalizedData['subject'] = $dataVector['value'];
                         break;
 
-                    case "addTreeImageOrder":
-                        $normalizedData['order'] = $value;
+                    case "addMessageMessage":
+                        $normalizedData['message'] = $dataVector['value'];
                         break;
 
-                    case "addTreeImageDescription":
-                        $normalizedData['description'] = $value;
+                    case "addMessageFromUser":
+                        $normalizedData['fromUser'] = $dataVector['value'];
                         break;
 
-                    /*case "addTreeImageActive":
-                        $normalizedData['active'] = "true";
-                        break;*/
+                    case "addMessageToUser":
+                        $normalizedData['toUser'] = $dataVector['value'];
+                        break;
+
                 }
 
             }
-        //}
-
-        foreach ($_FILES as $file){
-            $cfile = new CURLFile($file["tmp_name"], $file["type"], $file["name"]);
-            $normalizedData['file'] = $cfile;
         }
 
-        $url = API_URL . 'api/v1/trees/image/upload/' . $TreeId;
+        $url = API_URL . 'api/v1/messages/create';
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("POST", $url, $normalizedData, $userToken);
@@ -138,76 +146,61 @@ class AdminTreeImagesModel extends MainModel {
     }
 
     /**
-     * Metodo edita/update TreeImage
+     * Metodo Message Read
      * @param $data
-     * @return mixed
+     * @return array|null
      */
-    /*public function updateTreeImage($data) {
+    public function messageRead($data) {
         $result = null;
-        $TreeId = null;
-        $normalizedData = array();
 
-        // Not active by default
-        $normalizedData['active'] = "0";
-
-        // get data from form array and package it to send to api
-        foreach ($data as $dataVector) {
-            foreach ($dataVector as $key => $value) {
-                switch ($dataVector['name']){ //gets <input name="">
-                    case "editTreeImageTreeId":
-                        $normalizedData['treeId'] = $dataVector['value'];
-                        break;
-
-                    case "editTreeImagePath":
-                        $normalizedData['path'] = $dataVector['value'];
-                        break;
-
-                    case "editTreeImageSize":
-                        $normalizedData['size'] = $dataVector['value'];
-                        break;
-
-                    case "editTreeImagePosition":
-                        $normalizedData['position'] = $dataVector['value'];
-                        break;
-
-                    case "editTreeImageActive":
-                        $normalizedData['active'] = "1";
-                        break;
-                }
-
-            }
-        }
-
-        $url = API_URL . 'api/v1/trees/image/edit/' . $TreeId;
+        $url = API_URL . 'api/v1/messages/state/read/' . $data;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
-            $result = callAPI("PUT", $url, $normalizedData, $userToken);
+            $result = callAPI("POST", $url, "", $userToken);
         }
 
         //trasforma toda a msg em string json para poder ser enviado
         return json_decode(json_encode($result), true);
-    }*/
+    }
 
     /**
-     * Metodo delete TreeImage
+     * Metodo Message Unread
+     * @param $data
+     * @return array|null
+     */
+    public function messageUnread($data) {
+        $result = null;
+
+        $url = API_URL . 'api/v1/messages/state/unread/' . $data;
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("POST", $url, "", $userToken);
+        }
+
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+    /**
+     * Metodo delete Message
      * @param $data
      * @return mixed
      */
-    public function deleteTreeImage($data) {
+    public function deleteMessage($data) {
         $result = null;
-        $TreeImageId = null;
+        $MessageId = $data;
 
-        foreach ($data as $dataVector) {
+        /*foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']){ //gets input name=""
-                    case "deleteTreeImageId":
-                        $TreeImageId = $dataVector['value'];
+                    case "deleteMessageId":
+                        $MessageId = $dataVector['value'];
                         break;
                 }
             }
-        }
+        }*/
 
-        $url = API_URL . 'api/v1/trees/image/delete/' . $TreeImageId;
+        $url = API_URL . 'api/v1/messages/delete/' . $MessageId;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("DELETE", $url, '', $userToken);
