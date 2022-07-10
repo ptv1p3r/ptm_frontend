@@ -25,32 +25,32 @@
                                 <div class="row">
                                     <form id="updateAdmin">
                                         <div class="form-group">
-                                            <input id="editAdminId" name="editAdminId" type="hidden" class="form-control" value="<?php echo $_SESSION["userdata"]["id"] ?>">
+                                            <input id="editAdminId" name="editAdminId" type="hidden" class="form-control" value="<?php echo $_SESSION["userdata"]["id"] ?>" required>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Nome:</label>
-                                            <input type="text" class="form-control" name="editAdminName" value="<?php echo $_SESSION["userdata"]["name"] ?>">
+                                            <input type="text" class="form-control" name="editAdminName" value="<?php echo $_SESSION["userdata"]["name"] ?>" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Entidade:</label>
-                                            <input type="text" class="form-control" name="editAdminEntity" value="<?php echo $_SESSION["userdata"]["entity"] ?>">
+                                            <input type="text" class="form-control" name="editAdminEntity" value="<?php echo $_SESSION["userdata"]["entity"] ?>" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Morada:</label>
-                                            <input type="text" class="form-control" name="editAdminAddress" value="<?php echo $_SESSION["userdata"]["address"] ?>">
+                                            <input type="text" class="form-control" name="editAdminAddress" value="<?php echo $_SESSION["userdata"]["address"] ?>" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Código-postal:</label>
-                                            <input type="text" class="form-control" name="editAdminCodPost" value="<?php echo $_SESSION["userdata"]["codPost"] ?>">
+                                            <input type="text" class="form-control" name="editAdminCodPost" value="<?php echo $_SESSION["userdata"]["codPost"] ?>" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Localidade:</label>
-                                            <input type="text" class="form-control" name="editAdminLocality" value="<?php echo $_SESSION["userdata"]["locality"] ?>">
+                                            <input type="text" class="form-control" name="editAdminLocality" value="<?php echo $_SESSION["userdata"]["locality"] ?>" required>
                                         </div>
                                         <div class="form-group">
                                             <label>País:</label>
-                                            <select class="form-select" id="editAdminCountry" name="editAdminCountry">
+                                            <select class="form-select" id="editAdminCountry" name="editAdminCountry" required>
                                                 <?php foreach ($this->userdata['countryList'] as $key => $val) { ?>
                                                     <option value="<?php echo $val['id']; ?>" <?php echo ($val['id'] == $_SESSION["userdata"]["countryId"]) ? 'selected="selected"' : '' ?> > <?php echo $val['name']; ?></option>
                                                 <?php } ?>
@@ -58,15 +58,15 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Nif:</label>
-                                            <input type="text" class="form-control" name="editAdminNif" value="<?php echo $_SESSION["userdata"]["nif"] ?>">
+                                            <input type="text" class="form-control" name="editAdminNif" value="<?php echo $_SESSION["userdata"]["nif"] ?>" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Telefone:</label>
-                                            <input type="text" class="form-control" name="editAdminMobile" value="<?php echo $_SESSION["userdata"]["mobile"] ?>">
+                                            <input type="text" class="form-control" name="editAdminMobile" value="<?php echo $_SESSION["userdata"]["mobile"] ?>" required>
                                         </div>
                                         <div class="form-group">
                                             <label>País:</label>
-                                            <select class="form-select" id="editAdminGender" name="editAdminGender">
+                                            <select class="form-select" id="editAdminGender" name="editAdminGender" required>
                                                 <?php foreach ($this->userdata['genderList'] as $key => $val) { ?>
                                                     <option value="<?php echo $val['id']; ?>" <?php echo ($val['id'] == $_SESSION["userdata"]["genderId"]) ? 'selected="selected"' : '' ?> > <?php echo $val['name']; ?></option>
                                                 <?php } ?>
@@ -74,7 +74,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Data de nascimento:</label>
-                                            <input type="date" class="form-control" name="editAdminDateBirth" value="<?php echo $_SESSION["userdata"]["dateBirth"] ?>">
+                                            <input type="date" class="form-control" name="editAdminDateBirth" value="<?php echo $_SESSION["userdata"]["dateBirth"] ?>" required>
                                         </div>
                                         <br>
                                         <!--<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">-->
