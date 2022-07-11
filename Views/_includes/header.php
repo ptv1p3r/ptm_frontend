@@ -233,7 +233,7 @@
             </ul>
             <ul class="topnav-right">
                 <li class="login-reg"><a href="" data-toggle="modal" data-target="#loginModal"></i> Login</a>
-                    | <a href="<?php echo HOME_URL . '/register'; ?>">Signup</a>
+                    | <a href="<?php echo HOME_URL . '/register'; ?>">Registar</a>
                 </li>
             </ul>
         </div>
@@ -250,7 +250,7 @@
                     <div class="avatar">
                         <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'; ?>" alt="Avatar">
                     </div>
-                    <h4 class="modal-title">Login</h4>
+                    <h4 class="modal-title">Entrar</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -260,7 +260,7 @@
                                    required="required">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" name="pass" placeholder="Password"
+                            <input type="password" class="form-control" name="pass" placeholder="Palavra-passe"
                                    required="required">
                         </div>
                         <div class="form-group">
@@ -272,23 +272,6 @@
                         <a href="<?php echo HOME_URL . '/register/recover'; ?>">Esqueces-te a password?</a>
                     </div>
                     <br>
-                    <!--                    <div class="text-center text-muted delimiter">Usa a redes sociais</div>-->
-                    <!--                    <div class="d-flex justify-content-center social-buttons">-->
-                    <!--                        <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip"-->
-                    <!--                                data-placement="top" title="Twitter">-->
-                    <!--                            <i class="fab fa-twitter"></i>-->
-                    <!--                        </button>-->
-                    <!--                        <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip"-->
-                    <!--                                data-placement="top" title="Facebook">-->
-                    <!--                            <i class="fab fa-facebook"></i>-->
-                    <!--                        </button>-->
-                    <!--                        <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip"-->
-                    <!--                                data-placement="top" title="Linkedin">-->
-                    <!--                            <i class="fab fa-linkedin"></i>-->
-                    <!--                        </button>-->
-                    <!--                        </di>-->
-                    <!--                    </div>-->
-                    <!--                </div>-->
                     <div>
                         <div class="modal-footer d-flex justify-content-center">
                             <div >Ainda não és membro? <a
