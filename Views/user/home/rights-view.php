@@ -32,7 +32,7 @@
             <!-- Article 1 -->
             <h4 _ngcontent-serverapp-c180="">Artigo 1º</h4>
             <h3 _ngcontent-serverapp-c180="">Colaboração</h3>
-            <p _ngcontent-serverapp-c180="">O presente regulamento tem como �nalidade disciplinar o programa “Adote
+            <p _ngcontent-serverapp-c180="">O presente regulamento tem como finalidade disciplinar o programa “Adote
                 uma Árvore” dinamizado pelos alunos do curso de Direito
                 do ISMAT – Instituto Superior Manuel Teixeira Gomes, em Portimão, no âmbito da unidade curricular
                 Direito do Urbanismo e do
