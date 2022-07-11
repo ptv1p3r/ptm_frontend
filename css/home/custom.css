@@ -358,7 +358,7 @@ Inner Header Start
 *********************************/
 
 .inner-header {
-    background: url(../../Images/home/innerheader.jpg) no-repeat;
+    background: url(../../Images/trees/treeHeader1.png) no-repeat;
 }
 
 .inner-header h1 {
@@ -1720,7 +1720,7 @@ header.header-style-2 .navbar {
 }
 
 header.header-style-2 .navbar-brand {
-    background:url(../../Images/home/footerbg.jpg);
+    background: url(../../Images/home/footerbg.jpg);
     width: 270px;
     text-align: center;
     padding: 13px 0;
@@ -2384,7 +2384,7 @@ li.form-submit button:hover {
     color: #555555;
 }
 
-.why-ecova-center{
+.why-ecova-center {
     padding: 65px 0 65px;
     background-size: cover;
     text-align: center;
@@ -8435,7 +8435,7 @@ Transatiction tree CSS
 *********************************/
 
 
-.subBtna{
+.subBtna {
     text-align: -webkit-center;
 }
 
@@ -8457,7 +8457,6 @@ Payment modal CSS
 /*    overflow-x: hidden;*/
 /*    background: #000000*/
 /*}*/
-
 
 
 .modal-ku {
@@ -8770,33 +8769,33 @@ User messages CSS
     text-overflow: ellipsis;
 }
 
-.table-bordered th{
+.table-bordered th {
     border: 1px solid #66bb6a;
-    background-color:#66bb6a;
+    background-color: #66bb6a;
     color: white;
 }
 
-.table-bordered td  {
+.table-bordered td {
     border: none;
 }
 
-.replyIcon{
+.replyIcon {
     color: #66bb6a;
 }
 
-.replyIcon:hover{
+.replyIcon:hover {
     color: #1b5e20;
 }
 
-.deleteIcon{
+.deleteIcon {
     color: #66bb6a;
 }
 
-.deleteIcon:hover{
+.deleteIcon:hover {
     color: #1b5e20;
 }
 
-.addMessageItem{
+.addMessageItem {
     color: #0b2e13;
 }
 
@@ -8966,3 +8965,24 @@ input:focus + label {
 /*********************************
 Payment modal CSS END
 *********************************/
+
+/*********************************
+Presentation CSS
+*********************************/
+
+.treePic{
+    text-align: center;
+    /*width: 150px;*/
+    /*height: 150px;*/
+}
+.treePic img{
+
+    width: 200px;
+    height: 200px;
+}
+
+/*********************************
+Presentation CSS END
+*********************************/
+
+
