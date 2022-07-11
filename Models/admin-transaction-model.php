@@ -32,7 +32,74 @@ class AdminTransactionModel extends MainModel {
         //trasforma toda a msg em string json para poder ser enviado
         return json_decode(json_encode($result), true);
     }
-    
+
+    /**
+     * Metodo que retorna lista de Users
+     * @return mixed
+     */
+    public function getUserList() {
+        $result = null;
+
+        $url = API_URL . 'api/v1/users/list';
+
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+    /**
+     * Metodo que retorna lista de arvores disponiveis para adoçao
+     * @return mixed
+     */
+    public function getTransactionTreeList() {
+        $result = null;
+
+        $url = API_URL . 'api/v1/trees/transaction/list';
+
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+    /**
+     * Metodo que retorna lista de TransactionTypes
+     * @return mixed
+     */
+    public function getTransactionTypeList()
+    {
+        $result = null;
+
+        $url = API_URL . 'api/v1/transaction/types/list';
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+    /**
+     * Metodo que retorna lista de TransactionMethods
+     * @return mixed
+     */
+    public function getTransactionMethodList()
+    {
+        $result = null;
+
+        $url = API_URL . 'api/v1/transaction/methods/list';
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
     
     /** CRUD Transaction **/
     /**
