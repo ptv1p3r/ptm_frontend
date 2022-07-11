@@ -1994,16 +1994,16 @@ class AdminController extends MainController
                     echo $apiResponse;
                     break;
 
-                case 'UpdateTransaction' :
-                    /*$this->permission_required = array('treeTypeUpdate');
+                    /*case 'UpdateTransaction' :
+                      /*$this->permission_required = array('treeTypeUpdate');
 
-                    //Verifica se o user tem a permissão para realizar operaçao
-                    if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        //Verifica se o user tem a permissão para realizar operaçao
+                        if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
+                            $apiResponse["body"]['message'] = "You have no permission!";
 
-                        echo json_encode($apiResponse);
-                        break;
-                    }*/
+                            echo json_encode($apiResponse);
+                            break;
+                        }
 
                     $data = $_POST['data'];
                     $apiResponse = $modelo->updateTransaction($data); //decode to check message from api
@@ -2022,7 +2022,7 @@ class AdminController extends MainController
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
                     echo $apiResponse;
-                    break;
+                    break;*/
 
                 case 'DeleteTransaction' :
                     /*$this->permission_required = array('treeTypeDelete');
@@ -2058,66 +2058,61 @@ class AdminController extends MainController
         } else {
             // get transactions list
             $transactionList = $modelo->getTransactionList();
-            if ($transactionList["statusCode"] === 200){
-                $this->userdata['transactionList'] = $transactionList["body"]["transactions"];
-            }
             if ($transactionList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $transactionList = $modelo->getTransactionList();
-                $this->userdata['transactionList'] = $transactionList["body"]["transactions"];
+            }
+            if ($transactionList["statusCode"] === 200){
+                $this->userdata['transactionList'] = $transactionList["body"]["methods"];
             }
 
             //get users list
             $userList = $modelo->getUserList();
-            if ($userList["statusCode"] === 200){
-                $this->userdata['usersList'] = $userList["body"]["users"];
-            }
             if ($userList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $userList = $modelo->getUserList();
+            }
+            if ($userList["statusCode"] === 200){
                 $this->userdata['usersList'] = $userList["body"]["users"];
             }
 
             //get trees free for adoption list
-            /*$treesList = $modelo->getTransactionTreeList();
-            if ($treesList["statusCode"] === 200){
-                $this->userdata['treesList'] = $treesList["body"]["trees"];
-            }
+            $treesList = $modelo->getTransactionTreeList();
             if ($treesList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $treesList = $modelo->getTransactionTreeList();
+            }
+            if ($treesList["statusCode"] === 200){
                 $this->userdata['treesList'] = $treesList["body"]["trees"];
-            }*/
+            }
 
             // get transactions type list
             $transactionTypeList = $modelo->getTransactionTypeList();
-            if ($transactionTypeList["statusCode"] === 200){
-                $this->userdata['transactionTypeList'] = $transactionTypeList["body"]["methods"];
-            }
             if ($transactionTypeList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $transactionTypeList = $modelo->getTransactionTypeList();
+            }
+            if ($transactionTypeList["statusCode"] === 200){
                 $this->userdata['transactionTypeList'] = $transactionTypeList["body"]["methods"];
             }
 
             // get transactions method list
             $transactionMethodList = $modelo->getTransactionMethodList();
-            if ($transactionMethodList["statusCode"] === 200){
-                $this->userdata['transactionMethodList'] = $transactionMethodList["body"]["methods"];
-            }
             if ($transactionMethodList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $transactionMethodList = $modelo->getTransactionMethodList();
+            }
+            if ($transactionMethodList["statusCode"] === 200){
                 $this->userdata['transactionMethodList'] = $transactionMethodList["body"]["methods"];
             }
 
