@@ -40,7 +40,7 @@ class AdminTransactionModel extends MainModel {
     public function getTransactionTreeList() {
         $result = null;
 
-        $url = API_URL . 'api/v1/transaction/list';
+        $url = API_URL . 'api/v1/trees/transaction/list';
 
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
