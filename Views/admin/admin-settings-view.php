@@ -65,7 +65,7 @@
                                             <input type="text" class="form-control" name="editAdminMobile" value="<?php echo $_SESSION["userdata"]["mobile"] ?>" required>
                                         </div>
                                         <div class="form-group">
-                                            <label>País:</label>
+                                            <label>Género:</label>
                                             <select class="form-select" id="editAdminGender" name="editAdminGender" required>
                                                 <?php foreach ($this->userdata['genderList'] as $key => $val) { ?>
                                                     <option value="<?php echo $val['id']; ?>" <?php echo ($val['id'] == $_SESSION["userdata"]["genderId"]) ? 'selected="selected"' : '' ?> > <?php echo $val['name']; ?></option>

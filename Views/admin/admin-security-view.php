@@ -35,7 +35,7 @@
                                     <?php if (!empty($this->userdata['securityList'])) {
                                         foreach ($this->userdata['securityList'] as $key => $security) { ?>
                                             <tr>
-                                                <td><?php echo $security["id"] ?></td>
+                                                <td>Security Table <?php echo $security["id"] ?></td>
                                                 <td>
                                                     <a href="#editSecurityModal" id="<?php echo $security['id'] ?>" class="edit"
                                                        data-bs-toggle="modal" data-bs-target="#editSecurityModal"><i class="far fa-edit"></i></a>

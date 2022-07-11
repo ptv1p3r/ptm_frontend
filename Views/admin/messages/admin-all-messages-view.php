@@ -29,7 +29,7 @@
                                                 <!-- BEGIN INBOX MENU -->
                                                 <div class="col-md-3">
                                                     <h2 class="grid-title"><i class="fa fa-inbox"></i> Inbox (All)</h2>
-                                                    <a class="btn btn-block btn-primary"
+                                                    <a class="btn btn-block btn-primary" style="display: block"
                                                        data-bs-toggle="modal" data-bs-target="#addMessageModal">
                                                         <i class="fa fa-pencil"></i>&nbsp;&nbsp;NEW MESSAGE
                                                     </a>
