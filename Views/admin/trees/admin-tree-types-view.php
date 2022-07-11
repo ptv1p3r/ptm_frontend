@@ -8,7 +8,7 @@
 
 <div id="layoutSidenav">
     <!-- import sidebar -->
-    <?php require ABSPATH . '/views/_includes/admin-sidebar.php'?>
+    <?php require ABSPATH . '/views/_includes/admin-sidebar.php' ?>
 
     <div id="layoutSidenav_content">
         <main>

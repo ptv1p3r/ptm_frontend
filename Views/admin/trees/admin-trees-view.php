@@ -8,7 +8,7 @@
 
 <div id="layoutSidenav">
     <!-- import sidebar -->
-    <?php require ABSPATH . '/views/_includes/admin-sidebar.php'?>
+    <?php require ABSPATH . '/views/_includes/admin-sidebar.php' ?>
 
     <div id="layoutSidenav_content">
         <main>
@@ -27,11 +27,17 @@
                                 <a href="#addTreeModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTreeModal">
                                     <i class="fas fa-plus-circle"></i><span>Add New Tree</span>
                                 </a>
+                                <select id='GetActive'>
+                                    <option value=''>All</option>
+                                    <option value='1'>Active</option>
+                                    <option value='0'>Inactive</option>
+                                </select>
                             </div>
                             <div class="card-body">
                                 <table id="treesTable" class="table table-striped table-hover">
                                     <thead>
                                     <tr>
+                                        <th>id</th>
                                         <th>name</th>
                                         <th>nameCommon</th>
                                         <th>description</th>
@@ -39,13 +45,7 @@
                                         <th>typeId</th>
                                         <th>lat</th>
                                         <th>lng</th>
-                                        <th>active
-                                            <select id='GetActive'>
-                                                <option value=''>All</option>
-                                                <option value='1'>Active</option>
-                                                <option value='0'>Inactive</option>
-                                            </select>
-                                        </th>
+                                        <th hidden>active</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -53,6 +53,7 @@
                                     <?php if (!empty($this->userdata['treesList'])) {
                                         foreach ($this->userdata['treesList'] as $key => $tree) { ?>
                                             <tr>
+                                                <td><?php echo $tree["id"] ?></td>
                                                 <td><?php echo $tree["name"] ?></td>
                                                 <td><?php echo $tree["nameCommon"] ?></td>
                                                 <td><?php echo $tree["description"] ?></td>
@@ -60,7 +61,7 @@
                                                 <td><?php echo $tree["typeId"] ?></td>
                                                 <td><?php echo $tree["lat"] ?></td>
                                                 <td><?php echo $tree["lng"] ?></td>
-                                                <td><?php echo $tree["active"] ?></td>
+                                                <td hidden><?php echo $tree["active"] ?></td>
                                                 <td>
                                                     <a href="#editTreeModal" id="<?php echo $tree['id'] ?>" class="edit" data-bs-toggle="modal" data-bs-target="#editTreeModal"><i class="far fa-edit"></i></a>
                                                     <a href="#deleteTreeModal" id="<?php echo $tree['id'] ?>" class="delete" data-bs-toggle="modal" data-bs-target="#deleteTreeModal"><i class="fas fa-trash-alt"></i></a>
@@ -215,24 +216,11 @@
         </div>
     </div>
 
-    <!-- Logout Modal HTML
-    <div id="logoutModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4>Logout <i class="fa fa-lock"></i></h4>
-                </div>
-                <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
-                <div class="modal-footer"><a href="<?php //echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
-            </div>
-        </div>
-    </div>-->
-
 
 <script>
     // get tree first image
     function getImg(tree_id){
-        let treeImagePath = "no image path";
+        let treeImagePath = "";
 
         let formData = {
             'action' : "GetTreeImage",
@@ -249,7 +237,12 @@
                 $('#loader').removeClass('hidden')
             },
             success: function (data) {
-                treeImagePath = data["images"][0]["path"];
+                if (data.statusCode === 201){
+                    treeImagePath = "<?php echo API_URL . 'api/v1/trees/image/' ?>" + data["images"][0]["path"];
+                } else {
+                    treeImagePath = "<?php echo HOME_URL . '/Images/admin/nophoto.png' ?>";
+                }
+
             },
             error: function (data) {
                 Swal.fire({
@@ -279,14 +272,14 @@
                 rowReorder: false,
                 responsive: true,
                 columnDefs: [ {
-                    targets: [7,8],
+                    targets: [8,9],
                     orderable: false,
                 }]
             });
             //filtra table se ativo, inativo ou mostra todos
             $('#GetActive').on('change', function() {
                 let selectedItem = $(this).children("option:selected").val();
-                table.columns(7).search(selectedItem).draw();
+                table.columns(8).search(selectedItem).draw();
             })
         } catch (error){
             console.log(error);
@@ -328,15 +321,26 @@
 
         //function to load all trees from API
         function mapLoadTrees(){
-            <?php if (!empty($this->userdata['treesList'])) {
-                foreach ($this->userdata['treesList'] as $key => $tree) {?>
-                    marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
+            <?php
+            $adopted = array_column($this->userdata['adoptedTreesList'], 'treeId');
+            if (!empty($this->userdata['treesList'])) {
+                foreach ($this->userdata['treesList'] as $key => $tree) {
+                    if (in_array($tree["id"],$adopted)) {?>
+                        marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
+                            icon: blueIcon,
+                            adopted: 'true',
+                            name: '<?php echo $tree["name"]?>',
+                            tree_id: '<?php echo $tree["id"]?>',
+                        }).addTo(map).on("click", markerOnClick);
+                    <?php } else {?>
+                        marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
                             icon: greenIcon,
-                            user: 'none',
+                            adopted: 'false',
                             name: '<?php echo $tree["name"]?>',
                             tree_id: '<?php echo $tree["id"]?>',
                         }).addTo(map).on("click", markerOnClick);
                 <?php }
+                }
             }?>
         }
         mapLoadTrees();
@@ -358,12 +362,11 @@
             popupMarker
                 .setLatLng(e.latlng)
                 .setContent(
-                    `<div class="card" style="width: 10rem; border: unset">
-                    <img id="tree-card-image" src="<?php echo API_URL . 'api/v1/trees/image/' ?>` + image_path + `" class="card-img-top" alt="" height="160">
+                    `<div class="card" style="width: 15rem; border: unset">
+                    <img id="tree-card-image" src="` + image_path + `" class="card-img-top" alt="" height="160">
                       <div class="card-body">
                         <h5 class="card-title">` + this.options.name + `</h5>
-                        <!--<p class="card-text text-truncate">` + this.options.description + `</p>-->
-                        <!--<p class="card-text">Padrinho: ` + this.options.user + `</p>-->
+                        <p class="card-text">id: ` + this.options.tree_id + `</p>
                         <p class="card-text">Latitude: ` + e.latlng.lat + `</p>
                         <p class="card-text">Longitude: ` + e.latlng.lng + `</p>
                       </div>
