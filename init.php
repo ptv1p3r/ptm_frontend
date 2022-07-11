@@ -35,9 +35,9 @@ if (!defined('DEBUG') || DEBUG === false) {
 
 }
 
-require_once ABSPATH . 'Includes/PHPMailer/src/PHPMailer.php';
-require_once ABSPATH . 'Includes/PHPMailer/src/SMTP.php';
-require_once ABSPATH . 'Includes/PHPMailer/src/Exception.php';
+require_once ABSPATH . '/Includes/PHPMailer/src/PHPMailer.php';
+require_once ABSPATH . '/Includes/PHPMailer/src/SMTP.php';
+require_once ABSPATH . '/Includes/PHPMailer/src/Exception.php';
 require_once ABSPATH . '/Classes/classUserLogin.php';
 require_once ABSPATH . '/Includes/global-functions.php';
 require_once ABSPATH . '/Classes/classMainController.php';
