@@ -7,7 +7,6 @@
  */
 
 
-
 /**
  * home - Controller
  */
@@ -241,7 +240,6 @@ class HomeController extends MainController
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
 
-
         // obriga o login para aceder à pagina
         if (!$this->logged_in) {
 
@@ -430,55 +428,113 @@ class HomeController extends MainController
         //$modelo = $this->load_model('user-model');
 
         if (!$this->logged_in) {
-
-            // processa chamadas ajax
+// Process Ajax call function
             if (isset($_POST['action']) && !empty($_POST['action'])) {
                 $action = $_POST['action'];
                 switch ($action) {
                     case 'cMessage' :
                         $data = $_POST['data'];
-                       // $apiResponse = $model->getUserByEmail($data);
 
-                        $to      = 'lireu.pt@sapo.pt';
-                        $subject = 'the subject';
-                        $message = 'hello';
-                        $headers = 'From: webmaster@example.com' . "\r\n" .
-                            'Reply-To: webmaster@example.com' . "\r\n" .
-                            'X-Mailer: PHP/' . phpversion();
-                        $emailSend =  mail($to, $subject, $message, $headers);
+                        //Create an instance; passing true enables exceptions
+                        $mail = new PHPMailer\PHPMailer\PHPMailer();
 
-                            if($emailSend == true){
-                                echo 'Enviado';
-                            }else{
-                                echo 'Não enviado';
+                        try {
+                            //Server settings
+                            $mail->isSMTP();                                                //Send using SMTP
+                            $mail->Host = SMTP_HOST;                                        //Set the SMTP server to send through
+                            $mail->SMTPAuth = SMTP_SECURE == 'true' ? true : false;         //Enable SMTP authentication
+                            $mail->Username = SMTP_USER;                                    //SMTP username
+                            $mail->Password = SMTP_PASS;                                    //SMTP password
+                            $mail->SMTPSecure = 'ssl';                                      //SMTP ssl
+                            $mail->Port = SMTP_PORT;                                        //SMTP port
+                            $mail->CharSet = SMTP_CHARSET;                                  //SMTP charset
+
+                            //Recipients
+                            $mail->setFrom('noreply@adoteumaarvore.pt', 'adoteumaarvore.pt');
+                            $mail->addAddress($data[1]['value'], $data[0]['value']);     //Add a recipient
+
+                            //Content
+                            $mail->isHTML(true);                                  //Set email format to HTML
+                            $mail->Subject = $data[3]['value'];
+                            $mail->Body = $data[4]['value'];
+                            $mail->AltBody = $data[4]['value'];
+
+                            $mail->send();
+                            //Email response
+                            $response = array();
+                            if (!$mail->send()) {
+                                $response["body"]['message'] = $mail->ErrorInfo;
+                                $response['statusCode'] = 500;
+                            } else {
+                                $response["body"]['message'] = 'Email enviado com sucesso!';
+                                $response['statusCode'] = 200;
                             }
-
-//                        $apiResponseBody = array();
-
-
-
-
+                            $apiResponse = json_encode($response);// encode package to send
+                            echo $apiResponse;
+                            break;
+//TODO ver a response não esta a chegar na frente
+                        } catch (Exception $e) {
+                            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                        }
                 }
             }
 
-
-
-
-
-
-                        /** Load public files view **/
+            /** Load public files view **/
             require ABSPATH . '/views/_includes/header.php';
             require ABSPATH . '/views/user/home/contact-view.php';
             require ABSPATH . '/views/_includes/footer.php';
 
         } else {
+            // Process Ajax call function
+            if (isset($_POST['action']) && !empty($_POST['action'])) {
+                $action = $_POST['action'];
+                switch ($action) {
+                    case 'cMessage' :
+                        $data = $_POST['data'];
 
+                        //Create an instance; passing true enables exceptions
+                        $mail = new PHPMailer\PHPMailer\PHPMailer();
 
+                        try {
+                            //Server settings
+                            $mail->isSMTP();                                                //Send using SMTP
+                            $mail->Host = SMTP_HOST;                                        //Set the SMTP server to send through
+                            $mail->SMTPAuth = SMTP_SECURE == 'true' ? true : false;         //Enable SMTP authentication
+                            $mail->Username = SMTP_USER;                                    //SMTP username
+                            $mail->Password = SMTP_PASS;                                    //SMTP password
+                            $mail->SMTPSecure = 'ssl';                                      //SMTP ssl
+                            $mail->Port = SMTP_PORT;                                        //SMTP port
+                            $mail->CharSet = SMTP_CHARSET;                                  //SMTP charset
 
+                            //Recipients
+                            $mail->setFrom('noreply@adoteumaarvore.pt', 'adoteumaarvore.pt');
+                            $mail->addAddress($data[1]['value'], $data[0]['value']);     //Add a recipient
 
+                            //Content
+                            $mail->isHTML(true);                                  //Set email format to HTML
+                            $mail->Subject = $data[3]['value'];
+                            $mail->Body = $data[4]['value'];
+                            $mail->AltBody = $data[4]['value'];
 
-
-
+                            $mail->send();
+                            //Email response
+                            $response = array();
+                            if (!$mail->send()) {
+                                $response["body"]['message'] = $mail->ErrorInfo;
+                                $response['statusCode'] = 500;
+                            } else {
+                                $response["body"]['message'] = 'Email enviado com sucesso!';
+                                $response['statusCode'] = 200;
+                            }
+                            $apiResponse = json_encode($response);// encode package to send
+                            echo $apiResponse;
+                            break;
+//TODO ver a response não esta a chegar na frente
+                        } catch (Exception $e) {
+                            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                        }
+                }
+            }
 
             /** load files from view **/
             require ABSPATH . '/views/_includes/user-header.php';
@@ -632,9 +688,7 @@ class HomeController extends MainController
                         break;
                     }
 
-
                     $apiResponse = $model->updatePassUser($data); //decode to check message from api
-
 
                     if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
                         $apiResponse["body"]['message'] = "Updated with success!";
