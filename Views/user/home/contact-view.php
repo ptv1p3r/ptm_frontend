@@ -8,13 +8,17 @@
 ?>
 <?php if (!defined('ABSPATH')) exit; ?>
 
-
-
+<!-- Image loader -->
+<div class="loaderOverlay lds-dual-ring hidden" id="loader">
+    <svg class="loader" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="46"/>
+    </svg>
+</div>
+<!-- Image loader -->
 
 <!--Header End-->
 <!--Inner Header Start-->
 <section class="wf100 p100 inner-header">
-
 </section>
 <!--Inner Header End-->
 <!--Contact Start-->
@@ -56,8 +60,6 @@
 
 <!--Script's section-->
 <script>
-
-
     //Main functions from this view
     $(document).ready(function () {
         $('#cform').submit(function (event) {
@@ -66,7 +68,6 @@
                 'action': "cMessage",
                 'data': $(this).serializeArray()
             };
-            console.log(formData);
             $.ajax({
                 url: "<?php echo HOME_URL . '/home/contact';?>",
                 dataType: "json",
@@ -76,7 +77,8 @@
                     $('#loader').removeClass('hidden')
                 },
                 success: function (data) {
-                    if (data.statusCode === 201) {
+                    console.log(data);
+                    if (data.statusCode === 200) {
                         //mensagem de Success
                         Swal.fire({
                             title: 'Success!',
@@ -119,20 +121,6 @@
                 },
             });
         });
-
-        //
-        // //Function to lock the button
-        // $(function() {
-        //     $('#checkBtn').click(function() {
-        //         if ($(this).is(':checked')) {
-        //             $('#subBtn').removeAttr('disabled');
-        //         } else {
-        //
-        //             $('#subBtn').attr('disabled', 'disabled');
-        //
-        //         }
-        //     });
-        // });
     });
 
 </script>
