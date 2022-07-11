@@ -6,6 +6,8 @@
  * Time: 20:10
  */
 
+
+
 /**
  * home - Controller
  */
@@ -408,6 +410,79 @@ class HomeController extends MainController
             /** load files from view **/
             require ABSPATH . '/views/_includes/user-header.php';
             require ABSPATH . '/views/user/home/presentation-view.php';
+            require ABSPATH . '/views/_includes/footer.php';
+        }
+    }
+
+    /**
+     * Rights page handler
+     * "/views/home/contact-view.php"
+     */
+    public function contact()
+    {
+
+        // Title page
+        $this->title = 'Contacte-nos';
+
+        // Function parameters
+        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
+        //$modelo = $this->load_model('user-model');
+
+        if (!$this->logged_in) {
+
+            // processa chamadas ajax
+            if (isset($_POST['action']) && !empty($_POST['action'])) {
+                $action = $_POST['action'];
+                switch ($action) {
+                    case 'cMessage' :
+                        $data = $_POST['data'];
+                       // $apiResponse = $model->getUserByEmail($data);
+
+                        $to      = 'lireu.pt@sapo.pt';
+                        $subject = 'the subject';
+                        $message = 'hello';
+                        $headers = 'From: webmaster@example.com' . "\r\n" .
+                            'Reply-To: webmaster@example.com' . "\r\n" .
+                            'X-Mailer: PHP/' . phpversion();
+                        $emailSend =  mail($to, $subject, $message, $headers);
+
+                            if($emailSend == true){
+                                echo 'Enviado';
+                            }else{
+                                echo 'Não enviado';
+                            }
+
+//                        $apiResponseBody = array();
+
+
+
+
+                }
+            }
+
+
+
+
+
+
+                        /** Load public files view **/
+            require ABSPATH . '/views/_includes/header.php';
+            require ABSPATH . '/views/user/home/contact-view.php';
+            require ABSPATH . '/views/_includes/footer.php';
+
+        } else {
+
+
+
+
+
+
+
+
+            /** load files from view **/
+            require ABSPATH . '/views/_includes/user-header.php';
+            require ABSPATH . '/views/user/home/contact-view.php';
             require ABSPATH . '/views/_includes/footer.php';
         }
     }
