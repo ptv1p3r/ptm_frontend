@@ -934,7 +934,7 @@ class AdminController extends MainController
         /** Carrega os arquivos do view **/
         require ABSPATH . '/views/_includes/admin-header.php';
 
-        require ABSPATH . '/views/admin/admin-trees-dashboard-view.php';
+        require ABSPATH . '/views/admin/trees/admin-trees-dashboard-view.php';
 
         require ABSPATH . '/views/_includes/admin-footer.php';
 
@@ -1123,6 +1123,14 @@ class AdminController extends MainController
                     $apiResponse = $modelo->getTreeImageListById($data);
                     $apiResponseBody = array();
 
+                    if ($apiResponse['statusCode'] === 404) { // 404, not found
+                        $apiResponse['body']['message'] = $apiResponse['body']['error'];
+                        unset($apiResponse['body']['error']);
+                        $apiResponse = json_encode($apiResponse);
+                        echo $apiResponse;
+                        break;
+                    }
+
                     if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
                         //faz o refresh do accessToken
                         $this->userTokenRefresh();
@@ -1152,36 +1160,46 @@ class AdminController extends MainController
                 $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
 
+            //get user trees List / adopted trees
+            $adoptedTreesList = $modelo->getTreeUserList();
+            if ($adoptedTreesList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $adoptedTreesList = $modelo->getTreeUserList();
+            }
+            if ($adoptedTreesList["statusCode"] === 200){
+                $this->userdata['adoptedTreesList'] = $adoptedTreesList["body"]["trees"];
+            }
+
             //get trees List
             $treesList = $modelo->getTreeList();
-            if ($treesList["statusCode"] === 200){
-                $this->userdata['treesList'] = $treesList["body"]["trees"];
-            }
             if ($treesList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $treesList = $modelo->getTreeList();
+            }
+            if ($treesList["statusCode"] === 200){
                 $this->userdata['treesList'] = $treesList["body"]["trees"];
             }
 
             //get user list
             $userList = $modelo->getUserList();
-            if ($userList["statusCode"] === 200){
-                $this->userdata['userList'] = $userList["body"]["users"];
-            }
             if ($userList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $userList = $modelo->getUserList();
+            }
+            if ($userList["statusCode"] === 200){
                 $this->userdata['userList'] = $userList["body"]["users"];
             }
 
             /**Carrega os arquivos do view**/
             require ABSPATH . '/views/_includes/admin-header.php';
 
-            require ABSPATH . '/views/admin/admin-trees-view.php';
+            require ABSPATH . '/views/admin/trees/admin-trees-view.php';
 
             require ABSPATH . '/views/_includes/admin-footer.php';
         }
@@ -1411,7 +1429,7 @@ class AdminController extends MainController
             /**Carrega os arquivos do view**/
             require ABSPATH . '/views/_includes/admin-header.php';
 
-            require ABSPATH . '/views/admin/admin-trees-users-view.php';
+            require ABSPATH . '/views/admin/trees/admin-trees-users-view.php';
 
             require ABSPATH . '/views/_includes/admin-footer.php';
         }
@@ -1615,7 +1633,7 @@ class AdminController extends MainController
             /**Carrega os arquivos do view**/
             require ABSPATH . '/views/_includes/admin-header.php';
 
-            require ABSPATH . '/views/admin/admin-tree-images-view.php';
+            require ABSPATH . '/views/admin/trees/admin-tree-images-view.php';
 
             require ABSPATH . '/views/_includes/admin-footer.php';
         }
@@ -1819,7 +1837,7 @@ class AdminController extends MainController
             /**Carrega os arquivos do view**/
             require ABSPATH . '/views/_includes/admin-header.php';
 
-            require ABSPATH . '/views/admin/admin-tree-types-view.php';
+            require ABSPATH . '/views/admin/trees/admin-tree-types-view.php';
 
             require ABSPATH . '/views/_includes/admin-footer.php';
         }
@@ -2034,7 +2052,7 @@ class AdminController extends MainController
             /**Carrega os arquivos do view**/
             require ABSPATH . '/views/_includes/admin-header.php';
 
-            require ABSPATH . '/views/admin/admin-tree-interventions-view.php';
+            require ABSPATH . '/views/admin/trees/admin-tree-interventions-view.php';
 
             require ABSPATH . '/views/_includes/admin-footer.php';
         }
@@ -3198,6 +3216,7 @@ class AdminController extends MainController
         }
 
     }
+
 
     /**
      * Carrega a página
