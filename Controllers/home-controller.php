@@ -263,8 +263,6 @@ class HomeController extends MainController
 
         }
 
-
-
         $model = $this->load_model('home-model');
 
         //Get trees info from model
@@ -379,6 +377,37 @@ class HomeController extends MainController
             /** load files from view **/
             require ABSPATH . '/views/_includes/user-header.php';
             require ABSPATH . '/views/user/home/rights-view.php';
+            require ABSPATH . '/views/_includes/footer.php';
+        }
+    }
+
+    /**
+     * Rights page handler
+     * "/views/home/presentation-view.php"
+     */
+    public function presentation()
+    {
+
+        // Title page
+        $this->title = 'O Projeto';
+
+        // Function parameters
+        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
+        //$modelo = $this->load_model('user-model');
+
+        if (!$this->logged_in) {
+
+            /** Load public files view **/
+            require ABSPATH . '/views/_includes/header.php';
+            require ABSPATH . '/views/user/home/presentation-view.php';
+            require ABSPATH . '/views/_includes/footer.php';
+
+        } else {
+
+            /** load files from view **/
+            require ABSPATH . '/views/_includes/user-header.php';
+            require ABSPATH . '/views/user/home/presentation-view.php';
             require ABSPATH . '/views/_includes/footer.php';
         }
     }
@@ -646,8 +675,6 @@ class HomeController extends MainController
     }
 
 
-
-
     /**
      * Adoption tree page handler
      * "/views/home/user-settings-view.php"
@@ -683,7 +710,7 @@ class HomeController extends MainController
                 case 'getDonation' :
                     $data = $_POST['data'];
                     $_SESSION['userdata']['treeDonation'] = $data;
-                    $donation =  $_SESSION['userdata']['treeDonation'];
+                    $donation = $_SESSION['userdata']['treeDonation'];
                     $apiResponse = json_encode($donation);
                     echo $apiResponse;
                     break;
@@ -691,7 +718,7 @@ class HomeController extends MainController
                 case 'makeDonation' :
                     $data = $_POST['data'];
                     $_SESSION['userdata']['treeDonation'] = $data;
-                    $treeDonation =  $_SESSION['userdata']['treeDonation'];
+                    $treeDonation = $_SESSION['userdata']['treeDonation'];
                     // unset($apiResponse['body'])
                     $apiResponse = json_encode($treeDonation);
                     echo $apiResponse;
@@ -739,7 +766,7 @@ class HomeController extends MainController
             }
 
             //Get transaction methods list from model
-            $getTransactionModel =  $modelTransaction->getTransactionList();
+            $getTransactionModel = $modelTransaction->getTransactionList();
             if ($getAdoptTreesModel['statusCode'] === 200) { // 200 OK, successful
                 $this->userdata['transactionList'] = $getTransactionModel['body']['methods'];
             }
@@ -747,7 +774,7 @@ class HomeController extends MainController
                 //Refresh user token
                 $this->userTokenRefresh();
                 //Models
-                $getTransactionModel =  $modelTransaction->getTransactionList();
+                $getTransactionModel = $modelTransaction->getTransactionList();
                 //Userdata from model's
                 $this->userdata['transactionList'] = $getTransactionModel['body']['methods'];
             }
