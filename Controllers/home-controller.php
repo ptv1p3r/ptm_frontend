@@ -45,7 +45,7 @@ class HomeController extends MainController
 
             require ABSPATH . '/views/_includes/header.php';
 
-            require ABSPATH . '/views/home/home-view.php';
+            require ABSPATH . '/views/user/home/home-view.php';
 
             require ABSPATH . '/views/_includes/footer.php';
 
@@ -53,7 +53,7 @@ class HomeController extends MainController
 
             require ABSPATH . '/views/_includes/user-header.php';
 
-            require ABSPATH . '/views/home/home-view.php';
+            require ABSPATH . '/views/user/home/home-view.php';
 
             require ABSPATH . '/views/_includes/footer.php';
         }
@@ -367,10 +367,20 @@ class HomeController extends MainController
 
         //$modelo = $this->load_model('user-model');
 
-        /** load files from view **/
-        require ABSPATH . '/views/_includes/header.php';
-        require ABSPATH . '/views/home/rights-view.php';
-        require ABSPATH . '/views/_includes/footer.php';
+        if (!$this->logged_in) {
+
+            /** Load public files view **/
+            require ABSPATH . '/views/_includes/header.php';
+            require ABSPATH . '/views/user/home/rights-view.php';
+            require ABSPATH . '/views/_includes/footer.php';
+
+        } else {
+
+            /** load files from view **/
+            require ABSPATH . '/views/_includes/user-header.php';
+            require ABSPATH . '/views/user/home/rights-view.php';
+            require ABSPATH . '/views/_includes/footer.php';
+        }
     }
 
     /**
