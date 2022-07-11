@@ -12,7 +12,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,8 +21,11 @@
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <!--  CSS links -->
     <!-- BootStrap 4.1.3 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- BootStrap 3.6.1 toogle handler -->
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
     <!-- Popper 1.14.3 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
             integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
@@ -73,36 +75,9 @@
 </head>
 <body>
 
-
-<!-- left side of navbar
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <!- left side of navbar
-    <div class="navbar-collapse ">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="navbar-brand" href="<?php //echo HOME_URI; ?>">
-                <img src="../../Images/home.png" alt="Home" width="24" height="24"> </a>
-            </li>
-            <li class="nav-item">
-                <a class="navbar-brand" href="<?php //echo HOME_URI; ?>">
-                    <img src="../../Images/name.png" alt="Name" height="24"></a>
-            </li>
-        </ul>
-        <!- right side of navbar
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <form class="form-inline" action="">
-                    <a class="navbar-brand" href="<?php //echo HOME_URI . '/search/index/1_1'; ?>"><img src="../../Images/search.png" alt="Search" width="24" height="24"></a>
-                </form>
-            </li>
-        </ul>
-    </div>
-</nav>
--->
 <!--Header Start-->
 <header class="header-style-2">
     <nav class="navbar navbar-expand-lg">
-
         <a class="navbar-brand" href="<?php echo HOME_URL . '/'; ?>"><img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'; ?>" alt=""></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
@@ -329,7 +304,6 @@
 </div>
 <!-- End Login Modal HTML -->
 
-
 <script>
     //Main functions from this view
     $(document).ready(function () {
@@ -355,7 +329,6 @@
                     } else {
                         alert("Invalid Email/Password!", "danger");
                     }
-
                 },
                 error: function (data) {
                     alert("Connection error, please try again.", "danger");

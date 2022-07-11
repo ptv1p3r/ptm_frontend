@@ -180,67 +180,91 @@
 <!--About Section Start-->
 <section class="home2-about wf100 p100 gallery">
     <div class="container">
-        <div class="row">
+        <!--Map Section Start-->
+        <div class="mapGo">
+            <div class="row">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mapDirect">
+                        <li class="breadcrumb">
+                            <button class="btn btn-outline-success" id="monTarget">Monchique</button>
+                        </li>
+                        <li class="breadcrumb">
+                            <button class="btn btn-outline-success" id="marTarget">Marmelete</button>
+                        </li>
+                        <li class="breadcrumb">
+                            <button class="btn btn-outline-success" id="marTarget">Casais</button>
+                        </li>
+                        <li class="breadcrumb">
+                            <button class="btn btn-outline-success" id="marTarget">Alferce</button>
+                        </li>
+                        <li class="breadcrumb">
+                            <button class="btn btn-outline-success" id="marTarget">Fóia</button>
+                        </li>
+                    </ol>
+                </nav>
 
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Monchique</li>
-                </ol>
-            </nav>
 
-            <div class="col-md-12">
+                <!-- Leafletmap -->
+                <div class="col-md-12">
+                    <!--Map area start-->
+                    <div id="map"></div>
+                    <!--Map area end-->
+                </div>
+                <!-- END Leafletmap -->
 
-                <!--Map area div-->
-                <div id="map"></div>
-
+                <!-- Toogle controler tress view-->
+                <?php if ($this->logged_in) { ?>
+                    <div class="toggleBtn">
+                        <br>
+                        <input type="checkbox" data-toggle="toggle" data-off="Ver minhas árvores"
+                               data-on="Ver todas árvores" data-onstyle="success" data-offstyle="secondary">
+                    </div>
+                    <?php
+                }
+                ?>
+                <!-- End Toogle controler tress view-->
             </div>
-
-
         </div>
-        <div class="col-md-12">
-            <div class="h2-about-txt">
-                <h3>Sobre o iniciativa</h3>
-                <p></p>
-                <!--                    <h2>Eco-friendly products can be made from scratch.</h2>-->
-                <p> Para a melhoria da qualidade de vida dos habitantes da nossa serra, ao mesmo tempo que se contribui
-                    para o aumento da floresta e com isso, aumentar a resiliência dos ecossistemas, espécies e habitats
-                    aos efeitos das alterações climáticas. </p>
-                <!--                    <a class="aboutus" href="#">More About us</a>-->
-            </div>
-        </div>
-
-
     </div>
+
+
     <div class="home-facts counter pt80">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-sm-6 col-md-3">
-                    <div class="counter-box">
-                        <p class="counter-count">89000</p>
-                        <p class="ctxt">Árvores plantadas</p>
+                <?php if (!empty($this->userdata['treesInfo'])) { ?>
+                    <div class="col-lg-3 col-sm-6 col-md-3">
+                        <div class="counter-box">
+                            <p class="counter-count"><?php echo $this->userdata['treesInfo']['treesTotal'] ?></p>
+                            <p class="ctxt">Árvores plantadas</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-md-3">
-                    <div class="counter-box">
-                        <p class="counter-count">79000</p>
-                        <p class="ctxt">Solar Panels in 2017</p>
+                    <div class="col-lg-3 col-sm-6 col-md-3">
+                        <div class="counter-box">
+                            <p class="counter-count"><?php echo $this->userdata['treesInfo']['O2Kg'] ?></p>
+                            <p class="ctxt">Oxigénio(Kg)</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-md-3">
-                    <div class="counter-box">
-                        <p class="counter-count">69000</p>
-                        <p class="ctxt">Wildlife Saved</p>
+                    <div class="col-lg-3 col-sm-6 col-md-3">
+                        <div class="counter-box">
+                            <p class="counter-count"><?php echo $this->userdata['treesInfo']['co2Kg'] ?></p>
+                            <p class="ctxt">Dióxido Carbono(Kg)</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-md-3">
-                    <div class="counter-box">
-                        <p class="counter-count">59000</p>
-                        <p class="ctxt">Served Water Gallons</p>
+                    <div class="col-lg-3 col-sm-6 col-md-3">
+                        <div class="counter-box"><p
+                                    class="counter-count"><?php echo $this->userdata['treesInfo']['H2oLt'] ?></p>
+                            <p class="ctxt">Água(Ltr)</p>
+                        </div>
                     </div>
-                </div>
+                    <?php
+                } ?>
+            </div>
+            <div>
+                <br>
+                <p class="font-weight-light">*Dados médios calculados durante o periodo inicial de 20 anos de vida de uma árvore.</p>
             </div>
         </div>
+
     </div>
 </section>
 <!--About Section End-->
@@ -253,75 +277,47 @@
                     <h5>Uma causa nobre</h5>
                     <h2>Ajude a reflorestar a nossa serra</h2>
                 </div>
-                <!--                <p> We need your support and help to Stop Globar Warning. Few generations ago it to seemed like the-->
-                <!--                    world’s resources were infinite, and the people needed only. </p>-->
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0"
-                         aria-valuemax="100"></div>
-                </div>
-                <ul class="funds">
-                    <li class="text-left"><strong>73%</strong> Funded</li>
-                    <li class="text-center"><strong>$948.00</strong> Raised</li>
-                    <li class="text-right"><strong>$1750.00</strong> Required</li>
-                </ul>
             </div>
             <div class="col-md-6">
                 <div class="donation-amount">
                     <h5>Doação</h5>
-                    <form>
+
+                    <!--Donation form-->
+                    <form id="newDonation">
                         <ul class="radio-boxes">
                             <li>
                                 <div class="radio custom">
-                                    <input name="donation" id="d1" type="radio" class="css-radio">
-                                    <label for="d1" class="css-label">€ 2.5</label>
+                                    <input name="donation" id="d1" type="radio" value="2.50" class="css-radio">
+                                    <label for="d1" class="css-label">€ 2.50</label>
                                 </div>
                             </li>
-                            <!--                            <li>-->
-                            <!--                                <div class="radio custom">-->
-                            <!--                                    <input name="donation" id="d2" type="radio" class="css-radio">-->
-                            <!--                                    <label for="d2" class="css-label">€20</label>-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
-                            <!--                            <li>-->
-                            <!--                                <div class="radio custom">-->
-                            <!--                                    <input name="donation" id="d3" type="radio" class="css-radio">-->
-                            <!--                                    <label for="d3" class="css-label">$50</label>-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
-                            <!--                            <li>-->
-                            <!--                                <div class="radio custom">-->
-                            <!--                                    <input name="donation" id="d4" type="radio" class="css-radio">-->
-                            <!--                                    <label for="d4" class="css-label">$100</label>-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
-                            <!--                            <li>-->
-                            <!--                                <div class="radio custom">-->
-                            <!--                                    <input name="donation" id="d5" type="radio" class="css-radio">-->
-                            <!--                                    <label for="d5" class="css-label">$250</label>-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
-                            <!--                            <li>-->
-                            <!--                                <div class="radio custom">-->
-                            <!--                                    <input name="donation" id="d6" type="radio" class="css-radio">-->
-                            <!--                                    <label for="d6" class="css-label">$500</label>-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
-                            <!--                            <li>-->
-                            <!--                                <div class="radio custom">-->
-                            <!--                                    <input name="donation" id="d7" type="radio" class="css-radio">-->
-                            <!--                                    <label for="d7" class="css-label">$1000</label>-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
-                            <!--                            <li>-->
-                            <!--                                <div class="inputs">-->
-                            <!--                                    <input class="enter" type="text" placeholder="$ Other">-->
-                            <!--                                </div>-->
-                            <!--                            </li>-->
-                            <li class="form-submit">
-                                <button type="submit">Continue to Donate</button>
-                            </li>
+
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert" hidden>
+                                <strong>Selecione o valor e faça adoção!</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+<!--                            TODO ver porque aqui o sistema não sabe se estamos ou não login-->
+                            <!-- Make donation if login-->
+                            <?php if ($this->logged_in) { ?>
+                                <li class="form-submit">
+                                    <button type="submit" id="subBtn" disabled="disabled">
+                                        Faça a sua adoção
+                                    </button>
+
+                                </li>
+                            <?php } else { ?>
+                                <!-- Make donation send to login / register-->
+                                <li class="form-submit">
+                                    <a type="button" class="btn donationbutton login-reg" data-toggle="modal" data-target="#loginModal" >
+                                           Faça a sua adoção</a>
+                                </li>
+                            <?php } ?>
                         </ul>
                     </form>
+                    <!--Donation form END-->
                 </div>
             </div>
         </div>
@@ -329,10 +325,11 @@
 </section>
 <!--Urgent Causes End-->
 <!--Current Projects Start-->
-<section class="wf100 p80 current-projects">
-    <div class="container">
+
+<section class="wf100 p80">
+    <div class="container why-ecova-center">
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="section-title-2">
                     <h5>Faça uma escolha sensata</h5>
                     <h2>Adote uma árvore</h2>
@@ -903,42 +900,261 @@
 <!--InstaGram End-->
 
 <script>
-    var greenIcon = L.icon({
-        iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-green.png',
-        shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
 
-        iconSize: [38, 95], // size of the icon
-        shadowSize: [50, 64], // size of the shadow
-        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-        shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+
+    $(document).ready(function () {
+
+        // TreesMap
+        let greenIcon = L.icon({
+            iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/mapMarker.png'?>',
+            shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
+
+            iconSize: [38, 95], // size of the icon
+            shadowSize: [50, 64], // size of the shadow
+            iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+
+        let blueIcon = L.icon({
+            iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/blue-mapMarker.png'?>',
+            shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
+
+            iconSize: [38, 95], // size of the icon
+            shadowSize: [50, 64], // size of the shadow
+            iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+
+        let map = L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
+
+        // Fly to a specific point in the map (Monchique)
+        $("#monTarget").click(function () {
+            map.flyTo([37.319518557906285, -8.556156285649438], 13, {
+                animate: true,
+                duration: 2 // in seconds
+            });
+        });
+
+        // Fly to a specific point in the map (Marmelete)
+        $("#marTarget").click(function () {
+            map.flyTo([37.3119, -8.6671], 13, {
+                animate: true,
+                duration: 2 // in seconds
+            });
+        });
+
+        let satellite = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
+        }).addTo(map);
+
+        let allTrees = L.layerGroup();
+
+        ////function to load all trees from API
+        function mapLoadTrees() {
+            <?php if (!empty($this->userdata['allTreesList'])) {
+            foreach ($this->userdata['allTreesList'] as $key => $tree) {?>
+            allMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
+                icon: greenIcon,
+                user: 'none'
+            }).addTo(allTrees);
+            <?php }
+            }?>
+        }
+
+        mapLoadTrees();
+
+        let userTrees = L.layerGroup();
+        ////function to load user trees from API
+        <?php if ($this->logged_in) {?>
+        //Ajax call to user trees
+        //function to load user private trees from API
+        function mapUserLoadTrees() {
+            <?php if (!empty($this->userdata['userTreesList'])) {
+            foreach ($this->userdata['userTreesList'] as $key => $tree) {?>
+            userMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
+                icon: blueIcon,
+                user: '<?php echo $tree["treeName"] ?>',
+                id: '<?php echo $tree["treeId"] ?>',
+            }).addTo(userTrees).on("click", markerOnClick);
+            <?php }
+            }?>
+        }
+
+        mapUserLoadTrees();
+        <?php
+        }?>
+
+        map.addLayer(allTrees);
+
+        $('.toggleBtn :checkbox').change(function () {
+            // this will contain a reference to the checkbox
+            if (this.checked) {
+                // the checkbox is now checked
+                map.removeLayer(allTrees);
+                map.addLayer(userTrees);
+            } else {
+                // the checkbox is now no longer checked
+                map.removeLayer(userTrees);
+                map.addLayer(allTrees);
+            }
+        });
+
+
+        //Tree popup on marker click
+        var popupMarker = L.popup({
+            className: 'cardPopUp'
+        });
+
+        function markerOnClick(e, layer) {
+            popupMarker
+                .setLatLng(e.latlng)
+                .setContent(
+                    `
+                   <div class="card" style="width: 10rem; border: unset">
+                      <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'?>" class="card-img-top" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Nome: ` + this.options.user + `</p>
+                        <p class="card-text">Lat: ` + e.latlng.lat + `</p>
+                        <p class="card-text">Long: ` + e.latlng.lng + `</p>
+                        <button class="popBtn btn-success"  name="treeId" value='` + this.options.id + `' id="buttpop">Ver mais</button>
+                      </div>
+                    </div>
+                    `
+                )
+                // .className('cardPopUp');
+                .openOn(map);
+        }
+
+        //function to handler the button popup view
+        let eventHandlerAssigned = false;
+        map.on('popupopen', function () {
+            if (!eventHandlerAssigned && document.querySelector('.popBtn')) {
+                const link = document.querySelector('.popBtn')
+                link.addEventListener('click', function (e) {
+                    popBtn(e.target.value);
+                })
+                eventHandlerAssigned = true
+            }
+        })
+        map.on('popupclose', function () {
+            document.querySelector('.popBtn').removeEventListener('click', popBtn)
+            eventHandlerAssigned = false
+        })
+
+
+        // ajax to call user tree id
+        function popBtn(value) {
+            // event.preventDefault(); //prevent default action
+
+            let formData = {
+                'action': "userTreeView",
+                'data': value,
+            };
+            console.log(formData);
+
+            $.ajax({
+                url: "<?php echo HOME_URL . '/home/userTrees';?>",
+                dataType: "json",
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+                    // $("#deleteUserModal").modal('hide');
+
+                    if (data.statusCode === 200) {
+
+
+                        //Falta ver esta parte para mostrar os dados
+                        window.location.href = "<?php echo HOME_URL . '/home/userTrees';?>";
+
+
+
+                    } else {
+                        //mensagem de Error
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    }
+
+                },
+                error: function (data) {
+                    //mensagem de Error
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Connection error, please try again.",
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        didClose: () => {
+                            //location.reload();
+                        }
+                    });
+                }
+            });
+        }
+
     });
 
-    var blueIcon = L.icon({
-        iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-red.png',
-        shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
+    //Donation script////////////////////////////////////////////
+    $(document).ready(function () {
 
-        iconSize: [38, 95], // size of the icon
-        shadowSize: [50, 64], // size of the shadow
-        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-        shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+        $('#newDonation').submit(function (event) {
+            event.preventDefault(); //prevent default action
+            let formData = {
+                'action': "getDonation",
+                'data': $(this).serializeArray()
+            };
+            $.ajax({
+                url: "<?php echo HOME_URL . '/home/adoption';?>",
+                dataType: "json",
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+                    window.location.href = "<?php echo HOME_URL . '/home/adoption';?>";
+                },
+                error: function (data) {
+                    //mensagem de Error
+                    Swal.fire({
+                        title: 'Error!',
+                        text: "Connection error, please try again.",
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        didClose: () => {
+                            //location.reload();
+                        }
+                    });
+                },
+            });
+        });
+
+
+        //TODO rever o disable do botão de adoção
+        // //Function to lock the button
+        $(function () {
+            $('#d1').click(function () {
+                if ($(this).is(':checked')) {
+                    $('#subBtn').removeAttr('disabled');
+                } else {
+                    $('#alert').show();
+                    $('#subBtn').attr('disabled', 'disabled');
+                }
+            });
+        });
+
     });
-
-    let map = L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
-
-    var marker = L.marker([37.3174025204363, -8.566799289969723], {icon: greenIcon}).addTo(map);
-    var marker = L.marker([37.280008400415554, -8.554293570462498], {icon: blueIcon}).addTo(map);
-
-
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-        // attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox/streets-v11',
-        tileSize: 512,
-        zoomOffset: -1,
-        accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
-    }).addTo(map);
 
 
 </script>

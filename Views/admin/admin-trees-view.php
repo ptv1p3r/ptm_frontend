@@ -230,6 +230,47 @@
 
 
 <script>
+    // get tree first image
+    function getImg(tree_id){
+        let treeImagePath = "no image path";
+
+        let formData = {
+            'action' : "GetTreeImage",
+            'data'   : tree_id
+        };
+
+        $.ajax({
+            url : "<?php echo HOME_URL . '/admin/trees';?>",
+            dataType: "json",
+            type: 'POST',
+            async: false,
+            data : formData,
+            beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                $('#loader').removeClass('hidden')
+            },
+            success: function (data) {
+                treeImagePath = data["images"][0]["path"];
+            },
+            error: function (data) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: data.body.message,
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    didClose: () => {
+                        location.reload();
+                    }
+                });
+            },
+            complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                $('#loader').addClass('hidden')
+            }
+        });
+
+        return treeImagePath;
+    }
+
     $(document).ready(function() {
         //DATATABLES
         //Configura a dataTable
@@ -289,7 +330,12 @@
         function mapLoadTrees(){
             <?php if (!empty($this->userdata['treesList'])) {
                 foreach ($this->userdata['treesList'] as $key => $tree) {?>
-                    marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {icon: greenIcon, user: 'none'}).addTo(map).on("click", markerOnClick);
+                    marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
+                            icon: greenIcon,
+                            user: 'none',
+                            name: '<?php echo $tree["name"]?>',
+                            tree_id: '<?php echo $tree["id"]?>',
+                        }).addTo(map).on("click", markerOnClick);
                 <?php }
             }?>
         }
@@ -307,26 +353,24 @@
 
         //popup on marker click
         var popupMarker = L.popup();
-        function markerOnClick(e)
-        {
+        function markerOnClick(e) {
+            let image_path = getImg(this.options.tree_id);
             popupMarker
                 .setLatLng(e.latlng)
                 .setContent(
-                    `
-                    <div class="card" style="width: 10rem; border: unset">
-                      <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'?>" class="card-img-top" alt="">
+                    `<div class="card" style="width: 10rem; border: unset">
+                    <img id="tree-card-image" src="<?php echo API_URL . 'api/v1/trees/image/' ?>` + image_path + `" class="card-img-top" alt="" height="160">
                       <div class="card-body">
-                        <h5 class="card-title">Arvore exemplo</h5>
-                        <p class="card-text">Algo sobre a arvore.</p>
-                        <p class="card-text">Padrinho: ` + this.options.user + `</p>
+                        <h5 class="card-title">` + this.options.name + `</h5>
+                        <!--<p class="card-text text-truncate">` + this.options.description + `</p>-->
+                        <!--<p class="card-text">Padrinho: ` + this.options.user + `</p>-->
                         <p class="card-text">Latitude: ` + e.latlng.lat + `</p>
                         <p class="card-text">Longitude: ` + e.latlng.lng + `</p>
-                        <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
                       </div>
-                    </div>
-                    `
+                    </div>`
                 )
                 .openOn(map);
+
             //map.flyTo([e.latlng.lat, e.latlng.lng], 15);
         }
 

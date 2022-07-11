@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: V1p3r
- * Date: 19/01/2019
- * Time: 13:18
- */
 
 /**
  * Verifica chaves de arrays
@@ -71,6 +65,27 @@ function timeCalculation($time)
 }
 
 /**
+ * Metodo para ordenar arrays multidimencionais por um campo escolhido
+ * usage: array_orderby($array, 'campo', SORT_DESC); | https://www.php.net/manual/en/function.array-multisort.php#100534
+ * @return mixed|null
+ */
+function array_orderby() {
+    $args = func_get_args();
+    $data = array_shift($args);
+    foreach ($args as $n => $field) {
+        if (is_string($field)) {
+            $tmp = array();
+            foreach ($data as $key => $row)
+                $tmp[$key] = $row[$field];
+            $args[$n] = $tmp;
+        }
+    }
+    $args[] = &$data;
+    call_user_func_array('array_multisort', $args);
+    return array_pop($args);
+}
+
+/**
  * Metodo que efetua os pedidos a api e retorna os valores
  * @param $method
  * @param $url
@@ -83,12 +98,26 @@ function callAPI($method, $url, $data, $token = "")
 {
     $curl = curl_init();
 
+    if(isset($data["file"]) && !empty($data["file"])){
+        $header = "multipart/form-data";
+    } else {
+        $header = "application/json";
+    }
+
     switch ($method) {
         case "POST":
             curl_setopt($curl, CURLOPT_POST, 1);
-            if ($data)
-                curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+            if ($data){
+                //se existir ficheiro
+                if(isset($data['file']) && !empty($data['file'])){
+                    //constroi o post de maineira diferente
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+                } else {
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+                }
+            }
             break;
+
         case "PUT":
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
             if ($data)
@@ -117,8 +146,7 @@ function callAPI($method, $url, $data, $token = "")
     curl_setopt($curl, CURLOPT_URL, $url);
     curl_setopt($curl, CURLOPT_HTTPHEADER, array(
         'Authorization: ' . $token,
-        'Content-Type: application/json'
-        //"Content-Type: application/form-data"
+        'Content-Type: ' . $header
     ));
     curl_setopt($curl, CURLOPT_HEADER, true);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
