@@ -155,14 +155,14 @@
                                                                 <div class="modal-dialog">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header bg-blue">
-                                                                            <h4 class="modal-title"><i class="fa fa-envelope"></i> Compose New Message</h4>
+                                                                            <h4 class="modal-title"><i class="fa fa-envelope"></i> Nova mensagem</h4>
                                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                         </div>
                                                                         <form id="addMessage">
                                                                             <div class="modal-body">
                                                                                 <input id="addMessageFromUser" name="addMessageFromUser" type="hidden" class="form-control" value="<?php echo $_SESSION["userdata"]["id"];?>">
                                                                                 <div class="form-group">
-                                                                                    <label>Message to</label>
+                                                                                    <label>Para</label>
                                                                                     <select name="addMessageToUser" id="addMessageToUser" required>
                                                                                         <option value="" disabled selected>Selecione o recetor:</option>
                                                                                         <?php if (!empty($this->userdata['usersList'])) {
@@ -173,17 +173,17 @@
                                                                                     </select>
                                                                                 </div>
                                                                                 <div class="form-group">
-                                                                                    <label>Subject</label>
+                                                                                    <label>Assunto</label>
                                                                                     <input name="addMessageSubject" type="text" class="form-control" maxlength="30" required>
                                                                                 </div>
                                                                                 <div class="form-group">
-                                                                                    <label>Message</label>
+                                                                                    <label>Mensagem</label>
                                                                                     <textarea name="addMessageMessage" class="form-control" style="height: 120px;" maxlength="350" required></textarea>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="modal-footer">
-                                                                                <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-times"></i> Discard</button>
-                                                                                <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-envelope"></i> Send Message</button>
+                                                                                <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
+                                                                                <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-envelope"></i> Enviar</button>
                                                                             </div>
                                                                         </form>
                                                                     </div>
@@ -223,7 +223,7 @@
                                 <input id="deleteMessageId" name="deleteMessageId" type="hidden" class="form-control" value="">
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                 <input type="submit" class="btn btn-danger" value="Delete">
                             </div>
                         </form>
@@ -237,17 +237,17 @@
                     <div class="modal-content">
                         <form id="bulkDeleteMessages">
                             <div class="modal-header">
-                                <h4 class="modal-title">Delete Messages</h4>
+                                <h4 class="modal-title">Apagar mensagens</h4>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <p>Are you sure you want to delete <strong>ALL</strong> selected messages?</p>
-                                <p class="text-warning"><small>This action cannot be undone.</small></p>
+                                <p>Tem a certeza que quer apagar <strong>TODAS</strong> as mensagens selecionadas?</p>
+                                <p class="text-warning"><small>A ação não pode ser defeita.</small></p>
                                 <!--<input id="deleteMessageId" name="deleteMessageId" type="hidden" class="form-control" value="">-->
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <input type="submit" class="btn btn-danger" value="Delete all">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <input type="submit" class="btn btn-danger" value="Apagar todas">
                             </div>
                         </form>
                     </div>

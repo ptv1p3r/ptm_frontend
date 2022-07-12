@@ -318,7 +318,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Deseja apagar esse utilizador?</p>
+                            <p>Tem a certeza que quer apagar este utilizador?</p>
                             <p class="text-warning"><small>A ação não pode ser defeita.</small></p>
                             <input id="deleteUserId" name="deleteUserId" type="hidden" class="form-control">
                         </div>
@@ -381,7 +381,7 @@
                     if (data.statusCode === 201){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -393,7 +393,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -408,8 +408,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -467,7 +467,7 @@
                     if (data.statusCode === 200){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -479,7 +479,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -494,8 +494,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -560,7 +560,7 @@
                 },
                 error: function (data) {
                     Swal.fire({
-                        title: 'Error!',
+                        title: 'Erro!',
                         text: data['message'],
                         icon: 'error',
                         showConfirmButton: false,
@@ -600,7 +600,7 @@
                     if (data.statusCode === 200){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -612,7 +612,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -627,8 +627,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
