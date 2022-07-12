@@ -188,7 +188,10 @@ class AdminTreesUsersModel extends MainModel {
      */
     public function updateTree($data) {
         $result = null;
-        $TreeId = null;
+
+        $userId = null;
+        $treeId = null;
+
         $normalizedData = array();
 
         // Not active by default
@@ -198,40 +201,24 @@ class AdminTreesUsersModel extends MainModel {
         foreach ($data as $dataVector) {
             foreach ($dataVector as $key => $value) {
                 switch ($dataVector['name']){ //gets <input name="">
+                    case "editUserId":
+                        $userId = $dataVector['value'];
+                        break;
+
                     case "editTreeId":
-                        $TreeId = $dataVector['value'];
+                        $treeId = $dataVector['value'];
                         break;
 
-                    case "editTreeName":
-                        $normalizedData['name'] = $dataVector['value'];
+                    case "editTreeUserUserId":
+                        $normalizedData['userId'] = $dataVector['value'];
                         break;
 
-                    case "editTreeNameCommon":
-                        $normalizedData['nameCommon'] = $dataVector['value'];
-                        break;
-
-                    case "editTreeDescription":
-                        $normalizedData['description'] = $dataVector['value'];
-                        break;
-
-                    case "editTreeObservations":
-                        $normalizedData['observations'] = $dataVector['value'];
-                        break;
-
-                    case "editTreeTypeId":
-                        $normalizedData['typeId'] = (int) $dataVector['value'];
-                        break;
-
-                    case "editTreeLat":
-                        $normalizedData['lat'] = (float) $dataVector['value'];
-                        break;
-
-                    case "editTreeLng":
-                        $normalizedData['lng'] = (float) $dataVector['value'];
+                    case "editTreeUserTreeId":
+                        $normalizedData['treeId'] = $dataVector['value'];
                         break;
                 }
 
-                if ($dataVector['name'] == "editTreeActive"){
+                if ($dataVector['name'] == "editTreeUserActive"){
                     $normalizedData['active'] = "1";
                 } else {
                     $normalizedData['active'] = "0";
@@ -239,7 +226,7 @@ class AdminTreesUsersModel extends MainModel {
             }
         }
 
-        $url = API_URL . 'api/v1/user/trees/edit/' . $TreeId;
+        $url = API_URL . 'api/v1/user/trees/edit/' . $userId . '/' . $treeId;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("PUT", $url, $normalizedData, $userToken);

@@ -65,6 +65,22 @@ function timeCalculation($time)
 }
 
 /**
+ * Metodo para converter tamanhos de ficheiro para (KB, MB, GB, TB, PB)
+ * usage: echo formatBytes('1073741824'); //1GB || https://www.html-code-generator.com/php/function/convert-bytes
+ * @param $bytes
+ * @return int|string
+ */
+function formatBytes($bytes) {
+    if ($bytes > 0) {
+        $i = floor(log($bytes) / log(1024));
+        $sizes = array('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+        return sprintf('%.02F', round($bytes / pow(1024, $i),1)) * 1 . ' ' . @$sizes[$i];
+    } else {
+        return 0;
+    }
+}
+
+/**
  * Metodo para ordenar arrays multidimencionais por um campo escolhido
  * usage: array_orderby($array, 'campo', SORT_DESC); | https://www.php.net/manual/en/function.array-multisort.php#100534
  * @return mixed|null

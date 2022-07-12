@@ -1246,7 +1246,7 @@ class AdminController extends MainController
         $this->title = 'Admin - Adoções';
 
         // Permissoes da pagina
-        $this->permission_required = array('admLogin'/*,'usersTreesRead'*/);
+        $this->permission_required = array('admLogin','usersTreesRead');
 
         // Estado da sidebar
         // se ja existir uma active tab
@@ -1309,7 +1309,7 @@ class AdminController extends MainController
                     break;
 
                 case 'AddTreeUser' :
-                    /*$this->permission_required = array('usersTreesCreate');
+                    $this->permission_required = array('usersTreesCreate');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
@@ -1317,7 +1317,7 @@ class AdminController extends MainController
 
                         echo json_encode($apiResponse);
                         break;
-                    }*/
+                    }
 
                     $data = $_POST['data'];
                     $apiResponse = $modelo->addTreeUser($data); //decode to check message from api
@@ -1327,7 +1327,6 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->addTreeUser($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // quando statusCode = 201, a response nao vem com campo mensagem
@@ -1343,7 +1342,7 @@ class AdminController extends MainController
                     break;
 
                 case 'UpdateTreeUser' :
-                    /*$this->permission_required = array('usersTreesUpdate');
+                    $this->permission_required = array('usersTreesUpdate');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
@@ -1351,7 +1350,7 @@ class AdminController extends MainController
 
                         echo json_encode($apiResponse);
                         break;
-                    }*/
+                    }
 
                     $data = $_POST['data'];
                     $apiResponse = $modelo->updateTree($data); //decode to check message from api
@@ -1361,7 +1360,6 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->updateTree($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
@@ -1373,7 +1371,7 @@ class AdminController extends MainController
                     break;
 
                 case 'DeleteTreeUser' :
-                    /*$this->permission_required = array('usersTreesDelete');
+                    $this->permission_required = array('usersTreesDelete');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
@@ -1381,7 +1379,7 @@ class AdminController extends MainController
 
                         echo json_encode($apiResponse);
                         break;
-                    }*/
+                    }
 
                     $data = $_POST['data'];
                     $apiResponse = $modelo->deleteTreeUser($data); //decode to check message from api
@@ -1391,7 +1389,6 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->deleteTreeUser($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful

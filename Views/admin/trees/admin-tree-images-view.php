@@ -20,45 +20,50 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <a href="#addTreeImageModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTreeImageModal">
-                                    <i class="fas fa-plus-circle"></i><span>Add New Image</span>
+                                    <i class="fas fa-plus-circle"></i><span> Nova imagem</span>
                                 </a>
+                                <!--<div class="float-end">
+                                    <label>filtro:</label>
+                                    <select id='GetActive'>
+                                        <option value=''>Todos</option>
+                                        <option value='1'>Ativos</option>
+                                        <option value='0'>Inativos</option>
+                                    </select>
+                                </div>-->
                             </div>
                             <div class="card-body">
-                                <table id="treeImagesTable" class="table table-striped table-hover">
+                                <table id="treeImagesTable" class="table table-striped table-hover" style="width: 100%">
                                     <thead>
                                     <tr>
                                         <!--<th>id</th>-->
-                                        <th>treeId</th>
+                                        <th>Árvore</th>
                                         <!--<th>name</th>-->
-                                        <th>image</th>
-                                        <th>description</th>
-                                        <th>size</th>
-                                        <th>position</th>
-                                        <!--<th>active
-                                            <select id='GetActive'>
-                                                <option value=''>All</option>
-                                                <option value='1'>Active</option>
-                                                <option value='0'>Inactive</option>
-                                            </select>
-                                        </th>-->
+                                        <th>Imagem</th>
+                                        <th>Descrição</th>
+                                        <th>Tamanho</th>
+                                        <th>Posição</th>
+                                        <!--<th>active</th>-->
                                         <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <?php if (!empty($this->userdata['treeImageList'])) {
-                                        foreach ($this->userdata['treeImageList'] as $key => $treeImage) { ?>
+                                        foreach ($this->userdata['treeImageList'] as $key => $treeImage) {?>
                                             <tr>
                                                 <!--<td><?php //echo $treeImage["id"] ?></td>-->
                                                 <td><?php echo $treeImage["treeId"] ?></td>
                                                 <!--<td><?php //echo $treeImage["name"] ?></td>-->
                                                 <td> <img src="<?php echo API_URL . 'api/v1/trees/image/' . $treeImage["path"] ?>" width="72" height="72" style="cursor: zoom-in" onclick="window.open(this.src, '_blank');"></td>
                                                 <td><?php echo $treeImage["description"] ?></td>
-                                                <td><?php echo $treeImage["size"] ?></td>
+                                                <td><?php echo formatBytes($treeImage["size"]) ?></td>
                                                 <td><?php echo $treeImage["position"] ?></td>
-                                                <!--<td><?php //echo $treeImage["active"] ?></td>-->
+                                                <!--<td hidden><?php //echo $treeImage["active"] ?></td>-->
                                                 <td>
-                                                    <!--<a href="#editTreeImageModal" id="<?php //echo $treeImage['id'] ?>" data-ImagePath="<?php //echo $treeImage['path'] ?>" class="edit" data-bs-toggle="modal" data-bs-target="#editTreeModal"><i class="far fa-edit"></i></a>-->
-                                                    <a href="#deleteTreeImageModal" id="<?php echo $treeImage['id'] ?>" data-ImagePath="<?php echo $treeImage['path'] ?>" class="delete" data-bs-toggle="modal" data-bs-target="#deleteTreeModal"><i class="fas fa-trash-alt"></i></a>
+                                                    <div class="float-end">
+                                                        <!--<a href="#editTreeImageModal" id="<?php //echo $treeImage['id'] ?>" data-ImagePath="<?php //echo $treeImage['path'] ?>" class="edit" data-bs-toggle="modal" data-bs-target="#editTreeModal"><i class="far fa-edit"></i></a>-->
+                                                        <a href="#deleteTreeImageModal" id="<?php echo $treeImage['id'] ?>" data-ImagePath="<?php echo $treeImage['path'] ?>" class="delete m-2"
+                                                           data-bs-toggle="modal" data-bs-target="#deleteTreeModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         <?php }
@@ -80,31 +85,31 @@
         <!-- MODALS -->
         <!-- Add Modal HTML -->
         <div id="addTreeImageModal" class="modal fade" tabindex="-1" aria-labelledby="addTreeImageModal-Label" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
+            <div class="modal-dialog"> <!--modal-xl-->
                 <div class="modal-content">
                     <form id="addTreeImage" enctype="multipart/form-data" method="post">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Tree Image</h4>
+                            <h4 class="modal-title">Adicionar imagem</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
 
                             <div class="form-group">
-                                <label>treeId</label>
+                                <label>Árvore</label>
                                 <input type="text" class="form-control" name="addTreeImageTreeId" required>
                             </div>
                             <div class="form-group">
-                                <label>order</label>
+                                <label>Ordem de imagem</label>
                                 <input type="text" class="form-control" name="addTreeImageOrder" required>
                             </div>
                             <div class="form-group">
-                                <label>description</label>
+                                <label>Descrição</label>
                                 <input type="text" class="form-control" name="addTreeImageDescription" required>
                             </div>
                             <div class="form-group">
-                                <label>Image</label>
+                                <label>Imagem</label>
                                 <input id="file" type="file" class="form-control" name="file">
-                                <img id='img-upload' class="img-thumbnail"/>
+                                <!--<img id='img-upload' class="img-thumbnail"/>-->
                             </div>
                             <!-- <div class="form-group">
                                  <label>Active</label>
@@ -113,8 +118,8 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-success" value="Add">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-success" value="Adicionar">
                         </div>
                     </form>
                 </div>
@@ -173,17 +178,17 @@
                 <div class="modal-content">
                     <form id="deleteTreeImage">
                         <div class="modal-header">
-                            <h4 class="modal-title">Delete Tree</h4>
+                            <h4 class="modal-title">Apagar imagem</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Are you sure you want to delete this Tree?</p>
-                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                            <p>Tem a certeza que quer apagar esta imagem?</p>
+                            <p class="text-warning"><small>A ação não pode ser defeita.</small></p>
                             <input id="deleteTreeImageId" name="deleteTreeImageId" type="hidden" class="form-control" value="">
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-danger" value="Delete">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-danger" value="Apagar">
                         </div>
                     </form>
                 </div>
@@ -202,7 +207,10 @@
                         columnDefs: [ {
                             targets: [5],
                             orderable: false,
-                        }]
+                        }],
+                        oLanguage: {
+                            "sUrl": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-PT.json"
+                        }
                     });
                     //filtra table se ativo, inativo ou mostra todos
                     /*$('#GetActive').on('change', function() {

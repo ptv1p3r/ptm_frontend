@@ -25,7 +25,7 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <a href="#addTreeUserModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTreeUserModal">
-                                    <i class="fas fa-plus-circle"></i><span>Nova adoção</span>
+                                    <i class="fas fa-plus-circle"></i><span> Nova adoção</span>
                                 </a>
                                 <div class="float-end">
                                     <label>filtro:</label>
@@ -37,7 +37,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table id="treesUsersTable" class="table table-striped table-hover">
+                                <table id="treesUsersTable" class="table table-striped table-hover" style="width:100%">
                                     <thead>
                                     <tr>
                                         <th>Utilizador</th>
@@ -121,9 +121,10 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <!--<div class="form-group">
+                            <div class="form-group">
+                                <input id="editUserId" name="editUserId" type="hidden" class="form-control" value="">
                                 <input id="editTreeId" name="editTreeId" type="hidden" class="form-control" value="">
-                            </div>-->
+                            </div>
 
                             <div class="form-group">
                                 <label>Utilizador</label>
@@ -172,19 +173,6 @@
             </div>
         </div>
 
-        <!-- Logout Modal HTML
-    <div id="logoutModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4>Logout <i class="fa fa-lock"></i></h4>
-                </div>
-                <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
-                <div class="modal-footer"><a href="<?php //echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
-            </div>
-        </div>
-    </div>-->
-
 
 <script>
     $(document).ready(function() {
@@ -197,7 +185,10 @@
                 columnDefs: [ {
                     targets: [2,3],
                     orderable: false,
-                }]
+                }],
+                oLanguage: {
+                    "sUrl": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-PT.json"
+                }
             });
             //filtra table se ativo, inativo ou mostra todos
             $('#GetActive').on('change', function() {
@@ -207,9 +198,6 @@
         } catch (error){
             console.log(error)
         }
-
-
-
 
 
         // TreesMap
@@ -475,6 +463,8 @@
                 },
                 success: function (data) {
 
+                    $('[name="editUserId"]').val(data[0]['userId']);
+                    $('[name="editTreeId"]').val(data[0]['treeId']);
                     $('[name="editTreeUserUserId"]').val(data[0]['userId']);
                     $('[name="editTreeUserTreeId"]').val(data[0]['treeId']);
 
