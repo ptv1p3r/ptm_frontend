@@ -644,21 +644,38 @@ class AdminController extends MainController
 
             //get users list
             $userList = $modelo->getUserList();
-            if ($userList["statusCode"] === 200){
-                $this->userdata['usersList'] = $userList["body"]["users"];
-            }
             if ($userList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $userList = $modelo->getUserList();
+            }
+            if ($userList["statusCode"] === 200){
                 $this->userdata['usersList'] = $userList["body"]["users"];
             }
 
             //get country list
             $countryList = $modelo->getCountryList();
-            if ($countryList["statusCode"] != 401){
+            if ($countryList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $countryList = $modelo->getCountryList();
+            }
+            if ($countryList["statusCode"] === 200){
                 $this->userdata['countryList'] = $countryList["body"]["countries"];
+            }
+
+            //get group list
+            $groupsList = $modelo->getGroupList();
+            if ($groupsList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $groupsList = $modelo->getGroupList();
+            }
+            if ($groupsList["statusCode"] === 200){
+                $this->userdata['groupsList'] = $groupsList["body"]["groups"];
             }
 
             /**Carrega os arquivos do view**/

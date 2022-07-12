@@ -51,9 +51,17 @@
                                             <tr>
                                                 <td><?php echo $user["id"] ?></td>
                                                 <td><?php echo $user["name"] ?></td>
-                                                <td><?php echo $user["entity"] ?></td>
+                                                <td><?php echo (empty($user["entity"])) ? "Vazio" : $user["entity"] ?></td>
                                                 <td><?php echo $user["email"] ?></td>
-                                                <td><?php echo $user["groupId"] ?></td>
+                                                <td><?php
+                                                    if (!empty($this->userdata['groupsList'])) {
+                                                        foreach ($this->userdata['groupsList'] as $key => $group) {
+                                                            if ( $group["id"] == $user["groupId"]){
+                                                                echo $group["name"];
+                                                            }
+                                                        }
+                                                    }?>
+                                                </td>
                                                 <td><?php
                                                     if (!empty($this->userdata['countryList'])) {
                                                         foreach ($this->userdata['countryList'] as $key => $country) {
@@ -66,13 +74,13 @@
                                                 <td hidden><?php echo $user["active"] ?></td>
                                                 <td>
                                                     <div class="float-end">
-                                                    <?php if($user["id"] !== $_SESSION["userdata"]["id"]) { //if list user id is iqual to whats in the $_SESSION, dont show the edit button?>
+                                                    <?php if($user["id"] !== $_SESSION["userdata"]["id"]) { //if list user id is equal to whats in the $_SESSION, dont show the edit button?>
                                                         <a href="#editUserModal" id="<?php echo $user['email'] ?>" class="edit m-2" title="Editar"
                                                            data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="far fa-edit fa-lg"></i></a>
-                                                    <?php }?>
 
-                                                    <a href="#deleteUserModal" id="<?php echo $user['id'] ?>" class="delete m-2" title="Apagar"
-                                                       data-bs-toggle="modal" data-bs-target="#deleteUserModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                        <a href="#deleteUserModal" id="<?php echo $user['id'] ?>" class="delete m-2" title="Apagar"
+                                                           data-bs-toggle="modal" data-bs-target="#deleteUserModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                    <?php }?>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -157,11 +165,11 @@
                                 </select>-->
                             </div>
                             <div class="form-group">
-                                <label>Cidade</label>
+                                <label>Localidade</label>
                                 <input type="text" class="form-control" name="addUserLocality" required>
                             </div>
                             <div class="form-group">
-                                <label>Mobile</label>
+                                <label>Telefone</label>
                                 <input type="text" class="form-control" name="addUserMobile" maxlength="9" required>
                             </div>
                             <div class="form-group">
@@ -263,11 +271,11 @@
                                 </select>-->
                             </div>
                             <div class="form-group">
-                                <label>Cidade</label>
+                                <label>Localidade</label>
                                 <input type="text" class="form-control" name="editUserLocality" required>
                             </div>
                             <div class="form-group">
-                                <label>Telemóvel</label>
+                                <label>Telefone</label>
                                 <input type="text" class="form-control" name="editUserMobile" required>
                             </div>
                             <div class="form-group">

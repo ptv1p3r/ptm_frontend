@@ -57,7 +57,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label>Nif:</label>
+                                            <label>NIF:</label>
                                             <input type="text" class="form-control" name="editAdminNif" value="<?php echo $_SESSION["userdata"]["nif"] ?>" required>
                                         </div>
                                         <div class="form-group">

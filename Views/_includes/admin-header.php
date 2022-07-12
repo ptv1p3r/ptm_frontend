@@ -86,7 +86,7 @@
                 </a>
                 <!-- Dropdown - Messages -->
                 <div class="dropdown-menu dropdown-menu-end" style="width: 20rem !important;">
-                    <h6 class="dropdown-header">Message Center</h6>
+                    <h6 class="dropdown-header">Centro de mensagens</h6>
 
                     <!-- show only the last 5 messages -->
                     <?php if (!empty($this->userdata['userMessageList'])) {
@@ -104,7 +104,7 @@
                         }
                     }?>
 
-                    <a class="dropdown-item text-center small text-gray-500" href="<?php echo HOME_URL . '/admin/messages/inbox';?>">Read More Messages</a>
+                    <a class="dropdown-item text-center small text-gray-500" href="<?php echo HOME_URL . '/admin/messages/inbox';?>">Todas as minhas mensagens</a>
                 </div>
             </li>
 
@@ -114,7 +114,7 @@
                     <i class="fas fa-user fa-fw"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="<?php echo HOME_URL . '/admin/settings';?>">Settings</a></li>
+                    <li><a class="dropdown-item" href="<?php echo HOME_URL . '/admin/settings';?>">Perfil</a></li>
                     <li><hr class="dropdown-divider" /></li>
                     <li><a class="dropdown-item" href="<?php echo HOME_URL . '/admin/applogout';?>">Logout</a></li>
                 </ul>
