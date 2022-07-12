@@ -214,17 +214,17 @@
                     <div class="modal-content">
                         <form id="deleteMessage">
                             <div class="modal-header">
-                                <h4 class="modal-title">Delete Message</h4>
+                                <h4 class="modal-title">Apagar mensagem</h4>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <p>Are you sure you want to delete this Message?</p>
-                                <p class="text-warning"><small>This action cannot be undone.</small></p>
+                                <p>Tem a certeza que quer apagar esta mensagen?</p>
+                                <p class="text-warning"><small>A ação não pode ser defeita.</small></p>
                                 <input id="deleteMessageId" name="deleteMessageId" type="hidden" class="form-control" value="">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <input type="submit" class="btn btn-danger" value="Delete">
+                                <input type="submit" class="btn btn-danger" value="Apagar">
                             </div>
                         </form>
                     </div>
