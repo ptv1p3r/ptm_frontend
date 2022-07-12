@@ -18,7 +18,7 @@
         <div _ngcontent-serverapp-c180="" class="col-lg-8">
             <h2 _ngcontent-serverapp-c180="" class="d-flex align-items-center line-height-normal mb-4">
                 <div _ngcontent-serverapp-c180="">
-                    <i class="fas fa-home" style="color: #1c7430"></i>
+                    <i class="fas fa-home" style="color: #1c7430" text-center mr-1></i>
                     </fa-icon>
                 </div>
                 &nbsp;&nbsp;Onde estamos
@@ -30,8 +30,8 @@
                     Regulamento</b></h2>
             <!--Section 1-->
             <!-- Article 1 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 1º</h4>
-            <h3 _ngcontent-serverapp-c180="">Colaboração</h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 1º</h3>
+            <h5 _ngcontent-serverapp-c180="">Colaboração</h5>
             <p _ngcontent-serverapp-c180="">O presente regulamento tem como finalidade disciplinar o programa “Adote
                 uma Árvore” dinamizado pelos alunos do curso de Direito
                 do ISMAT – Instituto Superior Manuel Teixeira Gomes, em Portimão, no âmbito da unidade curricular
@@ -39,9 +39,9 @@
                 Ambiente</p>
             <!-- End article 1 -->
             <!-- Article 2 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 2º</h4>
-            <h3 _ngcontent-serverapp-c180="">Disposições Gerais
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 2º</h3>
+            <h5 _ngcontent-serverapp-c180="">Disposições Gerais
+            </h5>
             <p _ngcontent-serverapp-c180="">Para além do curso de Direito, a elaboração e desenvolvimento do
                 presente projeto tem a colaboração de vários cursos lecionados no
                 ISMAT promovendo a/uma interdisciplinaridade, nomeadamente:</p>
@@ -61,9 +61,9 @@
             </ul>
             <!-- End article 2 -->
             <!-- Article 3 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 3º</h4>
-            <h3 _ngcontent-serverapp-c180="">Objetivos
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 3º</h3>
+            <h5 _ngcontent-serverapp-c180="">Objetivos
+            </h5>
             <p _ngcontent-serverapp-c180="">São objetivos do projeto:
             </p>
             <ul _ngcontent-serverapp-c180="">
@@ -88,9 +88,9 @@
             </ul>
             <!-- End article 3 -->
             <!-- Article 4 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 4º</h4>
-            <h3 _ngcontent-serverapp-c180="">Objetivos Específicos
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 4º</h3>
+            <h5 _ngcontent-serverapp-c180="">Objetivos Específicos
+            </h5>
             <p _ngcontent-serverapp-c180="">São objetivos específicos do projeto:
             </p>
             <ul _ngcontent-serverapp-c180="">
@@ -113,9 +113,9 @@
                     Elaboração e Execução dos Projetos de Reflorestação
                 </b></h2>
             <!-- Article 5 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 5º</h4>
-            <h3 _ngcontent-serverapp-c180="">Acesso à Plataforma
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 5º</h3>
+            <h5 _ngcontent-serverapp-c180="">Acesso à Plataforma
+            </h5>
             <p _ngcontent-serverapp-c180="">São objetivos específicos do projeto:
             </p>
             <ol _ngcontent-serverapp-c180="">
@@ -145,9 +145,9 @@
             </ul>
             <!-- End article 5 -->
             <!-- Article 6 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 6º</h4>
-            <h3 _ngcontent-serverapp-c180="">Identificação
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 6º</h3>
+            <h5 _ngcontent-serverapp-c180="">Identificação
+            </h5>
             <ul _ngcontent-serverapp-c180="">
                 <li _ngcontent-serverapp-c180="" style="list-style-type:lower-alpha">Identificação do Adotante;
                 </li>
@@ -162,9 +162,9 @@
             </ul>
             <!-- End article 6 -->
             <!-- Article 7 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 7º</h4>
-            <h3 _ngcontent-serverapp-c180="">Plantação
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 7º</h3>
+            <h5 _ngcontent-serverapp-c180="">Plantação
+            </h5>
             <ol _ngcontent-serverapp-c180="">
                 <li _ngcontent-serverapp-c180="">As plantações serão efetuadas sazonalmente em data a referir pelo
                     Município.
@@ -181,25 +181,25 @@
             </ol>
             <!-- End article 7 -->
             <!-- Article 8 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 8º</h4>
-            <h3 _ngcontent-serverapp-c180="">Assegurar a plantação
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 8º</h3>
+            <h5 _ngcontent-serverapp-c180="">Assegurar a plantação
+            </h5>
             <p>Na impossibilidade do adotante se deslocar ao local de plantação na data designada,
                 caberá ao Município assegurar a plantação da árvore adotada.</p>
             <!-- End article 8 -->
             <!-- Article 9 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 9º</h4>
-            <h3 _ngcontent-serverapp-c180="">Localização
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 9º</h3>
+            <h5 _ngcontent-serverapp-c180="">Localização
+            </h5>
             <p>Após a plantação serão disponibilizadas na plataforma as coordenadas de cada árvore
                 com o objetivo do adotante acompanhar de forma real o crescimento e a evolução da
                 mesma.
             </p>
             <!-- End article 9 -->
             <!-- Article 10 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 10º</h4>
-            <h3 _ngcontent-serverapp-c180="">Manutenção e preservação
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 10º</h3>
+            <h5 _ngcontent-serverapp-c180="">Manutenção e preservação
+            </h5>
             <p>Caberá as partes envolvidas em coordenação com o Município designar a melhor forma
                 de preservação e manutenção das arvores adotadas com vista a assegurar o saudável
                 crescimento das mesmas.
@@ -210,9 +210,9 @@
                     Captação e Aplicação dos Recursos
                 </b></h2>
             <!-- Article 11 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 11º</h4>
-            <h3 _ngcontent-serverapp-c180="">Custos
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 11º</h3>
+            <h5 _ngcontent-serverapp-c180="">Custos
+            </h5>
             <ol _ngcontent-serverapp-c180="">
                 <li _ngcontent-serverapp-c180="">Cada árvore adotada tem um custo 2,50€.
                 </li>
@@ -224,9 +224,9 @@
             </ol>
             <!-- End article 11 -->
             <!-- Article 12 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 12º</h4>
-            <h3 _ngcontent-serverapp-c180="">Formas de pagamento
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 12º</h3>
+            <h5 _ngcontent-serverapp-c180="">Formas de pagamento
+            </h5>
             <ol _ngcontent-serverapp-c180="">
                 <li _ngcontent-serverapp-c180="">O adotante pode realizar o pagamento das árvores adotadas por um
                     dos seguintes
@@ -249,9 +249,9 @@
             </ul>
             <!-- End article 12 -->
             <!-- Article 13 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 13º</h4>
-            <h3 _ngcontent-serverapp-c180="">Gestão e aplicação de recursos
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 13º</h3>
+            <h5 _ngcontent-serverapp-c180="">Gestão e aplicação de recursos
+            </h5>
             <ol _ngcontent-serverapp-c180="">
                 <li _ngcontent-serverapp-c180="">Será criada uma conta bancária com o nome “Adote uma árvore” onde
                     serão
@@ -268,25 +268,25 @@
             </ol>
             <!-- End article 13 -->
             <!-- Article 14 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 14º</h4>
-            <h3 _ngcontent-serverapp-c180="">Divulgação
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 14º</h3>
+            <h5 _ngcontent-serverapp-c180="">Divulgação
+            </h5>
             <p>A divulgação do projeto cabe a todas as partes envolvidas, sendo cada uma responsável
                 pela informação que prestar.
             </p>
             <!-- End article 14 -->
             <!-- Article 15 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 15º</h4>
-            <h3 _ngcontent-serverapp-c180="">Fiscalização
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 15º</h3>
+            <h5 _ngcontent-serverapp-c180="">Fiscalização
+            </h5>
             <p>Compete ao Município de Monchique a fiscalização e supervisão das atividades previstas
                 no presente Regulamento.
             </p>
             <!-- End article 15 -->
             <!-- Article 16 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 16º</h4>
-            <h3 _ngcontent-serverapp-c180="">Gestão e aplicação de recursos
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 16º</h3>
+            <h5 _ngcontent-serverapp-c180="">Gestão e aplicação de recursos
+            </h5>
             <ol _ngcontent-serverapp-c180="">
                 <li _ngcontent-serverapp-c180="">Qualquer Município pode aderir ao presente projeto, podendo fazê-lo
                     através da
@@ -307,25 +307,25 @@
             </ol>
             <!-- End article 16 -->
             <!-- Article 17 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 17º</h4>
-            <h3 _ngcontent-serverapp-c180="">Registo na Plataforma
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 17º</h3>
+            <h5 _ngcontent-serverapp-c180="">Registo na Plataforma
+            </h5>
             <p>Todos os elementos registados pelo adotante na plataforma têm carácter individual e
                 intransmissível.
             </p>
             <!-- End article 17 -->
             <!-- Article 18 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 18º</h4>
-            <h3 _ngcontent-serverapp-c180="">Informação
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 18º</h3>
+            <h5 _ngcontent-serverapp-c180="">Informação
+            </h5>
             <p>Todas as informações relevantes que digam respeito ao projeto serão atualizadas
                 constantemente na plataforma.
             </p>
             <!-- End article 18 -->
             <!-- Article 19 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 19º</h4>
-            <h3 _ngcontent-serverapp-c180="">Política de privacidade e dados pessoais
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 19º</h3>
+            <h5 _ngcontent-serverapp-c180="">Política de privacidade e dados pessoais
+            </h5>
             <p>É garantida a salvaguarda do direito à proteção dos dados pessoais, nos termos do
                 disposto na Lei n.º 67/98, de 26 de outubro (Lei da Proteção dos Dados Pessoais), que
                 sejam prestados voluntariamente pelo seu titular, utilizador da plataforma, e cujo
@@ -337,9 +337,9 @@
             <h2 _ngcontent-serverapp-c180="" class="d-flex align-items-center line-height-normal mb-4"><b>
                     Condições de acesso e utilização da plataforma </b></h2>
             <!-- Article 20 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 20º</h4>
-            <h3 _ngcontent-serverapp-c180="">Condições de acesso
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 20º</h3>
+            <h5 _ngcontent-serverapp-c180="">Condições de acesso
+            </h5>
             <ol _ngcontent-serverapp-c180="">
                 <li _ngcontent-serverapp-c180="">O acesso e a utilização da área reservada da plataforma, depende da
                     aceitação sem
@@ -352,9 +352,9 @@
             </ol>
             <!-- End article 20 -->
             <!-- Article 21 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 21º</h4>
-            <h3 _ngcontent-serverapp-c180="">Alterações do regulamento
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 21º</h3>
+            <h5 _ngcontent-serverapp-c180="">Alterações do regulamento
+            </h5>
             <p>À administração reserva-se o direito de, a qualquer momento, proceder a reajustamentos
                 ou alterações ao presente regulamento e às condições nele constantes, sendo essas
                 alterações devidamente publicitadas na plataforma.
@@ -364,18 +364,18 @@
             <h2 _ngcontent-serverapp-c180="" class="d-flex align-items-center line-height-normal mb-4"><b>
                     Regras de conduta e responsabilidades do utilizador</b></h2>
             <!-- Article 22 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 22º</h4>
-            <h3 _ngcontent-serverapp-c180="">Boa conduta
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 22º</h3>
+            <h5 _ngcontent-serverapp-c180="">Boa conduta
+            </h5>
             <p>Na participação das atividades constantes na plataforma, cada utilizador deve observar
                 um dever geral de boa conduta, promovendo um ambiente digital propício à
                 aprendizagem.
             </p>
             <!-- End article 22 -->
             <!-- Article 23 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 23º</h4>
-            <h3 _ngcontent-serverapp-c180="">Responsabilidade do utilizador
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 23º</h3>
+            <h5 _ngcontent-serverapp-c180="">Responsabilidade do utilizador
+            </h5>
             <ol _ngcontent-serverapp-c180="">
                 <li _ngcontent-serverapp-c180="">O utilizador é responsável por todas as atividades que ocorrerem na
                     sua conta, nome
@@ -389,9 +389,9 @@
             </ol>
             <!-- End article 23 -->
             <!-- Article 24 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 24º</h4>
-            <h3 _ngcontent-serverapp-c180="">Deveres do utilizador
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 24º</h3>
+            <h5 _ngcontent-serverapp-c180="">Deveres do utilizador
+            </h5>
             <ol _ngcontent-serverapp-c180="">
                 <li _ngcontent-serverapp-c180="">São, em especial, deveres do utilizador:
                 </li>
@@ -409,9 +409,9 @@
             <h2 _ngcontent-serverapp-c180="" class="d-flex align-items-center line-height-normal mb-4"><b>
                     Regras de conduta e responsabilidades do utilizador</b></h2>
             <!-- Article 25 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 25º</h4>
-            <h3 _ngcontent-serverapp-c180="">Suspensão e Encerramento da Plataforma
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 25º</h3>
+            <h5 _ngcontent-serverapp-c180="">Suspensão e Encerramento da Plataforma
+            </h5>
             <ol _ngcontent-serverapp-c180="">
                 <li _ngcontent-serverapp-c180="">Pode a plataforma ser suspensa, parcial ou totalmente, em especial
                     nas operações
@@ -423,17 +423,17 @@
             </ol>
             <!-- End article 25 -->
             <!-- Article 26 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 26º</h4>
-            <h3 _ngcontent-serverapp-c180="">Armazenamento de conteúdo
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 26º</h3>
+            <h5 _ngcontent-serverapp-c180="">Armazenamento de conteúdo
+            </h5>
             <p>A administração da plataforma não se responsabiliza pela falha do armazenamento ou
                 eliminação de qualquer conteúdo.
             </p>
             <!-- End article 26 -->
             <!-- Article 27 -->
-            <h4 _ngcontent-serverapp-c180="">Artigo 27º</h4>
-            <h3 _ngcontent-serverapp-c180="">Legislação Aplicável
-            </h3>
+            <h3 _ngcontent-serverapp-c180="">Artigo 27º</h3>
+            <h5 _ngcontent-serverapp-c180="">Legislação Aplicável
+            </h5>
             <p>Na interpretação, execução e cumprimento do presente regulamento, bem como, tudo que
                 for omisso, aplica-se, supletivamente, o disposto na legislação portuguesa.
             </p>
