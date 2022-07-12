@@ -20,25 +20,28 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <a href="#addUserModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">
-                                    <i class="fas fa-plus-circle"></i><span>&nbsp;Add New User</span>
+                                    <i class="fas fa-plus-circle"></i><span>&nbsp;Novo utilizador</span>
                                 </a>
-                                <select id='GetActive'>
-                                    <option value=''>All</option>
-                                    <option value='1'>Active</option>
-                                    <option value='0'>Inactive</option>
-                                </select>
+                                <div class="float-end">
+                                    <label>filtro:</label>
+                                    <select id='GetActive'>
+                                        <option value=''>Todos</option>
+                                        <option value='1'>Ativos</option>
+                                        <option value='0'>Inativos</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body overflow-auto">
                                 <table id="usersTable" class="table table-striped table-hover">
                                     <thead>
                                     <tr>
-                                        <th>id</th>
-                                        <th>name</th>
-                                        <th>entity</th>
-                                        <th>email</th>
-                                        <th>groupId</th>
-                                        <th>countryId</th>
-                                        <th>active</th>
+                                        <th>Identificador</th>
+                                        <th>Nome</th>
+                                        <th>Entidade</th>
+                                        <th>Email</th>
+                                        <th>Grupo</th>
+                                        <th>País</th>
+                                        <th hidden>active</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -60,12 +63,17 @@
                                                         }
                                                     } ?>
                                                 </td>
-                                                <td><?php echo $user["active"] ?></td>
+                                                <td hidden><?php echo $user["active"] ?></td>
                                                 <td>
-                                                    <a href="#editUserModal" id="<?php echo $user['email'] ?>" class="edit"
-                                                       data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="far fa-edit"></i></a>
-                                                    <a href="#deleteUserModal" id="<?php echo $user['id'] ?>" class="delete"
-                                                       data-bs-toggle="modal" data-bs-target="#deleteUserModal"><i class="fas fa-trash-alt"></i></a>
+                                                    <div class="float-end">
+                                                    <?php if($user["id"] !== $_SESSION["userdata"]["id"]) { //if list user id is iqual to whats in the $_SESSION, dont show the edit button?>
+                                                        <a href="#editUserModal" id="<?php echo $user['email'] ?>" class="edit m-2"
+                                                           data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="far fa-edit fa-lg"></i></a>
+                                                    <?php }?>
+
+                                                    <a href="#deleteUserModal" id="<?php echo $user['id'] ?>" class="delete m-2"
+                                                       data-bs-toggle="modal" data-bs-target="#deleteUserModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         <?php }
@@ -90,16 +98,16 @@
                 <div class="modal-content">
                     <form id="addUser">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add User</h4>
+                            <h4 class="modal-title">Novo utilizador</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>Name</label>
+                                <label>Nome</label>
                                 <input type="text" class="form-control" name="addUserName" required>
                             </div>
                             <div class="form-group">
-                                <label>Entity</label>
+                                <label>Entidade</label>
                                 <input type="text" class="form-control" name="addUserEntity" >
                             </div>
                             <div class="form-group">
@@ -111,7 +119,7 @@
                                 <input type="password" class="form-control" name="addUserPassword" required>
                             </div>
                             <div class="form-group">
-                                <label>GroupId</label>
+                                <label>Grupo</label>
                                 <input type="text" class="form-control" name="addUserGroupId" required>
 
                                 <!--<select id="addUserGroupId" class="form-select" name="addUserGroupId" >
@@ -124,19 +132,19 @@
                                 </select>-->
                             </div>
                             <div class="form-group">
-                                <label>DateBirth</label>
+                                <label>Data de nascimento</label>
                                 <input type="text" class="form-control" name="addUserDateBirth" placeholder="yyyy-mm-dd" required>
                             </div>
                             <div class="form-group">
-                                <label>Address</label>
+                                <label>Morada</label>
                                 <input type="text" class="form-control" name="addUserAddress" required>
                             </div>
                             <div class="form-group">
-                                <label>CodPost</label>
+                                <label>Código postal</label>
                                 <input type="text" class="form-control" name="addUserCodPost" required>
                             </div>
                             <div class="form-group">
-                                <label>GenderId</label>
+                                <label>Género</label>
                                 <input type="text" class="form-control" name="addUserGenderId" required>
 
                                 <!--<select id="addUserGenderId" class="form-select" name="addUserGenderId" >
@@ -149,19 +157,19 @@
                                 </select>-->
                             </div>
                             <div class="form-group">
-                                <label>Locality</label>
+                                <label>Cidade</label>
                                 <input type="text" class="form-control" name="addUserLocality" required>
                             </div>
                             <div class="form-group">
                                 <label>Mobile</label>
-                                <input type="text" class="form-control" name="addUserMobile" required>
+                                <input type="text" class="form-control" name="addUserMobile" maxlength="9" required>
                             </div>
                             <div class="form-group">
-                                <label>Nif</label>
-                                <input type="text" class="form-control" name="addUserNif" required>
+                                <label>NIF</label>
+                                <input type="text" class="form-control" name="addUserNif" maxlength="9" required>
                             </div>
                             <div class="form-group">
-                                <label>Country</label>
+                                <label>País</label>
                                 <select class="form-select" name="addUserCountryId" id="addUserCountryId">
                                     <option value="" disabled selected>Selecione o País</option>
                                     <?php if (!empty($this->userdata['countryList'])) {
@@ -178,8 +186,8 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-success" value="Add">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-success" value="Adicionar">
                         </div>
                     </form>
                 </div>
@@ -192,7 +200,7 @@
                 <div class="modal-content">
                     <form id="editUser">
                         <div class="modal-header">
-                            <h4 class="modal-title">Edit User</h4>
+                            <h4 class="modal-title">Editar utilizador</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -201,11 +209,11 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Name</label>
+                                <label>Nome</label>
                                 <input type="text" class="form-control" name="editUserName" required>
                             </div>
                             <div class="form-group">
-                                <label>Entity</label>
+                                <label>Entidade</label>
                                 <input type="text" class="form-control" name="editUserEntity" >
                             </div>
                             <div class="form-group">
@@ -217,7 +225,7 @@
                                 <input type="password" class="form-control" name="editUserPassword" required>
                             </div>-->
                             <div class="form-group">
-                                <label>GroupId</label>
+                                <label>Grupo</label>
                                 <input type="text" class="form-control" name="editUserGroupId" required>
 
                                 <!--<select id="editUserGroupId" class="form-select" name="editUserGroupId" >
@@ -230,19 +238,19 @@
                                 </select>-->
                             </div>
                             <div class="form-group">
-                                <label>DateBirth</label>
+                                <label>Data de nascimento</label>
                                 <input type="text" class="form-control" name="editUserDateBirth" placeholder="yyyy-mm-dd" required>
                             </div>
                             <div class="form-group">
-                                <label>Address</label>
+                                <label>Morada</label>
                                 <input type="text" class="form-control" name="editUserAddress" required>
                             </div>
                             <div class="form-group">
-                                <label>CodPost</label>
+                                <label>Código postal</label>
                                 <input type="text" class="form-control" name="editUserCodPost" required>
                             </div>
                             <div class="form-group">
-                                <label>GenderId</label>
+                                <label>Género</label>
                                 <input type="text" class="form-control" name="editUserGenderId" required>
 
                                 <!--<select id="editUserGenderId" class="form-select" name="editUserGenderId" >
@@ -255,19 +263,19 @@
                                 </select>-->
                             </div>
                             <div class="form-group">
-                                <label>Locality</label>
+                                <label>Cidade</label>
                                 <input type="text" class="form-control" name="editUserLocality" required>
                             </div>
                             <div class="form-group">
-                                <label>Mobile</label>
+                                <label>Telemóvel</label>
                                 <input type="text" class="form-control" name="editUserMobile" required>
                             </div>
                             <div class="form-group">
-                                <label>Nif</label>
+                                <label>NIF</label>
                                 <input type="text" class="form-control" name="editUserNif" required>
                             </div>
                             <div class="form-group">
-                                <label>Country</label>
+                                <label>País</label>
                                 <select class="form-select" name="editUserCountryId" id="editUserCountryId">
                                     <option value="" disabled selected>Selecione o País</option>
                                     <?php if (!empty($this->userdata['countryList'])) {
@@ -284,8 +292,8 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-success" value="Save">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-success" value="Salvar">
                         </div>
                     </form>
                 </div>
@@ -298,35 +306,22 @@
                 <div class="modal-content">
                     <form id="deleteUser">
                         <div class="modal-header">
-                            <h4 class="modal-title">Delete User</h4>
+                            <h4 class="modal-title">Apagar utilizador</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Are you sure you want to delete this User?</p>
-                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                            <p>Deseja apagar esse utilizador?</p>
+                            <p class="text-warning"><small>A ação não pode ser defeita.</small></p>
                             <input id="deleteUserId" name="deleteUserId" type="hidden" class="form-control">
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-danger" value="Delete">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-danger" value="Apagar">
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
-        <!-- Logout Modal HTML
-        <div id="logoutModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4>Logout <i class="fa fa-lock"></i></h4>
-                    </div>
-                    <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
-                    <div class="modal-footer"><a href="<?php //echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
-                </div>
-            </div>
-        </div>-->
 
 
 <script>
@@ -340,7 +335,10 @@
                 columnDefs: [{
                     targets: [6,7],
                     orderable: false,
-                }]
+                }],
+                oLanguage: {
+                    "sUrl": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-PT.json"
+                }
             });
             //filtra table se ativo, inativo ou mostra todos
             $('#GetActive').on('change', function() {
@@ -422,10 +420,10 @@
         $('#editUser').submit(function (event) {
             event.preventDefault(); //prevent default action
 
-            <!--TODO: inst getting option value when country it changed-->
             //Ve se a data dos inputs mudou para formar so a data necessaria para o PATCH
             let formDataChanged = [];
-            $('#editUser input').each(function() { //para cada input vai ver
+            $('input, select', $('#editUser')).each(function() { //para cada input vai ver
+                console.log($(this).attr('name'), $(this).val())
                 if($(this).attr('name') === "editUserId" || ($(this).attr('name') === "editUserActive" && $(this).is(":checked")) || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
                     let emptyArray = { name: "", value: "" };
 
@@ -436,12 +434,13 @@
                 }
             });
 
+
             let formData = {
                 'action' : "UpdateUser",
                 'data'   : formDataChanged
             };
 
-           /* let formData = {
+            /*let formData = {
                 'action' : "UpdateUser",
                 'data'   : $(this).serializeArray()
             };*/
@@ -542,9 +541,9 @@
                         $('[name="editUserActive"]').attr('checked', false);
                     }
 
-                    //atribui atributo .data("lastValue") a cada input do form editGroup
+                    //atribui atributo .data("lastValue") a cada input/select do form editGroup
                     // para se poder comparar entre os dados anteriores e os current
-                    $('#editUser input').each(function() {
+                    $('input, select', $('#editUser')).each(function() {
                         $(this).data('lastValue', $(this).val());
                     });
 
