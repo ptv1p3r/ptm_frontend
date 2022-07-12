@@ -18,16 +18,44 @@ class UserSettingsModel extends MainModel
 
     public function __construct($db = false, $controller = null)
     {
-
-        $this->db = $db; // Configura o DB (PDO)
-
-        $this->controller = $controller; // Configura o controlador
-
-        $this->parametros = $this->controller->parametros; // Configura os parâmetros
+        $this->db = $db; // Config DB (PDO)
+        $this->controller = $controller; // Config controler
+        $this->parametros = $this->controller->parametros; // Config parameters
     }
 
     /**
-     * Metodo que retorna o User
+     * Get country list
+     *
+     * @since 0.1
+     * @access public
+     */
+    public function getCountryList()
+    {
+        $result = null;
+
+        $url = API_URL . 'api/v1/countries/list';
+        $result = callAPI("GET", $url, ''/*, $userToken*/);
+        return json_decode(json_encode($result), true);
+    }
+
+    /**
+     * Get gender list
+     *
+     * @since 0.1
+     * @access public
+     */
+    public function getGenderList()
+    {
+        $result = null;
+
+        $url = API_URL . 'api/v1/genders/list';
+        $result = callAPI("GET", $url, '');
+        return json_decode(json_encode($result), true);
+    }
+
+    /**
+     * Method that retorn User by email
+     * @param $email
      * @return mixed
      */
 
@@ -41,15 +69,33 @@ class UserSettingsModel extends MainModel
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
+        //Transform msg into json string
+        return json_decode(json_encode($result), true);
+    }
 
+    /**
+     * Method that retorn User transaction by Id
+     * @param $id
+     * @return mixed
+     */
 
-        //trasforma toda a msg em string json para poder ser enviado
+    public function getTransactionList($id)
+    {
+        $result = null;
+
+        $url = API_URL . 'api/v1/transaction/list/' . $id;
+
+        if (!empty($_SESSION['userdata']['accessToken'])) {
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //Transform msg into json string
         return json_decode(json_encode($result), true);
     }
 
 
     /**
-     * Metodo que retorna a lista User
+     * Method that return User list
      * @return mixed
      */
     public function getUserList()
@@ -77,12 +123,6 @@ class UserSettingsModel extends MainModel
 
         $result = null;
         $normalizedData = array();
-
-//        // Not active by default
-//        $normalizedData['active'] = "";
-
-        //Manually injected user group data
-        //$normalizedData['groupId'] = 1;
 
         // get data from form array and package it to send to api
         foreach ($data as $dataVector) {
@@ -136,18 +176,7 @@ class UserSettingsModel extends MainModel
                     case "editUserPassword":
                         $normalizedData['password'] = $dataVector['value'];
                         break;
-
-
-                    /*case "editGroupActive":
-                        $normalizedData['active'] = "1";
-                        break;*/
                 }
-
-//                if ($dataVector['name'] == "editGroupActive"){
-//                    $normalizedData['active'] = "1";
-//                } else {
-//                    $normalizedData['active'] = "0";
-//                }
             }
         }
 
@@ -168,7 +197,6 @@ class UserSettingsModel extends MainModel
      */
     public function updatePassUser($data)
     {
-
         $result = null;
         $normalizedData = array();
 
@@ -188,7 +216,6 @@ class UserSettingsModel extends MainModel
                 }
             }
         }
-
         $url = API_URL . 'api/v1/users/edit/' . $userId;
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
@@ -218,7 +245,6 @@ class UserSettingsModel extends MainModel
                 }
             }
         }
-
         $url = API_URL . 'api/v1/users/delete/' . $UserId;
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
@@ -228,6 +254,5 @@ class UserSettingsModel extends MainModel
         //trasforma toda a msg em string json para poder ser enviado
         return json_decode(json_encode($result), true);
     }
-
 
 }
