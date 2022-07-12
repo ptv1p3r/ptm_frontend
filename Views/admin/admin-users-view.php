@@ -20,7 +20,7 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <a href="#addUserModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">
-                                    <i class="fas fa-plus-circle"></i><span>Add New User</span>
+                                    <i class="fas fa-plus-circle"></i><span>&nbsp;Add New User</span>
                                 </a>
                                 <select id='GetActive'>
                                     <option value=''>All</option>

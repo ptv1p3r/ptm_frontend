@@ -20,7 +20,7 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <a href="#addSecurityModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addSecurityModal">
-                                    <i class="fas fa-plus-circle"></i><span>Add New Security</span>
+                                    <i class="fas fa-plus-circle"></i><span>&nbsp;Add New Security</span>
                                 </a>
                             </div>
                             <div class="card-body">

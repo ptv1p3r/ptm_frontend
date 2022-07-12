@@ -20,7 +20,7 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <a href="#addTransactionMethodModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTransactionMethodModal">
-                                    <i class="fas fa-plus-circle"></i><span>Add New TransactionMethod</span>
+                                    <i class="fas fa-plus-circle"></i><span>&nbsp;Add New TransactionMethod</span>
                                 </a>
                             </div>
                             <div class="card-body">

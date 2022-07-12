@@ -20,7 +20,7 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <a href="#addGroupModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addGroupModal">
-                                    <i class="fas fa-plus-circle"></i><span>Add New Group</span>
+                                    <i class="fas fa-plus-circle"></i><span>&nbsp;Add New Group</span>
                                 </a>
                             </div>
                             <div class="card-body">

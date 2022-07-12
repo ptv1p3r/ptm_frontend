@@ -325,17 +325,17 @@
             $adopted = array_column($this->userdata['adoptedTreesList'], 'treeId');
             if (!empty($this->userdata['treesList'])) {
                 foreach ($this->userdata['treesList'] as $key => $tree) {
-                    if (in_array($tree["id"],$adopted)) {?>
+                    if (in_array($tree["id"], $adopted)) {?>
                         marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
                             icon: blueIcon,
-                            adopted: 'true',
+                            adopted: 'sim',
                             name: '<?php echo $tree["name"]?>',
                             tree_id: '<?php echo $tree["id"]?>',
                         }).addTo(map).on("click", markerOnClick);
                     <?php } else {?>
                         marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
                             icon: greenIcon,
-                            adopted: 'false',
+                            adopted: 'não',
                             name: '<?php echo $tree["name"]?>',
                             tree_id: '<?php echo $tree["id"]?>',
                         }).addTo(map).on("click", markerOnClick);
@@ -367,6 +367,7 @@
                       <div class="card-body">
                         <h5 class="card-title">` + this.options.name + `</h5>
                         <p class="card-text">id: ` + this.options.tree_id + `</p>
+                        <p class="card-text">adotada: ` + this.options.adopted + `</p>
                         <p class="card-text">Latitude: ` + e.latlng.lat + `</p>
                         <p class="card-text">Longitude: ` + e.latlng.lng + `</p>
                       </div>
