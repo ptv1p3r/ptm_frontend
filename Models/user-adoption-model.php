@@ -1,6 +1,6 @@
 <?php
 
-class AdoptionModel extends MainModel
+class UserAdoptionModel extends MainModel
 {
 
     /**
