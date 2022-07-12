@@ -8130,7 +8130,6 @@ Modal End
 /*Settings profile Start*/
 /**********************************!*/
 
-
 .emp-profile {
     padding: 3%;
     margin-top: 3%;
@@ -8372,7 +8371,7 @@ Loader registration End
     height: 100%;
     z-index: 9999;
     background: rgba(0, 0, 0, .8);
-    z-index: 999;
+    z-index: 9999 !important;
     opacity: 1;
     transition: all 0.5s;
     /*overflow: hidden;*/
@@ -8808,6 +8807,13 @@ User messages CSS
 
 .dataTables_info {
     font-size: small;
+}
+
+.popover  {
+    background: #b0dcb3 !important;
+}
+.popover.bottom .arrow:after {
+    border-bottom-color:#b0dcb3;
 }
 
 /*********************************
