@@ -210,12 +210,12 @@
                 <!-- Settings -->
                 <?php if (isset($_SESSION["sidebar"]["active_tab"]["settings"]) && $_SESSION["sidebar"]["active_tab"]["settings"] === true) { ?>
                     <a class="nav-link active" href="<?php echo HOME_URL . '/admin/settings';?>">
-                        <div class="sb-nav-link-icon"><i class="fas fa-gear"></i></div>
+                        <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                         Perfil
                     </a>
                 <?php } else { ?>
                     <a class="nav-link" href="<?php echo HOME_URL . '/admin/settings';?>">
-                        <div class="sb-nav-link-icon"><i class="fas fa-gear"></i></div>
+                        <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                         Perfil
                     </a>
                 <?php } ?>
