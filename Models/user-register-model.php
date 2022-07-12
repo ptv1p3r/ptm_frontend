@@ -1,6 +1,6 @@
 <?php
 
-class RegisterModel extends MainModel
+class UserRegisterModel extends MainModel
 {
 
     /**
