@@ -1,6 +1,6 @@
 <?php
 
-class RecoverModel extends MainModel
+class UserRecoverModel extends MainModel
 {
 
     /**
