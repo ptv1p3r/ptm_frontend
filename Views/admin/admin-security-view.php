@@ -396,7 +396,10 @@
                 columnDefs: [ {
                     targets: [1],
                     orderable: false,
-                }]
+                }],
+                oLanguage: {
+                    "sUrl": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-PT.json"
+                }
             });
         } catch (error){
             console.log(error);

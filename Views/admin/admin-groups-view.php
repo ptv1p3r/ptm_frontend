@@ -203,7 +203,10 @@
                 columnDefs: [ {
                     targets: [6,3],
                     orderable: false,
-                }]
+                }],
+                oLanguage: {
+                    "sUrl": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-PT.json"
+                }
             });
             //filtra table se ativo, inativo ou mostra todos
             $('#GetActive').on('change', function() {

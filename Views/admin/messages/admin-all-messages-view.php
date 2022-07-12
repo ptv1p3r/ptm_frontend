@@ -28,20 +28,20 @@
                                             <div class="row">
                                                 <!-- BEGIN INBOX MENU -->
                                                 <div class="col-md-3">
-                                                    <h2 class="grid-title"><i class="fa fa-inbox"></i> Inbox (All)</h2>
+                                                    <h2 class="grid-title"><i class="fa fa-inbox"></i>&nbsp;Todas mensagens</h2>
                                                     <a class="btn btn-block btn-primary" style="display: block"
                                                        data-bs-toggle="modal" data-bs-target="#addMessageModal">
-                                                        <i class="fa fa-pencil"></i>&nbsp;&nbsp;NEW MESSAGE
+                                                        <i class="fa fa-pencil"></i>&nbsp;&nbsp;Nova mensagem
                                                     </a>
 
                                                     <hr>
 
                                                     <div>
                                                         <ul class="nav flex-column nav-pills nav-stacked">
-                                                            <li class="header">Folders</li>
+                                                            <li class="header">Core</li>
                                                             <li class="nav-item <?php echo ($tabActive === "inbox") ? "active" : ""?>">
                                                                 <a class="nav-link" href="<?php echo HOME_URL . '/admin/all_messages/inbox'?>">
-                                                                    <i class="fa fa-inbox"></i> Inbox
+                                                                    <i class="fa fa-inbox"></i> Caixa de entrada
                                                                 </a>
                                                             </li>
                                                         </ul>
@@ -59,11 +59,11 @@
                                                             <div class="btn-group">
                                                                 <input id="all-none" type="checkbox">
                                                                 <button hidden id="action-button" type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                    Action <span class="caret"></span>
+                                                                    Ação <span class="caret"></span>
                                                                 </button>
                                                                 <ul class="dropdown-menu" role="menu">
                                                                     <li><a href="#bulkDeleteMessagesModal" class="dropdown-item"
-                                                                           data-bs-toggle="modal" data-bs-target="#bulkDeleteMessagesModal" title="Delete">Delete</a></li>
+                                                                           data-bs-toggle="modal" data-bs-target="#bulkDeleteMessagesModal">Apagar</a></li>
                                                                 </ul>
                                                             </div>
                                                             <!-- refresh -->
@@ -115,7 +115,7 @@
                                                                             <td class="time"><?php echo $message["notificationDate"] ?></td>
                                                                             <td>
                                                                                 <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="delete m-2"
-                                                                                   data-bs-toggle="modal" data-bs-target="#deleteMessageModal" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                                                                                   data-bs-toggle="modal" data-bs-target="#deleteMessageModal" title="Apagar"><i class="fas fa-trash-alt fa-lg"></i></a>
                                                                             </td>
                                                                         </tr>
 
@@ -264,7 +264,9 @@
                         responsive: true,
                         lengthChange: false,
                         pageLength: 15,
-                        //order: [[4, 'desc']]
+                        oLanguage: {
+                            "sUrl": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-PT.json"
+                        }
                     });
 
                 } catch (error) {

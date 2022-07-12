@@ -30,25 +30,25 @@
                                                     <div class="row">
                                                         <!-- BEGIN INBOX MENU -->
                                                         <div class="col-md-3">
-                                                            <h2 class="grid-title"><i class="fa fa-inbox"></i> Inbox</h2>
+                                                            <h2 class="grid-title"><i class="fa fa-inbox"></i>&nbsp;Minhas mensagens</h2>
                                                             <a class="btn btn-primary" style="display: block"
                                                                data-bs-toggle="modal" data-bs-target="#addMessageModal">
-                                                                <i class="fa fa-pencil"></i>&nbsp;&nbsp;NEW MESSAGE
+                                                                <i class="fa fa-pencil"></i>&nbsp;&nbsp;Nova mensagem
                                                             </a>
 
                                                             <hr>
 
                                                             <div>
                                                                 <ul class="nav flex-column nav-pills nav-stacked">
-                                                                    <li class="header">Folders</li>
+                                                                    <li class="header">Core</li>
                                                                     <li class="nav-item <?php echo ($tabActive === "inbox") ? "active" : ""?>">
                                                                         <a class="nav-link" href="<?php echo HOME_URL . '/admin/messages/inbox'?>">
-                                                                            <i class="fa fa-inbox"></i> Inbox
+                                                                            <i class="fa fa-inbox"></i>&nbsp;Caixa de entrada
                                                                         </a>
                                                                     </li>
                                                                     <li class="nav-item <?php echo ($tabActive === "sent") ? "active" : ""?>">
                                                                         <a class="nav-link" href="<?php echo HOME_URL . '/admin/messages/sent'?>">
-                                                                            <i class="fa fa-mail-forward"></i> Sent
+                                                                            <i class="fa fa-mail-forward"></i>&nbsp;Enviado
                                                                         </a>
                                                                     </li>
                                                                 </ul>
@@ -66,18 +66,18 @@
                                                                     <div class="btn-group">
                                                                         <input id="all-none" type="checkbox">
                                                                         <button hidden id="action-button" type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                            Action <span class="caret"></span>
+                                                                            Ação <span class="caret"></span>
                                                                         </button>
                                                                         <ul class="dropdown-menu" role="menu">
-                                                                            <li><a class="dropdown-item message-read bulk" href="javascript:void(0);">Mark as read</a></li>
-                                                                            <li><a class="dropdown-item message-unread bulk" href="javascript:void(0);">Mark as unread</a></li>
+                                                                            <li><a class="dropdown-item message-read bulk" href="javascript:void(0);">Marcar como lida</a></li>
+                                                                            <li><a class="dropdown-item message-unread bulk" href="javascript:void(0);">Marcar como não lida</a></li>
                                                                             <li><hr class="dropdown-divider"></li>
                                                                             <li><a href="#bulkDeleteMessagesModal" class="dropdown-item"
-                                                                                   data-bs-toggle="modal" data-bs-target="#bulkDeleteMessagesModal" title="Delete">Delete</a></li>
+                                                                                   data-bs-toggle="modal" data-bs-target="#bulkDeleteMessagesModal">Apagar</a></li>
                                                                         </ul>
                                                                     </div>
                                                                     <!-- refresh -->
-                                                                    <a class="btn" href="<?php echo HOME_URL . '/admin/messages/inbox'?>">
+                                                                    <a class="btn" href="<?php echo HOME_URL . '/admin/messages/inbox'?>" title="Atualizar">
                                                                         <i class="fa-solid fa-rotate"></i>
                                                                     </a>
                                                                 </div>
@@ -111,7 +111,7 @@
                                                                                     </td>
                                                                                     <td class="name">
                                                                                         <div class="text-truncate" style="max-width: 150px">
-                                                                                            From: <?php echo $message["fromName"] ?>
+                                                                                            De: <?php echo $message["fromName"] ?>
                                                                                         </div>
                                                                                     </td>
                                                                                     <td class="subject">
@@ -125,14 +125,14 @@
                                                                                     <td>
                                                                                         <?php if ($message["receptionDate"] === null ) {?>
                                                                                             <a href="javascript:void(0);" id="<?php echo $message['id'] ?>"
-                                                                                               class="message-read m-2" title="Mark as read"><i class="fa-solid fa-envelope"></i></a>
+                                                                                               class="message-read m-2" title="Marcar como lida"><i class="fa-solid fa-envelope fa-lg"></i></a>
                                                                                         <?php } else {?>
                                                                                             <a href="javascript:void(0);" id="<?php echo $message['id'] ?>"
-                                                                                               class="message-unread m-2" title="Mark as unread"><i class="fa-solid fa-envelope-open"></i></a>
+                                                                                               class="message-unread m-2" title="Marcar como não lida"><i class="fa-solid fa-envelope-open fa-lg"></i></a>
                                                                                         <?php }?>
 
                                                                                         <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="delete m-2"
-                                                                                           data-bs-toggle="modal" data-bs-target="#deleteMessageModal" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                                                                                           data-bs-toggle="modal" data-bs-target="#deleteMessageModal" title="Apagar"><i class="fas fa-trash-alt fa-lg"></i></a>
                                                                                     </td>
                                                                                 </tr>
 
@@ -285,7 +285,9 @@
                         responsive: true,
                         lengthChange: false,
                         pageLength: 15,
-                        //order: [[3, 'desc']]
+                        oLanguage: {
+                            "sUrl": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-PT.json"
+                        }
                     });
 
                 } catch (error) {
@@ -308,15 +310,15 @@
                                                 <div class="icons">
                                                     <?php if ($message["receptionDate"] === null ) {?>
                                                         <a href="javascript:void(0);" id="<?php echo $message['id'] ?>"
-                                                           class="icon message-read" title="Mark as read"><i class="fa-solid fa-envelope"></i></a>
+                                                           class="icon message-read" title="Marcar como lida"><i class="fa-solid fa-envelope fa-lg"></i></a>
                                                     <?php } else {?>
                                                         <a href="javascript:void(0);" id="<?php echo $message['id'] ?>"
-                                                           class="icon message-unread" title="Mark as unread"><i class="fa-solid fa-envelope-open"></i></a>
+                                                           class="icon message-unread" title="Marcar como não lida"><i class="fa-solid fa-envelope-open fa-lg"></i></a>
                                                     <?php }?>
 
-                                                    <a href="javascript:void();" id="<?php echo $message['fromUser'] ?>" class="icon reply"><i class="fa-solid fa-reply"></i></a>
+                                                    <a href="javascript:void();" id="<?php echo $message['fromUser'] ?>" class="icon reply" title="Responder"><i class="fa-solid fa-reply fa-lg"></i></a>
                                                     <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="icon delete"
-                                                       data-bs-toggle="modal" data-bs-target="#deleteMessageModal" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                                                       data-bs-toggle="modal" data-bs-target="#deleteMessageModal" title="Apagar"><i class="fas fa-trash-alt fa-lg"></i></a>
                                                 </div>
                                             </div>
                                         </div>
