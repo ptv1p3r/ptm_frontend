@@ -294,7 +294,7 @@
                                 </select>
                             </div>
                             <div class="form-group form-check form-switch">
-                                <label>Active</label>
+                                <label>Ativo</label>
                                 <input type="checkbox" role="switch" class="form-check-input" name="editUserActive">
                             </div>
 

@@ -20,25 +20,25 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <a href="#addGroupModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addGroupModal">
-                                    <i class="fas fa-plus-circle"></i><span>&nbsp;Add New Group</span>
+                                    <i class="fas fa-plus-circle"></i><span>&nbsp;Novo grupo</span>
                                 </a>
+                                <div class="float-end">
+                                    <label>filtro:</label>
+                                    <select id='GetActive'>
+                                        <option value=''>Todos</option>
+                                        <option value='1'>Ativos</option>
+                                        <option value='0'>Inativos</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body overflow-auto">
                                 <table id="groupsTable" class="table table-striped table-hover">
                                     <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>SecurityId</th>
-                                        <th>active
-                                            <select id='GetActive'>
-                                                <option value=''>All</option>
-                                                <option value='1'>Active</option>
-                                                <option value='0'>Inactive</option>
-                                            </select>
-                                        </th>
-                                        <th>dateCreated</th>
-                                        <th>dateModified</th>
+                                        <th>Nome</th>
+                                        <th>Descrição</th>
+                                        <th>Tabela de segurança</th>
+                                        <th hidden>active</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -48,15 +48,13 @@
                                             <tr>
                                                 <td><?php echo $group["name"] ?></td>
                                                 <td><?php echo $group["description"] ?></td>
-                                                <td><?php echo $group["securityId"] ?></td>
-                                                <td><?php echo $group["active"] ?></td>
-                                                <td><?php echo $group["dateCreated"] ?></td>
-                                                <td><?php echo $group["dateModified"] ?></td>
+                                                <td>Tabela <?php echo $group["securityId"] ?></td>
+                                                <td hidden><?php echo $group["active"] ?></td>
                                                 <td>
-                                                    <a href="#editGroupModal" id="<?php echo $group['id'] ?>" class="edit"
-                                                       data-bs-toggle="modal" data-bs-target="#editGroupModal"><i class="far fa-edit"></i></a>
-                                                    <a href="#deleteGroupModal" id="<?php echo $group['id'] ?>" class="delete"
-                                                       data-bs-toggle="modal" data-bs-target="#deleteGroupModal"><i class="fas fa-trash-alt"></i></a>
+                                                    <a href="#editGroupModal" id="<?php echo $group['id'] ?>" class="edit m-2"
+                                                       data-bs-toggle="modal" data-bs-target="#editGroupModal"><i class="far fa-edit fa-lg"></i></a>
+                                                    <a href="#deleteGroupModal" id="<?php echo $group['id'] ?>" class="delete m-2"
+                                                       data-bs-toggle="modal" data-bs-target="#deleteGroupModal"><i class="fas fa-trash-alt fa-lg"></i></a>
                                                 </td>
                                             </tr>
                                         <?php }
@@ -83,30 +81,38 @@
                 <div class="modal-content">
                     <form id="addGroup">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Group</h4>
+                            <h4 class="modal-title">Adicionar grupo</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>Name</label>
+                                <label>Nome</label>
                                 <input type="text" class="form-control" name="addGroupName" required>
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
+                                <label>Descrição</label>
                                 <input type="text" class="form-control" name="addGroupDescription" required>
                             </div>
                             <div class="form-group">
-                                <label>SecurityId</label>
-                                <input type="number" class="form-control" name="addGroupSecurityId" required>
+                                <label>Tabela de segurança</label>
+                                <!--<input type="number" class="form-control" name="addGroupSecurityId" required>-->
+                                <select class="form-select" name="addGroupSecurityId" id="addGroupSecurityId" required>
+                                    <option value="" disabled selected>Selecione a tabela</option>
+                                    <?php if (!empty($this->userdata['securityList'])) {
+                                        foreach ($this->userdata['securityList'] as $key => $security) { ?>
+                                            <option value="<?php echo $security['id'] ?>">Tabela <?php echo $security["id"] ?></option>
+                                        <?php }
+                                    } ?>
+                                </select>
                             </div>
-                            <div class="form-group">
-                                <label>Active</label>
-                                <input type="checkbox" class="form-control form-check-input" name="addGroupActive">
+                            <div class="form-group form-check form-switch">
+                                <label>Ativo</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addGroupActive">
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-success" value="Add">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-success" value="Adicionar">
                         </div>
                     </form>
                 </div>
@@ -119,7 +125,7 @@
                 <div class="modal-content">
                     <form id="editGroup">
                         <div class="modal-header">
-                            <h4 class="modal-title">Edit Group</h4>
+                            <h4 class="modal-title">Editar grupo</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -128,26 +134,34 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Name</label>
+                                <label>Nome</label>
                                 <input type="text" class="form-control" name="editGroupName" required>
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
+                                <label>Descrição</label>
                                 <input type="text" class="form-control" name="editGroupDescription" required>
                             </div>
                             <div class="form-group">
-                                <label>SecurityId</label>
-                                <input type="number" class="form-control" name="editGroupSecurityId" required>
+                                <label>Tabela de segurança</label>
+                                <!--<input type="number" class="form-control" name="editGroupSecurityId" required>-->
+                                <select class="form-select" name="editGroupSecurityId" id="editGroupSecurityId" required>
+                                    <option value="" disabled selected>Selecione a tabela</option>
+                                    <?php if (!empty($this->userdata['securityList'])) {
+                                        foreach ($this->userdata['securityList'] as $key => $security) { ?>
+                                            <option value="<?php echo $security['id'] ?>">Tabela <?php echo $security["id"] ?></option>
+                                        <?php }
+                                    } ?>
+                                </select>
                             </div>
                             <div class="form-group form-check form-switch">
-                                <label>Active</label>
+                                <label>Ativo</label>
                                 <input type="checkbox" role="switch" class="form-check-input" name="editGroupActive">
                             </div>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-success" value="Save">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-success" value="Guardar">
                         </div>
                     </form>
                 </div>
@@ -160,35 +174,22 @@
                 <div class="modal-content">
                     <form id="deleteGroup">
                         <div class="modal-header">
-                            <h4 class="modal-title">Delete Group</h4>
+                            <h4 class="modal-title">Apagar grupo</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Are you sure you want to delete this Group?</p>
-                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                            <p>Tem a certeza que quer apagar este grupo?</p>
+                            <p class="text-warning"><small>A ação não pode ser defeita.</small></p>
                             <input id="deleteGroupId" name="deleteGroupId" type="hidden" class="form-control" value="">
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-danger" value="Delete">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-danger" value="Apagar">
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
-        <!-- Logout Modal HTML
-        <div id="logoutModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4>Logout <i class="fa fa-lock"></i></h4>
-                    </div>
-                    <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
-                    <div class="modal-footer"><a href="<?php //echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
-                </div>
-            </div>
-        </div>-->
 
 
 
@@ -201,7 +202,7 @@
                 rowReorder: false,
                 responsive: true,
                 columnDefs: [ {
-                    targets: [6,3],
+                    targets: [4,3],
                     orderable: false,
                 }],
                 oLanguage: {
@@ -242,7 +243,7 @@
                     if (data.statusCode === 201){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -254,7 +255,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -269,8 +270,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -326,7 +327,7 @@
                     if (data.statusCode === 200){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -338,7 +339,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -353,8 +354,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -408,7 +409,7 @@
                 },
                 error: function (data) {
                     Swal.fire({
-                        title: 'Error!',
+                        title: 'Erro!',
                         text: data.body.message,
                         icon: 'error',
                         showConfirmButton: false,
@@ -448,7 +449,7 @@
                     if (data.statusCode === 200){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -460,7 +461,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -475,8 +476,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,

@@ -442,16 +442,28 @@ class AdminController extends MainController
 
             //get group list
             $groupsList = $modelo->getGroupList();
-            if ($groupsList["statusCode"] === 200){
-                $this->userdata['groupsList'] = $groupsList["body"]["groups"];
-            }
             if ($groupsList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $groupsList = $modelo->getGroupList();
+            }
+            if ($groupsList["statusCode"] === 200){
                 $this->userdata['groupsList'] = $groupsList["body"]["groups"];
             }
+
+            //get securitys list
+            $securityList = $modelo->getSecurityList();
+            if ($securityList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $securityList = $modelo->getSecurityList();
+            }
+            if ($securityList["statusCode"] === 200){
+                $this->userdata['securityList'] = $securityList["body"]["security"];
+            }
+
 
             /**Carrega os arquivos do view**/
             require ABSPATH . '/views/_includes/admin-header.php';
@@ -863,14 +875,13 @@ class AdminController extends MainController
 
             //get securitys list
             $securityList = $modelo->getSecurityList();
-            if ($securityList["statusCode"] === 200){
-                $this->userdata['securityList'] = $securityList["body"]["security"];
-            }
             if ($securityList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $securityList = $modelo->getSecurityList();
+            }
+            if ($securityList["statusCode"] === 200){
                 $this->userdata['securityList'] = $securityList["body"]["security"];
             }
 
