@@ -29,7 +29,7 @@ class RegisterController extends MainController
         $parameters = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
 
-        $model = $this->load_model('register-model');
+        $model = $this->load_model('user-register-model');
         $getCountryModel = $model->getCountryList();
         $getGenderModel = $model->getGenderList();
 
@@ -59,7 +59,7 @@ class RegisterController extends MainController
 
 
         //Load user-model
-        $model = $this->load_model('register-model');
+        $model = $this->load_model('user-register-model');
 
         // Ajax call flow process
         if (isset($_POST['action']) && !empty($_POST['action'])) {
@@ -100,7 +100,7 @@ class RegisterController extends MainController
         // Function parameters
 //        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
-        $model = $this->load_model('recover-model');
+        $model = $this->load_model('user-recover-model');
 
         // Ajax call flow process
         if (isset($_POST['action']) && !empty($_POST['action'])) {
@@ -145,7 +145,7 @@ class RegisterController extends MainController
         // Function parameters
         $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
 
-        $model = $this->load_model('recover-model');
+        $model = $this->load_model('user-recover-model');
 
 
         // Ajax call flow process
