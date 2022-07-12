@@ -67,11 +67,11 @@
                                                 <td>
                                                     <div class="float-end">
                                                     <?php if($user["id"] !== $_SESSION["userdata"]["id"]) { //if list user id is iqual to whats in the $_SESSION, dont show the edit button?>
-                                                        <a href="#editUserModal" id="<?php echo $user['email'] ?>" class="edit m-2"
+                                                        <a href="#editUserModal" id="<?php echo $user['email'] ?>" class="edit m-2" title="Editar"
                                                            data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="far fa-edit fa-lg"></i></a>
                                                     <?php }?>
 
-                                                    <a href="#deleteUserModal" id="<?php echo $user['id'] ?>" class="delete m-2"
+                                                    <a href="#deleteUserModal" id="<?php echo $user['id'] ?>" class="delete m-2" title="Apagar"
                                                        data-bs-toggle="modal" data-bs-target="#deleteUserModal"><i class="fas fa-trash-alt fa-lg"></i></a>
                                                     </div>
                                                 </td>
@@ -293,7 +293,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <input type="submit" class="btn btn-success" value="Salvar">
+                            <input type="submit" class="btn btn-success" value="Guardar">
                         </div>
                     </form>
                 </div>

@@ -78,7 +78,7 @@
                                         </div>
                                         <br>
                                         <!--<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">-->
-                                        <input id="save-button" type="submit" class="btn btn-success" value="Save">
+                                        <input id="save-button" type="submit" class="btn btn-success" value="Guardar">
                                     </form>
 
                                 </div>
@@ -116,7 +116,7 @@
                                         </div>
                                         <br>
                                         <!--<input type="button" class="btn edit btn-danger" data-dismiss="modal" value="Cancel">-->
-                                        <input type="submit" class="btn btn-success" value="Save">
+                                        <input type="submit" class="btn btn-success" value="Guardar">
                                     </form>
 
                                 </div>
