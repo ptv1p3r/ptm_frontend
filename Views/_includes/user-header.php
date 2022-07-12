@@ -101,32 +101,6 @@
 </head>
 <body class>
 
-
-<!-- left side of navbar
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <!- left side of navbar
-    <div class="navbar-collapse ">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="navbar-brand" href="<?php //echo HOME_URI; ?>">
-                <img src="../../Images/home.png" alt="Home" width="24" height="24"> </a>
-            </li>
-            <li class="nav-item">
-                <a class="navbar-brand" href="<?php //echo HOME_URI; ?>">
-                    <img src="../../Images/name.png" alt="Name" height="24"></a>
-            </li>
-        </ul>
-        <!- right side of navbar
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <form class="form-inline" action="">
-                    <a class="navbar-brand" href="<?php //echo HOME_URI . '/search/index/1_1'; ?>"><img src="../../Images/search.png" alt="Search" width="24" height="24"></a>
-                </form>
-            </li>
-        </ul>
-    </div>
-</nav>
--->
 <!--Header Start-->
 <header class="header-style-2">
     <nav class="navbar navbar-expand-lg">
@@ -186,94 +160,6 @@
                                         href="/Images/home/about.html">Sobre</a>
                 </li>
 
-                <!--                <li class="nav-item dropdown">-->
-                <!--                    <a class="nav-link dropdown-toggle"-->
-                <!--                       href="/Images/home/blog.html" role="button"-->
-                <!--                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Blogs </a>-->
-                <!--                    <ul class="dropdown-menu">-->
-                <!--                        <li><a href="/Images/home/blog.html">Blog Default</a>-->
-                <!--                        </li>-->
-                <!--                        <li><a href="/Images/home/blog-list.html">Blog-->
-                <!--                                List</a></li>-->
-                <!--                        <li><a href="/Images/home/blog-grid.html">Blog-->
-                <!--                                Grid</a></li>-->
-                <!--                        <li><a href="/Images/home/blog-two-col.html">Blog Two-->
-                <!--                                Columns</a></li>-->
-                <!--                        <li><a href="/Images/home/blog-three-col.html">Blog-->
-                <!--                                Three Columns</a></li>-->
-                <!--                        <li><a href="/Images/home/blog-details.html">Blog-->
-                <!--                                Details</a></li>-->
-                <!--                    </ul>-->
-                <!--                </li>-->
-                <!--                <li class="nav-item dropdown">-->
-                <!--                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"-->
-                <!--                       aria-haspopup="true" aria-expanded="false"> Pages </a>-->
-                <!--                    <ul class="dropdown-menu">-->
-                <!--                        <li>-->
-                <!--                            <a href="#">Projects</a>-->
-                <!--                            <ul class="dropdown-menu">-->
-                <!--                                <li><a href="/Images/home/projects.html">Projects</a>-->
-                <!--                                </li>-->
-                <!--                                <li>-->
-                <!--                                    <a href="/Images/home/projects-grid.html">Projects-->
-                <!--                                        Grid</a></li>-->
-                <!--                                <li>-->
-                <!--                                    <a href="/Images/home/projects-grid-two.html">Projects-->
-                <!--                                        Grid Two</a></li>-->
-                <!--                                <li>-->
-                <!--                                    <a href="/Images/home/projects-list.html">Projects-->
-                <!--                                        List</a></li>-->
-                <!--                                <li>-->
-                <!--                                    <a href="/Images/home/projects-details.html">Project-->
-                <!--                                        Details</a></li>-->
-                <!--                            </ul>-->
-                <!--                        </li>-->
-                <!--                        <li>-->
-                <!--                            <a href="#">Shop</a>-->
-                <!--                            <ul class="dropdown-menu">-->
-                <!--                                <li><a href="/Images/home/shop.html">Shop</a>-->
-                <!--                                </li>-->
-                <!--                                <li><a href="/Images/home/shop-two.html">Shop-->
-                <!--                                        Two</a></li>-->
-                <!--                                <li><a href="/Images/home/shop-details.html">Shop-->
-                <!--                                        Details</a></li>-->
-                <!--                            </ul>-->
-                <!--                        </li>-->
-                <!--                        <li>-->
-                <!--                            <a href="/Images/home/team.html">Team</a>-->
-                <!--                            <ul class="dropdown-menu">-->
-                <!--                                <li><a href="/Images/home/team.html">Team-->
-                <!--                                        One</a></li>-->
-                <!--                                <li><a href="/Images/home/team-two.html">Team-->
-                <!--                                        Two</a></li>-->
-                <!--                                <li><a href="/Images/home/team-details.html">Team-->
-                <!--                                        Details</a></li>-->
-                <!--                            </ul>-->
-                <!--                        </li>-->
-                <!--                        <li>-->
-                <!--                            <a href="#">Gallery</a>-->
-                <!--                            <ul class="dropdown-menu">-->
-                <!--                                <li><a href="/Images/home/gallery-grid.html">Gallery-->
-                <!--                                        Grid</a></li>-->
-                <!--                                <li><a href="/Images/home/gallery-full.html">Gallery-->
-                <!--                                        Full</a></li>-->
-                <!--                                <li>-->
-                <!--                                    <a href="/Images/home/gallery-masonry.html">Gallery-->
-                <!--                                        Masonry</a></li>-->
-                <!--                            </ul>-->
-                <!--                        </li>-->
-                <!--                        <li><a href="/Images/home/testimonials.html">Testimonials</a>-->
-                <!--                        </li>-->
-                <!--                        <li><a href="/Images/home/donation.html">Donation</a>-->
-                <!--                        </li>-->
-                <!--                        <li><a href="/Images/home/my-account.html">My-->
-                <!--                                Account</a></li>-->
-                <!--                        <li><a href="/Images/home/coming-soon.html">Coming-->
-                <!--                                Soon</a></li>-->
-                <!--                        <li><a href="/Images/home/page-404.html">404-->
-                <!--                                Error</a></li>-->
-                <!--                    </ul>-->
-                <!--                </li>-->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="contact.html" role="button" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false"> Contactos </a>
@@ -340,10 +226,10 @@
     </ul>
 </nav>
 
-<div class="overlay"></div>
+<div class="overlay" style="z-index: 9998 !important;"></div>
 
 <!-- Start Logout  account Modal HTML -->
-<div id="logoutModal" class="modal fade">
+<div id="logoutModal" class="modal fade" style="z-index: 9999 !important;" >
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
