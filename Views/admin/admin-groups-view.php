@@ -51,10 +51,12 @@
                                                 <td>Tabela <?php echo $group["securityId"] ?></td>
                                                 <td hidden><?php echo $group["active"] ?></td>
                                                 <td>
-                                                    <a href="#editGroupModal" id="<?php echo $group['id'] ?>" class="edit m-2"
-                                                       data-bs-toggle="modal" data-bs-target="#editGroupModal"><i class="far fa-edit fa-lg"></i></a>
-                                                    <a href="#deleteGroupModal" id="<?php echo $group['id'] ?>" class="delete m-2"
-                                                       data-bs-toggle="modal" data-bs-target="#deleteGroupModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                    <div class="float-end">
+                                                        <a href="#editGroupModal" id="<?php echo $group['id'] ?>" class="edit m-2"
+                                                           data-bs-toggle="modal" data-bs-target="#editGroupModal"><i class="far fa-edit fa-lg"></i></a>
+                                                        <a href="#deleteGroupModal" id="<?php echo $group['id'] ?>" class="delete m-2"
+                                                           data-bs-toggle="modal" data-bs-target="#deleteGroupModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         <?php }

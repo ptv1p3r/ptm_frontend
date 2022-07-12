@@ -37,10 +37,12 @@
                                             <tr>
                                                 <td>Tabela <?php echo $security["id"] ?></td>
                                                 <td>
-                                                    <a href="#editSecurityModal" id="<?php echo $security['id'] ?>" class="edit m-2"
-                                                       data-bs-toggle="modal" data-bs-target="#editSecurityModal"><i class="far fa-edit fa-lg"></i></a>
-                                                    <a href="#deleteSecurityModal" id="<?php echo $security['id'] ?>" class="delete m-2"
-                                                       data-bs-toggle="modal" data-bs-target="#deleteSecurityModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                    <div class="float-end">
+                                                        <a href="#editSecurityModal" id="<?php echo $security['id'] ?>" class="edit m-2"
+                                                           data-bs-toggle="modal" data-bs-target="#editSecurityModal"><i class="far fa-edit fa-lg"></i></a>
+                                                        <a href="#deleteSecurityModal" id="<?php echo $security['id'] ?>" class="delete m-2"
+                                                           data-bs-toggle="modal" data-bs-target="#deleteSecurityModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         <?php }

@@ -1221,6 +1221,18 @@ class AdminController extends MainController
                 $this->userdata['userList'] = $userList["body"]["users"];
             }
 
+            //get tree Types List
+            $treeTypesList = $modelo->getTreeTypeList();
+            if ($treeTypesList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $treeTypesList = $modelo->getTreeTypeList();
+            }
+            if ($treeTypesList["statusCode"] === 200){
+                $this->userdata['treeTypesList'] = $treeTypesList["body"]["types"];
+            }
+
             /**Carrega os arquivos do view**/
             require ABSPATH . '/views/_includes/admin-header.php';
 
@@ -1847,14 +1859,13 @@ class AdminController extends MainController
 
             //get tree Types List
             $treeTypesList = $modelo->getTreeTypeList();
-            if ($treeTypesList["statusCode"] === 200){
-                $this->userdata['treeTypesList'] = $treeTypesList["body"]["types"];
-            }
             if ($treeTypesList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $treeTypesList = $modelo->getTreeTypeList();
+            }
+            if ($treeTypesList["statusCode"] === 200){
                 $this->userdata['treeTypesList'] = $treeTypesList["body"]["types"];
             }
 
