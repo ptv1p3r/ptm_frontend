@@ -23,8 +23,8 @@
                                     <i class="fas fa-plus-circle"></i><span>&nbsp;Nova tabela de segurança</span>
                                 </a>
                             </div>
-                            <div class="card-body overflow-auto">
-                                <table id="securitiesTable" class="table table-striped table-hover">
+                            <div class="card-body">
+                                <table id="securitiesTable" class="table table-striped table-hover" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>Identificador</th>

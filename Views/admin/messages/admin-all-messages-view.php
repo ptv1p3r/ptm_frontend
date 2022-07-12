@@ -78,7 +78,7 @@
                                                     <!-- INBOX/SENT -->
                                                     <div id="inbox-body">
                                                         <div class="table-responsive">
-                                                            <table class="table" id="messagesTable">
+                                                            <table class="table" id="messagesTable" style="width:100%">
                                                                 <thead hidden>
                                                                 <tr>
                                                                     <th>col1</th>

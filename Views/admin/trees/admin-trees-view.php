@@ -37,7 +37,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table id="treesTable" class="table table-striped table-hover">
+                                <table id="treesTable" class="table table-striped table-hover" style="width:100%">
                                     <thead>
                                     <tr>
                                         <th>Identificador</th>
@@ -358,10 +358,10 @@
         //function to load all trees from API
         function mapLoadTrees(){
             <?php
-            $adopted = array_column($this->userdata['adoptedTreesList'], 'treeId');
-            if (!empty($this->userdata['treesList'])) {
+            if (!empty($this->userdata['treesList']) && !empty($this->userdata['adoptedTreesList'])) {
+                $adopted = array_column($this->userdata['adoptedTreesList'], 'treeId');
                 foreach ($this->userdata['treesList'] as $key => $tree) {
-                    if (in_array($tree["id"], $adopted)) {?>
+                    if (isset($adopted) && in_array($tree["id"], $adopted)) {?>
                         marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
                             icon: blueIcon,
                             adopted: 'sim',

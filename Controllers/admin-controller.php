@@ -118,10 +118,6 @@ class AdminController extends MainController
                                     case "treeImagesRead":
                                     case "treeImagesUpdate":
                                     case "treeImagesDelete":
-                                    case "securityCreate":
-                                    case "securityRead":
-                                    case "securityUpdate":
-                                    case "securityDelete":
                                         if ($value == 1){ $permissionsArray[] = $key; }
                                         break;
 
@@ -1247,7 +1243,7 @@ class AdminController extends MainController
      */
     public function trees_users(){
         // Título da página
-        $this->title = 'Admin - Árvores-Utilizadores';
+        $this->title = 'Admin - Adoções';
 
         // Permissoes da pagina
         $this->permission_required = array('admLogin'/*,'usersTreesRead'*/);
@@ -3401,10 +3397,6 @@ class AdminController extends MainController
                                         case "treeImagesRead":
                                         case "treeImagesUpdate":
                                         case "treeImagesDelete":
-                                        case "securityCreate":
-                                        case "securityRead":
-                                        case "securityUpdate":
-                                        case "securityDelete":
                                             if ($value == 1){ $permissionsArray[] = $key; }
                                             break;
 
@@ -3500,48 +3492,21 @@ class AdminController extends MainController
                     $apiResponse = json_encode($apiResponse);// encode package to send
                     echo($apiResponse);
                     break;
-
-                /*case 'DeleteAdmin' :
-                    $this->permission_required = array('usersDelete');
-
-                    //Verifica se o user tem a permissão para realizar operaçao
-                    if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
-                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
-
-                        echo json_encode($apiResponse);
-                        break;
-                    }
-
-                    $data = $_POST['data'];
-                    $apiResponse = $modelo->deleteAdmin($data); //decode to check message from api
-                    if ($apiResponse['statusCode'] === 401) { // 200 OK, successful
-                        $this->userTokenRefresh();
-
-                        $apiResponse = $modelo->deleteAdmin($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
-                    }
-                    if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
-                    }
-
-                    $apiResponse = json_encode($apiResponse);// encode package to send
-                    echo($apiResponse);
-                    break;*/
             }
 
         } else {
-            //get user by email - ja está na session
-            /*$userData = $modelo->getUserByEmail($_SESSION['userdata']['email']);
-            if ($userData["statusCode"] === 200) {
-                $this->userdata['adminList'] = $userData["body"];
-            }
-            if ($userData["statusCode"] === 401) {
+            //get user Message list / user messages inbox
+            $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            //caso accessToken espire
+            if ($userMessageList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
-
-                $userData = $modelo->getUserByEmail($_SESSION['userdata']['email']);
-                $this->userdata['adminList'] = $userData["body"];
-            }*/
+                $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            }
+            if ($userMessageList["statusCode"] === 200){
+                $this->userdata['userMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
 
             //get countrys list
             $countryList = $modelo->getCountryList();
@@ -3567,19 +3532,6 @@ class AdminController extends MainController
 
                 $genderList = $modelo->getGenderList();
                 $this->userdata['genderList'] = $genderList['body']['genders'];
-            }
-
-            //get user Message list / user messages inbox
-            $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
-            //caso accessToken espire
-            if ($userMessageList["statusCode"] === 401){
-                //faz o refresh do accessToken
-                $this->userTokenRefresh();
-                $userMessageList = $modelo->getMessageListByUserId($_SESSION["userdata"]["id"]);
-            }
-            if ($userMessageList["statusCode"] === 200){
-                $this->userdata['userMessageList'] = array_orderby($userMessageList["body"]["messages"], 'notificationDate', SORT_DESC);
-                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
 
             /** Carrega os arquivos do view **/

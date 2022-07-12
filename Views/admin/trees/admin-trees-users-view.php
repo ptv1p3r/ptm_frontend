@@ -25,22 +25,24 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <a href="#addTreeUserModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTreeUserModal">
-                                    <i class="fas fa-plus-circle"></i><span>Add New Tree User</span>
+                                    <i class="fas fa-plus-circle"></i><span>Nova adoção</span>
                                 </a>
+                                <div class="float-end">
+                                    <label>filtro:</label>
+                                    <select id='GetActive'>
+                                        <option value=''>Todos</option>
+                                        <option value='1'>Ativos</option>
+                                        <option value='0'>Inativos</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <table id="treesUsersTable" class="table table-striped table-hover">
                                     <thead>
                                     <tr>
-                                        <th>userId</th>
-                                        <th>treeId</th>
-                                        <th>active
-                                            <select id='GetActive'>
-                                                <option value=''>All</option>
-                                                <option value='1'>Active</option>
-                                                <option value='0'>Inactive</option>
-                                            </select>
-                                        </th>
+                                        <th>Utilizador</th>
+                                        <th>Árvore</th>
+                                        <th hidden>active</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -50,10 +52,14 @@
                                             <tr>
                                                 <td><?php echo $treeUser["userId"] ?></td>
                                                 <td><?php echo $treeUser["treeId"] ?></td>
-                                                <td><?php echo $treeUser["active"] ?></td>
+                                                <td hidden><?php echo $treeUser["active"] ?></td>
                                                 <td>
-                                                    <a href="#editTreeUserModal" id="" class="edit" data-treeUser-treeId="<?php echo $treeUser['treeId'] ?>" data-treeUser-userId="<?php echo $treeUser['userId'] ?>" data-bs-toggle="modal" data-bs-target="#editTreeUserModal"><i class="far fa-edit"></i></a>
-                                                    <a href="#deleteTreeUserModal" id="" class="delete" data-treeUser-treeId="<?php echo $treeUser['treeId'] ?>" data-treeUser-userId="<?php echo $treeUser['userId'] ?>" data-bs-toggle="modal" data-bs-target="#deleteTreeUserModal"><i class="fas fa-trash-alt"></i></a>
+                                                    <div class="float-end">
+                                                        <a href="#editTreeUserModal" id="" class="edit m-2" data-treeUser-treeId="<?php echo $treeUser['treeId'] ?>" data-treeUser-userId="<?php echo $treeUser['userId'] ?>"
+                                                           data-bs-toggle="modal" data-bs-target="#editTreeUserModal"><i class="far fa-edit fa-lg"></i></a>
+                                                        <a href="#deleteTreeUserModal" id="" class="delete m-2" data-treeUser-treeId="<?php echo $treeUser['treeId'] ?>" data-treeUser-userId="<?php echo $treeUser['userId'] ?>"
+                                                           data-bs-toggle="modal" data-bs-target="#deleteTreeUserModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         <?php }
@@ -79,26 +85,26 @@
                 <div class="modal-content">
                     <form id="addTreeUser">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Tree</h4>
+                            <h4 class="modal-title">Adicionar adoção</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>userId</label>
+                                <label>Utilizador</label>
                                 <input type="text" class="form-control" name="addTreeUserUserId" required>
                             </div>
                             <div class="form-group">
-                                <label>treeId</label>
+                                <label>Árvore</label>
                                 <input type="text" class="form-control" name="addTreeUserTreeId" required>
                             </div>
-                            <div class="form-group">
-                                <label>Active</label>
-                                <input type="checkbox" class="form-control form-check-input" name="addTreeUserActive">
+                            <div class="form-group form-check form-switch">
+                                <label>Ativo</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addTreeUserActive">
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-success" value="Add">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-success" value="Adicionar">
                         </div>
                     </form>
                 </div>
@@ -111,7 +117,7 @@
                 <div class="modal-content">
                     <form id="editTreeUser">
                         <div class="modal-header">
-                            <h4 class="modal-title">Edit Tree</h4>
+                            <h4 class="modal-title">Editar Apagar</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -120,22 +126,22 @@
                             </div>-->
 
                             <div class="form-group">
-                                <label>userId</label>
+                                <label>Utilizador</label>
                                 <input type="text" class="form-control" name="editTreeUserUserId" required>
                             </div>
                             <div class="form-group">
-                                <label>treeId</label>
+                                <label>Árvore</label>
                                 <input type="text" class="form-control" name="editTreeUserTreeId" required>
                             </div>
-                            <div class="form-group">
-                                <label>Active</label>
-                                <input type="checkbox" class="form-control form-check-input" name="editTreeUserActive">
+                            <div class="form-group form-check form-switch">
+                                <label>Ativo</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="editTreeUserActive">
                             </div>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-success" value="Save">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-success" value="Guardar">
                         </div>
                     </form>
                 </div>
@@ -148,18 +154,18 @@
                 <div class="modal-content">
                     <form id="deleteTreeUser">
                         <div class="modal-header">
-                            <h4 class="modal-title">Delete Tree</h4>
+                            <h4 class="modal-title">Apagar adoção</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Are you sure you want to delete this Tree?</p>
-                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                            <p>Tem a certeza que quer apagar esta adoção?</p>
+                            <p class="text-warning"><small>A ação não pode ser defeita.</small></p>
                             <input id="deleteUserId" name="deleteUserId" type="hidden" class="form-control" value="">
                             <input id="deleteTreeId" name="deleteTreeId" type="hidden" class="form-control" value="">
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-danger" value="Delete">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-danger" value="Apagar">
                         </div>
                     </form>
                 </div>
@@ -308,7 +314,7 @@
                     if (data.statusCode === 201){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -320,7 +326,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -335,8 +341,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -392,7 +398,7 @@
                     if (data.statusCode === 200){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -404,7 +410,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -419,8 +425,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -438,9 +444,25 @@
         // ajax to get data to Modal Edit Tree
         $('.edit').on('click', function(){
 
+            let arrayAdoption = [];
+            let emptyArray;
+
+            //get user id
+            emptyArray = { name: "", value: "" }
+            emptyArray.name = "userId";
+            emptyArray.value = $(this).attr('data-treeUser-userId');
+            arrayAdoption.push(emptyArray)
+
+
+            //get tree id
+            emptyArray = { name: "", value: "" }
+            emptyArray.name = "treeId";
+            emptyArray.value = $(this).attr('data-treeUser-treeId');
+            arrayAdoption.push(emptyArray)
+
             let formData = {
                 'action' : "GetTreeUser",
-                'data'   : $(this).attr('id') //gets tree id from id="" attribute on edit button from table
+                'data'   : arrayAdoption
             };
 
             $.ajax({
@@ -453,19 +475,13 @@
                 },
                 success: function (data) {
 
-                    $('[name="editTreeId"]').val(data[0]['id']);
-                    $('[name="editTreeName"]').val(data[0]['name']);
-                    $('[name="editTreeNameCommon"]').val(data[0]['nameCommon']);
-                    $('[name="editTreeDescription"]').val(data[0]['description']);
-                    $('[name="editTreeObservations"]').val(data[0]['observations']);
-                    $('[name="editTreeTypeId"]').val(data[0]['typeId']);
-                    $('[name="editTreeLat"]').val(data[0]['lat']);
-                    $('[name="editTreeLng"]').val(data[0]['lng']);
+                    $('[name="editTreeUserUserId"]').val(data[0]['userId']);
+                    $('[name="editTreeUserTreeId"]').val(data[0]['treeId']);
 
                     if (data[0]['active'] === 1) {
-                        $('[name="editTreeActive"]').attr('checked', true);
+                        $('[name="editTreeUserActive"]').attr('checked', true);
                     } else {
-                        $('[name="editTreeActive"]').attr('checked', false);
+                        $('[name="editTreeUserActive"]').attr('checked', false);
                     }
 
                     //atribui atributo .data("lastValue") a cada input do form editTree
@@ -478,7 +494,7 @@
                 },
                 error: function (data) {
                     Swal.fire({
-                        title: 'Error!',
+                        title: 'Erro!',
                         text: data.body.message,
                         icon: 'error',
                         showConfirmButton: false,
@@ -518,7 +534,7 @@
                     if (data.statusCode === 200){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -530,7 +546,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -545,8 +561,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
