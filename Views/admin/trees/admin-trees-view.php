@@ -25,13 +25,16 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <a href="#addTreeModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTreeModal">
-                                    <i class="fas fa-plus-circle"></i><span>Add New Tree</span>
+                                    <i class="fas fa-plus-circle"></i><span> Nova árvore</span>
                                 </a>
-                                <select id='GetActive'>
-                                    <option value=''>All</option>
-                                    <option value='1'>Active</option>
-                                    <option value='0'>Inactive</option>
-                                </select>
+                                <div class="float-end">
+                                    <label>filtro:</label>
+                                    <select id='GetActive'>
+                                        <option value=''>Todos</option>
+                                        <option value='1'>Ativos</option>
+                                        <option value='0'>Inativos</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <table id="treesTable" class="table table-striped table-hover">
@@ -124,7 +127,15 @@
                         </div>
                         <div class="form-group">
                             <label>Tipo</label>
-                            <input type="text" class="form-control" name="addTreeTypeId" required>
+                            <!--<input type="text" class="form-control" name="addTreeTypeId" required>-->
+                            <select class="form-select" name="addTreeTypeId" id="addTreeTypeId" required>
+                                <option value="" disabled selected>Selecione o tipo</option>
+                                <?php if (!empty($this->userdata['treeTypesList'])) {
+                                    foreach ($this->userdata['treeTypesList'] as $key => $type) { ?>
+                                        <option value="<?php echo $type['id'] ?>"><?php echo $type["name"] ?></option>
+                                    <?php }
+                                } ?>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label>Latitude</label>
@@ -134,9 +145,9 @@
                             <label>Longitude</label>
                             <input type="number" step="any" class="form-control" name="addTreeLng" required>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group form-check form-switch">
                             <label>Ativo</label>
-                            <input type="checkbox" class="form-control form-check-input" name="addTreeActive">
+                            <input type="checkbox" role="switch" class="form-check-input" name="addTreeActive">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -180,7 +191,15 @@
                         </div>
                         <div class="form-group">
                             <label>Tipo</label>
-                            <input type="text" class="form-control" name="editTreeTypeId" required>
+                            <!--<input type="text" class="form-control" name="editTreeTypeId" required>-->
+                            <select class="form-select" name="editTreeTypeId" id="editTreeTypeId" required>
+                                <option value="" disabled selected>Selecione o tipo</option>
+                                <?php if (!empty($this->userdata['treeTypesList'])) {
+                                    foreach ($this->userdata['treeTypesList'] as $key => $type) { ?>
+                                        <option value="<?php echo $type['id'] ?>"><?php echo $type["name"] ?></option>
+                                    <?php }
+                                } ?>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label>Latitude</label>
@@ -190,9 +209,9 @@
                             <label>Longitude</label>
                             <input type="number" step="any" class="form-control" name="editTreeLng" required>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group form-check form-switch">
                             <label>Ativo</label>
-                            <input type="checkbox" class="form-control form-check-input" name="editTreeActive">
+                            <input type="checkbox" role="switch" class="form-check-input" name="editTreeActive">
                         </div>
 
                     </div>
@@ -249,16 +268,18 @@
                 $('#loader').removeClass('hidden')
             },
             success: function (data) {
-                if (data.statusCode === 201){
-                    treeImagePath = "<?php echo API_URL . 'api/v1/trees/image/' ?>" + data["images"][0]["path"];
+                //console.log(data)
+                if (data.statusCode === 404){
+                    treeImagePath = "<?php echo HOME_URL . '/Images/admin/noimage.png' ?>";
                 } else {
-                    treeImagePath = "<?php echo HOME_URL . '/Images/admin/nophoto.png' ?>";
+                    treeImagePath = "<?php echo API_URL . 'api/v1/trees/image/' ?>" + data["images"][0]["path"];
                 }
+                //console.log(treeImagePath)
 
             },
             error: function (data) {
                 Swal.fire({
-                    title: 'Error!',
+                    title: 'Erro!',
                     text: data.body.message,
                     icon: 'error',
                     showConfirmButton: false,
@@ -346,6 +367,7 @@
                             adopted: 'sim',
                             name: '<?php echo $tree["name"]?>',
                             tree_id: '<?php echo $tree["id"]?>',
+                            active: '<?php echo $tree["active"]?>',
                         }).addTo(map).on("click", markerOnClick);
                     <?php } else {?>
                         marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
@@ -353,6 +375,7 @@
                             adopted: 'não',
                             name: '<?php echo $tree["name"]?>',
                             tree_id: '<?php echo $tree["id"]?>',
+                            active: '<?php echo $tree["active"]?>',
                         }).addTo(map).on("click", markerOnClick);
                 <?php }
                 }
@@ -418,7 +441,7 @@
                     if (data.statusCode === 201){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -430,7 +453,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -445,8 +468,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -502,7 +525,7 @@
                     if (data.statusCode === 200){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -514,7 +537,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -529,8 +552,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -588,7 +611,7 @@
                 },
                 error: function (data) {
                     Swal.fire({
-                        title: 'Error!',
+                        title: 'Erro!',
                         text: data.body.message,
                         icon: 'error',
                         showConfirmButton: false,
@@ -628,7 +651,7 @@
                     if (data.statusCode === 200){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -640,7 +663,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -655,8 +678,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,

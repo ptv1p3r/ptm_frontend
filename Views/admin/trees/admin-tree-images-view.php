@@ -51,7 +51,7 @@
                                                 <!--<td><?php //echo $treeImage["id"] ?></td>-->
                                                 <td><?php echo $treeImage["treeId"] ?></td>
                                                 <!--<td><?php //echo $treeImage["name"] ?></td>-->
-                                                <td> <img src="<?php echo API_URL . 'api/v1/trees/image/' . $treeImage["path"] ?>" width="72" height="72" style="cursor: pointer" onclick="window.open(this.src, '_blank');"></td>
+                                                <td> <img src="<?php echo API_URL . 'api/v1/trees/image/' . $treeImage["path"] ?>" width="72" height="72" style="cursor: zoom-in" onclick="window.open(this.src, '_blank');"></td>
                                                 <td><?php echo $treeImage["description"] ?></td>
                                                 <td><?php echo $treeImage["size"] ?></td>
                                                 <td><?php echo $treeImage["position"] ?></td>

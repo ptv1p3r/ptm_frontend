@@ -336,7 +336,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -350,13 +350,13 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->addGroup($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // quando statusCode = 201, a response nao vem com campo mensagem
                     // entao é criado e encoded para ser enviado
                     if ($apiResponse['statusCode'] === 201){ // 201 created
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // se statsCode nao for 201, entao api response ja vem com um campo mensagem
@@ -370,7 +370,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -384,11 +384,11 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->updateGroup($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -400,7 +400,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -414,11 +414,11 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->deleteGroup($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -773,7 +773,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -787,11 +787,11 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->addSecurity($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 201){ // 201 created
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -803,7 +803,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -817,11 +817,11 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->updateSecurity($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -833,7 +833,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -847,11 +847,11 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->deleteSecurity($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -1042,7 +1042,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -1056,13 +1056,13 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->addTree($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // quando statusCode = 201, a response nao vem com campo mensagem
                     // entao é criado e encoded para ser enviado
                     if ($apiResponse['statusCode'] === 201){ // 201 created
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
 
                         $apiResponse = json_encode($apiResponse);// encode package to send
                         echo $apiResponse;
@@ -1080,7 +1080,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -1094,11 +1094,10 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->updateTree($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Updated with success!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
 
                         $apiResponse = json_encode($apiResponse);// encode package to send
                         echo $apiResponse;
@@ -1114,7 +1113,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -1128,11 +1127,10 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->deleteTree($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Deleted with success!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
 
                         $apiResponse = json_encode($apiResponse);// encode package to send
                         echo $apiResponse;
@@ -1319,7 +1317,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -1333,13 +1331,13 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->addTreeUser($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // quando statusCode = 201, a response nao vem com campo mensagem
                     // entao é criado e encoded para ser enviado
                     if ($apiResponse['statusCode'] === 201){ // 201 created
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // se statsCode nao for 201, entao api response ja vem com um campo mensagem
@@ -1353,7 +1351,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -1367,11 +1365,11 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->updateTree($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -1383,7 +1381,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -1397,11 +1395,11 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->deleteTreeUser($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -1549,7 +1547,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -1563,13 +1561,13 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->addTreeImage($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // quando statusCode = 201, a response nao vem com campo mensagem
                     // entao é criado e encoded para ser enviado
                     if ($apiResponse['statusCode'] === 201){ // 201 created
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // se statsCode nao for 201, entao api response ja vem com um campo mensagem
@@ -1583,7 +1581,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -1597,11 +1595,11 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->updateTreeImage($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -1613,7 +1611,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -1627,11 +1625,11 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->deleteTreeImage($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -1753,7 +1751,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -1767,13 +1765,13 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->addTreeType($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // quando statusCode = 201, a response nao vem com campo mensagem
                     // entao é criado e encoded para ser enviado
                     if ($apiResponse['statusCode'] === 201){ // 201 created
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // se statsCode nao for 201, entao api response ja vem com um campo mensagem
@@ -1787,7 +1785,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -1801,11 +1799,11 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->updateTreeType($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -1817,7 +1815,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -1831,11 +1829,11 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->deleteTreeType($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -1956,7 +1954,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -1970,13 +1968,13 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->addTreeIntervention($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // quando statusCode = 201, a response nao vem com campo mensagem
                     // entao é criado e encoded para ser enviado
                     if ($apiResponse['statusCode'] === 201){ // 201 created
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
 
                         $apiResponse = json_encode($apiResponse);// encode package to send
                         echo $apiResponse;
@@ -1994,7 +1992,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -2008,11 +2006,11 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->updateTreeIntervention($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
 
                         $apiResponse = json_encode($apiResponse);// encode package to send
                         echo $apiResponse;
@@ -2028,7 +2026,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -2042,11 +2040,11 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->deleteTreeIntervention($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
 
                         $apiResponse = json_encode($apiResponse);// encode package to send
                         echo $apiResponse;
@@ -2172,7 +2170,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -2186,13 +2184,13 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->addTransaction($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // quando statusCode = 201, a response nao vem com campo mensagem
                     // entao é criado e encoded para ser enviado
                     if ($apiResponse['statusCode'] === 201){ // 201 created
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // se statsCode nao for 201, entao api response ja vem com um campo mensagem
@@ -2206,7 +2204,7 @@ class AdminController extends MainController
 
                         //Verifica se o user tem a permissão para realizar operaçao
                         if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                            $apiResponse["body"]['message'] = "You have no permission!";
+                            $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                             echo json_encode($apiResponse);
                             break;
@@ -2220,11 +2218,11 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->updateTransaction($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -2236,7 +2234,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -2250,11 +2248,11 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->deleteTransaction($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -2423,7 +2421,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -2437,13 +2435,13 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->addTransactionType($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // quando statusCode = 201, a response nao vem com campo mensagem
                     // entao é criado e encoded para ser enviado
                     if ($apiResponse['statusCode'] === 201){ // 201 created
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // se statsCode nao for 201, entao api response ja vem com um campo mensagem
@@ -2457,7 +2455,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -2471,11 +2469,11 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->updateTransactionType($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -2487,7 +2485,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -2501,11 +2499,11 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->deleteTransactionType($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -2626,7 +2624,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -2640,13 +2638,13 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->addTransactionMethod($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // quando statusCode = 201, a response nao vem com campo mensagem
                     // entao é criado e encoded para ser enviado
                     if ($apiResponse['statusCode'] === 201){ // 201 created
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // se statsCode nao for 201, entao api response ja vem com um campo mensagem
@@ -2660,7 +2658,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -2674,11 +2672,11 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->updateTransactionMethod($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -2690,7 +2688,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -2704,11 +2702,11 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->deleteTransactionMethod($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -2811,7 +2809,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -2825,13 +2823,13 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->addMessage($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // quando statusCode = 201, a response nao vem com campo mensagem
                     // entao é criado e encoded para ser enviado
                     if ($apiResponse['statusCode'] === 201){ // 201 created
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // se statsCode nao for 201, entao api response ja vem com um campo mensagem
@@ -2845,7 +2843,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -2865,11 +2863,11 @@ class AdminController extends MainController
                             $this->userTokenRefresh();
 
                             $apiResponse = $modelo->deleteMessage($id); //decode to check message from api
-                            $apiResponse["body"]['message'] = "Deleted with success!";
+                            $apiResponse["body"]['message'] = "Apagado com sucesso!";
                         }
 
                         if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                            $apiResponse["body"]['message'] = "Deleted with success!";
+                            $apiResponse["body"]['message'] = "Apagado com sucesso!";
                         }
                     }
 
@@ -2882,7 +2880,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -2918,7 +2916,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -3105,7 +3103,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -3119,13 +3117,13 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->addMessage($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // quando statusCode = 201, a response nao vem com campo mensagem
                     // entao é criado e encoded para ser enviado
                     if ($apiResponse['statusCode'] === 201){ // 201 created
-                        $apiResponse["body"]['message'] = "Created with success!";
+                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // se statsCode nao for 201, entao api response ja vem com um campo mensagem
@@ -3139,7 +3137,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -3159,11 +3157,11 @@ class AdminController extends MainController
                             $this->userTokenRefresh();
 
                             $apiResponse = $modelo->deleteMessage($id); //decode to check message from api
-                            $apiResponse["body"]['message'] = "Deleted with success!";
+                            $apiResponse["body"]['message'] = "Apagado com sucesso!";
                         }
 
                         if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
-                            $apiResponse["body"]['message'] = "Deleted with success!";
+                            $apiResponse["body"]['message'] = "Apagado com sucesso!";
                         }
                     }
 
@@ -3331,7 +3329,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -3343,10 +3341,10 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->updateUser($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
                     if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
 
                         //atualiza toda a $_SESSION
                         $valResponse = $modelo->validateUser($_SESSION["userdata"]["email"],$_SESSION["userdata"]["password"]);
@@ -3437,7 +3435,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -3493,7 +3491,7 @@ class AdminController extends MainController
                     }
 
                     if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
 
                         // Atualiza a pass na $_SESSION
                         $_SESSION['userdata']['password'] = $newPassVal;
@@ -3508,7 +3506,7 @@ class AdminController extends MainController
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
-                        $apiResponse["body"]['message'] = "You have no permission!";
+                        $apiResponse["body"]['message'] = "Não tem permissões para realizar essa operação!";
 
                         echo json_encode($apiResponse);
                         break;
@@ -3520,10 +3518,10 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->deleteAdmin($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
                     if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Deleted with success!";
+                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
 
                     $apiResponse = json_encode($apiResponse);// encode package to send
