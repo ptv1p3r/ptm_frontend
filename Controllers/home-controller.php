@@ -418,17 +418,15 @@ class HomeController extends MainController
      */
     public function contact()
     {
-
         // Title page
         $this->title = 'Contacte-nos';
-
         // Function parameters
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
         //$modelo = $this->load_model('user-model');
 
         if (!$this->logged_in) {
-// Process Ajax call function
+            // Process Ajax call function
             if (isset($_POST['action']) && !empty($_POST['action'])) {
                 $action = $_POST['action'];
                 switch ($action) {
@@ -472,18 +470,20 @@ class HomeController extends MainController
                             $apiResponse = json_encode($response);// encode package to send
                             echo $apiResponse;
                             break;
-//TODO ver a response não esta a chegar na frente
+
                         } catch (Exception $e) {
-                            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                            $message = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                            $apiResponse = json_encode($message);// encode package to send
+                            echo $apiResponse;
+                            break;
                         }
                 }
+            } else {
+                /** Load public files view **/
+                require ABSPATH . '/views/_includes/header.php';
+                require ABSPATH . '/views/user/home/contact-view.php';
+                require ABSPATH . '/views/_includes/footer.php';
             }
-
-            /** Load public files view **/
-            require ABSPATH . '/views/_includes/header.php';
-            require ABSPATH . '/views/user/home/contact-view.php';
-            require ABSPATH . '/views/_includes/footer.php';
-
         } else {
             // Process Ajax call function
             if (isset($_POST['action']) && !empty($_POST['action'])) {
@@ -529,17 +529,20 @@ class HomeController extends MainController
                             $apiResponse = json_encode($response);// encode package to send
                             echo $apiResponse;
                             break;
-//TODO ver a response não esta a chegar na frente
+
                         } catch (Exception $e) {
-                            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                            $message = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                            $apiResponse = json_encode($message);// encode package to send
+                            echo $apiResponse;
+                            break;
                         }
                 }
+            } else {
+                /** Load files from view **/
+                require ABSPATH . '/views/_includes/user-header.php';
+                require ABSPATH . '/views/user/home/contact-view.php';
+                require ABSPATH . '/views/_includes/footer.php';
             }
-
-            /** load files from view **/
-            require ABSPATH . '/views/_includes/user-header.php';
-            require ABSPATH . '/views/user/home/contact-view.php';
-            require ABSPATH . '/views/_includes/footer.php';
         }
     }
 
