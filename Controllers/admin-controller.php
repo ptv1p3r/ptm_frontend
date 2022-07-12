@@ -1416,40 +1416,37 @@ class AdminController extends MainController
 
             //get trees List
             $treesList = $modelo->getTreeList();
-            if ($treesList["statusCode"] === 200){
-                $this->userdata['treesList'] = $treesList["body"]["trees"];
-            }
             if ($treesList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $treesList = $modelo->getTreeList();
+            }
+            if ($treesList["statusCode"] === 200){
                 $this->userdata['treesList'] = $treesList["body"]["trees"];
             }
 
             //get user List
             $userList = $modelo->getUserList();
-            if ($userList["statusCode"] === 200){
-                $this->userdata['userList'] = $userList["body"]["users"];
-            }
             if ($userList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $userList = $modelo->getUserList();
+            }
+            if ($userList["statusCode"] === 200){
                 $this->userdata['userList'] = $userList["body"]["users"];
             }
 
             //get trees User List
             $treesUserList = $modelo->getTreeUserList();
-            if ($treesUserList["statusCode"] === 200){
-                $this->userdata['treesUserList'] = $treesUserList["body"]["trees"];
-            }
             if ($treesUserList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $treesUserList = $modelo->getTreeUserList();
+            }
+            if ($treesUserList["statusCode"] === 200){
                 $this->userdata['treesUserList'] = $treesUserList["body"]["trees"];
             }
 
@@ -1473,7 +1470,7 @@ class AdminController extends MainController
         $this->title = 'Admin - Imagens';
 
         // Permissoes da pagina
-        $this->permission_required = array('admLogin'/*,'usersTreesRead'*/);
+        $this->permission_required = array('admLogin','usersTreesRead');
 
         // Estado da sidebar
         // se ja existir uma active tab
@@ -1536,7 +1533,7 @@ class AdminController extends MainController
                     break;
 
                 case 'AddTreeImage' :
-                    /*$this->permission_required = array('usersTreesCreate');
+                    $this->permission_required = array('usersTreesCreate');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
@@ -1544,7 +1541,7 @@ class AdminController extends MainController
 
                         echo json_encode($apiResponse);
                         break;
-                    }*/
+                    }
 
                     $data = $_POST['data'];
                     $apiResponse = $modelo->addTreeImage($data); //decode to check message from api
@@ -1554,7 +1551,6 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->addTreeImage($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // quando statusCode = 201, a response nao vem com campo mensagem
@@ -1570,7 +1566,7 @@ class AdminController extends MainController
                     break;
 
                 case 'UpdateTreeImage' :
-                    /*$this->permission_required = array('usersTreesUpdate');
+                    $this->permission_required = array('usersTreesUpdate');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
@@ -1578,7 +1574,7 @@ class AdminController extends MainController
 
                         echo json_encode($apiResponse);
                         break;
-                    }*/
+                    }
 
                     $data = $_POST['data'];
                     $apiResponse = $modelo->updateTreeImage($data); //decode to check message from api
@@ -1588,7 +1584,6 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->updateTreeImage($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
@@ -1600,7 +1595,7 @@ class AdminController extends MainController
                     break;
 
                 case 'DeleteTreeImage' :
-                    /*$this->permission_required = array('usersTreesDelete');
+                    $this->permission_required = array('usersTreesDelete');
 
                     //Verifica se o user tem a permissão para realizar operaçao
                     if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){
@@ -1608,7 +1603,7 @@ class AdminController extends MainController
 
                         echo json_encode($apiResponse);
                         break;
-                    }*/
+                    }
 
                     $data = $_POST['data'];
                     $apiResponse = $modelo->deleteTreeImage($data); //decode to check message from api
@@ -1618,7 +1613,6 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->deleteTreeImage($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
@@ -1646,14 +1640,13 @@ class AdminController extends MainController
 
             //get tree Image List
             $treeImageList = $modelo->getTreeImageList();
-            if ($treeImageList["statusCode"] === 200){
-                $this->userdata['treeImageList'] = $treeImageList["body"]["images"];
-            }
             if ($treeImageList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $treeImageList = $modelo->getTreeImageList();
+            }
+            if ($treeImageList["statusCode"] === 200){
                 $this->userdata['treeImageList'] = $treeImageList["body"]["images"];
             }
 
@@ -2065,14 +2058,13 @@ class AdminController extends MainController
 
             //get tree Intervention List
             $treeInterventionList = $modelo->getTreeInterventionList();
-            if ($treeInterventionList["statusCode"] === 200){
-                $this->userdata['treeInterventionList'] = $treeInterventionList["body"]["interventions"];
-            }
             if ($treeInterventionList["statusCode"] === 401){
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $treeInterventionList = $modelo->getTreeInterventionList();
+            }
+            if ($treeInterventionList["statusCode"] === 200){
                 $this->userdata['treeInterventionList'] = $treeInterventionList["body"]["interventions"];
             }
 
