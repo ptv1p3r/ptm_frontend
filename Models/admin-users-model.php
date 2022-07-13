@@ -93,6 +93,23 @@ class AdminUsersModel extends MainModel {
         return json_decode(json_encode($result), true);
     }
 
+    /**
+     * Metodo que retorna lista de Generos
+     * @return mixed
+     */
+    public function getGenderList()
+    {
+        $result = null;
+
+        $url = API_URL . 'api/v1/genders/list';
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
 
     /** CRUD USERS **/
     /**
