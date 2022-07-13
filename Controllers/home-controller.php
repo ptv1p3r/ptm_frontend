@@ -298,7 +298,7 @@ class HomeController extends MainController
         }
         /** Load files from view **/
         require ABSPATH . '/views/_includes/user-header.php';
-        require ABSPATH . '/views/home/home-view.php';
+        require ABSPATH . '/views/user/home/home-view.php';
         require ABSPATH . '/views/_includes/footer.php';
     }
 
@@ -407,6 +407,55 @@ class HomeController extends MainController
             /** load files from view **/
             require ABSPATH . '/views/_includes/user-header.php';
             require ABSPATH . '/views/user/home/presentation-view.php';
+            require ABSPATH . '/views/_includes/footer.php';
+        }
+    }
+
+    /**
+     * Rights page handler
+     * "/views/user/home/the-trees-view.php"
+     */
+    public function theTrees()
+    {
+        // Title page
+        $this->title = 'As árvores';
+
+        // Function parameters
+        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
+        //$modelo = $this->load_model('user-model');
+
+        if (!$this->logged_in) {
+
+            /** Load public files view **/
+            require ABSPATH . '/views/_includes/header.php';
+            require ABSPATH . '/views/user/home/trees-view.php';
+            require ABSPATH . '/views/_includes/footer.php';
+
+        } else {
+            //Load model messages from user
+            $modelMessage = $this->load_model('user-messages-model');
+            //Load model messages from user
+            $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
+
+            //Status code 200 => OK
+            if ($userMessageList["statusCode"] === 200) {
+                $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+            //Status code 401 => Unauthorized
+            if ($userMessageList["statusCode"] === 401) {
+                //Refresh do accessToken
+                $this->userTokenRefresh();
+                //Load model intervation tree
+                $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
+                $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+
+            /** load files from view **/
+            require ABSPATH . '/views/_includes/user-header.php';
+            require ABSPATH . '/views/user/home/trees-view.php';
             require ABSPATH . '/views/_includes/footer.php';
         }
     }
