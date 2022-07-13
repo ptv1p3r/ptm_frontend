@@ -114,7 +114,7 @@
                     <i class="fas fa-user fa-fw"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="<?php echo HOME_URL . '/admin/settings';?>">Perfil</a></li>
+                    <li><a class="dropdown-item" href="<?php echo HOME_URL . '/admin/settings';?>">Meus dados</a></li>
                     <li><hr class="dropdown-divider" /></li>
                     <li><a class="dropdown-item" href="<?php echo HOME_URL . '/admin/applogout';?>">Logout</a></li>
                 </ul>
