@@ -20,29 +20,31 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <a href="#addTransactionModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTransactionModal">
-                                    <i class="fas fa-plus-circle"></i><span>&nbsp;Add New Transaction</span>
+                                    <i class="fas fa-plus-circle"></i><span> Nova transação</span>
                                 </a>
+                                <!--<div class="float-end">
+                                    <label>filtro:</label>
+                                    <select id='GetActive'>
+                                        <option value=''>Todos</option>
+                                        <option value='1'>Ativos</option>
+                                        <option value='0'>Inativos</option>
+                                    </select>
+                                </div>-->
                             </div>
                             <div class="card-body">
                                 <table id="transactionsTable" class="table table-striped table-hover">
                                     <thead>
                                     <tr>
-                                        <th>id</th>
-                                        <th>typeId</th>
-                                        <th>methodId</th>
-                                        <th>userId</th>
-                                        <th>treeId</th>
-                                        <th>value</th>
-                                        <!--<th>active
-                                            <select id='GetActive'>
-                                                <option value=''>All</option>
-                                                <option value='1'>Active</option>
-                                                <option value='0'>Inactive</option>
-                                            </select>
-                                        </th>-->
-                                        <th>dateCreated</th>
-                                        <th>dateModified</th>
-                                        <th>dateValidated</th>
+                                        <th>Identificador</th>
+                                        <th>Tipo</th>
+                                        <th>Método</th>
+                                        <th>Utilizador</th>
+                                        <th>Árvore</th>
+                                        <th>Valor</th>
+                                        <!--<th>active</th>-->
+                                        <th>Data criado</th>
+                                        <th>Data atualizado</th>
+                                        <th>Data validado</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -77,8 +79,10 @@
                                                 <td><?php echo $transaction["dateModified"] ?></td>
                                                 <td><?php echo $transaction["dateValidated"] ?></td>
                                                 <td>
-                                                    <a href="#deleteTransactionModal" id="<?php echo $transaction['id'] ?>" class="delete"
-                                                       data-bs-toggle="modal" data-bs-target="#deleteTransactionModal"><i class="fas fa-trash-alt"></i></a>
+                                                    <div class="float-end">
+                                                        <a href="#deleteTransactionModal" id="<?php echo $transaction['id'] ?>" class="delete m-2"
+                                                           data-bs-toggle="modal" data-bs-target="#deleteTransactionModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         <?php }
@@ -105,12 +109,12 @@
                 <div class="modal-content">
                     <form id="addTransaction">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Transaction</h4>
+                            <h4 class="modal-title">Realizar transação</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>typeId</label>
+                                <label>Tipo</label>
                                 <!--<input type="text" class="form-control" name="addTransactionTypeId" required>-->
                                 <select name="addTransactionTypeId" id="addTransactionTypeId" required>
                                     <option value="" disabled selected >Tipo transação</option>
@@ -122,7 +126,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>methodId</label>
+                                <label>Método</label>
                                 <!--<input type="text" class="form-control" name="addTransactionMethodId" required>-->
                                 <select name="addTransactionMethodId" id="addTransactionMethodId" required>
                                     <option value="" disabled selected>Método transação</option>
@@ -134,7 +138,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>userId</label>
+                                <label>Utilizador</label>
                                 <!--<input type="text" class="form-control" name="addTransactionUserId" required> -->
                                 <select name="addTransactionUserId" id="addTransactionUserId" required>
                                     <option value="" disabled selected>Utilizador</option>
@@ -146,7 +150,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>treeId</label>
+                                <label>Árvore</label>
                                 <!--<input type="text" class="form-control" name="addTransactionTreeId" required>-->
                                 <select name="addTransactionTreeId" id="addTransactionTreeId" required>
                                     <option value="" disabled selected>Árvore a adotar</option>
@@ -158,7 +162,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>value</label>
+                                <label>Valor</label>
                                 <input type="number" min="2.50" step="0.05" class="form-control" name="addTransactionValue" required>
                             </div>
                             <!--<div class="form-group">
@@ -167,8 +171,8 @@
                             </div>-->
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-success" value="Add">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-success" value="Concluir">
                         </div>
                     </form>
                 </div>
@@ -181,17 +185,17 @@
                 <div class="modal-content">
                     <form id="deleteTransaction">
                         <div class="modal-header">
-                            <h4 class="modal-title">Delete Transaction</h4>
+                            <h4 class="modal-title">Apagar transação</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Are you sure you want to delete this Transaction?</p>
-                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                            <p>Tem a certeza que quer apagar esta transação?</p>
+                            <p class="text-warning"><small>A ação não pode ser defeita.</small></p>
                             <input id="deleteTransactionId" name="deleteTransactionId" type="hidden" class="form-control" value="">
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-danger" value="Delete">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-danger" value="Apagar">
                         </div>
                     </form>
                 </div>
@@ -251,7 +255,7 @@
                             if (data.statusCode === 201){
                                 //mensagem de Success
                                 Swal.fire({
-                                    title: 'Success!',
+                                    title: 'Sucesso!',
                                     text: data.body.message,
                                     icon: 'success',
                                     showConfirmButton: false,
@@ -263,7 +267,7 @@
                             } else {
                                 //mensagem de Error
                                 Swal.fire({
-                                    title: 'Error!',
+                                    title: 'Erro!',
                                     text: data.body.message,
                                     icon: 'error',
                                     showConfirmButton: false,
@@ -278,8 +282,8 @@
                         error: function (data) {
                             //mensagem de Error
                             Swal.fire({
-                                title: 'Error!',
-                                text: "Connection error, please try again.",
+                                title: 'Erro!',
+                                text: "Erro de conexão, por favor tente denovo.",
                                 icon: 'error',
                                 showConfirmButton: false,
                                 timer: 2000,
@@ -317,7 +321,7 @@
                             if (data.statusCode === 200){
                                 //mensagem de Success
                                 Swal.fire({
-                                    title: 'Success!',
+                                    title: 'Sucesso!',
                                     text: data.body.message,
                                     icon: 'success',
                                     showConfirmButton: false,
@@ -329,7 +333,7 @@
                             } else {
                                 //mensagem de Error
                                 Swal.fire({
-                                    title: 'Error!',
+                                    title: 'Erro!',
                                     text: data.body.message,
                                     icon: 'error',
                                     showConfirmButton: false,
@@ -344,8 +348,8 @@
                         error: function (data) {
                             //mensagem de Error
                             Swal.fire({
-                                title: 'Error!',
-                                text: "Connection error, please try again.",
+                                title: 'Erro!',
+                                text: "Erro de conexão, por favor tente denovo.",
                                 icon: 'error',
                                 showConfirmButton: false,
                                 timer: 2000,
