@@ -1480,6 +1480,7 @@ ul.flinks li a:hover, ul.flinks li.active a {
     right: 0;
 }
 
+
 /***************  Filter Gallery End  *****************/
 
 .partner-logos {
@@ -8302,61 +8303,9 @@ NEW Settings profile End
 Settings profile End
 *********************************/
 
-
-/*********************************
-Loader registration Start
-*********************************/
-
-/*!*Add an overlay to the entire page blocking any further presses to buttons or other elements.*!*/
-/*.overlay {*/
-/*    position: fixed;*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    width: 100%;*/
-/*    height: 100vh;*/
-/*    background: rgba(0,0,0,.8);*/
-/*    z-index: 999;*/
-/*    opacity: 1;*/
-/*    transition: all 0.5s;*/
-/*}*/
-
-/*!*Spinner Styles*!*/
-/*.lds-dual-ring {*/
-/*    display: inline-block;*/
-/*    width: auto;*/
-/*    height: auto;*/
-/*}*/
-/*.lds-dual-ring:after {*/
-/*    content: " ";*/
-/*    display: block;*/
-/*    width: 64px;*/
-/*    height: 64px;*/
-/*    margin: 5% auto;*/
-/*    border-radius: 50%;*/
-/*    border: 6px solid #fff;*/
-/*    border-color: #fff transparent #fff transparent;*/
-/*    animation: lds-dual-ring 1.2s linear infinite;*/
-/*}*/
-/*!*@keyframes lds-dual-ring {*!*/
-/*!*    0% {*!*/
-/*!*        transform: rotate(0deg);*!*/
-/*!*    }*!*/
-/*!*    100% {*!*/
-/*!*        transform: rotate(360deg);*!*/
-/*!*    }*!*/
-/*!*}*!*/
-
 /*********************************
 Loader registration End
 *********************************/
-
-/*body {*/
-/*    margin: 0;*/
-/*    min-height: 100vh;*/
-/*    display: grid;*/
-/*    place-items: center;*/
-
-/*}*/
 
 /*Hidden class for adding and removing*/
 .lds-dual-ring.hidden {
@@ -8428,6 +8377,37 @@ Map Leaflet CSS
 #map {
     height: 500px;
 }
+
+
+/*********************************
+Map Tab GoTo Point leaflet CSS
+*********************************/
+
+.mapGo .row {
+    justify-content: center;
+    background: white;
+}
+
+.mapDirect .btn {
+    /*background: white;*/
+    font-size: 2rem;
+}
+
+
+.mapDirect .btn-outline-success {
+    color: #66bb6a;
+    background: white;
+    border: white;
+    box-shadow: 0 10px 10px 0 rgba(0, 102, 0, 0.24), 0 17px 50px 0 rgba(0, 102, 0, 0.19);
+}
+
+.breadcrumb {
+    background: white;
+}
+
+
+
+
 
 /*********************************
 Transatiction tree CSS
