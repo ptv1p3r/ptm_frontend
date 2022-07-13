@@ -683,6 +683,18 @@ class AdminController extends MainController
                 $this->userdata['groupsList'] = $groupsList["body"]["groups"];
             }
 
+            //get group list
+            $gendersList = $modelo->getGenderList();
+            if ($gendersList["statusCode"] === 401){
+                //faz o refresh do accessToken
+                $this->userTokenRefresh();
+
+                $gendersList = $modelo->getGenderList();
+            }
+            if ($gendersList["statusCode"] === 200){
+                $this->userdata['gendersList'] = $gendersList["body"]["genders"];
+            }
+
             /**Carrega os arquivos do view**/
             require ABSPATH . '/views/_includes/admin-header.php';
 
