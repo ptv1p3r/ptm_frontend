@@ -62,40 +62,18 @@
     <!-- Bootstrap tables lib 1.20.2 -->
     <link href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css" rel="stylesheet">
     <!-- dataTables -->
-
-
-<!--    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>-->
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
-    <!--<script src="https://cdn.datatables.net/rowreorder/1.2.8/js/dataTables.rowReorder.min.js"></script>-->
     <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.5.6/js/dataTables.colReorder.min.js">
     <script src="https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-PT.json"></script>
-<!--    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">-->
-
 
     <!-- Template original CSS links -->
-    <!--  CSS custom que não pode ser apagado-->
+    <!--  CSS custom -->
     <link href="<?php echo HOME_URL . '/'; ?>css/home/custom.css" rel="stylesheet">
-    <!--    <link href="../../css/home/prettyPhoto.css" rel="stylesheet">-->
-
-    <!--     <link href="css/home/color.css" rel="stylesheet">-->
-    <!--     <link href="css/home/responsive.css" rel="stylesheet">-->
-    <!--     <link href="css/home/owl.carousel.min.css" rel="stylesheet">-->
-    <!-- <link href="../../css/home/bootstrap.min.css" rel="stylesheet">    -->
-
-    <!--     <link href="css/home/all.min.css" rel="stylesheet">-->
-
-    <!--  END CSS links -->
-    <!--     <script src="js/home/jquery-3.3.1.min.js"></script>-->
-
-
     <!--  Icon do template-->
     <link rel="icon" href="<?php echo HOME_URL . '/'; ?>Images/home/favicon.png">
-
-    <!--  Script auto-version-->
-    <!--    <script src="--><?php //echo auto_version('../../js/global-functions.js'); ?><!--"></script>-->
-
+    <!--    Page title-->
     <title><?php echo $this->title ?></title>
 
 </head>
@@ -112,63 +90,30 @@
                     class="fas fa-bars"></i></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="index.html" role="button" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false"> Home </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="index.html">Home One</a></li>
-                        <li><a href="<?php //echo HOME_URI . 'ptm_frontend/donation/donation-view.php'; ?>">
-                                PAGE</a></li>
-                        <li><a href="/Images/home/home-three.html">Home
-                                Three</a></li>
-                    </ul>
+                <!--Menu go to homepage-->
+                <li class="nav-item"><a class="nav-link"
+                                        href="<?php echo HOME_URL . '/'; ?>">Início</a>
                 </li>
-
+                <!--Menu go to presentation-->
+                <li class="nav-item"><a class="nav-link"
+                                        href="<?php echo HOME_URL . '/home/presentation'; ?>">O projeto</a>
+                </li>
+                <!--Menu go to trees-->
+                <li class="nav-item"><a class="nav-link"
+                                        href="<?php echo HOME_URL . '/home/thetrees'; ?>">As árvores</a>
+                </li>
+                <!--Menu go to causes-->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle"
                        href="/Images/home/causes.html" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Causas </a>
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Sobre </a>
                     <ul class="dropdown-menu">
-                        <li><a href="/Images/home/causes.html">Causa
-                                Grid</a></li>
-                        <li><a href="/Images/home/causes-list.html">Causes
-                                List</a></li>
-                        <li><a href="/Images/home/causes-details.html">Causes
-                                Details</a></li>
+                        <li><a href="<?php echo HOME_URL . '/home/rights'; ?>">Regulamento</a></li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle"
-                       href="Images/home/events-grid.html" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Eventos </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/Images/home/events-grid.html">Events
-                                Grid</a></li>
-                        <li><a href="/Images/home/events-grid-2.html">Events
-                                Grid Two</a></li>
-                        <li><a href="/Images/home/events-grid-3.html">Events
-                                Grid Three</a></li>
-                        <li><a href="/Images/home/events-list.html">Events
-                                List</a></li>
-                        <li><a href="/Images/home/events-list-two.html">Events
-                                List Two</a></li>
-                        <li><a href="/Images/home/event-details.html">Event
-                                Details</a></li>
-                    </ul>
-                </li>
+                <!--Menu go to contact-->
                 <li class="nav-item"><a class="nav-link"
-                                        href="/Images/home/about.html">Sobre</a>
-                </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="contact.html" role="button" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false"> Contactos </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/Images/home/contact-one.html">Contact
-                                One</a></li>
-                        <li><a href="/Images/home/contact-two.html">Contact
-                                Two</a></li>
-                    </ul>
+                                        href="<?php echo HOME_URL . '/home/contact'; ?>">Contacto</a>
                 </li>
             </ul>
             <ul class="float-right topside-menu">
@@ -211,37 +156,48 @@
     </nav>
 </header>
 
-
 <nav class="sidenav">
     <ul class="main">
         <li><a href="<?php echo HOME_URL . '/home/dashboard'; ?>">Home</a></li>
         <li><a href="<?php echo HOME_URL . '/home/usermessages'; ?>">Mensagens</a></li>
         <li><a href="<?php echo HOME_URL . '/home/usersettings'; ?>">Definições</a></li>
-        <li><a href="" data-toggle="modal" data-target="#logoutModal">Logout</a></li>
-        <!--        <li><a href="causes.html">Causes</a></li>-->
-        <!--        <li><a href="projects-grid.html">Projects</a></li>-->
-        <!--        <li><a href="blog.html">Blog</a></li>-->
-        <!--        <li><a href="shop-two.html">Shop</a></li>-->
-        <!--        <li><a href="contact-one.html">Contact</a></li>-->
+        <li><a href="" data-toggle="modal" data-target="#logoutModal">Sair</a></li>
     </ul>
 </nav>
 
 <div class="overlay" style="z-index: 9998 !important;"></div>
 
-<!-- Start Logout  account Modal HTML -->
-<div id="logoutModal" class="modal fade" style="z-index: 9999 !important;" >
+<!-- Logout Modal HTML -->
+<div id="logoutModal" class="modal fade" style="z-index: 9999 !important;">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4>Logout <i class='fa-sign-out'></i></i></h4>
+        <div class="modal-dialog modal-login">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="avatar">
+                        <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'; ?>" alt="Avatar">
+                    </div>
+                    <h4 class="modal-title">Sair</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div _ngcontent-serverapp-c180="" style="text-align: center">
+                        <i class="fas fa-sign-out-alt fa-3x"></i>
+                        </fa-icon>
+                    </div>
+                    <br>
+                    <div style="text-align: center">
+                        <b>De certeza que deseja sair?</b>
+                    </div>
+                    <br>
+                    <div class="modal-footer" style="background-color: #FFFFFF">
+                        <button type="button" class="btn btn-primary" ><a href="<?php echo HOME_URL . '/home/homelogout'; ?>" style="color: #FFFFFF">
+                                Terminar sessão</a></button>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body"><i class="fa fa-question-circle"></i> De certeza que deseja sair?</div>
-            <div class="modal-footer"><a href="<?php echo HOME_URL . '/home/homelogout'; ?>"
-                                         class="btn btn-danger btn-block">Sair</a></div>
-            <input type="button" class="btn btn-default" data-dismiss="modal" value="Voltar">
         </div>
     </div>
 </div>
-<!-- End Logout account Modal HTML -->
+<!-- End Logout Modal HTML -->
 
 
