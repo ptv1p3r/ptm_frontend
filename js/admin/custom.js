@@ -34,7 +34,7 @@ function copy(text, target) {
         $(concatCopyTip).remove();
     }, 800);
 
-    $(concatTarget).append("<div class='copied_tip tip' id='copied_tip-"+target+"'>Copied!</div>");
+    $(concatTarget).append("<div class='copied_tip tip' id='copied_tip-"+target+"'>Copiado!</div>");
 
     var input = document.createElement('input');
     input.setAttribute('value', text);

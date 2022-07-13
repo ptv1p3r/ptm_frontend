@@ -55,12 +55,49 @@
                                         <?php if (!empty($this->userdata['treeInterventionList'])) {
                                             foreach ($this->userdata['treeInterventionList'] as $key => $treeIntervention) { ?>
                                                 <tr>
-                                                    <td><?php echo $treeIntervention["treeId"] ?></td>
-                                                    <td><?php echo $treeIntervention["interventionDate"] ?></td>
-                                                    <td><?php echo $treeIntervention["subject"] ?></td>
-                                                    <td><?php echo $treeIntervention["description"] ?></td>
-                                                    <td><?php echo $treeIntervention["observations"] ?></td>
-                                                    <td><?php echo ($treeIntervention["public"] === 0) ? "Não" : "Sim"; ?></td>
+                                                    <td id="oypmsjeq9b-<?php echo $treeIntervention["id"] ?>"
+                                                        onclick="copy('<?php echo $treeIntervention["treeId"] ?>','oypmsjeq9b-<?php echo $treeIntervention["id"] ?>')"
+                                                        title="<?php echo $treeIntervention["treeId"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeIntervention["treeId"] ?>
+                                                    </td>
+                                                    <td id="1thoc89kam-<?php echo $treeIntervention["id"] ?>"
+                                                        onclick="copy('<?php echo $treeIntervention["interventionDate"] ?>','1thoc89kam-<?php echo $treeIntervention["id"] ?>')"
+                                                        title="<?php echo $treeIntervention["interventionDate"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeIntervention["interventionDate"] ?>
+                                                    </td>
+                                                    <td id="dgcpp7ftam-<?php echo $treeIntervention["id"] ?>"
+                                                        onclick="copy('<?php echo $treeIntervention["subject"] ?>','dgcpp7ftam-<?php echo $treeIntervention["id"] ?>')"
+                                                        title="<?php echo $treeIntervention["subject"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeIntervention["subject"] ?>
+                                                    </td>
+                                                    <td id="s7ybaq0bif-<?php echo $treeIntervention["id"] ?>"
+                                                        onclick="copy('<?php echo $treeIntervention["description"] ?>','s7ybaq0bif-<?php echo $treeIntervention["id"] ?>')"
+                                                        title="<?php echo $treeIntervention["description"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeIntervention["description"] ?>
+                                                    </td>
+                                                    <td id="hn27z7lwzg-<?php echo $treeIntervention["id"] ?>"
+                                                        onclick="copy('<?php echo $treeIntervention["observations"] ?>','hn27z7lwzg-<?php echo $treeIntervention["id"] ?>')"
+                                                        title="<?php echo $treeIntervention["observations"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeIntervention["observations"] ?>
+                                                    </td>
+                                                    <?php $treePublic = ($treeIntervention["public"] === 0) ? "Não" : "Sim"; ?>
+                                                    <td id="xc84lt4k02-<?php echo $treeIntervention["id"] ?>"
+                                                        onclick="copy('<?php echo $treePublic ?>','xc84lt4k02-<?php echo $treeIntervention["id"] ?>')"
+                                                        title="<?php echo $treePublic ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treePublic ?>
+                                                    </td>
                                                     <td hidden><?php echo $treeIntervention["active"] ?></td>
                                                     <td>
                                                         <div class="float-end">

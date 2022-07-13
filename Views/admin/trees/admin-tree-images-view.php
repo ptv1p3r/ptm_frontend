@@ -52,12 +52,39 @@
                                             foreach ($this->userdata['treeImageList'] as $key => $treeImage) {?>
                                                 <tr>
                                                     <!--<td><?php //echo $treeImage["id"] ?></td>-->
-                                                    <td><?php echo $treeImage["treeId"] ?></td>
+                                                    <td id="jvth8gy9u7-<?php echo $treeImage["id"] ?>"
+                                                        onclick="copy('<?php echo $treeImage["treeId"] ?>','jvth8gy9u7-<?php echo $treeImage["id"] ?>')"
+                                                        title="<?php echo $treeImage["treeId"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeImage["treeId"] ?>
+                                                    </td>
                                                     <!--<td><?php //echo $treeImage["name"] ?></td>-->
-                                                    <td> <img src="<?php echo API_URL . 'api/v1/trees/image/' . $treeImage["path"] ?>" width="72" height="72" style="cursor: zoom-in" onclick="window.open(this.src, '_blank');"></td>
-                                                    <td><?php echo $treeImage["description"] ?></td>
-                                                    <td><?php echo formatBytes($treeImage["size"]) ?></td>
-                                                    <td><?php echo $treeImage["position"] ?></td>
+                                                    <td>
+                                                        <img class="img-thumbnail" src="<?php echo API_URL . 'api/v1/trees/image/' . $treeImage["path"] ?>" width="90" height="90" style="cursor: zoom-in" title="Abrir imagem completa numa nova pagina" onclick="window.open(this.src, '_blank');">
+                                                    </td>
+                                                    <td id="hdxii4fd16-<?php echo $treeImage["id"] ?>"
+                                                        onclick="copy('<?php echo $treeImage["description"] ?>','hdxii4fd16-<?php echo $treeImage["id"] ?>')"
+                                                        title="<?php echo $treeImage["description"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeImage["description"] ?>
+                                                    </td>
+                                                    <?php $SizeFormated = formatBytes($treeImage["size"]) ?>
+                                                    <td id="7denshrki4-<?php echo $treeImage["id"] ?>"
+                                                        onclick="copy('<?php echo $SizeFormated ?>','7denshrki4-<?php echo $treeImage["id"] ?>')"
+                                                        title="<?php echo $SizeFormated ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $SizeFormated ?>
+                                                    </td>
+                                                    <td id="kgx7tiz1hd-<?php echo $treeImage["id"] ?>"
+                                                        onclick="copy('<?php echo $treeImage["position"] ?>','kgx7tiz1hd-<?php echo $treeImage["id"] ?>')"
+                                                        title="<?php echo $treeImage["position"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeImage["position"] ?>
+                                                    </td>
                                                     <!--<td hidden><?php //echo $treeImage["active"] ?></td>-->
                                                     <td>
                                                         <div class="float-end">

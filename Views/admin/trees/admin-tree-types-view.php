@@ -53,8 +53,20 @@
                                             foreach ($this->userdata['treeTypesList'] as $key => $treeTypes) { ?>
                                                 <tr>
                                                     <!--<td><?php //echo $treeTypes["id"] ?></td>-->
-                                                    <td><?php echo $treeTypes["name"] ?></td>
-                                                    <td><?php echo $treeTypes["description"] ?></td>
+                                                    <td id="oypmsjeq9b-<?php echo $treeTypes["id"] ?>"
+                                                        onclick="copy('<?php echo $treeTypes["name"] ?>','oypmsjeq9b-<?php echo $treeTypes["id"] ?>')"
+                                                        title="<?php echo $treeTypes["name"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeTypes["name"] ?>
+                                                    </td>
+                                                    <td id="wh1jkk7htf-<?php echo $treeTypes["id"] ?>"
+                                                        onclick="copy('<?php echo $treeTypes["description"] ?>','wh1jkk7htf-<?php echo $treeTypes["id"] ?>')"
+                                                        title="<?php echo $treeTypes["description"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeTypes["description"] ?>
+                                                    </td>
                                                     <td hidden><?php echo $treeTypes["active"] ?></td>
                                                     <td>
                                                         <div class="float-end">
