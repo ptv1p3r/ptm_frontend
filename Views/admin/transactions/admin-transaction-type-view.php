@@ -46,8 +46,20 @@
                                         <?php if (!empty($this->userdata['transactionTypeList'])) {
                                             foreach ($this->userdata['transactionTypeList'] as $key => $transactionType) { ?>
                                                 <tr>
-                                                    <td><?php echo $transactionType["name"] ?></td>
-                                                    <td><?php echo $transactionType["description"] ?></td>
+                                                    <td id="8njgucu1u8-<?php echo $transactionType["id"] ?>"
+                                                        onclick="copy('<?php echo $transactionType["name"] ?>','8njgucu1u8-<?php echo $transactionType["id"] ?>')"
+                                                        title="<?php echo $transactionType["name"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $transactionType["name"] ?>
+                                                    </td>
+                                                    <td id="9lgbpgqwbl-<?php echo $transactionType["id"] ?>"
+                                                        onclick="copy('<?php echo $transactionType["description"] ?>','9lgbpgqwbl-<?php echo $transactionType["id"] ?>')"
+                                                        title="<?php echo $transactionType["description"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $transactionType["description"] ?>
+                                                    </td>
                                                     <td hidden><?php echo $transactionType["active"] ?></td>
                                                     <td>
                                                         <div class="float-end">

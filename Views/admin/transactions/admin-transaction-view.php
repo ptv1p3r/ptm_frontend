@@ -53,32 +53,72 @@
                                         <?php if (!empty($this->userdata['transactionList'])) {
                                             foreach ($this->userdata['transactionList'] as $key => $transaction) { ?>
                                                 <tr>
-                                                    <td><?php echo $transaction["id"] ?></td>
-                                                    <td><?php
-                                                        if (!empty($this->userdata['transactionTypeList'])) {
-                                                            foreach ($this->userdata['transactionTypeList'] as $key => $type) {
-                                                                if ( $type["id"] == $transaction["transactionTypeId"]){
-                                                                    echo $type["name"];
-                                                                }
-                                                            }
-                                                        }?>
+                                                    <td id="bmpzvoeo4v-<?php echo $transaction["id"] ?>"
+                                                        onclick="copy('<?php echo $transaction["id"] ?>','bmpzvoeo4v-<?php echo $transaction["id"] ?>')"
+                                                        title="<?php echo $transaction["id"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $transaction["id"] ?>
                                                     </td>
-                                                    <td><?php
-                                                        if (!empty($this->userdata['transactionMethodList'])) {
-                                                            foreach ($this->userdata['transactionMethodList'] as $key => $method) {
-                                                                if ( $method["id"] == $transaction["transactionMethodId"]){
-                                                                    echo $method["name"];
-                                                                }
-                                                            }
-                                                        }?>
+                                                    <?php if (!empty($this->userdata['transactionTypeList'])) { foreach ($this->userdata['transactionTypeList'] as $key => $type) { if ( $type["id"] == $transaction["transactionTypeId"]){ $typeName = $type["name"]; } } }?>
+                                                    <td id="bc3fn1e1hx-<?php echo $transaction["id"] ?>"
+                                                        onclick="copy('<?php echo $typeName ?>','bc3fn1e1hx-<?php echo $transaction["id"] ?>')"
+                                                        title="<?php echo $typeName ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $typeName ?>
                                                     </td>
-                                                    <td><?php echo $transaction["userId"] ?></td>
-                                                    <td><?php echo $transaction["treeId"] ?></td>
-                                                    <td><?php echo $transaction["value"] ?></td>
+                                                    <?php if (!empty($this->userdata['transactionMethodList'])) { foreach ($this->userdata['transactionMethodList'] as $key => $method) { if ( $method["id"] == $transaction["transactionMethodId"]){ $methodName = $method["name"]; } } }?>
+                                                    <td id="qehnjmeopa-<?php echo $transaction["id"] ?>"
+                                                        onclick="copy('<?php echo $methodName ?>','qehnjmeopa-<?php echo $transaction["id"] ?>')"
+                                                        title="<?php echo $methodName ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $methodName ?>
+                                                    </td>
+                                                    <td id="0dlquhlflz-<?php echo $transaction["id"] ?>"
+                                                        onclick="copy('<?php echo $transaction["userId"] ?>','0dlquhlflz-<?php echo $transaction["id"] ?>')"
+                                                        title="<?php echo $transaction["userId"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $transaction["userId"] ?>
+                                                    </td>
+                                                    <td id="6efh5fxz3y-<?php echo $transaction["id"] ?>"
+                                                        onclick="copy('<?php echo $transaction["treeId"] ?>','6efh5fxz3y-<?php echo $transaction["id"] ?>')"
+                                                        title="<?php echo $transaction["treeId"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $transaction["treeId"] ?>
+                                                    </td>
+                                                    <td id="8njps2d3he-<?php echo $transaction["id"] ?>"
+                                                        onclick="copy('<?php echo $transaction["value"] ?>','8njps2d3he-<?php echo $transaction["id"] ?>')"
+                                                        title="<?php echo $transaction["value"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $transaction["value"] ?>
+                                                    </td>
                                                     <!--<td><?php //echo $transaction["active"] ?></td>-->
-                                                    <td><?php echo $transaction["dateCreated"] ?></td>
-                                                    <td><?php echo $transaction["dateModified"] ?></td>
-                                                    <td><?php echo $transaction["dateValidated"] ?></td>
+                                                    <td id="txq8n87681-<?php echo $transaction["id"] ?>"
+                                                        onclick="copy('<?php echo $transaction["dateCreated"] ?>','txq8n87681-<?php echo $transaction["id"] ?>')"
+                                                        title="<?php echo $transaction["dateCreated"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $transaction["dateCreated"] ?>
+                                                    </td>
+                                                    <td id="iiqwvbo98y-<?php echo $transaction["id"] ?>"
+                                                        onclick="copy('<?php echo $transaction["dateModified"] ?>','iiqwvbo98y-<?php echo $transaction["id"] ?>')"
+                                                        title="<?php echo $transaction["dateModified"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $transaction["dateModified"] ?>
+                                                    </td>
+                                                    <td id="r5bzfy57w7-<?php echo $transaction["id"] ?>"
+                                                        onclick="copy('<?php echo $transaction["dateValidated"] ?>','r5bzfy57w7-<?php echo $transaction["id"] ?>')"
+                                                        title="<?php echo $transaction["dateValidated"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $transaction["dateValidated"] ?>
+                                                    </td>
                                                     <td>
                                                         <div class="float-end">
                                                             <a href="#deleteTransactionModal" id="<?php echo $transaction['id'] ?>" class="delete m-2"

@@ -45,8 +45,20 @@
                                     <?php if (!empty($this->userdata['transactionMethodList'])) {
                                         foreach ($this->userdata['transactionMethodList'] as $key => $transactionMethod) { ?>
                                             <tr>
-                                                <td><?php echo $transactionMethod["name"] ?></td>
-                                                <td><?php echo $transactionMethod["description"] ?></td>
+                                                <td id="u2be6rhuln-<?php echo $transactionMethod["id"] ?>"
+                                                    onclick="copy('<?php echo $transactionMethod["name"] ?>','u2be6rhuln-<?php echo $transactionMethod["id"] ?>')"
+                                                    title="<?php echo $transactionMethod["name"] ?>"
+                                                    class="table-text-truncate"
+                                                    style="cursor: pointer">
+                                                    <?php echo $transactionMethod["name"] ?>
+                                                </td>
+                                                <td id="f48wf0k5et-<?php echo $transactionMethod["id"] ?>"
+                                                    onclick="copy('<?php echo $transactionMethod["description"] ?>','f48wf0k5et-<?php echo $transactionMethod["id"] ?>')"
+                                                    title="<?php echo $transactionMethod["description"] ?>"
+                                                    class="table-text-truncate"
+                                                    style="cursor: pointer">
+                                                    <?php echo $transactionMethod["description"] ?>
+                                                </td>
                                                 <td hidden><?php echo $transactionMethod["active"] ?></td>
                                                 <td>
                                                     <div class="float-end">
