@@ -203,7 +203,7 @@ class HomeController extends MainController
 
     /**
      * Carrega a página
-     * "/views/home/user-dashboard-view.php"
+     * "/views/home/home-view.php"
      */
     public function dashboard()
     {
@@ -316,7 +316,7 @@ class HomeController extends MainController
 
     /**
      * Rights page handler
-     * "/views/home/rights-view.php"
+     * "/views/user/home/rights-view.php"
      */
     public function rights()
     {
@@ -364,7 +364,7 @@ class HomeController extends MainController
 
     /**
      * Rights page handler
-     * "/views/home/presentation-view.php"
+     * "/views/user/home/presentation-view.php"
      */
     public function presentation()
     {
@@ -413,7 +413,7 @@ class HomeController extends MainController
 
     /**
      * Rights page handler
-     * "/views/home/contact-view.php"
+     * "/views/user/home/contact-view.php"
      */
     public function contact()
     {
@@ -549,7 +549,7 @@ class HomeController extends MainController
 
     /**
      * User settings page handler
-     * "/views/home/user-settings-view.php"
+     * "/views/user/profile/user-settings-view.php"
      */
     public function userSettings()
     {
@@ -824,77 +824,77 @@ class HomeController extends MainController
 
     /**
      * Adoption tree page handler
-     * "/views/home/user-settings-view.php"
+     * "/views/user/profile/user-adoption-view.php"
      */
     public function adoption()
     {
         // Page tilte
         $this->title = 'Escolha a árvore';
         $this->permission_required = array('homeLogin');
-
         //Load model messages from user
         $model = $this->load_model('user-adoption-model');
         $modelTransaction = $this->load_model('user-transaction-model');
-
-        // force the login
+        //Login access control
         if (!$this->logged_in) {
             $this->logout();
             $this->goto_login();
             return;
         }
-
-        // check permissions
+        //Check if the user have permission to use this section
         if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
             // show message
             echo 'Você não tem permissões para aceder a esta página.';
             return;
         }
 
-        // process ajax action call
+        //Ajax process action
         if (isset($_POST['action']) && !empty($_POST['action'])) {
             $action = $_POST['action'];
             switch ($action) {
-
+                //Get donation action
                 case 'getDonation' :
                     $data = $_POST['data'];
                     $_SESSION['userdata']['treeDonation'] = $data;
                     $donation = $_SESSION['userdata']['treeDonation'];
+                    //Encode package to send
                     $apiResponse = json_encode($donation);
                     echo $apiResponse;
                     break;
 
+                //Make donation action
                 case 'makeDonation' :
                     $data = $_POST['data'];
                     $_SESSION['userdata']['treeDonation'] = $data;
                     $treeDonation = $_SESSION['userdata']['treeDonation'];
-                    // unset($apiResponse['body'])
+                    //Encode package to send
                     $apiResponse = json_encode($treeDonation);
                     echo $apiResponse;
                     break;
-
+                //make transaction action
                 case 'makeTransaction' :
                     $data = $_POST['data'];
-                    $apiResponse = $modelTransaction->makeTransaction($data); //decode to check message from api
+                    //Decode to check message from api
+                    $apiResponse = $modelTransaction->makeTransaction($data);
 
-
+                    //Status code 200 => OK
                     if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                         $apiResponse = json_encode($apiResponse);// encode package to send
                         echo $apiResponse;
                         break;
                     }
-
-                    if ($apiResponse['statusCode'] === 40) { // 401, unauthorized
+                    //Status code 401 => Unauthorized
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
                         $this->userTokenRefresh();
-                        $apiResponse = $model->updateUser($data); //decode to check message from api
-                        $apiResponse = json_encode($apiResponse);// encode package to send
-                        echo $apiResponse;
+                        $apiResponse = $model->updateUser($data);
+                        //Encode package to send
+                        $apiResponse = json_encode($apiResponse);                        echo $apiResponse;
                         break;
                     }
-                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    //Encode package to send
+                    $apiResponse = json_encode($apiResponse);
                     echo($apiResponse);
                     break;
-
             }
 
         } else {
@@ -905,80 +905,67 @@ class HomeController extends MainController
                 $this->userdata['adoptionList'] = $getAdoptTreesModel['body']['trees'];
             }
             if ($getAdoptTreesModel['statusCode'] === 401) {  // 200 OK, successful
-                //Refresh user token
+                //Refresh accessToken
                 $this->userTokenRefresh();
-                //Models
+                //Load model get trees list
                 $getAdoptTreesModel = $model->getAdoptTreesList();
                 //Userdata from model's
                 $this->userdata['adoptionList'] = $getAdoptTreesModel['body']['trees'];
             }
-
             //Get transaction methods list from model
             $getTransactionModel = $modelTransaction->getTransactionList();
             if ($getAdoptTreesModel['statusCode'] === 200) { // 200 OK, successful
                 $this->userdata['transactionList'] = $getTransactionModel['body']['methods'];
             }
             if ($getAdoptTreesModel['statusCode'] === 401) {  // 200 OK, successful
-                //Refresh user token
+                //Refresh accessToken
                 $this->userTokenRefresh();
-                //Models
+                //Model to get transaction
                 $getTransactionModel = $modelTransaction->getTransactionList();
-                //Userdata from model's
                 $this->userdata['transactionList'] = $getTransactionModel['body']['methods'];
             }
 
-
-            /** Carrega os arquivos do view **/
-
+            /** Load page from view **/
             require ABSPATH . '/views/_includes/user-header.php';
-
             require ABSPATH . '/views/user/profile/user-adoption-view.php';
-
             require ABSPATH . '/views/_includes/footer.php';
-
         }
     }
 
 
     /**
-     * Carrega a página
+     * Load page control
      * "/views/user/profile/user-trees-view.php"
      */
     public function userTrees()
     {
-
-        // Título da página
+        //Page title
         $this->title = 'A minha árvore';
+
+        //Check if the user have permission to use this sectio
         $this->permission_required = array('homeLogin');
 
-        // Parametros da função
+        //Function paramenters
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
-        // obriga o login para aceder à pagina
+        //Login access control
         if (!$this->logged_in) {
-
-            // Se não; garante o logout
+            // If not login -> logout
             $this->logout();
-
-            // Redireciona para a página de login
+            // Redirect to login page
             $this->goto_login();
-
-            // Garante que o script não vai passar daqui
+            // Secure the pass
             return;
         }
-
+        //Check if the user have permission to use this sectio
         if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
-
-            // Exibe uma mensagem
             echo 'Você não tem permissões para aceder a esta página.';
-
-            // Finaliza aqui
+            // End where
             return;
-
         }
-
+        //Load model user trees
         $model = $this->load_model('user-trees-model');
-
+        // Process Ajax call function
         if (isset($_POST['action']) && !empty($_POST['action'])) {
             $action = $_POST['action'];
             switch ($action) {
@@ -986,17 +973,19 @@ class HomeController extends MainController
                     $data = $_POST['data'];
                     $apiResponse = $model->getUserTreeId($data);
 
-                    if ($apiResponse['statusCode'] === 200) { // 200 success
-                        $apiResponse['body']['message'] = 'success';
+                    //Status code 200 => OK
+                    if ($apiResponse['statusCode'] === 200) {
+                        $apiResponse['body']['message'] = 'Sucesso!';
 
                     }
 
-                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                    //Status code 401 => Unauthorized
+                    if ($apiResponse['statusCode'] === 401) {
                         //faz o refresh do accessToken
                         $this->userTokenRefresh();
 
                         $apiResponse = $model->getUserTreeId($data);
-                        $apiResponse['body']['message'] = 'success';
+                        $apiResponse['body']['message'] = 'Sucesso!';
                     }
 
                     // Update userdata to get trees info
@@ -1007,9 +996,7 @@ class HomeController extends MainController
                     break;
             }
         } else {
-
             if ($this->logged_in) {
-
                 //Load model intervation tree
                 $interventionList = $model->getInterventionsTreeList($_SESSION['userdata']['userTreeToShow']['id']);
 
@@ -1045,10 +1032,12 @@ class HomeController extends MainController
                 //Load model messages from user
                 $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
 
+                //Status code 200 => OK
                 if ($userMessageList["statusCode"] === 200) {
                     $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
                     $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
                 }
+                //Status code 401 => Unauthorized
                 if ($userMessageList["statusCode"] === 401) {
                     //Refresh do accessToken
                     $this->userTokenRefresh();
@@ -1061,8 +1050,7 @@ class HomeController extends MainController
 
 
             }
-            /** Carrega os arquivos do view **/
-
+            /** Load files from view **/
             require ABSPATH . '/views/_includes/user-header.php';
             require ABSPATH . '/views/user/profile/user-trees-view.php';
             require ABSPATH . '/views/_includes/footer.php';
@@ -1091,7 +1079,7 @@ class HomeController extends MainController
         }
         if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
             // Show message
-            echo 'Você não tem permissões para aceder a esta página.';
+            echo 'Não tem permissões para aceder a esta página.';
             // End where
             return;
         }
@@ -1102,6 +1090,7 @@ class HomeController extends MainController
         if (isset($_POST['action']) && !empty($_POST['action'])) {
             $action = $_POST['action'];
             switch ($action) {
+                //Add message action
                 case 'AddMessage' :
                     /*$this->permission_required = array('userMessagesCreate');
                     //Check if the user have permission to use this section
@@ -1129,6 +1118,7 @@ class HomeController extends MainController
                     echo $apiResponse;
                     break;
 
+                // MArk unread action
                 case "MarkUnread":
                     /*$this->permission_required = array('userMessagesDelete');
                     //Check if the user have permission to use this section
@@ -1157,6 +1147,7 @@ class HomeController extends MainController
                     echo $apiResponse;
                     break;
 
+                //Mark read action
                 case "MarkRead":
                     /*$this->permission_required = array('userMessagesDelete');
                     //Check if the user have permission to use this section
@@ -1189,6 +1180,7 @@ class HomeController extends MainController
                     echo $apiResponse;
                     break;
 
+                //Delete message action
                 case 'DeleteMessage' :
                     /*$this->permission_required = array('userMessagesDelete');
                     //Check if the user have permission to use this section
@@ -1210,11 +1202,11 @@ class HomeController extends MainController
                             $this->userTokenRefresh();
 
                             $apiResponse = $modelMessage->deleteMessage($id); //decode to check message from api
-                            $apiResponse["body"]['message'] = "Deleted with success!";
+                            $apiResponse["body"]['message'] = "Removido com sucesso!";
                         }
 
                         if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
-                            $apiResponse["body"]['message'] = "Deleted with success!";
+                            $apiResponse["body"]['message'] = "Removido com sucesso!";
                         }
                     }
                     $apiResponse = json_encode($apiResponse);// encode package to send
@@ -1230,19 +1222,21 @@ class HomeController extends MainController
             //If exists parameters
             if (isset($parameters) && !empty($parameters)) {
                 $paramVal = chk_array($parameters, 0);
-
+                //If parameter === inbox
                 if ($paramVal === "inbox") {
 
                     $tabActive = "inbox";
-
                     //get user Message list / user messages inbox
                     $userMessageList = $modelMessage->getMessageListByUserId($_SESSION["userdata"]["id"]);
                     //Refresh accessToken
+
+                    //Status code 401 => Unauthorized
                     if ($userMessageList["statusCode"] === 401) {
                         //Refresh accessToken
                         $this->userTokenRefresh();
                         $userMessageList = $modelMessage->getMessageListByUserId($_SESSION["userdata"]["id"]);
                     }
+                    //Status code 200 => OK
                     if ($userMessageList["statusCode"] === 200) {
                         $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
                         $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
@@ -1253,12 +1247,14 @@ class HomeController extends MainController
 
                     //get user Message list / user messages sent
                     $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
-                    //Refresh accessToken
+
+                    //Status code 401 => Unauthorized
                     if ($userMessageList["statusCode"] === 401) {
                         //Refresh accessToken
                         $this->userTokenRefresh();
                         $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
                     }
+                    //Status code 200 => OK
                     if ($userMessageList["statusCode"] === 200) {
                         $this->userdata['userMessageList'] = $userMessageList["body"]["messages"];
                     }
@@ -1266,15 +1262,20 @@ class HomeController extends MainController
                     //Get messagem by paramenter id
                     $userMessageView = $modelMessage->getMessageById($paramVal);
                     //Refresh accessToken
+                    //Status code 404 => Page Not Found Error
                     if ($userMessageView["statusCode"] === 404) {
                         //Refresh accessToken
                         $this->userdata['userMessageView'] = 404;
                     }
+
+                    //Status code 401 => Unauthorized
                     if ($userMessageView["statusCode"] === 401) {
                         //faz o refresh do accessToken
                         $this->userTokenRefresh();
                         $userMessageView = $modelMessage->getMessageById($paramVal);
                     }
+
+                    //Status code 200 => OK
                     if ($userMessageView["statusCode"] === 200) {
                         $this->userdata['userMessageView'] = $userMessageView["body"];
                     }
@@ -1283,9 +1284,13 @@ class HomeController extends MainController
 
             //get users list
             $userList = $modelMessage->getUserList();
+
+            //Status code 200 => OK
             if ($userList["statusCode"] === 200) {
                 $this->userdata['usersList'] = $userList["body"]["users"];
             }
+
+            //Status code 401 => Unauthorized
             if ($userList["statusCode"] === 401) {
                 //Refresh accessToken
                 $this->userTokenRefresh();

@@ -13,11 +13,9 @@ class UserRecoverModel extends MainModel
     public function __construct($db = false, $controller = null)
     {
 
-//        $this->db = $db; // Configura o DB (PDO)
+        $this->controller = $controller; // Config controller
 
-        $this->controller = $controller; // Configura o controlador
-
-        $this->parametros = $this->controller->parametros; // Configura os parâmetros
+        $this->parametros = $this->controller->parametros; // Config parameters
 
         $this->userdata = $this->controller->userdata;
     }
@@ -46,8 +44,12 @@ class UserRecoverModel extends MainModel
                 }
             }
         }
+
+        //API End point
         $url = API_URL . 'api/v1/recover';
-        $result = callAPI("POST", $url, $normalizedData/*, $userToken*/);
+        $result = callAPI("POST", $url, $normalizedData);
+
+        //Decode to check message from api
         return json_decode(json_encode($result), true);
 
     }
@@ -76,6 +78,8 @@ class UserRecoverModel extends MainModel
             }
         }
         $normalizedData['token'] = $userToken;
+
+        //API End point
         $url = API_URL . 'api/v1/recover/id/' . $userId;
         $result = callAPI("POST", $url, $normalizedData);
         return json_decode(json_encode($result), true);

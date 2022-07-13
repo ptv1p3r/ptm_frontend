@@ -17,23 +17,18 @@ class RegisterController extends MainController
      */
     public function index()
     {
-        /**
-         * Page load
-         * "/views/home/register-view.php"
-         */
-
         // Title page
         $this->title = 'Registo';
-
         // Function parameters
         $parameters = (func_num_args() >= 1) ? func_get_arg(0) : array();
-
-
+        //Load model register user
         $model = $this->load_model('user-register-model');
         $getCountryModel = $model->getCountryList();
         $getGenderModel = $model->getGenderList();
 
+        //Get country public list
         $this->userdata['countryList'] = $getCountryModel['body']['countries'];
+        //Get gender public list
         $this->userdata['genderList'] = $getGenderModel['body']['genders'];
 
         /** load files from view **/
@@ -55,36 +50,31 @@ class RegisterController extends MainController
         $this->title = 'NovoUtilizador';
 
         // Function parameters
-//        $parameters = (func_num_args() >= 1) ? func_get_arg(0) : array();
+        //$parameters = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
-
-        //Load user-model
+        //Load register user model
         $model = $this->load_model('user-register-model');
 
-        // Ajax call flow process
+        // Process Ajax call function
         if (isset($_POST['action']) && !empty($_POST['action'])) {
             $action = $_POST['action'];
             $data = $_POST['data'];
             $data[11]['value'] = hash('sha256', $data[11]['value']);
 
-            //$apiResponse = json_decode($model->addUser($data), true); //decode to check message from api
+            //Decode to check message from api
             $apiResponse = $model->addUser($data); //decode to check message from api
 
-            // quando statusCode = 201, a response nao vem com campo mensagem
-            // entao é criado e encoded para ser enviado
+            //Status code 200 => Created
             if ($apiResponse['statusCode'] === 201) { // 201 created
                 $apiResponse["body"]['message'] = "Created with success!";
-
+                //Encode package to send
                 $apiResponse = json_encode($apiResponse);// encode package to send
                 die ($apiResponse);
             }
 
-            // se statsCode nao for 201, entao api response ja vem com um campo mensagem
-            // assim so precisamos de fazer encode para ser enviado
+            //Encode package to send
             $apiResponse = json_encode($apiResponse);// encode package to send
             die($apiResponse);
-
-
         }
     }
 
@@ -98,34 +88,27 @@ class RegisterController extends MainController
         $this->title = 'RecuperarPalavraPasse';
 
         // Function parameters
-//        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+        //$parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
+        //Load model user password recover
         $model = $this->load_model('user-recover-model');
 
-        // Ajax call flow process
+        // Process Ajax call function
         if (isset($_POST['action']) && !empty($_POST['action'])) {
             $action = $_POST['action'];
             $data = $_POST['data'];
 
-
-//            $data[11]['value'] = hash('sha256', $data[11]['value']);
-
-            //$apiResponse = json_decode($model->addUser($data), true); //decode to check message from api
             $apiResponse = $model->recover($data); //decode to check message from api
 
-            // quando statusCode = 201, a response nao vem com campo mensagem
-            // entao é criado e encoded para ser enviado
+            //Status code 200 => OK
             if ($apiResponse['statusCode'] === 200) { // 200 ok
                 $apiResponse["body"]['message'] = "Consulte o seu email para repor a palavra passe!";
-
+                //Encode package to send
                 $apiResponse = json_encode($apiResponse);// encode package to send
                 die ($apiResponse);
             }
-
-            // se statsCode nao for 201, entao api response ja vem com um campo mensagem
-            // assim so precisamos de fazer encode para ser enviado
-            $apiResponse = json_encode($apiResponse);// encode package to send
-
+            //Encode package to send
+            $apiResponse = json_encode($apiResponse);
         }
         /** load files from view **/
         require ABSPATH . '/views/_includes/header.php';
@@ -138,33 +121,34 @@ class RegisterController extends MainController
      * Function password replace
      * "/views/user/registration/pass-recover-view.php"
      */
-    public function passRecover() {
+    public function passRecover()
+    {
         // Title page
         $this->title = 'ReporPalavraPasse';
 
         // Function parameters
-        $parametros = ( func_num_args() >= 1 ) ? func_get_arg(0) : array();
+        $parameters = (func_num_args() >= 1) ? func_get_arg(0) : array();
 
+        //Load model user recover password
         $model = $this->load_model('user-recover-model');
 
-
-        // Ajax call flow process
+        // Process Ajax call function
         if (isset($_POST['action']) && !empty($_POST['action'])) {
             $action = $_POST['action'];
             switch ($action) {
                 case 'PassRecover' :
                     $data = $_POST['data'];
 
-                    //password ecription
+                    //Password encription
                     $data[0]['value'] = hash('sha256', $data[0]['value']);
                     $data[1]['value'] = hash('sha256', $data[1]['value']);
 
-
+                    //Validation password
                     $newPassVal = $data[0]['value'];
                     $confPassVal = $data[1]['value'];
 
                     //Validate if the new pass is equal to conf
-                    if($newPassVal != $confPassVal ){
+                    if ($newPassVal != $confPassVal) {
                         //Array with status code message
                         $response = array();
                         $response["body"]['message'] = 'Palavra passe não coincide!';
@@ -173,21 +157,21 @@ class RegisterController extends MainController
                         break;
                     }
 
-
-
                     $user_id = null;
                     $user_token = null;
-                    if (isset($parametros) && !empty($parametros)) {
-                        $user_id = chk_array($parametros, 0);
-                        $user_token = chk_array($parametros, 1);
+                    if (isset($parameters) && !empty($parameters)) {
+                        $user_id = chk_array($parameters, 0);
+                        $user_token = chk_array($parameters, 1);
                     }
 
-                    $apiResponse = $model->passRecover($data, $user_id, $user_token); //decode to check message from api
+                    //Decode to check message from api
+                    $apiResponse = $model->passRecover($data, $user_id, $user_token);
 
+                    //Status code 200 => OK
                     if ($apiResponse['statusCode'] === 200) { // 200 ok
                         $apiResponse["body"]['message'] = "Palavra passe alterada com sucesso!";
                     }
-
+                    //Encode package to send
                     $apiResponse = json_encode($apiResponse);// encode package to send
                     echo $apiResponse;
                     break;
@@ -195,13 +179,8 @@ class RegisterController extends MainController
         } else {
             /** load files from view **/
             require ABSPATH . '/views/_includes/header.php';
-
             require ABSPATH . '/views/user/registration/pass-recover-view.php';
-
             require ABSPATH . '/views/_includes/footer.php';
         }
-
     }
-
-
 }

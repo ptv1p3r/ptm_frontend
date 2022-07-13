@@ -19,7 +19,9 @@ class UserSettingsModel extends MainModel
     public function __construct($db = false, $controller = null)
     {
         $this->db = $db; // Config DB (PDO)
+
         $this->controller = $controller; // Config controler
+
         $this->parametros = $this->controller->parametros; // Config parameters
     }
 
@@ -33,8 +35,11 @@ class UserSettingsModel extends MainModel
     {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/countries/list';
         $result = callAPI("GET", $url, ''/*, $userToken*/);
+
+        //Encode package to send
         return json_decode(json_encode($result), true);
     }
 
@@ -48,6 +53,7 @@ class UserSettingsModel extends MainModel
     {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/genders/list';
         $result = callAPI("GET", $url, '');
         return json_decode(json_encode($result), true);
@@ -63,13 +69,14 @@ class UserSettingsModel extends MainModel
     {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/users/view/' . $email;
-
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
-        //Transform msg into json string
+
+        //Encode package to send
         return json_decode(json_encode($result), true);
     }
 
@@ -83,13 +90,14 @@ class UserSettingsModel extends MainModel
     {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/transaction/list/' . $id;
-
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
-        //Transform msg into json string
+
+        //Encode package to send
         return json_decode(json_encode($result), true);
     }
 
@@ -102,20 +110,21 @@ class UserSettingsModel extends MainModel
     {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/user/list';
-
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
-        //trasforma toda a msg em string json para poder ser enviado
+
+        //Encode package to send
         return json_decode(json_encode($result), true);
     }
 
 
     /**
      * Metodo edita/update User
-     * @param $email
+     * @param $data
      * @return mixed
      */
     public function updateUser($data)
@@ -180,19 +189,20 @@ class UserSettingsModel extends MainModel
             }
         }
 
+        //API End point
         $url = API_URL . 'api/v1/users/edit/' . $userId;
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("PATCH", $url, $normalizedData, $userToken);
         }
 
-        //trasforma toda a msg em string json para poder ser enviado
+        //Encode package to send
         return json_decode(json_encode($result), true);
     }
 
     /**
      * Metodo edita/update User
-     * @param $email
+     * @param $data
      * @return mixed
      */
     public function updatePassUser($data)
@@ -216,13 +226,14 @@ class UserSettingsModel extends MainModel
                 }
             }
         }
+        //API End point
         $url = API_URL . 'api/v1/users/edit/' . $userId;
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("PATCH", $url, $normalizedData, $userToken);
         }
 
-        //trasforma toda a msg em string json para poder ser enviado
+        //Encode package to send
         return json_decode(json_encode($result), true);
     }
 
@@ -245,13 +256,14 @@ class UserSettingsModel extends MainModel
                 }
             }
         }
+        //API End point
         $url = API_URL . 'api/v1/users/delete/' . $UserId;
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("DELETE", $url, '', $userToken);
         }
 
-        //trasforma toda a msg em string json para poder ser enviado
+        //Encode package to send
         return json_decode(json_encode($result), true);
     }
 

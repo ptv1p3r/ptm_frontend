@@ -12,14 +12,11 @@ class UserTransactionModel extends MainModel
 
     public function __construct($db = false, $controller = null)
     {
+        $this->db = $db; // Config DB (PDO)
 
-//        $this->db = $db; // Configura o DB (PDO)
+        $this->controller = $controller; // Config controler
 
-        $this->controller = $controller; // Configura o controlador
-
-        $this->parametros = $this->controller->parametros; // Configura os parâmetros
-
-        $this->userdata = $this->controller->userdata;
+        $this->parametros = $this->controller->parametros; // Config parameters
     }
 
     /**
@@ -32,12 +29,14 @@ class UserTransactionModel extends MainModel
     {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/transaction/methods/list';
-
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
+
+        //Encode package to send
         return json_decode(json_encode($result), true);
     }
 
@@ -76,12 +75,15 @@ class UserTransactionModel extends MainModel
             }
         }
 
+        //API End point
         $url = API_URL . 'api/v1/transaction/create';
 
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("POST", $url, $normalizedData, $userToken);
         }
+
+        //Encode package to send
         return json_decode(json_encode($result), true);
     }
 

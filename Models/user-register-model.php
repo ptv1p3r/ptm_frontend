@@ -13,7 +13,7 @@ class UserRegisterModel extends MainModel
     public function __construct($db = false, $controller = null)
     {
 
-//        $this->db = $db; // Configura o DB (PDO)
+        //$this->db = $db; // Configura o DB (PDO)
 
         $this->controller = $controller; // Configura o controlador
 
@@ -32,6 +32,7 @@ class UserRegisterModel extends MainModel
     {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/countries/list';
         $result = callAPI("GET", $url, ''/*, $userToken*/);
         return json_decode(json_encode($result), true);
@@ -47,6 +48,7 @@ class UserRegisterModel extends MainModel
     {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/genders/list';
         $result = callAPI("GET", $url, '');
         return json_decode(json_encode($result), true);
@@ -123,9 +125,9 @@ class UserRegisterModel extends MainModel
                 }
             }
         }
+        //API End point
         $url = API_URL . 'api/v1/users/register';
         $result = callAPI("POST", $url, $normalizedData);
         return json_decode(json_encode($result), true);
     }
-
 }

@@ -15,13 +15,13 @@ class HomeModel extends MainModel{
      */
     public $db;
 
-    public function __construct( $db = false, $controller = null ) {
+    public function __construct($db = false, $controller = null)
+    {
+        $this->db = $db; // Config DB (PDO)
 
-        $this->db = $db; // Configura o DB (PDO)
+        $this->controller = $controller; // Config controler
 
-        $this->controller = $controller; // Configura o controlador
-
-        $this->parametros = $this->controller->parametros; // Configura os parâmetros
+        $this->parametros = $this->controller->parametros; // Config parameters
     }
 
 
@@ -35,6 +35,7 @@ class HomeModel extends MainModel{
     {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/trees/public/info';
         $result = callAPI("GET", $url, '');
         return json_decode(json_encode($result), true);

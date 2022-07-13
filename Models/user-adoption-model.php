@@ -13,11 +13,9 @@ class UserAdoptionModel extends MainModel
     public function __construct($db = false, $controller = null)
     {
 
-//        $this->db = $db; // Configura o DB (PDO)
+        $this->controller = $controller; // Config controller
 
-        $this->controller = $controller; // Configura o controlador
-
-        $this->parametros = $this->controller->parametros; // Configura os parâmetros
+        $this->parametros = $this->controller->parametros; // Config parameters
 
         $this->userdata = $this->controller->userdata;
     }
@@ -32,13 +30,12 @@ class UserAdoptionModel extends MainModel
     {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/trees/transaction/list';
-
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
         return json_decode(json_encode($result), true);
     }
-
 }

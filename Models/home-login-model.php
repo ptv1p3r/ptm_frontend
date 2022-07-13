@@ -48,10 +48,11 @@ class HomeLoginModel extends MainModel
             }
         }
 
+        //API End point
         $url = API_URL . 'api/v1/login';
         $result = callAPI("POST", $url, $normalizedData);
 
-        //trasforma toda a msg em string json para poder ser enviado
+        //Decode to check message from api
         return json_decode(json_encode($result), true);
     }
 }

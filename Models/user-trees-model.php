@@ -13,14 +13,11 @@ class UserTreesModel extends MainModel
 
     public function __construct($db = false, $controller = null)
     {
+        $this->db = $db; // Config DB (PDO)
 
-        //$this->db = $db; // Configura o DB (PDO)
+        $this->controller = $controller; // Config controler
 
-        $this->controller = $controller; // Configura o controlador
-
-        $this->parametros = $this->controller->parametros; // Configura os parâmetros
-
-        $this->userdata = $this->controller->userdata;
+        $this->parametros = $this->controller->parametros; // Config parameters
     }
 
     /**
@@ -28,18 +25,20 @@ class UserTreesModel extends MainModel
      * Private view
      * @since 0.1
      * @access private
+     * @param $userId
      */
     public function getUserTreesList($userId)
     {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/user/trees/list/' . $userId;
-
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
-        //trasforma toda a msg em string json para poder ser enviado
+
+        //Decode to check message from api
         return json_decode(json_encode($result), true);
     }
 
@@ -54,13 +53,15 @@ class UserTreesModel extends MainModel
     {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/user/trees/list';
 
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
-        //trasforma toda a msg em string json para poder ser enviado
+
+        //Decode to check message from api
         return json_decode(json_encode($result), true);
     }
 
@@ -74,13 +75,11 @@ class UserTreesModel extends MainModel
     {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/trees/public/list';
+        $result = callAPI("GET", $url, '');
 
-//        if (!empty($_SESSION['userdata']['accessToken'])) {
-//            $userToken = $_SESSION['userdata']['accessToken'];
-        $result = callAPI("GET", $url, ''/*, $userToken*/);
-//        }
-        //trasforma toda a msg em string json para poder ser enviado
+        //Decode to check message from api
         return json_decode(json_encode($result), true);
     }
 
@@ -89,18 +88,19 @@ class UserTreesModel extends MainModel
      * Private view
      * @since 0.1
      * @access private
+     * @param $treeId
      */
     public function getUserTreeId($treeId)
     {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/trees/view/' . $treeId;
-
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
-        //trasforma toda a msg em string json para poder ser enviado
+        //Decode to check message from api
         return json_decode(json_encode($result), true);
     }
 
@@ -108,62 +108,42 @@ class UserTreesModel extends MainModel
      * Get trees image list
      * Private view
      * @since 0.1
-     * @access private*/
+     * @access private
+     * @param $treeId
+     */
 
     public function getInterventionsTreeList($treeId)
     {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/interventions/list/' . $treeId;
-
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
-        //trasforma toda a msg em string json para poder ser enviado
+        //Decode to check message from api
         return json_decode(json_encode($result), true);
     }
-
 
     /**
      * Get trees image list
      * Private view
      * @since 0.1
      * @access private
-
-    public function getInterventionsTreeList()
-    {
-        $result = null;
-
-        $url = API_URL . 'api/v1/interventions/list/';
-
-        if (!empty($_SESSION['userdata']['accessToken'])) {
-            $userToken = $_SESSION['userdata']['accessToken'];
-            $result = callAPI("GET", $url, '', $userToken);
-        }
-        //trasforma toda a msg em string json para poder ser enviado
-        return json_decode(json_encode($result), true);
-    }
-*/
-
-
-    /**
-     * Get trees image list
-     * Private view
-     * @since 0.1
-     * @access private
+     * @param $treeId
      */
     public function getTreeImagesList($treeId)
     {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/trees/image/list/' . $treeId;
-
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
-        //trasforma toda a msg em string json para poder ser enviado
+        //Decode to check message from api
         return json_decode(json_encode($result), true);
     }
 
