@@ -32,38 +32,40 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table id="transactionTypeTable" class="table table-striped table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>Nome</th>
-                                        <th>Descrição</th>
-                                        <th hidden>active</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php if (!empty($this->userdata['transactionTypeList'])) {
-                                        foreach ($this->userdata['transactionTypeList'] as $key => $transactionType) { ?>
-                                            <tr>
-                                                <td><?php echo $transactionType["name"] ?></td>
-                                                <td><?php echo $transactionType["description"] ?></td>
-                                                <td hidden><?php echo $transactionType["active"] ?></td>
-                                                <td>
-                                                    <div class="float-end">
-                                                        <a href="#editTransactionTypeModal" id="<?php echo $transactionType['id'] ?>" class="edit m-2"
-                                                           data-bs-toggle="modal" data-bs-target="#editTransactionTypeModal"><i class="far fa-edit fa-lg"></i></a>
-                                                        <a href="#deleteTransactionTypeModal" id="<?php echo $transactionType['id'] ?>" class="delete m-2"
-                                                           data-bs-toggle="modal" data-bs-target="#deleteTransactionTypeModal"><i class="fas fa-trash-alt fa-lg"></i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        <?php }
-                                    } else { ?>
+                                <div class="table-responsive">
+                                    <table id="transactionTypeTable" class="table table-striped table-hover" style="width:100%">
+                                        <thead>
                                         <tr>
+                                            <th>Nome</th>
+                                            <th>Descrição</th>
+                                            <th hidden>active</th>
+                                            <th></th>
                                         </tr>
-                                    <?php } ?>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        <?php if (!empty($this->userdata['transactionTypeList'])) {
+                                            foreach ($this->userdata['transactionTypeList'] as $key => $transactionType) { ?>
+                                                <tr>
+                                                    <td><?php echo $transactionType["name"] ?></td>
+                                                    <td><?php echo $transactionType["description"] ?></td>
+                                                    <td hidden><?php echo $transactionType["active"] ?></td>
+                                                    <td>
+                                                        <div class="float-end">
+                                                            <a href="#editTransactionTypeModal" id="<?php echo $transactionType['id'] ?>" class="edit m-2"
+                                                               data-bs-toggle="modal" data-bs-target="#editTransactionTypeModal"><i class="far fa-edit fa-lg"></i></a>
+                                                            <a href="#deleteTransactionTypeModal" id="<?php echo $transactionType['id'] ?>" class="delete m-2"
+                                                               data-bs-toggle="modal" data-bs-target="#deleteTransactionTypeModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php }
+                                        } else { ?>
+                                            <tr>
+                                            </tr>
+                                        <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -176,7 +178,7 @@
                 try{
                     var table = $('#transactionTypeTable').DataTable({
                         rowReorder: false,
-                        responsive: true,
+                        responsive: false,
                         columnDefs: [ {
                             targets: [2,3],
                             orderable: false,

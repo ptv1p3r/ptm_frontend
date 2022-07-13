@@ -24,34 +24,36 @@
                                 </a>
                             </div>
                             <div class="card-body">
-                                <table id="securitiesTable" class="table table-striped table-hover" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Identificador</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php if (!empty($this->userdata['securityList'])) {
-                                        foreach ($this->userdata['securityList'] as $key => $security) { ?>
+                                <div class="table-responsive">
+                                    <table id="securitiesTable" class="table table-striped table-hover" style="width:100%">
+                                        <thead>
                                             <tr>
-                                                <td>Tabela <?php echo $security["id"] ?></td>
-                                                <td>
-                                                    <div class="float-end">
-                                                        <a href="#editSecurityModal" id="<?php echo $security['id'] ?>" class="edit m-2"
-                                                           data-bs-toggle="modal" data-bs-target="#editSecurityModal"><i class="far fa-edit fa-lg"></i></a>
-                                                        <a href="#deleteSecurityModal" id="<?php echo $security['id'] ?>" class="delete m-2"
-                                                           data-bs-toggle="modal" data-bs-target="#deleteSecurityModal"><i class="fas fa-trash-alt fa-lg"></i></a>
-                                                    </div>
-                                                </td>
+                                                <th>Identificador</th>
+                                                <th></th>
                                             </tr>
-                                        <?php }
-                                    } else { ?>
-                                        <tr>
-                                        </tr>
-                                    <?php } ?>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        <?php if (!empty($this->userdata['securityList'])) {
+                                            foreach ($this->userdata['securityList'] as $key => $security) { ?>
+                                                <tr>
+                                                    <td>Tabela <?php echo $security["id"] ?></td>
+                                                    <td>
+                                                        <div class="float-end">
+                                                            <a href="#editSecurityModal" id="<?php echo $security['id'] ?>" class="edit m-2"
+                                                               data-bs-toggle="modal" data-bs-target="#editSecurityModal"><i class="far fa-edit fa-lg"></i></a>
+                                                            <a href="#deleteSecurityModal" id="<?php echo $security['id'] ?>" class="delete m-2"
+                                                               data-bs-toggle="modal" data-bs-target="#deleteSecurityModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php }
+                                        } else { ?>
+                                            <tr>
+                                            </tr>
+                                        <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -381,7 +383,7 @@
         try{
             var table = $('#securitiesTable').DataTable({
                 rowReorder: false,
-                responsive: true,
+                responsive: false,
                 columnDefs: [ {
                     targets: [1],
                     orderable: false,

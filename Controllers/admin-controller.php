@@ -2185,7 +2185,7 @@ class AdminController extends MainController
                     break;
 
                     /*case 'UpdateTransaction' :
-                      /*$this->permission_required = array('treeTypeUpdate');
+                      $this->permission_required = array('treeTypeUpdate');
 
                         //Verifica se o user tem a permissão para realizar operaçao
                         if(!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])){

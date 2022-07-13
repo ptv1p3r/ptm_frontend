@@ -32,40 +32,42 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table id="groupsTable" class="table table-striped table-hover" style="width:100%">
-                                    <thead>
-                                    <tr>
-                                        <th>Nome</th>
-                                        <th>Descrição</th>
-                                        <th>Tabela de segurança</th>
-                                        <th hidden>active</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php if (!empty($this->userdata['groupsList'])) {
-                                        foreach ($this->userdata['groupsList'] as $key => $group) { ?>
-                                            <tr>
-                                                <td><?php echo $group["name"] ?></td>
-                                                <td><?php echo $group["description"] ?></td>
-                                                <td>Tabela <?php echo $group["securityId"] ?></td>
-                                                <td hidden><?php echo $group["active"] ?></td>
-                                                <td>
-                                                    <div class="float-end">
-                                                        <a href="#editGroupModal" id="<?php echo $group['id'] ?>" class="edit m-2"
-                                                           data-bs-toggle="modal" data-bs-target="#editGroupModal"><i class="far fa-edit fa-lg"></i></a>
-                                                        <a href="#deleteGroupModal" id="<?php echo $group['id'] ?>" class="delete m-2"
-                                                           data-bs-toggle="modal" data-bs-target="#deleteGroupModal"><i class="fas fa-trash-alt fa-lg"></i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        <?php }
-                                    } else { ?>
+                                <div class="table-responsive">
+                                    <table id="groupsTable" class="table table-striped table-hover" style="width:100%">
+                                        <thead>
                                         <tr>
+                                            <th>Nome</th>
+                                            <th>Descrição</th>
+                                            <th>Tabela de segurança</th>
+                                            <th hidden>active</th>
+                                            <th></th>
                                         </tr>
-                                    <?php } ?>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        <?php if (!empty($this->userdata['groupsList'])) {
+                                            foreach ($this->userdata['groupsList'] as $key => $group) { ?>
+                                                <tr>
+                                                    <td><?php echo $group["name"] ?></td>
+                                                    <td><?php echo $group["description"] ?></td>
+                                                    <td>Tabela <?php echo $group["securityId"] ?></td>
+                                                    <td hidden><?php echo $group["active"] ?></td>
+                                                    <td>
+                                                        <div class="float-end">
+                                                            <a href="#editGroupModal" id="<?php echo $group['id'] ?>" class="edit m-2"
+                                                               data-bs-toggle="modal" data-bs-target="#editGroupModal"><i class="far fa-edit fa-lg"></i></a>
+                                                            <a href="#deleteGroupModal" id="<?php echo $group['id'] ?>" class="delete m-2"
+                                                               data-bs-toggle="modal" data-bs-target="#deleteGroupModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php }
+                                        } else { ?>
+                                            <tr>
+                                            </tr>
+                                        <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -202,7 +204,7 @@
         try{
             var table = $('#groupsTable').DataTable({
                 rowReorder: false,
-                responsive: true,
+                responsive: false,
                 columnDefs: [ {
                     targets: [4,3],
                     orderable: false,

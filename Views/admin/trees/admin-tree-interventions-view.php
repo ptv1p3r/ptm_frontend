@@ -37,46 +37,48 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table id="treeInterventionsTable" class="table table-striped table-hover" style="width: 100%">
-                                    <thead>
-                                    <tr>
-                                        <th>Árvore</th>
-                                        <th>Data</th>
-                                        <th>Assunto</th>
-                                        <th>Descrição</th>
-                                        <th>Observaçao</th>
-                                        <th>Publico</th>
-                                        <th hidden>active</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php if (!empty($this->userdata['treeInterventionList'])) {
-                                        foreach ($this->userdata['treeInterventionList'] as $key => $treeIntervention) { ?>
-                                            <tr>
-                                                <td><?php echo $treeIntervention["treeId"] ?></td>
-                                                <td><?php echo $treeIntervention["interventionDate"] ?></td>
-                                                <td><?php echo $treeIntervention["subject"] ?></td>
-                                                <td><?php echo $treeIntervention["description"] ?></td>
-                                                <td><?php echo $treeIntervention["observations"] ?></td>
-                                                <td><?php echo ($treeIntervention["public"] === 0) ? "Não" : "Sim"; ?></td>
-                                                <td hidden><?php echo $treeIntervention["active"] ?></td>
-                                                <td>
-                                                    <div class="float-end">
-                                                        <a href="#editTreeInterventionsModal" id="<?php echo $treeIntervention['id'] ?>" class="edit m-2"
-                                                           data-bs-toggle="modal" data-bs-target="#editTreeInterventionsModal"><i class="far fa-edit fa-lg"></i></a>
-                                                        <a href="#deleteTreeInterventionsModal" id="<?php echo $treeIntervention['id'] ?>" class="delete m-2"
-                                                           data-bs-toggle="modal" data-bs-target="#deleteTreeInterventionsModal"><i class="fas fa-trash-alt fa-lg"></i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        <?php }
-                                    } else { ?>
+                                <div class="table-responsive">
+                                    <table id="treeInterventionsTable" class="table table-striped table-hover" style="width: 100%">
+                                        <thead>
                                         <tr>
+                                            <th>Árvore</th>
+                                            <th>Data</th>
+                                            <th>Assunto</th>
+                                            <th>Descrição</th>
+                                            <th>Observaçao</th>
+                                            <th>Publico</th>
+                                            <th hidden>active</th>
+                                            <th></th>
                                         </tr>
-                                    <?php } ?>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        <?php if (!empty($this->userdata['treeInterventionList'])) {
+                                            foreach ($this->userdata['treeInterventionList'] as $key => $treeIntervention) { ?>
+                                                <tr>
+                                                    <td><?php echo $treeIntervention["treeId"] ?></td>
+                                                    <td><?php echo $treeIntervention["interventionDate"] ?></td>
+                                                    <td><?php echo $treeIntervention["subject"] ?></td>
+                                                    <td><?php echo $treeIntervention["description"] ?></td>
+                                                    <td><?php echo $treeIntervention["observations"] ?></td>
+                                                    <td><?php echo ($treeIntervention["public"] === 0) ? "Não" : "Sim"; ?></td>
+                                                    <td hidden><?php echo $treeIntervention["active"] ?></td>
+                                                    <td>
+                                                        <div class="float-end">
+                                                            <a href="#editTreeInterventionsModal" id="<?php echo $treeIntervention['id'] ?>" class="edit m-2"
+                                                               data-bs-toggle="modal" data-bs-target="#editTreeInterventionsModal"><i class="far fa-edit fa-lg"></i></a>
+                                                            <a href="#deleteTreeInterventionsModal" id="<?php echo $treeIntervention['id'] ?>" class="delete m-2"
+                                                               data-bs-toggle="modal" data-bs-target="#deleteTreeInterventionsModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php }
+                                        } else { ?>
+                                            <tr>
+                                            </tr>
+                                        <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -230,7 +232,7 @@
                 try {
                     var table = $('#treeInterventionsTable').DataTable({
                         rowReorder: false,
-                        responsive: true,
+                        responsive: false,
                         columnDefs: [{
                             targets: [6, 7],
                             orderable: false,

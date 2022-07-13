@@ -37,38 +37,40 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table id="treesUsersTable" class="table table-striped table-hover" style="width:100%">
-                                    <thead>
-                                    <tr>
-                                        <th>Utilizador</th>
-                                        <th>Árvore</th>
-                                        <th hidden>active</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php if (!empty($this->userdata['treesUserList'])) {
-                                        foreach ($this->userdata['treesUserList'] as $key => $treeUser) { ?>
-                                            <tr>
-                                                <td><?php echo $treeUser["userId"] ?></td>
-                                                <td><?php echo $treeUser["treeId"] ?></td>
-                                                <td hidden><?php echo $treeUser["active"] ?></td>
-                                                <td>
-                                                    <div class="float-end">
-                                                        <a href="#editTreeUserModal" id="" class="edit m-2" data-treeUser-treeId="<?php echo $treeUser['treeId'] ?>" data-treeUser-userId="<?php echo $treeUser['userId'] ?>"
-                                                           data-bs-toggle="modal" data-bs-target="#editTreeUserModal"><i class="far fa-edit fa-lg"></i></a>
-                                                        <a href="#deleteTreeUserModal" id="" class="delete m-2" data-treeUser-treeId="<?php echo $treeUser['treeId'] ?>" data-treeUser-userId="<?php echo $treeUser['userId'] ?>"
-                                                           data-bs-toggle="modal" data-bs-target="#deleteTreeUserModal"><i class="fas fa-trash-alt fa-lg"></i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        <?php }
-                                    } else { ?>
+                                <div class="table-responsive">
+                                    <table id="treesUsersTable" class="table table-striped table-hover" style="width:100%">
+                                        <thead>
                                         <tr>
+                                            <th>Utilizador</th>
+                                            <th>Árvore</th>
+                                            <th hidden>active</th>
+                                            <th></th>
                                         </tr>
-                                    <?php } ?>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        <?php if (!empty($this->userdata['treesUserList'])) {
+                                            foreach ($this->userdata['treesUserList'] as $key => $treeUser) { ?>
+                                                <tr>
+                                                    <td><?php echo $treeUser["userId"] ?></td>
+                                                    <td><?php echo $treeUser["treeId"] ?></td>
+                                                    <td hidden><?php echo $treeUser["active"] ?></td>
+                                                    <td>
+                                                        <div class="float-end">
+                                                            <a href="#editTreeUserModal" id="" class="edit m-2" data-treeUser-treeId="<?php echo $treeUser['treeId'] ?>" data-treeUser-userId="<?php echo $treeUser['userId'] ?>"
+                                                               data-bs-toggle="modal" data-bs-target="#editTreeUserModal"><i class="far fa-edit fa-lg"></i></a>
+                                                            <a href="#deleteTreeUserModal" id="" class="delete m-2" data-treeUser-treeId="<?php echo $treeUser['treeId'] ?>" data-treeUser-userId="<?php echo $treeUser['userId'] ?>"
+                                                               data-bs-toggle="modal" data-bs-target="#deleteTreeUserModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php }
+                                        } else { ?>
+                                            <tr>
+                                            </tr>
+                                        <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -181,7 +183,7 @@
         try {
             var table = $('#treesUsersTable').DataTable({
                 rowReorder: false,
-                responsive: true,
+                responsive: false,
                 columnDefs: [ {
                     targets: [2,3],
                     orderable: false,

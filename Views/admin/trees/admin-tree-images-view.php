@@ -32,47 +32,49 @@
                                 </div>-->
                             </div>
                             <div class="card-body">
-                                <table id="treeImagesTable" class="table table-striped table-hover" style="width: 100%">
-                                    <thead>
-                                    <tr>
-                                        <!--<th>id</th>-->
-                                        <th>Árvore</th>
-                                        <!--<th>name</th>-->
-                                        <th>Imagem</th>
-                                        <th>Descrição</th>
-                                        <th>Tamanho</th>
-                                        <th>Posição</th>
-                                        <!--<th>active</th>-->
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php if (!empty($this->userdata['treeImageList'])) {
-                                        foreach ($this->userdata['treeImageList'] as $key => $treeImage) {?>
-                                            <tr>
-                                                <!--<td><?php //echo $treeImage["id"] ?></td>-->
-                                                <td><?php echo $treeImage["treeId"] ?></td>
-                                                <!--<td><?php //echo $treeImage["name"] ?></td>-->
-                                                <td> <img src="<?php echo API_URL . 'api/v1/trees/image/' . $treeImage["path"] ?>" width="72" height="72" style="cursor: zoom-in" onclick="window.open(this.src, '_blank');"></td>
-                                                <td><?php echo $treeImage["description"] ?></td>
-                                                <td><?php echo formatBytes($treeImage["size"]) ?></td>
-                                                <td><?php echo $treeImage["position"] ?></td>
-                                                <!--<td hidden><?php //echo $treeImage["active"] ?></td>-->
-                                                <td>
-                                                    <div class="float-end">
-                                                        <!--<a href="#editTreeImageModal" id="<?php //echo $treeImage['id'] ?>" data-ImagePath="<?php //echo $treeImage['path'] ?>" class="edit" data-bs-toggle="modal" data-bs-target="#editTreeModal"><i class="far fa-edit"></i></a>-->
-                                                        <a href="#deleteTreeImageModal" id="<?php echo $treeImage['id'] ?>" data-ImagePath="<?php echo $treeImage['path'] ?>" class="delete m-2"
-                                                           data-bs-toggle="modal" data-bs-target="#deleteTreeModal"><i class="fas fa-trash-alt fa-lg"></i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        <?php }
-                                    } else { ?>
+                                <div class="table-responsive">
+                                    <table id="treeImagesTable" class="table table-striped table-hover" style="width: 100%">
+                                        <thead>
                                         <tr>
+                                            <!--<th>id</th>-->
+                                            <th>Árvore</th>
+                                            <!--<th>name</th>-->
+                                            <th>Imagem</th>
+                                            <th>Descrição</th>
+                                            <th>Tamanho</th>
+                                            <th>Posição</th>
+                                            <!--<th>active</th>-->
+                                            <th></th>
                                         </tr>
-                                    <?php } ?>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        <?php if (!empty($this->userdata['treeImageList'])) {
+                                            foreach ($this->userdata['treeImageList'] as $key => $treeImage) {?>
+                                                <tr>
+                                                    <!--<td><?php //echo $treeImage["id"] ?></td>-->
+                                                    <td><?php echo $treeImage["treeId"] ?></td>
+                                                    <!--<td><?php //echo $treeImage["name"] ?></td>-->
+                                                    <td> <img src="<?php echo API_URL . 'api/v1/trees/image/' . $treeImage["path"] ?>" width="72" height="72" style="cursor: zoom-in" onclick="window.open(this.src, '_blank');"></td>
+                                                    <td><?php echo $treeImage["description"] ?></td>
+                                                    <td><?php echo formatBytes($treeImage["size"]) ?></td>
+                                                    <td><?php echo $treeImage["position"] ?></td>
+                                                    <!--<td hidden><?php //echo $treeImage["active"] ?></td>-->
+                                                    <td>
+                                                        <div class="float-end">
+                                                            <!--<a href="#editTreeImageModal" id="<?php //echo $treeImage['id'] ?>" data-ImagePath="<?php //echo $treeImage['path'] ?>" class="edit" data-bs-toggle="modal" data-bs-target="#editTreeModal"><i class="far fa-edit"></i></a>-->
+                                                            <a href="#deleteTreeImageModal" id="<?php echo $treeImage['id'] ?>" data-ImagePath="<?php echo $treeImage['path'] ?>" class="delete m-2"
+                                                               data-bs-toggle="modal" data-bs-target="#deleteTreeModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php }
+                                        } else { ?>
+                                            <tr>
+                                            </tr>
+                                        <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -203,7 +205,7 @@
                 try{
                     var table = $('#treeImagesTable').DataTable({
                         rowReorder: false,
-                        responsive: true,
+                        responsive: false,
                         columnDefs: [ {
                             targets: [5],
                             orderable: false,

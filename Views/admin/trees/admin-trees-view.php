@@ -37,58 +37,60 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table id="treesTable" class="table table-striped table-hover" style="width:100%">
-                                    <thead>
-                                    <tr>
-                                        <th>Identificador</th>
-                                        <th>Nome</th>
-                                        <th>Nome comum</th>
-                                        <th>Descrição</th>
-                                        <th>Observações</th>
-                                        <th>Tipo</th>
-                                        <th>lat</th>
-                                        <th>lng</th>
-                                        <th hidden>active</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php if (!empty($this->userdata['treesList'])) {
-                                        foreach ($this->userdata['treesList'] as $key => $tree) { ?>
-                                            <tr>
-                                                <td><?php echo $tree["id"] ?></td>
-                                                <td><?php echo $tree["name"] ?></td>
-                                                <td><?php echo $tree["nameCommon"] ?></td>
-                                                <td><?php echo $tree["description"] ?></td>
-                                                <td><?php echo $tree["observations"] ?></td>
-                                                <td><?php
-                                                    if (!empty($this->userdata['treeTypesList'])) {
-                                                        foreach ($this->userdata['treeTypesList'] as $key => $type) {
-                                                            if ( $type["id"] == $tree["typeId"]){
-                                                                echo $type["name"];
-                                                            }
-                                                        }
-                                                    }?>
-                                                </td>
-                                                <td><?php echo $tree["lat"] ?></td>
-                                                <td><?php echo $tree["lng"] ?></td>
-                                                <td hidden><?php echo $tree["active"] ?></td>
-                                                <td>
-                                                    <div class="float-end">
-                                                        <a href="#editTreeModal" id="<?php echo $tree['id'] ?>" class="edit m-2"
-                                                           data-bs-toggle="modal" data-bs-target="#editTreeModal"><i class="far fa-edit fa-lg"></i></a>
-                                                        <a href="#deleteTreeModal" id="<?php echo $tree['id'] ?>" class="delete m-2"
-                                                           data-bs-toggle="modal" data-bs-target="#deleteTreeModal"><i class="fas fa-trash-alt fa-lg"></i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        <?php }
-                                    } else { ?>
+                                <div class="table-responsive">
+                                    <table id="treesTable" class="table table-striped table-sm" style="width:100%">
+                                        <thead>
                                         <tr>
+                                            <th>Identificador</th>
+                                            <th>Nome</th>
+                                            <th>Nome comum</th>
+                                            <th>Descrição</th>
+                                            <th>Observações</th>
+                                            <th>Tipo</th>
+                                            <th>lat</th>
+                                            <th>lng</th>
+                                            <th hidden>active</th>
+                                            <th></th>
                                         </tr>
-                                    <?php } ?>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        <?php if (!empty($this->userdata['treesList'])) {
+                                            foreach ($this->userdata['treesList'] as $key => $tree) { ?>
+                                                <tr>
+                                                    <td><?php echo $tree["id"] ?></td>
+                                                    <td><?php echo $tree["name"] ?></td>
+                                                    <td><?php echo $tree["nameCommon"] ?></td>
+                                                    <td class="table-text-truncate" style="cursor: pointer" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="<?php echo $tree["description"] ?>"><?php echo $tree["description"] ?></td>
+                                                    <td class="table-text-truncate" style="cursor: pointer" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="<?php echo $tree["observations"] ?>"><?php echo $tree["observations"] ?></td>
+                                                    <td><?php
+                                                        if (!empty($this->userdata['treeTypesList'])) {
+                                                            foreach ($this->userdata['treeTypesList'] as $key => $type) {
+                                                                if ( $type["id"] == $tree["typeId"]){
+                                                                    echo $type["name"];
+                                                                }
+                                                            }
+                                                        }?>
+                                                    </td>
+                                                    <td><?php echo $tree["lat"] ?></td>
+                                                    <td><?php echo $tree["lng"] ?></td>
+                                                    <td hidden><?php echo $tree["active"] ?></td>
+                                                    <td>
+                                                        <div class="float-end">
+                                                            <a href="#editTreeModal" id="<?php echo $tree['id'] ?>" class="edit m-2"
+                                                               data-bs-toggle="modal" data-bs-target="#editTreeModal"><i class="far fa-edit fa-lg"></i></a>
+                                                            <a href="#deleteTreeModal" id="<?php echo $tree['id'] ?>" class="delete m-2"
+                                                               data-bs-toggle="modal" data-bs-target="#deleteTreeModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php }
+                                        } else { ?>
+                                            <tr>
+                                            </tr>
+                                        <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -297,17 +299,25 @@
         return treeImagePath;
     }
 
+    //table popovers
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
+    })
+
     $(document).ready(function() {
         //DATATABLES
         //Configura a dataTable
         try{
             var table = $('#treesTable').DataTable({
                 rowReorder: false,
-                responsive: true,
-                columnDefs: [ {
-                    targets: [8,9],
-                    orderable: false,
-                }],
+                responsive: false,
+                columnDefs: [
+                    {
+                        targets:[8,9],
+                        orderable: false,
+                    }
+                ],
                 oLanguage: {
                     "sUrl": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-PT.json"
                 }
@@ -320,7 +330,6 @@
         } catch (error){
             console.log(error);
         }
-
 
 
         // TreesMap

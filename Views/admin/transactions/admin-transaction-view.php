@@ -32,66 +32,68 @@
                                 </div>-->
                             </div>
                             <div class="card-body">
-                                <table id="transactionsTable" class="table table-striped table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>Identificador</th>
-                                        <th>Tipo</th>
-                                        <th>Método</th>
-                                        <th>Utilizador</th>
-                                        <th>Árvore</th>
-                                        <th>Valor</th>
-                                        <!--<th>active</th>-->
-                                        <th>Data criado</th>
-                                        <th>Data atualizado</th>
-                                        <th>Data validado</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php if (!empty($this->userdata['transactionList'])) {
-                                        foreach ($this->userdata['transactionList'] as $key => $transaction) { ?>
-                                            <tr>
-                                                <td><?php echo $transaction["id"] ?></td>
-                                                <td><?php
-                                                    if (!empty($this->userdata['transactionTypeList'])) {
-                                                        foreach ($this->userdata['transactionTypeList'] as $key => $type) {
-                                                            if ( $type["id"] == $transaction["transactionTypeId"]){
-                                                                echo $type["name"];
-                                                            }
-                                                        }
-                                                    }?>
-                                                </td>
-                                                <td><?php
-                                                    if (!empty($this->userdata['transactionMethodList'])) {
-                                                        foreach ($this->userdata['transactionMethodList'] as $key => $method) {
-                                                            if ( $method["id"] == $transaction["transactionMethodId"]){
-                                                                echo $method["name"];
-                                                            }
-                                                        }
-                                                    }?>
-                                                </td>
-                                                <td><?php echo $transaction["userId"] ?></td>
-                                                <td><?php echo $transaction["treeId"] ?></td>
-                                                <td><?php echo $transaction["value"] ?></td>
-                                                <!--<td><?php //echo $transaction["active"] ?></td>-->
-                                                <td><?php echo $transaction["dateCreated"] ?></td>
-                                                <td><?php echo $transaction["dateModified"] ?></td>
-                                                <td><?php echo $transaction["dateValidated"] ?></td>
-                                                <td>
-                                                    <div class="float-end">
-                                                        <a href="#deleteTransactionModal" id="<?php echo $transaction['id'] ?>" class="delete m-2"
-                                                           data-bs-toggle="modal" data-bs-target="#deleteTransactionModal"><i class="fas fa-trash-alt fa-lg"></i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        <?php }
-                                    } else { ?>
+                                <div class="table-responsive">
+                                    <table id="transactionsTable" class="table table-striped table-hover" style="width:100%">
+                                        <thead>
                                         <tr>
+                                            <th>Identificador</th>
+                                            <th>Tipo</th>
+                                            <th>Método</th>
+                                            <th>Utilizador</th>
+                                            <th>Árvore</th>
+                                            <th>Valor</th>
+                                            <!--<th>active</th>-->
+                                            <th>Data criado</th>
+                                            <th>Data atualizado</th>
+                                            <th>Data validado</th>
+                                            <th></th>
                                         </tr>
-                                    <?php } ?>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        <?php if (!empty($this->userdata['transactionList'])) {
+                                            foreach ($this->userdata['transactionList'] as $key => $transaction) { ?>
+                                                <tr>
+                                                    <td><?php echo $transaction["id"] ?></td>
+                                                    <td><?php
+                                                        if (!empty($this->userdata['transactionTypeList'])) {
+                                                            foreach ($this->userdata['transactionTypeList'] as $key => $type) {
+                                                                if ( $type["id"] == $transaction["transactionTypeId"]){
+                                                                    echo $type["name"];
+                                                                }
+                                                            }
+                                                        }?>
+                                                    </td>
+                                                    <td><?php
+                                                        if (!empty($this->userdata['transactionMethodList'])) {
+                                                            foreach ($this->userdata['transactionMethodList'] as $key => $method) {
+                                                                if ( $method["id"] == $transaction["transactionMethodId"]){
+                                                                    echo $method["name"];
+                                                                }
+                                                            }
+                                                        }?>
+                                                    </td>
+                                                    <td><?php echo $transaction["userId"] ?></td>
+                                                    <td><?php echo $transaction["treeId"] ?></td>
+                                                    <td><?php echo $transaction["value"] ?></td>
+                                                    <!--<td><?php //echo $transaction["active"] ?></td>-->
+                                                    <td><?php echo $transaction["dateCreated"] ?></td>
+                                                    <td><?php echo $transaction["dateModified"] ?></td>
+                                                    <td><?php echo $transaction["dateValidated"] ?></td>
+                                                    <td>
+                                                        <div class="float-end">
+                                                            <a href="#deleteTransactionModal" id="<?php echo $transaction['id'] ?>" class="delete m-2"
+                                                               data-bs-toggle="modal" data-bs-target="#deleteTransactionModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php }
+                                        } else { ?>
+                                            <tr>
+                                            </tr>
+                                        <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -211,11 +213,13 @@
                 try{
                     var table = $('#transactionsTable').DataTable({
                         rowReorder: false,
-                        responsive: true,
-                        columnDefs: [ {
-                            targets: [9],
-                            orderable: false,
-                        }],
+                        responsive: false,
+                        columnDefs: [
+                            {
+                                targets: [9],
+                                orderable: false,
+                            }
+                        ],
                         oLanguage: {
                             "sUrl": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-PT.json"
                         }

@@ -32,7 +32,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table id="transactionMethodTable" class="table table-striped table-hover">
+                                <table id="transactionMethodTable" class="table table-striped table-hover" style="width:100%">
                                     <thead>
                                     <tr>
                                         <th>Nome</th>
@@ -176,7 +176,7 @@
                 try{
                     var table = $('#transactionMethodTable').DataTable({
                         rowReorder: false,
-                        responsive: true,
+                        responsive: false,
                         columnDefs: [ {
                             targets: [2,3],
                             orderable: false,

@@ -32,65 +32,67 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table id="usersTable" class="table table-striped table-hover" style="width:100%">
-                                    <thead>
-                                    <tr>
-                                        <th>Identificador</th>
-                                        <th>Nome</th>
-                                        <th>Entidade</th>
-                                        <th>Email</th>
-                                        <th>Grupo</th>
-                                        <th>País</th>
-                                        <th hidden>active</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php if (!empty($this->userdata['usersList'])) {
-                                        foreach ($this->userdata['usersList'] as $key => $user) { ?>
-                                            <tr>
-                                                <td><?php echo $user["id"] ?></td>
-                                                <td><?php echo $user["name"] ?></td>
-                                                <td><?php echo (empty($user["entity"])) ? "Vazio" : $user["entity"] ?></td>
-                                                <td><?php echo $user["email"] ?></td>
-                                                <td><?php
-                                                    if (!empty($this->userdata['groupsList'])) {
-                                                        foreach ($this->userdata['groupsList'] as $key => $group) {
-                                                            if ( $group["id"] == $user["groupId"]){
-                                                                echo $group["name"];
-                                                            }
-                                                        }
-                                                    }?>
-                                                </td>
-                                                <td><?php
-                                                    if (!empty($this->userdata['countryList'])) {
-                                                        foreach ($this->userdata['countryList'] as $key => $country) {
-                                                            if ( $country["id"] == $user["countryId"]){
-                                                                echo $country["name"];
-                                                            }
-                                                        }
-                                                    } ?>
-                                                </td>
-                                                <td hidden><?php echo $user["active"] ?></td>
-                                                <td>
-                                                    <div class="float-end">
-                                                    <?php if($user["id"] !== $_SESSION["userdata"]["id"]) { //if list user id is equal to whats in the $_SESSION, dont show the edit button?>
-                                                        <a href="#editUserModal" id="<?php echo $user['email'] ?>" class="edit m-2" title="Editar"
-                                                           data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="far fa-edit fa-lg"></i></a>
-
-                                                        <a href="#deleteUserModal" id="<?php echo $user['id'] ?>" class="delete m-2" title="Apagar"
-                                                           data-bs-toggle="modal" data-bs-target="#deleteUserModal"><i class="fas fa-trash-alt fa-lg"></i></a>
-                                                    <?php }?>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        <?php }
-                                    } else { ?>
+                                <div class="table-responsive">
+                                    <table id="usersTable" class="table table-striped table-hover" style="width:100%">
+                                        <thead>
                                         <tr>
+                                            <th>Identificador</th>
+                                            <th>Nome</th>
+                                            <th>Entidade</th>
+                                            <th>Email</th>
+                                            <th>Grupo</th>
+                                            <th>País</th>
+                                            <th hidden>active</th>
+                                            <th></th>
                                         </tr>
-                                    <?php } ?>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        <?php if (!empty($this->userdata['usersList'])) {
+                                            foreach ($this->userdata['usersList'] as $key => $user) { ?>
+                                                <tr>
+                                                    <td><?php echo $user["id"] ?></td>
+                                                    <td><?php echo $user["name"] ?></td>
+                                                    <td><?php echo (empty($user["entity"])) ? "Vazio" : $user["entity"] ?></td>
+                                                    <td><?php echo $user["email"] ?></td>
+                                                    <td><?php
+                                                        if (!empty($this->userdata['groupsList'])) {
+                                                            foreach ($this->userdata['groupsList'] as $key => $group) {
+                                                                if ( $group["id"] == $user["groupId"]){
+                                                                    echo $group["name"];
+                                                                }
+                                                            }
+                                                        }?>
+                                                    </td>
+                                                    <td><?php
+                                                        if (!empty($this->userdata['countryList'])) {
+                                                            foreach ($this->userdata['countryList'] as $key => $country) {
+                                                                if ( $country["id"] == $user["countryId"]){
+                                                                    echo $country["name"];
+                                                                }
+                                                            }
+                                                        } ?>
+                                                    </td>
+                                                    <td hidden><?php echo $user["active"] ?></td>
+                                                    <td>
+                                                        <div class="float-end">
+                                                        <?php if($user["id"] !== $_SESSION["userdata"]["id"]) { //if list user id is equal to whats in the $_SESSION, dont show the edit button?>
+                                                            <a href="#editUserModal" id="<?php echo $user['email'] ?>" class="edit m-2" title="Editar"
+                                                               data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="far fa-edit fa-lg"></i></a>
+
+                                                            <a href="#deleteUserModal" id="<?php echo $user['id'] ?>" class="delete m-2" title="Apagar"
+                                                               data-bs-toggle="modal" data-bs-target="#deleteUserModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                        <?php }?>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php }
+                                        } else { ?>
+                                            <tr>
+                                            </tr>
+                                        <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -339,7 +341,7 @@
         try{
             var table = $('#usersTable').DataTable({
                 rowReorder: false,
-                responsive: true,
+                responsive: false,
                 columnDefs: [{
                     targets: [6,7],
                     orderable: false,
