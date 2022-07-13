@@ -47,9 +47,27 @@
                                         <?php if (!empty($this->userdata['groupsList'])) {
                                             foreach ($this->userdata['groupsList'] as $key => $group) { ?>
                                                 <tr>
-                                                    <td><?php echo $group["name"] ?></td>
-                                                    <td><?php echo $group["description"] ?></td>
-                                                    <td>Tabela <?php echo $group["securityId"] ?></td>
+                                                    <td id="5h3e4646ne-<?php echo $group["id"] ?>"
+                                                        onclick="copy('<?php echo $group["name"] ?>','5h3e4646ne-<?php echo $group["id"] ?>')"
+                                                        title="<?php echo $group["name"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $group["name"] ?>
+                                                    </td>
+                                                    <td id="d4j5t4bwdr-<?php echo $group["id"] ?>"
+                                                        onclick="copy('<?php echo $group["description"] ?>','d4j5t4bwdr-<?php echo $group["id"] ?>')"
+                                                        title="<?php echo $group["description"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $group["description"] ?>
+                                                    </td>
+                                                    <td id="5y7nftryn4-<?php echo $group["id"] ?>"
+                                                        onclick="copy('Tabela <?php echo $group["securityId"] ?>','5y7nftryn4-<?php echo $group["id"] ?>')"
+                                                        title="Tabela <?php echo $group["securityId"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        Tabela <?php echo $group["securityId"] ?>
+                                                    </td>
                                                     <td hidden><?php echo $group["active"] ?></td>
                                                     <td>
                                                         <div class="float-end">

@@ -50,27 +50,50 @@
                                         <?php if (!empty($this->userdata['usersList'])) {
                                             foreach ($this->userdata['usersList'] as $key => $user) { ?>
                                                 <tr>
-                                                    <td><?php echo $user["id"] ?></td>
-                                                    <td><?php echo $user["name"] ?></td>
-                                                    <td><?php echo (empty($user["entity"])) ? "Vazio" : $user["entity"] ?></td>
-                                                    <td><?php echo $user["email"] ?></td>
-                                                    <td><?php
-                                                        if (!empty($this->userdata['groupsList'])) {
-                                                            foreach ($this->userdata['groupsList'] as $key => $group) {
-                                                                if ( $group["id"] == $user["groupId"]){
-                                                                    echo $group["name"];
-                                                                }
-                                                            }
-                                                        }?>
+                                                    <td id="mybyoau225-<?php echo $user["id"] ?>"
+                                                        onclick="copy('<?php echo $user["id"] ?>','mybyoau225-<?php echo $user["id"] ?>')"
+                                                        title="<?php echo $user["id"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $user["id"] ?>
                                                     </td>
-                                                    <td><?php
-                                                        if (!empty($this->userdata['countryList'])) {
-                                                            foreach ($this->userdata['countryList'] as $key => $country) {
-                                                                if ( $country["id"] == $user["countryId"]){
-                                                                    echo $country["name"];
-                                                                }
-                                                            }
-                                                        } ?>
+                                                    <td id="h6xsvpd7tw-<?php echo $user["id"] ?>"
+                                                        onclick="copy('<?php echo $user["name"] ?>','h6xsvpd7tw-<?php echo $user["id"] ?>')"
+                                                        title="<?php echo $user["name"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $user["name"] ?>
+                                                    </td>
+                                                    <?php $userEntity = (empty($user["entity"])) ? "Vazio" : $user["entity"] ?>
+                                                    <td id="grm5lifkpl-<?php echo $user["id"] ?>"
+                                                        onclick="copy('<?php echo $userEntity ?>','grm5lifkpl-<?php echo $user["id"] ?>')"
+                                                        title="<?php echo $userEntity ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $userEntity ?>
+                                                    </td>
+                                                    <td id="h5or6lbi27-<?php echo $user["id"] ?>"
+                                                        onclick="copy('<?php echo $user["email"] ?>','h5or6lbi27-<?php echo $user["id"] ?>')"
+                                                        title="<?php echo $user["email"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $user["email"] ?>
+                                                    </td>
+                                                    <?php if (!empty($this->userdata['groupsList'])) { foreach ($this->userdata['groupsList'] as $key => $group) { if ( $group["id"] == $user["groupId"]){ $groupName = $group["name"]; } } }?>
+                                                    <td id="xtz9d92jhc-<?php echo $user["id"] ?>"
+                                                        onclick="copy('<?php echo $groupName ?>','xtz9d92jhc-<?php echo $user["id"] ?>')"
+                                                        title="<?php echo $groupName ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $groupName ?>
+                                                    </td>
+                                                    <?php if (!empty($this->userdata['countryList'])) { foreach ($this->userdata['countryList'] as $key => $country) { if ( $country["id"] == $user["countryId"]){ $countryName = $country["name"]; } } } ?>
+                                                    <td id="1idt83yteh-<?php echo $user["id"] ?>"
+                                                        onclick="copy('<?php echo $countryName ?>','1idt83yteh-<?php echo $user["id"] ?>')"
+                                                        title="<?php echo $countryName ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $countryName ?>
                                                     </td>
                                                     <td hidden><?php echo $user["active"] ?></td>
                                                     <td>

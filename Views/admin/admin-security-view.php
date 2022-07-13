@@ -36,7 +36,13 @@
                                         <?php if (!empty($this->userdata['securityList'])) {
                                             foreach ($this->userdata['securityList'] as $key => $security) { ?>
                                                 <tr>
-                                                    <td>Tabela <?php echo $security["id"] ?></td>
+                                                    <td id="mybyoau225-<?php echo $security["id"] ?>"
+                                                        onclick="copy('Tabela <?php echo $security["id"] ?>','mybyoau225-<?php echo $security["id"] ?>')"
+                                                        title="Tabela <?php echo $security["id"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        Tabela <?php echo $security["id"] ?>
+                                                    </td>
                                                     <td>
                                                         <div class="float-end">
                                                             <a href="#editSecurityModal" id="<?php echo $security['id'] ?>" class="edit m-2"
