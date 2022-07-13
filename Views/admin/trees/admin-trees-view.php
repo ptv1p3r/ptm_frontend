@@ -13,7 +13,7 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Gestão de <b>Árvores</b></h1>
+                <h1 class="mt-4">Gestão de <b>árvores</b></h1>
                 <div class="row">
 
                     <div class="col-xl-12 col-md-12 mb-4">
@@ -57,22 +57,16 @@
                                         <?php if (!empty($this->userdata['treesList'])) {
                                             foreach ($this->userdata['treesList'] as $key => $tree) { ?>
                                                 <tr>
-                                                    <td><?php echo $tree["id"] ?></td>
-                                                    <td><?php echo $tree["name"] ?></td>
-                                                    <td><?php echo $tree["nameCommon"] ?></td>
-                                                    <td class="table-text-truncate" style="cursor: pointer" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="<?php echo $tree["description"] ?>"><?php echo $tree["description"] ?></td>
-                                                    <td class="table-text-truncate" style="cursor: pointer" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="<?php echo $tree["observations"] ?>"><?php echo $tree["observations"] ?></td>
-                                                    <td><?php
-                                                        if (!empty($this->userdata['treeTypesList'])) {
-                                                            foreach ($this->userdata['treeTypesList'] as $key => $type) {
-                                                                if ( $type["id"] == $tree["typeId"]){
-                                                                    echo $type["name"];
-                                                                }
-                                                            }
-                                                        }?>
+                                                    <td id="guhr56htfumiuh-<?php echo $tree["id"] ?>" onclick="copy('<?php echo $tree["id"] ?>','guhr56htfumiuh-<?php echo $tree["id"] ?>')" title="<?php echo $tree["id"] ?>" class="table-text-truncate" style="cursor: pointer"><?php echo $tree["id"] ?></td>
+                                                    <td id="ftmyu6t8e465nf-<?php echo $tree["id"] ?>" onclick="copy('<?php echo $tree["name"] ?>','ftmyu6t8e465nf-<?php echo $tree["id"] ?>')" title="<?php echo $tree["name"] ?>" class="table-text-truncate" style="cursor: pointer"><?php echo $tree["name"] ?></td>
+                                                    <td id="4w5g56rdjn786n-<?php echo $tree["id"] ?>" onclick="copy('<?php echo $tree["nameCommon"] ?>','4w5g56rdjn786n-<?php echo $tree["id"] ?>')" title="<?php echo $tree["nameCommon"] ?>" class="table-text-truncate" style="cursor: pointer"><?php echo $tree["nameCommon"] ?></td>
+                                                    <td id="76k5m6t57r6yh6-<?php echo $tree["id"] ?>" onclick="copy('<?php echo $tree["description"] ?>','76k5m6t57r6yh6-<?php echo $tree["id"] ?>')" title="<?php echo $tree["description"] ?>" class="table-text-truncate" style="cursor: pointer"><?php echo $tree["description"] ?></td>
+                                                    <td id="758m6fntu6g8mk-<?php echo $tree["id"] ?>" onclick="copy('<?php echo $tree["observations"] ?>','758m6fntu6g8mk-<?php echo $tree["id"] ?>')" title="<?php echo $tree["observations"] ?>" class="table-text-truncate" style="cursor: pointer"><?php echo $tree["observations"] ?></td>
+                                                    <td id="6j43db5yr6jgsd-<?php echo $tree["id"] ?>" onclick="copy('<?php if (!empty($this->userdata['treeTypesList'])) { foreach ($this->userdata['treeTypesList'] as $key => $type) { if ( $type["id"] == $tree["typeId"]){ echo $type["name"]; } } }?>','6j43db5yr6jgsd-<?php echo $tree["id"] ?>')" title="<?php if (!empty($this->userdata['treeTypesList'])) { foreach ($this->userdata['treeTypesList'] as $key => $type) { if ( $type["id"] == $tree["typeId"]){ echo $type["name"]; } } }?>" class="table-text-truncate" style="cursor: pointer">
+                                                        <?php if (!empty($this->userdata['treeTypesList'])) { foreach ($this->userdata['treeTypesList'] as $key => $type) { if ( $type["id"] == $tree["typeId"]){ echo $type["name"]; } } }?>
                                                     </td>
-                                                    <td><?php echo $tree["lat"] ?></td>
-                                                    <td><?php echo $tree["lng"] ?></td>
+                                                    <td id="w354fsefrbertb-<?php echo $tree["id"] ?>" onclick="copy('<?php echo $tree["description"] ?>','w354fsefrbertb-<?php echo $tree["id"] ?>')" title="<?php echo $tree["lat"] ?>" class="table-text-truncate" style="cursor: pointer"><?php echo $tree["lat"] ?></td>
+                                                    <td id="67mrgcbftyne45-<?php echo $tree["id"] ?>" onclick="copy('<?php echo $tree["description"] ?>','67mrgcbftyne45-<?php echo $tree["id"] ?>')" title="<?php echo $tree["lng"] ?>" class="table-text-truncate" style="cursor: pointer"><?php echo $tree["lng"] ?></td>
                                                     <td hidden><?php echo $tree["active"] ?></td>
                                                     <td>
                                                         <div class="float-end">

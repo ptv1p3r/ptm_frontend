@@ -1,3 +1,39 @@
+/*********************************
+TABLE COPY TOOLTIP
+*********************************/
+.tip{
+    background-color: #263646;
+    padding: 0 14px;
+    line-height: 27px;
+    position: absolute;
+    border-radius: 4px;
+    z-index: 100;color: #fff;
+    font-size: 12px;
+    animation-name: tip;
+    animation-duration: .6s;
+    animation-fill-mode: both
+}
+
+.tip:before{
+    content: "";
+    background-color: #263646;
+    height: 10px;
+    width: 10px;
+    display: block;
+    position: absolute;
+    transform: rotate(45deg);
+    top: -4px;
+    left: 17px
+}
+
+#copied_tip{
+    animation-name: come_and_leave;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    /*bottom: 25px;*/
+    /*left:2px*/
+}
+
 
 /*********************************
 TABLES TEXT TRUNCATE

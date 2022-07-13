@@ -19,3 +19,27 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 
 });
+
+function copy(text, target) {
+    let concatTarget = '#'+target;
+    console.log(concatTarget);
+
+    let concatCopyTip = '.'+target;
+    console.log(concatCopyTip);
+
+    setTimeout(function() {
+        $(concatCopyTip).remove();
+    }, 800);
+
+    $(concatTarget).append("<div class='tip "+target+"' id='copied_tip'>Copied!</div>");
+
+    var input = document.createElement('input');
+    input.setAttribute('value', text);
+    document.body.appendChild(input);
+    input.select();
+
+    var result = document.execCommand('copy');
+    document.body.removeChild(input)
+
+    return result;
+}
