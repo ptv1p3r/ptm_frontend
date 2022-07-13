@@ -3,6 +3,8 @@
 * Copyright 2013-2022 Start Bootstrap
 * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-sb-admin/blob/master/LICENSE)
 */
+
+//sidebar toggle
 window.addEventListener('DOMContentLoaded', event => {
     // Toggle the side navigation
     const sidebarToggle = document.body.querySelector('#sidebarToggle');
@@ -20,18 +22,19 @@ window.addEventListener('DOMContentLoaded', event => {
 
 });
 
+//show tooltip & copy to clipbooard
 function copy(text, target) {
     let concatTarget = '#'+target;
-    console.log(concatTarget);
+    //console.log(concatTarget);
 
-    let concatCopyTip = '.'+target;
-    console.log(concatCopyTip);
+    let concatCopyTip = '#copied_tip-'+target;
+    //console.log(concatCopyTip);
 
     setTimeout(function() {
         $(concatCopyTip).remove();
     }, 800);
 
-    $(concatTarget).append("<div class='tip "+target+"' id='copied_tip'>Copied!</div>");
+    $(concatTarget).append("<div class='copied_tip tip' id='copied_tip-"+target+"'>Copied!</div>");
 
     var input = document.createElement('input');
     input.setAttribute('value', text);
