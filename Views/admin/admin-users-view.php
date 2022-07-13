@@ -153,20 +153,25 @@
                             </div>
                             <div class="form-group">
                                 <label>Grupo</label>
-                                <input type="text" class="form-control" name="addUserGroupId" required>
-
-                                <!--<select id="addUserGroupId" class="form-select" name="addUserGroupId" >
-                                    <option value="" disabled selected>Grupo</option>
-                                    <?php /*if (!empty($this->userdata['groupList'])) {
-                                        foreach ($this->userdata['groupList'] as $key => $group) { */?>
-                                            <option value="<?php //echo $group['id'] ?>"><?php //echo $group["name"] ?></option>
-                                        <?php /*}
-                                    }*/ ?>
-                                </select>-->
+                                <!--<input type="text" class="form-control" name="addUserGroupId" required>-->
+                                <select id="addUserGroupId" class="form-select" name="addUserGroupId" required>
+                                    <option value="" disabled selected>Selecione o grupo</option>
+                                    <?php if (!empty($this->userdata['groupsList'])) {
+                                        foreach ($this->userdata['groupsList'] as $key => $group) { ?>
+                                            <option value="<?php echo $group['id'] ?>"><?php echo $group["name"] ?></option>
+                                        <?php }
+                                    } ?>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Data de nascimento</label>
-                                <input type="text" class="form-control" name="addUserDateBirth" placeholder="yyyy-mm-dd" required>
+                                <!--<input type="text" class="form-control" name="addUserDateBirth" placeholder="yyyy-mm-dd" required>-->
+                                <div class='input-group' id='datetimepicker1' data-td-target-input='nearest' data-td-target-toggle='nearest'>
+                                    <input id='datetimepicker1Input' name="addUserDateBirth" type='text' class='form-control' data-td-target='#datetimepicker1' required/>
+                                    <span class='input-group-text' data-td-target='#datetimepicker1' data-td-toggle='datetimepicker'>
+                                        <span class='fa-solid fa-calendar'></span>
+                                    </span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Morada</label>
@@ -178,16 +183,15 @@
                             </div>
                             <div class="form-group">
                                 <label>Género</label>
-                                <input type="text" class="form-control" name="addUserGenderId" required>
-
-                                <!--<select id="addUserGenderId" class="form-select" name="addUserGenderId" >
-                                    <option value="" disabled selected>Género</option>
-                                    <?php /*if (!empty($this->userdata['genderList'])) {
-                                        foreach ($this->userdata['genderList'] as $key => $gender) { */?>
-                                            <option value="<?php //echo $gender['id'] ?>"><?php //echo $gender["name"] ?></option>
-                                        <?php /*}
-                                    }*/ ?>
-                                </select>-->
+                                <!--<input type="text" class="form-control" name="addUserGenderId" required>-->
+                                <select id="addUserGenderId" class="form-select" name="addUserGenderId" required>
+                                    <option value="" disabled selected>Selecione o género</option>
+                                    <?php if (!empty($this->userdata['gendersList'])) {
+                                        foreach ($this->userdata['gendersList'] as $key => $gender) { ?>
+                                            <option value="<?php echo $gender['id'] ?>"><?php echo $gender["name"] ?></option>
+                                        <?php }
+                                    } ?>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Localidade</label>
@@ -204,7 +208,7 @@
                             <div class="form-group">
                                 <label>País</label>
                                 <select class="form-select" name="addUserCountryId" id="addUserCountryId">
-                                    <option value="" disabled selected>Selecione o País</option>
+                                    <option value="" disabled selected>Selecione o país</option>
                                     <?php if (!empty($this->userdata['countryList'])) {
                                         foreach ($this->userdata['countryList'] as $key => $country) { ?>
                                             <option value="<?php echo $country['id'] ?>"><?php echo $country["name"] ?></option>
@@ -259,20 +263,25 @@
                             </div>-->
                             <div class="form-group">
                                 <label>Grupo</label>
-                                <input type="text" class="form-control" name="editUserGroupId" required>
-
-                                <!--<select id="editUserGroupId" class="form-select" name="editUserGroupId" >
-                                    <option value="" disabled selected>Grupo</option>
-                                    <?php /*if (!empty($this->userdata['groupList'])) {
-                                        foreach ($this->userdata['groupList'] as $key => $group) { */?>
-                                            <option value="<?php //echo $group['id'] ?>"><?php //echo $group["name"] ?></option>
-                                        <?php /*}
-                                    }*/ ?>
-                                </select>-->
+                                <!--<input type="text" class="form-control" name="editUserGroupId" required>-->
+                                <select id="addUserGroupId" class="form-select" name="editUserGroupId" required>
+                                    <option value="" disabled selected>Selecione o grupo</option>
+                                    <?php if (!empty($this->userdata['groupsList'])) {
+                                        foreach ($this->userdata['groupsList'] as $key => $group) { ?>
+                                            <option value="<?php echo $group['id'] ?>"><?php echo $group["name"] ?></option>
+                                        <?php }
+                                    } ?>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Data de nascimento</label>
-                                <input type="text" class="form-control" name="editUserDateBirth" placeholder="yyyy-mm-dd" required>
+                                <!--<input type="text" class="form-control" name="editUserDateBirth" placeholder="yyyy-mm-dd" required>-->
+                                <div class='input-group' id='datetimepicker2' data-td-target-input='nearest' data-td-target-toggle='nearest'>
+                                    <input id='datetimepicker2Input' name="editUserDateBirth" type='text' class='form-control' data-td-target='#datetimepicker2' required/>
+                                    <span class='input-group-text' data-td-target='#datetimepicker2' data-td-toggle='datetimepicker'>
+                                        <span class='fa-solid fa-calendar'></span>
+                                    </span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Morada</label>
@@ -284,16 +293,15 @@
                             </div>
                             <div class="form-group">
                                 <label>Género</label>
-                                <input type="text" class="form-control" name="editUserGenderId" required>
-
-                                <!--<select id="editUserGenderId" class="form-select" name="editUserGenderId" >
-                                    <option value="" disabled selected>Género</option>
-                                    <?php /*if (!empty($this->userdata['genderList'])) {
-                                        foreach ($this->userdata['genderList'] as $key => $gender) { */?>
-                                            <option value="<?php //echo $gender['id'] ?>"><?php //echo $gender["name"] ?></option>
-                                        <?php /*}
-                                    }*/ ?>
-                                </select>-->
+                                <!--<input type="text" class="form-control" name="editUserGenderId" required>-->
+                                <select id="editUserGenderId" class="form-select" name="editUserGenderId" required>
+                                    <option value="" disabled selected>Selecione o género</option>
+                                    <?php if (!empty($this->userdata['gendersList'])) {
+                                        foreach ($this->userdata['gendersList'] as $key => $gender) { ?>
+                                            <option value="<?php echo $gender['id'] ?>"><?php echo $gender["name"] ?></option>
+                                        <?php }
+                                    } ?>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Localidade</label>
@@ -381,6 +389,41 @@
         } catch (error) {
             console.log(error)
         }
+
+        //datetimepicker with momentjs plugin
+        tempusDominus.extend(tempusDominus.plugins.moment_parse, 'YYYY-MM-DD');
+
+        //datepicker form add
+        new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
+            display: {
+                components: {
+                    decades: true,
+                    year: true,
+                    month: true,
+                    date: true,
+                    hours: false,
+                    minutes: false,
+                    seconds: false,
+                }
+            },
+            useCurrent:true
+        });
+
+        //datepicker form edit
+        new tempusDominus.TempusDominus(document.getElementById('datetimepicker2'), {
+            display: {
+                components: {
+                    decades: true,
+                    year: true,
+                    month: true,
+                    date: true,
+                    hours: false,
+                    minutes: false,
+                    seconds: false,
+                }
+            },
+            useCurrent:false
+        });
 
 
         // ajax to Add User

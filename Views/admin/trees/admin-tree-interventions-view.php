@@ -289,12 +289,26 @@
 
 
                 //datetimepicker with momentjs plugin
-                tempusDominus.extend(tempusDominus.plugins.moment_parse, 'YYYY/MM/DD HH:mm:ss');
+                tempusDominus.extend(tempusDominus.plugins.moment_parse, 'YYYY-MM-DD HH:mm:ss');
                 //datepicker form add
-                new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'));
+                new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
+                    display: {
+                        components: {
+                            useTwentyfourHour: true
+                        }
+                    },
+                    useCurrent:true
+                });
 
                 //datepicker form edit
-                new tempusDominus.TempusDominus(document.getElementById('datetimepicker2'));
+                new tempusDominus.TempusDominus(document.getElementById('datetimepicker2'), {
+                    display: {
+                        components: {
+                            useTwentyfourHour: true
+                        }
+                    },
+                    useCurrent:false
+                });
 
 
 
