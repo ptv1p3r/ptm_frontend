@@ -128,162 +128,10 @@
             </div>
         </main>
 
-    <!-- Edit Profile Modal HTML
-    <div id="editAdminModal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Edite os seus dados</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <form id="updateAdmin">
-                        <div class="form-group">
-                            <input id="editAdminId" name="editAdminId" type="hidden" class="form-control"
-                                   value="<?php //echo $admin["id"] ?>">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Nome:</label>
-                            <input type="text" class="form-control" name="editAdminName"
-                                   value="">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Entidade:</label>
-                            <input type="text" class="form-control" name="editAdminEntity" value="">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Morada:</label>
-                            <input type="text" class="form-control" name="editAdminAddress" value="">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Código-postal:</label>
-                            <input type="text" class="form-control" name="editAdminCodPost" value="">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Localidade:</label>
-                            <input type="text" class="form-control" name="editAdminLocality" value="">
-                        </div>
-                        <div class="form-group">
-                            <label>País:</label>
-                            <select class="form-control" id="editAdminCountry" name="editAdminCountry">
-                                <?php /*foreach ($this->userdata['countryList'] as $key => $val) { ?>
-                                    <option value="<?php echo $val['id']; ?>" <?php echo ($val['id'] == $admin["countryId"]) ? 'selected="selected"' : '' ?> > <?php echo $val['name']; ?></option>
-                                <?php } */?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Nif:</label>
-                            <input type="text" class="form-control" name="editAdminNif" value="">
-                        </div>
-                        <div class="form-group">
-                            <label>Telefone:</label>
-                            <input type="text" class="form-control" name="editAdminMobile">
-                        </div>
-                        <div class="form-group">
-                            <label>País:</label>
-                            <select class="form-control" id="editAdminGender" name="editAdminGender">
-                                <?php /*foreach ($this->userdata['genderList'] as $key => $val) { ?>
-                                    <option value="<?php echo $val['id']; ?>" <?php echo ($val['id'] == $admin["genderId"]) ? 'selected="selected"' : '' ?> > <?php echo $val['name']; ?></option>
-                                <?php } */?>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Password:</label>
-                            <input type="password" class="form-control" name="editAdminPasswordAA">
-                        </div>
-                        <div class="form-group">
-                            <label>Data de aniversário:</label>
-                            <input type="date" class="form-control" name="editAdminDateBirth">
-                        </div>
-                        <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-info" value="Save">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>-->
-
-
-    <!-- Delete Modal HTML
-    <div id="deleteAdminModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id="deleteAdmin">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Apagar conta</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <p>De certeza que deseja remover a sua conta?</p>
-                        <p class="text-warning"><small>Esta ação não pode ser desfeita.</small></p>
-                        <div class="form-group">
-                                <input id="deleteAdminId" name="deleteAdminId" type="hidden" class="form-control"
-                                       value="<?php //echo $admin["id"] ?>">
-                            </div>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Voltar">
-                        <input type="submit" class="btn btn-danger" value="Apagar">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>-->
 
 
 <script>
     $(document).ready(function () {
-        // ajax to get data to Modal Edit Admin
-        /*$('.edit').on('click', function () {
-
-            let formData = {
-                'action': "GetAdmin",
-                'data': $(this).attr('id') //gets group id from id="" attribute on edit button from table
-            };
-
-            $.ajax({
-                url: "<?php //echo HOME_URL . '/admin/settings';?>",
-                dataType: "json",
-                type: 'POST',
-                data: formData,
-                success: function (data) {
-                    $('[name="editAdminId"]').val(data[0]['id']);
-                    $('[name="editAdminName"]').val(data[0]['name']);
-                    $('[name="editAdminEntity"]').val(data[0]['entity']);
-                    $('[name="editAdminDateBirth"]').val(data[0]['dateBirth']);
-                    $('[name="editAdminAddress"]').val(data[0]['address']);
-                    $('[name="editAdminCodPost"]').val(data[0]['codPost']);
-                    $('[name="editAdminLocality"]').val(data[0]['locality']);
-                    $('[name="editAdminMobile"]').val(data[0]['mobile']);
-                    $('[name="editAdminNif"]').val(data[0]['nif']);
-                    $('[name="editAdminPass"]').val(data[0]['password']);
-
-                    $('#updateAdmin input').each(function () {
-                        $(this).data('lastValue', $(this).val());
-                    });
-                },
-                error: function (data) {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: data.body,
-                        icon: 'error',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        // didClose: () => {
-                        //     location.reload();
-                        // }
-                    });
-                }
-            });
-        });*/
 
         // ajax to update modal data  Edit Admin
         $('#updateAdmin').submit(function (event) {
@@ -318,7 +166,7 @@
                     if (data.statusCode === 200) {
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -330,7 +178,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -344,8 +192,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -377,7 +225,7 @@
                     if (data.statusCode === 200) {
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -389,7 +237,7 @@
                     } else if (data.statusCode === 400) {
                         //Error message
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -413,8 +261,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -432,66 +280,6 @@
             if($(this).attr("name") === "newPass"){ $(this).parent().find("#verifyEqualPass").hide(); }
             if($(this).attr("name") === "confPass"){ $(this).parent().find("#verifyMatchPass").hide(); }
         });
-
-        // ajax to Delete User
-        /*$('#deleteAdmin').submit(function (event) {
-            event.preventDefault(); //prevent default action
-
-            let formData = {
-                'action': "DeleteAdmin",
-                'data': $(this).serializeArray()
-            };
-
-            $.ajax({
-                url: "<?php //echo HOME_URL . '/admin/settings';?>",
-                dataType: "json",
-                type: 'POST',
-                data: formData,
-                success: function (data) {
-                    $("#deleteAdminModal").modal('hide');
-
-                    if (data.statusCode === 200) {
-                        //mensagem de Success
-                        Swal.fire({
-                            title: 'Success!',
-                            text: data.body.message,
-                            icon: 'success',
-                            showConfirmButton: false,
-                            timer: 2000,
-                            didClose: () => {
-                                location.reload();
-                            }
-                        });
-                    } else {
-                        //mensagem de Error
-                        Swal.fire({
-                            title: 'Error!',
-                            text: data.body.message,
-                            icon: 'error',
-                            showConfirmButton: false,
-                            timer: 2000,
-                            didClose: () => {
-                                //location.reload();
-                            }
-                        });
-                    }
-
-                },
-                error: function (data) {
-                    //mensagem de Error
-                    Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
-                        icon: 'error',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        didClose: () => {
-                            //location.reload();
-                        }
-                    });
-                }
-            });
-        });*/
 
     });
 </script>

@@ -291,7 +291,7 @@
                             if (data.statusCode === 201){
                                 //mensagem de Success
                                 Swal.fire({
-                                    title: 'Success!',
+                                    title: 'Sucesso!',
                                     text: data.body.message,
                                     icon: 'success',
                                     showConfirmButton: false,
@@ -303,7 +303,7 @@
                             } else {
                                 //mensagem de Error
                                 Swal.fire({
-                                    title: 'Error!',
+                                    title: 'Erro!',
                                     text: data.body.message,
                                     icon: 'error',
                                     showConfirmButton: false,
@@ -318,8 +318,8 @@
                         error: function (data) {
                             //mensagem de Error
                             Swal.fire({
-                                title: 'Error!',
-                                text: "Connection error, please try again.",
+                                title: 'Erro!',
+                                text: "Erro de conexão, por favor tente denovo.",
                                 icon: 'error',
                                 showConfirmButton: false,
                                 timer: 2000,
@@ -333,146 +333,6 @@
                         }
                     });
                 });
-
-
-                // ajax to Edit
-                /*$('#editTreeImage').submit(function (event) {
-                    event.preventDefault(); //prevent default action
-
-                    //Ve se a data dos inputs mudou para formar so a data necessaria para o PATCH
-                    let formDataChanged = [];
-                    $('#editGroup input').each(function() { //para cada input vai ver
-                        if($(this).attr('name') === "editGroupId" || ($(this).attr('name') === "editGroupActive" && $(this).is(":checked")) || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
-                            let emptyArray = { name: "", value: "" };
-
-                            emptyArray.name = $(this).attr('name');
-                            emptyArray.value = $(this).val();
-
-                            formDataChanged.push(emptyArray);
-                        }
-                    });
-
-                    let formData = {
-                        'action' : "UpdateGroup",
-                        'data'   : formDataChanged
-                    };
-
-                    let formData = {
-                        'action': "UpdateTreeImage",
-                        'data': $(this).serializeArray()
-                    };
-
-                    $.ajax({
-                        url : "<?php //echo HOME_URL . '/admin/tree_images';?>",
-                        dataType: "json",
-                        type: 'POST',
-                        data : formData,
-                        beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
-                            $('#loader').removeClass('hidden')
-                        },
-                        success: function (data) {
-                            $("#editTreeImageModal").modal('hide');
-
-                            if (data.statusCode === 200){
-                                //mensagem de Success
-                                Swal.fire({
-                                    title: 'Success!',
-                                    text: data.body.message,
-                                    icon: 'success',
-                                    showConfirmButton: false,
-                                    timer: 2000,
-                                    didClose: () => {
-                                        location.reload();
-                                    }
-                                });
-                            } else {
-                                //mensagem de Error
-                                Swal.fire({
-                                    title: 'Error!',
-                                    text: data.body.message,
-                                    icon: 'error',
-                                    showConfirmButton: false,
-                                    timer: 2000,
-                                    didClose: () => {
-                                        //location.reload();
-                                    }
-                                });
-                            }
-
-                        },
-                        error: function (data) {
-                            //mensagem de Error
-                            Swal.fire({
-                                title: 'Error!',
-                                text: "Connection error, please try again.",
-                                icon: 'error',
-                                showConfirmButton: false,
-                                timer: 2000,
-                                didClose: () => {
-                                    //location.reload();
-                                }
-                            });
-                        },
-                        complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
-                            $('#loader').addClass('hidden')
-                        }
-                    });
-                });*/
-
-                // ajax to get data to Modal Edit Group
-                /*$('.edit').on('click', function(){
-
-                    let formData = {
-                        'action' : "GetTreeImage",
-                        'data'   : $(this).attr('id') //gets group id from id="" attribute on edit button from table
-                    };
-
-                    $.ajax({
-                        url : "<?php //echo HOME_URL . '/admin/tree_images';?>",
-                        dataType: "json",
-                        type: 'POST',
-                        data : formData,
-                        beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
-                            $('#loader').removeClass('hidden')
-                        },
-                        success: function (data) {
-
-                            $('[name="editTreeImageId"]').val(data[0]['id']);
-                            $('[name="editTreeImageDescription"]').val(data[0]['description']);
-                            $('[name="editTreeImagePosition"]').val(data[0]['position']);
-
-                            if (data[0]['active'] === 1) {
-                                $('[name="editTreeImageActive"]').attr('checked', true);
-                            } else {
-                                $('[name="editGroupActive"]').attr('checked', false);
-                            }
-
-                            //atribui atributo .data("lastValue") a cada input do form editGroup
-                            // para se poder comparar entre os dados anteriores e os current
-                            $('#editGroup input').each(function() {
-                                $(this).data('lastValue', $(this).val());
-                            });
-
-                            $("#editTreeImageModal").modal('show');
-            },
-            error: function (data) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: data.body.message,
-                    icon: 'error',
-                    showConfirmButton: false,
-                    timer: 2000,
-                    didClose: () => {
-                        location.reload();
-                    }
-                });
-            },
-            complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
-                $('#loader').addClass('hidden')
-            }
-        });
-
-    });*/
 
 
                 // ajax to Delete Tree
@@ -498,7 +358,7 @@
                             if (data.statusCode === 200){
                                 //mensagem de Success
                                 Swal.fire({
-                                    title: 'Success!',
+                                    title: 'Sucesso!',
                                     text: data.body.message,
                                     icon: 'success',
                                     showConfirmButton: false,
@@ -510,7 +370,7 @@
                             } else {
                                 //mensagem de Error
                                 Swal.fire({
-                                    title: 'Error!',
+                                    title: 'Erro!',
                                     text: data.body.message,
                                     icon: 'error',
                                     showConfirmButton: false,
@@ -525,8 +385,8 @@
                         error: function (data) {
                             //mensagem de Error
                             Swal.fire({
-                                title: 'Error!',
-                                text: "Connection error, please try again.",
+                                title: 'Erro!',
+                                text: "Erro de conexão, por favor tente denovo.",
                                 icon: 'error',
                                 showConfirmButton: false,
                                 timer: 2000,
