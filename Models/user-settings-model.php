@@ -121,6 +121,25 @@ class UserSettingsModel extends MainModel
         return json_decode(json_encode($result), true);
     }
 
+    /**
+     * Validate method login
+     * @param $email
+     * @param $pass
+     * @return mixed
+     */
+    public function validateUser($email,$pass){
+        $result = null;
+        $normalizedData = array();
+
+        $normalizedData['email'] = $email;
+        $normalizedData['password'] = $pass;
+
+        $url = API_URL . 'api/v1/login';
+        $result = callAPI("POST", $url, $normalizedData);
+
+        //Encode package to send
+        return json_decode(json_encode($result), true);
+    }
 
     /**
      * Metodo edita/update User
