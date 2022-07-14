@@ -88,21 +88,13 @@
                 <div class="dropdown-menu dropdown-menu-end" style="width: 20rem !important;">
                     <h6 class="dropdown-header">Centro de mensagens</h6>
 
-                    <!-- show only the last 5 messages -->
-                    <?php if (!empty($this->userdata['userMessageList'])) {
-                        $count = 0;
-                        foreach ($this->userdata['userMessageList'] as $key => $message) {
-                            if ($message["receptionDate"] === null && $count < 5) {?>
-                                <a class="dropdown-item d-flex align-items-center" href="<?php echo HOME_URL . '/admin/messages/' . $message["id"];?>">
-                                    <div class="dropdown-item">
-                                        <div class="text-truncate" style="width: 100%"><?php echo $message["message"] ?></div>
-                                        <div class="small text-gray-500"><?php echo $message["fromName"] ?> · <?php echo $message["notificationDate"] ?></div>
-                                    </div>
-                                </a>
-                            <?php $count++;
-                            }
-                        }
-                    }?>
+                    <div class="dropdown-body">
+                        <a class="dropdown-item d-flex align-items-center" href="javascript:void(0);">
+                            <div class="dropdown-item">
+                                <div class="text-truncate" style="width: 100%">Sem novas mensagens</div>
+                            </div>
+                        </a>
+                    </div>
 
                     <a class="dropdown-item text-center small text-gray-500" href="<?php echo HOME_URL . '/admin/messages/inbox';?>">Todas as minhas mensagens</a>
                 </div>
@@ -122,3 +114,23 @@
 
         </ul>
     </nav>
+
+<script>
+    function loadMsgs(){
+        <!-- show only the last 5 messages -->
+        <?php if (!empty($this->userdata['userMessageList'])) {
+            $count = 0;
+            foreach ($this->userdata['userMessageList'] as $key => $message) {
+                if ($message["receptionDate"] === null && $count < 5) {?>
+                $(".dropdown-body").html(`<a class="dropdown-item d-flex align-items-center" href="<?php echo HOME_URL . '/admin/messages/' . $message["id"];?>">
+                    <div class="dropdown-item">
+                        <div class="text-truncate" style="width: 100%"><?php echo $message["message"] ?></div>
+                        <div class="small text-gray-500"><?php echo $message["fromName"] ?> · <?php echo $message["notificationDate"] ?></div>
+                    </div>
+                </a>`)
+                <?php $count++;
+                }
+            }
+        }?>
+    }loadMsgs();
+</script>
