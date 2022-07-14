@@ -964,6 +964,31 @@ class AdminController extends MainController
             $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
         }
 
+        //get trees List
+        $treesList = $modelo->getTreeList();
+        if ($treesList["statusCode"] === 401){
+            //faz o refresh do accessToken
+            $this->userTokenRefresh();
+
+            $treesList = $modelo->getTreeList();
+        }
+        if ($treesList["statusCode"] === 200){
+            $this->userdata['treesList'] = $treesList["body"]["trees"];
+            $this->userdata['treesTotal'] = $treesList["body"]["total"];
+        }
+
+        //get user trees List / adopted trees
+        $adoptedTreesList = $modelo->getTreeUserList();
+        if ($adoptedTreesList["statusCode"] === 401){
+            //faz o refresh do accessToken
+            $this->userTokenRefresh();
+
+            $adoptedTreesList = $modelo->getTreeUserList();
+        }
+        if ($adoptedTreesList["statusCode"] === 200){
+            $this->userdata['adoptedTreesTotal'] = $adoptedTreesList["body"]["total"];
+        }
+
         /** Carrega os arquivos do view **/
         require ABSPATH . '/views/_includes/admin-header.php';
 

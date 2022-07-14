@@ -32,7 +32,7 @@
                                         <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
                                     </div>-->
                                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                        <input type="submit" name="submit" class="btn btn-primary form-control" value="Login">
+                                        <input type="submit" name="submit" class="btn btn-primary form-control" value="Entrar">
                                     </div>
                                 </form>
 
