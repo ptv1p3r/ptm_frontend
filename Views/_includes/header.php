@@ -141,8 +141,13 @@
                             <input type="password" class="form-control" name="pass" placeholder="Palavra-passe"
                                    required="required">
                         </div>
+
+                        <div id="liveAlert">
+
+                        </div>
+
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-lg btn-block login-btn">Entrar</button>
+                            <button type="submit" class="btn btn-lg btn-block login-btn btnLogin">Entrar</button>
                         </div>
                     </form>
                     <div class="modal-footer">
@@ -183,18 +188,35 @@
                 data: formData,
                 success: function (data) {
 
-                    if (data === 200) {
-                        alert("Logging in!", "success");
-                        location.reload();
-                    } else {
-                        alert("Invalid Email/Password!", "danger");
-                    }
+
+                        if(data === 200){
+                            alert("Acesso autorizado!", "success");
+                            location.reload();
+                        } else {
+                            alert("Email/Password errado!", "danger");
+                        }
+
                 },
+
                 error: function (data) {
-                    alert("Connection error, please try again.", "danger");
+                    alert("Erro de conexão, por favor tente novamente.", "danger");
                 }
             });
         });
+
+        //Error message
+        let alertPlaceholder = document.getElementById('liveAlert')
+        function alert(message, type) {
+            let wrapper = document.createElement('div')
+            wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '</div>'
+
+           $('#liveAlert').html(wrapper)
+
+            // timeout alert message
+            setTimeout(function () {
+                $(".alert").remove()
+            }, 3000);
+        }
     });
 </script>
 
