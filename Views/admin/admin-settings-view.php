@@ -13,13 +13,13 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Perfil</h1>
+                <h1 class="mt-4">Meus dados</h1>
                 <div class="row">
 
                     <div class="col-xl-6 col-md-6">
                         <div class="card mb-4">
                             <div class="card-header">
-                                Editar perfil
+                                Editar dados
                             </div>
                             <div class="card-body">
                                 <div class="row">
