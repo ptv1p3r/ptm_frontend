@@ -973,9 +973,13 @@ section#home-slider img {
 }
 
 .pro-thumb a:hover, .f-cat span a:hover, .campaign-thumb a:hover, .event-thumb a:hover, .blog-thumb a:hover {
-    background: #689f38;
+    background: rgba(139, 195, 74, 1);
     color: #fff;
     border-color: #689f38;
+}
+
+.sponsor {
+    justify-content: center;
 }
 
 .blog-list .blog-post .blog-txt {
@@ -2655,8 +2659,11 @@ header .navbar-toggler {
 }
 
 .pro-thumb img {
-    width: 100%;
-    height: auto;
+    /*width: 100%;*/
+    /*height: auto;*/
+    height:250px!important;
+    width:250px!important;
+
 }
 
 .product-box:hover .pro-thumb:after {
@@ -8798,7 +8805,7 @@ User messages CSS
 
 /*********************************
 End User messages CSS
-=======
+=======/*/
 #menu-toggle {
     height: 50px
 }
@@ -8922,7 +8929,7 @@ input.btn-success {
     margin-left: 1px;
     margin-right: 1px;
     border-radius: 6px;
-    padding-top: 30px;
+    padding-top: 10px;
     padding-left: 25px
 }
 
