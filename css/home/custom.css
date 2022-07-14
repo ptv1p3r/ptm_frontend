@@ -1958,10 +1958,10 @@ section.services-area ul li.active:after {
     position: absolute;
     left: 0;
     top: 0;
-    width: 95px;
-    height: 124px;
+    width: 250px;
+    height: 150px;
     background: #fff;
-    border: 2px solid #e6e6e6;
+    border: 2px solid #c9c8c8;
     content: "";
 }
 
@@ -1984,6 +1984,14 @@ section.services-area ul li.active:after {
     color: #888888;
     font-weight: 400;
     font-size: 18px;
+}
+
+.counter-box p.ctxt1 {
+    position: relative;
+    z-index: 99;
+    color: #888888;
+    font-weight: 400;
+    font-size: 14px;
 }
 
 .video-img {
@@ -2268,6 +2276,12 @@ li.form-submit button:hover {
     float: left;
     border-radius: 5px;
     overflow: hidden;
+    box-shadow: #00c273;
+}
+
+.picBorder{
+    border: 3px solid #c9c8c8;
+
 }
 
 .pro-box:after {
@@ -5671,6 +5685,12 @@ select.customDropdown {
     color: #fff;
 }
 
+.btn-primary btnLogin {
+    color: #fff;
+    background-color: #1b5e20;
+    border-color: #1b5e20;
+}
+
 .myaccount-form a {
     color: #66bb6a;
 }
@@ -8300,11 +8320,11 @@ NEW Settings profile End
 
 }
 
-.btn-success {
-    color: #fff;
-    background-color: #66bb6a;
-    border-color: #66bb6a;
-}
+/*.btn-success {*/
+/*    color: #fff;*/
+/*    background-color: #66bb6a;*/
+/*    border-color: #66bb6a;*/
+/*}*/
 
 /*********************************
 Settings profile End
@@ -8383,6 +8403,10 @@ Map Leaflet CSS
 *********************************/
 #map {
     height: 500px;
+}
+
+.mapBorder{
+    border: 3px solid #c9c8c8;
 }
 
 
@@ -8907,7 +8931,7 @@ End User messages CSS
 }
 
 input.btn-success {
-    height: 50px;
+    /*height: 50px;*/
     color: #ffffff;
     opacity: 0.9
 }
