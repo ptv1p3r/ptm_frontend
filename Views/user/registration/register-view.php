@@ -8,6 +8,14 @@
 ?>
 <?php if (!defined('ABSPATH')) exit; ?>
 
+<!-- Image loader -->
+<div class="loaderOverlay lds-dual-ring hidden" id="loader">
+    <svg class="loader" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="46"/>
+    </svg>
+</div>
+<!-- Image loader -->
+
 <div id="wrapper">
     <!--New User Register Start-->
     <section class="wf100 p80">
@@ -127,19 +135,9 @@
                                                required>
                                     </div>
                                 </li>
-
-
-                                <!-- Image loader -->
-                                <div class="loaderOverlay lds-dual-ring hidden" id="loader">
-                                    <svg class="loader" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="50" cy="50" r="46"/>
-                                    </svg>
-                                </div>
-                                <!-- Image loader -->
-
                                 <li class="col-md-12">
                                     <div class="input-group form-check">
-                                        <input type="checkbox" id="checkBtn" class="form-check-input"
+                                        <input type="checkbox" id="checkBtn" class="form-check-input" required
                                                onchange="isChecked(this, 'sub1')">
 
                                         <!--secção dos termos temos de analisar isto com o grupo de direito-->
@@ -150,19 +148,11 @@
                                     </div>
                                 </li>
                                 <li class="col-md-12">
-                                    <button type="submit" class="register" id="subBtn" disabled="disabled">Regista a sua conta</button>
+                                    <button type="submit" class="register" id="subBtn" disabled >Regista a sua conta</button>
 <!--                                    <div id="loader" class="lds-dual-ring hidden overlay"></div>-->
                                 </li>
-
                         </form>
-
-<!--                                <span class="d-inline-block" data-toggle="popover" data-content="Disabled popover">-->
-<!--                                            <button type="submit" style="pointer-events: none;" class="register" id="subBtn" disabled="disabled">Regista a sua conta</button>-->
-<!--                                    </span>-->
-                                <!--
-                        </ul>
-
-                    <!--Form End-->
+                    <!-- Form End-->
                     </div>
                 </div>
             </div>
