@@ -311,13 +311,11 @@
                 $('#loader').removeClass('hidden')
             },
             success: function (data) {
-                //console.log(data)
                 if (data.statusCode === 404){
                     treeImagePath = "<?php echo HOME_URL . '/Images/admin/noimage.png' ?>";
                 } else {
                     treeImagePath = "<?php echo API_URL . 'api/v1/trees/image/' ?>" + data["images"][0]["path"];
                 }
-                //console.log(treeImagePath)
 
             },
             error: function (data) {
@@ -339,12 +337,6 @@
 
         return treeImagePath;
     }
-
-    //table popovers
-    /*var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-        return new bootstrap.Popover(popoverTriggerEl)
-    })*/
 
     $(document).ready(function() {
         //DATATABLES
@@ -373,7 +365,7 @@
         }
 
 
-        // TreesMap
+        //Leaflet map icons
         var greenIcon = L.icon({
             iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/mapMarker.png'?>',
             shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
@@ -396,6 +388,7 @@
             popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
 
+        //Leaflet map
         let map = L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             maxZoom: 18,
@@ -405,53 +398,88 @@
             accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
         }).addTo(map);
 
-        //function to load all trees from API
+        //function create a blue marker / arvore adotada
+        function createBlueMarker(lat, lng, params){
+            params["icon"] = blueIcon;
+            params["adopted"] = 'sim';
+            return new L.marker([lat, lng],params);
+        }
+
+        //function create a green marker / arvore nao adotada
+        function createGreenMarker(lat, lng, params){
+            params["icon"] = greenIcon;
+            params["adopted"] = 'não';
+            return new L.marker([lat, lng],params);
+        }
+
+        //Load trees to respective Layers
+        let ActiveTrees = L.layerGroup(), InactiveTrees= L.layerGroup();
         function mapLoadTrees(){
             <?php
             if (!empty($this->userdata['treesList']) && !empty($this->userdata['adoptedTreesList'])) {
                 $adopted = array_column($this->userdata['adoptedTreesList'], 'treeId');
                 foreach ($this->userdata['treesList'] as $key => $tree) {
-                    if (isset($adopted) && in_array($tree["id"], $adopted)) {?>
-                        marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
-                            icon: blueIcon,
-                            adopted: 'sim',
-                            name: '<?php echo $tree["name"]?>',
-                            tree_id: '<?php echo $tree["id"]?>',
-                            active: '<?php echo $tree["active"]?>',
-                        }).addTo(map).on("click", markerOnClick);
+                    //checks if tree is already adopted or not
+                    if (in_array($tree["id"], $adopted)) { ?>
+                        marker = createBlueMarker(<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>,
+                            { name: '<?php echo $tree["name"]?>', tree_id: '<?php echo $tree["id"]?>'}
+                        );
                     <?php } else {?>
-                        marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
-                            icon: greenIcon,
-                            adopted: 'não',
-                            name: '<?php echo $tree["name"]?>',
-                            tree_id: '<?php echo $tree["id"]?>',
-                            active: '<?php echo $tree["active"]?>',
-                        }).addTo(map).on("click", markerOnClick);
-                <?php }
-                }
-            }?>
+                        marker = createGreenMarker(<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>,
+                            { name: '<?php echo $tree["name"]?>', tree_id: '<?php echo $tree["id"]?>'}
+                        );
+                    <?php }?>
+
+                    //checks if tree is active or inactive
+                    <?php if ($tree["active"] === 1) { ?>
+                        marker.addTo(ActiveTrees).on("click", markerOnClick);
+                    <?php } else {?>
+                        marker.addTo(InactiveTrees).on("click", markerOnClick);
+                    <?php }?>
+
+                <?php }?>
+            <?php }?>
         }
         mapLoadTrees();
 
-        //popup on map click
-        /*var popupMap = L.popup();
-        function onMapClick(e) {
-            popupMap
-                .setLatLng(e.latlng)
-                .setContent("LAT: " + e.latlng.lat + " LNG: " + e.latlng.lng)
-                .openOn(map);
-        }
-        map.on('click', onMapClick);*/
+        //show all trees by default
+        map.addLayer(ActiveTrees);
+        map.addLayer(InactiveTrees);
+
+        //filter trees on map. all, active or inactive
+        $('#GetActive').on('change', function() {
+            function removeAlltrees(){map.removeLayer(ActiveTrees); map.removeLayer(InactiveTrees);}
+            let selectedItem = $(this).children("option:selected").val();
+
+            //all
+            if(selectedItem === ""){
+                removeAlltrees()// remove all trees
+                map.addLayer(ActiveTrees);// adds active
+                map.addLayer(InactiveTrees);// adds inactive
+            }
+
+            //active
+            if(selectedItem === "1"){
+                removeAlltrees()// remove all trees
+                map.addLayer(ActiveTrees);// adds active
+            }
+
+            //inactive
+            if(selectedItem === "0"){
+                removeAlltrees()// remove all trees
+                map.addLayer(InactiveTrees);// adds inactive
+            }
+
+        })
 
         //popup on marker click
         var popupMarker = L.popup();
         function markerOnClick(e) {
-            let image_path = getImg(this.options.tree_id);
             popupMarker
                 .setLatLng(e.latlng)
                 .setContent(
                     `<div class="card" style="width: 15rem; border: unset">
-                    <img id="tree-card-image" src="` + image_path + `" class="card-img-top" alt="" height="160">
+                    <img id="tree-card-image" src="` + getImg(this.options.tree_id) + `" class="card-img-top" alt="" height="160">
                       <div class="card-body">
                         <h5 class="card-title">` + this.options.name + `</h5>
                         <p class="card-text">id: ` + this.options.tree_id + `</p>
@@ -462,8 +490,6 @@
                     </div>`
                 )
                 .openOn(map);
-
-            //map.flyTo([e.latlng.lat, e.latlng.lng], 15);
         }
 
 
