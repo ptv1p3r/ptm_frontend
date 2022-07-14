@@ -8,68 +8,13 @@
 ?>
 <?php if (!defined('ABSPATH')) exit; ?>
 
-
-<!-- Top Rated
-<div class="container-fluid">
-    <div class="text-light">
-        <h1>Download Realptm: HD smallest size</h1>
-    </div>
+<!-- Image loader -->
+<div class="loaderOverlay lds-dual-ring hidden" id="loader">
+    <svg class="loader" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="46"/>
+    </svg>
 </div>
-
-<div class="container-fluid">
-    <p class="text-light text-center" style="font-size:160%;"><span class="fas fa-heart" style="color: green;"></span> TOP RATED</p>
-    <div class="row " style="margin-bottom: 10%;">
-        <?php //foreach ($ptmsTopRated as $ptm) { ?>
-            <div class="card" style="margin:10px auto;width: 200px;height: 300px">
-                <a class="card-link" href="<?php //echo HOME_URI . '/detail/view/' . $ptm["movid"];?>">
-                    <img class="card-img-top" src="<?php //echo $ptm["poster"]; ?>" alt="<?php //echo $ptm["title"]; ?>">
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title text-white"><?php //echo $ptm["title"]; ?></h5>
-                    <p class="card-text text-muted"><?php //echo $ptm["year"]; ?></p>
-                    <a href="<?php // echo HOME_URI . '/detail/view/' . $ptm["movid"];?>" class="btn btn-success">Details</a>
-                </div>
-            </div>
-         <?php //} ?>
-    </div>
-</div>
- Top Downloaded
-<div class="container-fluid">
-    <p class="text-light text-center" style="font-size:160%;"><span class="fas fa-star" style="color: orange;"></span> TOP DOWNLOADED</p>
-    <div class="row" style="margin-bottom: 10%;">
-        <?php //foreach ($ptmsTopDownloaded as $ptm) { ?>
-            <div class="card" style="margin:10px auto;width: 200px;height: 300px">
-                <a href="<?php //echo HOME_URI . '/detail/view/' . $ptm["movid"];?>">
-                    <img class="card-img-top" src="<?php //echo $ptm["poster"]; ?>" alt="<?php //echo $ptm["title"]; ?>">
-                </a>
-                <div class="card-body" >
-                    <h5 class="card-title text-white"><?php //echo $ptm["title"]; ?></h5>
-                    <p class="card-text text-muted"><?php //echo $ptm["year"]; ?></p>
-                    <a href="<?php //echo HOME_URI . '/detail/view/' . $ptm["movid"];?>" class="btn btn-success">Details</a>
-                </div>
-            </div>
-        <?php // } ?>
-    </div>
-</div>
- Last Added
-<div class="container-fluid">
-    <p class="text-light text-center" style="font-size:160%;"><span class="fas fa-clock" ></span> LAST ADDED</p>
-    <div class="row" style="margin-bottom: 10%;">
-        <?php //foreach ($ptmsLastAdded as $ptm) { ?>
-            <div class="card" style="margin:10px auto;width: 200px;height: 300px">
-                <a href="<?php // echo HOME_URI . '/detail/view/' . $ptm["movid"];?>">
-                    <img class="card-img-top" src="<?php //echo $ptm["poster"]; ?>" alt="<?php //echo $ptm["title"]; ?>">
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title text-white"><?php //echo $ptm["title"]; ?></h5>
-                    <p class="card-text text-muted"><?php // echo $ptm["year"]; ?></p>
-                    <a href="<?php //echo HOME_URI . '/detail/view/' . $ptm["movid"];?>" class="btn btn-success">Details</a>
-                </div>
-            </div>
-        <?php // } ?>
-    </div>
-</div>
--->
+<!-- Image loader -->
 
 <!--Slider Start-->
 <section id="home-slider" class="owl-carousel owl-theme wf100">
@@ -80,7 +25,8 @@
                 <p></p>
                 <h1>Adote uma árvore</h1>
                 <p>A ajuda de todos é <strong>importante</strong></p>
-                <a href="#" class="active">Descubra mais</a> <a href="#">Junte-se já</a>
+                <a href="<?php echo HOME_URL . '/home/presentation'; ?>" class="active">Descubra mais</a> <a
+                        href="<?php echo HOME_URL . '/register'; ?>">Junte-se já</a>
             </div>
         </div>
         <img src="/Images/home/h2-slide1.jpg" alt="">
@@ -93,7 +39,8 @@
                 <h1>Seja patrocionador</h1>
                 <p></p>
                 <!--                <p>A ajuda de todos é <strong>importante</strong> for us...</p>-->
-                <a href="#" class="active">Descubra mais</a> <a href="#">Junte-se já</a>
+                <a href="<?php echo HOME_URL . '/home/presentation'; ?>" class="active">Descubra mais</a> <a
+                        href="<?php echo HOME_URL . '/register'; ?>">Junte-se já</a>
             </div>
         </div>
         <img src="/Images/home/h2-slide2.jpg" alt="">
@@ -105,7 +52,8 @@
                 <h1>Seja patrocionador</h1>
                 <p></p>
                 <p>A ajuda de todos é <strong>importante</strong></p>
-                <a href="#" class="active">Descubra mais</a> <a href="#">Junte-se já</a>
+                <a href="<?php echo HOME_URL . '/home/presentation'; ?>" class="active">Descubra mais</a> <a
+                        href="<?php echo HOME_URL . '/register'; ?>">Junte-se já</a>
             </div>
         </div>
         <img src="/Images/home/h2-slide3.jpg" alt="">
@@ -117,7 +65,8 @@
                 <strong>Salve a nossa serra <span> & seja nosso</span> patrocinador</strong>
                 <h1>Plante uma árvore</h1>
                 <p>Ajudar é importante <strong></strong></p>
-                <a href="#" class="active">Descubra mais</a> <a href="#">Junte-se já</a>
+                <a href="<?php echo HOME_URL . '/home/presentation'; ?>" class="active">Descubra mais</a> <a
+                        href="<?php echo HOME_URL . '/register'; ?>">Junte-se já</a>
             </div>
         </div>
         <img src="/Images/home/h2-slide4.jpg" alt="">
@@ -131,45 +80,41 @@
             <!--box  start-->
             <li>
                 <div class="sinfo">
-                    <img src="/Images/home/sericon1.png" alt="">
+                    <i class="fas fa-hand-holding-heart fa-3x"></i>
                     <h6>Sustentabilidade</h6>
-                    <p>Waste Management</p>
                 </div>
             </li>
             <!--box  end-->
             <!--box  start-->
             <li>
                 <div class="sinfo">
-                    <img src="/Images/home/sericon2.png" alt="">
+                    <i class="fas fa-city fa-3x"></i>
                     <h6>Valorização dos aglomerados rurais</h6>
-                    <p>Polar, Prevailing, Tropical</p>
                 </div>
             </li>
             <!--box  end-->
             <!--box  start-->
             <li>
                 <div class="sinfo">
-                    <img src="/Images/home/sericon3.png" alt="">
+                    <i class="fas fa-leaf fa-3x"></i>
                     <h6>Proteção dos eco-sistemas</h6>
-                    <p>Save Water Resources</p>
                 </div>
             </li>
             <!--box  end-->
             <!--box  start-->
             <li class="active">
                 <div class="sinfo">
-                    <img src="/Images/home/sericon4.png" alt="">
+                    <!--                    <i class="fas fa-tree "></i>-->
+                    <i class="fab fa-pagelines fa-3x"></i>
                     <h6>Reflosteração</h6>
-                    <p>Save Natural Engery</p>
                 </div>
             </li>
             <!--box  end-->
             <!--box  start-->
             <li>
                 <div class="sinfo">
-                    <img src="/Images/home/sericon5.png" alt="">
+                    <i class="fas fa-cloud-moon fa-3x"></i>
                     <h6>Alterações climáticas</h6>
-                    <p>Make Plants Alive for Life</p>
                 </div>
             </li>
             <!--box  end-->
@@ -202,8 +147,6 @@
                         </li>
                     </ol>
                 </nav>
-
-
                 <!-- Leafletmap -->
                 <div class="col-md-12">
                     <!--Map area start-->
@@ -211,7 +154,6 @@
                     <!--Map area end-->
                 </div>
                 <!-- END Leafletmap -->
-
                 <!-- Toogle controler tress view-->
                 <?php if ($this->logged_in) { ?>
                     <div class="toggleBtn">
@@ -226,8 +168,6 @@
             </div>
         </div>
     </div>
-
-
     <div class="home-facts counter pt80">
         <div class="container">
             <div class="row">
@@ -261,14 +201,15 @@
             </div>
             <div>
                 <br>
-                <p class="font-weight-light">*Dados médios calculados durante o periodo inicial de 20 anos de vida de uma árvore.</p>
+                <p class="font-weight-light">*Dados médios calculados durante o periodo inicial de 20 anos de vida de
+                    uma árvore.</p>
             </div>
         </div>
 
     </div>
 </section>
 <!--About Section End-->
-<!--Urgent Causes Start-->
+<!--Adoption Start-->
 <section class="urgent-causes wf100 p80">
     <div class="container">
         <div class="row">
@@ -281,7 +222,6 @@
             <div class="col-md-6">
                 <div class="donation-amount">
                     <h5>Doação</h5>
-
                     <!--Donation form-->
                     <form id="newDonation">
                         <ul class="radio-boxes">
@@ -291,28 +231,25 @@
                                     <label for="d1" class="css-label">€ 2.50</label>
                                 </div>
                             </li>
-
                             <div class="alert alert-warning alert-dismissible fade show" role="alert" hidden>
                                 <strong>Selecione o valor e faça adoção!</strong>
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-
-<!--                            TODO ver porque aqui o sistema não sabe se estamos ou não login-->
                             <!-- Make donation if login-->
                             <?php if ($this->logged_in) { ?>
                                 <li class="form-submit">
                                     <button type="submit" id="subBtn" disabled="disabled">
                                         Faça a sua adoção
                                     </button>
-
                                 </li>
                             <?php } else { ?>
                                 <!-- Make donation send to login / register-->
                                 <li class="form-submit">
-                                    <a type="button" class="btn donationbutton login-reg" data-toggle="modal" data-target="#loginModal" >
-                                           Faça a sua adoção</a>
+                                    <a type="button" class="btn donationbutton login-reg" data-toggle="modal"
+                                       data-target="#loginModal">
+                                        Faça a sua adoção</a>
                                 </li>
                             <?php } ?>
                         </ul>
@@ -323,11 +260,10 @@
         </div>
     </div>
 </section>
-<!--Urgent Causes End-->
+<!--Adoption End-->
 <!--Current Projects Start-->
-
 <section class="wf100 p80">
-    <div class="container why-ecova-center">
+    <div class="container why-ecova-center" id="myTabContentTrees">
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title-2">
@@ -335,36 +271,22 @@
                     <h2>Adote uma árvore</h2>
                 </div>
             </div>
-            <!--            <div class="col-lg-6">-->
-            <!--                <ul class="nav" id="myTab" role="tablist">-->
-            <!--                    <li class="nav-item"><a class="nav-link active" id="wildlife-tab" data-toggle="tab" href="#wildlife"-->
-            <!--                                            role="tab" aria-controls="wildlife-tab" aria-selected="true">Wildlife</a>-->
-            <!--                    </li>-->
-            <!--                    <li class="nav-item"><a class="nav-link" id="water-tab" data-toggle="tab" href="#water" role="tab"-->
-            <!--                                            aria-controls="water-tab" aria-selected="false">Water Resources</a></li>-->
-            <!--                    <li class="nav-item"><a class="nav-link" id="solar-tab" data-toggle="tab" href="#solar" role="tab"-->
-            <!--                                            aria-controls="solar-tab" aria-selected="false">Solar Energy</a></li>-->
-            <!--                    <li class="nav-item"><a class="nav-link" id="recycling-tab" data-toggle="tab" href="#recycling"-->
-            <!--                                            role="tab" aria-controls="recycling-tab" aria-selected="false">Recycling</a>-->
-            <!--                    </li>-->
-            <!--                </ul>-->
-            <!--            </div>-->
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="tab-content" id="myTabContent">
-                    <!--WildLife Slider Start-->
+                    <!--Trees Slider Start-->
                     <div class="tab-pane fade show active" id="wildlife" role="tabpanel" aria-labelledby="wildlife-tab">
                         <div class="cpro-slider owl-carousel owl-theme">
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="/Images/home/current-pro1.jpg" alt="">
+                                    <img src="/Images/trees/sobreiro.png" alt="Sobreiro">
                                     <h5>Sobreiro</h5>
                                     <div class="pro-hover">
                                         <h6>Sobreiro</h6>
                                         <p>Descubra mais sobre esta árvore!</p>
-                                        <a href="#">Clique aqui</a>
+                                        <a href="<?php echo HOME_URL . '/home/thetrees'; ?>">Clique aqui</a>
                                     </div>
                                 </div>
                             </div>
@@ -372,13 +294,12 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="/Images/home/current-pro2.jpg" alt="">
-                                    <h5>Recycling & Waste Management</h5>
+                                    <img src="/Images/trees/medronheiro.png" alt="Medronheiro">
+                                    <h5>Medronheiro</h5>
                                     <div class="pro-hover">
-                                        <h6>Recycling & Waste Management</h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
+                                        <h6>Medronheiro</h6>
+                                        <p>Descubra mais sobre esta árvore!</p>
+                                        <a href="<?php echo HOME_URL . '/home/thetrees'; ?>">Clique aqui</a>
                                     </div>
                                 </div>
                             </div>
@@ -386,17 +307,14 @@
                             <!--Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="/Images/home/current-pro3.jpg" alt="">
-                                    <h5>Solar & Wind
-                                        Energy
+                                    <img src="/Images/trees/castanheiro.png" alt="Castenheiro">
+                                    <h5>Castanheiro
                                     </h5>
                                     <div class="pro-hover">
-                                        <h6>Solar & Wind
-                                            Energy
+                                        <h6>Castanheiro
                                         </h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
+                                        <p>Descubra mais sobre esta árvore!</p>
+                                        <a href="<?php echo HOME_URL . '/home/thetrees'; ?>">Clique aqui</a>
                                     </div>
                                 </div>
                             </div>
@@ -404,462 +322,21 @@
                             <!--                            Pro Box-->
                             <div class="item">
                                 <div class="pro-box">
-                                    <img src="/Images/home/current-pro4.jpg" alt="">
-                                    <h5>Saving Wildlife
-                                        & their Cubs
+                                    <img src="/Images/trees/car_monchique.png" alt="CarvalhoMonchique">
+                                    <h5> Carvalho de Monchique
                                     </h5>
                                     <div class="pro-hover">
-                                        <h6>Saving Wildlife
-                                            & their Cubs
+                                        <h6>Carvalho de Monchique
                                         </h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro5.jpg" alt="">
-                                    <h5>Forest & Tree Planting</h5>
-                                    <div class="pro-hover">
-                                        <h6>Forest & Tree Planting</h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro6.jpg" alt="">
-                                    <h5>Recycling & Waste Management</h5>
-                                    <div class="pro-hover">
-                                        <h6>Recycling & Waste Management</h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro7.jpg" alt="">
-                                    <h5>Solar & Wind
-                                        Energy
-                                    </h5>
-                                    <div class="pro-hover">
-                                        <h6>Solar & Wind
-                                            Energy
-                                        </h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro8.jpg" alt="">
-                                    <h5>Saving Wildlife
-                                        & their Cubs
-                                    </h5>
-                                    <div class="pro-hover">
-                                        <h6>Saving Wildlife
-                                            & their Cubs
-                                        </h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
+                                        <p>Descubra mais sobre esta árvore!</p>
+                                        <a href="<?php echo HOME_URL . '/home/thetrees'; ?>">Clique aqui</a>
                                     </div>
                                 </div>
                             </div>
                             <!--Pro Box End-->
                         </div>
                     </div>
-                    <!--WildLife Slider End-->
-                    <!--Water Resources Slider Start-->
-                    <div class="tab-pane fade" id="water" role="tabpanel" aria-labelledby="water-tab">
-                        <div class="cpro-slider owl-carousel owl-theme">
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro5.jpg" alt="">
-                                    <h5>Forest & Tree Planting</h5>
-                                    <div class="pro-hover">
-                                        <h6>Forest & Tree Planting</h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro6.jpg" alt="">
-                                    <h5>Recycling & Waste Management</h5>
-                                    <div class="pro-hover">
-                                        <h6>Recycling & Waste Management</h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro7.jpg" alt="">
-                                    <h5>Solar & Wind
-                                        Energy
-                                    </h5>
-                                    <div class="pro-hover">
-                                        <h6>Solar & Wind
-                                            Energy
-                                        </h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro8.jpg" alt="">
-                                    <h5>Saving Wildlife
-                                        & their Cubs
-                                    </h5>
-                                    <div class="pro-hover">
-                                        <h6>Saving Wildlife
-                                            & their Cubs
-                                        </h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro1.jpg" alt="">
-                                    <h5>Forest & Tree Planting</h5>
-                                    <div class="pro-hover">
-                                        <h6>Forest & Tree Planting</h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro2.jpg" alt="">
-                                    <h5>Recycling & Waste Management</h5>
-                                    <div class="pro-hover">
-                                        <h6>Recycling & Waste Management</h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro3.jpg" alt="">
-                                    <h5>Solar & Wind
-                                        Energy
-                                    </h5>
-                                    <div class="pro-hover">
-                                        <h6>Solar & Wind
-                                            Energy
-                                        </h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro4.jpg" alt="">
-                                    <h5>Saving Wildlife
-                                        & their Cubs
-                                    </h5>
-                                    <div class="pro-hover">
-                                        <h6>Saving Wildlife
-                                            & their Cubs
-                                        </h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                        </div>
-                    </div>
-                    <!--Water Resources Slider End-->
-                    <!--Solar Energy Slider Start-->
-                    <div class="tab-pane fade" id="solar" role="tabpanel" aria-labelledby="solar-tab">
-                        <div class="cpro-slider owl-carousel owl-theme">
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro7.jpg" alt="">
-                                    <h5>Solar & Wind
-                                        Energy
-                                    </h5>
-                                    <div class="pro-hover">
-                                        <h6>Solar & Wind
-                                            Energy
-                                        </h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro8.jpg" alt="">
-                                    <h5>Saving Wildlife
-                                        & their Cubs
-                                    </h5>
-                                    <div class="pro-hover">
-                                        <h6>Saving Wildlife
-                                            & their Cubs
-                                        </h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro5.jpg" alt="">
-                                    <h5>Forest & Tree Planting</h5>
-                                    <div class="pro-hover">
-                                        <h6>Forest & Tree Planting</h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro6.jpg" alt="">
-                                    <h5>Recycling & Waste Management</h5>
-                                    <div class="pro-hover">
-                                        <h6>Recycling & Waste Management</h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro3.jpg" alt="">
-                                    <h5>Solar & Wind
-                                        Energy
-                                    </h5>
-                                    <div class="pro-hover">
-                                        <h6>Solar & Wind
-                                            Energy
-                                        </h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro4.jpg" alt="">
-                                    <h5>Saving Wildlife
-                                        & their Cubs
-                                    </h5>
-                                    <div class="pro-hover">
-                                        <h6>Saving Wildlife
-                                            & their Cubs
-                                        </h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro1.jpg" alt="">
-                                    <h5>Forest & Tree Planting</h5>
-                                    <div class="pro-hover">
-                                        <h6>Forest & Tree Planting</h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro2.jpg" alt="">
-                                    <h5>Recycling & Waste Management</h5>
-                                    <div class="pro-hover">
-                                        <h6>Recycling & Waste Management</h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                        </div>
-                    </div>
-                    <!--Solar Energy Slider End-->
-                    <!--Recycling Slider Start-->
-                    <div class="tab-pane fade" id="recycling" role="tabpanel" aria-labelledby="recycling-tab">
-                        <div class="cpro-slider owl-carousel owl-theme">
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro7.jpg" alt="">
-                                    <h5>Solar & Wind
-                                        Energy
-                                    </h5>
-                                    <div class="pro-hover">
-                                        <h6>Solar & Wind
-                                            Energy
-                                        </h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro8.jpg" alt="">
-                                    <h5>Saving Wildlife
-                                        & their Cubs
-                                    </h5>
-                                    <div class="pro-hover">
-                                        <h6>Saving Wildlife
-                                            & their Cubs
-                                        </h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro3.jpg" alt="">
-                                    <h5>Solar & Wind
-                                        Energy
-                                    </h5>
-                                    <div class="pro-hover">
-                                        <h6>Solar & Wind
-                                            Energy
-                                        </h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro4.jpg" alt="">
-                                    <h5>Saving Wildlife
-                                        & their Cubs
-                                    </h5>
-                                    <div class="pro-hover">
-                                        <h6>Saving Wildlife
-                                            & their Cubs
-                                        </h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro1.jpg" alt="">
-                                    <h5>Forest & Tree Planting</h5>
-                                    <div class="pro-hover">
-                                        <h6>Forest & Tree Planting</h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                            <!--Pro Box-->
-                            <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/home/current-pro2.jpg" alt="">
-                                    <h5>Recycling & Waste Management</h5>
-                                    <div class="pro-hover">
-                                        <h6>Recycling & Waste Management</h6>
-                                        <p>We are working over 20 years on Waste Management & Material Recycling
-                                            Projects.</p>
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Pro Box End-->
-                        </div>
-                    </div>
-                    <!--Recycling Slider End-->
+                    <!--Trees Slider End-->
                 </div>
             </div>
         </div>
@@ -867,7 +344,7 @@
 </section>
 <!--Current Projects End-->
 
-<!--Why Ecova + Facts Start-->
+<!--Why Adopt trees Start-->
 <section class="why-ecova wf100">
     <div class="container">
         <div class="row">
@@ -884,24 +361,81 @@
     </div>
 </section>
 
-<!--Maybe the local for the carrossel sponsor logo !!! -->
-<div class="instagram">
-    <h2 class="section-title-2">Os nossos patrocionadores!!</h2>
-    <ul>
-        <li><img src="/Images/home/insta1.jpg" alt=""></li>
-        <li><img src="/Images/home/insta2.jpg" alt=""></li>
-        <li><img src="/Images/home/insta3.jpg" alt=""></li>
-        <!--   <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta4.jpg" alt=""></li>
-           <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta5.jpg" alt=""></li>
-           <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta6.jpg" alt=""></li>
-           <li><a href="#"> <i class="fas fa-search"></i> </a> <img src="/Images/home/insta7.jpg" alt=""></li>-->
-    </ul>
-</div>
-<!--InstaGram End-->
+<!--Events Start-->
+<section class="wf100 p50 about" id="events">
+    <!--Our Success Story Start-->
+    <div class="our-success-story wf100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title-2 text-center">
+                        <h5>Os próximos eventos</h5>
+                    </div>
+                    <!--eco History Start-->
+                    <div class="eco-history">
+                        <div class="timeline-slider">
+                                <!--Timeline Text Start-->
+                                <div>
+                                    <div class="row">
+                                        <div class=" col-12">
+                                            <div class="timeline-box">
+                                                <h6>Em breve..</h6>
+                                                <p>Próximo evento será divulgado em breve.</p>
+                                            </div>
+                                        </div>
+<!--                                        <div class=" col-4">-->
+<!--                                            <div class="timeline-box">-->
+<!--                                                <h6></h6>-->
+<!--                                                <p>A preparar</p>                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class=" col-4">-->
+<!--                                            <div class="timeline-box">-->
+<!--                                                <h6></h6>-->
+<!--                                                <p>A preparar</p>                                            </div>-->
+<!--                                        </div>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Sponsor logo -->
+<section class="online-shop wf100 p80">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-title-2 text-center">
+                    <h5>Os promotores do projeto</h5>
+                    <h2>'Adote uma Árvore'</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row sponsor">
+            <!--Pro Box Start-->
+            <div class="col-md-3 col-sm-6">
+                <div class="product-box">
+                    <div class="pro-thumb"> <a href="https://www.ismat.pt/">Visite-nos</a> <img src="/Images/entities/ismat .png"  alt=""></div>
+                </div>
+            </div>
+            <!--Pro Box End-->
+            <!--Pro Box Start-->
+            <div class="col-md-3 col-sm-6">
+                <div class="product-box">
+                    <div class="pro-thumb"> <a href="https://www.cm-monchique.pt/pt/Default.aspx">Visite-nos</a> <img src="/Images/entities/LOGO-MONCHIQUE-300.png"  alt=""></div>
+                </div>
+            </div>
+            <!--Pro Box End-->
+        </div>
+    </div>
+</section>
+
 
 <script>
-
-
     $(document).ready(function () {
 
         // TreesMap
@@ -1073,7 +607,6 @@
                         window.location.href = "<?php echo HOME_URL . '/home/userTrees';?>";
 
 
-
                     } else {
                         //mensagem de Error
                         Swal.fire({
@@ -1107,7 +640,7 @@
 
     });
 
-    //Donation script////////////////////////////////////////////
+    //Donation script
     $(document).ready(function () {
 
         $('#newDonation').submit(function (event) {
