@@ -52,9 +52,6 @@
                         ?>
                     </div>
                 </div>
-                <!-- Profile tab section-->
-                <?php if (!empty($this->userdata['userList'])) {
-                foreach ($this->userdata['userList'] as $key => $user) { ?>
                 <div class="tab-content p-4 p-md-5 profile-tab" id="v-pills-tabContent">
                     <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
                         <h3 class="mb-4">Dados da conta</h3>
@@ -66,14 +63,15 @@
                                     <div class="form-group">
                                     <i class="fas fa-user" style="color: #1c7430" text-center mr-1></i>
                                         <label>Nome</label>
-                                        <p> <?php echo $user["name"] ?></p>
+
+                                        <p> <?php echo $_SESSION["userdata"]["name"] ?></p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 ml-auto">
                                    <div class="form-group">
                                    <i class="fas fa-briefcase" style="color: #1c7430" text-center mr-2></i>
                                     <label>Entidade</label>
-                                    <p><?php echo $user["entity"] ?></p>
+                                    <p><?php echo $_SESSION["userdata"]["entity"] ?></p>
                                 </div>
                                 </div>
                             </div>
@@ -84,14 +82,14 @@
                                     <div class="form-group">
                                      <i class="fas fa-home" style="color: #1c7430" text-center mr-1></i>
                                         <label>Morada</label>
-                                       <p><?php echo $user["address"] ?></p>
+                                       <p><?php echo $_SESSION["userdata"]["address"] ?></p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 ml-auto">
                                    <div class="form-group">
                                    <i class="fas fa-map-marker" style="color: #1c7430" text-center mr-1></i>
                                     <label>Código-postal</label>
-                                   <p><?php echo $user["codPost"] ?></p>
+                                   <p><?php echo $_SESSION["userdata"]["codPost"] ?></p>
                                 </div>
                                 </div>
                             </div>
@@ -102,17 +100,16 @@
                                     <div class="form-group">
                                      <i class="fas fa-city" style="color: #1c7430" text-center mr-1></i>
                                         <label>Morada</label>
-                                       <p><?php echo $user["locality"] ?></p>
+                                       <p><?php echo $_SESSION["userdata"]["locality"] ?></p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 ml-auto">
                                    <div class="form-group">
                                    <i class="fas fa-flag" style="color: #1c7430" text-center mr-1></i>
                                     <label>País</label>
-                                   <p><?php foreach ($this->userdata['countryList'] as $key => $val) { ?>
-                                        <?php echo ($val['id'] == $user["countryId"]) ? "<p>" . $val['name'] . "</p>" : ''; ?>
+                                   <?php foreach ($this->userdata['countryList'] as $key => $val) { ?>
+                                        <?php echo ($val['id'] == $_SESSION["userdata"]["countryId"]) ? "<p>" . $val['name'] . "</p>" : ''; ?>
                                     <?php } ?>
-                                    </p>
                                 </div>
                                 </div>
                             </div>
@@ -123,14 +120,14 @@
                                     <div class="form-group">
                                     <i class="fas fa-fingerprint" style="color: #1c7430" text-center mr-1></i>
                                      <label>NIF</label>
-                                    <p><?php echo $user["nif"] ?></p>
+                                    <p><?php echo $_SESSION["userdata"]["nif"] ?></p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 ml-auto">
                                    <div class="form-group">
                                    <i class="fas fa-mobile-alt" style="color: #1c7430" text-center mr-1></i>
                                      <label>Telefone</label>
-                                    <p><?php echo $user["mobile"] ?></p>
+                                    <p><?php echo $_SESSION["userdata"]["mobile"] ?></p>
                                 </div>
                                 </div>
                             </div>
@@ -141,22 +138,22 @@
                                     <div class="form-group">
                                     <i class="fas fa-baby" style="color: #1c7430" text-center mr-1></i>
                                       <label>Data de nascimento</label>
-                                    <p><?php echo $user["dateBirth"] ?></p>
+                                    <p><?php echo $_SESSION["userdata"]["dateBirth"] ?></p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 ml-auto">
                                    <div class="form-group">
                                        <i class="fas fa-genderless" style="color: #1c7430" text-center mr-1></i>
                                          <label>Gênero</label>
-                                        <p> <?php foreach ($this->userdata['genderList'] as $key => $val) { ?>
-                                            <?php echo ($val['id'] == $user["genderId"]) ? "<p>" . $val['name'] . "</p>" : ''; ?>
-                                        <?php } ?></p>
+                                         <?php foreach ($this->userdata['genderList'] as $key => $val) { ?>
+                                            <?php echo ($val['id'] == $_SESSION["userdata"]["genderId"]) ? "<p>" . $val['name'] . "</p>" : ''; ?>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div>
-                            <button class="btn edit btn-success" id="<?php echo $user["email"]; ?>" data-toggle="modal"
+                            <button class="btn edit btn-success" id="<?php echo $_SESSION["userdata"]["email"]; ?>" data-toggle="modal"
                                     data-target="#editUserModal">Editar
                             </button>
                         </div>
@@ -168,7 +165,7 @@
                         <form id="updatePass">
                             <div class="form-group">
                                 <input id="passEditUserId" name="passEditUserId" type="hidden" class="form-control"
-                                       value="<?php echo $user["id"] ?>">
+                                       value="<?php echo $_SESSION["userdata"]["id"] ?>">
                             </div>
                             <div>
                                 <div class="col-md-6">
@@ -296,9 +293,9 @@
 
 
 <!-- Edit Profile Modal HTML -->
-    <div id="editUserModal" class="modal fade" role="dialog" data-keyboard="false"
-                             data-backdrop="false"  role="dialog" aria-labelledby="exampleModalLabel"
-                             aria-hidden="true">
+    <div id="editUserModal" class="modal fade center" data-keyboard="false"
+         data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5);" tabindex="-1"
+         aria-labelledby="bulkDeleteMessagesModal-Label" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -310,42 +307,42 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <input id="editUserId" name="editUserId" type="hidden" class="form-control"
-                                       value="<?php echo $user["id"] ?>">
+                                       value="<?php echo $_SESSION["userdata"]["id"] ?>">
                             </div>
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-md-6 ">
                                         <label style="color: #66bb6a"><b>Nome:</b></label>
                                         <input type="text" class="form-control" name="editUserName"
-                                               value="">
+                                               value="<?php echo $_SESSION["userdata"]["name"] ?>">
                                     </div>
                                     <div class="col-md-6 ml-auto">
                                         <label style="color: #66bb6a"><b>Entidade:</b></label>
-                                        <input type="text" class="form-control" name="editUserEntity" value="">
+                                        <input type="text" class="form-control" name="editUserEntity" value="<?php echo $_SESSION["userdata"]["entity"] ?>">
                                     </div>
                                 </div>
                                 <br>
                                 <div class="row">
                                     <div class="col-md-6 ">
                                         <label style="color: #66bb6a"><b>Morada:</b></label>
-                                        <input type="text" class="form-control" name="editUserAddress" value="">
+                                        <input type="text" class="form-control" name="editUserAddress" value="<?php echo $_SESSION["userdata"]["address"] ?>">
                                     </div>
                                     <div class="col-md-6 ml-auto">
                                         <label style="color: #66bb6a"><b>Localidade:</b></label>
-                                        <input type="text" class="form-control" name="editUserLocality" value="">
+                                        <input type="text" class="form-control" name="editUserLocality" value="<?php echo $_SESSION["userdata"]["locality"] ?>">
                                     </div>
                                 </div>
                                 <br>
                                 <div class="row">
                                     <div class="col-md-6 ml-auto">
                                         <label style="color: #66bb6a"><b>Código-postal:</b></label>
-                                        <input type="text" class="form-control" name="editUserCodPost" value="">
+                                        <input type="text" class="form-control" name="editUserCodPost" value="<?php echo $_SESSION["userdata"]["codPost"] ?>">
                                     </div>
                                     <div class="col-md-6 ml-auto">
                                         <label style="color: #66bb6a"><b>País:</b></label>
                                         <select class="form-control" id="editUserCountry" name="editUserCountry">
                                             <?php foreach ($this->userdata['countryList'] as $key => $val) { ?>
-                                                <option value="<?php echo $val['id']; ?>" <?php echo ($val['id'] == $user["countryId"]) ? 'selected="selected"' : '' ?> > <?php echo $val['name']; ?></option>
+                                                <option value="<?php echo $val['id']; ?>" <?php echo ($val['id'] == $_SESSION["userdata"]["countryId"]) ? 'selected="selected"' : '' ?> > <?php echo $val['name']; ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
@@ -354,11 +351,11 @@
                                 <div class="row">
                                     <div class="col-md-6 ml-auto">
                                         <label style="color: #66bb6a"><b>NIF:</b></label>
-                                        <input type="text" class="form-control" name="editUserNif" value="">
+                                        <input type="text" class="form-control" name="editUserNif" value="<?php echo $_SESSION["userdata"]["nif"] ?>">
                                     </div>
                                     <div class="col-md-6 ml-auto">
                                         <label style="color: #66bb6a"><b>Telefone:</b></label>
-                                        <input type="text" class="form-control" name="editUserMobile">
+                                        <input type="text" class="form-control" name="editUserMobile" value="<?php echo $_SESSION["userdata"]["mobile"] ?>">
                                     </div>
                                 </div>
                                 <br>
@@ -367,31 +364,28 @@
                                         <label style="color: #66bb6a"><b>Gênero:</b></label>
                                         <select class="form-control" id="editUserGender" name="editUserGender">
                                             <?php foreach ($this->userdata['genderList'] as $key => $val) { ?>
-                                                <option value="<?php echo $val['id']; ?>" <?php echo ($val['id'] == $user["genderId"]) ? 'selected="selected"' : '' ?> > <?php echo $val['name']; ?></option>
+                                                <option value="<?php echo $val['id']; ?>" <?php echo ($val['id'] == $_SESSION["userdata"]["genderId"]) ? 'selected="selected"' : '' ?> > <?php echo $val['name']; ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
                                     <div class="col-md-6 ml-auto">
                                         <label style="color: #66bb6a"><b>Data de aniversário:</b></label>
-                                        <input type="date" class="form-control" name="editUserDateBirth">
+                                        <input type="date" class="form-control" name="editUserDateBirth" value="<?php echo $_SESSION["userdata"]["dateBirth"] ?>">
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Voltar">
+                            <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Voltar">
                             <input type="submit" class="btn btn-success" value="Salvar">
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
     </div>
     </div>
-<?php }
-} ?>
 <!-- End Edit Profile Modal HTML -->
 
 <!-- Delete Modal HTML -->
@@ -402,7 +396,7 @@
         <div class="modal-content">
             <form id="deleteUser">
                 <div class="modal-header">
-                    <h4 class="modal-title">Delete Group</h4>
+                    <h4 class="modal-title">Apagar conta</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -411,7 +405,7 @@
                     <input id="deleteUserId" name="deleteUserId" type="hidden" class="form-control">
                 </div>
                 <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Voltar">
+                    <input type="button" class="btn btn-secundary" data-dismiss="modal" value="Voltar">
                     <input type="submit" class="btn btn-danger" value="Apagar">
                 </div>
             </form>
@@ -452,63 +446,15 @@
             console.log(error);
         }
 
-        // ajax to get data to Modal Edit User
-        $('.edit').on('click', function () {
-            let formData = {
-                'action': "GetUser",
-                'data': $(this).attr('id') //gets group id from id="" attribute on edit button from table
-            };
-            $.ajax({
-                url: "<?php echo HOME_URL . '/home/userSettings';?>",
-                dataType: "json",
-                type: 'POST',
-                data: formData,
-                success: function (data) {
-                    $("#editUserModal").modal('hide');
-                    $('[name="editUserId"]').val(data[0]['id']);
-                    $('[name="editUserName"]').val(data[0]['name']);
-                    $('[name="editUserEntity"]').val(data[0]['entity']);
-                    $('[name="editUserDateBirth"]').val(data[0]['dateBirth']);
-                    $('[name="editUserAddress"]').val(data[0]['address']);
-                    $('[name="editUserCodPost"]').val(data[0]['codPost']);
-                    $('[name="editUserLocality"]').val(data[0]['locality']);
-                    $('[name="editUserMobile"]').val(data[0]['mobile']);
-                    $('[name="editUserNif"]').val(data[0]['nif']);
-                    $('[name="editUserPass"]').val(data[0]['password']);
-
-                    $('#updateUser input').each(function () {
-                        $(this).data('lastValue', $(this).val());
-                    });
-                },
-                error: function (data) {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: data.body,
-                        icon: 'error',
-                        showConfirmButton: false,
-                        timer: 2000,
-                    });
-                }
-            });
-        });
         // ajax to update modal data  Edit User
         $('#updateUser').submit(function (event) {
             event.preventDefault(); //prevent default action
 
-            let formDataChanged = [];
-            $('#updateUser input').each(function () { //para cada input vai ver
-                if ($(this).attr('name') === "editUserId" || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
-                    let emptyArray = {name: "", value: ""};
-                    emptyArray.name = $(this).attr('name');
-                    emptyArray.value = $(this).val();
-                    formDataChanged.push(emptyArray);
-                }
-            });
             let formData = {
                 'action': "UpdateUser",
-                'data': formDataChanged
+                'data': $(this).serializeArray()
             };
-
+            //Ajax function call
             $.ajax({
                 url: "<?php echo HOME_URL . '/home/userSettings';?>",
                 dataType: "json",
