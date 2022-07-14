@@ -150,7 +150,7 @@
                 <!-- Leafletmap -->
                 <div class="col-md-12">
                     <!--Map area start-->
-                    <div id="map"></div>
+                    <div id="map" class="shadow-lg p-3 mb-5 bg-white rounded mapBorder"></div>
                     <!--Map area end-->
                 </div>
                 <!-- END Leafletmap -->
@@ -182,18 +182,21 @@
                         <div class="counter-box">
                             <p class="counter-count"><?php echo $this->userdata['treesInfo']['O2Kg'] ?></p>
                             <p class="ctxt">Oxigénio(Kg)</p>
+                            <p class="ctxt1" >O2 libertado na atmosfera</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6 col-md-3">
                         <div class="counter-box">
                             <p class="counter-count"><?php echo $this->userdata['treesInfo']['co2Kg'] ?></p>
                             <p class="ctxt">Dióxido Carbono(Kg)</p>
+                            <p class="ctxt1" >CO2 sequestrado da atmosfera</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6 col-md-3">
                         <div class="counter-box"><p
                                     class="counter-count"><?php echo $this->userdata['treesInfo']['H2oLt'] ?></p>
                             <p class="ctxt">Água(Ltr)</p>
+                            <p class="ctxt1" >H2O produzida</p>
                         </div>
                     </div>
                     <?php
@@ -280,8 +283,8 @@
                         <div class="cpro-slider owl-carousel owl-theme">
                             <!--Pro Box-->
                             <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/trees/sobreiro.png" alt="Sobreiro">
+                                <div class="pro-box picBorder">
+                                    <img src="/Images/trees/sobreiro.png" alt="Sobreiro" class="rounded">
                                     <h5>Sobreiro</h5>
                                     <div class="pro-hover">
                                         <h6>Sobreiro</h6>
@@ -293,8 +296,8 @@
                             <!--Pro Box End-->
                             <!--Pro Box-->
                             <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/trees/medronheiro.png" alt="Medronheiro">
+                                <div class="pro-box picBorder">
+                                    <img src="/Images/trees/medronheiro.png" alt="Medronheiro" class="rounded">
                                     <h5>Medronheiro</h5>
                                     <div class="pro-hover">
                                         <h6>Medronheiro</h6>
@@ -306,8 +309,8 @@
                             <!--Pro Box End-->
                             <!--Pro Box-->
                             <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/trees/castanheiro.png" alt="Castenheiro">
+                                <div class="pro-box picBorder">
+                                    <img src="/Images/trees/castanheiro.png" alt="Castenheiro" class="rounded" >
                                     <h5>Castanheiro
                                     </h5>
                                     <div class="pro-hover">
@@ -321,8 +324,8 @@
                             <!--                            Pro Box End-->
                             <!--                            Pro Box-->
                             <div class="item">
-                                <div class="pro-box">
-                                    <img src="/Images/trees/car_monchique.png" alt="CarvalhoMonchique">
+                                <div class="pro-box picBorder">
+                                    <img src="/Images/trees/car_monchique.png" alt="CarvalhoMonchique" class="rounded">
                                     <h5> Carvalho de Monchique
                                     </h5>
                                     <div class="pro-hover">
@@ -419,14 +422,14 @@
             <!--Pro Box Start-->
             <div class="col-md-3 col-sm-6">
                 <div class="product-box">
-                    <div class="pro-thumb"> <a href="https://www.ismat.pt/">Visite-nos</a> <img src="/Images/entities/ismat .png"  alt=""></div>
+                    <div class="pro-thumb"> <a href="https://www.ismat.pt/" target="_blank">Visite-nos</a> <img src="/Images/entities/ismat .png"  alt=""></div>
                 </div>
             </div>
             <!--Pro Box End-->
             <!--Pro Box Start-->
             <div class="col-md-3 col-sm-6">
                 <div class="product-box">
-                    <div class="pro-thumb"> <a href="https://www.cm-monchique.pt/pt/Default.aspx">Visite-nos</a> <img src="/Images/entities/LOGO-MONCHIQUE-300.png"  alt=""></div>
+                    <div class="pro-thumb"> <a href="https://www.cm-monchique.pt/pt/Default.aspx" target="_blank">Visite-nos</a> <img src="/Images/entities/LOGO-MONCHIQUE-300.png"  alt=""></div>
                 </div>
             </div>
             <!--Pro Box End-->
