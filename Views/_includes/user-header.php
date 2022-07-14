@@ -100,7 +100,7 @@
                 </li>
                 <!--Menu go to trees-->
                 <li class="nav-item"><a class="nav-link"
-                                        href="<?php echo HOME_URL . '/home/thetrees'; ?>">As árvores</a>
+                                        href="<?php echo HOME_URL . '/home' . '#myTabContentTrees'; ?>">As árvores</a>
                 </li>
                 <!--Menu go to causes-->
                 <li class="nav-item dropdown">
