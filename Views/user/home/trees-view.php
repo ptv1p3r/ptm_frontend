@@ -25,7 +25,7 @@
                 <div class="col-lg-12">
                     <div class="section-title-2">
                         <h5>Adote uma árvore</h5>
-                        <h2>Escolha a árvore</h2>
+                        <h2>As nossas árvores</h2>
                     </div>
 
                     <div class="row">
@@ -62,9 +62,8 @@
                                          aria-labelledby="nav-one-tab">
                                         <div class="row">
                                             <div class="col">
-                                                <div style="text-align: -webkit-center;">
-                                                    <img src="/Images/trees/sobreiro.png" alt="Sobreiro">
-
+                                                <div  class="rounded shadow-lg p-3 mb-5 bg-white rounded" style="text-align: -webkit-center;">
+                                                    <img src="/Images/trees/sobreiro.png" alt="Sobreiro" class="border border-secondary">
                                                 </div>
                                             </div>
                                             <div class="col">
@@ -128,7 +127,7 @@
                                         <div class="row">
                                             <div class="col">
                                                 <div style="text-align: -webkit-center;">
-                                                    <img src="/Images/trees/medronheiro.png" alt="Medronheiro">
+                                                    <img src="/Images/trees/medronheiro.png" alt="Medronheiro" class="rounded border border-secondary">
                                                 </div>
                                             </div>
                                             <div class="col">
@@ -193,7 +192,7 @@
                                         <div class="row">
                                             <div class="col">
                                                 <div style="text-align: -webkit-center;">
-                                                    <img src="/Images/trees/castanheiro.png" alt="Sobreiro">
+                                                    <img src="/Images/trees/castanheiro.png" alt="Sobreiro" class="rounded border border-secondary">
                                                 </div>
                                             </div>
                                             <div class="col">
@@ -258,7 +257,7 @@
                                         <div class="row">
                                             <div class="col">
                                                 <div style="text-align: -webkit-center;">
-                                                    <img src="/Images/trees/sobreiro.png" alt="Sobreiro">
+                                                    <img src="/Images/trees/sobreiro.png" alt="Sobreiro" class="rounded border border-secondary">
                                                 </div>
                                             </div>
                                             <div class="col">
