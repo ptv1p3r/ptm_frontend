@@ -657,28 +657,97 @@ class HomeController extends MainController
                     }
 
                     $data = $_POST['data'];
-                    $apiResponse = $model->updateUser($data);
-                    //Status code 200 => OK
-                    if ($apiResponse['statusCode'] === 200) {
-
-                        $apiResponse["body"]['message'] = "Updated with success!";
-                        $apiResponse = json_encode($apiResponse);
-                        echo $apiResponse;
-                        break;
-                    }
-                    //Status code 401 => Unauthorized
+                    $apiResponse = $model->updateUser($data); //decode to check message from api
                     if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
                         $this->userTokenRefresh();
 
                         $apiResponse = $model->updateUser($data); //decode to check message from api
-                        $apiResponse = json_encode($apiResponse);// encode package to send
-                        echo $apiResponse;
-                        break;
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
-                    //Encode response
-                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
+
+                        //atualiza toda a $_SESSION
+                        $valResponse = $model->validateUser($_SESSION["userdata"]["email"],$_SESSION["userdata"]["password"]);
+                        if ($valResponse != null) {
+                            // verifica se autenticaçao com sucesso
+                            if ($valResponse['statusCode'] === 200) {
+                                // verifica se existe accessToken na response
+                                if (array_key_exists("accessToken", $valResponse["body"])) {
+                                    $userToken = $valResponse["body"]["accessToken"];
+                                }
+
+                                // Refresh token
+                                if (array_key_exists("refreshToken", $valResponse["body"])) {
+                                    $userRefreshToken = $valResponse["body"]['refreshToken'];
+                                }
+
+                                //Get user data
+                                $url = API_URL . 'api/v1/users/view/' . $_SESSION["userdata"]["email"];
+                                $result = callAPI("GET", $url, '', $_SESSION["userdata"]['accessToken'] );
+                                $userData = json_decode(json_encode($result), true);
+
+                                //Get permissions data
+                                $url = API_URL . 'api/v1/groups/view/' . $_SESSION["userdata"]["groupId"];
+                                $result = callAPI("GET", $url, '', $_SESSION["userdata"]['accessToken'] );
+                                $userPermissions = json_decode(json_encode($result), true);
+
+                                //Array construct again
+                                $permissionsArray = array();
+                                foreach ($userPermissions["body"][0] as $key => $value) {
+                                    switch ($key){
+                                        case "homeLogin":
+                                        case "admLogin":
+                                        case "usersCreate":
+                                        case "usersRead":
+                                        case "usersUpdate":
+                                        case "usersDelete":
+                                        case "userGroupsCreate":
+                                        case "userGroupsRead":
+                                        case "userGroupsUpdate":
+                                        case "userGroupsDelete":
+                                        case "usersTreesCreate":
+                                        case "usersTreesRead":
+                                        case "usersTreesUpdate":
+                                        case "usersTreesDelete":
+                                        case "treesCreate":
+                                        case "treesRead":
+                                        case "treesUpdate":
+                                        case "treesDelete":
+                                        case "treeTypeCreate":
+                                        case "treeTypeRead":
+                                        case "treeTypeUpdate":
+                                        case "treeTypeDelete":
+                                        case "treeImagesCreate":
+                                        case "treeImagesRead":
+                                        case "treeImagesUpdate":
+                                        case "treeImagesDelete":
+                                        case "securityCreate":
+                                        case "securityRead":
+                                        case "securityUpdate":
+                                        case "securityDelete":
+                                            if ($value == 1){ $permissionsArray[] = $key; }
+                                            break;
+
+                                    }
+                                }
+                                //Update userdata
+                                $_SESSION['userdata'] = $userData["body"][0];
+                                //Update user permissions
+                                $_SESSION['userdata']["user_permissions"] = $permissionsArray;
+                                // Update token
+                                $_SESSION['userdata']['accessToken'] = $userToken;
+                                // Update token
+                                $_SESSION['userdata']['refreshToken'] = $userRefreshToken;
+                            }
+                        }
+                    }
+
+                    //Encode package to send
+                    $apiResponse = json_encode($apiResponse);
                     echo($apiResponse);
                     break;
+
 
                 case 'UpdateUserPass' :
                     $this->permission_required = array('usersUpdate');
@@ -847,18 +916,17 @@ class HomeController extends MainController
             $modelMessage = $this->load_model('user-messages-model');
             //Load model messages from user
             $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
-            //Status code 200 => OK
-            if ($userMessageList["statusCode"] === 200) {
-                $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
-                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
-            }
+
             //Status code 401 => Unauthorized
             if ($userMessageList["statusCode"] === 401) {
                 //Refresh do accessToken
                 $this->userTokenRefresh();
-
                 //Load model intervation tree
                 $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
+            }
+
+            //Status code 200 => OK
+            if ($userMessageList["statusCode"] === 200) {
                 $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
                 $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
@@ -963,14 +1031,15 @@ class HomeController extends MainController
             }
             //Get transaction methods list from model
             $getTransactionModel = $modelTransaction->getTransactionList();
-            if ($getAdoptTreesModel['statusCode'] === 200) { // 200 OK, successful
-                $this->userdata['transactionList'] = $getTransactionModel['body']['methods'];
-            }
+
+            //Status code 401 => Unauthorized
             if ($getAdoptTreesModel['statusCode'] === 401) {  // 200 OK, successful
                 //Refresh accessToken
                 $this->userTokenRefresh();
-                //Model to get transaction
-                $getTransactionModel = $modelTransaction->getTransactionList();
+            }
+
+            //Status code 200 => OK
+            if ($getAdoptTreesModel['statusCode'] === 200) { // 200 OK, successful
                 $this->userdata['transactionList'] = $getTransactionModel['body']['methods'];
             }
 
