@@ -181,27 +181,28 @@
                             </div>
                             <div class="form-group">
                                 <label>Utilizador</label>
-                                <!--<input type="text" class="form-control" name="addTransactionUserId" required> -->
+                                <!--<input type="text" class="form-control" name="addTransactionUserId" required>-->
                                 <select name="addTransactionUserId" id="addTransactionUserId" required>
                                     <option value="" disabled selected>Utilizador</option>
                                     <?php if (!empty($this->userdata['usersList'])) {
                                         foreach ($this->userdata['usersList'] as $key => $user) { ?>
-                                            <option value="<?php echo $user['id'] ?>"><?php echo $user["name"] ?></option>
+                                            <option value="<?php echo $user['id'] ?>"><?php echo $user["id"] ?> | <?php echo $user["name"] ?></option>
                                         <?php }
                                     } ?>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label>Árvore</label>
+                                <?php echo (empty($this->userdata['treesList'])) ? '<input type="text" class="form-control" name="addTransactionTreeId" value="Não existem árvores a adotar" disabled>' : '<input type="text" class="form-control" name="addTransactionTreeId" required>' ?>
                                 <!--<input type="text" class="form-control" name="addTransactionTreeId" required>-->
-                                <select name="addTransactionTreeId" id="addTransactionTreeId" required>
-                                    <option value="" disabled selected>Árvore a adotar</option>
-                                    <?php if (!empty($this->userdata['treesList'])) {
+                                <!--<select name="addTransactionTreeId" id="addTransactionTreeId" required>
+                                    <option value="" disabled selected> <?php //echo (empty($this->userdata['treesList'])) ? "Não existem árvores a adotar" : "Árvore a adotar" ?></option>
+                                    <?php /*if (!empty($this->userdata['treesList'])) {
                                         foreach ($this->userdata['treesList'] as $key => $tree) { ?>
                                             <option value="<?php echo $tree['id'] ?>"><?php echo $tree["id"] ?></option>
                                         <?php }
-                                    } ?>
-                                </select>
+                                    } */?>
+                                </select>-->
                             </div>
                             <div class="form-group">
                                 <label>Valor</label>
@@ -214,7 +215,8 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <input type="submit" class="btn btn-success" value="Concluir">
+                            <?php echo (empty($this->userdata['treesList'])) ? '' : '<input type="submit" class="btn btn-success" value="Concluir">' ?>
+
                         </div>
                     </form>
                 </div>

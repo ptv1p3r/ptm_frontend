@@ -101,14 +101,14 @@
                                                         <?php echo $typeName ?>
                                                     </td>
                                                     <td id="m8f8qy9bsk-<?php echo $tree["id"] ?>"
-                                                        onclick="copy('<?php echo $tree["description"] ?>','m8f8qy9bsk-<?php echo $tree["id"] ?>')"
+                                                        onclick="copy('<?php echo $tree["lat"] ?>','m8f8qy9bsk-<?php echo $tree["id"] ?>')"
                                                         title="<?php echo $tree["lat"] ?>"
                                                         class="table-text-truncate"
                                                         style="cursor: pointer">
                                                         <?php echo $tree["lat"] ?>
                                                     </td>
                                                     <td id="0piqt9r7gu-<?php echo $tree["id"] ?>"
-                                                        onclick="copy('<?php echo $tree["description"] ?>','0piqt9r7gu-<?php echo $tree["id"] ?>')"
+                                                        onclick="copy('<?php echo $tree["lng"] ?>','0piqt9r7gu-<?php echo $tree["id"] ?>')"
                                                         title="<?php echo $tree["lng"] ?>"
                                                         class="table-text-truncate"
                                                         style="cursor: pointer">
