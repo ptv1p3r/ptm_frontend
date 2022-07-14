@@ -13,44 +13,40 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Dashboard de Árvores</h1>
-                <ol class="breadcrumb mb-4">
+                <h1 class="mt-4 mb-4">Dashboard de árvores</h1>
+                <!--<ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item active">Dashboard</li>
-                </ol>
+                </ol>-->
                 <div class="row">
                     <div class="col-xl-3 col-md-6">
-                        <div class="card bg-primary text-white mb-4">
-                            <div class="card-body">Primary Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        <div class="card bg-primary text-white mb-4 text-center">
+                            <div class="card-body">
+                                <div class="text-white fs-5">Árvores</div>
+                                <div class="text-white fs-4"><?php echo (!empty($this->userdata['treesTotal'])) ? $this->userdata['treesTotal'] : "0" ?></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6">
-                        <div class="card bg-warning text-white mb-4">
-                            <div class="card-body">Warning Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        <div class="card bg-primary text-white mb-4 text-center">
+                            <div class="card-body">
+                                <div class="text-white fs-5">Árvores adotadas</div>
+                                <div class="text-white fs-4"><?php echo (!empty($this->userdata['adoptedTreesTotal'])) ? $this->userdata['adoptedTreesTotal'] : "0" ?></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6">
-                        <div class="card bg-success text-white mb-4">
-                            <div class="card-body">Success Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        <div class="card bg-primary text-white mb-4 text-center">
+                            <div class="card-body">
+                                <div class="text-white fs-5">?</div>
+                                <div class="text-white fs-4">?</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6">
-                        <div class="card bg-danger text-white mb-4">
-                            <div class="card-body">Danger Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        <div class="card bg-primary text-white mb-4 text-center">
+                            <div class="card-body">
+                                <div class="text-white fs-5">?</div>
+                                <div class="text-white fs-4">?</div>
                             </div>
                         </div>
                     </div>
@@ -99,19 +95,30 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-chart-bar me-1"></i>
-                                Bar Chart Example
+                                Gráfico de barras
                             </div>
                             <div class="card-body">
                                 <canvas id="BarChart" width="100%" height="40"></canvas>
                                 <script>
+                                    let LabelsArray = [], DataArray = [];
+                                    <?php if (!empty($this->userdata['treesList'])) {
+                                        $namesColumn = array_column($this->userdata['treesList'],"name");
+                                        $distNames = array_unique($namesColumn);?>
+
+                                        <?php foreach ($distNames as $key => $value){ ?>
+                                            LabelsArray.push("<?php echo $value ?>");
+                                            DataArray.push("<?php echo array_count_values(array_column($this->userdata['treesList'], 'name'))[$value] ?>")
+                                        <?php }?>
+
+                                    <?php } ?>
                                     //Bar chart
                                     const BarChart = new Chart(document.getElementById('BarChart'), {
                                         type: 'bar',
                                         data: {
-                                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                                            labels: LabelsArray,
                                             datasets: [{
-                                                label: '# of Votes',
-                                                data: [12, 19, 3, 5, 2, 3],
+                                                label: '# árvores por nome',
+                                                data: DataArray,
                                                 backgroundColor: [
                                                     'rgba(255, 99, 132, 0.2)',
                                                     'rgba(54, 162, 235, 0.2)',
