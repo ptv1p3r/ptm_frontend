@@ -298,6 +298,43 @@ class AdminController extends MainController
             $this->userdata['usersTotal'] = $userList["body"]["total"];
         }
 
+        // get transactions list
+        $transactionList = $modelo->getTransactionList();
+        if ($transactionList["statusCode"] === 401){
+            //faz o refresh do accessToken
+            $this->userTokenRefresh();
+
+            $transactionList = $modelo->getTransactionList();
+        }
+        if ($transactionList["statusCode"] === 200){
+            $this->userdata['transactionList'] = array_orderby($transactionList["body"]["methods"], "dateCreated", SORT_DESC);
+            $this->userdata['transactionTotal'] = $transactionList["body"]["total"];
+        }
+
+        // get transactions type list
+        $transactionTypeList = $modelo->getTransactionTypeList();
+        if ($transactionTypeList["statusCode"] === 401){
+            //faz o refresh do accessToken
+            $this->userTokenRefresh();
+
+            $transactionTypeList = $modelo->getTransactionTypeList();
+        }
+        if ($transactionTypeList["statusCode"] === 200){
+            $this->userdata['transactionTypeList'] = $transactionTypeList["body"]["methods"];
+        }
+
+        // get transactions method list
+        $transactionMethodList = $modelo->getTransactionMethodList();
+        if ($transactionMethodList["statusCode"] === 401){
+            //faz o refresh do accessToken
+            $this->userTokenRefresh();
+
+            $transactionMethodList = $modelo->getTransactionMethodList();
+        }
+        if ($transactionMethodList["statusCode"] === 200){
+            $this->userdata['transactionMethodList'] = $transactionMethodList["body"]["methods"];
+        }
+
         /** Carrega os arquivos do view **/
         require ABSPATH . '/views/_includes/admin-header.php';
 
