@@ -80,49 +80,81 @@
                             <div class="card-body">
                                 <canvas id="AreaChart1" width="100%" height="40"></canvas>
                                 <script>
+                                    let DataByYear = {}, months, values, monthCount, monthIndex, dataset;
+                                    DataByYear = {}
+                                    months = ["Janeiro", 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+                                    values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                                    monthCount = 0; monthIndex = 0;
 
-                                    let LabelsArray1 = [], DataArray1 = [];
                                     <?php if (!empty($this->userdata['adoptedTreesList'])) {
                                         //apanha coluna de datas
                                         $timeColumn = array_column($this->userdata['adoptedTreesList'],"dateCreated");
                                         $monthsColumn = []; $monthsNumbers = []; $distMonths = []; $distMonthsFull = [];
 
-                                        //para cada data em $timeColumn
+                                        //apanha anos
                                         foreach ($timeColumn as $key => $value){
-                                            $monthNumber = date("n", strtotime($value)); // apanha o numero do mes
-                                            $monthsNumbers[] = $monthNumber; // adiciona no array de numeros de meses
-                                            $monthsColumn[] = getMonth($monthNumber); // converte-o no mes escrito por extenso
+                                            $yearNumber = date("Y", strtotime($value));// apanha ano
+                                            $yearNumbers[] = $yearNumber;// adiciona no array de numeros de anos
                                         }
 
-                                        $distMonths = array_unique($monthsNumbers);//apanha so 1 de cada mes
-                                        sort($distMonths); //ordena os numeros dos meses
+                                        $distYears = array_unique($yearNumbers);//apanha so 1 de cada ano
+                                        sort($distYears);//ordena os numeros dos anos
 
-                                        $monthsNumbers = [];// limpa array de numeros de meses
+                                        //para cada ano
+                                        foreach ($distYears as $yearKey => $year){
+                                            $monthsColumn = []; $monthsNumbers = []; $distMonthsFull = [];
 
-                                        //para cada numero de mes distinto
-                                        foreach ($distMonths as $key => $value){
-                                            $distMonthsFull[] = getMonth($value);//converte-o no mes escrito por extenso
-                                        }?>
+                                            foreach ($timeColumn as $key => $time){ // ve se o ano da data na $timeColumn é o mesmo do $year, se sim
+                                                $timeyear = date("Y", strtotime($time));// apanha ano
 
-                                        //cria array de Labels e Data de meses
-                                        <?php foreach ($distMonthsFull as $key => $value){?>
-                                            LabelsArray1.push("<?php echo $value ?>");
-                                            <?php //conta quantos "janeiro" existem em $monthsColumn ?>
-                                            DataArray1.push("<?php echo array_count_values($monthsColumn)[$value] ?>")
-                                        <?php } ?>
+                                                if($timeyear === $year){
+                                                    $monthNumber = date("n", strtotime($time)); // apanha o numero do mes
+                                                    $monthsNumbers[] = $monthNumber; // adiciona no array de numeros de meses
+                                                    $monthsColumn[] = getMonth($monthNumber); // converte-o no mes escrito por extenso e adiciona ao array de meses
+                                                }
+                                            }
+
+                                            $distMonths = array_unique($monthsNumbers);//apanha so 1 de cada mes
+                                            sort($distMonths); //ordena os numeros dos meses
+
+                                            //para cada numero de mes distinto
+                                            foreach ($distMonths as $monthKey => $month){
+                                                $distMonthsFull[] = getMonth($month);//converte-o no mes escrito por extenso e adiciona ao array de meses
+                                            }?>
+
+                                            //cria array de Labels e Data de meses
+                                            monthCount = 0; monthIndex = 0; values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                                            <?php foreach ($distMonthsFull as $key => $monthFull){?>
+                                                monthCount = "<?php echo array_count_values($monthsColumn)[$monthFull] ?>";
+                                                monthIndex = months.indexOf("<?php echo $monthFull ?>");
+                                                values[monthIndex] = monthCount;
+                                            <?php } ?>
+
+                                            DataByYear["<?php echo $year?>"] = (values);
+
+                                        <?php }?>
 
                                     <?php } ?>
 
+                                    dataset = [];
+                                    if(DataByYear !== {}){
+                                        var last = Object.keys(DataByYear).pop()
+                                        for( let year in DataByYear){
+                                            let empty = {hidden: (year === last) ? false : true, label: '', data: "", fill: false, borderColor: /*"rgb(36,203,159)"*/Colors.random().rgb, tension: 0.1};
+
+                                            empty.label = year;
+                                            empty.data = DataByYear[year];
+
+                                            dataset.push(empty);
+                                        }
+                                    } else {
+                                        dataset = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                                    }
+
                                     // area/line chart
                                     const data1 = {
-                                        labels: LabelsArray1,
-                                        datasets: [{
-                                            label: 'Árvores',
-                                            data: DataArray1,
-                                            fill: false,
-                                            borderColor: 'rgb(75, 192, 192)',
-                                            tension: 0.1
-                                        }]
+                                        labels: months,
+                                        datasets: dataset
                                     };
 
                                     const AreaChart1 = new Chart(document.getElementById('AreaChart1'), {
@@ -299,51 +331,81 @@
                             <div class="card-body">
                                 <canvas id="AreaChart3" width="100%" height="40"></canvas>
                                 <script>
+                                    DataByYear = {};
+                                    months = ["Janeiro", 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+                                    values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                                    monthCount = 0; monthIndex = 0;
 
-                                    let LabelsArray3 = [], DataArray3 = [];
                                     <?php if (!empty($this->userdata['treeInterventionList'])) {
-                                        //TODO: meter todos os meses nos charts
-
                                         //apanha coluna de datas
                                         $timeColumn = array_column($this->userdata['treeInterventionList'],"interventionDate");
                                         $monthsColumn = []; $monthsNumbers = []; $distMonths = []; $distMonthsFull = [];
 
-                                        //para cada data em $timeColumn
+                                        //apanha anos
                                         foreach ($timeColumn as $key => $value){
-                                            $monthNumber = date("n", strtotime($value)); // apanha o numero do mes
-                                            $monthsNumbers[] = $monthNumber; // adiciona no array de numeros de meses
-                                            $monthsColumn[] = getMonth($monthNumber); // converte-o no mes escrito por extenso e adiciona ao array de meses
+                                            $yearNumber = date("Y", strtotime($value));// apanha ano
+                                            $yearNumbers[] = $yearNumber;// adiciona no array de numeros de anos
                                         }
 
-                                        $distMonths = array_unique($monthsNumbers);//apanha so 1 de cada mes
-                                        sort($distMonths); //ordena os numeros dos meses
+                                        $distYears = array_unique($yearNumbers);//apanha so 1 de cada ano
+                                        sort($distYears);//ordena os numeros dos anos
 
-                                        $monthsNumbers = [];// limpa array de numeros de meses
+                                        //para cada ano
+                                        foreach ($distYears as $yearKey => $year){
+                                            $monthsColumn = []; $monthsNumbers = []; $distMonthsFull = [];
 
-                                        //para cada numero de mes distinto
-                                        foreach ($distMonths as $key => $value){
-                                            $distMonthsFull[] = getMonth($value);//converte-o no mes escrito por extenso e adiciona ao array de meses
-                                        }?>
+                                            foreach ($timeColumn as $key => $time){ // ve se o ano da data na $timeColumn é o mesmo do $year, se sim
+                                                $timeyear = date("Y", strtotime($time));// apanha ano
 
-                                        //cria array de Labels e Data de meses
-                                        <?php foreach ($distMonthsFull as $key => $value){?>
-                                            LabelsArray3.push("<?php echo $value ?>");
-                                            <?php //conta quantos "janeiro" existem em $monthsColumn ?>
-                                            DataArray3.push("<?php echo array_count_values($monthsColumn)[$value] ?>")
-                                        <?php } ?>
+                                                if($timeyear === $year){
+                                                    $monthNumber = date("n", strtotime($time)); // apanha o numero do mes
+                                                    $monthsNumbers[] = $monthNumber; // adiciona no array de numeros de meses
+                                                    $monthsColumn[] = getMonth($monthNumber); // converte-o no mes escrito por extenso e adiciona ao array de meses
+                                                }
+                                            }
+
+                                            $distMonths = array_unique($monthsNumbers);//apanha so 1 de cada mes
+                                            sort($distMonths); //ordena os numeros dos meses
+
+                                            //para cada numero de mes distinto
+                                            foreach ($distMonths as $monthKey => $month){
+                                                $distMonthsFull[] = getMonth($month);//converte-o no mes escrito por extenso e adiciona ao array de meses
+                                            }?>
+
+                                            //cria array de Labels e Data de meses
+                                            monthCount = 0; monthIndex = 0; values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                                            <?php foreach ($distMonthsFull as $key => $monthFull){?>
+                                                monthCount = "<?php echo array_count_values($monthsColumn)[$monthFull] ?>";
+                                                monthIndex = months.indexOf("<?php echo $monthFull ?>");
+                                                values[monthIndex] = monthCount;
+                                            <?php } ?>
+
+                                            DataByYear["<?php echo $year?>"] = (values);
+
+                                        <?php }?>
 
                                     <?php } ?>
 
+                                    dataset = [];
+                                    if(DataByYear !== {}){
+                                        var last = Object.keys(DataByYear).pop()
+                                        console.log(last)
+                                        for( let year in DataByYear){
+                                            let empty = {hidden: (year === last) ? false : true, label: '', data: "", fill: false, borderColor: /*"rgb(36,203,159)"*/Colors.random().rgb, tension: 0.1};
+
+                                            empty.label = year;
+                                            empty.data = DataByYear[year];
+
+                                            dataset.push(empty);
+                                        }
+                                    } else {
+                                        dataset = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                                    }
+
                                     // area/line chart
                                     const data3 = {
-                                        labels: LabelsArray3,
-                                        datasets: [{
-                                            label: 'Intervenções',
-                                            data: DataArray3,
-                                            fill: false,
-                                            borderColor: 'rgb(75, 192, 192)',
-                                            tension: 0.1
-                                        }]
+                                        labels: months,
+                                        datasets: dataset
                                     };
 
                                     const AreaChart3 = new Chart(document.getElementById('AreaChart3'), {

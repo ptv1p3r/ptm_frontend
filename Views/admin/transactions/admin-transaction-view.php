@@ -216,7 +216,6 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                             <?php echo (empty($this->userdata['treesList'])) ? '' : '<input type="submit" class="btn btn-success" value="Concluir">' ?>
-
                         </div>
                     </form>
                 </div>

@@ -3,6 +3,9 @@
 
 <?php if ( $this->login_required && ! $this->logged_in ) return; ?>
 
+<!-- refresh page every 5 mins -->
+<meta http-equiv="refresh" content="300">
+
 <!-- AJAX loader -->
 <div id="loader" class="lds-dual-ring hidden overlay"></div>
 
@@ -72,49 +75,81 @@
                             <div class="card-body">
                                 <canvas id="AreaChart3" width="100%" height="40"></canvas>
                                 <script>
+                                    let DataByYear, months, values, monthCount, monthIndex, dataset;
+                                    DataByYear = {}
+                                    months = ["Janeiro", 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+                                    values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                                    monthCount = 0; monthIndex = 0;
 
-                                    let LabelsArray3 = [], DataArray3 = [];
-                                    <?php if (!empty($this->userdata['treesList'])) {
-                                    //apanha coluna de datas
-                                    $timeColumn = array_column($this->userdata['usersList'],"dateCreated");
-                                    $monthsColumn = []; $monthsNumbers = []; $distMonths = []; $distMonthsFull = [];
+                                    <?php if (!empty($this->userdata['usersList'])) {
+                                        //apanha coluna de datas
+                                        $timeColumn = array_column($this->userdata['usersList'],"dateCreated");
+                                        $monthsColumn = []; $monthsNumbers = []; $distMonths = []; $distMonthsFull = [];
 
-                                    //para cada data em $timeColumn
-                                    foreach ($timeColumn as $key => $value){
-                                        $monthNumber = date("n", strtotime($value)); // apanha o numero do mes
-                                        $monthsNumbers[] = $monthNumber; // adiciona no array de numeros de meses
-                                        $monthsColumn[] = getMonth($monthNumber); // converte-o no mes escrito por extenso
+                                        //apanha anos
+                                        foreach ($timeColumn as $key => $value){
+                                            $yearNumber = date("Y", strtotime($value));// apanha ano
+                                            $yearNumbers[] = $yearNumber;// adiciona no array de numeros de anos
+                                        }
+
+                                        $distYears = array_unique($yearNumbers);//apanha so 1 de cada ano
+                                        sort($distYears);//ordena os numeros dos anos
+
+                                        //para cada ano
+                                        foreach ($distYears as $yearKey => $year){
+                                            $monthsColumn = []; $monthsNumbers = []; $distMonthsFull = [];
+
+                                            foreach ($timeColumn as $key => $time){ // ve se o ano da data na $timeColumn é o mesmo do $year, se sim
+                                                $timeyear = date("Y", strtotime($time));// apanha ano
+
+                                                if($timeyear === $year){
+                                                    $monthNumber = date("n", strtotime($time)); // apanha o numero do mes
+                                                    $monthsNumbers[] = $monthNumber; // adiciona no array de numeros de meses
+                                                    $monthsColumn[] = getMonth($monthNumber); // converte-o no mes escrito por extenso e adiciona ao array de meses
+                                                }
+                                            }
+
+                                            $distMonths = array_unique($monthsNumbers);//apanha so 1 de cada mes
+                                            sort($distMonths); //ordena os numeros dos meses
+
+                                            //para cada numero de mes distinto
+                                            foreach ($distMonths as $monthKey => $month){
+                                                $distMonthsFull[] = getMonth($month);//converte-o no mes escrito por extenso e adiciona ao array de meses
+                                            }?>
+
+                                            //cria array de Labels e Data de meses
+                                            monthCount = 0; monthIndex = 0; values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                                            <?php foreach ($distMonthsFull as $key => $monthFull){?>
+                                                monthCount = "<?php echo array_count_values($monthsColumn)[$monthFull] ?>";
+                                                monthIndex = months.indexOf("<?php echo $monthFull ?>");
+                                                values[monthIndex] = monthCount;
+                                            <?php } ?>
+
+                                            DataByYear["<?php echo $year?>"] = (values);
+
+                                        <?php }?>
+
+                                    <?php } ?>
+
+                                    dataset = [];
+                                    if(DataByYear !== {}){
+                                        var last = Object.keys(DataByYear).pop()
+                                        for( let year in DataByYear){
+                                            let empty = {hidden: (year === last) ? false : true, label: '', data: "", fill: false, borderColor: /*"rgb(36,203,159)"*/Colors.random().rgb, tension: 0.1};
+
+                                            empty.label = year;
+                                            empty.data = DataByYear[year];
+
+                                            dataset.push(empty);
+                                        }
+                                    } else {
+                                        dataset = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
                                     }
-
-                                    $distMonths = array_unique($monthsNumbers);//apanha so 1 de cada mes
-                                    sort($distMonths); //ordena os numeros dos meses
-
-                                    $monthsNumbers = [];// limpa array de numeros de meses
-
-                                    //para cada numero de mes distinto
-                                    foreach ($distMonths as $key => $value){
-                                        $distMonthsFull[] = getMonth($value);//converte-o no mes escrito por extenso
-                                    }?>
-
-                                    //cria array de Labels e Data de meses
-                                    <?php foreach ($distMonthsFull as $key => $value){?>
-                                    LabelsArray3.push("<?php echo $value ?>");
-                                    <?php //conta quantos "janeiro" existem em $monthsColumn ?>
-                                    DataArray3.push("<?php echo array_count_values($monthsColumn)[$value] ?>")
-                                    <?php } ?>
-
-                                    <?php } ?>
 
                                     // area/line chart
                                     const data3 = {
-                                        labels: LabelsArray3,
-                                        datasets: [{
-                                            label: 'Utilizadores',
-                                            data: DataArray3,
-                                            fill: false,
-                                            borderColor: 'rgb(75, 192, 192)',
-                                            tension: 0.1
-                                        }]
+                                        labels: months,
+                                        datasets: dataset
                                     };
 
                                     const AreaChart3 = new Chart(document.getElementById('AreaChart3'), {
@@ -189,6 +224,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-primary text-white mb-4 text-center">
+                            <div class="card-body">
+                                <div class="fs-5">Intervenções</div>
+                                <div class="fs-4"><?php echo (!empty($this->userdata['treeInterventionTotal'])) ? $this->userdata['treeInterventionTotal'] : "0" ?></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row">
@@ -201,49 +244,80 @@
                             <div class="card-body">
                                 <canvas id="AreaChart2" width="100%" height="40"></canvas>
                                 <script>
+                                    DataByYear = {}
+                                    months = ["Janeiro", 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+                                    values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                                    monthCount = 0; monthIndex = 0;
 
-                                    let LabelsArray2 = [], DataArray2 = [];
                                     <?php if (!empty($this->userdata['treesList'])) {
                                         //apanha coluna de datas
                                         $timeColumn = array_column($this->userdata['treesList'],"dateCreated");
                                         $monthsColumn = []; $monthsNumbers = []; $distMonths = []; $distMonthsFull = [];
 
-                                        //para cada data em $timeColumn
+                                        //apanha anos
                                         foreach ($timeColumn as $key => $value){
-                                            $monthNumber = date("n", strtotime($value)); // apanha o numero do mes
-                                            $monthsNumbers[] = $monthNumber; // adiciona no array de numeros de meses
-                                            $monthsColumn[] = getMonth($monthNumber); // converte-o no mes escrito por extenso
+                                            $yearNumber = date("Y", strtotime($value));// apanha ano
+                                            $yearNumbers[] = $yearNumber;// adiciona no array de numeros de anos
                                         }
 
-                                        $distMonths = array_unique($monthsNumbers);//apanha so 1 de cada mes
-                                        sort($distMonths); //ordena os numeros dos meses
+                                        $distYears = array_unique($yearNumbers);//apanha so 1 de cada ano
+                                        sort($distYears);//ordena os numeros dos anos
 
-                                        $monthsNumbers = [];// limpa array de numeros de meses
+                                        //para cada ano
+                                        foreach ($distYears as $yearKey => $year){
+                                            $monthsColumn = []; $monthsNumbers = []; $distMonthsFull = [];
 
-                                        //para cada numero de mes distinto
-                                        foreach ($distMonths as $key => $value){
-                                            $distMonthsFull[] = getMonth($value);//converte-o no mes escrito por extenso
-                                        }?>
+                                            foreach ($timeColumn as $key => $time){ // ve se o ano da data na $timeColumn é o mesmo do $year, se sim
+                                                $timeyear = date("Y", strtotime($time));// apanha ano
 
-                                        //cria array de Labels e Data de meses
-                                        <?php foreach ($distMonthsFull as $key => $value){?>
-                                            LabelsArray2.push("<?php echo $value ?>");
-                                            <?php //conta quantos "janeiro" existem em $monthsColumn ?>
-                                            DataArray2.push("<?php echo array_count_values($monthsColumn)[$value] ?>")
-                                        <?php } ?>
+                                                if($timeyear === $year){
+                                                    $monthNumber = date("n", strtotime($time)); // apanha o numero do mes
+                                                    $monthsNumbers[] = $monthNumber; // adiciona no array de numeros de meses
+                                                    $monthsColumn[] = getMonth($monthNumber); // converte-o no mes escrito por extenso e adiciona ao array de meses
+                                                }
+                                            }
+
+                                            $distMonths = array_unique($monthsNumbers);//apanha so 1 de cada mes
+                                            sort($distMonths); //ordena os numeros dos meses
+
+                                            //para cada numero de mes distinto
+                                            foreach ($distMonths as $monthKey => $month){
+                                                $distMonthsFull[] = getMonth($month);//converte-o no mes escrito por extenso e adiciona ao array de meses
+                                            }?>
+
+                                            //cria array de Labels e Data de meses
+                                            monthCount = 0; monthIndex = 0; values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                                            <?php foreach ($distMonthsFull as $key => $monthFull){?>
+                                                monthCount = "<?php echo array_count_values($monthsColumn)[$monthFull] ?>";
+                                                monthIndex = months.indexOf("<?php echo $monthFull ?>");
+                                                values[monthIndex] = monthCount;
+                                            <?php } ?>
+
+                                            DataByYear["<?php echo $year?>"] = (values);
+
+                                        <?php }?>
 
                                     <?php } ?>
 
+                                    dataset = [];
+                                    if(DataByYear !== {}){
+                                        var last = Object.keys(DataByYear).pop()
+                                        for( let year in DataByYear){
+                                            let empty = {hidden: (year === last) ? false : true, label: '', data: "", fill: false, borderColor: /*"rgb(36,203,159)"*/Colors.random().rgb, tension: 0.1};
+
+                                            empty.label = year;
+                                            empty.data = DataByYear[year];
+
+                                            dataset.push(empty);
+                                        }
+                                    } else {
+                                        dataset = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                                    }
+
                                     // area/line chart
                                     const data2 = {
-                                        labels: LabelsArray2,
-                                        datasets: [{
-                                            label: 'Árvores',
-                                            data: DataArray2,
-                                            fill: false,
-                                            borderColor: 'rgb(75, 192, 192)',
-                                            tension: 0.1
-                                        }]
+                                        labels: months,
+                                        datasets: dataset
                                     };
 
                                     const AreaChart2 = new Chart(document.getElementById('AreaChart2'), {
@@ -271,49 +345,80 @@
                             <div class="card-body">
                                 <canvas id="AreaChart1" width="100%" height="40"></canvas>
                                 <script>
+                                    DataByYear = {}
+                                    months = ["Janeiro", 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+                                    values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                                    monthCount = 0; monthIndex = 0;
 
-                                    let LabelsArray1 = [], DataArray1 = [];
                                     <?php if (!empty($this->userdata['adoptedTreesList'])) {
                                         //apanha coluna de datas
                                         $timeColumn = array_column($this->userdata['adoptedTreesList'],"dateCreated");
                                         $monthsColumn = []; $monthsNumbers = []; $distMonths = []; $distMonthsFull = [];
 
-                                        //para cada data em $timeColumn
+                                        //apanha anos
                                         foreach ($timeColumn as $key => $value){
-                                            $monthNumber = date("n", strtotime($value)); // apanha o numero do mes
-                                            $monthsNumbers[] = $monthNumber; // adiciona no array de numeros de meses
-                                            $monthsColumn[] = getMonth($monthNumber); // converte-o no mes escrito por extenso
+                                            $yearNumber = date("Y", strtotime($value));// apanha ano
+                                            $yearNumbers[] = $yearNumber;// adiciona no array de numeros de anos
                                         }
 
-                                        $distMonths = array_unique($monthsNumbers);//apanha so 1 de cada mes
-                                        sort($distMonths); //ordena os numeros dos meses
+                                        $distYears = array_unique($yearNumbers);//apanha so 1 de cada ano
+                                        sort($distYears);//ordena os numeros dos anos
 
-                                        $monthsNumbers = [];// limpa array de numeros de meses
+                                        //para cada ano
+                                        foreach ($distYears as $yearKey => $year){
+                                            $monthsColumn = []; $monthsNumbers = []; $distMonthsFull = [];
 
-                                        //para cada numero de mes distinto
-                                        foreach ($distMonths as $key => $value){
-                                            $distMonthsFull[] = getMonth($value);//converte-o no mes escrito por extenso
-                                        }?>
+                                            foreach ($timeColumn as $key => $time){ // ve se o ano da data na $timeColumn é o mesmo do $year, se sim
+                                                $timeyear = date("Y", strtotime($time));// apanha ano
 
-                                        //cria array de Labels e Data de meses
-                                        <?php foreach ($distMonthsFull as $key => $value){?>
-                                            LabelsArray1.push("<?php echo $value ?>");
-                                            <?php //conta quantos "janeiro" existem em $monthsColumn ?>
-                                            DataArray1.push("<?php echo array_count_values($monthsColumn)[$value] ?>")
-                                        <?php } ?>
+                                                if($timeyear === $year){
+                                                    $monthNumber = date("n", strtotime($time)); // apanha o numero do mes
+                                                    $monthsNumbers[] = $monthNumber; // adiciona no array de numeros de meses
+                                                    $monthsColumn[] = getMonth($monthNumber); // converte-o no mes escrito por extenso e adiciona ao array de meses
+                                                }
+                                            }
+
+                                            $distMonths = array_unique($monthsNumbers);//apanha so 1 de cada mes
+                                            sort($distMonths); //ordena os numeros dos meses
+
+                                            //para cada numero de mes distinto
+                                            foreach ($distMonths as $monthKey => $month){
+                                                $distMonthsFull[] = getMonth($month);//converte-o no mes escrito por extenso e adiciona ao array de meses
+                                            }?>
+
+                                            //cria array de Labels e Data de meses
+                                            monthCount = 0; monthIndex = 0; values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                                            <?php foreach ($distMonthsFull as $key => $monthFull){?>
+                                                monthCount = "<?php echo array_count_values($monthsColumn)[$monthFull] ?>";
+                                                monthIndex = months.indexOf("<?php echo $monthFull ?>");
+                                                values[monthIndex] = monthCount;
+                                            <?php } ?>
+
+                                            DataByYear["<?php echo $year?>"] = (values);
+
+                                        <?php }?>
 
                                     <?php } ?>
 
+                                    dataset = [];
+                                    if(DataByYear !== {}){
+                                        var last = Object.keys(DataByYear).pop()
+                                        for( let year in DataByYear){
+                                            let empty = {hidden: (year === last) ? false : true, label: '', data: "", fill: false, borderColor: /*"rgb(36,203,159)"*/Colors.random().rgb, tension: 0.1};
+
+                                            empty.label = year;
+                                            empty.data = DataByYear[year];
+
+                                            dataset.push(empty);
+                                        }
+                                    } else {
+                                        dataset = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                                    }
+
                                     // area/line chart
                                     const data1 = {
-                                        labels: LabelsArray1,
-                                        datasets: [{
-                                            label: 'Árvores',
-                                            data: DataArray1,
-                                            fill: false,
-                                            borderColor: 'rgb(75, 192, 192)',
-                                            tension: 0.1
-                                        }]
+                                        labels: months,
+                                        datasets: dataset
                                     };
 
                                     const AreaChart1 = new Chart(document.getElementById('AreaChart1'), {
@@ -334,130 +439,133 @@
 
                 </div>
 
+                <h3 class="mt-4 mb-4">Transações</h3>
+                <div class="row">
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-primary text-white mb-4 text-center">
+                            <div class="card-body">
+                                <div class="fs-5">Transações</div>
+                                <div class="fs-4"><?php echo (!empty($this->userdata['transactionTotal'])) ? $this->userdata['transactionTotal'] : "0" ?></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-primary text-white mb-4 text-center">
+                            <div class="card-body">
+                                <div class="fs-5">Valor angariado</div>
+                                <div class="fs-4">
+                                    <?php if (!empty($this->userdata['transactionList'])) {
+                                        $result = 0;
+                                        foreach ($this->userdata['transactionList'] as $key => $transaction) {
+                                            $result += $transaction["value"];
+                                        }
+                                    }
+                                    echo $result . "€"?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-table me-1"></i>
-                        DataTable Example
+                        Ultimas transações
                     </div>
                     <div class="card-body">
-                        <table id="datatablesSimple">
+                        <table id="transactionsTable" class="table table-striped table-hover" style="width:100%">
                             <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>Identificador</th>
+                                <th>Tipo</th>
+                                <th>Método</th>
+                                <th>Utilizador</th>
+                                <th>Árvore</th>
+                                <th>Valor</th>
+                                <th>Data criado</th>
+                                <th>Data atualizado</th>
+                                <th>Data validado</th>
                             </tr>
                             </thead>
-                            <tfoot>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
-                            </tr>
-                            </tfoot>
                             <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                            </tr>
-                            <tr>
-                                <td>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                                <td>63</td>
-                                <td>2011/07/25</td>
-                                <td>$170,750</td>
-                            </tr>
-                            <tr>
-                                <td>Ashton Cox</td>
-                                <td>Junior Technical Author</td>
-                                <td>San Francisco</td>
-                                <td>66</td>
-                                <td>2009/01/12</td>
-                                <td>$86,000</td>
-                            </tr>
-                            <tr>
-                                <td>Cedric Kelly</td>
-                                <td>Senior Javascript Developer</td>
-                                <td>Edinburgh</td>
-                                <td>22</td>
-                                <td>2012/03/29</td>
-                                <td>$433,060</td>
-                            </tr>
-                            <tr>
-                                <td>Airi Satou</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                                <td>33</td>
-                                <td>2008/11/28</td>
-                                <td>$162,700</td>
-                            </tr>
-                            <tr>
-                                <td>Brielle Williamson</td>
-                                <td>Integration Specialist</td>
-                                <td>New York</td>
-                                <td>61</td>
-                                <td>2012/12/02</td>
-                                <td>$372,000</td>
-                            </tr>
-                            <tr>
-                                <td>Herrod Chandler</td>
-                                <td>Sales Assistant</td>
-                                <td>San Francisco</td>
-                                <td>59</td>
-                                <td>2012/08/06</td>
-                                <td>$137,500</td>
-                            </tr>
-                            <tr>
-                                <td>Rhona Davidson</td>
-                                <td>Integration Specialist</td>
-                                <td>Tokyo</td>
-                                <td>55</td>
-                                <td>2010/10/14</td>
-                                <td>$327,900</td>
-                            </tr>
-                            <tr>
-                                <td>Colleen Hurst</td>
-                                <td>Javascript Developer</td>
-                                <td>San Francisco</td>
-                                <td>39</td>
-                                <td>2009/09/15</td>
-                                <td>$205,500</td>
-                            </tr>
-                            <tr>
-                                <td>Sonya Frost</td>
-                                <td>Software Engineer</td>
-                                <td>Edinburgh</td>
-                                <td>23</td>
-                                <td>2008/12/13</td>
-                                <td>$103,600</td>
-                            </tr>
-                            <tr>
-                                <td>Jena Gaines</td>
-                                <td>Office Manager</td>
-                                <td>London</td>
-                                <td>30</td>
-                                <td>2008/12/19</td>
-                                <td>$90,560</td>
-                            </tr>
-                            <tr>
-                                <td>Quinn Flynn</td>
-                                <td>Support Lead</td>
-                                <td>Edinburgh</td>
-                                <td>22</td>
-                                <td>2013/03/03</td>
-                                <td>$342,000</td>
-                            </tr>
+                            <?php if (!empty($this->userdata['transactionList'])) {
+                                $count = 0;
+                                foreach ($this->userdata['transactionList'] as $key => $transaction) {
+                                    if ($count < 10) {?>
+                                        <tr>
+                                            <td id="bmpzvoeo4v-<?php echo $transaction["id"] ?>"
+                                                onclick="copy('<?php echo $transaction["id"] ?>','bmpzvoeo4v-<?php echo $transaction["id"] ?>')"
+                                                title="<?php echo $transaction["id"] ?>"
+                                                class="table-text-truncate"
+                                                style="cursor: pointer">
+                                                <?php echo $transaction["id"] ?>
+                                            </td>
+                                            <?php if (!empty($this->userdata['transactionTypeList'])) { foreach ($this->userdata['transactionTypeList'] as $key => $type) { if ( $type["id"] == $transaction["transactionTypeId"]){ $typeName = $type["name"]; } } }?>
+                                            <td id="bc3fn1e1hx-<?php echo $transaction["id"] ?>"
+                                                onclick="copy('<?php echo $typeName ?>','bc3fn1e1hx-<?php echo $transaction["id"] ?>')"
+                                                title="<?php echo $typeName ?>"
+                                                class="table-text-truncate"
+                                                style="cursor: pointer">
+                                                <?php echo $typeName ?>
+                                            </td>
+                                            <?php if (!empty($this->userdata['transactionMethodList'])) { foreach ($this->userdata['transactionMethodList'] as $key => $method) { if ( $method["id"] == $transaction["transactionMethodId"]){ $methodName = $method["name"]; } } }?>
+                                            <td id="qehnjmeopa-<?php echo $transaction["id"] ?>"
+                                                onclick="copy('<?php echo $methodName ?>','qehnjmeopa-<?php echo $transaction["id"] ?>')"
+                                                title="<?php echo $methodName ?>"
+                                                class="table-text-truncate"
+                                                style="cursor: pointer">
+                                                <?php echo $methodName ?>
+                                            </td>
+                                            <td id="0dlquhlflz-<?php echo $transaction["id"] ?>"
+                                                onclick="copy('<?php echo $transaction["userId"] ?>','0dlquhlflz-<?php echo $transaction["id"] ?>')"
+                                                title="<?php echo $transaction["userId"] ?>"
+                                                class="table-text-truncate"
+                                                style="cursor: pointer">
+                                                <?php echo $transaction["userId"] ?>
+                                            </td>
+                                            <td id="6efh5fxz3y-<?php echo $transaction["id"] ?>"
+                                                onclick="copy('<?php echo $transaction["treeId"] ?>','6efh5fxz3y-<?php echo $transaction["id"] ?>')"
+                                                title="<?php echo $transaction["treeId"] ?>"
+                                                class="table-text-truncate"
+                                                style="cursor: pointer">
+                                                <?php echo $transaction["treeId"] ?>
+                                            </td>
+                                            <td id="8njps2d3he-<?php echo $transaction["id"] ?>"
+                                                onclick="copy('<?php echo $transaction["value"] ?>','8njps2d3he-<?php echo $transaction["id"] ?>')"
+                                                title="<?php echo $transaction["value"] ?>"
+                                                class="table-text-truncate"
+                                                style="cursor: pointer">
+                                                <?php echo $transaction["value"] ?>
+                                            </td>
+                                            <td id="txq8n87681-<?php echo $transaction["id"] ?>"
+                                                onclick="copy('<?php echo $transaction["dateCreated"] ?>','txq8n87681-<?php echo $transaction["id"] ?>')"
+                                                title="<?php echo $transaction["dateCreated"] ?>"
+                                                class="table-text-truncate"
+                                                style="cursor: pointer">
+                                                <?php echo $transaction["dateCreated"] ?>
+                                            </td>
+                                            <td id="iiqwvbo98y-<?php echo $transaction["id"] ?>"
+                                                onclick="copy('<?php echo $transaction["dateModified"] ?>','iiqwvbo98y-<?php echo $transaction["id"] ?>')"
+                                                title="<?php echo $transaction["dateModified"] ?>"
+                                                class="table-text-truncate"
+                                                style="cursor: pointer">
+                                                <?php echo $transaction["dateModified"] ?>
+                                            </td>
+                                            <td id="r5bzfy57w7-<?php echo $transaction["id"] ?>"
+                                                onclick="copy('<?php echo $transaction["dateValidated"] ?>','r5bzfy57w7-<?php echo $transaction["id"] ?>')"
+                                                title="<?php echo $transaction["dateValidated"] ?>"
+                                                class="table-text-truncate"
+                                                style="cursor: pointer">
+                                                <?php echo $transaction["dateValidated"] ?>
+                                            </td>
+                                        </tr>
+                                        <?php $count++; ?>
+                                    <?php }
+                                }
+                            } else { ?>
+                                <tr>
+                                </tr>
+                            <?php } ?>
                             </tbody>
                         </table>
                     </div>
