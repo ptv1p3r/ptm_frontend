@@ -46,3 +46,32 @@ function copy(text, target) {
 
     return result;
 }
+
+//Get a random color from the colors array
+Colors = {};
+Colors.names = {
+    red: "#f14a4a",
+    purple: "#721f72",
+    black: "#2d2d2d",
+    blue: "#4c81ea",
+    brown: "#a52a2a",
+    darkorange: "#b26600",
+    gold: "#ffc400",
+    green: "#009a00",
+    indigo: "#773d93",
+    lime: "#6cef6c",
+    magenta: "#ef62ef",
+    maroon: "#942727",
+    orange: "#ff9e00",
+    pink: "#ffc0cb",
+    cyan: "#3cffff",
+    yellow: "#ffff3c"
+};
+Colors.random = function() {
+    var result;
+    var count = 0;
+    for (var prop in this.names)
+        if (Math.random() < 1/++count)
+            result = prop;
+    return { name: result, rgb: this.names[result]};
+};
