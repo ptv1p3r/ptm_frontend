@@ -65,6 +65,16 @@ function timeCalculation($time)
 }
 
 /**
+ * Metodo para returnar mes baseado no seu numero
+ * @param $number
+ * @return string
+ */
+function getMonth($number){
+    $months = array("Janeiro", 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro');
+    return $months[$number-1];
+}
+
+/**
  * Metodo para converter tamanhos de ficheiro para (KB, MB, GB, TB, PB)
  * usage: echo formatBytes('1073741824'); //1GB || https://www.html-code-generator.com/php/function/convert-bytes
  * @param $bytes
