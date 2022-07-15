@@ -246,6 +246,58 @@ class AdminController extends MainController
             $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
         }
 
+        //get trees List
+        $treesList = $modelo->getTreeList();
+        if ($treesList["statusCode"] === 401){
+            //faz o refresh do accessToken
+            $this->userTokenRefresh();
+
+            $treesList = $modelo->getTreeList();
+        }
+        if ($treesList["statusCode"] === 200){
+            $this->userdata['treesList'] = $treesList["body"]["trees"];//array_orderby(, "dateCreated", SORT_ASC);
+            $this->userdata['treesTotal'] = $treesList["body"]["total"];
+        }
+
+        //get user trees List / adopted trees
+        $adoptedTreesList = $modelo->getTreeUserList();
+        if ($adoptedTreesList["statusCode"] === 401){
+            //faz o refresh do accessToken
+            $this->userTokenRefresh();
+
+            $adoptedTreesList = $modelo->getTreeUserList();
+        }
+        if ($adoptedTreesList["statusCode"] === 200){
+            $this->userdata['adoptedTreesList'] = $adoptedTreesList["body"]["trees"];//array_orderby(, "dateCreated", SORT_ASC);
+            $this->userdata['adoptedTreesTotal'] = $adoptedTreesList["body"]["total"];
+        }
+
+        //get tree Intervention List
+        $treeInterventionList = $modelo->getTreeInterventionList();
+        if ($treeInterventionList["statusCode"] === 401){
+            //faz o refresh do accessToken
+            $this->userTokenRefresh();
+
+            $treeInterventionList = $modelo->getTreeInterventionList();
+        }
+        if ($treeInterventionList["statusCode"] === 200){
+            $this->userdata['treeInterventionList'] = $treeInterventionList["body"]["interventions"];//array_orderby(, "interventionDate", SORT_ASC);
+            $this->userdata['treeInterventionTotal'] = $treeInterventionList["body"]["total"];
+        }
+
+        //get users list
+        $userList = $modelo->getUserList();
+        if ($userList["statusCode"] === 401){
+            //faz o refresh do accessToken
+            $this->userTokenRefresh();
+
+            $userList = $modelo->getUserList();
+        }
+        if ($userList["statusCode"] === 200){
+            $this->userdata['usersList'] = $userList["body"]["users"];
+            $this->userdata['usersTotal'] = $userList["body"]["total"];
+        }
+
         /** Carrega os arquivos do view **/
         require ABSPATH . '/views/_includes/admin-header.php';
 
@@ -986,7 +1038,21 @@ class AdminController extends MainController
             $adoptedTreesList = $modelo->getTreeUserList();
         }
         if ($adoptedTreesList["statusCode"] === 200){
+            $this->userdata['adoptedTreesList'] = $adoptedTreesList["body"]["trees"];
             $this->userdata['adoptedTreesTotal'] = $adoptedTreesList["body"]["total"];
+        }
+
+        //get tree Intervention List
+        $treeInterventionList = $modelo->getTreeInterventionList();
+        if ($treeInterventionList["statusCode"] === 401){
+            //faz o refresh do accessToken
+            $this->userTokenRefresh();
+
+            $treeInterventionList = $modelo->getTreeInterventionList();
+        }
+        if ($treeInterventionList["statusCode"] === 200){
+            $this->userdata['treeInterventionList'] = $treeInterventionList["body"]["interventions"];
+            $this->userdata['treeInterventionTotal'] = $treeInterventionList["body"]["total"];
         }
 
         /** Carrega os arquivos do view **/

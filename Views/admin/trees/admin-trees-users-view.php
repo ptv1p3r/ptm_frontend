@@ -43,6 +43,7 @@
                                         <tr>
                                             <th>Utilizador</th>
                                             <th>Árvore</th>
+                                            <th>Data Criação</th>
                                             <th hidden>active</th>
                                             <th></th>
                                         </tr>
@@ -64,6 +65,13 @@
                                                         class="table-text-truncate"
                                                         style="cursor: pointer">
                                                         <?php echo $treeUser["treeId"] ?>
+                                                    </td>
+                                                    <td id="fsdwr45nss-<?php echo $treeUser["treeId"] ?>"
+                                                        onclick="copy('<?php echo $treeUser["dateCreated"] ?>','fsdwr45nss-<?php echo $treeUser["treeId"] ?>')"
+                                                        title="<?php echo $treeUser["dateCreated"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeUser["dateCreated"] ?>
                                                     </td>
                                                     <td hidden><?php echo $treeUser["active"] ?></td>
                                                     <td>
@@ -197,7 +205,7 @@
                 rowReorder: false,
                 responsive: false,
                 columnDefs: [ {
-                    targets: [2,3],
+                    targets: [3,4],
                     orderable: false,
                 }],
                 oLanguage: {

@@ -13,70 +13,121 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4 mb-4">Dashboard de árvores</h1>
-                <!--<ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active">Dashboard</li>
-                </ol>-->
+                <h1 class="mt-4 mb-4">Dashboard</h1>
+                <h3 class="mt-4 mb-4">Árvores</h3>
                 <div class="row">
                     <div class="col-xl-3 col-md-6">
                         <div class="card bg-primary text-white mb-4 text-center">
                             <div class="card-body">
-                                <div class="text-white fs-5">Árvores</div>
-                                <div class="text-white fs-4"><?php echo (!empty($this->userdata['treesTotal'])) ? $this->userdata['treesTotal'] : "0" ?></div>
+                                <div class="fs-5">Árvores</div>
+                                <div class="fs-4"><?php echo (!empty($this->userdata['treesTotal'])) ? $this->userdata['treesTotal'] : "0" ?></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6">
                         <div class="card bg-primary text-white mb-4 text-center">
                             <div class="card-body">
-                                <div class="text-white fs-5">Árvores adotadas</div>
-                                <div class="text-white fs-4"><?php echo (!empty($this->userdata['adoptedTreesTotal'])) ? $this->userdata['adoptedTreesTotal'] : "0" ?></div>
+                                <div class="fs-5">Árvores adotadas</div>
+                                <div class="fs-4"><?php echo (!empty($this->userdata['adoptedTreesTotal'])) ? $this->userdata['adoptedTreesTotal'] : "0" ?></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6">
                         <div class="card bg-primary text-white mb-4 text-center">
                             <div class="card-body">
-                                <div class="text-white fs-5">?</div>
-                                <div class="text-white fs-4">?</div>
+                                <div class="fs-5">Árvores ativas</div>
+                                <div class="fs-4">
+                                    <?php if (!empty($this->userdata['treesList'])) {
+                                        $count = 0;
+                                        foreach ($this->userdata['treesList'] as $key => $tree){
+                                            if ($tree["active"] === 1) {
+                                                $count++;
+                                            }
+                                        }
+                                        echo $count;
+                                    } ?>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6">
                         <div class="card bg-primary text-white mb-4 text-center">
                             <div class="card-body">
-                                <div class="text-white fs-5">?</div>
-                                <div class="text-white fs-4">?</div>
+                                <div class="fs-5">Árvores inativas</div>
+                                <div class="fs-4">
+                                    <?php if (!empty($this->userdata['treesList'])) {
+                                        $count = 0;
+                                        foreach ($this->userdata['treesList'] as $key => $tree){
+                                            if ($tree["active"] === 0) {
+                                                $count++;
+                                            }
+                                        }
+                                        echo $count;
+                                    } ?>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-xl-6">
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-chart-area me-1"></i>
-                                Area Chart Example
+                                Árvores adotadas ao longo do tempo
                             </div>
                             <div class="card-body">
-                                <canvas id="AreaChart" width="100%" height="40"></canvas>
+                                <canvas id="AreaChart1" width="100%" height="40"></canvas>
                                 <script>
+
+                                    let LabelsArray1 = [], DataArray1 = [];
+                                    <?php if (!empty($this->userdata['adoptedTreesList'])) {
+                                        //apanha coluna de datas
+                                        $timeColumn = array_column($this->userdata['adoptedTreesList'],"dateCreated");
+                                        $monthsColumn = []; $monthsNumbers = []; $distMonths = []; $distMonthsFull = [];
+
+                                        //para cada data em $timeColumn
+                                        foreach ($timeColumn as $key => $value){
+                                            $monthNumber = date("n", strtotime($value)); // apanha o numero do mes
+                                            $monthsNumbers[] = $monthNumber; // adiciona no array de numeros de meses
+                                            $monthsColumn[] = getMonth($monthNumber); // converte-o no mes escrito por extenso
+                                        }
+
+                                        $distMonths = array_unique($monthsNumbers);//apanha so 1 de cada mes
+                                        sort($distMonths); //ordena os numeros dos meses
+
+                                        $monthsNumbers = [];// limpa array de numeros de meses
+
+                                        //para cada numero de mes distinto
+                                        foreach ($distMonths as $key => $value){
+                                            $distMonthsFull[] = getMonth($value);//converte-o no mes escrito por extenso
+                                        }?>
+
+                                        //cria array de Labels e Data de meses
+                                        <?php foreach ($distMonthsFull as $key => $value){?>
+                                            LabelsArray1.push("<?php echo $value ?>");
+                                            <?php //conta quantos "janeiro" existem em $monthsColumn ?>
+                                            DataArray1.push("<?php echo array_count_values($monthsColumn)[$value] ?>")
+                                        <?php } ?>
+
+                                    <?php } ?>
+
                                     // area/line chart
-                                    const labels = [50,60,70,80,90,100,110,120,130,140,150];
-                                    const data = {
-                                        labels: labels,
+                                    const data1 = {
+                                        labels: LabelsArray1,
                                         datasets: [{
-                                            label: 'My First Dataset',
-                                            data: [7,8,8,9,9,9,10,11,14,14,15],
+                                            label: 'Árvores',
+                                            data: DataArray1,
                                             fill: false,
                                             borderColor: 'rgb(75, 192, 192)',
                                             tension: 0.1
                                         }]
                                     };
 
-                                    const AreaChart = new Chart(document.getElementById('AreaChart'), {
+                                    const AreaChart1 = new Chart(document.getElementById('AreaChart1'), {
                                         type: 'line',
-                                        data: data,
+                                        data: data1,
                                         options: {
                                             scales: {
                                                 y: {
@@ -85,8 +136,6 @@
                                             }
                                         }
                                     });
-
-
                                 </script>
                             </div>
                         </div>
@@ -95,30 +144,32 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-chart-bar me-1"></i>
-                                Gráfico de barras
+                                Árvores por nome
                             </div>
                             <div class="card-body">
-                                <canvas id="BarChart" width="100%" height="40"></canvas>
+                                <canvas id="BarChart2" width="100%" height="40"></canvas>
                                 <script>
-                                    let LabelsArray = [], DataArray = [];
+                                    //arvores adotadas por nome
+                                    let LabelsArray2 = [], DataArray2 = [];
                                     <?php if (!empty($this->userdata['treesList'])) {
                                         $namesColumn = array_column($this->userdata['treesList'],"name");
                                         $distNames = array_unique($namesColumn);?>
 
                                         <?php foreach ($distNames as $key => $value){ ?>
-                                            LabelsArray.push("<?php echo $value ?>");
-                                            DataArray.push("<?php echo array_count_values(array_column($this->userdata['treesList'], 'name'))[$value] ?>")
+                                            LabelsArray2.push("<?php echo $value ?>");
+                                            <?php //conta quantos "pinheiro" existem em $namesColumn ?>
+                                            DataArray2.push("<?php echo array_count_values($namesColumn)[$value] ?>")
                                         <?php }?>
 
                                     <?php } ?>
                                     //Bar chart
-                                    const BarChart = new Chart(document.getElementById('BarChart'), {
+                                    const BarChart2 = new Chart(document.getElementById('BarChart2'), {
                                         type: 'bar',
                                         data: {
-                                            labels: LabelsArray,
+                                            labels: LabelsArray2,
                                             datasets: [{
-                                                label: '# árvores por nome',
-                                                data: DataArray,
+                                                label: 'Árvores',
+                                                data: DataArray2,
                                                 backgroundColor: [
                                                     'rgba(255, 99, 132, 0.2)',
                                                     'rgba(54, 162, 235, 0.2)',
@@ -152,6 +203,234 @@
                         </div>
                     </div>
                 </div>
+
+                <h3 class="mt-4 mb-4">Intervenções</h3>
+                <div class="row">
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-primary text-white mb-4 text-center">
+                            <div class="card-body">
+                                <div class="fs-5">Intervenções</div>
+                                <div class="fs-4"><?php echo (!empty($this->userdata['treeInterventionTotal'])) ? $this->userdata['treeInterventionTotal'] : "0" ?></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-primary text-white mb-4 text-center">
+                            <div class="card-body">
+                                <div class="fs-5">Intervenções ativas</div>
+                                <div class="fs-4">
+                                    <?php if (!empty($this->userdata['treeInterventionList'])) {
+                                        $count = 0;
+                                        foreach ($this->userdata['treeInterventionList'] as $key => $intervention){
+                                            if ($intervention["active"] === 1) {
+                                                $count++;
+                                            }
+                                        }
+                                        echo $count;
+                                    } ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-primary text-white mb-4 text-center">
+                            <div class="card-body">
+                                <div class="fs-5">Intervenções inativas</div>
+                                <div class="fs-4">
+                                    <?php if (!empty($this->userdata['treeInterventionList'])) {
+                                        $count = 0;
+                                        foreach ($this->userdata['treeInterventionList'] as $key => $intervention){
+                                            if ($intervention["active"] === 0) {
+                                                $count++;
+                                            }
+                                        }
+                                        echo $count;
+                                    } ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-primary text-white mb-4 text-center">
+                            <div class="card-body">
+                                <div class="fs-5">Intervenções publicas</div>
+                                <div class="fs-4">
+                                    <?php if (!empty($this->userdata['treeInterventionList'])) {
+                                        $count = 0;
+                                        foreach ($this->userdata['treeInterventionList'] as $key => $intervention){
+                                            if ($intervention["public"] === 1) {
+                                                $count++;
+                                            }
+                                        }
+                                        echo $count;
+                                    } ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-primary text-white mb-4 text-center">
+                            <div class="card-body">
+                                <div class="fs-5">Intervenções não publicas</div>
+                                <div class="fs-4">
+                                    <?php if (!empty($this->userdata['treeInterventionList'])) {
+                                        $count = 0;
+                                        foreach ($this->userdata['treeInterventionList'] as $key => $intervention){
+                                            if ($intervention["public"] === 0) {
+                                                $count++;
+                                            }
+                                        }
+                                        echo $count;
+                                    } ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-area me-1"></i>
+                                Intervenções ao longo do tempo
+                            </div>
+                            <div class="card-body">
+                                <canvas id="AreaChart3" width="100%" height="40"></canvas>
+                                <script>
+
+                                    let LabelsArray3 = [], DataArray3 = [];
+                                    <?php if (!empty($this->userdata['treeInterventionList'])) {
+                                        //TODO: meter todos os meses nos charts
+
+                                        //apanha coluna de datas
+                                        $timeColumn = array_column($this->userdata['treeInterventionList'],"interventionDate");
+                                        $monthsColumn = []; $monthsNumbers = []; $distMonths = []; $distMonthsFull = [];
+
+                                        //para cada data em $timeColumn
+                                        foreach ($timeColumn as $key => $value){
+                                            $monthNumber = date("n", strtotime($value)); // apanha o numero do mes
+                                            $monthsNumbers[] = $monthNumber; // adiciona no array de numeros de meses
+                                            $monthsColumn[] = getMonth($monthNumber); // converte-o no mes escrito por extenso e adiciona ao array de meses
+                                        }
+
+                                        $distMonths = array_unique($monthsNumbers);//apanha so 1 de cada mes
+                                        sort($distMonths); //ordena os numeros dos meses
+
+                                        $monthsNumbers = [];// limpa array de numeros de meses
+
+                                        //para cada numero de mes distinto
+                                        foreach ($distMonths as $key => $value){
+                                            $distMonthsFull[] = getMonth($value);//converte-o no mes escrito por extenso e adiciona ao array de meses
+                                        }?>
+
+                                        //cria array de Labels e Data de meses
+                                        <?php foreach ($distMonthsFull as $key => $value){?>
+                                            LabelsArray3.push("<?php echo $value ?>");
+                                            <?php //conta quantos "janeiro" existem em $monthsColumn ?>
+                                            DataArray3.push("<?php echo array_count_values($monthsColumn)[$value] ?>")
+                                        <?php } ?>
+
+                                    <?php } ?>
+
+                                    // area/line chart
+                                    const data3 = {
+                                        labels: LabelsArray3,
+                                        datasets: [{
+                                            label: 'Intervenções',
+                                            data: DataArray3,
+                                            fill: false,
+                                            borderColor: 'rgb(75, 192, 192)',
+                                            tension: 0.1
+                                        }]
+                                    };
+
+                                    const AreaChart3 = new Chart(document.getElementById('AreaChart3'), {
+                                        type: 'line',
+                                        data: data3,
+                                        options: {
+                                            scales: {
+                                                y: {
+                                                    beginAtZero: true
+                                                }
+                                            }
+                                        }
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-bar me-1"></i>
+                                Intervenções por nome de árvores
+                            </div>
+                            <div class="card-body">
+                                <canvas id="BarChart4" width="100%" height="40"></canvas>
+                                <script>
+                                    //arvores adotadas por nome
+                                    let LabelsArray4 = [], DataArray4 = [];
+                                    <?php if (!empty($this->userdata['treesList']) && !empty($this->userdata['treeInterventionList']) ) {
+                                        $interTreeIdColumn = array_column($this->userdata['treeInterventionList'],"treeId");
+                                        $distInterTreeId = array_unique($interTreeIdColumn);?>
+
+                                        <?php foreach ($distInterTreeId as $key => $value){ ?>
+                                            <?php foreach ($this->userdata['treesList'] as $key => $tree) {
+                                                if ($tree["id"] === $value) {?>
+                                                    LabelsArray4.push("<?php echo $tree["name"] ?>");
+                                                    <?php //conta quantos "pinheiro" existem em $namesColumn ?>
+                                                    DataArray4.push("<?php echo array_count_values($interTreeIdColumn)[$value] ?>")
+                                                <?php }
+                                            }
+                                        }?>
+
+                                    <?php } ?>
+                                    //Bar chart
+                                    const BarChart4 = new Chart(document.getElementById('BarChart4'), {
+                                        type: 'bar',
+                                        data: {
+                                            labels: LabelsArray4,
+                                            datasets: [{
+                                                label: 'Árvores',
+                                                data: DataArray4,
+                                                backgroundColor: [
+                                                    'rgba(255, 99, 132, 0.2)',
+                                                    'rgba(54, 162, 235, 0.2)',
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(75, 192, 192, 0.2)',
+                                                    'rgba(153, 102, 255, 0.2)',
+                                                    'rgba(255, 159, 64, 0.2)'
+                                                ],
+                                                borderColor: [
+                                                    'rgba(255, 99, 132, 1)',
+                                                    'rgba(54, 162, 235, 1)',
+                                                    'rgba(255, 206, 86, 1)',
+                                                    'rgba(75, 192, 192, 1)',
+                                                    'rgba(153, 102, 255, 1)',
+                                                    'rgba(255, 159, 64, 1)'
+                                                ],
+                                                borderWidth: 1
+                                            }]
+                                        },
+                                        options: {
+                                            scales: {
+                                                y: {
+                                                    beginAtZero: true
+                                                }
+                                            }
+                                        }
+                                    });
+
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
                 <!--<div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-table me-1"></i>

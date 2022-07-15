@@ -14,73 +14,112 @@
         <main>
             <div class="container-fluid px-4">
                 <h1 class="mt-4">Dashboard</h1>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active">Dashboard</li>
-                </ol>
+                <h3 class="mt-4 mb-4">Utilizadores</h3>
                 <div class="row">
                     <div class="col-xl-3 col-md-6">
-                        <div class="card bg-primary text-white mb-4">
-                            <div class="card-body">Primary Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        <div class="card bg-primary text-white mb-4 text-center">
+                            <div class="card-body">
+                                <div class="fs-5">Utilizadores</div>
+                                <div class="fs-4"><?php echo (!empty($this->userdata['usersTotal'])) ? $this->userdata['usersTotal'] : "0" ?></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6">
-                        <div class="card bg-warning text-white mb-4">
-                            <div class="card-body">Warning Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        <div class="card bg-primary text-white mb-4 text-center">
+                            <div class="card-body">
+                                <div class="fs-5">Utilizadores ativos</div>
+                                <div class="fs-4">
+                                    <?php if (!empty($this->userdata['usersList'])) {
+                                        $count = 0;
+                                        foreach ($this->userdata['usersList'] as $key => $user){
+                                            if ($user["active"] === 1) {
+                                                $count++;
+                                            }
+                                        }
+                                        echo $count;
+                                    } ?>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6">
-                        <div class="card bg-success text-white mb-4">
-                            <div class="card-body">Success Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-danger text-white mb-4">
-                            <div class="card-body">Danger Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        <div class="card bg-primary text-white mb-4 text-center">
+                            <div class="card-body">
+                                <div class="fs-5">Utilizadores inativos</div>
+                                <div class="fs-4">
+                                    <?php if (!empty($this->userdata['usersList'])) {
+                                        $count = 0;
+                                        foreach ($this->userdata['usersList'] as $key => $user){
+                                            if ($user["active"] === 0) {
+                                                $count++;
+                                            }
+                                        }
+                                        echo $count;
+                                    } ?>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-xl-6">
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-chart-area me-1"></i>
-                                Area Chart Example
+                                Utilizadores ao longo do tempo
                             </div>
                             <div class="card-body">
-                                <canvas id="AreaChart" width="100%" height="40"></canvas>
+                                <canvas id="AreaChart3" width="100%" height="40"></canvas>
                                 <script>
+
+                                    let LabelsArray3 = [], DataArray3 = [];
+                                    <?php if (!empty($this->userdata['treesList'])) {
+                                    //apanha coluna de datas
+                                    $timeColumn = array_column($this->userdata['usersList'],"dateCreated");
+                                    $monthsColumn = []; $monthsNumbers = []; $distMonths = []; $distMonthsFull = [];
+
+                                    //para cada data em $timeColumn
+                                    foreach ($timeColumn as $key => $value){
+                                        $monthNumber = date("n", strtotime($value)); // apanha o numero do mes
+                                        $monthsNumbers[] = $monthNumber; // adiciona no array de numeros de meses
+                                        $monthsColumn[] = getMonth($monthNumber); // converte-o no mes escrito por extenso
+                                    }
+
+                                    $distMonths = array_unique($monthsNumbers);//apanha so 1 de cada mes
+                                    sort($distMonths); //ordena os numeros dos meses
+
+                                    $monthsNumbers = [];// limpa array de numeros de meses
+
+                                    //para cada numero de mes distinto
+                                    foreach ($distMonths as $key => $value){
+                                        $distMonthsFull[] = getMonth($value);//converte-o no mes escrito por extenso
+                                    }?>
+
+                                    //cria array de Labels e Data de meses
+                                    <?php foreach ($distMonthsFull as $key => $value){?>
+                                    LabelsArray3.push("<?php echo $value ?>");
+                                    <?php //conta quantos "janeiro" existem em $monthsColumn ?>
+                                    DataArray3.push("<?php echo array_count_values($monthsColumn)[$value] ?>")
+                                    <?php } ?>
+
+                                    <?php } ?>
+
                                     // area/line chart
-                                    const labels = [50,60,70,80,90,100,110,120,130,140,150];
-                                    const data = {
-                                        labels: labels,
+                                    const data3 = {
+                                        labels: LabelsArray3,
                                         datasets: [{
-                                            label: 'My First Dataset',
-                                            data: [7,8,8,9,9,9,10,11,14,14,15],
+                                            label: 'Utilizadores',
+                                            data: DataArray3,
                                             fill: false,
                                             borderColor: 'rgb(75, 192, 192)',
                                             tension: 0.1
                                         }]
                                     };
 
-                                    const AreaChart = new Chart(document.getElementById('AreaChart'), {
+                                    const AreaChart3 = new Chart(document.getElementById('AreaChart3'), {
                                         type: 'line',
-                                        data: data,
+                                        data: data3,
                                         options: {
                                             scales: {
                                                 y: {
@@ -89,48 +128,127 @@
                                             }
                                         }
                                     });
-
-
                                 </script>
                             </div>
                         </div>
                     </div>
+
+                </div>
+
+                <h3 class="mt-4 mb-4">Árvores</h3>
+                <div class="row">
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-primary text-white mb-4 text-center">
+                            <div class="card-body">
+                                <div class="fs-5">Árvores</div>
+                                <div class="fs-4"><?php echo (!empty($this->userdata['treesTotal'])) ? $this->userdata['treesTotal'] : "0" ?></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-primary text-white mb-4 text-center">
+                            <div class="card-body">
+                                <div class="fs-5">Árvores adotadas</div>
+                                <div class="fs-4"><?php echo (!empty($this->userdata['adoptedTreesTotal'])) ? $this->userdata['adoptedTreesTotal'] : "0" ?></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-primary text-white mb-4 text-center">
+                            <div class="card-body">
+                                <div class="fs-5">Árvores ativas</div>
+                                <div class="fs-4">
+                                    <?php if (!empty($this->userdata['treesList'])) {
+                                        $count = 0;
+                                        foreach ($this->userdata['treesList'] as $key => $tree){
+                                            if ($tree["active"] === 1) {
+                                                $count++;
+                                            }
+                                        }
+                                        echo $count;
+                                    } ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-primary text-white mb-4 text-center">
+                            <div class="card-body">
+                                <div class="fs-5">Árvores inativas</div>
+                                <div class="fs-4">
+                                    <?php if (!empty($this->userdata['treesList'])) {
+                                        $count = 0;
+                                        foreach ($this->userdata['treesList'] as $key => $tree){
+                                            if ($tree["active"] === 0) {
+                                                $count++;
+                                            }
+                                        }
+                                        echo $count;
+                                    } ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="col-xl-6">
                         <div class="card mb-4">
                             <div class="card-header">
-                                <i class="fas fa-chart-bar me-1"></i>
-                                Bar Chart Example
+                                <i class="fas fa-chart-area me-1"></i>
+                                Árvores ao longo do tempo
                             </div>
                             <div class="card-body">
-                                <canvas id="BarChart" width="100%" height="40"></canvas>
+                                <canvas id="AreaChart2" width="100%" height="40"></canvas>
                                 <script>
-                                    //Bar chart
-                                    const BarChart = new Chart(document.getElementById('BarChart'), {
-                                        type: 'bar',
-                                        data: {
-                                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                                            datasets: [{
-                                                label: '# of Votes',
-                                                data: [12, 19, 3, 5, 2, 3],
-                                                backgroundColor: [
-                                                    'rgba(255, 99, 132, 0.2)',
-                                                    'rgba(54, 162, 235, 0.2)',
-                                                    'rgba(255, 206, 86, 0.2)',
-                                                    'rgba(75, 192, 192, 0.2)',
-                                                    'rgba(153, 102, 255, 0.2)',
-                                                    'rgba(255, 159, 64, 0.2)'
-                                                ],
-                                                borderColor: [
-                                                    'rgba(255, 99, 132, 1)',
-                                                    'rgba(54, 162, 235, 1)',
-                                                    'rgba(255, 206, 86, 1)',
-                                                    'rgba(75, 192, 192, 1)',
-                                                    'rgba(153, 102, 255, 1)',
-                                                    'rgba(255, 159, 64, 1)'
-                                                ],
-                                                borderWidth: 1
-                                            }]
-                                        },
+
+                                    let LabelsArray2 = [], DataArray2 = [];
+                                    <?php if (!empty($this->userdata['treesList'])) {
+                                        //apanha coluna de datas
+                                        $timeColumn = array_column($this->userdata['treesList'],"dateCreated");
+                                        $monthsColumn = []; $monthsNumbers = []; $distMonths = []; $distMonthsFull = [];
+
+                                        //para cada data em $timeColumn
+                                        foreach ($timeColumn as $key => $value){
+                                            $monthNumber = date("n", strtotime($value)); // apanha o numero do mes
+                                            $monthsNumbers[] = $monthNumber; // adiciona no array de numeros de meses
+                                            $monthsColumn[] = getMonth($monthNumber); // converte-o no mes escrito por extenso
+                                        }
+
+                                        $distMonths = array_unique($monthsNumbers);//apanha so 1 de cada mes
+                                        sort($distMonths); //ordena os numeros dos meses
+
+                                        $monthsNumbers = [];// limpa array de numeros de meses
+
+                                        //para cada numero de mes distinto
+                                        foreach ($distMonths as $key => $value){
+                                            $distMonthsFull[] = getMonth($value);//converte-o no mes escrito por extenso
+                                        }?>
+
+                                        //cria array de Labels e Data de meses
+                                        <?php foreach ($distMonthsFull as $key => $value){?>
+                                            LabelsArray2.push("<?php echo $value ?>");
+                                            <?php //conta quantos "janeiro" existem em $monthsColumn ?>
+                                            DataArray2.push("<?php echo array_count_values($monthsColumn)[$value] ?>")
+                                        <?php } ?>
+
+                                    <?php } ?>
+
+                                    // area/line chart
+                                    const data2 = {
+                                        labels: LabelsArray2,
+                                        datasets: [{
+                                            label: 'Árvores',
+                                            data: DataArray2,
+                                            fill: false,
+                                            borderColor: 'rgb(75, 192, 192)',
+                                            tension: 0.1
+                                        }]
+                                    };
+
+                                    const AreaChart2 = new Chart(document.getElementById('AreaChart2'), {
+                                        type: 'line',
+                                        data: data2,
                                         options: {
                                             scales: {
                                                 y: {
@@ -139,11 +257,81 @@
                                             }
                                         }
                                     });
-
                                 </script>
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-xl-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-area me-1"></i>
+                                Árvores adotadas ao longo do tempo
+                            </div>
+                            <div class="card-body">
+                                <canvas id="AreaChart1" width="100%" height="40"></canvas>
+                                <script>
+
+                                    let LabelsArray1 = [], DataArray1 = [];
+                                    <?php if (!empty($this->userdata['adoptedTreesList'])) {
+                                        //apanha coluna de datas
+                                        $timeColumn = array_column($this->userdata['adoptedTreesList'],"dateCreated");
+                                        $monthsColumn = []; $monthsNumbers = []; $distMonths = []; $distMonthsFull = [];
+
+                                        //para cada data em $timeColumn
+                                        foreach ($timeColumn as $key => $value){
+                                            $monthNumber = date("n", strtotime($value)); // apanha o numero do mes
+                                            $monthsNumbers[] = $monthNumber; // adiciona no array de numeros de meses
+                                            $monthsColumn[] = getMonth($monthNumber); // converte-o no mes escrito por extenso
+                                        }
+
+                                        $distMonths = array_unique($monthsNumbers);//apanha so 1 de cada mes
+                                        sort($distMonths); //ordena os numeros dos meses
+
+                                        $monthsNumbers = [];// limpa array de numeros de meses
+
+                                        //para cada numero de mes distinto
+                                        foreach ($distMonths as $key => $value){
+                                            $distMonthsFull[] = getMonth($value);//converte-o no mes escrito por extenso
+                                        }?>
+
+                                        //cria array de Labels e Data de meses
+                                        <?php foreach ($distMonthsFull as $key => $value){?>
+                                            LabelsArray1.push("<?php echo $value ?>");
+                                            <?php //conta quantos "janeiro" existem em $monthsColumn ?>
+                                            DataArray1.push("<?php echo array_count_values($monthsColumn)[$value] ?>")
+                                        <?php } ?>
+
+                                    <?php } ?>
+
+                                    // area/line chart
+                                    const data1 = {
+                                        labels: LabelsArray1,
+                                        datasets: [{
+                                            label: 'Árvores',
+                                            data: DataArray1,
+                                            fill: false,
+                                            borderColor: 'rgb(75, 192, 192)',
+                                            tension: 0.1
+                                        }]
+                                    };
+
+                                    const AreaChart1 = new Chart(document.getElementById('AreaChart1'), {
+                                        type: 'line',
+                                        data: data1,
+                                        options: {
+                                            scales: {
+                                                y: {
+                                                    beginAtZero: true
+                                                }
+                                            }
+                                        }
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="card mb-4">
