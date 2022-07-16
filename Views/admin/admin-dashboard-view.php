@@ -16,7 +16,7 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Dashboard</h1>
+                <h1 class="mt-4">Dashboard </h1> <p><small>*Página com recarregamento automático a cada 5 minutos.</small></p>
                 <h3 class="mt-4 mb-4">Utilizadores</h3>
                 <div class="row">
                     <div class="col-xl-3 col-md-6">

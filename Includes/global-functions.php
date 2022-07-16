@@ -117,8 +117,7 @@ function array_orderby() {
  * @param $url
  * @param $data
  * @param string $token
-// * @return bool|string
- * @return array
+ * @return array|void
  */
 function callAPI($method, $url, $data, $token = "")
 {
@@ -175,8 +174,12 @@ function callAPI($method, $url, $data, $token = "")
         'Content-Type: ' . $header
     ));
     curl_setopt($curl, CURLOPT_HEADER, true);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+
+    //if url doesnt respond, set timeout
+    curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+    curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
 
     // EXECUTE:
     $result = curl_exec($curl);
@@ -190,15 +193,20 @@ function callAPI($method, $url, $data, $token = "")
     //gets body from api response
     $body = substr($result, $header_size);
 
-    //final response array construction
-    $resultArray = array(
-        "statusCode" => $http_status,
-        "body" => json_decode($body, true) //decode json body from api response
-    );
-
     if (!$result) {
-        die("Connection Failure");
+        die("API Connection Failure");
+        /*$resultArray = array(
+            "statusCode" => 503,
+            "body" => "Service Unavailable" //decode json body from api response
+        );*/
+    } else {
+        //final response array construction
+        $resultArray = array(
+            "statusCode" => $http_status,
+            "body" => json_decode($body, true) //decode json body from api response
+        );
     }
+
     curl_close($curl);
     return $resultArray;
 }
