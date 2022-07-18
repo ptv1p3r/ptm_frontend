@@ -53,8 +53,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
     <!--<script src="https://cdn.datatables.net/rowreorder/1.2.8/js/dataTables.rowReorder.min.js"></script>-->
     <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.8/css/rowReorder.dataTables.min.css">
-    <!--<script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">-->
+    <!----><script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
 
     <!-- selectize.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.5/js/standalone/selectize.min.js" integrity="sha512-JFjt3Gb92wFay5Pu6b0UCH9JIOkOGEfjIi7yykNWUwj55DBBp79VIJ9EPUzNimZ6FvX41jlTHpWFUQjog8P/sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -86,25 +86,17 @@
                 </a>
                 <!-- Dropdown - Messages -->
                 <div class="dropdown-menu dropdown-menu-end" style="width: 20rem !important;">
-                    <h6 class="dropdown-header">Message Center</h6>
+                    <h6 class="dropdown-header">Centro de mensagens</h6>
 
-                    <!-- show only the last 5 messages -->
-                    <?php if (!empty($this->userdata['userMessageList'])) {
-                        $count = 0;
-                        foreach ($this->userdata['userMessageList'] as $key => $message) {
-                            if ($message["receptionDate"] === null && $count < 5) {?>
-                                <a class="dropdown-item d-flex align-items-center" href="<?php echo HOME_URL . '/admin/messages/' . $message["id"];?>">
-                                    <div class="dropdown-item">
-                                        <div class="text-truncate" style="width: 100%"><?php echo $message["message"] ?></div>
-                                        <div class="small text-gray-500"><?php echo $message["fromName"] ?> · <?php echo $message["notificationDate"] ?></div>
-                                    </div>
-                                </a>
-                            <?php $count++;
-                            }
-                        }
-                    }?>
+                    <div class="dropdown-body">
+                        <a class="dropdown-item d-flex align-items-center" href="javascript:void(0);">
+                            <div class="dropdown-item">
+                                <div class="text-truncate" style="width: 100%">Sem novas mensagens</div>
+                            </div>
+                        </a>
+                    </div>
 
-                    <a class="dropdown-item text-center small text-gray-500" href="<?php echo HOME_URL . '/admin/messages/inbox';?>">Read More Messages</a>
+                    <a class="dropdown-item text-center small text-gray-500" href="<?php echo HOME_URL . '/admin/messages/inbox';?>">Todas as minhas mensagens</a>
                 </div>
             </li>
 
@@ -114,11 +106,31 @@
                     <i class="fas fa-user fa-fw"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="<?php echo HOME_URL . '/admin/settings';?>">Settings</a></li>
+                    <li><a class="dropdown-item" href="<?php echo HOME_URL . '/admin/settings';?>">Meus dados</a></li>
                     <li><hr class="dropdown-divider" /></li>
-                    <li><a class="dropdown-item" href="<?php echo HOME_URL . '/admin/applogout';?>">Logout</a></li>
+                    <li><a class="dropdown-item" href="<?php echo HOME_URL . '/admin/applogout';?>">Sair</a></li>
                 </ul>
             </li>
 
         </ul>
     </nav>
+
+<script>
+    function loadMsgs(){
+        <!-- show only the last 5 messages -->
+        <?php if (!empty($this->userdata['userMessageList'])) {
+            $count = 0;
+            foreach ($this->userdata['userMessageList'] as $key => $message) {
+                if ($message["receptionDate"] === null && $count < 5) {?>
+                $(".dropdown-body").html(`<a class="dropdown-item d-flex align-items-center" href="<?php echo HOME_URL . '/admin/messages/' . $message["id"];?>">
+                    <div class="dropdown-item">
+                        <div class="text-truncate" style="width: 100%"><?php echo $message["message"] ?></div>
+                        <div class="small text-gray-500"><?php echo $message["fromName"] ?> · <?php echo $message["notificationDate"] ?></div>
+                    </div>
+                </a>`)
+                <?php $count++;
+                }
+            }
+        }?>
+    }loadMsgs();
+</script>

@@ -8,12 +8,12 @@
 
 <div id="layoutSidenav">
     <!-- import sidebar -->
-    <?php require ABSPATH . '/views/_includes/admin-sidebar.php'?>
+    <?php require ABSPATH . '/views/_includes/admin-sidebar.php' ?>
 
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Gestão de <b>Intervenções</b></h1>
+                <h1 class="mt-4">Gestão de <b>intervenções</b></h1>
                 <div class="row">
 
                     <!--<div class="col-xl-12 col-md-12 mb-4">
@@ -25,52 +25,113 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <a href="#addTreeInterventionsModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTreeInterventionsModal">
-                                    <i class="fas fa-plus-circle"></i><span>Add New Tree Intervention</span>
+                                    <i class="fas fa-plus-circle"></i><span> Nova intervenção</span>
                                 </a>
+                                <div class="float-end">
+                                    <label>filtro:</label>
+                                    <select id='GetActive'>
+                                        <option value=''>Todos</option>
+                                        <option value='1'>Ativos</option>
+                                        <option value='0'>Inativos</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="card-body">
-                                <table id="treeInterventionsTable" class="table table-striped table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>treeId</th>
-                                        <th>date</th>
-                                        <th>subject</th>
-                                        <th>description</th>
-                                        <th>observations</th>
-                                        <th>public</th>
-                                        <th>active
-                                            <select id='GetActive'>
-                                                <option value=''>All</option>
-                                                <option value='1'>Active</option>
-                                                <option value='0'>Inactive</option>
-                                            </select>
-                                        </th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php if (!empty($this->userdata['treeInterventionList'])) {
-                                        foreach ($this->userdata['treeInterventionList'] as $key => $treeIntervention) { ?>
-                                            <tr>
-                                                <td><?php echo $treeIntervention["treeId"] ?></td>
-                                                <td><?php echo $treeIntervention["interventionDate"] ?></td>
-                                                <td><?php echo $treeIntervention["subject"] ?></td>
-                                                <td><?php echo $treeIntervention["description"] ?></td>
-                                                <td><?php echo $treeIntervention["observations"] ?></td>
-                                                <td><?php echo $treeIntervention["public"] ?></td>
-                                                <td><?php echo $treeIntervention["active"] ?></td>
-                                                <td>
-                                                    <a href="#editTreeInterventionsModal" id="<?php echo $treeIntervention['id'] ?>" class="edit" data-bs-toggle="modal" data-bs-target="#editTreeInterventionsModal"><i class="far fa-edit"></i></a>
-                                                    <a href="#deleteTreeInterventionsModal" id="<?php echo $treeIntervention['id'] ?>" class="delete" data-bs-toggle="modal" data-bs-target="#deleteTreeInterventionsModal"><i class="fas fa-trash-alt"></i></a>
-                                                </td>
-                                            </tr>
-                                        <?php }
-                                    } else { ?>
+                                <div class="table-responsive">
+                                    <table id="treeInterventionsTable" class="table table-striped table-hover" style="width: 100%">
+                                        <thead>
                                         <tr>
+                                            <th>Árvore</th>
+                                            <th>Data</th>
+                                            <th>Assunto</th>
+                                            <th>Descrição</th>
+                                            <th>Observaçao</th>
+                                            <th>Publico</th>
+                                            <th>Data Criação</th>
+                                            <th>Data Modificação</th>
+                                            <th hidden>active</th>
+                                            <th></th>
                                         </tr>
-                                    <?php } ?>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        <?php if (!empty($this->userdata['treeInterventionList'])) {
+                                            foreach ($this->userdata['treeInterventionList'] as $key => $treeIntervention) { ?>
+                                                <tr>
+                                                    <td id="oypmsjeq9b-<?php echo $treeIntervention["id"] ?>"
+                                                        onclick="copy('<?php echo $treeIntervention["treeId"] ?>','oypmsjeq9b-<?php echo $treeIntervention["id"] ?>')"
+                                                        title="<?php echo $treeIntervention["treeId"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeIntervention["treeId"] ?>
+                                                    </td>
+                                                    <td id="1thoc89kam-<?php echo $treeIntervention["id"] ?>"
+                                                        onclick="copy('<?php echo $treeIntervention["interventionDate"] ?>','1thoc89kam-<?php echo $treeIntervention["id"] ?>')"
+                                                        title="<?php echo $treeIntervention["interventionDate"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeIntervention["interventionDate"] ?>
+                                                    </td>
+                                                    <td id="dgcpp7ftam-<?php echo $treeIntervention["id"] ?>"
+                                                        onclick="copy('<?php echo $treeIntervention["subject"] ?>','dgcpp7ftam-<?php echo $treeIntervention["id"] ?>')"
+                                                        title="<?php echo $treeIntervention["subject"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeIntervention["subject"] ?>
+                                                    </td>
+                                                    <td id="s7ybaq0bif-<?php echo $treeIntervention["id"] ?>"
+                                                        onclick="copy('<?php echo $treeIntervention["description"] ?>','s7ybaq0bif-<?php echo $treeIntervention["id"] ?>')"
+                                                        title="<?php echo $treeIntervention["description"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeIntervention["description"] ?>
+                                                    </td>
+                                                    <td id="hn27z7lwzg-<?php echo $treeIntervention["id"] ?>"
+                                                        onclick="copy('<?php echo $treeIntervention["observations"] ?>','hn27z7lwzg-<?php echo $treeIntervention["id"] ?>')"
+                                                        title="<?php echo $treeIntervention["observations"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeIntervention["observations"] ?>
+                                                    </td>
+                                                    <?php $treePublic = ($treeIntervention["public"] === 0) ? "Não" : "Sim"; ?>
+                                                    <td id="xc84lt4k02-<?php echo $treeIntervention["id"] ?>"
+                                                        onclick="copy('<?php echo $treePublic ?>','xc84lt4k02-<?php echo $treeIntervention["id"] ?>')"
+                                                        title="<?php echo $treePublic ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treePublic ?>
+                                                    </td>
+                                                    <td id="uufmrtms2b-<?php echo $treeIntervention["id"] ?>"
+                                                        onclick="copy('<?php echo $treeIntervention["dateCreated"] ?>','uufmrtms2b-<?php echo $treeIntervention["id"] ?>')"
+                                                        title="<?php echo $treeIntervention["dateCreated"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeIntervention["dateCreated"] ?>
+                                                    </td>
+                                                    <td id="ltrderm65t-<?php echo $treeIntervention["id"] ?>"
+                                                        onclick="copy('<?php echo $treeIntervention["dateModified"] ?>','ltrderm65t-<?php echo $treeIntervention["id"] ?>')"
+                                                        title="<?php echo $treeIntervention["dateModified"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeIntervention["dateModified"] ?>
+                                                    </td>
+                                                    <td hidden><?php echo $treeIntervention["active"] ?></td>
+                                                    <td>
+                                                        <div class="float-end">
+                                                            <a href="#editTreeInterventionsModal" id="<?php echo $treeIntervention['id'] ?>" class="edit m-2"
+                                                               data-bs-toggle="modal" data-bs-target="#editTreeInterventionsModal"><i class="far fa-edit fa-lg"></i></a>
+                                                            <a href="#deleteTreeInterventionsModal" id="<?php echo $treeIntervention['id'] ?>" class="delete m-2"
+                                                               data-bs-toggle="modal" data-bs-target="#deleteTreeInterventionsModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php }
+                                        } else { ?>
+                                            <tr>
+                                            </tr>
+                                        <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -87,16 +148,16 @@
                 <div class="modal-content">
                     <form id="addTreeInterventions">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Tree Intervention</h4>
+                            <h4 class="modal-title">Adicionar intervenção</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>treeId</label>
+                                <label>Árvore</label>
                                 <input type="text" class="form-control" name="addTreeInterventionTreeId" required>
                             </div>
                             <div class="form-group">
-                                <label>Date</label>
+                                <label>Data</label>
                                 <div class='input-group' id='datetimepicker1' data-td-target-input='nearest' data-td-target-toggle='nearest'>
                                     <input id='datetimepicker1Input' name="addTreeInterventionDate" type='text' class='form-control' data-td-target='#datetimepicker1' required/>
                                     <span class='input-group-text' data-td-target='#datetimepicker1' data-td-toggle='datetimepicker'>
@@ -105,29 +166,29 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>subject</label>
+                                <label>Assunto</label>
                                 <input type="text" class="form-control" name="addTreeInterventionSubject" required>
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
+                                <label>Descrição</label>
                                 <input type="text" class="form-control" name="addTreeInterventionDescription" required>
                             </div>
                             <div class="form-group">
-                                <label>Observations</label>
+                                <label>Observação</label>
                                 <input type="text" class="form-control" name="addTreeInterventionObservations" required>
                             </div>
                             <div class="form-group form-check form-switch">
-                                <label>public</label>
+                                <label>Publico</label>
                                 <input type="checkbox" role="switch" class="form-check-input" name="addTreeInterventionPublic">
                             </div>
                             <div class="form-group form-check form-switch">
-                                <label>Active</label>
+                                <label>Ativo</label>
                                 <input type="checkbox" role="switch" class="form-check-input" name="addTreeInterventionActive">
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-success" value="Add">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-success" value="Adicionar">
                         </div>
                     </form>
                 </div>
@@ -140,7 +201,7 @@
                 <div class="modal-content">
                     <form id="editTreeInterventions">
                         <div class="modal-header">
-                            <h4 class="modal-title">Edit Tree Intervention</h4>
+                            <h4 class="modal-title">Editar intervenção</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -149,11 +210,11 @@
                             </div>
 
                             <div class="form-group">
-                                <label>treeId</label>
+                                <label>Árvore</label>
                                 <input type="text" class="form-control" name="editTreeInterventionTreeId" required>
                             </div>
                             <div class="form-group">
-                                <label>Date</label>
+                                <label>Data</label>
                                 <div class='input-group' id='datetimepicker2' data-td-target-input='nearest' data-td-target-toggle='nearest'>
                                     <input id='datetimepicker2Input' name="editTreeInterventionDate" type='text' class='form-control' data-td-target='#datetimepicker2' required/>
                                     <span class='input-group-text' data-td-target='#datetimepicker2' data-td-toggle='datetimepicker'>
@@ -162,30 +223,30 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>subject</label>
+                                <label>Assunto</label>
                                 <input type="text" class="form-control" name="editTreeInterventionSubject" required>
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
+                                <label>Descrição</label>
                                 <input type="text" class="form-control" name="editTreeInterventionDescription" required>
                             </div>
                             <div class="form-group">
-                                <label>Observations</label>
+                                <label>Observação</label>
                                 <input type="text" class="form-control" name="editTreeInterventionObservations" required>
                             </div>
                             <div class="form-group form-check form-switch">
-                                <label>public</label>
+                                <label>Publico</label>
                                 <input type="checkbox" role="switch" class="form-check-input" name="editTreeInterventionPublic">
                             </div>
                             <div class="form-group form-check form-switch">
-                                <label>Active</label>
+                                <label>Ativo</label>
                                 <input type="checkbox" role="switch" class="form-check-input" name="editTreeInterventionActive">
                             </div>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-success" value="Save">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-success" value="Guardar">
                         </div>
                     </form>
                 </div>
@@ -198,35 +259,23 @@
                 <div class="modal-content">
                     <form id="deleteTreeInterventions">
                         <div class="modal-header">
-                            <h4 class="modal-title">Delete Tree Intervention</h4>
+                            <h4 class="modal-title">Apagar intervenção</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Are you sure you want to delete this Tree?</p>
-                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                            <p>Tem a certeza que quer apagar esta intervenção?</p>
+                            <p class="text-warning"><small>A ação não pode ser defeita.</small></p>
                             <input id="deleteTreeInterventionId" name="deleteTreeInterventionId" type="hidden" class="form-control" value="">
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-danger" value="Delete">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-danger" value="Apagar">
                         </div>
                     </form>
                 </div>
             </div>
         </div>
 
-        <!-- Logout Modal HTML
-    <div id="logoutModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4>Logout <i class="fa fa-lock"></i></h4>
-                </div>
-                <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
-                <div class="modal-footer"><a href="<?php //echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
-            </div>
-        </div>
-    </div>-->
 
 
         <script>
@@ -236,16 +285,19 @@
                 try {
                     var table = $('#treeInterventionsTable').DataTable({
                         rowReorder: false,
-                        responsive: true,
+                        responsive: false,
                         columnDefs: [{
-                            targets: [6, 7],
+                            targets: [8, 9],
                             orderable: false,
-                        }]
+                        }],
+                        oLanguage: {
+                            "sUrl": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-PT.json"
+                        }
                     });
                     //filtra table se ativo, inativo ou mostra todos
                     $('#GetActive').on('change', function () {
                         let selectedItem = $(this).children("option:selected").val();
-                        table.columns(6).search(selectedItem).draw();
+                        table.columns(8).search(selectedItem).draw();
                     })
                 } catch (error){
                     console.log(error);
@@ -253,12 +305,26 @@
 
 
                 //datetimepicker with momentjs plugin
-                tempusDominus.extend(tempusDominus.plugins.moment_parse, 'YYYY/MM/DD HH:mm:ss');
+                tempusDominus.extend(tempusDominus.plugins.moment_parse, 'YYYY-MM-DD HH:mm:ss');
                 //datepicker form add
-                new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'));
+                new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
+                    display: {
+                        components: {
+                            useTwentyfourHour: true
+                        }
+                    },
+                    useCurrent:true
+                });
 
                 //datepicker form edit
-                new tempusDominus.TempusDominus(document.getElementById('datetimepicker2'));
+                new tempusDominus.TempusDominus(document.getElementById('datetimepicker2'), {
+                    display: {
+                        components: {
+                            useTwentyfourHour: true
+                        }
+                    },
+                    useCurrent:false
+                });
 
 
 
@@ -369,7 +435,7 @@
                             if (data.statusCode === 201){
                                 //mensagem de Success
                                 Swal.fire({
-                                    title: 'Success!',
+                                    title: 'Sucesso!',
                                     text: data.body.message,
                                     icon: 'success',
                                     showConfirmButton: false,
@@ -381,7 +447,7 @@
                             } else {
                                 //mensagem de Error
                                 Swal.fire({
-                                    title: 'Error!',
+                                    title: 'Erro!',
                                     text: data.body.message,
                                     icon: 'error',
                                     showConfirmButton: false,
@@ -396,8 +462,8 @@
                         error: function (data) {
                             //mensagem de Error
                             Swal.fire({
-                                title: 'Error!',
-                                text: "Connection error, please try again.",
+                                title: 'Erro!',
+                                text: "Erro de conexão, por favor tente denovo.",
                                 icon: 'error',
                                 showConfirmButton: false,
                                 timer: 2000,
@@ -453,7 +519,7 @@
                             if (data.statusCode === 200){
                                 //mensagem de Success
                                 Swal.fire({
-                                    title: 'Success!',
+                                    title: 'Sucesso!',
                                     text: data.body.message,
                                     icon: 'success',
                                     showConfirmButton: false,
@@ -465,7 +531,7 @@
                             } else {
                                 //mensagem de Error
                                 Swal.fire({
-                                    title: 'Error!',
+                                    title: 'Erro!',
                                     text: data.body.message,
                                     icon: 'error',
                                     showConfirmButton: false,
@@ -480,8 +546,8 @@
                         error: function (data) {
                             //mensagem de Error
                             Swal.fire({
-                                title: 'Error!',
-                                text: "Connection error, please try again.",
+                                title: 'Erro!',
+                                text: "Erro de conexão, por favor tente denovo.",
                                 icon: 'error',
                                 showConfirmButton: false,
                                 timer: 2000,
@@ -543,7 +609,7 @@
                         },
                         error: function (data) {
                             Swal.fire({
-                                title: 'Error!',
+                                title: 'Erro!',
                                 text: data.body.message,
                                 icon: 'error',
                                 showConfirmButton: false,
@@ -583,7 +649,7 @@
                             if (data.statusCode === 200){
                                 //mensagem de Success
                                 Swal.fire({
-                                    title: 'Success!',
+                                    title: 'Sucesso!',
                                     text: data.body.message,
                                     icon: 'success',
                                     showConfirmButton: false,
@@ -595,7 +661,7 @@
                             } else {
                                 //mensagem de Error
                                 Swal.fire({
-                                    title: 'Error!',
+                                    title: 'Erro!',
                                     text: data.body.message,
                                     icon: 'error',
                                     showConfirmButton: false,
@@ -610,8 +676,8 @@
                         error: function (data) {
                             //mensagem de Error
                             Swal.fire({
-                                title: 'Error!',
-                                text: "Connection error, please try again.",
+                                title: 'Erro!',
+                                text: "Erro de conexão, por favor tente denovo.",
                                 icon: 'error',
                                 showConfirmButton: false,
                                 timer: 2000,

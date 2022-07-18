@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: V1p3r
- * Date: 21/11/2018
- * Time: 22:33
- */
+
 //ini_set("memory_limit",-1);
 // Prevents direct access
 if (!defined('ABSPATH')) exit;

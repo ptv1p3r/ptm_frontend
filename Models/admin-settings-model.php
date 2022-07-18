@@ -221,40 +221,4 @@ class AdminSettingsModel extends MainModel
         return json_decode(json_encode($result), true);
     }
 
-    /**
-     * Metodo delete Grupo
-     * @param $data
-     * @return mixed
-     */
-    public function deleteAdmin($data)
-    {
-        $result = null;
-        $UserId = null;
-
-        foreach ($data as $dataVector) {
-            foreach ($dataVector as $key => $value) {
-                switch ($dataVector['name']) { //gets input name=""
-                    case "deleteAdminId":
-                        $UserId = $dataVector['value'];
-                        break;
-                }
-            }
-        }
-
-        /**TODO
-         * $url = API_URL . 'api/v1/users/delete/' . $UserId;
-        / Deslidado propositadamente para evitar apagar conta
-        */
-
-        $url = API_URL . '/api/v1/users/delete/' . $UserId;
-
-        if (!empty($_SESSION['userdata']['accessToken'])) {
-            $userToken = $_SESSION['userdata']['accessToken'];
-            $result = callAPI("DELETE", $url, '', $userToken);
-        }
-
-        //trasforma toda a msg em string json para poder ser enviado
-        return json_decode(json_encode($result), true);
-    }
-
 }

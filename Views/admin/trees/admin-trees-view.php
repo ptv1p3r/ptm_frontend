@@ -8,12 +8,12 @@
 
 <div id="layoutSidenav">
     <!-- import sidebar -->
-    <?php require ABSPATH . '/views/_includes/admin-sidebar.php'?>
+    <?php require ABSPATH . '/views/_includes/admin-sidebar.php' ?>
 
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Gestão de <b>Árvores</b></h1>
+                <h1 class="mt-4">Gestão de <b>árvores</b></h1>
                 <div class="row">
 
                     <div class="col-xl-12 col-md-12 mb-4">
@@ -25,54 +25,129 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <a href="#addTreeModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTreeModal">
-                                    <i class="fas fa-plus-circle"></i><span>Add New Tree</span>
+                                    <i class="fas fa-plus-circle"></i><span> Nova árvore</span>
                                 </a>
+                                <div class="float-end">
+                                    <label>filtro:</label>
+                                    <select id='GetActive'>
+                                        <option value=''>Todos</option>
+                                        <option value='1'>Ativos</option>
+                                        <option value='0'>Inativos</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="card-body">
-                                <table id="treesTable" class="table table-striped table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>name</th>
-                                        <th>nameCommon</th>
-                                        <th>description</th>
-                                        <th>observations</th>
-                                        <th>typeId</th>
-                                        <th>lat</th>
-                                        <th>lng</th>
-                                        <th>active
-                                            <select id='GetActive'>
-                                                <option value=''>All</option>
-                                                <option value='1'>Active</option>
-                                                <option value='0'>Inactive</option>
-                                            </select>
-                                        </th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php if (!empty($this->userdata['treesList'])) {
-                                        foreach ($this->userdata['treesList'] as $key => $tree) { ?>
-                                            <tr>
-                                                <td><?php echo $tree["name"] ?></td>
-                                                <td><?php echo $tree["nameCommon"] ?></td>
-                                                <td><?php echo $tree["description"] ?></td>
-                                                <td><?php echo $tree["observations"] ?></td>
-                                                <td><?php echo $tree["typeId"] ?></td>
-                                                <td><?php echo $tree["lat"] ?></td>
-                                                <td><?php echo $tree["lng"] ?></td>
-                                                <td><?php echo $tree["active"] ?></td>
-                                                <td>
-                                                    <a href="#editTreeModal" id="<?php echo $tree['id'] ?>" class="edit" data-bs-toggle="modal" data-bs-target="#editTreeModal"><i class="far fa-edit"></i></a>
-                                                    <a href="#deleteTreeModal" id="<?php echo $tree['id'] ?>" class="delete" data-bs-toggle="modal" data-bs-target="#deleteTreeModal"><i class="fas fa-trash-alt"></i></a>
-                                                </td>
-                                            </tr>
-                                        <?php }
-                                    } else { ?>
+                                <div class="table-responsive">
+                                    <table id="treesTable" class="table table-striped table-sm" style="width:100%">
+                                        <thead>
                                         <tr>
+                                            <th>Identificador</th>
+                                            <th>Nome</th>
+                                            <th>Nome comum</th>
+                                            <th>Descrição</th>
+                                            <th>Observações</th>
+                                            <th>Tipo</th>
+                                            <th>lat</th>
+                                            <th>lng</th>
+                                            <th>Data Criação</th>
+                                            <th>Data Modificação</th>
+                                            <th hidden>active</th>
+                                            <th></th>
                                         </tr>
-                                    <?php } ?>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        <?php if (!empty($this->userdata['treesList'])) {
+                                            foreach ($this->userdata['treesList'] as $key => $tree) { ?>
+                                                <tr>
+                                                    <td id="d210j1x8i9-<?php echo $tree["id"] ?>"
+                                                        onclick="copy('<?php echo $tree["id"] ?>','d210j1x8i9-<?php echo $tree["id"] ?>')"
+                                                        title="<?php echo $tree["id"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $tree["id"] ?>
+                                                    </td>
+                                                    <td id="fau9fv44vf-<?php echo $tree["id"] ?>"
+                                                        onclick="copy('<?php echo $tree["name"] ?>','fau9fv44vf-<?php echo $tree["id"] ?>')"
+                                                        title="<?php echo $tree["name"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $tree["name"] ?>
+                                                    </td>
+                                                    <td id="my2kda7utd-<?php echo $tree["id"] ?>"
+                                                        onclick="copy('<?php echo $tree["nameCommon"] ?>','my2kda7utd-<?php echo $tree["id"] ?>')"
+                                                        title="<?php echo $tree["nameCommon"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $tree["nameCommon"] ?>
+                                                    </td>
+                                                    <td id="19hogucdo8-<?php echo $tree["id"] ?>"
+                                                        onclick="copy('<?php echo $tree["description"] ?>','19hogucdo8-<?php echo $tree["id"] ?>')"
+                                                        title="<?php echo $tree["description"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $tree["description"] ?>
+                                                    </td>
+                                                    <td id="x3hfoezx8q-<?php echo $tree["id"] ?>"
+                                                        onclick="copy('<?php echo $tree["observations"] ?>','x3hfoezx8q-<?php echo $tree["id"] ?>')"
+                                                        title="<?php echo $tree["observations"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $tree["observations"] ?>
+                                                    </td>
+                                                    <?php if (!empty($this->userdata['treeTypesList'])) { foreach ($this->userdata['treeTypesList'] as $key => $type) { if ( $type["id"] == $tree["typeId"]){ $typeName = $type["name"]; } } }?>
+                                                    <td id="lfca8ctid7-<?php echo $tree["id"] ?>"
+                                                        onclick="copy('<?php echo $typeName ?>','lfca8ctid7-<?php echo $tree["id"] ?>')"
+                                                        title="<?php echo $typeName ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $typeName ?>
+                                                    </td>
+                                                    <td id="m8f8qy9bsk-<?php echo $tree["id"] ?>"
+                                                        onclick="copy('<?php echo $tree["lat"] ?>','m8f8qy9bsk-<?php echo $tree["id"] ?>')"
+                                                        title="<?php echo $tree["lat"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $tree["lat"] ?>
+                                                    </td>
+                                                    <td id="0piqt9r7gu-<?php echo $tree["id"] ?>"
+                                                        onclick="copy('<?php echo $tree["lng"] ?>','0piqt9r7gu-<?php echo $tree["id"] ?>')"
+                                                        title="<?php echo $tree["lng"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $tree["lng"] ?>
+                                                    </td>
+                                                    <td id="cd5tntewxm-<?php echo $tree["id"] ?>"
+                                                        onclick="copy('<?php echo $tree["dateCreated"] ?>','cd5tntewxm-<?php echo $tree["id"] ?>')"
+                                                        title="<?php echo $tree["dateCreated"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $tree["dateCreated"] ?>
+                                                    </td>
+                                                    <td id="12n35nxebd-<?php echo $tree["id"] ?>"
+                                                        onclick="copy('<?php echo $tree["dateModified"] ?>','12n35nxebd-<?php echo $tree["id"] ?>')"
+                                                        title="<?php echo $tree["dateModified"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $tree["dateModified"] ?>
+                                                    </td>
+                                                    <td hidden><?php echo $tree["active"] ?></td>
+                                                    <td>
+                                                        <div class="float-end">
+                                                            <a href="#editTreeModal" id="<?php echo $tree['id'] ?>" class="edit m-2"
+                                                               data-bs-toggle="modal" data-bs-target="#editTreeModal"><i class="far fa-edit fa-lg"></i></a>
+                                                            <a href="#deleteTreeModal" id="<?php echo $tree['id'] ?>" class="delete m-2"
+                                                               data-bs-toggle="modal" data-bs-target="#deleteTreeModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php }
+                                        } else { ?>
+                                            <tr>
+                                            </tr>
+                                        <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -89,29 +164,37 @@
             <div class="modal-content">
                 <form id="addTree">
                     <div class="modal-header">
-                        <h4 class="modal-title">Add Tree</h4>
+                        <h4 class="modal-title">Adicionar árvore</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>Name</label>
+                            <label>Nome</label>
                             <input type="text" class="form-control" name="addTreeName" required>
                         </div>
                         <div class="form-group">
-                            <label>NameCommon</label>
+                            <label>Nome comum</label>
                             <input type="text" class="form-control" name="addTreeNameCommon" required>
                         </div>
                         <div class="form-group">
-                            <label>Description</label>
+                            <label>Descrição</label>
                             <input type="text" class="form-control" name="addTreeDescription" required>
                         </div>
                         <div class="form-group">
-                            <label>Observations</label>
+                            <label>Observações</label>
                             <input type="text" class="form-control" name="addTreeObservations" required>
                         </div>
                         <div class="form-group">
-                            <label>TypeId</label>
-                            <input type="text" class="form-control" name="addTreeTypeId" required>
+                            <label>Tipo</label>
+                            <!--<input type="text" class="form-control" name="addTreeTypeId" required>-->
+                            <select class="form-select" name="addTreeTypeId" id="addTreeTypeId" required>
+                                <option value="" disabled selected>Selecione o tipo</option>
+                                <?php if (!empty($this->userdata['treeTypesList'])) {
+                                    foreach ($this->userdata['treeTypesList'] as $key => $type) { ?>
+                                        <option value="<?php echo $type['id'] ?>"><?php echo $type["name"] ?></option>
+                                    <?php }
+                                } ?>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label>Latitude</label>
@@ -121,14 +204,14 @@
                             <label>Longitude</label>
                             <input type="number" step="any" class="form-control" name="addTreeLng" required>
                         </div>
-                        <div class="form-group">
-                            <label>Active</label>
-                            <input type="checkbox" class="form-control form-check-input" name="addTreeActive">
+                        <div class="form-group form-check form-switch">
+                            <label>Ativo</label>
+                            <input type="checkbox" role="switch" class="form-check-input" name="addTreeActive">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <input type="submit" class="btn btn-success" value="Add">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <input type="submit" class="btn btn-success" value="Adicionar">
                     </div>
                 </form>
             </div>
@@ -141,7 +224,7 @@
             <div class="modal-content">
                 <form id="editTree">
                     <div class="modal-header">
-                        <h4 class="modal-title">Edit Tree</h4>
+                        <h4 class="modal-title">Editar árvore</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -150,24 +233,32 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Name</label>
+                            <label>Nome</label>
                             <input type="text" class="form-control" name="editTreeName" required>
                         </div>
                         <div class="form-group">
-                            <label>NameCommon</label>
+                            <label>Nome comum</label>
                             <input type="text" class="form-control" name="editTreeNameCommon" required>
                         </div>
                         <div class="form-group">
-                            <label>Description</label>
+                            <label>Descrição</label>
                             <input type="text" class="form-control" name="editTreeDescription" required>
                         </div>
                         <div class="form-group">
-                            <label>Observations</label>
+                            <label>Observações</label>
                             <input type="text" class="form-control" name="editTreeObservations" required>
                         </div>
                         <div class="form-group">
-                            <label>TypeId</label>
-                            <input type="text" class="form-control" name="editTreeTypeId" required>
+                            <label>Tipo</label>
+                            <!--<input type="text" class="form-control" name="editTreeTypeId" required>-->
+                            <select class="form-select" name="editTreeTypeId" id="editTreeTypeId" required>
+                                <option value="" disabled selected>Selecione o tipo</option>
+                                <?php if (!empty($this->userdata['treeTypesList'])) {
+                                    foreach ($this->userdata['treeTypesList'] as $key => $type) { ?>
+                                        <option value="<?php echo $type['id'] ?>"><?php echo $type["name"] ?></option>
+                                    <?php }
+                                } ?>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label>Latitude</label>
@@ -177,15 +268,15 @@
                             <label>Longitude</label>
                             <input type="number" step="any" class="form-control" name="editTreeLng" required>
                         </div>
-                        <div class="form-group">
-                            <label>Active</label>
-                            <input type="checkbox" class="form-control form-check-input" name="editTreeActive">
+                        <div class="form-group form-check form-switch">
+                            <label>Ativo</label>
+                            <input type="checkbox" role="switch" class="form-check-input" name="editTreeActive">
                         </div>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <input type="submit" class="btn btn-success" value="Save">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <input type="submit" class="btn btn-success" value="Guardar">
                     </div>
                 </form>
             </div>
@@ -198,41 +289,28 @@
             <div class="modal-content">
                 <form id="deleteTree">
                     <div class="modal-header">
-                        <h4 class="modal-title">Delete Tree</h4>
+                        <h4 class="modal-title">Apagar árvore</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Are you sure you want to delete this Tree?</p>
-                        <p class="text-warning"><small>This action cannot be undone.</small></p>
+                        <p>Tem a certeza que quer apagar esta árvore?</p>
+                        <p class="text-warning"><small>A ação não pode ser defeita.</small></p>
                         <input id="deleteTreeId" name="deleteTreeId" type="hidden" class="form-control" value="">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <input type="submit" class="btn btn-danger" value="Delete">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <input type="submit" class="btn btn-danger" value="Apagar">
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Logout Modal HTML
-    <div id="logoutModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4>Logout <i class="fa fa-lock"></i></h4>
-                </div>
-                <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
-                <div class="modal-footer"><a href="<?php //echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
-            </div>
-        </div>
-    </div>-->
-
 
 <script>
     // get tree first image
     function getImg(tree_id){
-        let treeImagePath = "no image path";
+        let treeImagePath = "";
 
         let formData = {
             'action' : "GetTreeImage",
@@ -249,11 +327,16 @@
                 $('#loader').removeClass('hidden')
             },
             success: function (data) {
-                treeImagePath = data["images"][0]["path"];
+                if (data.statusCode === 404){
+                    treeImagePath = "<?php echo HOME_URL . '/Images/admin/noimage.png' ?>";
+                } else {
+                    treeImagePath = "<?php echo API_URL . 'api/v1/trees/image/' ?>" + data["images"][0]["path"];
+                }
+
             },
             error: function (data) {
                 Swal.fire({
-                    title: 'Error!',
+                    title: 'Erro!',
                     text: data.body.message,
                     icon: 'error',
                     showConfirmButton: false,
@@ -277,24 +360,28 @@
         try{
             var table = $('#treesTable').DataTable({
                 rowReorder: false,
-                responsive: true,
-                columnDefs: [ {
-                    targets: [7,8],
-                    orderable: false,
-                }]
+                responsive: false,
+                columnDefs: [
+                    {
+                        targets:[10,11],
+                        orderable: false,
+                    }
+                ],
+                oLanguage: {
+                    "sUrl": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-PT.json"
+                }
             });
             //filtra table se ativo, inativo ou mostra todos
             $('#GetActive').on('change', function() {
                 let selectedItem = $(this).children("option:selected").val();
-                table.columns(7).search(selectedItem).draw();
+                table.columns(10).search(selectedItem).draw();
             })
         } catch (error){
             console.log(error);
         }
 
 
-
-        // TreesMap
+        //Leaflet map icons
         var greenIcon = L.icon({
             iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/mapMarker.png'?>',
             shadowUrl: '<?php echo HOME_URL . '/Images/mapMarkers/shadow.png'?>',
@@ -317,6 +404,7 @@
             popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
 
+        //Leaflet map
         let map = L.map('map').setView([37.319518557906285, -8.556156285649438], 12.5);
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             maxZoom: 18,
@@ -326,52 +414,98 @@
             accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
         }).addTo(map);
 
-        //function to load all trees from API
+        //function create a blue marker / arvore adotada
+        function createBlueMarker(lat, lng, params){
+            params["icon"] = blueIcon;
+            params["adopted"] = 'sim';
+            return new L.marker([lat, lng],params);
+        }
+
+        //function create a green marker / arvore nao adotada
+        function createGreenMarker(lat, lng, params){
+            params["icon"] = greenIcon;
+            params["adopted"] = 'não';
+            return new L.marker([lat, lng],params);
+        }
+
+        //Load trees to respective Layers
+        let ActiveTrees = L.layerGroup(), InactiveTrees= L.layerGroup();
         function mapLoadTrees(){
-            <?php if (!empty($this->userdata['treesList'])) {
-                foreach ($this->userdata['treesList'] as $key => $tree) {?>
-                    marker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
-                            icon: greenIcon,
-                            user: 'none',
-                            name: '<?php echo $tree["name"]?>',
-                            tree_id: '<?php echo $tree["id"]?>',
-                        }).addTo(map).on("click", markerOnClick);
-                <?php }
-            }?>
+            <?php
+            if (!empty($this->userdata['treesList']) && !empty($this->userdata['adoptedTreesList'])) {
+                $adopted = array_column($this->userdata['adoptedTreesList'], 'treeId');
+                foreach ($this->userdata['treesList'] as $key => $tree) {
+                    //checks if tree is already adopted or not
+                    if (in_array($tree["id"], $adopted)) { ?>
+                        marker = createBlueMarker(<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>,
+                            { name: '<?php echo $tree["name"]?>', tree_id: '<?php echo $tree["id"]?>'}
+                        );
+                    <?php } else {?>
+                        marker = createGreenMarker(<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>,
+                            { name: '<?php echo $tree["name"]?>', tree_id: '<?php echo $tree["id"]?>'}
+                        );
+                    <?php }?>
+
+                    //checks if tree is active or inactive
+                    <?php if ($tree["active"] === 1) { ?>
+                        marker.addTo(ActiveTrees).on("click", markerOnClick);
+                    <?php } else {?>
+                        marker.addTo(InactiveTrees).on("click", markerOnClick);
+                    <?php }?>
+
+                <?php }?>
+            <?php }?>
         }
         mapLoadTrees();
 
-        //popup on map click
-        /*var popupMap = L.popup();
-        function onMapClick(e) {
-            popupMap
-                .setLatLng(e.latlng)
-                .setContent("LAT: " + e.latlng.lat + " LNG: " + e.latlng.lng)
-                .openOn(map);
-        }
-        map.on('click', onMapClick);*/
+        //show all trees by default
+        map.addLayer(ActiveTrees);
+        map.addLayer(InactiveTrees);
+
+        //filter trees on map. all, active or inactive
+        $('#GetActive').on('change', function() {
+            function removeAlltrees(){map.removeLayer(ActiveTrees); map.removeLayer(InactiveTrees);}
+            let selectedItem = $(this).children("option:selected").val();
+
+            //all
+            if(selectedItem === ""){
+                removeAlltrees()// remove all trees
+                map.addLayer(ActiveTrees);// adds active
+                map.addLayer(InactiveTrees);// adds inactive
+            }
+
+            //active
+            if(selectedItem === "1"){
+                removeAlltrees()// remove all trees
+                map.addLayer(ActiveTrees);// adds active
+            }
+
+            //inactive
+            if(selectedItem === "0"){
+                removeAlltrees()// remove all trees
+                map.addLayer(InactiveTrees);// adds inactive
+            }
+
+        })
 
         //popup on marker click
         var popupMarker = L.popup();
         function markerOnClick(e) {
-            let image_path = getImg(this.options.tree_id);
             popupMarker
                 .setLatLng(e.latlng)
                 .setContent(
-                    `<div class="card" style="width: 10rem; border: unset">
-                    <img id="tree-card-image" src="<?php echo API_URL . 'api/v1/trees/image/' ?>` + image_path + `" class="card-img-top" alt="" height="160">
+                    `<div class="card" style="width: 15rem; border: unset">
+                    <img id="tree-card-image" src="` + getImg(this.options.tree_id) + `" class="card-img-top" alt="" height="160">
                       <div class="card-body">
                         <h5 class="card-title">` + this.options.name + `</h5>
-                        <!--<p class="card-text text-truncate">` + this.options.description + `</p>-->
-                        <!--<p class="card-text">Padrinho: ` + this.options.user + `</p>-->
+                        <p class="card-text">id: ` + this.options.tree_id + `</p>
+                        <p class="card-text">adotada: ` + this.options.adopted + `</p>
                         <p class="card-text">Latitude: ` + e.latlng.lat + `</p>
                         <p class="card-text">Longitude: ` + e.latlng.lng + `</p>
                       </div>
                     </div>`
                 )
                 .openOn(map);
-
-            //map.flyTo([e.latlng.lat, e.latlng.lng], 15);
         }
 
 
@@ -399,7 +533,7 @@
                     if (data.statusCode === 201){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -411,7 +545,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -426,8 +560,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -483,7 +617,7 @@
                     if (data.statusCode === 200){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -495,7 +629,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -510,8 +644,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -569,7 +703,7 @@
                 },
                 error: function (data) {
                     Swal.fire({
-                        title: 'Error!',
+                        title: 'Erro!',
                         text: data.body.message,
                         icon: 'error',
                         showConfirmButton: false,
@@ -609,7 +743,7 @@
                     if (data.statusCode === 200){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -621,7 +755,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -636,8 +770,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,

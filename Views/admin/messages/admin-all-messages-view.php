@@ -28,20 +28,20 @@
                                             <div class="row">
                                                 <!-- BEGIN INBOX MENU -->
                                                 <div class="col-md-3">
-                                                    <h2 class="grid-title"><i class="fa fa-inbox"></i> Inbox (All)</h2>
-                                                    <a class="btn btn-block btn-primary"
+                                                    <h2 class="grid-title"><i class="fa fa-inbox"></i>&nbsp;Todas mensagens</h2>
+                                                    <a class="btn btn-block btn-primary" style="display: block"
                                                        data-bs-toggle="modal" data-bs-target="#addMessageModal">
-                                                        <i class="fa fa-pencil"></i>&nbsp;&nbsp;NEW MESSAGE
+                                                        <i class="fa fa-pencil"></i>&nbsp;&nbsp;Nova mensagem
                                                     </a>
 
                                                     <hr>
 
                                                     <div>
                                                         <ul class="nav flex-column nav-pills nav-stacked">
-                                                            <li class="header">Folders</li>
+                                                            <li class="header">Core</li>
                                                             <li class="nav-item <?php echo ($tabActive === "inbox") ? "active" : ""?>">
                                                                 <a class="nav-link" href="<?php echo HOME_URL . '/admin/all_messages/inbox'?>">
-                                                                    <i class="fa fa-inbox"></i> Inbox
+                                                                    <i class="fa fa-inbox"></i> Caixa de entrada
                                                                 </a>
                                                             </li>
                                                         </ul>
@@ -59,11 +59,11 @@
                                                             <div class="btn-group">
                                                                 <input id="all-none" type="checkbox">
                                                                 <button hidden id="action-button" type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                    Action <span class="caret"></span>
+                                                                    Ação <span class="caret"></span>
                                                                 </button>
                                                                 <ul class="dropdown-menu" role="menu">
                                                                     <li><a href="#bulkDeleteMessagesModal" class="dropdown-item"
-                                                                           data-bs-toggle="modal" data-bs-target="#bulkDeleteMessagesModal" title="Delete">Delete</a></li>
+                                                                           data-bs-toggle="modal" data-bs-target="#bulkDeleteMessagesModal">Apagar</a></li>
                                                                 </ul>
                                                             </div>
                                                             <!-- refresh -->
@@ -78,7 +78,7 @@
                                                     <!-- INBOX/SENT -->
                                                     <div id="inbox-body">
                                                         <div class="table-responsive">
-                                                            <table class="table" id="messagesTable">
+                                                            <table class="table" id="messagesTable" style="width:100%">
                                                                 <thead hidden>
                                                                 <tr>
                                                                     <th>col1</th>
@@ -100,10 +100,10 @@
                                                                                 <input class="message-check" type="checkbox">
                                                                             </td>
                                                                             <td class="name">
-                                                                                From: <?php echo $message["fromName"] ?>
+                                                                                De: <?php echo $message["fromName"] ?>
                                                                             </td>
                                                                             <td class="name">
-                                                                                To: <?php echo $message["toName"] ?>
+                                                                                Para: <?php echo $message["toName"] ?>
                                                                             </td>
                                                                             <td class="subject">
                                                                                 <div class="text-truncate" style="max-width: 200px">
@@ -115,7 +115,7 @@
                                                                             <td class="time"><?php echo $message["notificationDate"] ?></td>
                                                                             <td>
                                                                                 <a href="#deleteMessageModal" id="<?php echo $message['id'] ?>" class="delete m-2"
-                                                                                   data-bs-toggle="modal" data-bs-target="#deleteMessageModal" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                                                                                   data-bs-toggle="modal" data-bs-target="#deleteMessageModal" title="Apagar"><i class="fas fa-trash-alt fa-lg"></i></a>
                                                                             </td>
                                                                         </tr>
 
@@ -138,14 +138,14 @@
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header bg-blue">
-                                                                    <h4 class="modal-title"><i class="fa fa-envelope"></i> Compose New Message</h4>
+                                                                    <h4 class="modal-title"><i class="fa fa-envelope"></i> Nova mensagem</h4>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
                                                                 <form id="addMessage">
                                                                     <div class="modal-body">
                                                                         <input id="addMessageFromUser" name="addMessageFromUser" type="hidden" class="form-control" value="<?php echo $_SESSION["userdata"]["id"];?>">
                                                                         <div class="form-group">
-                                                                            <label>Message to</label>
+                                                                            <label>Para</label>
                                                                             <select name="addMessageToUser" id="addMessageToUser" required>
                                                                                 <option value="" disabled selected>Selecione o recetor:</option>
                                                                                 <?php if (!empty($this->userdata['usersList'])) {
@@ -156,17 +156,17 @@
                                                                             </select>
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <label>Subject</label>
+                                                                            <label>Assunto</label>
                                                                             <input name="addMessageSubject" type="text" class="form-control" maxlength="30" required>
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <label>Message</label>
+                                                                            <label>Mensagem</label>
                                                                             <textarea name="addMessageMessage" class="form-control" style="height: 120px;" maxlength="350" required></textarea>
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-times"></i> Discard</button>
-                                                                        <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-envelope"></i> Send Message</button>
+                                                                        <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button>
+                                                                        <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-envelope"></i> Enviar</button>
                                                                     </div>
                                                                 </form>
                                                             </div>
@@ -195,17 +195,17 @@
                     <div class="modal-content">
                         <form id="deleteMessage">
                             <div class="modal-header">
-                                <h4 class="modal-title">Delete Message</h4>
+                                <h4 class="modal-title">Apagar mensagen</h4>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <p>Are you sure you want to delete this Message?</p>
-                                <p class="text-warning"><small>This action cannot be undone.</small></p>
+                                <p>Tem a certeza que quer apagar esta mensagen?</p>
+                                <p class="text-warning"><small>A ação não pode ser defeita.</small></p>
                                 <input id="deleteMessageId" name="deleteMessageId" type="hidden" class="form-control" value="">
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <input type="submit" class="btn btn-danger" value="Delete">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <input type="submit" class="btn btn-danger" value="Apagar">
                             </div>
                         </form>
                     </div>
@@ -218,16 +218,16 @@
                     <div class="modal-content">
                         <form id="bulkDeleteMessages">
                             <div class="modal-header">
-                                <h4 class="modal-title">Delete Messages</h4>
+                                <h4 class="modal-title">Apagar mensagens</h4>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <p>Are you sure you want to delete <strong>ALL</strong> selected messages?</p>
-                                <p class="text-warning"><small>This action cannot be undone.</small></p>
+                                <p>Tem a certeza que quer apagar <strong>TODAS</strong> as mensagens selecionadas?</p>
+                                <p class="text-warning"><small>A ação não pode ser defeita.</small></p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <input type="submit" class="btn btn-danger" value="Delete all">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <input type="submit" class="btn btn-danger" value="Apagar todas">
                             </div>
                         </form>
                     </div>
@@ -264,7 +264,9 @@
                         responsive: true,
                         lengthChange: false,
                         pageLength: 15,
-                        //order: [[4, 'desc']]
+                        oLanguage: {
+                            "sUrl": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-PT.json"
+                        }
                     });
 
                 } catch (error) {

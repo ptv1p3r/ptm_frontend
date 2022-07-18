@@ -20,36 +20,62 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <a href="#addSecurityModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addSecurityModal">
-                                    <i class="fas fa-plus-circle"></i><span>Add New Security</span>
+                                    <i class="fas fa-plus-circle"></i><span>&nbsp;Nova tabela de segurança</span>
                                 </a>
                             </div>
                             <div class="card-body">
-                                <table id="securitiesTable" class="table table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>id</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php if (!empty($this->userdata['securityList'])) {
-                                        foreach ($this->userdata['securityList'] as $key => $security) { ?>
+                                <div class="table-responsive">
+                                    <table id="securitiesTable" class="table table-striped table-hover" style="width:100%">
+                                        <thead>
                                             <tr>
-                                                <td><?php echo $security["id"] ?></td>
-                                                <td>
-                                                    <a href="#editSecurityModal" id="<?php echo $security['id'] ?>" class="edit"
-                                                       data-bs-toggle="modal" data-bs-target="#editSecurityModal"><i class="far fa-edit"></i></a>
-                                                    <a href="#deleteSecurityModal" id="<?php echo $security['id'] ?>" class="delete"
-                                                       data-bs-toggle="modal" data-bs-target="#deleteSecurityModal"><i class="fas fa-trash-alt"></i></a>
-                                                </td>
+                                                <th>Identificador</th>
+                                                <th>Data Criação</th>
+                                                <th>Data Modificação</th>
+                                                <th></th>
                                             </tr>
-                                        <?php }
-                                    } else { ?>
-                                        <tr>
-                                        </tr>
-                                    <?php } ?>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        <?php if (!empty($this->userdata['securityList'])) {
+                                            foreach ($this->userdata['securityList'] as $key => $security) { ?>
+                                                <tr>
+                                                    <td id="mybyoau225-<?php echo $security["id"] ?>"
+                                                        onclick="copy('Tabela <?php echo $security["id"] ?>','mybyoau225-<?php echo $security["id"] ?>')"
+                                                        title="Tabela <?php echo $security["id"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        Tabela <?php echo $security["id"] ?>
+                                                    </td>
+                                                    <td id="789fgm5nmw-<?php echo $security["id"] ?>"
+                                                        onclick="copy('Tabela <?php echo $security["dateCreated"] ?>','789fgm5nmw-<?php echo $security["id"] ?>')"
+                                                        title="Tabela <?php echo $security["dateCreated"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $security["dateCreated"] ?>
+                                                    </td>
+                                                    <td id="n33nyfr31n-<?php echo $security["id"] ?>"
+                                                        onclick="copy('Tabela <?php echo $security["dateModified"] ?>','n33nyfr31n-<?php echo $security["id"] ?>')"
+                                                        title="Tabela <?php echo $security["dateModified"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $security["dateModified"] ?>
+                                                    </td>
+                                                    <td>
+                                                        <div class="float-end">
+                                                            <a href="#editSecurityModal" id="<?php echo $security['id'] ?>" class="edit m-2"
+                                                               data-bs-toggle="modal" data-bs-target="#editSecurityModal"><i class="far fa-edit fa-lg"></i></a>
+                                                            <a href="#deleteSecurityModal" id="<?php echo $security['id'] ?>" class="delete m-2"
+                                                               data-bs-toggle="modal" data-bs-target="#deleteSecurityModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php }
+                                        } else { ?>
+                                            <tr>
+                                            </tr>
+                                        <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -65,7 +91,7 @@
                 <div class="modal-content">
                     <form id="addSecurity">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Security</h4>
+                            <h4 class="modal-title">Adicionar tabela de segurança</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -193,8 +219,8 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-success" value="Add">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-success" value="Adicionar">
                         </div>
                     </form>
                 </div>
@@ -207,7 +233,7 @@
                 <div class="modal-content">
                     <form id="editSecurity">
                         <div class="modal-header">
-                            <h4 class="modal-title">Edit Security</h4>
+                            <h4 class="modal-title">Editar tabela de segurança</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -340,8 +366,8 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-success" value="Save">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-success" value="Guardar">
                         </div>
                     </form>
                 </div>
@@ -354,35 +380,22 @@
                 <div class="modal-content">
                     <form id="deleteSecurity">
                         <div class="modal-header">
-                            <h4 class="modal-title">Delete Security</h4>
+                            <h4 class="modal-title">Apagar tabela de segurança</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Are you sure you want to delete this Security?</p>
-                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                            <p>Tem a certeza que quer apagar esta tabela de segurança?</p>
+                            <p class="text-warning"><small>A ação não pode ser defeita.</small></p>
                             <input id="deleteSecurityId" name="deleteSecurityId" type="hidden" class="form-control">
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-danger" value="Delete">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-danger" value="Apagar">
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
-        <!-- Logout Modal HTML
-        <div id="logoutModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4>Logout <i class="fa fa-lock"></i></h4>
-                    </div>
-                    <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
-                    <div class="modal-footer"><a href="<?php //echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
-                </div>
-            </div>
-        </div>-->
 
 
 
@@ -392,11 +405,14 @@
         try{
             var table = $('#securitiesTable').DataTable({
                 rowReorder: false,
-                responsive: true,
+                responsive: false,
                 columnDefs: [ {
-                    targets: [1],
+                    targets: [3],
                     orderable: false,
-                }]
+                }],
+                oLanguage: {
+                    "sUrl": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-PT.json"
+                }
             });
         } catch (error){
             console.log(error);
@@ -426,7 +442,7 @@
                     if (data.statusCode === 201){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -438,7 +454,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -453,8 +469,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -533,7 +549,7 @@
                     if (data.statusCode === 200){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -545,7 +561,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -560,8 +576,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -668,7 +684,7 @@
                 },
                 error: function (data) {
                     Swal.fire({
-                        title: 'Error!',
+                        title: 'Erro!',
                         text: data['message'],
                         icon: 'error',
                         showConfirmButton: false,
@@ -708,7 +724,7 @@
                     if (data.statusCode === 200){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -720,7 +736,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -735,8 +751,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,

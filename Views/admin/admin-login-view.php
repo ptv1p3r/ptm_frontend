@@ -20,11 +20,11 @@
 
                                 <form id="doLogin">
                                     <div class="form-floating mb-3">
-                                        <input id="emailInput" class="form-control" name="email" type="email" placeholder="name@example.com" />
-                                        <label for="emailInput">Email address</label>
+                                        <input id="emailInput" class="form-control" name="email" type="email" placeholder="name@example.com" required />
+                                        <label for="emailInput">Email</label>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input id="passInput" class="form-control" name="pass" type="password" placeholder="Password" />
+                                        <input id="passInput" class="form-control" name="pass" type="password" placeholder="Password" required />
                                         <label for="passInput">Password</label>
                                     </div>
                                     <!--<div class="form-check mb-3">
@@ -32,7 +32,7 @@
                                         <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
                                     </div>-->
                                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                        <input type="submit" name="submit" class="btn btn-primary form-control" value="Login">
+                                        <input type="submit" name="submit" class="btn btn-primary form-control" value="Entrar">
                                     </div>
                                 </form>
 
@@ -63,15 +63,15 @@
                 success: function (data) {
 
                     if(data === 200){
-                        alert("Logging in!", "success");
+                        alert("A iniciar!", "success");
                         location.reload();
                     } else {
-                        alert("Invalid Email/Password!", "danger");
+                        alert("Email/Password invalida!", "danger");
                     }
 
                 },
                 error: function (data) {
-                    alert("Connection error, please try again.", "danger");
+                    alert("Erro de conexão, por favor tente denovo.", "danger");
                 }
             });
         });
@@ -82,7 +82,8 @@
             let wrapper = document.createElement('div')
             wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '</div>'
 
-            alertPlaceholder.append(wrapper)
+            $('#liveAlert').html(wrapper)
+            //alertPlaceholder.innerHTML(wrapper)
 
             // timeout alert message
             setTimeout(function () {

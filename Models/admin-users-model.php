@@ -76,6 +76,41 @@ class AdminUsersModel extends MainModel {
         return json_decode(json_encode($result), true);
     }
 
+    /**
+     * Metodo que retorna lista de Grupos
+     * @return mixed
+     */
+    public function getGroupList()
+    {
+        $result = null;
+
+        $url = API_URL . 'api/v1/groups/list';
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+    /**
+     * Metodo que retorna lista de Generos
+     * @return mixed
+     */
+    public function getGenderList()
+    {
+        $result = null;
+
+        $url = API_URL . 'api/v1/genders/list';
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+
     /** CRUD USERS **/
     /**
      * Metodo que retorna User pelo id
@@ -133,7 +168,6 @@ class AdminUsersModel extends MainModel {
                         break;
 
                     case "addUserEntity":
-                        //TODO: a validaçao se estiver vazio(null) nao esta a funcionar
                         $normalizedData['entity'] = strlen($dataVector['value']) > 0 ? $dataVector['value'] : NULL;
                         break;
 
@@ -206,100 +240,6 @@ class AdminUsersModel extends MainModel {
      * @param $data
      * @return mixed
      */
-    /*public function updateUser($data) {
-        $result = null;
-        $UserId = null;
-        $normalizedData = array();
-
-        // Not active by default
-        $normalizedData['active'] = "";
-
-        // get data from form array and package it to send to api
-        foreach ($data as $dataVector) {
-            foreach ($dataVector as $key => $value) {
-                switch ($dataVector['name']){ //gets <input name="">
-                    case "editUserId":
-                        $UserId = $dataVector['value'];
-                        break;
-
-                    case "editUserName":
-                        $normalizedData['name'] = $dataVector['value'];
-                        break;
-
-                    case "editUserEntity":
-                        //TODO: a validaçao se estiver vazio(null) nao esta a funcionar
-                        $normalizedData['entity'] = strlen($dataVector['value']) > 0 ? $dataVector['value'] : NULL;
-                        break;
-
-                    case "editUserEmail":
-                        $normalizedData['email'] = $dataVector['value'];
-                        break;
-
-                    case "editUserPassword":
-                        $normalizedData['password'] = $dataVector['value'];
-                        break;
-
-                    case "editUserGroupId":
-                        $normalizedData['groupId'] = $dataVector['value'];
-                        break;
-
-                    case "editUserDateBirth":
-                        $normalizedData['dateBirth'] = $dataVector['value'];
-                        break;
-
-                    case "editUserAddress":
-                        $normalizedData['address'] = $dataVector['value'];
-                        break;
-
-                    case "editUserCodPost":
-                        $normalizedData['codPost'] = $dataVector['value'];
-                        break;
-
-                    case "editUserGenderId":
-                        $normalizedData['genderId'] = $dataVector['value'];
-                        break;
-
-                    case "editUserLocality":
-                        $normalizedData['locality'] = $dataVector['value'];
-                        break;
-
-                    case "editUserMobile":
-                        $normalizedData['mobile'] = $dataVector['value'];
-                        break;
-
-                    case "editUserNif":
-                        $normalizedData['nif'] = $dataVector['value'];
-                        break;
-
-                    case "editUserCountryId":
-                        $normalizedData['countryId'] = (int)$dataVector['value'];
-                        break;
-                }
-
-                if ($dataVector['name'] == "editUserActive"){
-                    $normalizedData['active'] = "1";
-                } else {
-                    $normalizedData['active'] = "0";
-                }
-            }
-        }
-
-        $url = API_URL . 'api/v1/users/edit/' . $UserId;
-
-        if (!empty($_SESSION['userdata']['accessToken'])){
-            $userToken = $_SESSION['userdata']['accessToken'];
-            $result = callAPI("PUT", $url, $normalizedData, $userToken);
-        }
-
-        //trasforma toda a msg em string json para poder ser enviado
-        return json_decode(json_encode($result), true);
-    }*/
-
-    /**
-     * Metodo edita/update User
-     * @param $data
-     * @return mixed
-     */
     public function updateUser($data) {
         $result = null;
         $UserId = null;
@@ -321,7 +261,6 @@ class AdminUsersModel extends MainModel {
                         break;
 
                     case "editUserEntity":
-                        //TODO: a validaçao se estiver vazio(null) nao esta a funcionar
                         $normalizedData['entity'] = strlen($dataVector['value']) > 0 ? $dataVector['value'] : NULL;
                         break;
 

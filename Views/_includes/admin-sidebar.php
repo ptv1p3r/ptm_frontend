@@ -75,12 +75,12 @@
                 <?php if (isset($_SESSION["sidebar"]["active_tab"]["securities"]) && $_SESSION["sidebar"]["active_tab"]["securities"] === true) { ?>
                     <a class="nav-link active" href="<?php echo HOME_URL . '/admin/security';?>">
                         <div class="sb-nav-link-icon"><i class="fas fa-lock"></i></div>
-                        Tabela de segurança
+                        Tabelas segurança
                     </a>
                 <?php } else { ?>
                     <a class="nav-link" href="<?php echo HOME_URL . '/admin/security';?>">
                         <div class="sb-nav-link-icon"><i class="fas fa-lock"></i></div>
-                        Tabelas de segurança
+                        Tabelas segurança
                     </a>
                 <?php } ?>
 
@@ -141,13 +141,13 @@
                 <!-- tree types -->
                 <?php if (isset($_SESSION["sidebar"]["active_tab"]["tree_types"]) && $_SESSION["sidebar"]["active_tab"]["tree_types"] === true) { ?>
                     <a class="nav-link active" href="<?php echo HOME_URL . '/admin/tree_types';?>">
-                        <div class="sb-nav-link-icon"><i class="fa-solid fa-tree"></i></div>
-                        Tipos
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-file-pen"></i></div>
+                        Tipos árvores
                     </a>
                 <?php } else { ?>
                     <a class="nav-link" href="<?php echo HOME_URL . '/admin/tree_types';?>">
-                        <div class="sb-nav-link-icon"><i class="fa-solid fa-tree"></i></div>
-                        Tipos
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-file-pen"></i></div>
+                        Tipos árvores
                     </a>
                 <?php } ?>
 
@@ -183,12 +183,12 @@
                 <?php if (isset($_SESSION["sidebar"]["active_tab"]["transaction_type"]) && $_SESSION["sidebar"]["active_tab"]["transaction_type"] === true) { ?>
                     <a class="nav-link active" href="<?php echo HOME_URL . '/admin/transaction_type';?>">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-file-pen"></i></div>
-                        Tipos de transação
+                        Tipos transação
                     </a>
                 <?php } else { ?>
                     <a class="nav-link" href="<?php echo HOME_URL . '/admin/transaction_type';?>">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-file-pen"></i></div>
-                        Tipos de transação
+                        Tipos transação
                     </a>
                 <?php } ?>
 
@@ -196,12 +196,12 @@
                 <?php if (isset($_SESSION["sidebar"]["active_tab"]["transaction_method"]) && $_SESSION["sidebar"]["active_tab"]["transaction_method"] === true) { ?>
                     <a class="nav-link active" href="<?php echo HOME_URL . '/admin/transaction_method';?>">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-credit-card"></i></div>
-                        Métodos de pagamento
+                        Métodos pagamento
                     </a>
                 <?php } else { ?>
                     <a class="nav-link" href="<?php echo HOME_URL . '/admin/transaction_method';?>">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-credit-card"></i></div>
-                        Métodos de pagamento
+                        Métodos pagamento
                     </a>
                 <?php } ?>
 
@@ -210,19 +210,19 @@
                 <!-- Settings -->
                 <?php if (isset($_SESSION["sidebar"]["active_tab"]["settings"]) && $_SESSION["sidebar"]["active_tab"]["settings"] === true) { ?>
                     <a class="nav-link active" href="<?php echo HOME_URL . '/admin/settings';?>">
-                        <div class="sb-nav-link-icon"><i class="fas fa-gear"></i></div>
-                        Definições
+                        <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                        Meus dados
                     </a>
                 <?php } else { ?>
                     <a class="nav-link" href="<?php echo HOME_URL . '/admin/settings';?>">
-                        <div class="sb-nav-link-icon"><i class="fas fa-gear"></i></div>
-                        Definições
+                        <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                        Meus dados
                     </a>
                 <?php } ?>
             </div>
         </div>
         <div class="sb-sidenav-footer">
-            <div class="small">Logged in as:</div>
+            <div class="small">Iniciado como:</div>
             <?php echo $_SESSION["userdata"]["name"] ?>
         </div>
     </nav>

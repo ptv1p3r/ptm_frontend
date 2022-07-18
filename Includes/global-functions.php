@@ -65,6 +65,32 @@ function timeCalculation($time)
 }
 
 /**
+ * Metodo para returnar mes baseado no seu numero
+ * @param $number
+ * @return string
+ */
+function getMonth($number){
+    $months = array("Janeiro", 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro');
+    return $months[$number-1];
+}
+
+/**
+ * Metodo para converter tamanhos de ficheiro para (KB, MB, GB, TB, PB)
+ * usage: echo formatBytes('1073741824'); //1GB || https://www.html-code-generator.com/php/function/convert-bytes
+ * @param $bytes
+ * @return int|string
+ */
+function formatBytes($bytes) {
+    if ($bytes > 0) {
+        $i = floor(log($bytes) / log(1024));
+        $sizes = array('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+        return sprintf('%.02F', round($bytes / pow(1024, $i),1)) * 1 . ' ' . @$sizes[$i];
+    } else {
+        return 0;
+    }
+}
+
+/**
  * Metodo para ordenar arrays multidimencionais por um campo escolhido
  * usage: array_orderby($array, 'campo', SORT_DESC); | https://www.php.net/manual/en/function.array-multisort.php#100534
  * @return mixed|null
@@ -91,8 +117,7 @@ function array_orderby() {
  * @param $url
  * @param $data
  * @param string $token
-// * @return bool|string
- * @return array
+ * @return array|void
  */
 function callAPI($method, $url, $data, $token = "")
 {
@@ -149,8 +174,12 @@ function callAPI($method, $url, $data, $token = "")
         'Content-Type: ' . $header
     ));
     curl_setopt($curl, CURLOPT_HEADER, true);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+
+    //if url doesnt respond, set timeout
+    curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+    curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
 
     // EXECUTE:
     $result = curl_exec($curl);
@@ -164,15 +193,20 @@ function callAPI($method, $url, $data, $token = "")
     //gets body from api response
     $body = substr($result, $header_size);
 
-    //final response array construction
-    $resultArray = array(
-        "statusCode" => $http_status,
-        "body" => json_decode($body, true) //decode json body from api response
-    );
-
     if (!$result) {
-        die("Connection Failure");
+        die("Conexão com API falhou.");
+        /*$resultArray = array(
+            "statusCode" => 503,
+            "body" => "Service Unavailable" //decode json body from api response
+        );*/
+    } else {
+        //final response array construction
+        $resultArray = array(
+            "statusCode" => $http_status,
+            "body" => json_decode($body, true) //decode json body from api response
+        );
     }
+
     curl_close($curl);
     return $resultArray;
 }

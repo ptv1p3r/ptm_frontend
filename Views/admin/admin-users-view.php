@@ -20,61 +20,118 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <a href="#addUserModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">
-                                    <i class="fas fa-plus-circle"></i><span>Add New User</span>
+                                    <i class="fas fa-plus-circle"></i><span>&nbsp;Novo utilizador</span>
                                 </a>
-                                <select id='GetActive'>
-                                    <option value=''>All</option>
-                                    <option value='1'>Active</option>
-                                    <option value='0'>Inactive</option>
-                                </select>
+                                <div class="float-end">
+                                    <label>filtro:</label>
+                                    <select id='GetActive'>
+                                        <option value=''>Todos</option>
+                                        <option value='1'>Ativos</option>
+                                        <option value='0'>Inativos</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="card-body">
-                                <table id="usersTable" class="table table-striped table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>id</th>
-                                        <th>name</th>
-                                        <th>entity</th>
-                                        <th>email</th>
-                                        <th>groupId</th>
-                                        <th>countryId</th>
-                                        <th>active</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php if (!empty($this->userdata['usersList'])) {
-                                        foreach ($this->userdata['usersList'] as $key => $user) { ?>
-                                            <tr>
-                                                <td><?php echo $user["id"] ?></td>
-                                                <td><?php echo $user["name"] ?></td>
-                                                <td><?php echo $user["entity"] ?></td>
-                                                <td><?php echo $user["email"] ?></td>
-                                                <td><?php echo $user["groupId"] ?></td>
-                                                <td><?php
-                                                    if (!empty($this->userdata['countryList'])) {
-                                                        foreach ($this->userdata['countryList'] as $key => $country) {
-                                                            if ( $country["id"] == $user["countryId"]){
-                                                                echo $country["name"];
-                                                            }
-                                                        }
-                                                    } ?>
-                                                </td>
-                                                <td><?php echo $user["active"] ?></td>
-                                                <td>
-                                                    <a href="#editUserModal" id="<?php echo $user['email'] ?>" class="edit"
-                                                       data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="far fa-edit"></i></a>
-                                                    <a href="#deleteUserModal" id="<?php echo $user['id'] ?>" class="delete"
-                                                       data-bs-toggle="modal" data-bs-target="#deleteUserModal"><i class="fas fa-trash-alt"></i></a>
-                                                </td>
-                                            </tr>
-                                        <?php }
-                                    } else { ?>
+                                <div class="table-responsive">
+                                    <table id="usersTable" class="table table-striped table-hover" style="width:100%">
+                                        <thead>
                                         <tr>
+                                            <th>Identificador</th>
+                                            <th>Nome</th>
+                                            <th>Entidade</th>
+                                            <th>Email</th>
+                                            <th>Grupo</th>
+                                            <th>País</th>
+                                            <th>Data Criação</th>
+                                            <th>Data Modificação</th>
+                                            <th hidden>active</th>
+                                            <th></th>
                                         </tr>
-                                    <?php } ?>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        <?php if (!empty($this->userdata['usersList'])) {
+                                            foreach ($this->userdata['usersList'] as $key => $user) { ?>
+                                                <tr>
+                                                    <td id="mybyoau225-<?php echo $user["id"] ?>"
+                                                        onclick="copy('<?php echo $user["id"] ?>','mybyoau225-<?php echo $user["id"] ?>')"
+                                                        title="<?php echo $user["id"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $user["id"] ?>
+                                                    </td>
+                                                    <td id="h6xsvpd7tw-<?php echo $user["id"] ?>"
+                                                        onclick="copy('<?php echo $user["name"] ?>','h6xsvpd7tw-<?php echo $user["id"] ?>')"
+                                                        title="<?php echo $user["name"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $user["name"] ?>
+                                                    </td>
+                                                    <?php $userEntity = (empty($user["entity"])) ? "Vazio" : $user["entity"] ?>
+                                                    <td id="grm5lifkpl-<?php echo $user["id"] ?>"
+                                                        onclick="copy('<?php echo $userEntity ?>','grm5lifkpl-<?php echo $user["id"] ?>')"
+                                                        title="<?php echo $userEntity ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $userEntity ?>
+                                                    </td>
+                                                    <td id="h5or6lbi27-<?php echo $user["id"] ?>"
+                                                        onclick="copy('<?php echo $user["email"] ?>','h5or6lbi27-<?php echo $user["id"] ?>')"
+                                                        title="<?php echo $user["email"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $user["email"] ?>
+                                                    </td>
+                                                    <?php if (!empty($this->userdata['groupsList'])) { foreach ($this->userdata['groupsList'] as $key => $group) { if ( $group["id"] == $user["groupId"]){ $groupName = $group["name"]; } } }?>
+                                                    <td id="xtz9d92jhc-<?php echo $user["id"] ?>"
+                                                        onclick="copy('<?php echo $groupName ?>','xtz9d92jhc-<?php echo $user["id"] ?>')"
+                                                        title="<?php echo $groupName ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $groupName ?>
+                                                    </td>
+                                                    <?php if (!empty($this->userdata['countryList'])) { foreach ($this->userdata['countryList'] as $key => $country) { if ( $country["id"] == $user["countryId"]){ $countryName = $country["name"]; } } } ?>
+                                                    <td id="1idt83yteh-<?php echo $user["id"] ?>"
+                                                        onclick="copy('<?php echo $countryName ?>','1idt83yteh-<?php echo $user["id"] ?>')"
+                                                        title="<?php echo $countryName ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $countryName ?>
+                                                    </td>
+                                                    <td id="h3nsen32jn-<?php echo $user["id"] ?>"
+                                                        onclick="copy('<?php echo $user["dateCreated"] ?>','h3nsen32jn-<?php echo $user["id"] ?>')"
+                                                        title="<?php echo $user["dateCreated"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $user["dateCreated"] ?>
+                                                    </td>
+                                                    <td id="kern3tvns3-<?php echo $user["id"] ?>"
+                                                        onclick="copy('<?php echo $user["dateModified"] ?>','kern3tvns3-<?php echo $user["id"] ?>')"
+                                                        title="<?php echo $user["dateModified"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $user["dateModified"] ?>
+                                                    </td>
+                                                    <td hidden><?php echo $user["active"] ?></td>
+                                                    <td>
+                                                        <div class="float-end">
+                                                        <?php if($user["id"] !== $_SESSION["userdata"]["id"]) { //if list user id is equal to whats in the $_SESSION, dont show the edit button?>
+                                                            <a href="#editUserModal" id="<?php echo $user['email'] ?>" class="edit m-2" title="Editar"
+                                                               data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="far fa-edit fa-lg"></i></a>
+
+                                                            <a href="#deleteUserModal" id="<?php echo $user['id'] ?>" class="delete m-2" title="Apagar"
+                                                               data-bs-toggle="modal" data-bs-target="#deleteUserModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                        <?php }?>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php }
+                                        } else { ?>
+                                            <tr>
+                                            </tr>
+                                        <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -90,16 +147,16 @@
                 <div class="modal-content">
                     <form id="addUser">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add User</h4>
+                            <h4 class="modal-title">Novo utilizador</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>Name</label>
+                                <label>Nome</label>
                                 <input type="text" class="form-control" name="addUserName" required>
                             </div>
                             <div class="form-group">
-                                <label>Entity</label>
+                                <label>Entidade</label>
                                 <input type="text" class="form-control" name="addUserEntity" >
                             </div>
                             <div class="form-group">
@@ -111,59 +168,63 @@
                                 <input type="password" class="form-control" name="addUserPassword" required>
                             </div>
                             <div class="form-group">
-                                <label>GroupId</label>
-                                <input type="text" class="form-control" name="addUserGroupId" required>
-
-                                <!--<select id="addUserGroupId" class="form-select" name="addUserGroupId" >
-                                    <option value="" disabled selected>Grupo</option>
-                                    <?php /*if (!empty($this->userdata['groupList'])) {
-                                        foreach ($this->userdata['groupList'] as $key => $group) { */?>
-                                            <option value="<?php //echo $group['id'] ?>"><?php //echo $group["name"] ?></option>
-                                        <?php /*}
-                                    }*/ ?>
-                                </select>-->
+                                <label>Grupo</label>
+                                <!--<input type="text" class="form-control" name="addUserGroupId" required>-->
+                                <select id="addUserGroupId" class="form-select" name="addUserGroupId" required>
+                                    <option value="" disabled selected>Selecione o grupo</option>
+                                    <?php if (!empty($this->userdata['groupsList'])) {
+                                        foreach ($this->userdata['groupsList'] as $key => $group) { ?>
+                                            <option value="<?php echo $group['id'] ?>"><?php echo $group["name"] ?></option>
+                                        <?php }
+                                    } ?>
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label>DateBirth</label>
-                                <input type="text" class="form-control" name="addUserDateBirth" placeholder="yyyy-mm-dd" required>
+                                <label>Data de nascimento</label>
+                                <!--<input type="text" class="form-control" name="addUserDateBirth" placeholder="yyyy-mm-dd" required>-->
+                                <div class='input-group' id='datetimepicker1' data-td-target-input='nearest' data-td-target-toggle='nearest'>
+                                    <input id='datetimepicker1Input' name="addUserDateBirth" type='text' class='form-control' data-td-target='#datetimepicker1' required/>
+                                    <span class='input-group-text' data-td-target='#datetimepicker1' data-td-toggle='datetimepicker'>
+                                        <span class='fa-solid fa-calendar'></span>
+                                    </span>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label>Address</label>
+                                <label>Morada</label>
                                 <input type="text" class="form-control" name="addUserAddress" required>
                             </div>
                             <div class="form-group">
-                                <label>CodPost</label>
+                                <label>Código postal</label>
                                 <input type="text" class="form-control" name="addUserCodPost" required>
                             </div>
                             <div class="form-group">
-                                <label>GenderId</label>
-                                <input type="text" class="form-control" name="addUserGenderId" required>
-
-                                <!--<select id="addUserGenderId" class="form-select" name="addUserGenderId" >
-                                    <option value="" disabled selected>Género</option>
-                                    <?php /*if (!empty($this->userdata['genderList'])) {
-                                        foreach ($this->userdata['genderList'] as $key => $gender) { */?>
-                                            <option value="<?php //echo $gender['id'] ?>"><?php //echo $gender["name"] ?></option>
-                                        <?php /*}
-                                    }*/ ?>
-                                </select>-->
+                                <label>Género</label>
+                                <!--<input type="text" class="form-control" name="addUserGenderId" required>-->
+                                <select id="addUserGenderId" class="form-select" name="addUserGenderId" required>
+                                    <option value="" disabled selected>Selecione o género</option>
+                                    <?php if (!empty($this->userdata['gendersList'])) {
+                                        foreach ($this->userdata['gendersList'] as $key => $gender) { ?>
+                                            <option value="<?php echo $gender['id'] ?>"><?php echo $gender["name"] ?></option>
+                                        <?php }
+                                    } ?>
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label>Locality</label>
+                                <label>Localidade</label>
                                 <input type="text" class="form-control" name="addUserLocality" required>
                             </div>
                             <div class="form-group">
-                                <label>Mobile</label>
-                                <input type="text" class="form-control" name="addUserMobile" required>
+                                <label>Telefone</label>
+                                <input type="text" class="form-control" name="addUserMobile" maxlength="9" required>
                             </div>
                             <div class="form-group">
-                                <label>Nif</label>
-                                <input type="text" class="form-control" name="addUserNif" required>
+                                <label>NIF</label>
+                                <input type="text" class="form-control" name="addUserNif" maxlength="9" required>
                             </div>
                             <div class="form-group">
-                                <label>Country</label>
+                                <label>País</label>
                                 <select class="form-select" name="addUserCountryId" id="addUserCountryId">
-                                    <option value="" disabled selected>Selecione o País</option>
+                                    <option value="" disabled selected>Selecione o país</option>
                                     <?php if (!empty($this->userdata['countryList'])) {
                                         foreach ($this->userdata['countryList'] as $key => $country) { ?>
                                             <option value="<?php echo $country['id'] ?>"><?php echo $country["name"] ?></option>
@@ -178,8 +239,8 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-success" value="Add">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-success" value="Adicionar">
                         </div>
                     </form>
                 </div>
@@ -192,7 +253,7 @@
                 <div class="modal-content">
                     <form id="editUser">
                         <div class="modal-header">
-                            <h4 class="modal-title">Edit User</h4>
+                            <h4 class="modal-title">Editar utilizador</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -201,11 +262,11 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Name</label>
+                                <label>Nome</label>
                                 <input type="text" class="form-control" name="editUserName" required>
                             </div>
                             <div class="form-group">
-                                <label>Entity</label>
+                                <label>Entidade</label>
                                 <input type="text" class="form-control" name="editUserEntity" >
                             </div>
                             <div class="form-group">
@@ -217,57 +278,61 @@
                                 <input type="password" class="form-control" name="editUserPassword" required>
                             </div>-->
                             <div class="form-group">
-                                <label>GroupId</label>
-                                <input type="text" class="form-control" name="editUserGroupId" required>
-
-                                <!--<select id="editUserGroupId" class="form-select" name="editUserGroupId" >
-                                    <option value="" disabled selected>Grupo</option>
-                                    <?php /*if (!empty($this->userdata['groupList'])) {
-                                        foreach ($this->userdata['groupList'] as $key => $group) { */?>
-                                            <option value="<?php //echo $group['id'] ?>"><?php //echo $group["name"] ?></option>
-                                        <?php /*}
-                                    }*/ ?>
-                                </select>-->
+                                <label>Grupo</label>
+                                <!--<input type="text" class="form-control" name="editUserGroupId" required>-->
+                                <select id="addUserGroupId" class="form-select" name="editUserGroupId" required>
+                                    <option value="" disabled selected>Selecione o grupo</option>
+                                    <?php if (!empty($this->userdata['groupsList'])) {
+                                        foreach ($this->userdata['groupsList'] as $key => $group) { ?>
+                                            <option value="<?php echo $group['id'] ?>"><?php echo $group["name"] ?></option>
+                                        <?php }
+                                    } ?>
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label>DateBirth</label>
-                                <input type="text" class="form-control" name="editUserDateBirth" placeholder="yyyy-mm-dd" required>
+                                <label>Data de nascimento</label>
+                                <!--<input type="text" class="form-control" name="editUserDateBirth" placeholder="yyyy-mm-dd" required>-->
+                                <div class='input-group' id='datetimepicker2' data-td-target-input='nearest' data-td-target-toggle='nearest'>
+                                    <input id='datetimepicker2Input' name="editUserDateBirth" type='text' class='form-control' data-td-target='#datetimepicker2' required/>
+                                    <span class='input-group-text' data-td-target='#datetimepicker2' data-td-toggle='datetimepicker'>
+                                        <span class='fa-solid fa-calendar'></span>
+                                    </span>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label>Address</label>
+                                <label>Morada</label>
                                 <input type="text" class="form-control" name="editUserAddress" required>
                             </div>
                             <div class="form-group">
-                                <label>CodPost</label>
+                                <label>Código postal</label>
                                 <input type="text" class="form-control" name="editUserCodPost" required>
                             </div>
                             <div class="form-group">
-                                <label>GenderId</label>
-                                <input type="text" class="form-control" name="editUserGenderId" required>
-
-                                <!--<select id="editUserGenderId" class="form-select" name="editUserGenderId" >
-                                    <option value="" disabled selected>Género</option>
-                                    <?php /*if (!empty($this->userdata['genderList'])) {
-                                        foreach ($this->userdata['genderList'] as $key => $gender) { */?>
-                                            <option value="<?php //echo $gender['id'] ?>"><?php //echo $gender["name"] ?></option>
-                                        <?php /*}
-                                    }*/ ?>
-                                </select>-->
+                                <label>Género</label>
+                                <!--<input type="text" class="form-control" name="editUserGenderId" required>-->
+                                <select id="editUserGenderId" class="form-select" name="editUserGenderId" required>
+                                    <option value="" disabled selected>Selecione o género</option>
+                                    <?php if (!empty($this->userdata['gendersList'])) {
+                                        foreach ($this->userdata['gendersList'] as $key => $gender) { ?>
+                                            <option value="<?php echo $gender['id'] ?>"><?php echo $gender["name"] ?></option>
+                                        <?php }
+                                    } ?>
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label>Locality</label>
+                                <label>Localidade</label>
                                 <input type="text" class="form-control" name="editUserLocality" required>
                             </div>
                             <div class="form-group">
-                                <label>Mobile</label>
+                                <label>Telefone</label>
                                 <input type="text" class="form-control" name="editUserMobile" required>
                             </div>
                             <div class="form-group">
-                                <label>Nif</label>
+                                <label>NIF</label>
                                 <input type="text" class="form-control" name="editUserNif" required>
                             </div>
                             <div class="form-group">
-                                <label>Country</label>
+                                <label>País</label>
                                 <select class="form-select" name="editUserCountryId" id="editUserCountryId">
                                     <option value="" disabled selected>Selecione o País</option>
                                     <?php if (!empty($this->userdata['countryList'])) {
@@ -278,14 +343,14 @@
                                 </select>
                             </div>
                             <div class="form-group form-check form-switch">
-                                <label>Active</label>
+                                <label>Ativo</label>
                                 <input type="checkbox" role="switch" class="form-check-input" name="editUserActive">
                             </div>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-success" value="Save">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-success" value="Guardar">
                         </div>
                     </form>
                 </div>
@@ -298,35 +363,22 @@
                 <div class="modal-content">
                     <form id="deleteUser">
                         <div class="modal-header">
-                            <h4 class="modal-title">Delete User</h4>
+                            <h4 class="modal-title">Apagar utilizador</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Are you sure you want to delete this User?</p>
-                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                            <p>Tem a certeza que quer apagar este utilizador?</p>
+                            <p class="text-warning"><small>A ação não pode ser defeita.</small></p>
                             <input id="deleteUserId" name="deleteUserId" type="hidden" class="form-control">
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-danger" value="Delete">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-danger" value="Apagar">
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
-        <!-- Logout Modal HTML
-        <div id="logoutModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4>Logout <i class="fa fa-lock"></i></h4>
-                    </div>
-                    <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
-                    <div class="modal-footer"><a href="<?php //echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
-                </div>
-            </div>
-        </div>-->
 
 
 <script>
@@ -336,20 +388,58 @@
         try{
             var table = $('#usersTable').DataTable({
                 rowReorder: false,
-                responsive: true,
+                responsive: false,
                 columnDefs: [{
-                    targets: [6,7],
+                    targets: [8,9],
                     orderable: false,
-                }]
+                }],
+                oLanguage: {
+                    "sUrl": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-PT.json"
+                }
             });
             //filtra table se ativo, inativo ou mostra todos
             $('#GetActive').on('change', function() {
                 let selectedItem = $(this).children("option:selected").val();
-                table.columns(6).search(selectedItem).draw();
+                table.columns(8).search(selectedItem).draw();
             })
         } catch (error) {
             console.log(error)
         }
+
+        //datetimepicker with momentjs plugin
+        tempusDominus.extend(tempusDominus.plugins.moment_parse, 'YYYY-MM-DD');
+
+        //datepicker form add
+        new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
+            display: {
+                components: {
+                    decades: true,
+                    year: true,
+                    month: true,
+                    date: true,
+                    hours: false,
+                    minutes: false,
+                    seconds: false,
+                }
+            },
+            useCurrent:true
+        });
+
+        //datepicker form edit
+        new tempusDominus.TempusDominus(document.getElementById('datetimepicker2'), {
+            display: {
+                components: {
+                    decades: true,
+                    year: true,
+                    month: true,
+                    date: true,
+                    hours: false,
+                    minutes: false,
+                    seconds: false,
+                }
+            },
+            useCurrent:false
+        });
 
 
         // ajax to Add User
@@ -375,7 +465,7 @@
                     if (data.statusCode === 201){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -387,7 +477,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -402,8 +492,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -422,10 +512,10 @@
         $('#editUser').submit(function (event) {
             event.preventDefault(); //prevent default action
 
-            <!--TODO: inst getting option value when country it changed-->
             //Ve se a data dos inputs mudou para formar so a data necessaria para o PATCH
             let formDataChanged = [];
-            $('#editUser input').each(function() { //para cada input vai ver
+            $('input, select', $('#editUser')).each(function() { //para cada input vai ver
+                console.log($(this).attr('name'), $(this).val())
                 if($(this).attr('name') === "editUserId" || ($(this).attr('name') === "editUserActive" && $(this).is(":checked")) || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
                     let emptyArray = { name: "", value: "" };
 
@@ -436,12 +526,13 @@
                 }
             });
 
+
             let formData = {
                 'action' : "UpdateUser",
                 'data'   : formDataChanged
             };
 
-           /* let formData = {
+            /*let formData = {
                 'action' : "UpdateUser",
                 'data'   : $(this).serializeArray()
             };*/
@@ -460,7 +551,7 @@
                     if (data.statusCode === 200){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -472,7 +563,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -487,8 +578,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -542,9 +633,9 @@
                         $('[name="editUserActive"]').attr('checked', false);
                     }
 
-                    //atribui atributo .data("lastValue") a cada input do form editGroup
+                    //atribui atributo .data("lastValue") a cada input/select do form editGroup
                     // para se poder comparar entre os dados anteriores e os current
-                    $('#editUser input').each(function() {
+                    $('input, select', $('#editUser')).each(function() {
                         $(this).data('lastValue', $(this).val());
                     });
 
@@ -553,7 +644,7 @@
                 },
                 error: function (data) {
                     Swal.fire({
-                        title: 'Error!',
+                        title: 'Erro!',
                         text: data['message'],
                         icon: 'error',
                         showConfirmButton: false,
@@ -593,7 +684,7 @@
                     if (data.statusCode === 200){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -605,7 +696,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -620,8 +711,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,

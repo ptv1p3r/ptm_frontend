@@ -20,74 +20,120 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <a href="#addTransactionModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTransactionModal">
-                                    <i class="fas fa-plus-circle"></i><span>Add New Transaction</span>
+                                    <i class="fas fa-plus-circle"></i><span> Nova transação</span>
                                 </a>
+                                <!--<div class="float-end">
+                                    <label>filtro:</label>
+                                    <select id='GetActive'>
+                                        <option value=''>Todos</option>
+                                        <option value='1'>Ativos</option>
+                                        <option value='0'>Inativos</option>
+                                    </select>
+                                </div>-->
                             </div>
                             <div class="card-body">
-                                <table id="transactionsTable" class="table table-striped table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>id</th>
-                                        <th>typeId</th>
-                                        <th>methodId</th>
-                                        <th>userId</th>
-                                        <th>treeId</th>
-                                        <th>value</th>
-                                        <!--<th>active
-                                            <select id='GetActive'>
-                                                <option value=''>All</option>
-                                                <option value='1'>Active</option>
-                                                <option value='0'>Inactive</option>
-                                            </select>
-                                        </th>-->
-                                        <th>dateCreated</th>
-                                        <th>dateModified</th>
-                                        <th>dateValidated</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php if (!empty($this->userdata['transactionList'])) {
-                                        foreach ($this->userdata['transactionList'] as $key => $transaction) { ?>
-                                            <tr>
-                                                <td><?php echo $transaction["id"] ?></td>
-                                                <td><?php
-                                                    if (!empty($this->userdata['transactionTypeList'])) {
-                                                        foreach ($this->userdata['transactionTypeList'] as $key => $type) {
-                                                            if ( $type["id"] == $transaction["transactionTypeId"]){
-                                                                echo $type["name"];
-                                                            }
-                                                        }
-                                                    }?>
-                                                </td>
-                                                <td><?php
-                                                    if (!empty($this->userdata['transactionMethodList'])) {
-                                                        foreach ($this->userdata['transactionMethodList'] as $key => $method) {
-                                                            if ( $method["id"] == $transaction["transactionMethodId"]){
-                                                                echo $method["name"];
-                                                            }
-                                                        }
-                                                    }?>
-                                                </td>
-                                                <td><?php echo $transaction["userId"] ?></td>
-                                                <td><?php echo $transaction["treeId"] ?></td>
-                                                <td><?php echo $transaction["value"] ?></td>
-                                                <!--<td><?php //echo $transaction["active"] ?></td>-->
-                                                <td><?php echo $transaction["dateCreated"] ?></td>
-                                                <td><?php echo $transaction["dateModified"] ?></td>
-                                                <td><?php echo $transaction["dateValidated"] ?></td>
-                                                <td>
-                                                    <a href="#deleteTransactionModal" id="<?php echo $transaction['id'] ?>" class="delete"
-                                                       data-bs-toggle="modal" data-bs-target="#deleteTransactionModal"><i class="fas fa-trash-alt"></i></a>
-                                                </td>
-                                            </tr>
-                                        <?php }
-                                    } else { ?>
+                                <div class="table-responsive">
+                                    <table id="transactionsTable" class="table table-striped table-hover" style="width:100%">
+                                        <thead>
                                         <tr>
+                                            <th>Identificador</th>
+                                            <th>Tipo</th>
+                                            <th>Método</th>
+                                            <th>Utilizador</th>
+                                            <th>Árvore</th>
+                                            <th>Valor</th>
+                                            <!--<th>active</th>-->
+                                            <th>Data criado</th>
+                                            <th>Data atualizado</th>
+                                            <th>Data validado</th>
+                                            <th></th>
                                         </tr>
-                                    <?php } ?>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        <?php if (!empty($this->userdata['transactionList'])) {
+                                            foreach ($this->userdata['transactionList'] as $key => $transaction) { ?>
+                                                <tr>
+                                                    <td id="bmpzvoeo4v-<?php echo $transaction["id"] ?>"
+                                                        onclick="copy('<?php echo $transaction["id"] ?>','bmpzvoeo4v-<?php echo $transaction["id"] ?>')"
+                                                        title="<?php echo $transaction["id"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $transaction["id"] ?>
+                                                    </td>
+                                                    <?php if (!empty($this->userdata['transactionTypeList'])) { foreach ($this->userdata['transactionTypeList'] as $key => $type) { if ( $type["id"] == $transaction["transactionTypeId"]){ $typeName = $type["name"]; } } }?>
+                                                    <td id="bc3fn1e1hx-<?php echo $transaction["id"] ?>"
+                                                        onclick="copy('<?php echo $typeName ?>','bc3fn1e1hx-<?php echo $transaction["id"] ?>')"
+                                                        title="<?php echo $typeName ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $typeName ?>
+                                                    </td>
+                                                    <?php if (!empty($this->userdata['transactionMethodList'])) { foreach ($this->userdata['transactionMethodList'] as $key => $method) { if ( $method["id"] == $transaction["transactionMethodId"]){ $methodName = $method["name"]; } } }?>
+                                                    <td id="qehnjmeopa-<?php echo $transaction["id"] ?>"
+                                                        onclick="copy('<?php echo $methodName ?>','qehnjmeopa-<?php echo $transaction["id"] ?>')"
+                                                        title="<?php echo $methodName ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $methodName ?>
+                                                    </td>
+                                                    <td id="0dlquhlflz-<?php echo $transaction["id"] ?>"
+                                                        onclick="copy('<?php echo $transaction["userId"] ?>','0dlquhlflz-<?php echo $transaction["id"] ?>')"
+                                                        title="<?php echo $transaction["userId"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $transaction["userId"] ?>
+                                                    </td>
+                                                    <td id="6efh5fxz3y-<?php echo $transaction["id"] ?>"
+                                                        onclick="copy('<?php echo $transaction["treeId"] ?>','6efh5fxz3y-<?php echo $transaction["id"] ?>')"
+                                                        title="<?php echo $transaction["treeId"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $transaction["treeId"] ?>
+                                                    </td>
+                                                    <td id="8njps2d3he-<?php echo $transaction["id"] ?>"
+                                                        onclick="copy('<?php echo $transaction["value"] ?>','8njps2d3he-<?php echo $transaction["id"] ?>')"
+                                                        title="<?php echo $transaction["value"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $transaction["value"] ?>
+                                                    </td>
+                                                    <!--<td><?php //echo $transaction["active"] ?></td>-->
+                                                    <td id="txq8n87681-<?php echo $transaction["id"] ?>"
+                                                        onclick="copy('<?php echo $transaction["dateCreated"] ?>','txq8n87681-<?php echo $transaction["id"] ?>')"
+                                                        title="<?php echo $transaction["dateCreated"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $transaction["dateCreated"] ?>
+                                                    </td>
+                                                    <td id="iiqwvbo98y-<?php echo $transaction["id"] ?>"
+                                                        onclick="copy('<?php echo $transaction["dateModified"] ?>','iiqwvbo98y-<?php echo $transaction["id"] ?>')"
+                                                        title="<?php echo $transaction["dateModified"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $transaction["dateModified"] ?>
+                                                    </td>
+                                                    <td id="r5bzfy57w7-<?php echo $transaction["id"] ?>"
+                                                        onclick="copy('<?php echo $transaction["dateValidated"] ?>','r5bzfy57w7-<?php echo $transaction["id"] ?>')"
+                                                        title="<?php echo $transaction["dateValidated"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $transaction["dateValidated"] ?>
+                                                    </td>
+                                                    <td>
+                                                        <div class="float-end">
+                                                            <a href="#deleteTransactionModal" id="<?php echo $transaction['id'] ?>" class="delete m-2"
+                                                               data-bs-toggle="modal" data-bs-target="#deleteTransactionModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php }
+                                        } else { ?>
+                                            <tr>
+                                            </tr>
+                                        <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -105,12 +151,12 @@
                 <div class="modal-content">
                     <form id="addTransaction">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Transaction</h4>
+                            <h4 class="modal-title">Realizar transação</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>typeId</label>
+                                <label>Tipo</label>
                                 <!--<input type="text" class="form-control" name="addTransactionTypeId" required>-->
                                 <select name="addTransactionTypeId" id="addTransactionTypeId" required>
                                     <option value="" disabled selected >Tipo transação</option>
@@ -122,7 +168,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>methodId</label>
+                                <label>Método</label>
                                 <!--<input type="text" class="form-control" name="addTransactionMethodId" required>-->
                                 <select name="addTransactionMethodId" id="addTransactionMethodId" required>
                                     <option value="" disabled selected>Método transação</option>
@@ -134,31 +180,32 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>userId</label>
-                                <!--<input type="text" class="form-control" name="addTransactionUserId" required> -->
+                                <label>Utilizador</label>
+                                <!--<input type="text" class="form-control" name="addTransactionUserId" required>-->
                                 <select name="addTransactionUserId" id="addTransactionUserId" required>
                                     <option value="" disabled selected>Utilizador</option>
                                     <?php if (!empty($this->userdata['usersList'])) {
                                         foreach ($this->userdata['usersList'] as $key => $user) { ?>
-                                            <option value="<?php echo $user['id'] ?>"><?php echo $user["name"] ?></option>
+                                            <option value="<?php echo $user['id'] ?>"><?php echo $user["id"] ?> | <?php echo $user["name"] ?></option>
                                         <?php }
                                     } ?>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>treeId</label>
+                                <label>Árvore</label>
+                                <?php echo (empty($this->userdata['treesList'])) ? '<input type="text" class="form-control" name="addTransactionTreeId" value="Não existem árvores a adotar" disabled>' : '<input type="text" class="form-control" name="addTransactionTreeId" required>' ?>
                                 <!--<input type="text" class="form-control" name="addTransactionTreeId" required>-->
-                                <select name="addTransactionTreeId" id="addTransactionTreeId" required>
-                                    <option value="" disabled selected>Árvore a adotar</option>
-                                    <?php if (!empty($this->userdata['treesList'])) {
+                                <!--<select name="addTransactionTreeId" id="addTransactionTreeId" required>
+                                    <option value="" disabled selected> <?php //echo (empty($this->userdata['treesList'])) ? "Não existem árvores a adotar" : "Árvore a adotar" ?></option>
+                                    <?php /*if (!empty($this->userdata['treesList'])) {
                                         foreach ($this->userdata['treesList'] as $key => $tree) { ?>
                                             <option value="<?php echo $tree['id'] ?>"><?php echo $tree["id"] ?></option>
                                         <?php }
-                                    } ?>
-                                </select>
+                                    } */?>
+                                </select>-->
                             </div>
                             <div class="form-group">
-                                <label>value</label>
+                                <label>Valor</label>
                                 <input type="number" min="2.50" step="0.05" class="form-control" name="addTransactionValue" required>
                             </div>
                             <!--<div class="form-group">
@@ -167,8 +214,8 @@
                             </div>-->
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-success" value="Add">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <?php echo (empty($this->userdata['treesList'])) ? '' : '<input type="submit" class="btn btn-success" value="Concluir">' ?>
                         </div>
                     </form>
                 </div>
@@ -181,17 +228,17 @@
                 <div class="modal-content">
                     <form id="deleteTransaction">
                         <div class="modal-header">
-                            <h4 class="modal-title">Delete Transaction</h4>
+                            <h4 class="modal-title">Apagar transação</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Are you sure you want to delete this Transaction?</p>
-                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                            <p>Tem a certeza que quer apagar esta transação?</p>
+                            <p class="text-warning"><small>A ação não pode ser defeita.</small></p>
                             <input id="deleteTransactionId" name="deleteTransactionId" type="hidden" class="form-control" value="">
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-danger" value="Delete">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-danger" value="Apagar">
                         </div>
                     </form>
                 </div>
@@ -207,11 +254,16 @@
                 try{
                     var table = $('#transactionsTable').DataTable({
                         rowReorder: false,
-                        responsive: true,
-                        columnDefs: [ {
-                            targets: [9],
-                            orderable: false,
-                        }]
+                        responsive: false,
+                        columnDefs: [
+                            {
+                                targets: [9],
+                                orderable: false,
+                            }
+                        ],
+                        oLanguage: {
+                            "sUrl": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-PT.json"
+                        }
                     });
                     //filtra table se ativo, inativo ou mostra todos
                     $('#GetActive').on('change', function() {
@@ -248,7 +300,7 @@
                             if (data.statusCode === 201){
                                 //mensagem de Success
                                 Swal.fire({
-                                    title: 'Success!',
+                                    title: 'Sucesso!',
                                     text: data.body.message,
                                     icon: 'success',
                                     showConfirmButton: false,
@@ -260,7 +312,7 @@
                             } else {
                                 //mensagem de Error
                                 Swal.fire({
-                                    title: 'Error!',
+                                    title: 'Erro!',
                                     text: data.body.message,
                                     icon: 'error',
                                     showConfirmButton: false,
@@ -275,8 +327,8 @@
                         error: function (data) {
                             //mensagem de Error
                             Swal.fire({
-                                title: 'Error!',
-                                text: "Connection error, please try again.",
+                                title: 'Erro!',
+                                text: "Erro de conexão, por favor tente denovo.",
                                 icon: 'error',
                                 showConfirmButton: false,
                                 timer: 2000,
@@ -314,7 +366,7 @@
                             if (data.statusCode === 200){
                                 //mensagem de Success
                                 Swal.fire({
-                                    title: 'Success!',
+                                    title: 'Sucesso!',
                                     text: data.body.message,
                                     icon: 'success',
                                     showConfirmButton: false,
@@ -326,7 +378,7 @@
                             } else {
                                 //mensagem de Error
                                 Swal.fire({
-                                    title: 'Error!',
+                                    title: 'Erro!',
                                     text: data.body.message,
                                     icon: 'error',
                                     showConfirmButton: false,
@@ -341,8 +393,8 @@
                         error: function (data) {
                             //mensagem de Error
                             Swal.fire({
-                                title: 'Error!',
-                                text: "Connection error, please try again.",
+                                title: 'Erro!',
+                                text: "Erro de conexão, por favor tente denovo.",
                                 icon: 'error',
                                 showConfirmButton: false,
                                 timer: 2000,
