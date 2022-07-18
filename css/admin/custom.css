@@ -1,4 +1,19 @@
 /*********************************
+some backgorund colors
+*********************************/
+.bg-orange {
+    background-color: #ea933e;
+}
+
+.bg-slightly-darker-blue {
+    background-color: #025BE1;
+}
+
+.bg-purple {
+    background-color: #866EBB;
+}
+
+/*********************************
 TABLE COPY TOOLTIP
 *********************************/
 .tip{

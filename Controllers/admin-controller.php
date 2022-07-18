@@ -998,7 +998,7 @@ class AdminController extends MainController
      */
     public function trees_dashboard() {
         // Título da página
-        $this->title = 'Admin - Trees dashboard';
+        $this->title = 'Admin - Dashboard árvores';
 
         // Permissoes da pagina
         $this->permission_required = array('admLogin');

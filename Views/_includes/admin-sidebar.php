@@ -142,12 +142,12 @@
                 <?php if (isset($_SESSION["sidebar"]["active_tab"]["tree_types"]) && $_SESSION["sidebar"]["active_tab"]["tree_types"] === true) { ?>
                     <a class="nav-link active" href="<?php echo HOME_URL . '/admin/tree_types';?>">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-file-pen"></i></div>
-                        Tipos
+                        Tipos árvores
                     </a>
                 <?php } else { ?>
                     <a class="nav-link" href="<?php echo HOME_URL . '/admin/tree_types';?>">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-file-pen"></i></div>
-                        Tipos
+                        Tipos árvores
                     </a>
                 <?php } ?>
 
