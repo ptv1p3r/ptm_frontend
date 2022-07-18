@@ -194,7 +194,7 @@ function callAPI($method, $url, $data, $token = "")
     $body = substr($result, $header_size);
 
     if (!$result) {
-        die("API Connection Failure");
+        die("Conexão com API falhou.");
         /*$resultArray = array(
             "statusCode" => 503,
             "body" => "Service Unavailable" //decode json body from api response
