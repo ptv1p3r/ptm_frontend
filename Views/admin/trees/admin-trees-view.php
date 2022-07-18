@@ -49,6 +49,8 @@
                                             <th>Tipo</th>
                                             <th>lat</th>
                                             <th>lng</th>
+                                            <th>Data Criação</th>
+                                            <th>Data Modificação</th>
                                             <th hidden>active</th>
                                             <th></th>
                                         </tr>
@@ -113,6 +115,20 @@
                                                         class="table-text-truncate"
                                                         style="cursor: pointer">
                                                         <?php echo $tree["lng"] ?>
+                                                    </td>
+                                                    <td id="cd5tntewxm-<?php echo $tree["id"] ?>"
+                                                        onclick="copy('<?php echo $tree["dateCreated"] ?>','cd5tntewxm-<?php echo $tree["id"] ?>')"
+                                                        title="<?php echo $tree["dateCreated"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $tree["dateCreated"] ?>
+                                                    </td>
+                                                    <td id="12n35nxebd-<?php echo $tree["id"] ?>"
+                                                        onclick="copy('<?php echo $tree["dateModified"] ?>','12n35nxebd-<?php echo $tree["id"] ?>')"
+                                                        title="<?php echo $tree["dateModified"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $tree["dateModified"] ?>
                                                     </td>
                                                     <td hidden><?php echo $tree["active"] ?></td>
                                                     <td>
@@ -347,7 +363,7 @@
                 responsive: false,
                 columnDefs: [
                     {
-                        targets:[8,9],
+                        targets:[10,11],
                         orderable: false,
                     }
                 ],
@@ -358,7 +374,7 @@
             //filtra table se ativo, inativo ou mostra todos
             $('#GetActive').on('change', function() {
                 let selectedItem = $(this).children("option:selected").val();
-                table.columns(8).search(selectedItem).draw();
+                table.columns(10).search(selectedItem).draw();
             })
         } catch (error){
             console.log(error);

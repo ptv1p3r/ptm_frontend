@@ -44,6 +44,8 @@
                                             <!--<th>id</th>-->
                                             <th>Nome</th>
                                             <th>Descrição</th>
+                                            <th>Data Criação</th>
+                                            <th>Data Modificação</th>
                                             <th hidden>active</th>
                                             <th></th>
                                         </tr>
@@ -66,6 +68,20 @@
                                                         class="table-text-truncate"
                                                         style="cursor: pointer">
                                                         <?php echo $treeTypes["description"] ?>
+                                                    </td>
+                                                    <td id="gfdg3ns2bz-<?php echo $treeTypes["id"] ?>"
+                                                        onclick="copy('<?php echo $treeTypes["dateCreated"] ?>','gfdg3ns2bz-<?php echo $treeTypes["id"] ?>')"
+                                                        title="<?php echo $treeTypes["dateCreated"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeTypes["dateCreated"] ?>
+                                                    </td>
+                                                    <td id="zzsdawwvzd-<?php echo $treeTypes["id"] ?>"
+                                                        onclick="copy('<?php echo $treeTypes["dateModified"] ?>','zzsdawwvzd-<?php echo $treeTypes["id"] ?>')"
+                                                        title="<?php echo $treeTypes["dateModified"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeTypes["dateModified"] ?>
                                                     </td>
                                                     <td hidden><?php echo $treeTypes["active"] ?></td>
                                                     <td>
@@ -196,7 +212,7 @@
                 rowReorder: false,
                 responsive: false,
                 columnDefs: [ {
-                    targets: [2,3],
+                    targets: [4,5],
                     orderable: false,
                 }],
                 oLanguage: {
@@ -206,7 +222,7 @@
             //filtra table se ativo, inativo ou mostra todos
             $('#GetActive').on('change', function() {
                 let selectedItem = $(this).children("option:selected").val();
-                table.columns(2).search(selectedItem).draw();
+                table.columns(4).search(selectedItem).draw();
             })
         } catch (error) {
             console.log(error);

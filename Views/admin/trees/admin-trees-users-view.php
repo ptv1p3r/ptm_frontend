@@ -44,6 +44,7 @@
                                             <th>Utilizador</th>
                                             <th>Árvore</th>
                                             <th>Data Criação</th>
+                                            <th>Data Modificação</th>
                                             <th hidden>active</th>
                                             <th></th>
                                         </tr>
@@ -72,6 +73,13 @@
                                                         class="table-text-truncate"
                                                         style="cursor: pointer">
                                                         <?php echo $treeUser["dateCreated"] ?>
+                                                    </td>
+                                                    <td id="qnwavebq2n-<?php echo $treeUser["treeId"] ?>"
+                                                        onclick="copy('<?php echo $treeUser["dateModified"] ?>','qnwavebq2n-<?php echo $treeUser["treeId"] ?>')"
+                                                        title="<?php echo $treeUser["dateModified"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeUser["dateModified"] ?>
                                                     </td>
                                                     <td hidden><?php echo $treeUser["active"] ?></td>
                                                     <td>
@@ -205,7 +213,7 @@
                 rowReorder: false,
                 responsive: false,
                 columnDefs: [ {
-                    targets: [3,4],
+                    targets: [4,5],
                     orderable: false,
                 }],
                 oLanguage: {
@@ -215,7 +223,7 @@
             //filtra table se ativo, inativo ou mostra todos
             $('#GetActive').on('change', function() {
                 let selectedItem = $(this).children("option:selected").val();
-                table.columns(2).search(selectedItem).draw();
+                table.columns(4).search(selectedItem).draw();
             })
         } catch (error){
             console.log(error)

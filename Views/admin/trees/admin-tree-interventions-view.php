@@ -47,6 +47,8 @@
                                             <th>Descrição</th>
                                             <th>Observaçao</th>
                                             <th>Publico</th>
+                                            <th>Data Criação</th>
+                                            <th>Data Modificação</th>
                                             <th hidden>active</th>
                                             <th></th>
                                         </tr>
@@ -97,6 +99,20 @@
                                                         class="table-text-truncate"
                                                         style="cursor: pointer">
                                                         <?php echo $treePublic ?>
+                                                    </td>
+                                                    <td id="uufmrtms2b-<?php echo $treeIntervention["id"] ?>"
+                                                        onclick="copy('<?php echo $treeIntervention["dateCreated"] ?>','uufmrtms2b-<?php echo $treeIntervention["id"] ?>')"
+                                                        title="<?php echo $treeIntervention["dateCreated"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeIntervention["dateCreated"] ?>
+                                                    </td>
+                                                    <td id="ltrderm65t-<?php echo $treeIntervention["id"] ?>"
+                                                        onclick="copy('<?php echo $treeIntervention["dateModified"] ?>','ltrderm65t-<?php echo $treeIntervention["id"] ?>')"
+                                                        title="<?php echo $treeIntervention["dateModified"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeIntervention["dateModified"] ?>
                                                     </td>
                                                     <td hidden><?php echo $treeIntervention["active"] ?></td>
                                                     <td>
@@ -271,7 +287,7 @@
                         rowReorder: false,
                         responsive: false,
                         columnDefs: [{
-                            targets: [6, 7],
+                            targets: [8, 9],
                             orderable: false,
                         }],
                         oLanguage: {
@@ -281,7 +297,7 @@
                     //filtra table se ativo, inativo ou mostra todos
                     $('#GetActive').on('change', function () {
                         let selectedItem = $(this).children("option:selected").val();
-                        table.columns(6).search(selectedItem).draw();
+                        table.columns(8).search(selectedItem).draw();
                     })
                 } catch (error){
                     console.log(error);

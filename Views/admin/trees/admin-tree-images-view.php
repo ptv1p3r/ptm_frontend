@@ -43,6 +43,8 @@
                                             <th>Descrição</th>
                                             <th>Tamanho</th>
                                             <th>Posição</th>
+                                            <th>Data Criação</th>
+                                            <th>Data Modificação</th>
                                             <!--<th>active</th>-->
                                             <th></th>
                                         </tr>
@@ -86,6 +88,20 @@
                                                         <?php echo $treeImage["position"] ?>
                                                     </td>
                                                     <!--<td hidden><?php //echo $treeImage["active"] ?></td>-->
+                                                    <td id="jnt4s4e5dc-<?php echo $treeImage["id"] ?>"
+                                                        onclick="copy('<?php echo $treeImage["dateCreated"] ?>','jnt4s4e5dc-<?php echo $treeImage["id"] ?>')"
+                                                        title="<?php echo $treeImage["dateCreated"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeImage["dateCreated"] ?>
+                                                    </td>
+                                                    <td id="jnt4s4e5dc-<?php echo $treeImage["id"] ?>"
+                                                        onclick="copy('<?php echo $treeImage["dateModified"] ?>','jnt4s4e5dc-<?php echo $treeImage["id"] ?>')"
+                                                        title="<?php echo $treeImage["dateModified"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $treeImage["dateModified"] ?>
+                                                    </td>
                                                     <td>
                                                         <div class="float-end">
                                                             <!--<a href="#editTreeImageModal" id="<?php //echo $treeImage['id'] ?>" data-ImagePath="<?php //echo $treeImage['path'] ?>" class="edit" data-bs-toggle="modal" data-bs-target="#editTreeModal"><i class="far fa-edit"></i></a>-->
@@ -234,7 +250,7 @@
                         rowReorder: false,
                         responsive: false,
                         columnDefs: [ {
-                            targets: [5],
+                            targets: [7],
                             orderable: false,
                         }],
                         oLanguage: {

@@ -39,6 +39,8 @@
                                             <th>Nome</th>
                                             <th>Descrição</th>
                                             <th>Tabela de segurança</th>
+                                            <th>Data Criação</th>
+                                            <th>Data Modificação</th>
                                             <th hidden>active</th>
                                             <th></th>
                                         </tr>
@@ -67,6 +69,20 @@
                                                         class="table-text-truncate"
                                                         style="cursor: pointer">
                                                         Tabela <?php echo $group["securityId"] ?>
+                                                    </td>
+                                                    <td id="b3esv3awv-<?php echo $group["id"] ?>"
+                                                        onclick="copy('Tabela <?php echo $group["dateCreated"] ?>','b3esv3awv-<?php echo $group["id"] ?>')"
+                                                        title="Tabela <?php echo $group["dateCreated"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $group["dateCreated"] ?>
+                                                    </td>
+                                                    <td id="f3nnrdr3b-<?php echo $group["id"] ?>"
+                                                        onclick="copy('Tabela <?php echo $group["dateModified"] ?>','f3nnrdr3b-<?php echo $group["id"] ?>')"
+                                                        title="Tabela <?php echo $group["dateModified"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $group["dateModified"] ?>
                                                     </td>
                                                     <td hidden><?php echo $group["active"] ?></td>
                                                     <td>
@@ -224,7 +240,7 @@
                 rowReorder: false,
                 responsive: false,
                 columnDefs: [ {
-                    targets: [4,3],
+                    targets: [6,5],
                     orderable: false,
                 }],
                 oLanguage: {
@@ -234,7 +250,7 @@
             //filtra table se ativo, inativo ou mostra todos
             $('#GetActive').on('change', function() {
                 let selectedItem = $(this).children("option:selected").val();
-                table.columns(3).search(selectedItem).draw();
+                table.columns(5).search(selectedItem).draw();
             })
         } catch (error) {
             console.log(error);

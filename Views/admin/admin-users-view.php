@@ -42,6 +42,8 @@
                                             <th>Email</th>
                                             <th>Grupo</th>
                                             <th>País</th>
+                                            <th>Data Criação</th>
+                                            <th>Data Modificação</th>
                                             <th hidden>active</th>
                                             <th></th>
                                         </tr>
@@ -94,6 +96,20 @@
                                                         class="table-text-truncate"
                                                         style="cursor: pointer">
                                                         <?php echo $countryName ?>
+                                                    </td>
+                                                    <td id="h3nsen32jn-<?php echo $user["id"] ?>"
+                                                        onclick="copy('<?php echo $user["dateCreated"] ?>','h3nsen32jn-<?php echo $user["id"] ?>')"
+                                                        title="<?php echo $user["dateCreated"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $user["dateCreated"] ?>
+                                                    </td>
+                                                    <td id="kern3tvns3-<?php echo $user["id"] ?>"
+                                                        onclick="copy('<?php echo $user["dateModified"] ?>','kern3tvns3-<?php echo $user["id"] ?>')"
+                                                        title="<?php echo $user["dateModified"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $user["dateModified"] ?>
                                                     </td>
                                                     <td hidden><?php echo $user["active"] ?></td>
                                                     <td>
@@ -374,7 +390,7 @@
                 rowReorder: false,
                 responsive: false,
                 columnDefs: [{
-                    targets: [6,7],
+                    targets: [8,9],
                     orderable: false,
                 }],
                 oLanguage: {
@@ -384,7 +400,7 @@
             //filtra table se ativo, inativo ou mostra todos
             $('#GetActive').on('change', function() {
                 let selectedItem = $(this).children("option:selected").val();
-                table.columns(6).search(selectedItem).draw();
+                table.columns(8).search(selectedItem).draw();
             })
         } catch (error) {
             console.log(error)

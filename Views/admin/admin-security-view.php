@@ -29,6 +29,8 @@
                                         <thead>
                                             <tr>
                                                 <th>Identificador</th>
+                                                <th>Data Criação</th>
+                                                <th>Data Modificação</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -42,6 +44,20 @@
                                                         class="table-text-truncate"
                                                         style="cursor: pointer">
                                                         Tabela <?php echo $security["id"] ?>
+                                                    </td>
+                                                    <td id="789fgm5nmw-<?php echo $security["id"] ?>"
+                                                        onclick="copy('Tabela <?php echo $security["dateCreated"] ?>','789fgm5nmw-<?php echo $security["id"] ?>')"
+                                                        title="Tabela <?php echo $security["dateCreated"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $security["dateCreated"] ?>
+                                                    </td>
+                                                    <td id="n33nyfr31n-<?php echo $security["id"] ?>"
+                                                        onclick="copy('Tabela <?php echo $security["dateModified"] ?>','n33nyfr31n-<?php echo $security["id"] ?>')"
+                                                        title="Tabela <?php echo $security["dateModified"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $security["dateModified"] ?>
                                                     </td>
                                                     <td>
                                                         <div class="float-end">
@@ -391,7 +407,7 @@
                 rowReorder: false,
                 responsive: false,
                 columnDefs: [ {
-                    targets: [1],
+                    targets: [3],
                     orderable: false,
                 }],
                 oLanguage: {
