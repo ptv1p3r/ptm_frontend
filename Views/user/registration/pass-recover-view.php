@@ -85,7 +85,7 @@
             console.log(formData);
 
             $.ajax({
-                url: "<?php echo HOME_URL . '/register/passRecover/' . chk_array($parametros, 0) . '/' . chk_array($parametros, 1);?>",
+                url: "<?php echo HOME_URL . '/register/passRecover/' . chk_array($parameters, 0) . '/' . chk_array($parameters, 1);?>",
                 dataType: "json",
                 type: 'POST',
                 data: formData,
