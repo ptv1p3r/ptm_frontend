@@ -21,7 +21,7 @@
 
 <!--Messages Start-->
 <section class="home-about wf100 p80">
-    <div class="container">
+    <div class="container" style="max-width: 1500px;!important;">
         <div class="row">
             <div class="grid email">
                 <div class="grid-body">
@@ -98,10 +98,11 @@
                             <!-- INBOX/SENT -->
                             <div id="inbox-body">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered mytable display" id="messagesTable" style="width:97%">
+                                    <table class="table table-bordered mytable display" id="messagesTable"
+                                           style="width:97%">
                                         <thead>
                                         <tr>
-                                            <th> <input id="all-none" type="checkbox"></th>
+                                            <th><input id="all-none" type="checkbox"></th>
                                             <th>De</th>
                                             <th>Assunto</th>
                                             <th>Data</th>
@@ -181,18 +182,19 @@
                                                        value="<?php echo $_SESSION["userdata"]["id"]; ?>">
                                                 <div class="form-group">
                                                     <label>Para:</label>
-                                                    <select  name="addMessageToUser" id="addMessageToUser" required>
+                                                    <select name="addMessageToUser" id="addMessageToUser" required>
                                                         <option value="" disabled selected>Selecione o recetor</option>
                                                         <?php if (!empty($this->userdata['usersList'])) {
                                                             foreach ($this->userdata['usersList'] as $key => $user) { ?>
-                                                                <option value="<?php echo $user['id'] ?>" ><?php echo $user["email"] ?> </option>
+                                                                <option value="<?php echo $user['id'] ?>"><?php echo $user["email"] ?> </option>
                                                             <?php }
                                                         } ?>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Assunto</label>
-                                                    <input name="addMessageSubject" type="text" class="form-control" required>
+                                                    <input name="addMessageSubject" type="text" class="form-control"
+                                                           required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Mensagem</label>
@@ -309,31 +311,15 @@
                 pageLength: 15,
                 colReorder: false,
                 columns: [
-                    { "width": "5%", orderable: false },
-                    { "width": "20%" },
-                    { "width": "20%" },
-                    { "width": "20%" },
-                    { "width": "10%" },
-                    { "width": "0%" }
+                    {"width": "5%", orderable: false},
+                    {"width": "20%"},
+                    {"width": "20%"},
+                    {"width": "20%"},
+                    {"width": "10%"},
+                    {"width": "0%"}
                 ],
-                "language": {
-                    "sProcessing": "A processar...",
-                    "sLengthMenu": "Mostrar _MENU_ registos",
-                    "sZeroRecords": "Sem resultados",
-                    "sInfo": "Mostrando _START_ a _END_ em um total de _TOTAL_ mensagens.",
-                    "sInfoEmpty": "Mostrando mensagens de 0 a 0 de um total de 0 mensagens.",
-                    "sInfoPostFix": "",
-                    "sSearch": "Pesquisar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Carregando...",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Seguinte",
-                        "sPrevious": "Anterior"
-                    }
-
+                oLanguage: {
+                    "sUrl": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-PT.json"
                 }
             });
         } catch (error) {
@@ -423,6 +409,7 @@
                                 </div>`
             );
         }
+
         LoadMessage()
         <?php }
         }?>

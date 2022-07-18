@@ -37,6 +37,14 @@ define( 'DB_PASSWORD', '' );
 // Charset da conexão PDO
 define( 'DB_CHARSET', 'utf8' );*/
 
+//PHPMailer
+define ('SMTP_SECURE', 'true' );
+define ('SMTP_USER', 'noreply@adoteumaarvore.pt' );
+define ('SMTP_PASS', 'HesB#?c:pU6m93#b' );
+define('SMTP_PORT', 465);
+define('SMTP_CHARSET', 'UTF-8');
+define('SMTP_HOST', 'mail.adoteumaarvore.pt');
+
 // DEBUG MODE
 define( 'DEBUG', true );
 

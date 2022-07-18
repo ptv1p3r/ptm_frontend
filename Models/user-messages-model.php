@@ -29,13 +29,14 @@ class UserMessagesModel extends MainModel
     {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/users/list';
-
         if (!empty($_SESSION['userdata']['accessToken'])) {
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
-        //trasforma toda a msg em string json para poder ser enviado
+
+        //Decode to check message from api
         return json_decode(json_encode($result), true);
     }
 
@@ -49,12 +50,14 @@ class UserMessagesModel extends MainModel
     public function getMessageById($id) {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/messages/view/' . $id;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
-        //Transform message into string to be send to the controller
+
+        //Decode to check message from api
         return json_decode(json_encode($result), true);
     }
 
@@ -66,12 +69,14 @@ class UserMessagesModel extends MainModel
     public function getMessageListByUserId($id) {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/messages/list/' . $id;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
-        //Transform message into string to be send to the controller
+
+        //Decode to check message from api
         return json_decode(json_encode($result), true);
     }
 
@@ -83,12 +88,14 @@ class UserMessagesModel extends MainModel
     public function getMessageSentListByUserId($id) {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/messages/list/send/' . $id;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
-        //trasforma toda a msg em string json para poder ser enviado
+
+        //Decode to check message from api
         return json_decode(json_encode($result), true);
     }
 
@@ -99,12 +106,14 @@ class UserMessagesModel extends MainModel
     public function getMessageList() {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/messages/list';
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("GET", $url, '', $userToken);
         }
-        //trasforma toda a msg em string json para poder ser enviado
+
+        //Decode to check message from api
         return json_decode(json_encode($result), true);
     }
 
@@ -140,13 +149,14 @@ class UserMessagesModel extends MainModel
             }
         }
 
+        //API End point
         $url = API_URL . 'api/v1/messages/create';
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("POST", $url, $normalizedData, $userToken);
         }
 
-        //trasforma toda a msg em string json para poder ser enviado
+        //Decode to check message from api
         return json_decode(json_encode($result), true);
     }
 
@@ -158,13 +168,14 @@ class UserMessagesModel extends MainModel
     public function messageRead($data) {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/messages/state/read/' . $data;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("POST", $url, "", $userToken);
         }
 
-        //trasforma toda a msg em string json para poder ser enviado
+        //Decode to check message from api
         return json_decode(json_encode($result), true);
     }
 
@@ -176,13 +187,14 @@ class UserMessagesModel extends MainModel
     public function messageUnread($data) {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/messages/state/unread/' . $data;
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("POST", $url, "", $userToken);
         }
 
-        //trasforma toda a msg em string json para poder ser enviado
+        //Decode to check message from api
         return json_decode(json_encode($result), true);
     }
 
@@ -194,14 +206,14 @@ class UserMessagesModel extends MainModel
     public function deleteMessage($data) {
         $result = null;
 
+        //API End point
         $url = API_URL . 'api/v1/messages/delete/' . $data;
-//        $url = API_URL . 'api/v1/messages/delete/' . $data[0];
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
             $result = callAPI("DELETE", $url, '', $userToken);
         }
 
-        //trasforma toda a msg em string json para poder ser enviado
+        //Decode to check message from api
         return json_decode(json_encode($result), true);
     }
 

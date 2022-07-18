@@ -358,7 +358,7 @@ Inner Header Start
 *********************************/
 
 .inner-header {
-    background: url(../../Images/home/innerheader.jpg) no-repeat;
+    background: url(../../Images/trees/treeHeader1.png) no-repeat;
 }
 
 .inner-header h1 {
@@ -973,9 +973,13 @@ section#home-slider img {
 }
 
 .pro-thumb a:hover, .f-cat span a:hover, .campaign-thumb a:hover, .event-thumb a:hover, .blog-thumb a:hover {
-    background: #689f38;
+    background: rgba(139, 195, 74, 1);
     color: #fff;
     border-color: #689f38;
+}
+
+.sponsor {
+    justify-content: center;
 }
 
 .blog-list .blog-post .blog-txt {
@@ -1480,6 +1484,7 @@ ul.flinks li a:hover, ul.flinks li.active a {
     right: 0;
 }
 
+
 /***************  Filter Gallery End  *****************/
 
 .partner-logos {
@@ -1720,7 +1725,7 @@ header.header-style-2 .navbar {
 }
 
 header.header-style-2 .navbar-brand {
-    background:url(../../Images/home/footerbg.jpg);
+    background: url(../../Images/home/footerbg.jpg);
     width: 270px;
     text-align: center;
     padding: 13px 0;
@@ -1953,10 +1958,10 @@ section.services-area ul li.active:after {
     position: absolute;
     left: 0;
     top: 0;
-    width: 95px;
-    height: 124px;
+    width: 250px;
+    height: 150px;
     background: #fff;
-    border: 2px solid #e6e6e6;
+    border: 2px solid #c9c8c8;
     content: "";
 }
 
@@ -1979,6 +1984,14 @@ section.services-area ul li.active:after {
     color: #888888;
     font-weight: 400;
     font-size: 18px;
+}
+
+.counter-box p.ctxt1 {
+    position: relative;
+    z-index: 99;
+    color: #888888;
+    font-weight: 400;
+    font-size: 14px;
 }
 
 .video-img {
@@ -2263,6 +2276,12 @@ li.form-submit button:hover {
     float: left;
     border-radius: 5px;
     overflow: hidden;
+    box-shadow: #00c273;
+}
+
+.picBorder{
+    border: 3px solid #c9c8c8;
+
 }
 
 .pro-box:after {
@@ -2384,7 +2403,7 @@ li.form-submit button:hover {
     color: #555555;
 }
 
-.why-ecova-center{
+.why-ecova-center {
     padding: 65px 0 65px;
     background-size: cover;
     text-align: center;
@@ -2654,8 +2673,11 @@ header .navbar-toggler {
 }
 
 .pro-thumb img {
-    width: 100%;
-    height: auto;
+    /*width: 100%;*/
+    /*height: auto;*/
+    height:250px!important;
+    width:250px!important;
+
 }
 
 .product-box:hover .pro-thumb:after {
@@ -5663,6 +5685,12 @@ select.customDropdown {
     color: #fff;
 }
 
+.btn-primary btnLogin {
+    color: #fff;
+    background-color: #1b5e20;
+    border-color: #1b5e20;
+}
+
 .myaccount-form a {
     color: #66bb6a;
 }
@@ -8130,7 +8158,6 @@ Modal End
 /*Settings profile Start*/
 /**********************************!*/
 
-
 .emp-profile {
     padding: 3%;
     margin-top: 3%;
@@ -8293,71 +8320,19 @@ NEW Settings profile End
 
 }
 
-.btn-success {
-    color: #fff;
-    background-color: #66bb6a;
-    border-color: #66bb6a;
-}
+/*.btn-success {*/
+/*    color: #fff;*/
+/*    background-color: #66bb6a;*/
+/*    border-color: #66bb6a;*/
+/*}*/
 
 /*********************************
 Settings profile End
 *********************************/
 
-
-/*********************************
-Loader registration Start
-*********************************/
-
-/*!*Add an overlay to the entire page blocking any further presses to buttons or other elements.*!*/
-/*.overlay {*/
-/*    position: fixed;*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    width: 100%;*/
-/*    height: 100vh;*/
-/*    background: rgba(0,0,0,.8);*/
-/*    z-index: 999;*/
-/*    opacity: 1;*/
-/*    transition: all 0.5s;*/
-/*}*/
-
-/*!*Spinner Styles*!*/
-/*.lds-dual-ring {*/
-/*    display: inline-block;*/
-/*    width: auto;*/
-/*    height: auto;*/
-/*}*/
-/*.lds-dual-ring:after {*/
-/*    content: " ";*/
-/*    display: block;*/
-/*    width: 64px;*/
-/*    height: 64px;*/
-/*    margin: 5% auto;*/
-/*    border-radius: 50%;*/
-/*    border: 6px solid #fff;*/
-/*    border-color: #fff transparent #fff transparent;*/
-/*    animation: lds-dual-ring 1.2s linear infinite;*/
-/*}*/
-/*!*@keyframes lds-dual-ring {*!*/
-/*!*    0% {*!*/
-/*!*        transform: rotate(0deg);*!*/
-/*!*    }*!*/
-/*!*    100% {*!*/
-/*!*        transform: rotate(360deg);*!*/
-/*!*    }*!*/
-/*!*}*!*/
-
 /*********************************
 Loader registration End
 *********************************/
-
-/*body {*/
-/*    margin: 0;*/
-/*    min-height: 100vh;*/
-/*    display: grid;*/
-/*    place-items: center;*/
-
-/*}*/
 
 /*Hidden class for adding and removing*/
 .lds-dual-ring.hidden {
@@ -8372,7 +8347,7 @@ Loader registration End
     height: 100%;
     z-index: 9999;
     background: rgba(0, 0, 0, .8);
-    z-index: 999;
+    z-index: 9999 !important;
     opacity: 1;
     transition: all 0.5s;
     /*overflow: hidden;*/
@@ -8430,12 +8405,47 @@ Map Leaflet CSS
     height: 500px;
 }
 
+.mapBorder{
+    border: 3px solid #c9c8c8;
+}
+
+
+/*********************************
+Map Tab GoTo Point leaflet CSS
+*********************************/
+
+.mapGo .row {
+    justify-content: center;
+    background: white;
+}
+
+.mapDirect .btn {
+    /*background: white;*/
+    font-size: 2rem;
+}
+
+
+.mapDirect .btn-outline-success {
+    color: #66bb6a;
+    background: white;
+    border: white;
+    box-shadow: 0 10px 10px 0 rgba(0, 102, 0, 0.24), 0 17px 50px 0 rgba(0, 102, 0, 0.19);
+}
+
+.breadcrumb {
+    background: white;
+}
+
+
+
+
+
 /*********************************
 Transatiction tree CSS
 *********************************/
 
 
-.subBtna{
+.subBtna {
     text-align: -webkit-center;
 }
 
@@ -8457,7 +8467,6 @@ Payment modal CSS
 /*    overflow-x: hidden;*/
 /*    background: #000000*/
 /*}*/
-
 
 
 .modal-ku {
@@ -8770,33 +8779,33 @@ User messages CSS
     text-overflow: ellipsis;
 }
 
-.table-bordered th{
+.table-bordered th {
     border: 1px solid #66bb6a;
-    background-color:#66bb6a;
+    background-color: #66bb6a;
     color: white;
 }
 
-.table-bordered td  {
+.table-bordered td {
     border: none;
 }
 
-.replyIcon{
+.replyIcon {
     color: #66bb6a;
 }
 
-.replyIcon:hover{
+.replyIcon:hover {
     color: #1b5e20;
 }
 
-.deleteIcon{
+.deleteIcon {
     color: #66bb6a;
 }
 
-.deleteIcon:hover{
+.deleteIcon:hover {
     color: #1b5e20;
 }
 
-.addMessageItem{
+.addMessageItem {
     color: #0b2e13;
 }
 
@@ -8811,9 +8820,16 @@ User messages CSS
     font-size: small;
 }
 
+.popover  {
+    background: #b0dcb3 !important;
+}
+.popover.bottom .arrow:after {
+    border-bottom-color:#b0dcb3;
+}
+
 /*********************************
 End User messages CSS
-=======
+=======/*/
 #menu-toggle {
     height: 50px
 }
@@ -8915,7 +8931,7 @@ End User messages CSS
 }
 
 input.btn-success {
-    height: 50px;
+    /*height: 50px;*/
     color: #ffffff;
     opacity: 0.9
 }
@@ -8937,7 +8953,7 @@ input.btn-success {
     margin-left: 1px;
     margin-right: 1px;
     border-radius: 6px;
-    padding-top: 30px;
+    padding-top: 10px;
     padding-left: 25px
 }
 
@@ -8966,3 +8982,24 @@ input:focus + label {
 /*********************************
 Payment modal CSS END
 *********************************/
+
+/*********************************
+Presentation CSS
+*********************************/
+
+.treePic{
+    text-align: center;
+    /*width: 150px;*/
+    /*height: 150px;*/
+}
+.treePic img{
+
+    width: 200px;
+    height: 200px;
+}
+
+/*********************************
+Presentation CSS END
+*********************************/
+
+
