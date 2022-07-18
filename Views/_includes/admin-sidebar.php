@@ -75,7 +75,7 @@
                 <?php if (isset($_SESSION["sidebar"]["active_tab"]["securities"]) && $_SESSION["sidebar"]["active_tab"]["securities"] === true) { ?>
                     <a class="nav-link active" href="<?php echo HOME_URL . '/admin/security';?>">
                         <div class="sb-nav-link-icon"><i class="fas fa-lock"></i></div>
-                        Tabela segurança
+                        Tabelas segurança
                     </a>
                 <?php } else { ?>
                     <a class="nav-link" href="<?php echo HOME_URL . '/admin/security';?>">
