@@ -4,7 +4,7 @@
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright ISMAT &copy;<?php echo date('Y');?> - Design & Developed By: EI Ismat</div>
+                        <div class="text-muted">&copy; <?php echo date('Y');?> - Designed & Developed By: ISMAT EI</div>
                     </div>
                 </div>
             </footer>
