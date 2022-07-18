@@ -50,22 +50,22 @@ function copy(text, target) {
 //Get a random color from the colors array
 Colors = {};
 Colors.names = {
-    red: "#f14a4a",
-    purple: "#721f72",
-    black: "#2d2d2d",
-    blue: "#4c81ea",
-    brown: "#a52a2a",
-    darkorange: "#b26600",
-    gold: "#ffc400",
-    green: "#009a00",
-    indigo: "#773d93",
-    lime: "#6cef6c",
-    magenta: "#ef62ef",
-    maroon: "#942727",
-    orange: "#ff9e00",
-    pink: "#ffc0cb",
-    cyan: "#3cffff",
-    yellow: "#ffff3c"
+    color1: "#f85e5e",
+    color2: "#a80a8e",
+    color3: "#2d2d2d",
+    color4: "#4c81ea",
+    color5: "#e35c21",
+    color6: "#8a4e00",
+    color7: "#ffc400",
+    color8: "#079a07",
+    color9: "#8932b7",
+    color10: "#5bd25b",
+    color11: "#ef62ef",
+    color12: "#b02525",
+    color13: "#ff9e00",
+    color14: "#ffc0cb",
+    color15: "#17d3d3",
+    color16: "#20be79"
 };
 Colors.random = function() {
     var result;
