@@ -8,14 +8,6 @@
 ?>
 <?php if (!defined('ABSPATH')) exit; ?>
 
-<!-- Image loader -->
-<div class="loaderOverlay lds-dual-ring hidden" id="loader">
-    <svg class="loader" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="46"/>
-    </svg>
-</div>
-<!-- Image loader -->
-
 <div id="wrapper">
     <!--New User Register Start-->
     <section class="wf100 p80">
@@ -103,7 +95,7 @@
                                     <div>
                                         <select name="addUserGender" id="addUserGender"
                                                 class="form-control customDropdown">
-                                            <option value="" disabled selected>Sexo</option>
+                                            <option value="" disabled selected>Género</option>
                                             <?php if (!empty($this->userdata['genderList'])) {
                                                 foreach ($this->userdata['genderList'] as $key => $gender) { ?>
                                                     <option value="<?php echo $gender['id'] ?>">
@@ -130,29 +122,39 @@
 
                                 <li class="col-md-6">
                                     <div class="form-group input-group">
-                                        <input type="text" name="addUserPassword" placeholder="Password"
+                                        <input type="password" name="addUserPassword" placeholder="Password"
                                                class="form-control"
                                                required>
                                     </div>
                                 </li>
+                                <!-- Image loader -->
+                                <div class="loaderOverlay lds-dual-ring hidden" id="loader" >
+                                    <svg class="loader" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="50" cy="50" r="46"/>
+                                    </svg>
+                                </div>
+                                <!-- Image loader -->
                                 <li class="col-md-12">
-                                    <div class="input-group form-check">
-                                        <input type="checkbox" id="checkBtn" class="form-check-input" required
-                                               onchange="isChecked(this, 'sub1')">
+                                    <div class=" form-check">
+                                        <br>
+                                        <input type="checkbox" id="checkBtn" class="form-check-input" onchange="isChecked(this, 'sub1')">
 
                                         <!--secção dos termos temos de analisar isto com o grupo de direito-->
+
                                         <label class="form-check-label" for="exampleCheck1">Eu concordo com os termos <a
                                                     href="<?php echo HOME_URL . '/home/rights'; ?>">Regulamento &
                                                 Política de
                                                 Privacidade</a></label>
                                     </div>
+                                    <br>
                                 </li>
                                 <li class="col-md-12">
-                                    <button type="submit" class="register" id="subBtn" disabled >Regista a sua conta</button>
-<!--                                    <div id="loader" class="lds-dual-ring hidden overlay"></div>-->
+                                    <button type="submit" class="register" id="subBtn" disabled="disabled">Regista a sua conta</button>
+                                    <!--                                    <div id="loader" class="lds-dual-ring hidden overlay"></div>-->
                                 </li>
+                            </ul>
                         </form>
-                    <!-- Form End-->
+                        <!--Form End-->
                     </div>
                 </div>
             </div>
@@ -228,21 +230,15 @@
 
 
         //Function to lock the button
-        $(function () {
-            $('#checkBtn').click(function () {
+        $(function() {
+            $('#checkBtn').click(function() {
                 if ($(this).is(':checked')) {
                     $('#subBtn').removeAttr('disabled');
                 } else {
-
                     $('#subBtn').attr('disabled', 'disabled');
-
                 }
             });
         });
-
-
     });
-
-
 </script>
 <!--Script's end section-->

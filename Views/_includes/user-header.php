@@ -70,9 +70,9 @@
 
     <!-- Template original CSS links -->
     <!--  CSS custom -->
-    <link href="<?php echo HOME_URL . '/'; ?>css/home/custom.css" rel="stylesheet">
+    <link href="<?php echo HOME_URL . '/css/home/custom.css'; ?>" rel="stylesheet">
     <!--  Icon do template-->
-    <link rel="icon" href="<?php echo HOME_URL . '/'; ?>Images/home/favicon.png">
+    <link rel="icon" href="<?php echo HOME_URL . '/Images/home/favicon.png'; ?>">
     <!--    Page title-->
     <title><?php echo $this->title ?></title>
 
@@ -82,38 +82,38 @@
 <!--Header Start-->
 <header class="header-style-2">
     <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="<?php echo HOME_URL . '/home/dashboard'; ?>"><img
-                    src="../../Images/logo/adoteUma.png"
-                    alt=""></a>
+        <a class="navbar-brand" href="<?php echo HOME_URL . '/home'; ?>">
+            <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'; ?>" alt="">
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
-                    class="fas fa-bars"></i></button>
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <!--Menu go to homepage-->
-                <li class="nav-item"><a class="nav-link"
-                                        href="<?php echo HOME_URL . '/'; ?>">Início</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo HOME_URL . '/home'; ?>">Início</a>
                 </li>
                 <!--Menu go to presentation-->
-                <li class="nav-item"><a class="nav-link"
-                                        href="<?php echo HOME_URL . '/home/presentation'; ?>">O projeto</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo HOME_URL . '/home/presentation'; ?>">O projeto</a>
                 </li>
                 <!--Menu go to trees-->
-                <li class="nav-item"><a class="nav-link"
-                                        href="<?php echo HOME_URL . '/home' . '#myTabContentTrees'; ?>">As árvores</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo HOME_URL . '/home' . '#myTabContentTrees'; ?>">As árvores</a>
                 </li>
                 <!--Menu go to causes-->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle"
-                       href="/Images/home/causes.html" role="button"
+                    <a class="nav-link dropdown-toggle" href="/Images/home/causes.html" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Sobre </a>
                     <ul class="dropdown-menu">
-                        <li><a href="<?php echo HOME_URL . '/home/rights'; ?>">Regulamento</a></li>
+                        <li>
+                            <a href="<?php echo HOME_URL . '/home/rights'; ?>">Regulamento</a>
+                        </li>
                     </ul>
                 </li>
                 <!--Menu go to contact-->
-                <li class="nav-item"><a class="nav-link"
-                                        href="<?php echo HOME_URL . '/home/contact'; ?>">Contacto</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo HOME_URL . '/home/contact'; ?>">Contacto</a>
                 </li>
             </ul>
             <ul class="float-right topside-menu">
@@ -133,21 +133,21 @@
                             $count = 0;
                             foreach ($this->userdata['userMessageList'] as $key => $message) {
                                 if ($message["receptionDate"] === null && $count < 5) { ?>
-                                    <a class="dropdown-item d-flex align-items-center"
-                                       href="<?php echo HOME_URL . '/home/usermessages/' . $message["id"]; ?>">
+                                    <a class="dropdown-item d-flex align-items-center" href="<?php echo HOME_URL . '/home/usermessages/' . $message["id"]; ?>">
                                         <div class="dropdown-item">
-                                            <div class="d-inline-block text-truncate"
-                                                 style="max-width: 150px;"><?php echo $message["message"] ?></div>
-                                            <div class="text-truncate small text-gray-500"><?php echo $message["fromName"] ?>
-                                                · <?php echo $message["notificationDate"] ?></div>
+                                            <div class="d-inline-block text-truncate" style="max-width: 150px;">
+                                                <?php echo $message["message"] ?>
+                                            </div>
+                                            <div class="text-truncate small text-gray-500">
+                                                <?php echo $message["fromName"] ?>· <?php echo $message["notificationDate"] ?>
+                                            </div>
                                         </div>
                                     </a>
                                     <?php $count++;
                                 }
                             }
                         } ?>
-                        <a class="dropdown-item text-center small text-gray-500"
-                           href="<?php echo HOME_URL . '/home/usermessages/inbox'; ?>">Mais mensagens...</a>
+                        <a class="dropdown-item text-center small text-gray-500" href="<?php echo HOME_URL . '/home/usermessages/inbox'; ?>">Mais mensagens...</a>
                     </ul>
                 </li>
                 <li class="burger"><a href="#"><i class="fas fa-bars"></i> Menu</a></li>
@@ -158,7 +158,7 @@
 
 <nav class="sidenav">
     <ul class="main">
-        <li><a href="<?php echo HOME_URL . '/home/dashboard'; ?>">Home</a></li>
+        <li><a href="<?php echo HOME_URL . '/home'; ?>">Home</a></li>
         <li><a href="<?php echo HOME_URL . '/home/usermessages'; ?>">Mensagens</a></li>
         <li><a href="<?php echo HOME_URL . '/home/usersettings'; ?>">Definições</a></li>
         <li><a href="" data-toggle="modal" data-target="#logoutModal">Sair</a></li>
@@ -190,8 +190,8 @@
                     </div>
                     <br>
                     <div class="modal-footer" style="background-color: #FFFFFF">
-                        <button type="button" class="btn btn-primary" ><a href="<?php echo HOME_URL . '/home/homelogout'; ?>" style="color: #FFFFFF">
-                                Terminar sessão</a></button>
+                        <!--<button type="button" class="btn btn-primary"></button>-->
+                        <a type="button" class="btn btn-primary" href="<?php echo HOME_URL . '/home/homelogout'; ?>" style="color: #FFFFFF;line-height: unset">Terminar sessão</a>
                     </div>
                 </div>
             </div>

@@ -9003,3 +9003,13 @@ Presentation CSS END
 *********************************/
 
 
+
+.owl-carousel .owl-wrapper {
+    display: flex !important;
+}
+.owl-carousel .owl-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-width: initial;
+}

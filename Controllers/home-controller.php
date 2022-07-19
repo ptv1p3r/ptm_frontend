@@ -1,24 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: V1p3r
- * Date: 17/10/2018
- * Time: 20:10
- */
-
 
 /**
  * home - Controller
  */
-class HomeController extends MainController
-{
+class HomeController extends MainController {
 
     /**
-     * Page loader "/views/home/home-view.php"
+     * Carrega Index "/views/home/home-view.php"
      */
-    public function index()
-    {
-
+    public function index() {
         //Page title
         $this->title = 'Adote uma árvore';
 
@@ -27,38 +17,119 @@ class HomeController extends MainController
 
         $model = $this->load_model('home-model');
         $getTreeInfo = $model->getTreeInfo();
-        $this->userdata['treesInfo'] = $getTreeInfo['body'];
+        //Status code 200 => OK
+        if ($getTreeInfo['statusCode'] === 200) {
+            $this->userdata['treesInfo'] = $getTreeInfo['body'];
+        }
+
+        //Load all trees into public home view
+        $model = $this->load_model('user-trees-model');
+        $allTrees = $model->getAllTrees();
+        //Status code 200 => OK
+        if ($getTreeInfo['statusCode'] === 200) {
+            $this->userdata['allTreesList'] = $allTrees['body']['trees'];
+        }
 
         // Login access control
-        if (!$this->logged_in) {
+        if ($this->logged_in) {
 
-            //Load all trees into public home view
-            $model = $this->load_model('user-trees-model');
-            $allTrees = $model->getAllTrees();
-            $this->userdata['allTreesList'] = $allTrees['body']['trees'];
+            //check permissions
+            $this->permission_required = array('homeLogin');
+            if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+                // Show message
+                echo 'Você não tem permissões para aceder a esta página.';
+                // End where
+                return;
+            }
+
+            // processa chamadas ajax
+            if(isset($_POST['action']) && !empty($_POST['action'])) {
+                $action = $_POST['action'];
+                switch($action) {
+                    case "GetTreeImage":
+                        $data = $_POST['data'];
+                        $model = $this->load_model('user-trees-model');
+                        $apiResponse = $model->getTreeImageListById($data);
+                        $apiResponseBody = array();
+
+                        if ($apiResponse['statusCode'] === 404) { // 404, not found
+                            $apiResponse['body']['message'] = $apiResponse['body']['error'];
+                            unset($apiResponse['body']['error']);
+                            $apiResponse = json_encode($apiResponse);
+                            echo $apiResponse;
+                            break;
+                        }
+
+                        if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                            //faz o refresh do accessToken
+                            $this->userTokenRefresh();
+
+                            $apiResponse = $model->getTreeImageListById($data);
+                        }
+
+                        if ($apiResponse['statusCode'] === 200) { // 200 success
+                            $apiResponseBody = json_encode($apiResponse["body"]);
+                        }
+
+                        echo $apiResponseBody;
+                        break;
+                }
+
+            } else {
+                //Load user trees
+                $model = $this->load_model('user-trees-model');
+                $userTreesList = $model->getUserTreesList($_SESSION['userdata']['id']);
+                //Status code 401 => Unauthorized
+                if ($userTreesList["statusCode"] === 401) {
+                    //faz o refresh do accessToken
+                    $this->userTokenRefresh();
+
+                    $userTreesList = $model->getUserTreesList($_SESSION['userdata']['id']);
+                }
+                //Status code 200 => OK
+                if ($userTreesList["statusCode"] === 200) {
+                    $this->userdata['userTreesList'] = $userTreesList["body"]['trees'];
+                }
+
+                //Load model messages from user
+                $modelMessage = $this->load_model('user-messages-model');
+                //Load model messages from user
+                $userMessageList = $modelMessage->getMessageListByUserId($_SESSION["userdata"]["id"]);
+                //Status code 401 => Unauthorized
+                if ($userMessageList["statusCode"] === 401) {
+                    //Refresh do accessToken
+                    $this->userTokenRefresh();
+                    //Load model intervation tree
+                    $userMessageList = $modelMessage->getMessageListByUserId($_SESSION["userdata"]["id"]);
+                }
+                //Status code 200 => OK
+                if ($userMessageList["statusCode"] === 200) {
+                    $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
+                    $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+                }
+
+                /** Balance load page to force user view **/
+                require ABSPATH . '/views/_includes/user-header.php';
+
+                require ABSPATH . '/views/user/home/home-view.php';
+
+                require ABSPATH . '/views/_includes/footer.php';
+            }
+
+        } else {
 
             /** Load public files view **/
-
             require ABSPATH . '/views/_includes/header.php';
 
             require ABSPATH . '/views/user/home/home-view.php';
 
             require ABSPATH . '/views/_includes/footer.php';
-
-        } else {
-
-            /** Balance load page to force user view **/
-            require ABSPATH . '/views/_includes/user-header.php';
-
-            require ABSPATH . '/views/user/home/home-view.php';
-
-            require ABSPATH . '/views/_includes/footer.php';
         }
+
     }
 
-
     /**
-     * Login
+     * Login function
      * @return void
      */
     public function login()
@@ -81,6 +152,7 @@ class HomeController extends MainController
                     $userPass = $_POST['data'][1]['value'];
 
                     $valResponse = $modelo->validateUser($_POST['data']);
+
                     if ($valResponse != null) {
 
                         //Checks if the authentication is correct and saves tokens for $_SESSION
@@ -156,26 +228,36 @@ class HomeController extends MainController
                                         break;
                                 }
                             }
-                            //User comes login and give the acces to homepage
-                            $this->logged_in = true;
+
                             //Create user session
                             $session_id = session_id();
+
                             //Update userdata
                             $_SESSION['userdata'] = $userData["body"][0];
+
                             //Update user permissions
                             $_SESSION['userdata']["user_permissions"] = $permissionsArray;
+
                             //Update user
                             $_SESSION['userdata']['email'] = $userEmail;
+
                             //Update password
                             $_SESSION['userdata']['password'] = $userPass;
+
                             // Update token
-                            $_SESSION['userdata']['accessToken'] = $valResponse["body"]["accessToken"];
+                            $_SESSION['userdata']['accessToken'] = $userToken;
+
+                            // Update refresh token
+                            $_SESSION['userdata']['refreshToken'] = $userRefreshToken;
+
                             //update session Id
                             $_SESSION['userdata']['user_session_id'] = $session_id;
+
                             //User has login
                             $this->logged_in = true;
-                            //User has redirected to home/dashboard
-                            $_SESSION['goto_url'] = '/home/dashboard';
+
+                            //User has redirected to home
+                            $_SESSION['goto_url'] = '/home';
 
                             echo $valResponse["statusCode"];
                             break;
@@ -183,6 +265,7 @@ class HomeController extends MainController
                         } else {
                             //Redirect to dashboard when ajax do the window.reload()
                             $_SESSION['goto_url'] = '/home';
+
                             //Remove any session that may exists from the user
                             $this->logout();
                             echo $valResponse["statusCode"];
@@ -192,6 +275,7 @@ class HomeController extends MainController
                     } else {
                         //Redirect to dashboard when ajax do the window.reload()
                         $_SESSION['goto_url'] = '/home';
+
                         //Remove any session that may exists from the user
                         $this->logout();
                         echo $valResponse["statusCode"];
@@ -202,16 +286,16 @@ class HomeController extends MainController
     }
 
     /**
-     * Carrega a página
-     * "/views/home/home-view.php"
+     * Carrega a página "/views/home/home-view.php"
+     * @return void
      */
-    public function dashboard()
-    {
+    /*public function dashboard() {
         //Page title
         $this->title = 'A minha página';
-        $this->permission_required = array('homeLogin');
+
         // Function paramenters
         $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+
         // Login access control
         if (!$this->logged_in) {
             // If not login -> logout
@@ -221,29 +305,30 @@ class HomeController extends MainController
             // Secure the pass
             return;
         }
+
+        //check permissions
+        $this->permission_required = array('homeLogin');
         if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
             // Show message
             echo 'Você não tem permissões para aceder a esta página.';
             // End where
             return;
         }
+
         //Load home-model
         $model = $this->load_model('home-model');
 
         //Get trees info from model
         $getTreeInfo = $model->getTreeInfo();
-
-        //Status code 200 => OK
-        if ($getTreeInfo['statusCode'] === 200) {
-            $this->userdata['treesInfo'] = $getTreeInfo['body'];
-        }
         //Status code 400 => Bad Request
         if ($getTreeInfo['statusCode'] === 400) {
             //Refresh user token
             $this->userTokenRefresh();
             //Models
             $getTreeInfo = $model->getTreeInfo();
-            //Userdata from model's
+        }
+        //Status code 200 => OK
+        if ($getTreeInfo['statusCode'] === 200) {
             $this->userdata['treesInfo'] = $getTreeInfo['body'];
         }
 
@@ -259,64 +344,47 @@ class HomeController extends MainController
             //Load user trees
             $model = $this->load_model('user-trees-model');
             $userTreesList = $model->getUserTreesList($_SESSION['userdata']['id']);
-
-            //Status code 200 => OK
-            if ($userTreesList["statusCode"] === 200) {
-                $this->userdata['userTreesList'] = $userTreesList["body"]['trees'];
-
-            }
             //Status code 401 => Unauthorized
             if ($userTreesList["statusCode"] === 401) {
                 //faz o refresh do accessToken
                 $this->userTokenRefresh();
 
                 $userTreesList = $model->getUserTreesList($_SESSION['userdata']['id']);
+            }
+            //Status code 200 => OK
+            if ($userTreesList["statusCode"] === 200) {
                 $this->userdata['userTreesList'] = $userTreesList["body"]['trees'];
-
             }
 
             //Load model messages from user
             $modelMessage = $this->load_model('user-messages-model');
             //Load model messages from user
-            $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
-
-            //Status code 200 => OK
-            if ($userMessageList["statusCode"] === 200) {
-                $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
-                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
-            }
+            $userMessageList = $modelMessage->getMessageListByUserId($_SESSION["userdata"]["id"]);
             //Status code 401 => Unauthorized
             if ($userMessageList["statusCode"] === 401) {
                 //Refresh do accessToken
                 $this->userTokenRefresh();
                 //Load model intervation tree
-                $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
+                $userMessageList = $modelMessage->getMessageListByUserId($_SESSION["userdata"]["id"]);
+            }
+            //Status code 200 => OK
+            if ($userMessageList["statusCode"] === 200) {
                 $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
                 $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
 
         }
-        /** Load files from view **/
+        // Load files from view
         require ABSPATH . '/views/_includes/user-header.php';
+
         require ABSPATH . '/views/user/home/home-view.php';
+
         require ABSPATH . '/views/_includes/footer.php';
-    }
-
+    }*/
 
     /**
-     * Logout user function
+     * Carrega a página "/views/user/home/rights-view.php"
      * @return void
-     */
-
-    function homelogout()
-    {
-        $_SESSION['goto_url'] = '/home';
-        $this->logout(true);
-    }
-
-    /**
-     * Rights page handler
-     * "/views/user/home/rights-view.php"
      */
     public function rights()
     {
@@ -339,12 +407,6 @@ class HomeController extends MainController
             $modelMessage = $this->load_model('user-messages-model');
             //Load model messages from user
             $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
-
-            //Status code 200 => OK
-            if ($userMessageList["statusCode"] === 200) {
-                $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
-                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
-            }
             //Status code 401 => Unauthorized
             if ($userMessageList["statusCode"] === 401) {
                 //Refresh do accessToken
@@ -354,6 +416,12 @@ class HomeController extends MainController
                 $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
                 $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
+            //Status code 200 => OK
+            if ($userMessageList["statusCode"] === 200) {
+                $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+
 
             /** load files from view **/
             require ABSPATH . '/views/_includes/user-header.php';
@@ -363,8 +431,8 @@ class HomeController extends MainController
     }
 
     /**
-     * Rights page handler
-     * "/views/user/home/presentation-view.php"
+     * Carrega a página "/views/user/home/presentation-view.php"
+     * @return void
      */
     public function presentation()
     {
@@ -388,18 +456,17 @@ class HomeController extends MainController
             $modelMessage = $this->load_model('user-messages-model');
             //Load model messages from user
             $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
-
-            //Status code 200 => OK
-            if ($userMessageList["statusCode"] === 200) {
-                $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
-                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
-            }
             //Status code 401 => Unauthorized
             if ($userMessageList["statusCode"] === 401) {
                 //Refresh do accessToken
                 $this->userTokenRefresh();
                 //Load model intervation tree
                 $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
+                $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+            //Status code 200 => OK
+            if ($userMessageList["statusCode"] === 200) {
                 $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
                 $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
@@ -412,8 +479,8 @@ class HomeController extends MainController
     }
 
     /**
-     * Rights page handler
-     * "/views/user/home/the-trees-view.php"
+     * Carrega a página "/views/user/home/the-trees-view.php"
+     * @return void
      */
     public function theTrees()
     {
@@ -437,18 +504,15 @@ class HomeController extends MainController
             $modelMessage = $this->load_model('user-messages-model');
             //Load model messages from user
             $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
-
-            //Status code 200 => OK
-            if ($userMessageList["statusCode"] === 200) {
-                $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
-                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
-            }
             //Status code 401 => Unauthorized
             if ($userMessageList["statusCode"] === 401) {
                 //Refresh do accessToken
                 $this->userTokenRefresh();
                 //Load model intervation tree
                 $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
+            }
+            //Status code 200 => OK
+            if ($userMessageList["statusCode"] === 200) {
                 $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
                 $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
             }
@@ -461,8 +525,8 @@ class HomeController extends MainController
     }
 
     /**
-     * Rights page handler
-     * "/views/user/home/contact-view.php"
+     * Carrega a página "/views/user/home/contact-view.php"
+     * @return void
      */
     public function contact()
     {
@@ -597,351 +661,8 @@ class HomeController extends MainController
     }
 
     /**
-     * User settings page handler
-     * "/views/user/profile/user-settings-view.php"
-     */
-    public function userSettings()
-    {
-        //Page title
-        $this->title = 'Definições';
-        $this->permission_required = array('usersRead');
-        //Function paramenters
-        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
-        //Login access control
-        if (!$this->logged_in) {
-            // If not login -> logout
-            $this->logout();
-            // Redirect to login page
-            $this->goto_login();
-            // Secure the pass
-            return;
-        }
-
-        //Load model messages from user
-        $model = $this->load_model('user-settings-model');
-
-        //Ajax process action
-        if (isset($_POST['action']) && !empty($_POST['action'])) {
-            $action = $_POST['action'];
-            switch ($action) {
-                case 'GetUser' :
-                    $data = $_POST['data'];
-                    $apiResponse = $model->getUserByEmail($data);
-                    $apiResponseBody = array();
-
-                    //Status code 200 => OK
-                    if ($apiResponse['statusCode'] === 200) { // 200 success
-                        $apiResponseBody = json_encode($apiResponse["body"]);
-                    }
-                    //Status code 401 => Unauthorized
-                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
-                        //Refresh accessToken
-                        $this->userTokenRefresh();
-
-                        $apiResponse = $model->getUserByEmail($data);
-                        $apiResponseBody = json_encode($apiResponse["body"]);
-                    }
-                    echo $apiResponseBody;
-                    break;
-
-                case 'UpdateUser' :
-                    $this->permission_required = array('usersUpdate');
-
-                    //Check if the user have permission to use this section
-                    if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
-                        $apiResponse["body"]['message'] = "Não tem permissão para aceder a esta secção!!";
-
-                        //Encode package to send
-                        echo json_encode($apiResponse);
-                        break;
-                    }
-
-                    $data = $_POST['data'];
-                    $apiResponse = $model->updateUser($data); //decode to check message from api
-                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
-                        $this->userTokenRefresh();
-
-                        $apiResponse = $model->updateUser($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
-                    }
-                    if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
-                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
-
-                        //atualiza toda a $_SESSION
-                        $valResponse = $model->validateUser($_SESSION["userdata"]["email"],$_SESSION["userdata"]["password"]);
-                        if ($valResponse != null) {
-                            // verifica se autenticaçao com sucesso
-                            if ($valResponse['statusCode'] === 200) {
-                                // verifica se existe accessToken na response
-                                if (array_key_exists("accessToken", $valResponse["body"])) {
-                                    $userToken = $valResponse["body"]["accessToken"];
-                                }
-
-                                // Refresh token
-                                if (array_key_exists("refreshToken", $valResponse["body"])) {
-                                    $userRefreshToken = $valResponse["body"]['refreshToken'];
-                                }
-
-                                //Get user data
-                                $url = API_URL . 'api/v1/users/view/' . $_SESSION["userdata"]["email"];
-                                $result = callAPI("GET", $url, '', $_SESSION["userdata"]['accessToken'] );
-                                $userData = json_decode(json_encode($result), true);
-
-                                //Get permissions data
-                                $url = API_URL . 'api/v1/groups/view/' . $_SESSION["userdata"]["groupId"];
-                                $result = callAPI("GET", $url, '', $_SESSION["userdata"]['accessToken'] );
-                                $userPermissions = json_decode(json_encode($result), true);
-
-                                //Array construct again
-                                $permissionsArray = array();
-                                foreach ($userPermissions["body"][0] as $key => $value) {
-                                    switch ($key){
-                                        case "homeLogin":
-                                        case "admLogin":
-                                        case "usersCreate":
-                                        case "usersRead":
-                                        case "usersUpdate":
-                                        case "usersDelete":
-                                        case "userGroupsCreate":
-                                        case "userGroupsRead":
-                                        case "userGroupsUpdate":
-                                        case "userGroupsDelete":
-                                        case "usersTreesCreate":
-                                        case "usersTreesRead":
-                                        case "usersTreesUpdate":
-                                        case "usersTreesDelete":
-                                        case "treesCreate":
-                                        case "treesRead":
-                                        case "treesUpdate":
-                                        case "treesDelete":
-                                        case "treeTypeCreate":
-                                        case "treeTypeRead":
-                                        case "treeTypeUpdate":
-                                        case "treeTypeDelete":
-                                        case "treeImagesCreate":
-                                        case "treeImagesRead":
-                                        case "treeImagesUpdate":
-                                        case "treeImagesDelete":
-                                        case "securityCreate":
-                                        case "securityRead":
-                                        case "securityUpdate":
-                                        case "securityDelete":
-                                            if ($value == 1){ $permissionsArray[] = $key; }
-                                            break;
-
-                                    }
-                                }
-                                //Update userdata
-                                $_SESSION['userdata'] = $userData["body"][0];
-                                //Update user permissions
-                                $_SESSION['userdata']["user_permissions"] = $permissionsArray;
-                                // Update token
-                                $_SESSION['userdata']['accessToken'] = $userToken;
-                                // Update token
-                                $_SESSION['userdata']['refreshToken'] = $userRefreshToken;
-                            }
-                        }
-                    }
-
-                    //Encode package to send
-                    $apiResponse = json_encode($apiResponse);
-                    echo($apiResponse);
-                    break;
-
-
-                case 'UpdateUserPass' :
-                    $this->permission_required = array('usersUpdate');
-
-                    //Check if the user have permission to use this section
-                    if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
-                        $apiResponse["body"]['message'] = "Não tem permissão para aceder a esta secção!!";
-
-                        echo json_encode($apiResponse);
-                        break;
-                    }
-
-                    //Password values from user and encrypt to make the matches
-                    $data = $_POST['data'];
-                    $data[1]['value'] = hash('sha256', $data[1]['value']);
-                    $data[2]['value'] = hash('sha256', $data[2]['value']);
-                    $data[3]['value'] = hash('sha256', $data[3]['value']);
-
-                    //Variables to hold the encripted password's
-                    $oldPassVal = $data[1]['value'];
-                    $newPassVal = $data[2]['value'];
-                    $confPassVal = $data[3]['value'];
-
-                    //Check password with DB
-                    if ($oldPassVal != $_SESSION['userdata']['password']) {
-                        //Array with status code message
-                        $response = array();
-                        $response["body"]['message'] = 'Palavra passe incorreta!';
-                        $response['statusCode'] = 0;
-                        echo json_encode($response);
-                        break;
-                    }
-                    //Validate if the new pass is the sames as old one
-                    if ($newPassVal == $oldPassVal) {
-                        //Array with status code message
-                        $response = array();
-                        $response["body"]['message'] = 'A nova palavra passe não pode ser igual à antiga!';
-                        $response['statusCode'] = 1;
-                        echo json_encode($response);
-                        break;
-                    }
-                    //Validate if the new pass is equal to conf
-                    if ($newPassVal != $confPassVal) {
-                        //Array with status code message
-                        $response = array();
-                        $response["body"]['message'] = 'Palavra passe não coincide!';
-                        $response['statusCode'] = 2;
-                        echo json_encode($response);
-                        break;
-                    }
-
-                    //Decode to check message from api
-                    $apiResponse = $model->updatePassUser($data);
-
-                    //Status code 200 => OK
-                    if ($apiResponse['statusCode'] === 200) {
-                        $apiResponse["body"]['message'] = "Updated with success!";
-
-                        //Encode package to send
-                        $apiResponse = json_encode($apiResponse);
-                        $_SESSION['userdata']['password'] = $newPassVal;
-                        echo $apiResponse;
-                        break;
-                    }
-
-                    //Status code 401 => Unauthorized
-                    if ($apiResponse['statusCode'] === 401) {
-                        //Refresh accessToken
-                        $this->userTokenRefresh();
-
-                        //Decode to check message from api
-                        $apiResponse = $model->updateUser($data);
-
-                        //Encode package to send
-                        $apiResponse = json_encode($apiResponse);
-                        $_SESSION['userdata']['password'] = $newPassVal;
-                        echo $apiResponse;
-                        break;
-                    }
-
-                    //Encode package to send
-                    $apiResponse = json_encode($apiResponse);// encode package to send
-                    echo($apiResponse);
-                    break;
-
-                case 'DeleteUser' :
-                    $this->permission_required = array('usersDelete');
-
-                    //Check if the user have permission to use this section
-                    if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
-                        $apiResponse["body"]['message'] = "Não tem permissão para aceder a esta secção!!";
-
-                        echo json_encode($apiResponse);
-                        break;
-                    }
-
-                    $data = $_POST['data'];
-                    $apiResponse = $model->deleteUser($data);
-
-                    //Status code 200 => OK
-                    if ($apiResponse['statusCode'] === 200) {
-                        $apiResponse["body"]['message'] = "Utilizador removido com sucesso!";
-
-                        //Encode package to send
-                        $apiResponse = json_encode($apiResponse);
-                        echo $apiResponse;
-                        break;
-                    }
-
-                    //Status code 401 => Unauthorized
-                    if ($apiResponse['statusCode'] === 401) {
-                        //Refresh accessToken
-                        $this->userTokenRefresh();
-                        //Decode to check message from api
-                        $apiResponse = $model->deleteUser($data);
-
-                        //Encode package to send
-                        $apiResponse = json_encode($apiResponse);
-                        echo $apiResponse;
-                        break;
-                    }
-
-                    //Encode package to send
-                    $apiResponse = json_encode($apiResponse);
-                    echo($apiResponse);
-                    break;
-            }
-        } else {
-
-            //Load model to get country's
-            $getCountryModel = $model->getCountryList();
-            //Load model to get gender's
-            $getGenderModel = $model->getGenderList();
-            //Add reicived values to data user
-            $this->userdata['countryList'] = $getCountryModel['body']['countries'];
-            $this->userdata['genderList'] = $getGenderModel['body']['genders'];
-
-            //Get user by email
-            $getUserModel = $model->getUserByEmail($_SESSION['userdata']['email']);
-            //Status code 200 => OK
-            if ($getUserModel['statusCode'] === 200) {
-                $this->userdata['userList'] = $getUserModel['body'];
-            }
-            //Status code 401 => Unauthorized
-            if ($getUserModel['statusCode'] === 401) {  // 200 OK, successful
-                $this->userTokenRefresh();
-                $getUserModel = $model->getUserByEmail($_SESSION['userdata']['email']);
-                $this->userdata['userList'] = $getUserModel['body'];
-            }
-            $this->userdata['userList'] = $getUserModel['body'];
-
-            //Get user Transactions by Id
-            $getTransactionModel = $model->getTransactionList($_SESSION['userdata']['id']);
-            //Status code 200 => OK
-            if ($getTransactionModel['statusCode'] === 200) { // 200 OK, successful
-                $this->userdata['userTransList'] = $getTransactionModel['body']['transactions'];
-            }
-            //Status code 401 => Unauthorized
-            if ($getTransactionModel['statusCode'] === 401) {  // 200 OK, successful
-                $this->userTokenRefresh();
-                $getTransactionModel = $model->getTransactionList($_SESSION['userdata']['id']);
-                $this->userdata['userTransList'] = $getTransactionModel['body']['transactions'];
-            }
-
-            //Load model messages from user
-            $modelMessage = $this->load_model('user-messages-model');
-            //Load model messages from user
-            $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
-
-            //Status code 401 => Unauthorized
-            if ($userMessageList["statusCode"] === 401) {
-                //Refresh do accessToken
-                $this->userTokenRefresh();
-                //Load model intervation tree
-                $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
-            }
-
-            //Status code 200 => OK
-            if ($userMessageList["statusCode"] === 200) {
-                $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
-                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
-            }
-
-            /** Load files from view **/
-            require ABSPATH . '/views/_includes/user-header.php';
-            require ABSPATH . '/views/user/profile/user-settings-view.php';
-            require ABSPATH . '/views/_includes/footer.php';
-        }
-    }
-
-
-    /**
-     * Adoption tree page handler
-     * "/views/user/profile/user-adoption-view.php"
+     * Carrega a página "/views/user/profile/user-adoption-view.php"
+     * @return void
      */
     public function adoption()
     {
@@ -1018,28 +739,27 @@ class HomeController extends MainController
 
             //Get adopt list from model
             $getAdoptTreesModel = $model->getAdoptTreesList();
-            if ($getAdoptTreesModel['statusCode'] === 200) { // 200 OK, successful
-                $this->userdata['adoptionList'] = $getAdoptTreesModel['body']['trees'];
-            }
             if ($getAdoptTreesModel['statusCode'] === 401) {  // 200 OK, successful
                 //Refresh accessToken
                 $this->userTokenRefresh();
                 //Load model get trees list
                 $getAdoptTreesModel = $model->getAdoptTreesList();
-                //Userdata from model's
+            }
+            if ($getAdoptTreesModel['statusCode'] === 200) { // 200 OK, successful
                 $this->userdata['adoptionList'] = $getAdoptTreesModel['body']['trees'];
             }
+
             //Get transaction methods list from model
             $getTransactionModel = $modelTransaction->getTransactionList();
-
             //Status code 401 => Unauthorized
-            if ($getAdoptTreesModel['statusCode'] === 401) {  // 200 OK, successful
+            if ($getTransactionModel['statusCode'] === 401) {  // 200 OK, successful
                 //Refresh accessToken
                 $this->userTokenRefresh();
-            }
 
+                $getTransactionModel = $model->getTransactionList();
+            }
             //Status code 200 => OK
-            if ($getAdoptTreesModel['statusCode'] === 200) { // 200 OK, successful
+            if ($getTransactionModel['statusCode'] === 200) { // 200 OK, successful
                 $this->userdata['transactionList'] = $getTransactionModel['body']['methods'];
             }
 
@@ -1052,8 +772,8 @@ class HomeController extends MainController
 
 
     /**
-     * Load page control
-     * "/views/user/profile/user-trees-view.php"
+     * Carrega a página "/views/user/profile/user-trees-view.php"
+     * @return void
      */
     public function userTrees()
     {
@@ -1075,12 +795,14 @@ class HomeController extends MainController
             // Secure the pass
             return;
         }
+
         //Check if the user have permission to use this sectio
         if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
             echo 'Você não tem permissões para aceder a esta página.';
             // End where
             return;
         }
+
         //Load model user trees
         $model = $this->load_model('user-trees-model');
         // Process Ajax call function
@@ -1091,19 +813,17 @@ class HomeController extends MainController
                     $data = $_POST['data'];
                     $apiResponse = $model->getUserTreeId($data);
 
-                    //Status code 200 => OK
-                    if ($apiResponse['statusCode'] === 200) {
-                        $apiResponse['body']['message'] = 'Sucesso!';
-
-                    }
-
                     //Status code 401 => Unauthorized
                     if ($apiResponse['statusCode'] === 401) {
                         //faz o refresh do accessToken
                         $this->userTokenRefresh();
 
                         $apiResponse = $model->getUserTreeId($data);
+                    }
+                    //Status code 200 => OK
+                    if ($apiResponse['statusCode'] === 200) {
                         $apiResponse['body']['message'] = 'Sucesso!';
+
                     }
 
                     // Update userdata to get trees info
@@ -1117,44 +837,35 @@ class HomeController extends MainController
             if ($this->logged_in) {
                 //Load model intervation tree
                 $interventionList = $model->getInterventionsTreeList($_SESSION['userdata']['userTreeToShow']['id']);
-
-                if ($interventionList["statusCode"] === 200) {
-                    $this->userdata['interventionList'] = $interventionList['body']['interventions'];
-                }
                 if ($interventionList["statusCode"] === 401) {
                     //Refresh do accessToken
                     $this->userTokenRefresh();
 
                     //Load model intervation tree
                     $interventionList = $model->getInterventionsTreeList($_SESSION['userdata']['userTreeToShow']['id']);
+                }
+                if ($interventionList["statusCode"] === 200) {
                     $this->userdata['interventionList'] = $interventionList['body']['interventions'];
                 }
 
                 //Load model all images tree list
                 $imageTreeList = $model->getTreeImagesList($_SESSION['userdata']['userTreeToShow']['id']);
-
-                if ($imageTreeList["statusCode"] === 200) {
-                    $this->userdata['imageTreeList'] = $imageTreeList['body']['images'];
-                }
                 if ($imageTreeList["statusCode"] === 401) {
                     //Refresh do accessToken
                     $this->userTokenRefresh();
 
                     //Load model intervation tree
                     $imageTreeList = $model->getTreeImagesList($_SESSION['userdata']['userTreeToShow']['id']);
+                }
+                if ($imageTreeList["statusCode"] === 200) {
                     $this->userdata['imageTreeList'] = $imageTreeList['body']['images'];
                 }
+
 
                 //Load model messages from user
                 $modelMessage = $this->load_model('user-messages-model');
                 //Load model messages from user
                 $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
-
-                //Status code 200 => OK
-                if ($userMessageList["statusCode"] === 200) {
-                    $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
-                    $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
-                }
                 //Status code 401 => Unauthorized
                 if ($userMessageList["statusCode"] === 401) {
                     //Refresh do accessToken
@@ -1162,12 +873,15 @@ class HomeController extends MainController
 
                     //Load model intervation tree
                     $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
+                }
+                //Status code 200 => OK
+                if ($userMessageList["statusCode"] === 200) {
                     $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
                     $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
                 }
 
-
             }
+
             /** Load files from view **/
             require ABSPATH . '/views/_includes/user-header.php';
             require ABSPATH . '/views/user/profile/user-trees-view.php';
@@ -1176,11 +890,10 @@ class HomeController extends MainController
     }
 
     /**
-     * Page load
-     * "/views/user/profile/user-messages-view.php"
+     * Carrega a página "/views/user/profile/user-messages-view.php"
+     * @return void
      */
-    public function userMessages()
-    {
+    public function userMessages(){
         // Page title
         $this->title = 'Mensagens';
         $this->permission_required = array('homeLogin');
@@ -1223,7 +936,6 @@ class HomeController extends MainController
                         //Refresh accessToken
                         $this->userTokenRefresh();
                         $apiResponse = $modelMessage->addMessage($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Mensagem enviada com sucesso!";
                     }
                     // If statusCode = 201, response dont get messages
                     // just need the encode is created to be send
@@ -1255,7 +967,6 @@ class HomeController extends MainController
                             //Refresh accessToken
                             $this->userTokenRefresh();
                             $apiResponse = $modelMessage->messageUnread($id); //decode to check message from api
-                            $apiResponse["body"]['message'] = "Marcado como não lido";
                         }
                         if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
                             $apiResponse["body"]['message'] = "Marcado como não lido";
@@ -1281,15 +992,12 @@ class HomeController extends MainController
                         if ($apiResponse['statusCode'] === 404) { // 404
                             break;
                         }
-
                         if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
                             //Refresh accessToken
                             $this->userTokenRefresh();
 
                             $apiResponse = $modelMessage->messageRead($id); //decode to check message from api
-                            $apiResponse["body"]['message'] = "Marcado como lido";
                         }
-
                         if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
                             $apiResponse["body"]['message'] = "Marcado como lido";
                         }
@@ -1314,15 +1022,12 @@ class HomeController extends MainController
                         if ($apiResponse['statusCode'] === 404) { // 404
                             break;
                         }
-
                         if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
                             //Refresh accessToken
                             $this->userTokenRefresh();
 
                             $apiResponse = $modelMessage->deleteMessage($id); //decode to check message from api
-                            $apiResponse["body"]['message'] = "Removido com sucesso!";
                         }
-
                         if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
                             $apiResponse["body"]['message'] = "Removido com sucesso!";
                         }
@@ -1385,14 +1090,12 @@ class HomeController extends MainController
                         //Refresh accessToken
                         $this->userdata['userMessageView'] = 404;
                     }
-
                     //Status code 401 => Unauthorized
                     if ($userMessageView["statusCode"] === 401) {
                         //faz o refresh do accessToken
                         $this->userTokenRefresh();
                         $userMessageView = $modelMessage->getMessageById($paramVal);
                     }
-
                     //Status code 200 => OK
                     if ($userMessageView["statusCode"] === 200) {
                         $this->userdata['userMessageView'] = $userMessageView["body"];
@@ -1402,24 +1105,371 @@ class HomeController extends MainController
 
             //get users list
             $userList = $modelMessage->getUserList();
-
-            //Status code 200 => OK
-            if ($userList["statusCode"] === 200) {
-                $this->userdata['usersList'] = $userList["body"]["users"];
-            }
-
             //Status code 401 => Unauthorized
             if ($userList["statusCode"] === 401) {
                 //Refresh accessToken
                 $this->userTokenRefresh();
                 $userList = $modelMessage->getUserList();
+            }
+            //Status code 200 => OK
+            if ($userList["statusCode"] === 200) {
                 $this->userdata['usersList'] = $userList["body"]["users"];
             }
+
             /**Load files from the view **/
             require ABSPATH . '/views/_includes/user-header.php';
             require ABSPATH . '/views/user/profile/user-messages-view.php';
             require ABSPATH . '/views/_includes/footer.php';
         }
     }
+
+    /**
+     * Carrega a página "/views/user/profile/user-settings-view.php"
+     * @return void
+     */
+    public function userSettings()
+    {
+        //Page title
+        $this->title = 'Definições';
+        $this->permission_required = array('usersRead');
+        //Function paramenters
+        $parametros = (func_num_args() >= 1) ? func_get_arg(0) : array();
+        //Login access control
+        if (!$this->logged_in) {
+            // If not login -> logout
+            $this->logout();
+            // Redirect to login page
+            $this->goto_login();
+            // Secure the pass
+            return;
+        }
+
+        //Load model messages from user
+        $model = $this->load_model('user-settings-model');
+
+        //Ajax process action
+        if (isset($_POST['action']) && !empty($_POST['action'])) {
+            $action = $_POST['action'];
+            switch ($action) {
+                case 'GetUser' :
+                    $data = $_POST['data'];
+                    $apiResponse = $model->getUserByEmail($data);
+                    $apiResponseBody = array();
+                    //Status code 401 => Unauthorized
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        //Refresh accessToken
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $model->getUserByEmail($data);
+                    }
+                    //Status code 200 => OK
+                    if ($apiResponse['statusCode'] === 200) { // 200 success
+                        $apiResponseBody = json_encode($apiResponse["body"]);
+                    }
+
+                    echo $apiResponseBody;
+                    break;
+
+                case 'UpdateUser' :
+                    $this->permission_required = array('usersUpdate');
+
+                    //Check if the user have permission to use this section
+                    if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+                        $apiResponse["body"]['message'] = "Não tem permissão para aceder a esta secção!!";
+
+                        //Encode package to send
+                        echo json_encode($apiResponse);
+                        break;
+                    }
+
+                    $data = $_POST['data'];
+                    $apiResponse = $model->updateUser($data); //decode to check message from api
+                    if ($apiResponse['statusCode'] === 401) { // 401, unauthorized
+                        $this->userTokenRefresh();
+
+                        $apiResponse = $model->updateUser($data); //decode to check message from api
+                    }
+                    if ($apiResponse['statusCode'] === 200) { // 200 OK, successful
+                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
+
+                        //atualiza toda a $_SESSION
+                        $valResponse = $model->validateUser($_SESSION["userdata"]["email"],$_SESSION["userdata"]["password"]);
+                        if ($valResponse != null) {
+                            // verifica se autenticaçao com sucesso
+                            if ($valResponse['statusCode'] === 200) {
+                                // verifica se existe accessToken na response
+                                if (array_key_exists("accessToken", $valResponse["body"])) {
+                                    $userToken = $valResponse["body"]["accessToken"];
+                                }
+
+                                // Refresh token
+                                if (array_key_exists("refreshToken", $valResponse["body"])) {
+                                    $userRefreshToken = $valResponse["body"]['refreshToken'];
+                                }
+
+                                //Get user data
+                                $url = API_URL . 'api/v1/users/view/' . $_SESSION["userdata"]["email"];
+                                $result = callAPI("GET", $url, '', $_SESSION["userdata"]['accessToken'] );
+                                $userData = json_decode(json_encode($result), true);
+
+                                //Get permissions data
+                                $url = API_URL . 'api/v1/groups/view/' . $_SESSION["userdata"]["groupId"];
+                                $result = callAPI("GET", $url, '', $_SESSION["userdata"]['accessToken'] );
+                                $userPermissions = json_decode(json_encode($result), true);
+
+                                //Array construct again
+                                $permissionsArray = array();
+                                foreach ($userPermissions["body"][0] as $key => $value) {
+                                    switch ($key){
+                                        case "homeLogin":
+                                        case "admLogin":
+                                        case "usersCreate":
+                                        case "usersRead":
+                                        case "usersUpdate":
+                                        case "usersDelete":
+                                        case "userGroupsCreate":
+                                        case "userGroupsRead":
+                                        case "userGroupsUpdate":
+                                        case "userGroupsDelete":
+                                        case "usersTreesCreate":
+                                        case "usersTreesRead":
+                                        case "usersTreesUpdate":
+                                        case "usersTreesDelete":
+                                        case "treesCreate":
+                                        case "treesRead":
+                                        case "treesUpdate":
+                                        case "treesDelete":
+                                        case "treeTypeCreate":
+                                        case "treeTypeRead":
+                                        case "treeTypeUpdate":
+                                        case "treeTypeDelete":
+                                        case "treeImagesCreate":
+                                        case "treeImagesRead":
+                                        case "treeImagesUpdate":
+                                        case "treeImagesDelete":
+                                        case "securityCreate":
+                                        case "securityRead":
+                                        case "securityUpdate":
+                                        case "securityDelete":
+                                            if ($value == 1){ $permissionsArray[] = $key; }
+                                            break;
+
+                                    }
+                                }
+                                //Update userdata
+                                $_SESSION['userdata'] = $userData["body"][0];
+
+                                //Update user permissions
+                                $_SESSION['userdata']["user_permissions"] = $permissionsArray;
+
+                                // Update token
+                                $_SESSION['userdata']['accessToken'] = $userToken;
+
+                                // Update token
+                                $_SESSION['userdata']['refreshToken'] = $userRefreshToken;
+                            }
+                        }
+                    }
+
+                    //Encode package to send
+                    $apiResponse = json_encode($apiResponse);
+                    echo($apiResponse);
+                    break;
+
+
+                case 'UpdateUserPass' :
+                    $this->permission_required = array('usersUpdate');
+
+                    //Check if the user have permission to use this section
+                    if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+                        $apiResponse["body"]['message'] = "Não tem permissão para aceder a esta secção!!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }
+
+                    //Password values from user and encrypt to make the matches
+                    $data = $_POST['data'];
+                    $data[1]['value'] = hash('sha256', $data[1]['value']);
+                    $data[2]['value'] = hash('sha256', $data[2]['value']);
+                    $data[3]['value'] = hash('sha256', $data[3]['value']);
+
+                    //Variables to hold the encripted password's
+                    $oldPassVal = $data[1]['value'];
+                    $newPassVal = $data[2]['value'];
+                    $confPassVal = $data[3]['value'];
+
+                    //Check password with DB
+                    if ($oldPassVal != $_SESSION['userdata']['password']) {
+                        //Array with status code message
+                        $response = array();
+                        $response["body"]['message'] = 'Palavra passe incorreta!';
+                        $response['statusCode'] = 0;
+                        echo json_encode($response);
+                        break;
+                    }
+                    //Validate if the new pass is the sames as old one
+                    if ($newPassVal == $oldPassVal) {
+                        //Array with status code message
+                        $response = array();
+                        $response["body"]['message'] = 'A nova palavra passe não pode ser igual à antiga!';
+                        $response['statusCode'] = 1;
+                        echo json_encode($response);
+                        break;
+                    }
+                    //Validate if the new pass is equal to conf
+                    if ($newPassVal != $confPassVal) {
+                        //Array with status code message
+                        $response = array();
+                        $response["body"]['message'] = 'Palavra passe não coincide!';
+                        $response['statusCode'] = 2;
+                        echo json_encode($response);
+                        break;
+                    }
+
+                    //Decode to check message from api
+                    $apiResponse = $model->updatePassUser($data);
+
+                    //Status code 401 => Unauthorized
+                    if ($apiResponse['statusCode'] === 401) {
+                        //Refresh accessToken
+                        $this->userTokenRefresh();
+
+                        //Decode to check message from api
+                        $apiResponse = $model->updateUser($data);
+                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $_SESSION['userdata']['password'] = $newPassVal;
+
+                        //Encode package to send
+                        $apiResponse = json_encode($apiResponse);
+                        echo $apiResponse;
+                        break;
+                    }
+                    //Status code 200 => OK
+                    if ($apiResponse['statusCode'] === 200) {
+                        $apiResponse["body"]['message'] = "Updated with success!";
+                        $_SESSION['userdata']['password'] = $newPassVal;
+
+                        //Encode package to send
+                        $apiResponse = json_encode($apiResponse);
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    //Encode package to send
+                    $apiResponse = json_encode($apiResponse);// encode package to send
+                    echo($apiResponse);
+                    break;
+
+                case 'DeleteUser' :
+                    $this->permission_required = array('usersDelete');
+
+                    //Check if the user have permission to use this section
+                    if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) {
+                        $apiResponse["body"]['message'] = "Não tem permissão para aceder a esta secção!!";
+
+                        echo json_encode($apiResponse);
+                        break;
+                    }
+
+                    $data = $_POST['data'];
+                    $apiResponse = $model->deleteUser($data);
+                    //Status code 401 => Unauthorized
+                    if ($apiResponse['statusCode'] === 401) {
+                        //Refresh accessToken
+                        $this->userTokenRefresh();
+                        //Decode to check message from api
+                        $apiResponse = $model->deleteUser($data);
+                        $apiResponse["body"]['message'] = "Utilizador removido com sucesso!";
+
+                        //Encode package to send
+                        $apiResponse = json_encode($apiResponse);
+                        echo $apiResponse;
+                        break;
+                    }
+                    //Status code 200 => OK
+                    if ($apiResponse['statusCode'] === 200) {
+                        $apiResponse["body"]['message'] = "Utilizador removido com sucesso!";
+
+                        //Encode package to send
+                        $apiResponse = json_encode($apiResponse);
+                        echo $apiResponse;
+                        break;
+                    }
+
+                    //Encode package to send
+                    $apiResponse = json_encode($apiResponse);
+                    echo($apiResponse);
+                    break;
+            }
+        } else {
+
+            //Load model to get country's
+            $getCountryModel = $model->getCountryList();
+            //Load model to get gender's
+            $getGenderModel = $model->getGenderList();
+            //Add reicived values to data user
+            $this->userdata['countryList'] = $getCountryModel['body']['countries'];
+            $this->userdata['genderList'] = $getGenderModel['body']['genders'];
+
+            //Get user by email
+            $getUserModel = $model->getUserByEmail($_SESSION['userdata']['email']);
+            //Status code 401 => Unauthorized
+            if ($getUserModel['statusCode'] === 401) {  // 200 OK, successful
+                $this->userTokenRefresh();
+                $getUserModel = $model->getUserByEmail($_SESSION['userdata']['email']);
+            }
+            //Status code 200 => OK
+            if ($getUserModel['statusCode'] === 200) {
+                $this->userdata['userList'] = $getUserModel['body'];
+            }
+
+            //Get user Transactions by Id
+            $getTransactionModel = $model->getTransactionList($_SESSION['userdata']['id']);
+            //Status code 401 => Unauthorized
+            if ($getTransactionModel['statusCode'] === 401) {  // 200 OK, successful
+                $this->userTokenRefresh();
+                $getTransactionModel = $model->getTransactionList($_SESSION['userdata']['id']);
+            }
+            //Status code 200 => OK
+            if ($getTransactionModel['statusCode'] === 200) { // 200 OK, successful
+                $this->userdata['userTransList'] = $getTransactionModel['body']['transactions'];
+            }
+
+            //Load model messages from user
+            $modelMessage = $this->load_model('user-messages-model');
+            //Load model messages from user
+            $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
+            //Status code 401 => Unauthorized
+            if ($userMessageList["statusCode"] === 401) {
+                //Refresh do accessToken
+                $this->userTokenRefresh();
+                //Load model intervation tree
+                $userMessageList = $modelMessage->getMessageSentListByUserId($_SESSION["userdata"]["id"]);
+            }
+            //Status code 200 => OK
+            if ($userMessageList["statusCode"] === 200) {
+                $this->userdata['userMessageList'] = $userMessageList['body']['messages'];
+                $this->userdata['totalMessagesNotViewed'] = $userMessageList["body"]["totalNotViewed"];
+            }
+
+            /** Load files from view **/
+            require ABSPATH . '/views/_includes/user-header.php';
+            require ABSPATH . '/views/user/profile/user-settings-view.php';
+            require ABSPATH . '/views/_includes/footer.php';
+        }
+    }
+
+
+    /**
+     * Logout function
+     * @return void
+     */
+    function homelogout()
+    {
+        $_SESSION['goto_url'] = '/home';
+        $this->logout(true);
+    }
+
 }
 

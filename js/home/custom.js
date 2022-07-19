@@ -6,8 +6,8 @@ jQuery(document).ready(function($) {
         $('#home-slider').owlCarousel({
             loop: true,
             margin: 0,
-            nav: true,
-			dots:false,
+            nav: false,
+			dots: false,
             items: 1,
             autoplay: true,
 
@@ -112,7 +112,8 @@ jQuery(document).ready(function($) {
 			margin: 0,
 			items: 1,
 			autoplay: true,
-			autoplay: true,
+			center: true,
+			autoHeight:true
 		})
 	}
 	// ------- Home Slider End ------- //

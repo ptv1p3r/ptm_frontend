@@ -23,9 +23,10 @@ class UserTreesModel extends MainModel
     /**
      * Get user trees list
      * Private view
+     * @param $userId
+     * @return mixed
      * @since 0.1
      * @access private
-     * @param $userId
      */
     public function getUserTreesList($userId)
     {
@@ -86,9 +87,10 @@ class UserTreesModel extends MainModel
     /**
      * Get trees list
      * Private view
+     * @param $treeId
+     * @return mixed
      * @since 0.1
      * @access private
-     * @param $treeId
      */
     public function getUserTreeId($treeId)
     {
@@ -107,9 +109,10 @@ class UserTreesModel extends MainModel
     /**
      * Get trees image list
      * Private view
+     * @param $treeId
+     * @return mixed
      * @since 0.1
      * @access private
-     * @param $treeId
      */
 
     public function getInterventionsTreeList($treeId)
@@ -129,9 +132,10 @@ class UserTreesModel extends MainModel
     /**
      * Get trees image list
      * Private view
+     * @param $treeId
+     * @return mixed
      * @since 0.1
      * @access private
-     * @param $treeId
      */
     public function getTreeImagesList($treeId)
     {
@@ -147,7 +151,22 @@ class UserTreesModel extends MainModel
         return json_decode(json_encode($result), true);
     }
 
+    /**
+     * Metodo que retorna Tree images pelo id
+     * @param $id
+     * @return mixed
+     */
+    public function getTreeImageListById($id) {
+        $result = null;
 
+        $url = API_URL . 'api/v1/trees/image/list/' . $id;
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
 
 
 }

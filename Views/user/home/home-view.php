@@ -326,11 +326,9 @@
                             <div class="item">
                                 <div class="pro-box picBorder">
                                     <img src="/Images/trees/car_monchique.png" alt="CarvalhoMonchique" class="rounded">
-                                    <h5> Carvalho de Monchique
-                                    </h5>
+                                    <h5> Carvalho de Monchique</h5>
                                     <div class="pro-hover">
-                                        <h6>Carvalho de Monchique
-                                        </h6>
+                                        <h6>Carvalho de Monchique</h6>
                                         <p>Descubra mais sobre esta árvore!</p>
                                         <a href="<?php echo HOME_URL . '/home/thetrees'; ?>">Clique aqui</a>
                                     </div>
@@ -439,8 +437,53 @@
 
 
 <script>
-    $(document).ready(function () {
+    // get tree first image
+    function getImg(tree_id){
+        let treeImagePath = "";
 
+        let formData = {
+            'action' : "GetTreeImage",
+            'data'   : tree_id
+        };
+
+        $.ajax({
+            url : "<?php echo HOME_URL . '/home';?>",
+            dataType: "json",
+            type: 'POST',
+            async: false,
+            data : formData,
+            beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                $('#loader').removeClass('hidden')
+            },
+            success: function (data) {
+                if (data.statusCode === 404){
+                    treeImagePath = "<?php echo HOME_URL . '/Images/logo/adoteUmaBig.png' ?>";
+                } else {
+                    treeImagePath = "<?php echo API_URL . 'api/v1/trees/image/' ?>" + data["images"][0]["path"];
+                }
+
+            },
+            error: function (data) {
+                Swal.fire({
+                    title: 'Erro!',
+                    text: data.body.message,
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    didClose: () => {
+                        location.reload();
+                    }
+                });
+            },
+            complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                $('#loader').addClass('hidden')
+            }
+        });
+
+        return treeImagePath;
+    }
+
+    $(document).ready(function () {
         // TreesMap
         let greenIcon = L.icon({
             iconUrl: '<?php echo HOME_URL . '/Images/mapMarkers/mapMarker.png'?>',
@@ -491,39 +534,34 @@
         }).addTo(map);
 
         let allTrees = L.layerGroup();
-
-        ////function to load all trees from API
+        //function to load all trees from API
         function mapLoadTrees() {
             <?php if (!empty($this->userdata['allTreesList'])) {
-            foreach ($this->userdata['allTreesList'] as $key => $tree) {?>
-            allMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
-                icon: greenIcon,
-                user: 'none'
-            }).addTo(allTrees);
-            <?php }
+                foreach ($this->userdata['allTreesList'] as $key => $tree) {?>
+                    allMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
+                        icon: greenIcon,
+                        user: 'none'
+                    }).addTo(allTrees);
+                <?php }
             }?>
-        }
-
-        mapLoadTrees();
+        }mapLoadTrees();
 
         let userTrees = L.layerGroup();
-        ////function to load user trees from API
-        <?php if ($this->logged_in) {?>
-        //Ajax call to user trees
-        //function to load user private trees from API
-        function mapUserLoadTrees() {
-            <?php if (!empty($this->userdata['userTreesList'])) {
-            foreach ($this->userdata['userTreesList'] as $key => $tree) {?>
-            userMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
-                icon: blueIcon,
-                user: '<?php echo $tree["treeName"] ?>',
-                id: '<?php echo $tree["treeId"] ?>',
-            }).addTo(userTrees).on("click", markerOnClick);
-            <?php }
-            }?>
-        }
-
-        mapUserLoadTrees();
+        //function to load user trees from API
+        <?php if ($this->logged_in) { ?>
+            //Ajax call to user trees
+            //function to load user private trees from API
+            function mapUserLoadTrees() {
+                <?php if (!empty($this->userdata['userTreesList'])) {
+                    foreach ($this->userdata['userTreesList'] as $key => $tree) {?>
+                        userMarker = new L.marker([<?php echo $tree["lat"]?>, <?php echo $tree["lng"]?>], {
+                            icon: blueIcon,
+                            user: '<?php echo $tree["treeName"] ?>',
+                            id: '<?php echo $tree["treeId"] ?>',
+                        }).addTo(userTrees).on("click", markerOnClick);
+                    <?php }
+                }?>
+            }mapUserLoadTrees();
         <?php
         }?>
 
@@ -542,7 +580,6 @@
             }
         });
 
-
         //Tree popup on marker click
         var popupMarker = L.popup({
             className: 'cardPopUp'
@@ -552,21 +589,17 @@
             popupMarker
                 .setLatLng(e.latlng)
                 .setContent(
-                    `
-                   <div class="card" style="width: 10rem; border: unset">
-                      <img src="<?php echo HOME_URL . '/Images/logo/adoteUma.png'?>" class="card-img-top" alt="">
+                   `<div class="card" style="width: 10rem; border: unset">
+                      <img src="`+ getImg(this.options.id)+`" class="card-img-top" alt="">
                       <div class="card-body">
-                        <p class="card-text">Nome: ` + this.options.user + `</p>
+                        <h6 class="card-title">` + this.options.user + `</h6>
                         <p class="card-text">Lat: ` + e.latlng.lat + `</p>
                         <p class="card-text">Long: ` + e.latlng.lng + `</p>
                         <button class="popBtn btn-success"  name="treeId" value='` + this.options.id + `' id="buttpop">Ver mais</button>
                       </div>
-                    </div>
-                    `
-                )
-                // .className('cardPopUp');
-                .openOn(map);
-        }
+                    </div>`
+                ).openOn(map);
+        }// .className('cardPopUp');
 
         //function to handler the button popup view
         let eventHandlerAssigned = false;
@@ -604,12 +637,8 @@
                     // $("#deleteUserModal").modal('hide');
 
                     if (data.statusCode === 200) {
-
-
                         //Falta ver esta parte para mostrar os dados
                         window.location.href = "<?php echo HOME_URL . '/home/userTrees';?>";
-
-
                     } else {
                         //mensagem de Error
                         Swal.fire({

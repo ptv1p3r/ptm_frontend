@@ -11,17 +11,15 @@
 <!--New user register Start-->
 <section class="home-about wf100 p80">
     <div class="container">
-        <div class="imageUserTree">
-            <div class="col-md-6 cardImage ">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
                 <div id="fpro-slider" class="owl-carousel owl-theme ">
                     <!--Tree Images Start-->
                     <?php if (!empty($this->userdata['imageTreeList'])) {
                         foreach ($this->userdata['imageTreeList'] as $key => $image) { ?>
                             <div class="item">
                                 <div class="f-product">
-                                    <img
-                                            src="<?php echo API_URL . "api/v1/trees/image/" . $image["path"] ?>"
-                                            alt="<?php echo $image['name'] ?>">
+                                    <img src="<?php echo API_URL . "api/v1/trees/image/" . $image["path"] ?>" alt="<?php echo $image['name'] ?>">
                                 </div>
                             </div>
                         <?php }
@@ -41,7 +39,7 @@
 
 <!--Section tree details Start-->
 <section>
-    <div class="wf100 p10">
+    <div class="wf100 p80">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">

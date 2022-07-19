@@ -34,26 +34,14 @@
                                 <nav>
                                     <div class="nav nav-tabs" id="nav-tab"
                                          role="tablist">
-                                        <a class="nav-item nav-link active"
-                                           id="nav-one-tab" data-toggle="tab"
-                                           href="#nav-one" role="tab"
-                                           aria-controls="nav-one"
-                                           aria-selected="true">Sobreiro
-                                        </a>
-                                        <a class="nav-item nav-link" id="nav-two-tab" data-toggle="tab"
-                                           href="#nav-two" role="tab"
-                                           aria-controls="nav-two" aria-selected="true">Medronheiro
-                                        </a>
-                                        <a class="nav-item nav-link" id="nav-three-tab" data-toggle="tab"
-                                           href="#nav-three" role="tab"
+                                        <a class="nav-item nav-link active" id="nav-one-tab" data-toggle="tab" href="#nav-one" role="tab"
+                                           aria-controls="nav-one" aria-selected="true">Sobreiro</a>
+                                        <a class="nav-item nav-link" id="nav-two-tab" data-toggle="tab" href="#nav-two" role="tab"
+                                           aria-controls="nav-two" aria-selected="true">Medronheiro</a>
+                                        <a class="nav-item nav-link" id="nav-three-tab" data-toggle="tab" href="#nav-three" role="tab"
                                            aria-controls="nav-three" aria-selected="false">Castanheiro</a>
-                                        <a class="nav-item nav-link" id="nav-three-tab" data-toggle="tab"
-                                           href="#nav-four" role="tab"
-                                           aria-controls="nav-three" aria-selected="false">Carvalho de
-                                            Monchique
-                                        </a>
-
-
+                                        <a class="nav-item nav-link" id="nav-three-tab" data-toggle="tab" href="#nav-four" role="tab"
+                                           aria-controls="nav-three" aria-selected="false">Carvalho de Monchique</a>
                                     </div>
                                 </nav>
                                 <!-- Tab One-->
@@ -62,8 +50,8 @@
                                          aria-labelledby="nav-one-tab">
                                         <div class="row">
                                             <div class="col">
-                                                <div  class="rounded shadow-lg p-3 mb-5 bg-white rounded" style="text-align: -webkit-center;">
-                                                    <img src="/Images/trees/sobreiro.png" alt="Sobreiro" class="border border-secondary">
+                                                <div class="rounded" style="text-align: center;">
+                                                    <img src="/Images/trees/sobreiro.png" alt="Sobreiro" class="img-fluid border border-secondary">
                                                 </div>
                                             </div>
                                             <div class="col">
@@ -76,42 +64,33 @@
                                                 <br>
                                                 <div>
                                                     <p><b>Mais informações clique no link:</b></p>
-                                                    <p><a href="https://flora-on.pt/?q=Quercus+suber">https://flora-on.pt/?q=Quercus+suber</a>
-                                                    </p>
+                                                    <p><a href="https://flora-on.pt/?q=Quercus+suber" target="_blank">https://flora-on.pt/?q=Quercus+suber</a></p>
                                                 </div>
                                                 <div>
                                                     <!--Donation form-->
                                                     <form id="newDonation">
                                                         <ul class="radio-boxes">
-                                                            <div class="alert alert-warning alert-dismissible fade show"
-                                                                 role="alert" hidden>
+                                                            <div class="alert alert-warning alert-dismissible fade show" role="alert" hidden>
                                                                 <strong>Selecione o valor e faça adoção!</strong>
-                                                                <button type="button" class="close" data-dismiss="alert"
-                                                                        aria-label="Close">
+                                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
                                                             <div class="col-12">
-                                                                <p class="mb-0 mr-4 "><span
-                                                                            class="top-highlight">€2.50</span>
-                                                                </p>
+                                                                <p class="mb-0 mr-4 "><span class="top-highlight">€2.50</span></p>
                                                             </div>
                                                             <!-- Make donation if login-->
                                                             <?php if ($this->logged_in) { ?>
                                                                 <li class="form-submit">
-                                                                    <button type="submit" id="subBtn"
-                                                                            disabled="disabled">
+                                                                    <button type="submit" id="subBtn" disabled="disabled">
                                                                         Adote-me
                                                                     </button>
                                                                 </li>
                                                             <?php } else { ?>
                                                                 <!-- Make donation send to login / register-->
                                                                 <li class="form-submit">
-                                                                    <a type="button"
-                                                                       class="btn donationbutton login-reg"
-                                                                       data-toggle="modal"
-                                                                       data-target="#loginModal">
-                                                                        Adote-me</a>
+                                                                    <a type="button" class="btn donationbutton login-reg"
+                                                                       data-toggle="modal" data-target="#loginModal">Adote-me</a>
                                                                 </li>
                                                             <?php } ?>
                                                         </ul>
@@ -126,8 +105,8 @@
                                          aria-labelledby="nav-two-tab">
                                         <div class="row">
                                             <div class="col">
-                                                <div style="text-align: -webkit-center;">
-                                                    <img src="/Images/trees/medronheiro.png" alt="Medronheiro" class="rounded border border-secondary">
+                                                <div class="rounded" style="text-align: center;">
+                                                    <img src="/Images/trees/medronheiro.png" alt="Medronheiro" class="img-fluid border border-secondary">
                                                 </div>
                                             </div>
                                             <div class="col">
@@ -141,8 +120,7 @@
                                                 <br>
                                                 <div>
                                                     <p><b>Mais informações clique no link:</b></p>
-                                                    <p><a href="https://flora-on.pt/?q=Arbutus">https://flora-on.pt/?q=Arbutus</a>
-                                                    </p>
+                                                    <p><a href="https://flora-on.pt/?q=Arbutus" target="_blank">https://flora-on.pt/?q=Arbutus</a></p>
                                                 </div>
                                                 <div>
                                                     <!--Donation form-->
@@ -151,32 +129,26 @@
                                                             <div class="alert alert-warning alert-dismissible fade show"
                                                                  role="alert" hidden>
                                                                 <strong>Selecione o valor e faça adoção!</strong>
-                                                                <button type="button" class="close" data-dismiss="alert"
-                                                                        aria-label="Close">
+                                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
                                                             <div class="col-12">
-                                                                <p class="mb-0 mr-4 "><span
-                                                                            class="top-highlight">€2.50</span>
+                                                                <p class="mb-0 mr-4 "><span class="top-highlight">€2.50</span>
                                                                 </p>
                                                             </div>
                                                             <!-- Make donation if login-->
                                                             <?php if ($this->logged_in) { ?>
                                                                 <li class="form-submit">
-                                                                    <button type="submit" id="subBtn"
-                                                                            disabled="disabled">
+                                                                    <button type="submit" id="subBtn" disabled="disabled">
                                                                         Adote-me
                                                                     </button>
                                                                 </li>
                                                             <?php } else { ?>
                                                                 <!-- Make donation send to login / register-->
                                                                 <li class="form-submit">
-                                                                    <a type="button"
-                                                                       class="btn donationbutton login-reg"
-                                                                       data-toggle="modal"
-                                                                       data-target="#loginModal">
-                                                                        Adote-me</a>
+                                                                    <a type="button" class="btn donationbutton login-reg"
+                                                                       data-toggle="modal" data-target="#loginModal">Adote-me</a>
                                                                 </li>
                                                             <?php } ?>
                                                         </ul>
@@ -191,8 +163,8 @@
                                          aria-labelledby="nav-three-tab">
                                         <div class="row">
                                             <div class="col">
-                                                <div style="text-align: -webkit-center;">
-                                                    <img src="/Images/trees/castanheiro.png" alt="Sobreiro" class="rounded border border-secondary">
+                                                <div class="rounded" style="text-align: center;">
+                                                    <img src="/Images/trees/castanheiro.png" alt="Sobreiro" class="img-fluid border border-secondary">
                                                 </div>
                                             </div>
                                             <div class="col">
@@ -206,8 +178,7 @@
                                                 <br>
                                                 <div>
                                                     <p><b>Mais informações clique no link:</b></p>
-                                                    <p><a href="https://flora-on.pt/?q=Castanea">https://flora-on.pt/?q=Castanea</a>
-                                                    </p>
+                                                    <p><a href="https://flora-on.pt/?q=Castanea" target="_blank">https://flora-on.pt/?q=Castanea</a></p>
                                                 </div>
                                                 <div>
                                                     <!--Donation form-->
@@ -216,32 +187,25 @@
                                                             <div class="alert alert-warning alert-dismissible fade show"
                                                                  role="alert" hidden>
                                                                 <strong>Selecione o valor e faça adoção!</strong>
-                                                                <button type="button" class="close" data-dismiss="alert"
-                                                                        aria-label="Close">
+                                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
                                                             <div class="col-12">
-                                                                <p class="mb-0 mr-4 "><span
-                                                                            class="top-highlight">€2.50</span>
-                                                                </p>
+                                                                <p class="mb-0 mr-4 "><span class="top-highlight">€2.50</span></p>
                                                             </div>
                                                             <!-- Make donation if login-->
                                                             <?php if ($this->logged_in) { ?>
                                                                 <li class="form-submit">
-                                                                    <button type="submit" id="subBtn"
-                                                                            disabled="disabled">
+                                                                    <button type="submit" id="subBtn" disabled="disabled">
                                                                         Adote-me
                                                                     </button>
                                                                 </li>
                                                             <?php } else { ?>
                                                                 <!-- Make donation send to login / register-->
                                                                 <li class="form-submit">
-                                                                    <a type="button"
-                                                                       class="btn donationbutton login-reg"
-                                                                       data-toggle="modal"
-                                                                       data-target="#loginModal">
-                                                                        Adote-me</a>
+                                                                    <a type="button" class="btn donationbutton login-reg"
+                                                                       data-toggle="modal" data-target="#loginModal">Adote-me</a>
                                                                 </li>
                                                             <?php } ?>
                                                         </ul>
@@ -256,8 +220,8 @@
                                          aria-labelledby="nav-four-tab">
                                         <div class="row">
                                             <div class="col">
-                                                <div style="text-align: -webkit-center;">
-                                                    <img src="/Images/trees/sobreiro.png" alt="Sobreiro" class="rounded border border-secondary">
+                                                <div class="rounded" style="text-align: center;">
+                                                    <img src="/Images/trees/car_monchique.png" alt="Sobreiro" class="img-fluid border border-secondary">
                                                 </div>
                                             </div>
                                             <div class="col">
@@ -267,9 +231,7 @@
                                                 <br>
                                                 <div>
                                                     <p><b>Mais informações clique no link:</b></p>
-                                                    <p><a href=" https://flora-on.pt/?q=Quercus+canariensis">
-                                                            https://flora-on.pt/?q=Quercus+canariensis</a>
-                                                    </p>
+                                                    <p><a href=" https://flora-on.pt/?q=Quercus+canariensis" target="_blank">https://flora-on.pt/?q=Quercus+canariensis</a></p>
                                                 </div>
                                                 <div>
                                                     <!--Donation form-->
@@ -278,32 +240,25 @@
                                                             <div class="alert alert-warning alert-dismissible fade show"
                                                                  role="alert" hidden>
                                                                 <strong>Selecione o valor e faça adoção!</strong>
-                                                                <button type="button" class="close" data-dismiss="alert"
-                                                                        aria-label="Close">
+                                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
                                                             <div class="col-12">
-                                                                <p class="mb-0 mr-4 "><span
-                                                                            class="top-highlight">€2.50</span>
-                                                                </p>
+                                                                <p class="mb-0 mr-4 "><span class="top-highlight">€2.50</span></p>
                                                             </div>
                                                             <!-- Make donation if login-->
                                                             <?php if ($this->logged_in) { ?>
                                                                 <li class="form-submit">
-                                                                    <button type="submit" id="subBtn"
-                                                                            disabled="disabled">
+                                                                    <button type="submit" id="subBtn" disabled="disabled">
                                                                         Adote-me
                                                                     </button>
                                                                 </li>
                                                             <?php } else { ?>
                                                                 <!-- Make donation send to login / register-->
                                                                 <li class="form-submit">
-                                                                    <a type="button"
-                                                                       class="btn donationbutton login-reg"
-                                                                       data-toggle="modal"
-                                                                       data-target="#loginModal">
-                                                                        Adote-me</a>
+                                                                    <a type="button" class="btn donationbutton login-reg"
+                                                                       data-toggle="modal" data-target="#loginModal">Adote-me</a>
                                                                 </li>
                                                             <?php } ?>
                                                         </ul>
@@ -355,6 +310,6 @@
                 },
             });
         });
-    }
+    });
 </script>
 
