@@ -65,14 +65,18 @@ class PtmMVC
 
         if ( ! $this->controlador ) {
 
+            //caso nao venha com controlador, redireciona para o /home
+            echo '<meta http-equiv="Refresh" content="0; url=' . HOME_URL . "/home" .'">';
+            echo '<script type="text/javascript">window.location.href = "' . HOME_URL . "/home" . '";</script>';
+
             // Adiciona o controlador padrão
-            require_once ABSPATH . '/Controllers/home-controller.php';
+            /*require_once ABSPATH . '/Controllers/home-controller.php';
 
             // Cria o objeto do controlador "home-controller.php"
             $this->controlador = new HomeController();
 
             // Executa o método index()
-            $this->controlador->index();
+            $this->controlador->index();*/
 
             return;
         }
