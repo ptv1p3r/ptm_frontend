@@ -377,26 +377,25 @@
                     <!--eco History Start-->
                     <div class="eco-history">
                         <div class="timeline-slider">
-                                <!--Timeline Text Start-->
-                                <div>
-                                    <div class="row">
-                                        <div class=" col-12">
-                                            <div class="timeline-box">
-                                                <h6>Em breve..</h6>
-                                                <p>Próximo evento será divulgado em breve.</p>
-                                            </div>
+                            <!--Timeline Text Start-->
+                            <div>
+                                <div class="row">
+                                    <div class=" col-12">
+                                        <div class="timeline-box">
+                                            <h6>Em breve..</h6>
+                                            <p>Próximo evento será divulgado em breve.</p>
                                         </div>
-<!--                                        <div class=" col-4">-->
-<!--                                            <div class="timeline-box">-->
-<!--                                                <h6></h6>-->
-<!--                                                <p>A preparar</p>                                            </div>-->
-<!--                                        </div>-->
-<!--                                        <div class=" col-4">-->
-<!--                                            <div class="timeline-box">-->
-<!--                                                <h6></h6>-->
-<!--                                                <p>A preparar</p>                                            </div>-->
-<!--                                        </div>-->
                                     </div>
+                                    <!--                                        <div class=" col-4">-->
+                                    <!--                                            <div class="timeline-box">-->
+                                    <!--                                                <h6></h6>-->
+                                    <!--                                                <p>A preparar</p>                                            </div>-->
+                                    <!--                                        </div>-->
+                                    <!--                                        <div class=" col-4">-->
+                                    <!--                                            <div class="timeline-box">-->
+                                    <!--                                                <h6></h6>-->
+                                    <!--                                                <p>A preparar</p>                                            </div>-->
+                                    <!--                                        </div>-->
                                 </div>
                             </div>
                         </div>
@@ -404,6 +403,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
 
@@ -422,7 +422,7 @@
             <!--Pro Box Start-->
             <div class="col-md-3 col-sm-6">
                 <div class="product-box">
-                    <div class="pro-thumb"> <a href="https://www.ismat.pt/" target="_blank">Visite-nos</a> <img src="/Images/entities/ismat .png"  alt=""></div>
+                    <div class="pro-thumb"> <a href="https://www.ismat.pt/" target="_blank">Visite-nos</a> <img src="/Images/entities/ismat.png" alt=""></div>
                 </div>
             </div>
             <!--Pro Box End-->
