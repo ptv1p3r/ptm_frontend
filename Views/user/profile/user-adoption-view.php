@@ -460,8 +460,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -493,7 +493,7 @@
                     if (data.statusCode === 201) {
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -505,7 +505,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -521,8 +521,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,

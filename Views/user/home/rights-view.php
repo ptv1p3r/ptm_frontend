@@ -439,10 +439,8 @@
             </p>
             <!-- End article 27 -->
         </div>
-        <div _ngcontent-serverapp-c180="" class="col-lg-4 d-none d-lg-block"><img _ngcontent-serverapp-c180=""
-                                                                                  src="/Images/logo/adoteUma(PNG Transparent).png"
-                                                                                  alt="AdoteUma" class="img-fluid"
-            >
+        <div _ngcontent-serverapp-c180="" class="col-lg-4 d-none d-lg-block">
+            <img _ngcontent-serverapp-c180="" src="/Images/logo/adoteUma(PNG Transparent).png" alt="AdoteUma" class="img-fluid">
         </div>
     </div>
 </div>
