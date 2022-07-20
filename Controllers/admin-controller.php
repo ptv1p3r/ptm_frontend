@@ -435,7 +435,6 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->addGroup($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Criado com sucesso!";
                     }
 
                     // quando statusCode = 201, a response nao vem com campo mensagem
@@ -469,7 +468,6 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->updateGroup($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Atualizado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
@@ -499,7 +497,6 @@ class AdminController extends MainController
                         $this->userTokenRefresh();
 
                         $apiResponse = $modelo->deleteGroup($data); //decode to check message from api
-                        $apiResponse["body"]['message'] = "Apagado com sucesso!";
                     }
 
                     if ($apiResponse['statusCode'] === 200){ // 200 OK, successful
@@ -534,7 +531,7 @@ class AdminController extends MainController
                 $groupsList = $modelo->getGroupList();
             }
             if ($groupsList["statusCode"] === 200){
-                $this->userdata['groupsList'] = $groupsList["body"]["groups"];
+                $this->userdata['groupsList'] = array_orderby($groupsList["body"]["groups"], "dateCreated", SORT_DESC);
             }
 
             //get securitys list
@@ -745,7 +742,7 @@ class AdminController extends MainController
                 $userList = $modelo->getUserList();
             }
             if ($userList["statusCode"] === 200){
-                $this->userdata['usersList'] = $userList["body"]["users"];
+                $this->userdata['usersList'] = array_orderby($userList["body"]["users"], "dateCreated", SORT_DESC);
             }
 
             //get country list
@@ -979,7 +976,7 @@ class AdminController extends MainController
                 $securityList = $modelo->getSecurityList();
             }
             if ($securityList["statusCode"] === 200){
-                $this->userdata['securityList'] = $securityList["body"]["security"];
+                $this->userdata['securityList'] = array_orderby($securityList["body"]["security"], "dateCreated", SORT_DESC);
             }
 
             /**Carrega os arquivos do view**/
@@ -1298,7 +1295,7 @@ class AdminController extends MainController
                     }
 
                     if ($apiResponse['statusCode'] === 200) { // 200 success
-                        $apiResponseBody = json_encode($apiResponse["body"]);
+                        $apiResponseBody = json_encode(array_orderby($apiResponse["body"]["images"],"position", SORT_ASC));
                     }
 
                     echo $apiResponseBody;
@@ -1340,7 +1337,7 @@ class AdminController extends MainController
                 $treesList = $modelo->getTreeList();
             }
             if ($treesList["statusCode"] === 200){
-                $this->userdata['treesList'] = $treesList["body"]["trees"];
+                $this->userdata['treesList'] = array_orderby($treesList["body"]["trees"], "dateCreated", SORT_DESC);
             }
 
             //get user list
@@ -1587,7 +1584,7 @@ class AdminController extends MainController
                 $treesUserList = $modelo->getTreeUserList();
             }
             if ($treesUserList["statusCode"] === 200){
-                $this->userdata['treesUserList'] = $treesUserList["body"]["trees"];
+                $this->userdata['treesUserList'] = array_orderby($treesUserList["body"]["trees"], "dateCreated", SORT_DESC);
             }
 
 
@@ -1787,7 +1784,7 @@ class AdminController extends MainController
                 $treeImageList = $modelo->getTreeImageList();
             }
             if ($treeImageList["statusCode"] === 200){
-                $this->userdata['treeImageList'] = $treeImageList["body"]["images"];
+                $this->userdata['treeImageList'] = array_orderby(array_orderby($treeImageList["body"]["images"], "dateCreated", SORT_DESC), "position", SORT_ASC);
             }
 
 
@@ -1990,7 +1987,7 @@ class AdminController extends MainController
                 $treeTypesList = $modelo->getTreeTypeList();
             }
             if ($treeTypesList["statusCode"] === 200){
-                $this->userdata['treeTypesList'] = $treeTypesList["body"]["types"];
+                $this->userdata['treeTypesList'] = array_orderby($treeTypesList["body"]["types"], 'dateCreated', SORT_DESC);
             }
 
 
@@ -2205,7 +2202,7 @@ class AdminController extends MainController
                 $treeInterventionList = $modelo->getTreeInterventionList();
             }
             if ($treeInterventionList["statusCode"] === 200){
-                $this->userdata['treeInterventionList'] = $treeInterventionList["body"]["interventions"];
+                $this->userdata['treeInterventionList'] = array_orderby($treeInterventionList["body"]["interventions"], 'dateCreated', SORT_DESC);
             }
 
             /**Carrega os arquivos do view**/
@@ -2408,7 +2405,7 @@ class AdminController extends MainController
                 $transactionList = $modelo->getTransactionList();
             }
             if ($transactionList["statusCode"] === 200){
-                $this->userdata['transactionList'] = $transactionList["body"]["methods"];
+                $this->userdata['transactionList'] = array_orderby($transactionList["body"]["methods"], "dateCreated", SORT_DESC);
             }
 
             //get users list
@@ -2659,7 +2656,7 @@ class AdminController extends MainController
                 $transactionTypeList = $modelo->getTransactionTypeList();
             }
             if ($transactionTypeList["statusCode"] === 200){
-                $this->userdata['transactionTypeList'] = $transactionTypeList["body"]["methods"];
+                $this->userdata['transactionTypeList'] = array_orderby($transactionTypeList["body"]["methods"], "dateCreated", SORT_DESC);
             }
 
 
@@ -2862,7 +2859,7 @@ class AdminController extends MainController
                 $transactionMethodList = $modelo->getTransactionMethodList();
             }
             if ($transactionMethodList["statusCode"] === 200){
-                $this->userdata['transactionMethodList'] = $transactionMethodList["body"]["methods"];
+                $this->userdata['transactionMethodList'] = array_orderby($transactionMethodList["body"]["methods"], "dateCreated", SORT_DESC);
             }
 
 

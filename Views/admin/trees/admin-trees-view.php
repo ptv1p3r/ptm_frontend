@@ -330,7 +330,7 @@
                 if (data.statusCode === 404){
                     treeImagePath = "<?php echo HOME_URL . '/Images/admin/noimage.png' ?>";
                 } else {
-                    treeImagePath = "<?php echo API_URL . 'api/v1/trees/image/' ?>" + data["images"][0]["path"];
+                    treeImagePath = "<?php echo API_URL . 'api/v1/trees/image/' ?>" + data[0]["path"];
                 }
 
             },
