@@ -68,7 +68,7 @@ class HomeController extends MainController {
                         }
 
                         if ($apiResponse['statusCode'] === 200) { // 200 success
-                            $apiResponseBody = json_encode($apiResponse["body"]);
+                            $apiResponseBody = json_encode(array_orderby($apiResponse["body"]["images"],"position", SORT_ASC));
                         }
 
                         echo $apiResponseBody;
@@ -845,7 +845,7 @@ class HomeController extends MainController {
                     $interventionList = $model->getInterventionsTreeList($_SESSION['userdata']['userTreeToShow']['id']);
                 }
                 if ($interventionList["statusCode"] === 200) {
-                    $this->userdata['interventionList'] = $interventionList['body']['interventions'];
+                    $this->userdata['interventionList'] = array_orderby($interventionList['body']['interventions'], "dateCreated", SORT_DESC);
                 }
 
                 //Load model all images tree list
@@ -858,7 +858,7 @@ class HomeController extends MainController {
                     $imageTreeList = $model->getTreeImagesList($_SESSION['userdata']['userTreeToShow']['id']);
                 }
                 if ($imageTreeList["statusCode"] === 200) {
-                    $this->userdata['imageTreeList'] = $imageTreeList['body']['images'];
+                    $this->userdata['imageTreeList'] = array_orderby($imageTreeList['body']['images'], "position", SORT_ASC);
                 }
 
 
