@@ -29,10 +29,8 @@
                         <!-- BEGIN INBOX MENU -->
                         <div class="col-md-3">
                             <h3 class="grid-title"><i class="fa fa-inbox"></i> Caixa de mensagens</h3>
-                            <button class="btn edit btn-success" id="" data-toggle="modal"
-                                    data-target="#addMessageModal" data-bs-toggle="modal"
-                                    data-bs-target="#addMessageModal"
-                            ><i class="fa fa-pen"></i>&nbsp;&nbsp;Nova Mensagem
+                            <button class="btn edit btn-success" id="" data-toggle="modal" data-target="#addMessageModal" data-bs-toggle="modal" data-bs-target="#addMessageModal">
+                                <i class="fa fa-pen"></i>&nbsp;&nbsp;Nova Mensagem
                             </button>
                             <hr>
                             <div>

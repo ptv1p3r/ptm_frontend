@@ -39,8 +39,8 @@
                 <h1>Seja patrocionador</h1>
                 <p></p>
                 <!--                <p>A ajuda de todos é <strong>importante</strong> for us...</p>-->
-                <a href="<?php echo HOME_URL . '/home/presentation'; ?>" class="active">Descubra mais</a> <a
-                        href="<?php echo HOME_URL . '/register'; ?>">Junte-se já</a>
+                <a href="<?php echo HOME_URL . '/home/presentation'; ?>" class="active">Descubra mais</a>
+                <a href="<?php echo HOME_URL . '/register'; ?>">Junte-se já</a>
             </div>
         </div>
         <img src="/Images/home/h2-slide2.jpg" alt="">
@@ -356,7 +356,7 @@
                     mitigação das alterações climáticas, resiliência contra incêndios, regulação e melhoria do clima e
                     conservação da biodiversidade.
                 </p>
-                <a href="#" class="cus">Junte-se já</a>
+                <a href="<?php echo HOME_URL . '/register'; ?>" class="cus">Junte-se já</a>
             </div>
         </div>
     </div>
@@ -412,7 +412,7 @@
             <div class="col-md-12">
                 <div class="section-title-2 text-center">
                     <h5>Os promotores do projeto</h5>
-                    <h2>'Adote uma Árvore'</h2>
+                    <h2>"Adote uma Árvore"</h2>
                 </div>
             </div>
         </div>
@@ -590,7 +590,7 @@
                 .setLatLng(e.latlng)
                 .setContent(
                    `<div class="card" style="width: 10rem; border: unset">
-                      <img src="`+ getImg(this.options.id)+`" class="card-img-top" alt="">
+                      <img src="`+ getImg(this.options.id)+`" class="card-img-top" alt="Imagem árvore" height="160">
                       <div class="card-body">
                         <h6 class="card-title">` + this.options.user + `</h6>
                         <p class="card-text">Lat: ` + e.latlng.lat + `</p>

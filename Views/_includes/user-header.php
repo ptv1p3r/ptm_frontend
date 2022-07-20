@@ -182,7 +182,6 @@
                 <div class="modal-body">
                     <div _ngcontent-serverapp-c180="" style="text-align: center">
                         <i class="fas fa-sign-out-alt fa-3x"></i>
-                        </fa-icon>
                     </div>
                     <br>
                     <div style="text-align: center">

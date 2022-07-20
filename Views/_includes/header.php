@@ -81,7 +81,7 @@
             <ul class="navbar-nav mr-auto">
                 <!--Menu go to homepage-->
                 <li class="nav-item"><a class="nav-link"
-                                        href="<?php echo HOME_URL . '/'; ?>">Início</a>
+                                        href="<?php echo HOME_URL . '/home'; ?>">Início</a>
                 </li>
                 <!--Menu go to presentation-->
                 <li class="nav-item"><a class="nav-link"
@@ -89,11 +89,11 @@
                 </li>
                 <!--Menu go to trees-->
                 <li class="nav-item"><a class="nav-link"
-                                        href="<?php echo HOME_URL . '/' . '#myTabContentTrees'; ?>">As árvores</a>
+                                        href="<?php echo HOME_URL . '/home' . '#myTabContentTrees'; ?>">As árvores</a>
                 </li>
                 <!--Menu go to trees-->
                 <li class="nav-item"><a class="nav-link"
-                                        href="<?php echo HOME_URL . '/' . '#events'; ?>">Eventos</a>
+                                        href="<?php echo HOME_URL . '/home' . '#events'; ?>">Eventos</a>
                 </li>
                 <!--Menu go to causes-->
                 <li class="nav-item dropdown">

@@ -28,7 +28,7 @@
             <div class="col-md-1"></div>
             <div class="col-md-10">
                 <div class="contact-form mb60">
-                    <h3>Contacte</h3>
+                    <h3>Contacte-nos</h3>
                     <form id="cform">
                         <ul class="cform">
                             <li class="half pr-15">
