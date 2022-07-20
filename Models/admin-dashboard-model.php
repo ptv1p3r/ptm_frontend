@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: V1p3r
- * Date: 17/10/2018
- * Time: 20:13
- */
 
 class AdminDashboardModel extends MainModel {
 
@@ -22,142 +16,139 @@ class AdminDashboardModel extends MainModel {
         $this->userdata = $this->controller->userdata;
     }
 
-    /*public function validateUser($username, $password){
+    /**
+     * Metodo que retorna Message list do user pelo seu id
+     * @param $id
+     * @return mixed
+     */
+    public function getMessageListByUserId($id) {
         $result = null;
 
-        $data = null;
-        $data["email"] = $username;
-        $data["password"] = $password;
-
-        $url = API_URL . 'api/v1/login';
-        $result = callAPI("POST", $url, $data);
-
-        return json_decode($result, true);
-    }*/
+        $url = API_URL . 'api/v1/messages/list/' . $id;
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
 
     /**
-     * Metodo que retorna 10 categorias da BD
-     * @return array
+     * Metodo que retorna lista de Trees
+     * @return mixed
      */
-    /*public function getTableCategories($startNumber = null){
-        $query = null;
+    public function getTreeList()
+    {
+        $result = null;
 
-        $query = $this->db->query('SELECT * FROM `categories` limit ' . $startNumber .',10');
-        //}
-
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
+        $url = API_URL . 'api/v1/trees/list';
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
         }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
 
     /**
-     * Metodo que retorna o filme pelo id
-     * @return array
+     * Metodo que retorna lista de TreesUser
+     * @return mixed
      */
-    /*public function getgroupById($intgroupId = null){
-        $query = null;
+    public function getTreeUserList()
+    {
+        $result = null;
 
-        if ($intgroupId != null){
-            $query = $this->db->query('SELECT * FROM `groups` WHERE movid = '.$intgroupId);
+        $url = API_URL . 'api/v1/user/trees/list';
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
         }
-
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
-        }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
 
     /**
-     * Metodo que retorna todos os filmes existentes na BD
-     * @return array
+     * Metodo que retorna lista de Tree Tntervention
+     * @return mixed
      */
-    /*public function getgroups(){
-        $query = null;
+    public function getTreeInterventionList()
+    {
+        $result = null;
 
-        $query = $this->db->query('SELECT * FROM `groups`');
-
-
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
+        $url = API_URL . 'api/v1/interventions/list';
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
         }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
 
     /**
-     * Metodo que retorna 10 filmes existentes na BD
-     * @return array
+     * Metodo que retorna lista de Users
+     * @return mixed
      */
-    /*public function getgroupsTable($startNumber = null){
-        $query = null;
+    public function getUserList() {
+        $result = null;
 
-        $query = $this->db->query('SELECT * FROM `groups` limit ' . $startNumber.',10');
+        $url = API_URL . 'api/v1/users/list';
 
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
         }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
 
     /**
-     * Metodo que retorna todos os comentarios existentes na BD
-     * @return array
+     * Metodo que retorna lista de Transactions
+     * @return mixed
      */
-    /*public function getComments(){
-        $query = null;
+    public function getTransactionList()
+    {
+        $result = null;
 
-        $query = $this->db->query('SELECT * FROM `comments`');
-
-
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
+        $url = API_URL . 'api/v1/transaction/list';
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
         }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
 
     /**
-     * Metodo que retorna 10 comentarios existentes na BD
-     * @return array
+     * Metodo que retorna lista de TransactionMethods
+     * @return mixed
      */
-    /*public function getCommentsTable($startNumber = null){
-        $query = null;
+    public function getTransactionMethodList()
+    {
+        $result = null;
 
-        $query = $this->db->query('SELECT * FROM `comments` limit ' . $startNumber.',10');
-
-
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
+        $url = API_URL . 'api/v1/transaction/methods/list';
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
         }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
 
     /**
-     * Metodo que retorna todos os categorias com filmes
-     * @return array
+     * Metodo que retorna lista de TransactionTypes
+     * @return mixed
      */
-    /*public function getgroupCategories(){
-        $query = null;
+    public function getTransactionTypeList()
+    {
+        $result = null;
 
-        $query = $this->db->query('SELECT * FROM `groups_categories`');
-
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
+        $url = API_URL . 'api/v1/transaction/types/list';
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
         }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
-
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
 }

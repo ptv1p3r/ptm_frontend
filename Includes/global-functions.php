@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: V1p3r
- * Date: 19/01/2019
- * Time: 13:18
- */
 
 /**
  * Verifica chaves de arrays
@@ -71,24 +65,84 @@ function timeCalculation($time)
 }
 
 /**
+ * Metodo para returnar mes baseado no seu numero
+ * @param $number
+ * @return string
+ */
+function getMonth($number){
+    $months = array("Janeiro", 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro');
+    return $months[$number-1];
+}
+
+/**
+ * Metodo para converter tamanhos de ficheiro para (KB, MB, GB, TB, PB)
+ * usage: echo formatBytes('1073741824'); //1GB || https://www.html-code-generator.com/php/function/convert-bytes
+ * @param $bytes
+ * @return int|string
+ */
+function formatBytes($bytes) {
+    if ($bytes > 0) {
+        $i = floor(log($bytes) / log(1024));
+        $sizes = array('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+        return sprintf('%.02F', round($bytes / pow(1024, $i),1)) * 1 . ' ' . @$sizes[$i];
+    } else {
+        return 0;
+    }
+}
+
+/**
+ * Metodo para ordenar arrays multidimencionais por um campo escolhido
+ * usage: array_orderby($array, 'campo', SORT_DESC); | https://www.php.net/manual/en/function.array-multisort.php#100534
+ * @return mixed|null
+ */
+function array_orderby() {
+    $args = func_get_args();
+    $data = array_shift($args);
+    foreach ($args as $n => $field) {
+        if (is_string($field)) {
+            $tmp = array();
+            foreach ($data as $key => $row)
+                $tmp[$key] = $row[$field];
+            $args[$n] = $tmp;
+        }
+    }
+    $args[] = &$data;
+    call_user_func_array('array_multisort', $args);
+    return array_pop($args);
+}
+
+/**
  * Metodo que efetua os pedidos a api e retorna os valores
  * @param $method
  * @param $url
  * @param $data
  * @param string $token
-// * @return bool|string
- * @return array
+ * @return array|void
  */
 function callAPI($method, $url, $data, $token = "")
 {
     $curl = curl_init();
 
+    if(isset($data["file"]) && !empty($data["file"])){
+        $header = "multipart/form-data";
+    } else {
+        $header = "application/json";
+    }
+
     switch ($method) {
         case "POST":
             curl_setopt($curl, CURLOPT_POST, 1);
-            if ($data)
-                curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+            if ($data){
+                //se existir ficheiro
+                if(isset($data['file']) && !empty($data['file'])){
+                    //constroi o post de maineira diferente
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+                } else {
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+                }
+            }
             break;
+
         case "PUT":
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
             if ($data)
@@ -117,11 +171,15 @@ function callAPI($method, $url, $data, $token = "")
     curl_setopt($curl, CURLOPT_URL, $url);
     curl_setopt($curl, CURLOPT_HTTPHEADER, array(
         'Authorization: ' . $token,
-        'Content-Type: application/json'
+        'Content-Type: ' . $header
     ));
     curl_setopt($curl, CURLOPT_HEADER, true);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+
+    //if url doesnt respond, set timeout
+    curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+    curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
 
     // EXECUTE:
     $result = curl_exec($curl);
@@ -135,15 +193,20 @@ function callAPI($method, $url, $data, $token = "")
     //gets body from api response
     $body = substr($result, $header_size);
 
-    //final response array construction
-    $resultArray = array(
-        "statusCode" => $http_status,
-        "body" => json_decode($body, true) //decode json body from api response
-    );
-
     if (!$result) {
-        die("Connection Failure");
+        die("Conexão com API falhou.");
+        /*$resultArray = array(
+            "statusCode" => 503,
+            "body" => "Service Unavailable" //decode json body from api response
+        );*/
+    } else {
+        //final response array construction
+        $resultArray = array(
+            "statusCode" => $http_status,
+            "body" => json_decode($body, true) //decode json body from api response
+        );
     }
+
     curl_close($curl);
     return $resultArray;
 }

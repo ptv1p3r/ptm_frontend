@@ -15,74 +15,30 @@ class HomeModel extends MainModel{
      */
     public $db;
 
-    public function __construct( $db = false, $controller = null ) {
+    public function __construct($db = false, $controller = null)
+    {
+        $this->db = $db; // Config DB (PDO)
 
-        $this->db = $db; // Configura o DB (PDO)
+        $this->controller = $controller; // Config controler
 
-        $this->controller = $controller; // Configura o controlador
-
-        $this->parametros = $this->controller->parametros; // Configura os parâmetros
+        $this->parametros = $this->controller->parametros; // Config parameters
     }
 
 
     /**
-     * Obtém a lista de filmes top rated
-     *
+     * Get inf from trees
+     * @since 0.1
+     * @access public
      */
-    /*public function getTopRatedList($intLimit = 0) {
 
-        if ($intLimit > 0){
-            $query = $this->db->query('SELECT * FROM `ptms` ORDER BY rating_1 DESC LIMIT ' . $intLimit);
-        } else {
-            $query = $this->db->query('SELECT * FROM `ptms` ORDER BY rating_1 DESC');
-        }
+    public function getTreeInfo()
+    {
+        $result = null;
 
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
-        }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
+        //API End point
+        $url = API_URL . 'api/v1/trees/public/info';
+        $result = callAPI("GET", $url, '');
+        return json_decode(json_encode($result), true);
+    }
 
-    /**
-     * Obtém a lista de filmes top downloaded
-     *
-     */
-    /*public function getTopDownloaded($intLimit = 0) {
-
-        if ($intLimit > 0){
-            $query = $this->db->query('SELECT * FROM `ptms` ORDER BY download_count DESC LIMIT ' . $intLimit);
-        } else {
-            $query = $this->db->query('SELECT * FROM `ptms` ORDER BY download_count DESC');
-        }
-
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
-        }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
-
-    /**
-     * Obtém a lista de filmes adicionados recentemente
-     *
-     */
-    /*public function getLastAdded($intLimit = 0) {
-
-        if ($intLimit > 0){
-            $query = $this->db->query('SELECT * FROM `ptms` ORDER BY creation_timestamp DESC LIMIT ' . $intLimit);
-        } else {
-            $query = $this->db->query('SELECT * FROM `ptms` ORDER BY creation_timestamp DESC');
-        }
-
-
-        // Verifica se a consulta está OK
-        if ( ! $query ) {
-            return array();
-        }
-        // Preenche a tabela com os dados
-        return $query->fetchAll();
-    }*/
 }

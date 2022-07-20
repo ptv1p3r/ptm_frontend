@@ -95,7 +95,7 @@
                                     <div>
                                         <select name="addUserGender" id="addUserGender"
                                                 class="form-control customDropdown">
-                                            <option value="" disabled selected>Sexo</option>
+                                            <option value="" disabled selected>Género</option>
                                             <?php if (!empty($this->userdata['genderList'])) {
                                                 foreach ($this->userdata['genderList'] as $key => $gender) { ?>
                                                     <option value="<?php echo $gender['id'] ?>">
@@ -122,13 +122,11 @@
 
                                 <li class="col-md-6">
                                     <div class="form-group input-group">
-                                        <input type="text" name="addUserPassword" placeholder="Password"
+                                        <input type="password" name="addUserPassword" placeholder="Password"
                                                class="form-control"
                                                required>
                                     </div>
                                 </li>
-
-
                                 <!-- Image loader -->
                                 <div class="loaderOverlay lds-dual-ring hidden" id="loader" >
                                     <svg class="loader" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -136,21 +134,23 @@
                                     </svg>
                                 </div>
                                 <!-- Image loader -->
-
                                 <li class="col-md-12">
-                                    <div class="input-group form-check">
+                                    <div class=" form-check">
+                                        <br>
                                         <input type="checkbox" id="checkBtn" class="form-check-input" onchange="isChecked(this, 'sub1')">
 
                                         <!--secção dos termos temos de analisar isto com o grupo de direito-->
+
                                         <label class="form-check-label" for="exampleCheck1">Eu concordo com os termos <a
                                                     href="<?php echo HOME_URL . '/home/rights'; ?>">Regulamento &
                                                 Política de
                                                 Privacidade</a></label>
                                     </div>
+                                    <br>
                                 </li>
                                 <li class="col-md-12">
                                     <button type="submit" class="register" id="subBtn" disabled="disabled">Regista a sua conta</button>
-<!--                                    <div id="loader" class="lds-dual-ring hidden overlay"></div>-->
+                                    <!--                                    <div id="loader" class="lds-dual-ring hidden overlay"></div>-->
                                 </li>
                             </ul>
                         </form>
@@ -187,7 +187,7 @@
                     if (data.statusCode === 201) {
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -199,7 +199,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -215,8 +215,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -235,17 +235,10 @@
                 if ($(this).is(':checked')) {
                     $('#subBtn').removeAttr('disabled');
                 } else {
-
                     $('#subBtn').attr('disabled', 'disabled');
-
                 }
             });
         });
-
-
-
     });
-
-
 </script>
 <!--Script's end section-->

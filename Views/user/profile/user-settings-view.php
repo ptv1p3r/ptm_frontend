@@ -8,24 +8,21 @@
 ?>
 <?php if (!defined('ABSPATH')) exit; ?>
 
+<!-- Image loader -->
+<div class="loaderOverlay lds-dual-ring hidden" id="loader">
+    <svg class="loader" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="46"/>
+    </svg>
+</div>
+<!-- Image loader -->
 
 <div id="wrapper">
-
     <!--Profile user edit account Start-->
     <section class="py-5 my-5">
-        <div class="container">
+        <div class="container" style="max-width: 1500px;!important;">
             <h1 class="mb-5">Definições gerais</h1>
             <div class="bg-white rounded-lg d-block d-sm-flex">
                 <div class="profile-tab-nav border-right">
-
-
-                    <!--                    Podemos utilizar para colocar uma imagem de utilizador-->
-                    <!--                    <div class="p-4">-->
-                    <!--                        <div class="fa-xing-square text-center mb-3">-->
-                    <!--                            <img src="Images/user2.png" alt="Image">-->
-                    <!--                        </div>-->
-                    <!--                    </div>-->
-
                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                         <a class="nav-link active" id="account-tab" data-toggle="pill" href="#account" role="tab"
                            aria-controls="account" aria-selected="true">
@@ -42,145 +39,171 @@
                             <i class="fa fa-user text-center mr-1"></i>
                             Opções
                         </a>
-
-                        <!--                        Teste premissões-->
-                        <?php $this->permission_required = 'treeRead';
+                        <!--Permissions Test-->
+                        <?php $this->permission_required = array('treeRead');
                         if (!$this->check_permissions($this->permission_required, $_SESSION["userdata"]['user_permissions'])) { ?>
-                            <a class="nav-link" id="application-tab" data-toggle="pill" href="#application" role="tab"
+                            <a class="nav-link" id="application-tab" data-toggle="pill" href="#transaction" role="tab"
                                aria-controls="application" aria-selected="false">
-                                <i class="fa fa-tv text-center mr-1"></i>
-                                Test Permissões
+                                <i class="fas fa-wallet text-center mr-1"></i>
+                                Transações
                             </a>
                             <?php
                         }
                         ?>
-
-
-                        <!--                        <a class="nav-link" id="notification-tab" data-toggle="pill" href="#notification" role="tab" aria-controls="notification" aria-selected="false">-->
-                        <!--                            <i class="fa fa-bell text-center mr-1"></i>-->
-                        <!--                            Notification-->
-                        <!--                        </a>-->
                     </div>
                 </div>
-
-                <!-- Profile tab section-->
-                <?php if (!empty($this->userdata['userList'])) {
-                foreach ($this->userdata['userList'] as $key => $user) { ?>
                 <div class="tab-content p-4 p-md-5 profile-tab" id="v-pills-tabContent">
                     <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
                         <h3 class="mb-4">Dados da conta</h3>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Nome</label>
-                                    <p> <?php echo $user["name"] ?></p>
+
+
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6 ">
+                                    <div class="form-group">
+                                    <i class="fas fa-user" style="color: #1c7430" text-center mr-1></i>
+                                        <label>Nome</label>
+
+                                        <p> <?php echo $_SESSION["userdata"]["name"] ?></p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
+                                <div class="col-md-6 ml-auto">
+                                   <div class="form-group">
+                                   <i class="fas fa-briefcase" style="color: #1c7430" text-center mr-2></i>
                                     <label>Entidade</label>
-                                    <p><?php echo $user["entity"] ?></p>
+                                    <p><?php echo $_SESSION["userdata"]["entity"] ?></p>
+                                </div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Morada</label>
-                                    <p><?php echo $user["address"] ?></p>
+                        </div>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6 ">
+                                    <div class="form-group">
+                                     <i class="fas fa-home" style="color: #1c7430" text-center mr-1></i>
+                                        <label>Morada</label>
+                                       <p><?php echo $_SESSION["userdata"]["address"] ?></p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
+                                <div class="col-md-6 ml-auto">
+                                   <div class="form-group">
+                                   <i class="fas fa-map-marker" style="color: #1c7430" text-center mr-1></i>
                                     <label>Código-postal</label>
-                                    <p><?php echo $user["codPost"] ?></p>
+                                   <p><?php echo $_SESSION["userdata"]["codPost"] ?></p>
+                                </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Localidade</label>
-                                    <p><?php echo $user["locality"] ?></p>
+                        </div>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6 ">
+                                    <div class="form-group">
+                                     <i class="fas fa-city" style="color: #1c7430" text-center mr-1></i>
+                                        <label>Morada</label>
+                                       <p><?php echo $_SESSION["userdata"]["locality"] ?></p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
+                                <div class="col-md-6 ml-auto">
+                                   <div class="form-group">
+                                   <i class="fas fa-flag" style="color: #1c7430" text-center mr-1></i>
                                     <label>País</label>
-                                    <?php foreach ($this->userdata['countryList'] as $key => $val) { ?>
-                                        <?php echo ($val['id'] == $user["countryId"]) ? "<p>" . $val['name'] . "</p>" : ''; ?>
+                                   <?php foreach ($this->userdata['countryList'] as $key => $val) { ?>
+                                        <?php echo ($val['id'] == $_SESSION["userdata"]["countryId"]) ? "<p>" . $val['name'] . "</p>" : ''; ?>
                                     <?php } ?>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Data de nascimento</label>
-                                    <p><?php echo $user["dateBirth"] ?></p>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Gênero</label>
-                                    <?php foreach ($this->userdata['genderList'] as $key => $val) { ?>
-                                        <?php echo ($val['id'] == $user["genderId"]) ? "<p>" . $val['name'] . "</p>" : ''; ?>
-                                    <?php } ?>
+                        </div>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6 ">
+                                    <div class="form-group">
+                                    <i class="fas fa-fingerprint" style="color: #1c7430" text-center mr-1></i>
+                                     <label>NIF</label>
+                                    <p><?php echo $_SESSION["userdata"]["nif"] ?></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 ml-auto">
+                                   <div class="form-group">
+                                   <i class="fas fa-mobile-alt" style="color: #1c7430" text-center mr-1></i>
+                                     <label>Telefone</label>
+                                    <p><?php echo $_SESSION["userdata"]["mobile"] ?></p>
+                                </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>NIF</label>
-                                    <p><?php echo $user["nif"] ?></p>
+                        </div>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6 ">
+                                    <div class="form-group">
+                                    <i class="fas fa-baby" style="color: #1c7430" text-center mr-1></i>
+                                      <label>Data de nascimento</label>
+                                    <p><?php echo $_SESSION["userdata"]["dateBirth"] ?></p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Telefone</label>
-                                    <p><?php echo $user["mobile"] ?></p>
+                                <div class="col-md-6 ml-auto">
+                                   <div class="form-group">
+                                       <i class="fas fa-genderless" style="color: #1c7430" text-center mr-1></i>
+                                         <label>Gênero</label>
+                                         <?php foreach ($this->userdata['genderList'] as $key => $val) { ?>
+                                            <?php echo ($val['id'] == $_SESSION["userdata"]["genderId"]) ? "<p>" . $val['name'] . "</p>" : ''; ?>
+                                        <?php } ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div>
-                            <button class="btn edit btn-success" id="<?php echo $user["email"]; ?>" data-toggle="modal"
+                            <button class="btn edit btn-success" id="<?php echo $_SESSION["userdata"]["email"]; ?>" data-toggle="modal"
                                     data-target="#editUserModal">Editar
                             </button>
-                            <!--                            <button class="btn btn-light">Cancel</button>-->
                         </div>
                     </div>
                     <!--End profile tab section-->
-
                     <!--Edit password tab section-->
                     <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
-                        <h3 class="mb-4">Password Settings</h3>
-                        <div class="form-group">
-                            <input id="editUserId" name="editUserId" type="hidden" class="form-control"
-                                   value="<?php echo $user["id"] ?>">
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Password antiga</label>
-                                    <input type="password" class="form-control">
+                        <h3 class="mb-4">Alterar palavra-passe</h3>
+                        <form id="updatePass">
+                            <div class="form-group">
+                                <input id="passEditUserId" name="passEditUserId" type="hidden" class="form-control"
+                                       value="<?php echo $_SESSION["userdata"]["id"] ?>">
+                            </div>
+                            <div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Palavra-passe antiga</label>
+                                        <input type="password" id="oldPass" name="oldPass" class="form-control"
+                                               required>
+                                        <span id="verifyOldPass" class="badge-warning hidden"></span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Nova password</label>
-                                    <input type="password" id="password" class="form-control">
-                                    <p class="registrationFormAlert" style="color:green;" id="CheckPasswordMatch">
+                            <div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Nova palavra-passe</label>
+                                        <input type="password" id="pass" name="newPass" class="form-control"
+                                               required>
+                                        <span id="verifyEqualPass" class="badge-warning hidden"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Confirme a nova palavra-passe</label>
+                                        <input type="password" id="verify" name="confPass" class="form-control"
+                                               required>
+                                        <span id="verifyMatchPass" class="badge-warning hidden"></span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Confirma a nova password</label>
-                                    <input type="password" id="confPass" class="form-control">
+                            <div>
+                                <div class="col-md-6">
+                                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+                                    <input type="submit" class="btn btn-success" value="Salvar">
                                 </div>
                             </div>
-                        </div>
-                        <div>
-                            <button class="btn btn-success save">Salvar</button>
-                            <!--                            <button class="btn btn-light">Cancel</button>-->
-                        </div>
+                        </form>
                     </div>
                     <!--End Edit password tab section-->
-
                     <!--Remove account tab section-->
                     <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
                         <h3 class="mb-4">Remover conta</h3>
@@ -199,122 +222,181 @@
                         </div>
                     </div>
                     <!--Remove account tab section-->
-
-
                     <!--Test premissions account tab section-->
-
-                    <div class="tab-pane fade" id="application" role="tabpanel" aria-labelledby="security-tab">
-                        <h3 class="mb-4">Remover conta</h3>
-                        <div class="row">
-                        </div>
+                    <div class="tab-pane fade" id="transaction" role="tabpanel" aria-labelledby="security-tab">
+                        <h3 class="mb-4">Transações</h3>
                         <div>
-                            Teste premissoes
+                            <!--Section tree Intrevation Sart-->
+                            <section class="wf100 p30">
+                                <div class="container">
+                                    <div>
+                                        <table class="table table-bordered mytable display" id="transTable"
+                                               style="width: 100%">
+                                            <thead>
+                                            <tr>
+                                                <th style="text-align: left;">Transação</th>
+                                                <th>Tipo</th>
+                                                <th>Método</th>
+                                                <th>NIF</th>
+                                                <th>Árvore</th>
+                                                <th>Valor</th>
+                                                <th>Estado</th>
+                                                <th style="font-size: small;">Data/criação</th>
+                                                <th style="font-size: small;">Data/alteração</th>
+                                                <th style="font-size: small;">Data/validação</th>
+                                            </tr>
+                                            </thead>
+                                            <?php if (!empty($this->userdata['userTransList'])) {
+                                                foreach ($this->userdata['userTransList'] as $key => $trans) { ?>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="long-td" data-toggle="popover" data-trigger="hover"
+                                                            data-content="<?php echo $trans["id"] ?>"><?php echo $trans["id"] ?></td>
+                                                        <td class="long-td" data-toggle="popover" data-trigger="hover"
+                                                            data-content="<?php echo $trans["typeName"] ?>"><?php echo $trans["typeName"] ?></td>
+                                                        <td class="long-td" data-toggle="popover" data-trigger="hover"
+                                                            data-content="<?php echo $trans["methodName"] ?>"><?php echo $trans["methodName"] ?></td>
+                                                        <td class="long-td" data-toggle="popover" data-trigger="hover"
+                                                            data-content="<?php echo $trans["userNif"] ?>"><?php echo $trans["userNif"] ?></td>
+                                                        <td class="long-td" data-toggle="popover" data-trigger="hover"
+                                                            data-content="<?php echo $trans["treeId"] ?>"><?php echo $trans["treeId"] ?></td>
+                                                        <td class="long-td" data-toggle="popover" data-trigger="hover"
+                                                            data-content="<?php echo $trans["value"] ?>"><?php echo $trans["value"] ?></td>
+                                                        <td class="long-td" data-toggle="popover" data-trigger="hover"
+                                                            data-content="<?php echo $trans["state"] ?>"><?php echo $trans["state"] ?></td>
+                                                        <td class="long-td" data-toggle="popover" data-trigger="hover"
+                                                            data-content="<?php echo $trans["dateCreated"] ?>"><?php echo $trans["dateCreated"] ?></td>
+                                                        <td class="long-td" data-toggle="popover" data-trigger="hover"
+                                                            data-content="<?php echo $trans["dateModified"] ?>"><?php echo $trans["dateModified"] ?></td>
+                                                        <td class="long-td" data-toggle="popover" data-trigger="hover"
+                                                            data-content="<?php echo $trans["dateValidated"] ?>"><?php echo $trans["dateValidated"] ?></td>
+                                                    </tr>
+                                                    </tbody>
+                                                <?php }
+                                            } else { ?>
+                                                <tbody>
+                                                <tr>
+                                                </tr>
+                                                </tbody>
+                                            <?php } ?>
+                                        </table>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
                     </div>
-                    <!--Test premissions account tab section-->
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- Edit Profile Modal HTML -->
-    <div id="editUserModal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Edite os seus dados</h4>
-
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <form id="updateUser">
-                        <div class="form-group">
-                            <input id="editUserId" name="editUserId" type="hidden" class="form-control"
-                                   value="<?php echo $user["id"] ?>">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Nome:</label>
-                            <input type="text" class="form-control" name="editUserName"
-                                   value="">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Entidade:</label>
-                            <input type="text" class="form-control" name="editUserEntity" value="">
-
-                        </div>
-
-                        <div class="form-group">
-                            <label>Morada:</label>
-                            <input type="text" class="form-control" name="editUserAddress" value="">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Código-postal:</label>
-                            <input type="text" class="form-control" name="editUserCodPost" value="">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Localidade:</label>
-                            <input type="text" class="form-control" name="editUserLocality" value="">
-                        </div>
-                        <div class="form-group">
-                            <label>País:</label>
-                            <select class="form-control" id="editUserCountry" name="editUserCountry">
-                                <?php foreach ($this->userdata['countryList'] as $key => $val) { ?>
-                                    <option value="<?php echo $val['id']; ?>" <?php echo ($val['id'] == $user["countryId"]) ? 'selected="selected"' : '' ?> > <?php echo $val['name']; ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Nif:</label>
-                            <input type="text" class="form-control" name="editUserNif" value="">
-                        </div>
-                        <div class="form-group">
-                            <label>Telefone:</label>
-                            <input type="text" class="form-control" name="editUserMobile">
-                        </div>
-                        <div class="form-group">
-                            <label>País:</label>
-                            <select class="form-control" id="editUserGender" name="editUserGender">
-                                <?php foreach ($this->userdata['genderList'] as $key => $val) { ?>
-                                    <option value="<?php echo $val['id']; ?>" <?php echo ($val['id'] == $user["genderId"]) ? 'selected="selected"' : '' ?> > <?php echo $val['name']; ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Password:</label>
-                            <input type="password" class="form-control" name="editUserPasswordAA">
-                        </div>
-                        <div class="form-group">
-                            <label>Data de aniversário:</label>
-                            <input type="date" class="form-control" name="editUserDateBirth">
-                        </div>
-                        <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-info" value="Save">
-                        </div>
-                    </form>
-
                 </div>
             </div>
         </div>
     </div>
-</div>
-<?php }
-} ?>
+</section>
+
+
+<!-- Edit Profile Modal HTML -->
+    <div id="editUserModal" class="modal fade center" data-keyboard="false"
+         data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5);" tabindex="-1"
+         aria-labelledby="bulkDeleteMessagesModal-Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edite os seus dados</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateUser">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <input id="editUserId" name="editUserId" type="hidden" class="form-control"
+                                       value="<?php echo $_SESSION["userdata"]["id"] ?>">
+                            </div>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-6 ">
+                                        <label style="color: #66bb6a"><b>Nome:</b></label>
+                                        <input type="text" class="form-control" name="editUserName"
+                                               value="<?php echo $_SESSION["userdata"]["name"] ?>">
+                                    </div>
+                                    <div class="col-md-6 ml-auto">
+                                        <label style="color: #66bb6a"><b>Entidade:</b></label>
+                                        <input type="text" class="form-control" name="editUserEntity" value="<?php echo $_SESSION["userdata"]["entity"] ?>">
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6 ">
+                                        <label style="color: #66bb6a"><b>Morada:</b></label>
+                                        <input type="text" class="form-control" name="editUserAddress" value="<?php echo $_SESSION["userdata"]["address"] ?>">
+                                    </div>
+                                    <div class="col-md-6 ml-auto">
+                                        <label style="color: #66bb6a"><b>Localidade:</b></label>
+                                        <input type="text" class="form-control" name="editUserLocality" value="<?php echo $_SESSION["userdata"]["locality"] ?>">
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6 ml-auto">
+                                        <label style="color: #66bb6a"><b>Código-postal:</b></label>
+                                        <input type="text" class="form-control" name="editUserCodPost" value="<?php echo $_SESSION["userdata"]["codPost"] ?>">
+                                    </div>
+                                    <div class="col-md-6 ml-auto">
+                                        <label style="color: #66bb6a"><b>País:</b></label>
+                                        <select class="form-control" id="editUserCountry" name="editUserCountry">
+                                            <?php foreach ($this->userdata['countryList'] as $key => $val) { ?>
+                                                <option value="<?php echo $val['id']; ?>" <?php echo ($val['id'] == $_SESSION["userdata"]["countryId"]) ? 'selected="selected"' : '' ?> > <?php echo $val['name']; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6 ml-auto">
+                                        <label style="color: #66bb6a"><b>NIF:</b></label>
+                                        <input type="text" class="form-control" name="editUserNif" value="<?php echo $_SESSION["userdata"]["nif"] ?>">
+                                    </div>
+                                    <div class="col-md-6 ml-auto">
+                                        <label style="color: #66bb6a"><b>Telefone:</b></label>
+                                        <input type="text" class="form-control" name="editUserMobile" value="<?php echo $_SESSION["userdata"]["mobile"] ?>">
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6 ml-auto">
+                                        <label style="color: #66bb6a"><b>Gênero:</b></label>
+                                        <select class="form-control" id="editUserGender" name="editUserGender">
+                                            <?php foreach ($this->userdata['genderList'] as $key => $val) { ?>
+                                                <option value="<?php echo $val['id']; ?>" <?php echo ($val['id'] == $_SESSION["userdata"]["genderId"]) ? 'selected="selected"' : '' ?> > <?php echo $val['name']; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 ml-auto">
+                                        <label style="color: #66bb6a"><b>Data de aniversário:</b></label>
+                                        <input type="date" class="form-control" name="editUserDateBirth" value="<?php echo $_SESSION["userdata"]["dateBirth"] ?>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Voltar">
+                            <input type="submit" class="btn btn-success" value="Salvar">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 <!-- End Edit Profile Modal HTML -->
 
 <!-- Delete Modal HTML -->
-<div id="deleteUserModal" class="modal fade">
+<div id="deleteUserModal" class="modal fade center" data-keyboard="false"
+             data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5);" tabindex="-1"
+             aria-labelledby="bulkDeleteMessagesModal-Label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <form id="deleteUser">
                 <div class="modal-header">
-                    <h4 class="modal-title">Delete Group</h4>
+                    <h4 class="modal-title">Apagar conta</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -323,7 +405,7 @@
                     <input id="deleteUserId" name="deleteUserId" type="hidden" class="form-control">
                 </div>
                 <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Voltar">
+                    <input type="button" class="btn btn-secundary" data-dismiss="modal" value="Voltar">
                     <input type="submit" class="btn btn-danger" value="Apagar">
                 </div>
             </form>
@@ -333,94 +415,60 @@
 
 <!--Script's section-->
 <script>
-
     $(document).ready(function () {
 
-        $('.save').on('click', function () {
 
-            guardar(); //guardar data
-
-        });
-
-
-        //////// ajax to get data to Modal Edit User
-        $('.edit').on('click', function () {
-            let formData = {
-                'action': "GetUser",
-                'data': $(this).attr('id') //gets group id from id="" attribute on edit button from table
-            };
-            $.ajax({
-                url: "<?php echo HOME_URL . '/home/userSettings';?>",
-                dataType: "json",
-                type: 'POST',
-                data: formData,
-
-                success: function (data) {
-
-                    //TODO Os dados chegam aqui, mas não aparecem
-
-
-                    $('[name="editUserId"]').val(data[0]['id']);
-                    $('[name="editUserName"]').val(data[0]['name']);
-                    $('[name="editUserEntity"]').val(data[0]['entity']);
-                    $('[name="editUserDateBirth"]').val(data[0]['dateBirth']);
-                    $('[name="editUserAddress"]').val(data[0]['address']);
-                    $('[name="editUserCodPost"]').val(data[0]['codPost']);
-                    $('[name="editUserLocality"]').val(data[0]['locality']);
-                    $('[name="editUserMobile"]').val(data[0]['mobile']);
-                    $('[name="editUserNif"]').val(data[0]['nif']);
-                    $('[name="editUserPass"]').val(data[0]['password']);
-
-                    $('#updateUser input').each(function () {
-                        $(this).data('lastValue', $(this).val());
-                    });
-
-
-                    // $("#editUserModal").modal('show');
-                },
-                error: function (data) {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: data.body,
-                        icon: 'error',
-                        showConfirmButton: false,
-                        // timer: 2000,
-                        // didClose: () => {
-                        //     location.reload();
-                        // }
-                    });
+        //DATATABLES
+        try {
+            var table = $('#transTable').DataTable({
+                rowReorder: false,
+                responsive: true,
+                lengthChange: false,
+                pageLength: 15,
+                // colReorder: false,
+                columns: [
+                    {"width": "9%", orderable: false},
+                    {"width": "9%", orderable: false},
+                    {"width": "10%", orderable: false},
+                    {"width": "10%", orderable: false},
+                    {"width": "10%", orderable: false},
+                    {"width": "5%", orderable: false},
+                    {"width": "10%", orderable: false},
+                    {"width": "15%", orderable: false},
+                    {"width": "16%", orderable: false},
+                    {"width": "16%", orderable: false}
+                ],
+                oLanguage: {
+                    "sUrl": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-PT.json"
                 }
             });
-        });
+        } catch (error) {
+            console.log(error);
+        }
 
         // ajax to update modal data  Edit User
         $('#updateUser').submit(function (event) {
             event.preventDefault(); //prevent default action
 
-            let formDataChanged = [];
-            $('#updateUser input').each(function () { //para cada input vai ver
-                if ($(this).attr('name') === "editUserId" || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
-                    let emptyArray = {name: "", value: ""};
-                    emptyArray.name = $(this).attr('name');
-                    emptyArray.value = $(this).val();
-                    formDataChanged.push(emptyArray);
-                }
-            });
             let formData = {
                 'action': "UpdateUser",
-                'data': formDataChanged
+                'data': $(this).serializeArray()
             };
-
+            //Ajax function call
             $.ajax({
                 url: "<?php echo HOME_URL . '/home/userSettings';?>",
                 dataType: "json",
                 type: 'POST',
                 data: formData,
+                beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    $('#loader').removeClass('hidden')
+                },
                 success: function (data) {
+                    $("#editUserModal").modal('hide');
                     if (data.statusCode === 200) {
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -432,37 +480,29 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
                             timer: 2000,
-                            didClose: () => {
-                                //location.reload();
-                            }
                         });
                     }
                 },
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
-                        didClose: () => {
-                            //location.reload();
-                        }
                     });
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
                 }
-
             });
-            // } else {
-            //     alert('batatas');
-            // }
         });
-
         // ajax to Delete User
         $('#deleteUser').submit(function (event) {
             event.preventDefault(); //prevent default action
@@ -477,13 +517,15 @@
                 dataType: "json",
                 type: 'POST',
                 data: formData,
+                beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    $('#loader').removeClass('hidden')
+                },
                 success: function (data) {
                     $("#deleteUserModal").modal('hide');
-
                     if (data.statusCode === 200) {
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -500,48 +542,106 @@
                             icon: 'error',
                             showConfirmButton: false,
                             timer: 2000,
-                            didClose: () => {
-                                //location.reload();
-                            }
                         });
                     }
-
                 },
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
-                        didClose: () => {
-                            //location.reload();
-                        }
                     });
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
                 }
             });
         });
-
-        $(".listen").keyup(function () {
-            $(this).attr("name", "user-field-updated");
-            console.log('batatas')
-        })
-
-
-        function checkPasswordMatch() {
-            let password = $("#txtNewPassword").val();
-            let confirmPassword = $("#txtConfirmPassword").val();
-            if (password != confirmPassword)
-                $("#CheckPasswordMatch").html("Passwords does not match!");
-            else
-                $("#CheckPasswordMatch").html("Passwords match.");
-        }
+        // ajax to update modal data  Edit User
+        $('#updatePass').submit(function (event) {
+            event.preventDefault(); //prevent default action
+            let formData = {
+                'action': "UpdateUserPass",
+                'data': $(this).serializeArray()
+            };
+            $.ajax({
+                url: "<?php echo HOME_URL . '/home/userSettings';?>",
+                dataType: "json",
+                type: 'POST',
+                data: formData,
+                beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    $('#loader').removeClass('hidden')
+                },
+                success: function (data) {
+                    //Status response error messages
+                    //Success response
+                    if (data.statusCode === 200) {
+                        //mensagem de Success
+                        Swal.fire({
+                            title: 'Sucesso!',
+                            text: data.body.message,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                location.reload();
+                            }
+                        });
+                    } else if (data.statusCode === 400) {
+                        //Error message
+                        Swal.fire({
+                            title: 'Erro!',
+                            text: data.body.message,
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            didClose: () => {
+                                //location.reload();
+                            }
+                        });
+                    } else {
+                        if (data.statusCode == 0) {
+                            $('#verifyOldPass').text(data.body.message);
+                            $('#verifyOldPass').show();
+                        }
+                        if (data.statusCode == 1) {
+                            $('#verifyEqualPass').text(data.body.message);
+                            $('#verifyEqualPass').show();
+                        }
+                        if (data.statusCode == 2) {
+                            $('#verifyMatchPass').text(data.body.message);
+                            $('#verifyMatchPass').show();
+                        }
+                    }
+                },
+                error: function (data) {
+                    //mensagem de Error
+                    Swal.fire({
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 2000,
+                    });
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
+                }
+            });
+        });
+        //function handler spn messages
+        $('#updatePass').click(function () {
+            $(this).parent().find('#verifyOldPass').hide();
+            $(this).parent().find('#verifyEqualPass').hide();
+            $(this).parent().find('#verifyMatchPass').hide();
+        });
 
         $(document).ready(function () {
-            $("#txtConfirmPassword").keyup(checkPasswordMatch);
+            $('[data-toggle="popover"]').popover({})
         });
     });
-
 </script>
 <!--Script's end section-->

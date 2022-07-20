@@ -3,139 +3,154 @@
 
 <?php if ( $this->login_required && ! $this->logged_in ) return; ?>
 
-<div id="wrapper">
+<!-- AJAX loader -->
+<div id="loader" class="lds-dual-ring hidden overlay"></div>
 
-    <!-- Sidebar -->
-    <ul class="sidebar navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/dashboard';?>"><span>Dashboard</span></a></li>
-        <li class="nav-item active"><a class="nav-link" href="<?php echo HOME_URL . '/admin/groups';?>"><span>Gestão de grupos</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/users';?>"><span>Gestão de utilizadores</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/security';?>"><span>Gestão de securitys</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="<?php echo HOME_URL . '/admin/settings';?>"><span>Settings</span></a></li>
-    </ul>
+<div id="layoutSidenav">
+    <!-- import sidebar -->
+    <?php require ABSPATH . '/views/_includes/admin-sidebar.php'?>
 
-    <div id="content-wrapper">
-        <!-- DataTables -->
-        <div class="container">
-            <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2>Manage <b>Groups</b></h2>
-                        </div>
-                        <div class="col-sm-6">
-                            <a href="#addGroupModal" class="btn btn-success" data-toggle="modal"><i class="fas fa-plus-circle"></i><span>Add New Group</span></a>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Gestão de <b>grupos</b></h1>
+                <div class="row">
+
+                    <div class="col-xl-12 col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <a href="#addGroupModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addGroupModal">
+                                    <i class="fas fa-plus-circle"></i><span>&nbsp;Novo grupo</span>
+                                </a>
+                                <div class="float-end">
+                                    <label>filtro:</label>
+                                    <select id='GetActive'>
+                                        <option value=''>Todos</option>
+                                        <option value='1'>Ativos</option>
+                                        <option value='0'>Inativos</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="groupsTable" class="table table-striped table-hover" style="width:100%">
+                                        <thead>
+                                        <tr>
+                                            <th>Nome</th>
+                                            <th>Descrição</th>
+                                            <th>Tabela de segurança</th>
+                                            <th>Data Criação</th>
+                                            <th>Data Modificação</th>
+                                            <th hidden>active</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php if (!empty($this->userdata['groupsList'])) {
+                                            foreach ($this->userdata['groupsList'] as $key => $group) { ?>
+                                                <tr>
+                                                    <td id="5h3e4646ne-<?php echo $group["id"] ?>"
+                                                        onclick="copy('<?php echo $group["name"] ?>','5h3e4646ne-<?php echo $group["id"] ?>')"
+                                                        title="<?php echo $group["name"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $group["name"] ?>
+                                                    </td>
+                                                    <td id="d4j5t4bwdr-<?php echo $group["id"] ?>"
+                                                        onclick="copy('<?php echo $group["description"] ?>','d4j5t4bwdr-<?php echo $group["id"] ?>')"
+                                                        title="<?php echo $group["description"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $group["description"] ?>
+                                                    </td>
+                                                    <td id="5y7nftryn4-<?php echo $group["id"] ?>"
+                                                        onclick="copy('Tabela <?php echo $group["securityId"] ?>','5y7nftryn4-<?php echo $group["id"] ?>')"
+                                                        title="Tabela <?php echo $group["securityId"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        Tabela <?php echo $group["securityId"] ?>
+                                                    </td>
+                                                    <td id="b3esv3awv-<?php echo $group["id"] ?>"
+                                                        onclick="copy('Tabela <?php echo $group["dateCreated"] ?>','b3esv3awv-<?php echo $group["id"] ?>')"
+                                                        title="Tabela <?php echo $group["dateCreated"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $group["dateCreated"] ?>
+                                                    </td>
+                                                    <td id="f3nnrdr3b-<?php echo $group["id"] ?>"
+                                                        onclick="copy('Tabela <?php echo $group["dateModified"] ?>','f3nnrdr3b-<?php echo $group["id"] ?>')"
+                                                        title="Tabela <?php echo $group["dateModified"] ?>"
+                                                        class="table-text-truncate"
+                                                        style="cursor: pointer">
+                                                        <?php echo $group["dateModified"] ?>
+                                                    </td>
+                                                    <td hidden><?php echo $group["active"] ?></td>
+                                                    <td>
+                                                        <div class="float-end">
+                                                            <a href="#editGroupModal" id="<?php echo $group['id'] ?>" class="edit m-2"
+                                                               data-bs-toggle="modal" data-bs-target="#editGroupModal"><i class="far fa-edit fa-lg"></i></a>
+                                                            <a href="#deleteGroupModal" id="<?php echo $group['id'] ?>" class="delete m-2"
+                                                               data-bs-toggle="modal" data-bs-target="#deleteGroupModal"><i class="fas fa-trash-alt fa-lg"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php }
+                                        } else { ?>
+                                            <tr>
+                                            </tr>
+                                        <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>SecurityId</th>
-                        <th>active</th>
-                        <th>dateCreated</th>
-                        <th>dateModified</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-
-                    <?php if (!empty($this->userdata['groupsList'])) {
-                        foreach ($this->userdata['groupsList'] as $key => $group) { ?>
-                            <tbody>
-                            <tr>
-                                <td><?php echo $group["name"] ?></td>
-                                <td><?php echo $group["description"] ?></td>
-                                <td><?php echo $group["securityId"] ?></td>
-                                <td><?php echo $group["active"] ?></td>
-                                <td><?php echo $group["dateCreated"] ?></td>
-                                <td><?php echo $group["dateModified"] ?></td>
-                                <td>
-                                    <a href="#editGroupModal" id="<?php echo $group['id'] ?>" class="edit"
-                                       data-toggle="modal"><i class="far fa-edit"></i></a>
-                                    <a href="#deleteGroupModal" id="<?php echo $group['id'] ?>" class="delete"
-                                       data-toggle="modal"><i class="fas fa-trash-alt"></i></a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        <?php }
-                    } else { ?>
-                        <tbody>
-                        <tr>
-                        </tr>
-                        </tbody>
-                    <?php } ?>
-
-                </table>
-
-
-                <!-- TODO: views pagination -->
-                <div class="clearfix">
-                    <div class="hint-text">Showing <b>
-                            <?php
-                            /*if (10*$parametros[0] >= count($groups)) {
-                                echo count($groups);
-                            } else {
-                                if ($parametros[0] == null || $parametros[0] == "1") {
-                                    if (10 >= count($groups)) {
-                                        echo count($groups);
-                                    } else {
-                                        echo 10;
-                                    }
-                                } else {
-                                    echo 10*$parametros[0];
-                                }
-                            }*/
-                            ?>
-                        </b> out of <b><?php //echo count($groups)?></b> entries</div>
-                        <ul class="pagination">
-                            <?php /*if ($parametros[0] == null) { ?>
-                                <li class="page-item active"><a href="<?php echo HOME_URL . '/admin/group/' . 1;?>" class="page-link">1</a></li>
-                            <?php } else {
-                                for ($i = 1 ; $i <= ceil(count($groups)/10) ; $i++) { ?>
-                                <li class="page-item <?php if ($parametros[0] == $i) {
-                                    echo "active";
-                                }?>"><a href="<?php echo HOME_URL . '/admin/group/' . $i;?>" class="page-link"><?php echo $i?></a></li>
-                                <?php }
-                            }*/
-                            ?>
-                        </ul>
-                    </div>
                 </div>
             </div>
+        </main>
+
+
+
 
         <!-- Add Modal HTML -->
-        <div id="addGroupModal" class="modal fade">
+        <div id="addGroupModal" class="modal fade" tabindex="-1" aria-labelledby="addGroupModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="addGroup">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Group</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Adicionar grupo</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>Name</label>
+                                <label>Nome</label>
                                 <input type="text" class="form-control" name="addGroupName" required>
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
+                                <label>Descrição</label>
                                 <input type="text" class="form-control" name="addGroupDescription" required>
                             </div>
                             <div class="form-group">
-                                <label>SecurityId</label>
-                                <input type="number" class="form-control" name="addGroupSecurityId" required>
+                                <label>Tabela de segurança</label>
+                                <!--<input type="number" class="form-control" name="addGroupSecurityId" required>-->
+                                <select class="form-select" name="addGroupSecurityId" id="addGroupSecurityId" required>
+                                    <option value="" disabled selected>Selecione a tabela</option>
+                                    <?php if (!empty($this->userdata['securityList'])) {
+                                        foreach ($this->userdata['securityList'] as $key => $security) { ?>
+                                            <option value="<?php echo $security['id'] ?>">Tabela <?php echo $security["id"] ?></option>
+                                        <?php }
+                                    } ?>
+                                </select>
                             </div>
-                            <div class="form-group">
-                                <label>Active</label>
-                                <input type="checkbox" class="form-control" name="addGroupActive">
+                            <div class="form-group form-check form-switch">
+                                <label>Ativo</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="addGroupActive">
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-success" value="Add">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-success" value="Adicionar">
                         </div>
                     </form>
                 </div>
@@ -143,13 +158,13 @@
         </div>
 
         <!-- Edit Modal HTML -->
-        <div id="editGroupModal" class="modal fade">
+        <div id="editGroupModal" class="modal fade" tabindex="-1" aria-labelledby="editGroupModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="editGroup">
                         <div class="modal-header">
-                            <h4 class="modal-title">Edit Group</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Editar grupo</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
@@ -157,26 +172,34 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Name</label>
+                                <label>Nome</label>
                                 <input type="text" class="form-control" name="editGroupName" required>
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
+                                <label>Descrição</label>
                                 <input type="text" class="form-control" name="editGroupDescription" required>
                             </div>
                             <div class="form-group">
-                                <label>SecurityId</label>
-                                <input type="number" class="form-control" name="editGroupSecurityId" required>
+                                <label>Tabela de segurança</label>
+                                <!--<input type="number" class="form-control" name="editGroupSecurityId" required>-->
+                                <select class="form-select" name="editGroupSecurityId" id="editGroupSecurityId" required>
+                                    <option value="" disabled selected>Selecione a tabela</option>
+                                    <?php if (!empty($this->userdata['securityList'])) {
+                                        foreach ($this->userdata['securityList'] as $key => $security) { ?>
+                                            <option value="<?php echo $security['id'] ?>">Tabela <?php echo $security["id"] ?></option>
+                                        <?php }
+                                    } ?>
+                                </select>
                             </div>
-                            <div class="form-group">
-                                <label>Active</label>
-                                <input type="checkbox" class="form-control" name="editGroupActive">
+                            <div class="form-group form-check form-switch">
+                                <label>Ativo</label>
+                                <input type="checkbox" role="switch" class="form-check-input" name="editGroupActive">
                             </div>
 
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-info" value="Save">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-success" value="Guardar">
                         </div>
                     </form>
                 </div>
@@ -184,46 +207,57 @@
         </div>
 
         <!-- Delete Modal HTML -->
-        <div id="deleteGroupModal" class="modal fade">
+        <div id="deleteGroupModal" class="modal fade" tabindex="-1" aria-labelledby="deleteGroupModal-Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="deleteGroup">
                         <div class="modal-header">
-                            <h4 class="modal-title">Delete Group</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Apagar grupo</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Are you sure you want to delete this Group?</p>
-                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                            <p>Tem a certeza que quer apagar este grupo?</p>
+                            <p class="text-warning"><small>A ação não pode ser defeita.</small></p>
                             <input id="deleteGroupId" name="deleteGroupId" type="hidden" class="form-control" value="">
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-danger" value="Delete">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <input type="submit" class="btn btn-danger" value="Apagar">
                         </div>
                     </form>
                 </div>
             </div>
         </div>
 
-        <!-- Logout Modal HTML -->
-        <div id="logoutModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4>Logout <i class="fa fa-lock"></i></h4>
-                    </div>
-                    <div class="modal-body"><i class="fa fa-question-circle"></i> Are you sure you want to log-off?</div>
-                    <div class="modal-footer"><a href="<?php echo HOME_URL . '/admin/logout';?>" class="btn btn-danger btn-block">Logout</a></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <script>
     $(document).ready(function() {
+        //DATATABLES
+        //Configura a dataTable
+        try{
+            var table = $('#groupsTable').DataTable({
+                rowReorder: false,
+                responsive: false,
+                columnDefs: [ {
+                    targets: [6,5],
+                    orderable: false,
+                }],
+                oLanguage: {
+                    "sUrl": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-PT.json"
+                }
+            });
+            //filtra table se ativo, inativo ou mostra todos
+            $('#GetActive').on('change', function() {
+                let selectedItem = $(this).children("option:selected").val();
+                table.columns(5).search(selectedItem).draw();
+            })
+        } catch (error) {
+            console.log(error);
+        }
+
+
+
         // ajax to Add Group
         $('#addGroup').submit(function (event) {
             event.preventDefault(); //prevent default action
@@ -238,13 +272,16 @@
                 dataType: "json",
                 type: 'POST',
                 data: formData,
+                beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    $('#loader').removeClass('hidden')
+                },
                 success: function (data) {
                     $("#addGroupModal").modal('hide');
 
                     if (data.statusCode === 201){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -256,7 +293,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -271,8 +308,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -280,6 +317,9 @@
                             //location.reload();
                         }
                     });
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
                 }
             });
         });
@@ -291,7 +331,7 @@
             //Ve se a data dos inputs mudou para formar so a data necessaria para o PATCH
             /*let formDataChanged = [];
             $('#editGroup input').each(function() { //para cada input vai ver
-                if($(this).attr('name') === "editGroupId" || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
+                if($(this).attr('name') === "editGroupId" || ($(this).attr('name') === "editGroupActive" && $(this).is(":checked")) || $(this).data('lastValue') !== $(this).val()) {//se a data anterior é diferente da current
                     let emptyArray = { name: "", value: "" };
 
                     emptyArray.name = $(this).attr('name');
@@ -316,13 +356,16 @@
                 dataType: "json",
                 type: 'POST',
                 data : formData,
+                beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    $('#loader').removeClass('hidden')
+                },
                 success: function (data) {
                     $("#editGroupModal").modal('hide');
 
                     if (data.statusCode === 200){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -334,7 +377,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -349,8 +392,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -358,6 +401,9 @@
                             //location.reload();
                         }
                     });
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
                 }
             });
         });
@@ -375,6 +421,9 @@
                 dataType: "json",
                 type: 'POST',
                 data : formData,
+                beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    $('#loader').removeClass('hidden')
+                },
                 success: function (data) {
 
                     $('[name="editGroupId"]').val(data[0]['id']);
@@ -398,7 +447,7 @@
                 },
                 error: function (data) {
                     Swal.fire({
-                        title: 'Error!',
+                        title: 'Erro!',
                         text: data.body.message,
                         icon: 'error',
                         showConfirmButton: false,
@@ -407,6 +456,9 @@
                             location.reload();
                         }
                     });
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
                 }
             });
 
@@ -426,13 +478,16 @@
                 dataType: "json",
                 type: 'POST',
                 data : formData,
+                beforeSend: function () { // Before we send the request, remove the .hidden class from the spinner and default to inline-block.
+                    $('#loader').removeClass('hidden')
+                },
                 success: function (data) {
                     $("#deleteGroupModal").modal('hide');
 
                     if (data.statusCode === 200){
                         //mensagem de Success
                         Swal.fire({
-                            title: 'Success!',
+                            title: 'Sucesso!',
                             text: data.body.message,
                             icon: 'success',
                             showConfirmButton: false,
@@ -444,7 +499,7 @@
                     } else {
                         //mensagem de Error
                         Swal.fire({
-                            title: 'Error!',
+                            title: 'Erro!',
                             text: data.body.message,
                             icon: 'error',
                             showConfirmButton: false,
@@ -459,8 +514,8 @@
                 error: function (data) {
                     //mensagem de Error
                     Swal.fire({
-                        title: 'Error!',
-                        text: "Connection error, please try again.",
+                        title: 'Erro!',
+                        text: "Erro de conexão, por favor tente denovo.",
                         icon: 'error',
                         showConfirmButton: false,
                         timer: 2000,
@@ -468,6 +523,9 @@
                             //location.reload();
                         }
                     });
+                },
+                complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                    $('#loader').addClass('hidden')
                 }
             });
         });

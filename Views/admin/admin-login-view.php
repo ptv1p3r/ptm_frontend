@@ -1,46 +1,48 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: V1p3r
- * Date: 17/10/2018
- * Time: 20:14
- */
-?>
+
 <?php if ( ! defined('ABSPATH')) exit; ?>
 
-<div class="container">
+<div id="layoutAuthentication">
 
-    <div class="row  justify-content-center align-items-center" style="margin-top: 100px">
-        <img src="../../Images/logo.png" alt="">
-        <h1 class="text-light">Project Tree Management</h1>
-    </div>
+    <div id="layoutAuthentication_content">
+        <main>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5">
+                        <div class="card shadow-lg border-0 rounded-lg mt-5">
+                            <div class="card-header">
+                                <img class="mx-auto d-block" src="<?php echo HOME_URL . '/Images/logo/adoteUma.png' ?>" alt="Adote uma árvore.">
+                                <h3 class="text-center font-weight-light my-4">Project Tree Management</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="liveAlert">
 
-    <div class="row  justify-content-center align-items-center">
-        <div class="col-lg-4">
-            <div class="jumbotron" style="margin-top: 150px">
-                <?php //if (isset($_POST['validation']) && $_POST['validation'] == "failed") { ?>
-                <!--<div class="alert alert-danger alert-dismissable" role="alert">
-                        <a class="panel-close close" data-dismiss="alert">×</a>
-                        <i class="fa fa-times-circle"></i> Invalid Email/Password!
-                    </div>-->
-                <?php //} ?>
+                                </div>
 
-                <div id="liveAlert">
+                                <form id="doLogin">
+                                    <div class="form-floating mb-3">
+                                        <input id="emailInput" class="form-control" name="email" type="email" placeholder="name@example.com" required />
+                                        <label for="emailInput">Email</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input id="passInput" class="form-control" name="pass" type="password" placeholder="Password" required />
+                                        <label for="passInput">Password</label>
+                                    </div>
+                                    <!--<div class="form-check mb-3">
+                                        <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
+                                        <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
+                                    </div>-->
+                                    <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                        <input type="submit" name="submit" class="btn btn-primary form-control" value="Entrar">
+                                    </div>
+                                </form>
 
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <form id="doLogin">
-                    <input name="email" type="email" class="form-control" placeholder="Email">
-                    <br>
-                    <input name="pass" type="password" class="form-control" placeholder="Password">
-                    <br>
-                    <button type="submit" name="submit" class="btn btn-success form-control">Login</button>
-                </form>
             </div>
-        </div>
+        </main>
     </div>
-
-</div>
 
 <script>
     $(document).ready(function() {
@@ -61,15 +63,15 @@
                 success: function (data) {
 
                     if(data === 200){
-                        alert("Logging in!", "success");
+                        alert("A iniciar!", "success");
                         location.reload();
                     } else {
-                        alert("Invalid Email/Password!", "danger");
+                        alert("Email/Password invalida!", "danger");
                     }
 
                 },
                 error: function (data) {
-                    alert("Connection error, please try again.", "danger");
+                    alert("Erro de conexão, por favor tente denovo.", "danger");
                 }
             });
         });
@@ -80,7 +82,8 @@
             let wrapper = document.createElement('div')
             wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '</div>'
 
-            alertPlaceholder.append(wrapper)
+            $('#liveAlert').html(wrapper)
+            //alertPlaceholder.innerHTML(wrapper)
 
             // timeout alert message
             setTimeout(function () {

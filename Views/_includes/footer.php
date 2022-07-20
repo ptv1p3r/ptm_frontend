@@ -12,94 +12,6 @@
 
 <!--Footer Start-->
 <footer class="footer">
-    <div class="footer-top wf100">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <!--Footer Widget Start-->
-                    <div class="footer-widget">
-                        <h4>Sobre nós</h4>
-                        <p> Batatas </p>
-                        <a href="#" class="lm">About us</a>
-                    </div>
-                    <!--Footer Widget End-->
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <!--Footer Widget Start-->
-                    <div class="footer-widget">
-                        <h4>Os nossos compromissoss</h4>
-                        <ul class="quick-links">
-                            <li><a href="#">Visão</a></li>
-                            <li><a href="#">Etc....</a></li>
-                            <li><a href="#">Etc....</a></li>
-                            <li><a href="#">Etc....</a></li>
-                            <li><a href="#">Etc....</a></li>
-                            <li><a href="#">Batatas</a></li>
-                        </ul>
-                    </div>
-                    <!--Footer Widget End-->
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-
-
-                    <!--Footer Widget Start-->
-                    <div class="footer-widget">
-                        <h4>Ocupar com algo interessante</h4>
-                        <ul class="quick-links">
-                            <li><a href="#">Visão</a></li>
-                            <li><a href="#">Etc....</a></li>
-                            <li><a href="#">Etc....</a></li>
-                            <li><a href="#">Etc....</a></li>
-                            <li><a href="#">Etc....</a></li>
-                            <li><a href="#">Batatas</a></li>
-                        </ul>
-                    </div>
-                    <!--Footer Widget End-->
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <!--Footer Widget Start-->
-                    <div class="footer-widget">
-                        <div id="fpro-slider" class="owl-carousel owl-theme">
-                            <!--Footer Product Start-->
-                            <div class="item">
-                                <div class="f-product">
-                                    <img src="/Images/home/fpro1.jpg" alt="">
-                                    <div class="fp-text">
-                                        <h6><a href="#">Amendoeira</a></h6>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Footer Product End-->
-                            <!--Footer Product Start-->
-                            <div class="item">
-                                <div class="f-product">
-                                    <img src="/Images/home/fpro1.jpg" alt="">
-                                    <div class="fp-text">
-                                        <h6><a href="#">Medronheiro</a></h6>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Footer Product End-->
-                            <!--Footer Product Start-->
-                            <div class="item">
-                                <div class="f-product">
-                                    <img src="/Images/home/fpro1.jpg" alt="">
-                                    <div class="fp-text">
-                                        <h6><a href="#">Sobreiro</a></h6>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Footer Product End-->
-                        </div>
-                    </div>
-                    <!--Footer Widget End-->
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="footer-copyr wf100">
         <div class="container">
             <div class="row">
@@ -124,7 +36,7 @@
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.4.1/jquery-migrate.min.map"></script>-->
 <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
 <!--<script src="js/home/popper.min.js"></script>-->
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>-->
 <!--<script src="js/home/bootstrap.min.js"></script>-->
 <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>

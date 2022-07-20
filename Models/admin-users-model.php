@@ -23,6 +23,23 @@ class AdminUsersModel extends MainModel {
     }
 
     /**
+     * Metodo que retorna Message list do user pelo seu id
+     * @param $id
+     * @return mixed
+     */
+    public function getMessageListByUserId($id) {
+        $result = null;
+
+        $url = API_URL . 'api/v1/messages/list/' . $id;
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+    /**
      * Get country by id
      * @param $id
      * @return mixed
@@ -58,6 +75,41 @@ class AdminUsersModel extends MainModel {
         //trasforma toda a msg em string json para poder ser enviado
         return json_decode(json_encode($result), true);
     }
+
+    /**
+     * Metodo que retorna lista de Grupos
+     * @return mixed
+     */
+    public function getGroupList()
+    {
+        $result = null;
+
+        $url = API_URL . 'api/v1/groups/list';
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
+    /**
+     * Metodo que retorna lista de Generos
+     * @return mixed
+     */
+    public function getGenderList()
+    {
+        $result = null;
+
+        $url = API_URL . 'api/v1/genders/list';
+        if (!empty($_SESSION['userdata']['accessToken'])){
+            $userToken = $_SESSION['userdata']['accessToken'];
+            $result = callAPI("GET", $url, '', $userToken);
+        }
+        //trasforma toda a msg em string json para poder ser enviado
+        return json_decode(json_encode($result), true);
+    }
+
 
     /** CRUD USERS **/
     /**
@@ -116,7 +168,6 @@ class AdminUsersModel extends MainModel {
                         break;
 
                     case "addUserEntity":
-                        //TODO: a validaçao se estiver vazio(null) nao esta a funcionar
                         $normalizedData['entity'] = strlen($dataVector['value']) > 0 ? $dataVector['value'] : NULL;
                         break;
 
@@ -195,7 +246,7 @@ class AdminUsersModel extends MainModel {
         $normalizedData = array();
 
         // Not active by default
-        $normalizedData['active'] = "";
+        $normalizedData['active'] = "0";
 
         // get data from form array and package it to send to api
         foreach ($data as $dataVector) {
@@ -210,7 +261,6 @@ class AdminUsersModel extends MainModel {
                         break;
 
                     case "editUserEntity":
-                        //TODO: a validaçao se estiver vazio(null) nao esta a funcionar
                         $normalizedData['entity'] = strlen($dataVector['value']) > 0 ? $dataVector['value'] : NULL;
                         break;
 
@@ -257,13 +307,12 @@ class AdminUsersModel extends MainModel {
                     case "editUserCountryId":
                         $normalizedData['countryId'] = (int)$dataVector['value'];
                         break;
+
+                    case "editUserActive":
+                        $normalizedData['active'] = "1";
+                        break;
                 }
 
-                if ($dataVector['name'] == "editUserActive"){
-                    $normalizedData['active'] = "1";
-                } else {
-                    $normalizedData['active'] = "0";
-                }
             }
         }
 
@@ -271,7 +320,7 @@ class AdminUsersModel extends MainModel {
 
         if (!empty($_SESSION['userdata']['accessToken'])){
             $userToken = $_SESSION['userdata']['accessToken'];
-            $result = callAPI("PUT", $url, $normalizedData, $userToken);
+            $result = callAPI("PATCH", $url, $normalizedData, $userToken);
         }
 
         //trasforma toda a msg em string json para poder ser enviado
